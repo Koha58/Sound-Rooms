@@ -5,19 +5,28 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     public float Speed = 2f;
-    public float Range = 2f;//自分の行動範囲
+    public float Range = 20f;//自分の行動範囲
     private Vector3 StartPosition;//初期位置
     private Vector3 targetPosition;//目標位置
 
 
     public Transform Player;//プレイヤーを参照
-    public float Detection = 10f; //プレイヤーを検知する範囲
+    public float Detection = 100f; //プレイヤーを検知する範囲
+    public float ChaseSpeed = 0.01f;
+
+    MeshRenderer Renderer;
+    GameObject Enemy0;
+    int ONOFF = 0;
+    private float Seetime;
+    private float SoundTime;
+
 
     // Start is called before the first frame update
     void Start()
     {
         StartPosition = transform.position;
-
+        Renderer = GetComponent<MeshRenderer>();
+        Renderer.enabled = false;
 
     }
 
@@ -31,7 +40,7 @@ public class Enemy : MonoBehaviour
         if (detectionPlayer <= Detection)
         {
             transform.LookAt(Player.position);//プレイヤーの方向を見る
-
+            transform.position += transform.forward * ChaseSpeed;
         }
 
 
@@ -53,7 +62,25 @@ public class Enemy : MonoBehaviour
             return randomdetection;
         }
 
-
-
+        if(ONOFF ==0)
+        {
+            SoundTime += Time.deltaTime;
+            if (SoundTime > 10.0f) 
+            {
+                Renderer.enabled = true;
+                ONOFF = 1;
+                SoundTime = 0.0f;
+            }
+        }
+        else if (ONOFF == 1)
+        {
+            SoundTime += Time.deltaTime;
+            if (SoundTime > 10.0f)
+            {
+                Renderer.enabled = true;
+                ONOFF = 0;
+                SoundTime = 0.0f;
+            }
+        }
     }
 }

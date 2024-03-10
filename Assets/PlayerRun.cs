@@ -36,6 +36,11 @@ public class PlayerRun : MonoBehaviour
         {
             transform.Rotate(0, -1, 0);
         }
+        if (Input.GetKey(KeyCode.S))
+        {
+            transform.position -= transform.forward * 0.03f;
+            animator.SetBool("Run", true);
+        }
         if (Input.GetKey(KeyCode.D))
         {
             transform.Rotate(0, 1, 0);
