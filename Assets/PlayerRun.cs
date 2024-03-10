@@ -6,39 +6,40 @@ using UnityEngine;
 
 public class PlayerRun : MonoBehaviour
 {
-    Rigidbody rb;
-    float speed = 3.0f;
+    public float Speed = 1.0f;//プレイヤーの動くスピード
+    private Rigidbody rb;
+    private Animator animator;
 
+
+    // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        animator = GetComponent<Animator>();   //アニメーターコントローラーからアニメーションを取得する
+
     }
 
+    // Update is called once per frame
     void Update()
     {
-        //Wキー（前方移動）
         if (Input.GetKey(KeyCode.W))
         {
-            rb.velocity = transform.forward * speed;
+            transform.position += transform.forward * 0.03f;
+            animator.SetBool("Run", true);
         }
-
-        //Sキー（後方移動）
-        if (Input.GetKey(KeyCode.S))
+        else
         {
-            rb.velocity = -transform.forward * speed;
+            animator.SetBool("Run", false);
         }
 
-        //Aキー（左移動）
         if (Input.GetKey(KeyCode.A))
         {
-            rb.velocity = -transform.right * speed;
+            transform.Rotate(0, -1, 0);
         }
-
-        //Dキー（右移動）
         if (Input.GetKey(KeyCode.D))
         {
-            rb.velocity = transform.right * speed;
+            transform.Rotate(0, 1, 0);
         }
-    }
 
+    }
 }

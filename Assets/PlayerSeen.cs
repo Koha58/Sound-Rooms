@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class PlayerSeen : MonoBehaviour
 {
-    MeshRenderer mr;
+    SkinnedMeshRenderer mr;
     GameObject Player;  //オブジェクト名は適宜変更
 
     int onoff = 0;  //判定用（プレイヤーが見えていない時：0/プレイヤーが見えている時：1）
@@ -16,7 +16,7 @@ public class PlayerSeen : MonoBehaviour
     void Start()
     {
         //最初は見えない状態
-        mr = GetComponent<MeshRenderer>();
+        mr = GetComponent<SkinnedMeshRenderer>();
         mr.enabled = false; //見えない（無効）
     }
 
@@ -33,7 +33,7 @@ public class PlayerSeen : MonoBehaviour
         if (onoff == 1)
         {
             seentime += Time.deltaTime;
-            if (seentime >= 3.0f)
+            if (seentime >= 5.0f)
             {
                 mr.enabled = false; //見えない（無効）
                 onoff = 0;  //見えていないから0
