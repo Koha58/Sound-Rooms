@@ -12,12 +12,13 @@ public class Enemy : MonoBehaviour
 
     public Transform Player;//プレイヤーを参照
     public float Detection = 100f; //プレイヤーを検知する範囲
-    public float ChaseSpeed = 0.01f;
+    public float ChaseSpeed = 0.01f;//追いかけるスピード
 
-    MeshRenderer Renderer;
-    GameObject Enemy0;
-    int ONOFF = 0;
-    private float Seetime;
+    MeshRenderer MR;
+    GameObject Eneny;
+    int ONoff = 0;//(0が見えない；１が見える状態）
+    private float Seetime;  //経過時間
+
     private float SoundTime;
 
 
@@ -25,8 +26,8 @@ public class Enemy : MonoBehaviour
     void Start()
     {
         StartPosition = transform.position;
-        Renderer = GetComponent<MeshRenderer>();
-        Renderer.enabled = false;
+        MR = GetComponent<MeshRenderer>();
+        MR.enabled = false;
 
     }
 
@@ -35,14 +36,15 @@ public class Enemy : MonoBehaviour
     {
 
 
+
         float detectionPlayer = Vector3.Distance(transform.position, Player.position);//プレイヤーと敵の位置の計算
 
-        if (detectionPlayer <= Detection)
+        if (detectionPlayer <= Detection)//プレイヤーが検知範囲に入ったら
         {
-            transform.LookAt(Player.position);//プレイヤーの方向を見る
-            transform.position += transform.forward * ChaseSpeed;
-        }
+            transform.LookAt(Player.transform); //プレイヤーの方向にむく
+            transform.position += transform.forward * ChaseSpeed;//プレイヤーの方向に向かう
 
+        }
 
 
         transform.position = Vector3.MoveTowards(transform.position, targetPosition, Speed * Time.deltaTime);//目標位置に向かって進む
@@ -62,25 +64,36 @@ public class Enemy : MonoBehaviour
             return randomdetection;
         }
 
-        if(ONOFF ==0)
-        {
-            SoundTime += Time.deltaTime;
-            if (SoundTime > 10.0f) 
-            {
-                Renderer.enabled = true;
-                ONOFF = 1;
-                SoundTime = 0.0f;
-            }
-        }
-        else if (ONOFF == 1)
+
+        if (ONoff == 0)
         {
             SoundTime += Time.deltaTime;
             if (SoundTime > 10.0f)
             {
-                Renderer.enabled = true;
-                ONOFF = 0;
+                MR.enabled = true;
+                ONoff = 1;
                 SoundTime = 0.0f;
+            }
+
+        }
+        else if (ONoff == 1)
+        {
+            Seetime += Time.deltaTime;
+            if (Seetime >= 10.0f)
+            {
+                MR.enabled = false;
+                ONoff = 0;
+                Seetime = 0.0f;
             }
         }
     }
+    /*
+   private void OnTriggerEnter(Collider other)
+   {
+       if(other.gameObject.tag =="Player" )
+       {
+           Destroy(other.gameObject);
+       }
+   }
+   */
 }
