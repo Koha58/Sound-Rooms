@@ -33,7 +33,7 @@ public class PlayerSeen : MonoBehaviour
         if (onoff == 1)
         {
             seentime += Time.deltaTime;
-            if (seentime >= 5.0f)
+            if (seentime >= 10.0f)
             {
                 mr.enabled = false; //Œ©‚¦‚È‚¢i–³Œøj
                 onoff = 0;  //Œ©‚¦‚Ä‚¢‚È‚¢‚©‚ç0

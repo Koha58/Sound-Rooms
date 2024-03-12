@@ -9,7 +9,7 @@ public class BoundScript : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Sphere.AddForce(Vector3.up * 3f, ForceMode.Impulse);
+        Sphere.AddForce(Vector3.up * 2f, ForceMode.Impulse);
     }
 
 }
