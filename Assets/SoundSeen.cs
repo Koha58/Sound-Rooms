@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
 
+//sphereオブジェクトの不可視化
 public class SoundSeen : MonoBehaviour
 {
     MeshRenderer spmr;

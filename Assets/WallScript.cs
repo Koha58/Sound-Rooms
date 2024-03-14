@@ -33,7 +33,7 @@ public class WallScript : MonoBehaviour
         if (onoff == 1)
         {
             seentime += Time.deltaTime;
-            if (seentime >= 5.0f)
+            if (seentime >= 10.0f)
             {
                 bc.enabled = false; //’Ê‚è”²‚¯‰Â”\
                 onoff = 0;  //Œ©‚¦‚Ä‚¢‚È‚¢‚©‚ç0

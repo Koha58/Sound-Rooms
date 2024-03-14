@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//‰¹”g‚Ì‰Â‹‰»E•s‰Â‹‰»
+
 public class SwitchDirector : MonoBehaviour
 {
     [SerializeField] GameObject Sphere;
