@@ -1,93 +1,68 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
+//アイテム取得
 public class ItemSearch : MonoBehaviour
 {
-    //　近くにあるアイテムのリスト
-    [SerializeField] private List<GameObject> itemList;
-    //　メッセージ表示用キャンバス
-    public GameObject itemMessageCanvas;
+    public GameObject closetObject;
+    public List<GameObject> ItemSearchArea = new List<GameObject>();
+    public List<string> myItemList = new List<string>();
 
-
-    //　アイテムがサーチエリア内に入ったら（場合によってはOnTriggerStayを使った方がいいかも？）
-    void OnTriggerEnter(Collider col)
+    private void Update()
     {
-        if (col.tag == "Item")
-        {
-            //　Eキーで取得する
-            if (Input.GetKeyDown(KeyCode.E))
-            {
-                SetItem(col.gameObject);
-                itemMessageCanvas.GetComponentInChildren<Text>().text = "Eで取得";
-                itemMessageCanvas.SetActive(true);
-            }
-        }
+        CaluculateClosetObject();
     }
 
-    //　アイテムがサーチエリア外に出たら
-    void OnTriggerExit(Collider col)
+    void CaluculateClosetObject()
     {
-        if (col.tag == "Item")
+        //一番近いアイテムを取得する
+        float closetDistance = 1000000;
+        for (int i = 0; i < ItemSearchArea.Count; i++)
         {
-            //　アイテムリストに存在していたらアイテムリストから削除
-            if (itemList.Contains(col.gameObject))
+            if (ItemSearchArea[i] == null)
             {
-                itemList.Remove(col.gameObject);
-                //　アイテムが範囲内になくなったら主人公の状態変更
-                if (itemList.Count <= 0)
+                ItemSearchArea.Remove(ItemSearchArea[i]);
+                return;
+            }
+            float distance = Vector3.Distance(transform.position, ItemSearchArea[i].transform.position);
+            if (closetDistance > distance)
+            {
+                closetDistance = distance;
+                closetObject = ItemSearchArea[i].gameObject;
+            }
+            //一定距離離れたらItemSearchAreaからオブジェクトを取り除く。
+            if (distance > 6f)
+            {
+                if (closetObject == ItemSearchArea[i].gameObject)
                 {
-                    itemMessageCanvas.SetActive(false);
+                    closetObject = null;
                 }
+                ItemSearchArea.Remove(ItemSearchArea[i]);
             }
         }
-    }
 
-    //　アイテムリストにアイテムを追加する処理
-    void SetItem(GameObject addItem)
-    {
-        //　すでに同じアイテムがあるかどうか
-        if (!itemList.Contains(addItem))
+        //最も近いアイテムが一定の距離内にある場合、アイテムの説明UIを表示。Eキーを押すと拾える。
+        if (closetObject == null) return;
+        if (closetDistance < 1.5f)
         {
-            itemList.Add(addItem);
+
+            PickUp();
         }
+
     }
 
-    //　アイテムリストからアイテムを削除する処理
-    public void DeleteItem(GameObject deleteItem)
+    void PickUp()
     {
-        if (itemList.Contains(deleteItem))
+        if (Input.GetKeyDown(KeyCode.E))
         {
-            itemList.Remove(deleteItem);
+            myItemList.Add(closetObject.name);
+            //ItemSearchAreaからアイテムを取り除く。
+            ItemSearchArea.Remove(closetObject);
+            Destroy(closetObject, 0.5f);
+            closetObject = null;
         }
-    }
-
-    //　手動モードの場合一番近いアイテムを探し取得する
-    public void SelectItem()
-    {
-            //　一つでも検知エリア内にアイテムがあれば
-            if (itemList.Count >= 1)
-            {
-                //　アイテムリストの先頭にあるアイテムを初期値にする
-                Transform near = itemList[0].transform;
-                float distance = Vector3.Distance(transform.root.position, near.position);
-
-                //　一番近いアイテムを探す
-                foreach (var item in itemList)
-                {
-                    if (Vector3.Distance(transform.root.position, item.transform.position) < distance)
-                    {
-                        near = item.transform;
-                        distance = Vector3.Distance(transform.root.position, item.transform.position);
-                    }
-                }
-
-                //　一番近いアイテムを取得、アイテムリストから削除、アイテムゲームオブジェクトの削除
-                itemMessageCanvas.GetComponentInChildren<Text>().text = "";
-                itemMessageCanvas.SetActive(false);
-                DeleteItem(near.gameObject);
-                Destroy(near.gameObject);
-            }
     }
 }
