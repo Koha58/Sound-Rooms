@@ -42,4 +42,21 @@ public class WallScript : MonoBehaviour
         }
 
     }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Enemy"))
+        {
+            if (EnemySeen.ONoff == 0)
+            {
+                bc.enabled = false;
+                Debug.Log("?");
+            }
+            else if (EnemySeen.ONoff == 1)
+            {
+                bc.enabled = true;
+                Enemy.targetPosition = Enemy.GetRandomPosition();
+                Debug.Log("!");
+            }
+        }
+    }
 }
