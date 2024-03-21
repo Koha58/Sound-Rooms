@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEditor.Timeline.TimelinePlaybackControls;
 
 //アイテム取得
 public class ItemSearch : MonoBehaviour
@@ -10,7 +12,17 @@ public class ItemSearch : MonoBehaviour
     public GameObject closetObject;
     public List<GameObject> ItemSearchArea = new List<GameObject>();
     public List<string> myItemList = new List<string>();
-
+    public TextMeshProUGUI keyCountText;
+    public int count;
+    //public OverHeadMsgCreater overHeadMsgCreater;
+    
+    private void Start()
+    {
+        count = 0;
+        SetCountText();
+        //overHeadMsgCreater = GetComponent<OverHeadMsgCreater>();
+        //overHeadMsgCreater.OnDisable();
+    }
     private void Update()
     {
         CaluculateClosetObject();
@@ -48,10 +60,10 @@ public class ItemSearch : MonoBehaviour
         if (closetObject == null) return;
         if (closetDistance < 1.5f)
         {
-
+            //アイテム解説UI表示
+            //overHeadMsgCreater.OnEnable();
             PickUp();
         }
-
     }
 
     void PickUp()
@@ -63,6 +75,15 @@ public class ItemSearch : MonoBehaviour
             ItemSearchArea.Remove(closetObject);
             Destroy(closetObject, 0.5f);
             closetObject = null;
+            //アイテム解説UI非表示
+            //overHeadMsgCreater.OnDisable();
+            count += 1;
+            SetCountText();
         }
+    }
+
+    void SetCountText()
+    {
+        keyCountText.text = count.ToString();
     }
 }
