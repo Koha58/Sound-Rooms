@@ -14,7 +14,6 @@ public class OverHeadMsgCreater : MonoBehaviour
 
     public void OnEnable()
     {
-        //overHeadMsg.gameObject.SetActive(true);
         overHeadMsg = Instantiate(overHeadMsgPrefab, canvasRect);
         overHeadMsg.targetTran = transform;
     }
@@ -23,7 +22,6 @@ public class OverHeadMsgCreater : MonoBehaviour
     {
         if (overHeadMsg != null)
         {
-            //Destroy(overHeadMsg.gameObject);
             overHeadMsg.gameObject.SetActive(false);
         }
     }
