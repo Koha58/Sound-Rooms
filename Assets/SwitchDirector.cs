@@ -9,7 +9,7 @@ public class SwitchDirector : MonoBehaviour
     [SerializeField] GameObject Sphere;
     int onoff = 0;  //判定用（音波が見えていない時：0/音波が見えている時：1）
     private float seentime = 0.0f; //経過時間記録用
-
+    
     // Update is called once per frame
     void Update()
     {
