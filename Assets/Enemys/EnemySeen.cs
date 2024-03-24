@@ -30,7 +30,7 @@ public class EnemySeen : MonoBehaviour
                 MR.enabled = true;
                 ONoff = 1;
                 SoundTime = 0.0f;
-                //  Sphere.SetActive(true);//音波非表示→表示
+                
             }
         }
         else if (ONoff == 1)//見えているとき
@@ -41,7 +41,7 @@ public class EnemySeen : MonoBehaviour
                 MR.enabled = false;
                 ONoff = 0;
                 Seetime = 0.0f;
-                // Sphere.SetActive(false);//音波表示→非表示
+               
             }
         }
     }

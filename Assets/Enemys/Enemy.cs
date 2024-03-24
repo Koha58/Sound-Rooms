@@ -50,7 +50,7 @@ public class Enemy : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Player"))
+        if (other.gameObject.CompareTag("Player"))//「Player」のタグに接触した時
         {
             EnemyParturition.isHidden = false;
         }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyParturition : MonoBehaviour
 {
-    public GameObject ebiPrefab;
+    public GameObject ebiPrefab;　//増加するオブジェクトを入れる
     static public bool isHidden = true;
 
     // Start is called before the first frame update
@@ -16,12 +16,11 @@ public class EnemyParturition : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!isHidden)
+        if (!isHidden)// falseの時
         {
             isHidden = true;
             GameObject go = Instantiate(ebiPrefab) as GameObject;
-            Debug.Log(go);
-            int px = Random.Range(0, 20);
+            int px = Random.Range(0, 20);   //Xの０～２０の範囲生成
             go.transform.position = new Vector3(px, 5, 0);
         }
     }
