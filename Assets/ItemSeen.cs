@@ -13,9 +13,10 @@ public class ItemSeen : MonoBehaviour
     public GameObject Key2;
     public GameObject Key3;
     public GameObject Key4;
-    public GameObject Key5;
+    //public GameObject Key5;
     [SerializeField] public GameObject SeenArea;
     public GameObject ItemCanvas;
+    public GameObject Wall;
 
 
     void Start()
@@ -26,8 +27,9 @@ public class ItemSeen : MonoBehaviour
         Key2.GetComponent<Renderer>().enabled = false;
         Key3.GetComponent<Renderer>().enabled = false;
         Key4.GetComponent<Renderer>().enabled = false;
-        Key5.GetComponent<Renderer>().enabled = false;
+       // Key5.GetComponent<Renderer>().enabled = false;
         ItemCanvas.GetComponent<Canvas>().enabled = false;
+        Wall.GetComponent<Renderer>().enabled = false;
     }
 
     private void Update()
@@ -50,8 +52,9 @@ public class ItemSeen : MonoBehaviour
                 Key2.GetComponent<Renderer>().enabled = false;
                 Key3.GetComponent<Renderer>().enabled = false;
                 Key4.GetComponent<Renderer>().enabled = false;
-                Key5.GetComponent<Renderer>().enabled = false;
+               // Key5.GetComponent<Renderer>().enabled = false;
                 ItemCanvas.GetComponent<Canvas>().enabled = false;
+                Wall.GetComponent<Renderer>().enabled = false;
                 onoff = 0;  //見えていないから0
                 seentime = 0.0f;    //経過時間をリセット
             }
@@ -67,8 +70,9 @@ public class ItemSeen : MonoBehaviour
             Key2.GetComponent<Renderer>().enabled = true;
             Key3.GetComponent<Renderer>().enabled = true;
             Key4.GetComponent<Renderer>().enabled = true;
-            Key5.GetComponent<Renderer>().enabled = true;
+           // Key5.GetComponent<Renderer>().enabled = true;
             ItemCanvas.GetComponent<Canvas>().enabled = true;
+            Wall.GetComponent<Renderer>().enabled = true;
         }
     }
 }
