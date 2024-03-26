@@ -9,9 +9,10 @@ public class PlayerSeen : MonoBehaviour
     SkinnedMeshRenderer mr;
     GameObject Player;  //オブジェクト名は適宜変更
 
-    int onoff = 0;  //判定用（プレイヤーが見えていない時：0/プレイヤーが見えている時：1）
+    public int onoff = 0;  //判定用（プレイヤーが見えていない時：0/プレイヤーが見えている時：1）
 
     private float seentime = 0.0f; //経過時間記録用
+
 
     void Start()
     {
@@ -20,7 +21,7 @@ public class PlayerSeen : MonoBehaviour
         mr.enabled = false; //見えない（無効）
     }
 
-    void Update()
+    public void Update()
     {
         //左クリックで見えるようになる
         if (Input.GetMouseButtonDown(0))

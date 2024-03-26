@@ -11,9 +11,6 @@ public class ItemSeen : MonoBehaviour
 
     public GameObject Key1;
     public GameObject Key2;
-    public GameObject Key3;
-    public GameObject Key4;
-    //public GameObject Key5;
     [SerializeField] public GameObject SeenArea;
     public GameObject ItemCanvas;
     public GameObject Wall;
@@ -25,9 +22,6 @@ public class ItemSeen : MonoBehaviour
         SeenArea.GetComponent<Collider>().enabled = false;
         Key1.GetComponent<Renderer>().enabled = false;
         Key2.GetComponent<Renderer>().enabled = false;
-        Key3.GetComponent<Renderer>().enabled = false;
-        Key4.GetComponent<Renderer>().enabled = false;
-       // Key5.GetComponent<Renderer>().enabled = false;
         ItemCanvas.GetComponent<Canvas>().enabled = false;
         Wall.GetComponent<Renderer>().enabled = false;
     }
@@ -47,31 +41,32 @@ public class ItemSeen : MonoBehaviour
             seentime += Time.deltaTime;
             if (seentime >= 10.0f)
             {
-                SeenArea.GetComponent<Collider>().enabled = false;//見えない（無効）
-                Key1.GetComponent<Renderer>().enabled = false;
-                Key2.GetComponent<Renderer>().enabled = false;
-                Key3.GetComponent<Renderer>().enabled = false;
-                Key4.GetComponent<Renderer>().enabled = false;
-               // Key5.GetComponent<Renderer>().enabled = false;
-                ItemCanvas.GetComponent<Canvas>().enabled = false;
+                if (Key1 != null)
+                {
+                    SeenArea.GetComponent<Collider>().enabled = false;//見えない（無効）
+                    Key1.GetComponent<Renderer>().enabled = false;
+                    Key2.GetComponent<Renderer>().enabled = false;
+                    ItemCanvas.GetComponent<Canvas>().enabled = false;
+                }
                 Wall.GetComponent<Renderer>().enabled = false;
                 onoff = 0;  //見えていないから0
                 seentime = 0.0f;    //経過時間をリセット
             }
         }
+
     }
 
     void OnTriggerEnter(Collider other)
     {
         //接触したオブジェクトのタグが"Item"のとき
-        if (other.CompareTag("Item"))
+        if (other.CompareTag("Item") && Key1 != null)
         {
             Key1.GetComponent<Renderer>().enabled = true;
             Key2.GetComponent<Renderer>().enabled = true;
-            Key3.GetComponent<Renderer>().enabled = true;
-            Key4.GetComponent<Renderer>().enabled = true;
-           // Key5.GetComponent<Renderer>().enabled = true;
             ItemCanvas.GetComponent<Canvas>().enabled = true;
+        }
+        else if (other.CompareTag("Wall"))//接触したオブジェクトのタグが"Wall"のとき
+        {
             Wall.GetComponent<Renderer>().enabled = true;
         }
     }
