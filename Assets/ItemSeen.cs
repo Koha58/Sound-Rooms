@@ -1,6 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using UnityEngine;
+using UnityEngine.XR;
+using static Unity.VisualScripting.Metadata;
 
 //範囲内のアイテムの可視化・不可視化
 public class ItemSeen : MonoBehaviour
@@ -14,7 +17,6 @@ public class ItemSeen : MonoBehaviour
     [SerializeField] public GameObject SeenArea;
     public GameObject ItemCanvas;
     public GameObject Wall;
-
 
     void Start()
     {

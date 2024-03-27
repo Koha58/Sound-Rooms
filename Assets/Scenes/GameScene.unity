@@ -467,10 +467,20 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5735303415995423851, guid: ae99f31535f6d7a43af5057ab682ad94,
+        type: 3}
+      propertyPath: m_TagString
+      value: Keyparts02
+      objectReference: {fileID: 0}
     - target: {fileID: 6839499785036673251, guid: ae99f31535f6d7a43af5057ab682ad94,
         type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6839499785036673251, guid: ae99f31535f6d7a43af5057ab682ad94,
+        type: 3}
+      propertyPath: m_TagString
+      value: Keyparts01
       objectReference: {fileID: 0}
     - target: {fileID: 8209607689113787381, guid: ae99f31535f6d7a43af5057ab682ad94,
         type: 3}
@@ -1969,6 +1979,16 @@ PrefabInstance:
       propertyPath: canvasRect
       value: 
       objectReference: {fileID: 1552007106}
+    - target: {fileID: 5735303415995423851, guid: ae99f31535f6d7a43af5057ab682ad94,
+        type: 3}
+      propertyPath: m_TagString
+      value: Keyparts02
+      objectReference: {fileID: 0}
+    - target: {fileID: 6839499785036673251, guid: ae99f31535f6d7a43af5057ab682ad94,
+        type: 3}
+      propertyPath: m_TagString
+      value: Keyparts01
+      objectReference: {fileID: 0}
     - target: {fileID: 8209607689113787381, guid: ae99f31535f6d7a43af5057ab682ad94,
         type: 3}
       propertyPath: m_Name
@@ -2263,51 +2283,6 @@ PrefabInstance:
       insertIndex: 4
       addedObject: {fileID: 836124382}
   m_SourcePrefab: {fileID: 100100000, guid: bf75af8564529b146ac19ab10eb8865d, type: 3}
---- !u!1 &1424412262
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1424412264}
-  - component: {fileID: 1424412263}
-  m_Layer: 0
-  m_Name: CamaraController
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &1424412263
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1424412262}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b2cdc012bbae83d438014e2b91aea02e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 0}
---- !u!4 &1424412264
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1424412262}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.544, y: 1.812, z: -5.526}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1452464241
 GameObject:
   m_ObjectHideFlags: 0
@@ -3320,6 +3295,7 @@ GameObject:
   - component: {fileID: 1898125176}
   - component: {fileID: 1898125175}
   - component: {fileID: 1898125174}
+  - component: {fileID: 1898125177}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -3401,6 +3377,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 135133355}
   m_LocalEulerAnglesHint: {x: 11.164, y: 0, z: 0}
+--- !u!114 &1898125177
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1898125173}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63e62142aa9894649a72e4650bd17783, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mainCamera: {fileID: 1898125175}
+  rotationSpeed: {x: 0.1, y: 0.2}
+  reverse: 0
 --- !u!1 &1963763279
 GameObject:
   m_ObjectHideFlags: 0
@@ -3792,6 +3783,5 @@ SceneRoots:
   - {fileID: 1552007106}
   - {fileID: 1452464243}
   - {fileID: 491960244}
-  - {fileID: 1424412264}
   - {fileID: 203519263}
   - {fileID: 1196977016}
