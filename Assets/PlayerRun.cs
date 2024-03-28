@@ -7,6 +7,7 @@ using UnityEngine;
 public class PlayerRun : MonoBehaviour
 {
     public float Speed = 1.0f;//プレイヤーの動くスピード
+    public float Forward = 0.03f;
     private Rigidbody rb;
     private Animator animator;
 
@@ -24,26 +25,27 @@ public class PlayerRun : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.W))
         {
-            transform.position += transform.forward * 0.03f;
+            transform.position += transform.forward * Forward;
             animator.SetBool("Run", true);
+        }
+        else if (Input.GetKey(KeyCode.A))
+        {
+            animator.SetBool("Run", true);
+            transform.Rotate(0, -1, 0);
+        }
+        else if (Input.GetKey(KeyCode.S))
+        {
+            transform.position -= transform.forward * Forward;
+            animator.SetBool("Run", true);
+        }
+        else if (Input.GetKey(KeyCode.D))
+        {
+            animator.SetBool("Run", true);
+            transform.Rotate(0, 1, 0);
         }
         else
         {
             animator.SetBool("Run", false);
-        }
-
-        if (Input.GetKey(KeyCode.A))
-        {
-            transform.Rotate(0, -1, 0);
-        }
-        if (Input.GetKey(KeyCode.S))
-        {
-            transform.position -= transform.forward * 0.03f;
-            animator.SetBool("Run", true);
-        }
-        if (Input.GetKey(KeyCode.D))
-        {
-            transform.Rotate(0, 1, 0);
         }
 
     }

@@ -4,82 +4,45 @@ using UnityEngine;
 
 public class CameraRotator : MonoBehaviour
 {
-    // カメラオブジェクトを格納する変数
-    public Camera mainCamera;
-    // カメラの回転速度を格納する変数
-    public Vector2 rotationSpeed;
-    // マウス移動方向とカメラ回転方向を反転する判定フラグ
-    public bool reverse;
-    // マウス座標を格納する変数
-    private Vector2 lastMousePosition;
-    // カメラの角度を格納する変数（初期値に0,0を代入）
-    private Vector2 newAngle = new Vector2(0, 0);
+    public GameObject target; // 追従するオブジェクト
+    public Vector3 offset; // targetとの位置関係
 
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private float distance = 4.0f; // targetとの距離
+    [SerializeField] private float polarAngle = 45.0f; // y座標のアングル
+    [SerializeField] private float azimuthalAngle = 45.0f; // x座標のアングル
+    [SerializeField] private float minPolarAngle = 5.0f;
+    [SerializeField] private float maxPolarAngle = 75.0f;
+    [SerializeField] private float mouseXSensitivity = 5.0f;
+    [SerializeField] private float mouseYSensitivity = 5.0f;
+
+    void LateUpdate()
     {
+        if (Input.GetMouseButton(1))//rightキーを押している間
+        {
+            updateAngle(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
+        }
 
+        var lookAtPos = target.transform.position + offset;
+        updatePosition(lookAtPos);
+        transform.LookAt(lookAtPos);
     }
 
-    // Update is called once per frame
-    void Update()
+    void updateAngle(float x, float y)
     {
-        // 左クリックした時
-        if (Input.GetMouseButtonDown(1))
-        {
-            // カメラの角度を変数"newAngle"に格納
-            newAngle = mainCamera.transform.localEulerAngles;
-            // マウス座標を変数"lastMousePosition"に格納
-            lastMousePosition = Input.mousePosition;
-        }
-        // 左ドラッグしている間
-        else if (Input.GetMouseButton(1))
-        {
-            //カメラ回転方向の判定フラグが"true"の場合
-            if (!reverse)
-            {
-                // Y軸の回転：マウスドラッグ方向に視点回転
-                // マウスの水平移動値に変数"rotationSpeed"を掛ける
-                //（クリック時の座標とマウス座標の現在値の差分値）
-                newAngle.y -= (lastMousePosition.x - Input.mousePosition.x) * rotationSpeed.y;
-                // X軸の回転：マウスドラッグ方向に視点回転
-                // マウスの垂直移動値に変数"rotationSpeed"を掛ける
-                //（クリック時の座標とマウス座標の現在値の差分値）
-                newAngle.x -= (Input.mousePosition.y - lastMousePosition.y) * rotationSpeed.x;
-                // "newAngle"の角度をカメラ角度に格納
-                mainCamera.transform.localEulerAngles = newAngle;
-                // マウス座標を変数"lastMousePosition"に格納
-                lastMousePosition = Input.mousePosition;
-            }
-            // カメラ回転方向の判定フラグが"reverse"の場合
-            else if (reverse)
-            {
-                // Y軸の回転：マウスドラッグと逆方向に視点回転
-                newAngle.y -= (Input.mousePosition.x - lastMousePosition.x) * rotationSpeed.y;
-                // X軸の回転：マウスドラッグと逆方向に視点回転
-                newAngle.x -= (lastMousePosition.y - Input.mousePosition.y) * rotationSpeed.x;
-                // "newAngle"の角度をカメラ角度に格納
-                mainCamera.transform.localEulerAngles = newAngle;
-                // マウス座標を変数"lastMousePosition"に格納
-                lastMousePosition = Input.mousePosition;
-            }
-        }
+        x = azimuthalAngle - x * mouseXSensitivity;
+        azimuthalAngle = Mathf.Repeat(x, 360);
+
+        y = polarAngle + y * mouseYSensitivity;
+        polarAngle = Mathf.Clamp(y, minPolarAngle, maxPolarAngle);
     }
 
-    // マウスドラッグ方向と視点回転方向を反転する処理
-    public void DirectionChange()
+    void updatePosition(Vector3 lookAtPos)
     {
-        // 判定フラグ変数"reverse"が"false"であれば
-        if (!reverse)
-        {
-            // 判定フラグ変数"reverse"に"true"を代入
-            reverse = true;
-        }
-        // でなければ（判定フラグ変数"reverse"が"true"であれば）
-        else
-        {
-            // 判定フラグ変数"reverse"に"false"を代入
-            reverse = false;
-        }
+        var da = azimuthalAngle * Mathf.Deg2Rad;
+        var dp = polarAngle * Mathf.Deg2Rad;
+        transform.position = new Vector3(
+            lookAtPos.x + distance * Mathf.Sin(dp) * Mathf.Cos(da),
+            lookAtPos.y + distance * Mathf.Cos(dp),
+            lookAtPos.z + distance * Mathf.Sin(dp) * Mathf.Sin(da));
     }
 }

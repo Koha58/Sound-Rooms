@@ -1,0 +1,22 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+//マウス長押し挙動(範囲指定)
+public class ButtonHoldDown : MonoBehaviour
+{
+    // Start is called before the first frame update
+    void Start()
+    {
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (Input.GetMouseButton(0))//leftキーを押している間
+        {
+            
+        }
+    }
+}

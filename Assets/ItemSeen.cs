@@ -12,24 +12,31 @@ public class ItemSeen : MonoBehaviour
 
     private float seentime = 0.0f; //経過時間記録用
 
-    public GameObject Key1;
-    public GameObject Key2;
     [SerializeField] public GameObject SeenArea;
     public GameObject ItemCanvas;
     public GameObject Wall;
 
     void Start()
     {
+        GameObject parentObject = GameObject.Find("key 1");
+
+        // 子オブジェクトの数を取得
+        int childCount = parentObject.transform.childCount;
+        for (int i = 0; i < childCount; i++)
+        {
+            Transform childTransform = parentObject.transform.GetChild(i);
+            GameObject childObject = childTransform.gameObject;
+            childObject.GetComponent<Renderer>().enabled = false;
+        }
         //最初は見えない状態
         SeenArea.GetComponent<Collider>().enabled = false;
-        Key1.GetComponent<Renderer>().enabled = false;
-        Key2.GetComponent<Renderer>().enabled = false;
         ItemCanvas.GetComponent<Canvas>().enabled = false;
         Wall.GetComponent<Renderer>().enabled = false;
     }
 
     private void Update()
     {
+        GameObject parentObject = GameObject.Find("key 1");
         //左クリックで範囲内を可視化
         if (Input.GetMouseButtonDown(0))
         {
@@ -43,11 +50,17 @@ public class ItemSeen : MonoBehaviour
             seentime += Time.deltaTime;
             if (seentime >= 10.0f)
             {
-                if (Key1 != null)
+                if (parentObject != null)
                 {
+                    // 子オブジェクトの数を取得
+                    int childCount = parentObject.transform.childCount;
+                    for (int i = 0; i < childCount; i++)
+                    {
+                        Transform childTransform = parentObject.transform.GetChild(i);
+                        GameObject childObject = childTransform.gameObject;
+                        childObject.GetComponent<Renderer>().enabled = false;
+                    }
                     SeenArea.GetComponent<Collider>().enabled = false;//見えない（無効）
-                    Key1.GetComponent<Renderer>().enabled = false;
-                    Key2.GetComponent<Renderer>().enabled = false;
                     ItemCanvas.GetComponent<Canvas>().enabled = false;
                 }
                 Wall.GetComponent<Renderer>().enabled = false;
@@ -60,11 +73,18 @@ public class ItemSeen : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
+        GameObject parentObject = GameObject.Find("key 1");
         //接触したオブジェクトのタグが"Item"のとき
-        if (other.CompareTag("Item") && Key1 != null)
+        if (other.CompareTag("Item") && parentObject != null)
         {
-            Key1.GetComponent<Renderer>().enabled = true;
-            Key2.GetComponent<Renderer>().enabled = true;
+            // 子オブジェクトの数を取得
+            int childCount = parentObject.transform.childCount;
+            for (int i = 0; i < childCount; i++)
+            {
+                Transform childTransform = parentObject.transform.GetChild(i);
+                GameObject childObject = childTransform.gameObject;
+                childObject.GetComponent<Renderer>().enabled = true;
+            }
             ItemCanvas.GetComponent<Canvas>().enabled = true;
         }
         else if (other.CompareTag("Wall"))//接触したオブジェクトのタグが"Wall"のとき
