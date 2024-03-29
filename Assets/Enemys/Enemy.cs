@@ -12,7 +12,7 @@ public class Enemy : MonoBehaviour
     float Detection = 5f; //プレイヤーを検知する範囲
     float ChaseSpeed = 1f;//追いかけるスピード
 
-
+    public Animator animator;
 
     // [SerializeField] GameObject Sphere;
 
@@ -21,11 +21,14 @@ public class Enemy : MonoBehaviour
     {
         // 初期位置をランダムに設定する
         targetPosition = GetRandomPosition();
+        animator = GetComponent<Animator>();   //アニメーターコントローラーからアニメーションを取得する
     }
 
     // Update is called once per frame
     void Update()
     {
+        // 「歩く」のアニメーションを再生する
+        animator.SetBool("Walk", true);
 
         float detectionPlayer = Vector3.Distance(transform.position, Player.position);//プレイヤーと敵の位置の計算
 
@@ -50,7 +53,8 @@ public class Enemy : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            Destroy(gameObject);
+            //Destroy(gameObject);
+            Enemyincrease.isHidden = false;
         }
     }
 
