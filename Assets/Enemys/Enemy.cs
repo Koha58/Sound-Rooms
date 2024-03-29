@@ -28,7 +28,7 @@ public class Enemy : MonoBehaviour
     void Update()
     {
         // 「歩く」のアニメーションを再生する
-        animator.SetBool("Walk", true);
+        animator.SetBool("EnemyWalk", true);
 
         float detectionPlayer = Vector3.Distance(transform.position, Player.position);//プレイヤーと敵の位置の計算
 
