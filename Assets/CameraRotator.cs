@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//視点移動
 public class CameraRotator : MonoBehaviour
 {
     public GameObject target; // 追従するオブジェクト

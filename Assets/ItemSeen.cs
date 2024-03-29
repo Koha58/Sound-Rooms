@@ -38,7 +38,7 @@ public class ItemSeen : MonoBehaviour
     {
         GameObject parentObject = GameObject.Find("key 1");
         //左クリックで範囲内を可視化
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonUp(0))
         {
             SeenArea.GetComponent<Collider>().enabled = true;//見える（有効）
             onoff = 1;  //見えているから1

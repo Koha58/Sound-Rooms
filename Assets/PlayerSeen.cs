@@ -24,7 +24,7 @@ public class PlayerSeen : MonoBehaviour
     public void Update()
     {
         //左クリックで見えるようになる
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonUp(0))
         {
             mr.enabled = true;  //見える（有効）
             onoff = 1;  //見えているから1
