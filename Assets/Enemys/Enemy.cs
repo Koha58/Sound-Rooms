@@ -9,8 +9,11 @@ public class Enemy : MonoBehaviour
     static public Vector3 targetPosition;
 
     public Transform Player;//プレイヤーを参照
-    float Detection = 5f; //プレイヤーを検知する範囲
+    float Detection = 2f; //プレイヤーを検知する範囲
     float ChaseSpeed = 1f;//追いかけるスピード
+
+    float Enemystoptime = 0;
+    float Enemystoponoff;
 
     public Animator animator;
 
@@ -46,7 +49,18 @@ public class Enemy : MonoBehaviour
         // targetPositionに到着したら新しいランダムな位置を設定する
         if (transform.position == targetPosition)
         {
-            targetPosition = GetRandomPosition();
+            Enemystoponoff = 1;
+            if (Enemystoponoff == 1)
+            {
+                animator.SetBool("EnemyWalk", false);
+                Enemystoptime += Time.deltaTime;
+                if (Enemystoptime > 2.0f)
+                {
+                    targetPosition = GetRandomPosition();
+                    Enemystoponoff = 0;
+                }
+            }
+            
         }
     }
     private void OnTriggerEnter(Collider other)
@@ -61,9 +75,9 @@ public class Enemy : MonoBehaviour
     public static Vector3 GetRandomPosition()
     {
         // ランダムなx, y, z座標を生成する
-        float randomX = Random.Range(-10f, 10f);
+        float randomX = Random.Range(-46f, 46f);
         float randomY = 0f;// Random.Range(-10f, 10f);
-        float randomZ = Random.Range(-10f, 10f);
+        float randomZ = Random.Range(-46f, 46f);
 
         // 生成した座標を返す
         return new Vector3(randomX, randomY, randomZ);

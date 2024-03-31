@@ -49,13 +49,13 @@ public class WallScript : MonoBehaviour
             if (EnemySeen.ONoff == 0)
             {
                 bc.enabled = false;
-                Debug.Log("?");
+               // Debug.Log("?");
             }
             else if (EnemySeen.ONoff == 1)
             {
                 bc.enabled = true;
                 Enemy.targetPosition = Enemy.GetRandomPosition();
-                Debug.Log("!");
+               // Debug.Log("!");
             }
         }
     }
