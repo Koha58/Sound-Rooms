@@ -17,14 +17,14 @@ public class EnemySwitch : MonoBehaviour
     {
         if (EnemySeen.ONoff == 0)//見えないとき
         {
-            Sphere.SetActive(false);//音波非表示→表示
+            Sphere.SetActive(true);//音波非表示→表示
         }
 
         //指定した時間が経過したら音波を見えなくする
         if (EnemySeen.ONoff == 1)
         {
 
-            Sphere.SetActive(true);//音波表示→非表示
+            Sphere.SetActive(false);//音波表示→非表示
 
         }
     }

@@ -9,14 +9,15 @@ public class EnemySeen : MonoBehaviour
     static public int ONoff = 0;//(0が見えない；１が見える状態）
     private float Seetime;  //経過時間
     private float SoundTime;
-
-    // [SerializeField] GameObject Sphere;
+    public GameObject eyes;
+     [SerializeField] GameObject Sphere;
 
     // Start is called before the first frame update
     void Start()
     {
         MR = GetComponent<SkinnedMeshRenderer>();
         MR.enabled = false;
+        eyes.GetComponent<SkinnedMeshRenderer>().enabled = false;
     }
 
     // Update is called once per frame
@@ -28,20 +29,22 @@ public class EnemySeen : MonoBehaviour
             if (SoundTime > 10.0f)
             {
                 MR.enabled = true;
+                eyes.GetComponent<SkinnedMeshRenderer>().enabled = true;
                 ONoff = 1;
                 SoundTime = 0.0f;
-                //  Sphere.SetActive(true);//音波非表示→表示
+                Sphere.SetActive(true);//音波非表示→表示
             }
         }
-        else if (ONoff == 1)//見えているとき
+         if (ONoff == 1)//見えているとき
         {
             Seetime += Time.deltaTime;
             if (Seetime >= 10.0f)
             {
                 MR.enabled = false;
+                eyes.GetComponent<SkinnedMeshRenderer>().enabled = false;
                 ONoff = 0;
                 Seetime = 0.0f;
-                // Sphere.SetActive(false);//音波表示→非表示
+                Sphere.SetActive(false);//音波表示→非表示
             }
         }
     }
