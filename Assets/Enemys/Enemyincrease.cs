@@ -19,9 +19,9 @@ public class Enemyincrease : MonoBehaviour
         if (!isHidden)
         {
             isHidden = true;
-            GameObject go = Instantiate(ebiPrefab) as GameObject;
-            Debug.Log(go);
-            int px = Random.Range(0, 20);
+            GameObject go = Instantiate(ebiPrefab) as GameObject;//コピーを生成
+            //Debug.Log(go);
+            int px = Random.Range(0, 20);//0以上２０以下のランダムの値を生成
             go.transform.position = new Vector3(px, 5, 0);
         }
     }

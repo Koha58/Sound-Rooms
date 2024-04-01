@@ -9,7 +9,7 @@ public class PlayerSeen : MonoBehaviour
     SkinnedMeshRenderer mr;
     GameObject Player;  //オブジェクト名は適宜変更
 
-    public int onoff = 0;  //判定用（プレイヤーが見えていない時：0/プレイヤーが見えている時：1）
+    static  public int onoff = 0;  //判定用（プレイヤーが見えていない時：0/プレイヤーが見えている時：1）
 
     private float seentime = 0.0f; //経過時間記録用
 

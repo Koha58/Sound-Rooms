@@ -9,7 +9,7 @@ public class Enemy : MonoBehaviour
     static public Vector3 targetPosition;
 
     public Transform Player;//プレイヤーを参照
-    float Detection = 2f; //プレイヤーを検知する範囲
+    float Detection = 5f; //プレイヤーを検知する範囲
     float ChaseSpeed = 1f;//追いかけるスピード
 
     float Enemystoptime = 0;
@@ -35,16 +35,18 @@ public class Enemy : MonoBehaviour
 
         float detectionPlayer = Vector3.Distance(transform.position, Player.position);//プレイヤーと敵の位置の計算
 
-        if (detectionPlayer <= Detection)//プレイヤーが検知範囲に入ったら
+        if (PlayerSeen.onoff==1)//プレイヤーが見えている時
         {
-            transform.LookAt(Player.transform); //プレイヤーの方向にむく
-            transform.position += transform.forward * ChaseSpeed;//プレイヤーの方向に向かう
-
+            if (detectionPlayer <= Detection)//プレイヤーが検知範囲に入ったら
+            {
+                transform.LookAt(Player.transform); //プレイヤーの方向にむく
+                transform.position += transform.forward * ChaseSpeed;//プレイヤーの方向に向かう
+            }
         }
-
 
         // targetPositionに向かって移動する
         transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
+        transform.LookAt(targetPosition);
 
         // targetPositionに到着したら新しいランダムな位置を設定する
         if (transform.position == targetPosition)
