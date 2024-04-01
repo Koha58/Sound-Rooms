@@ -91,5 +91,10 @@ public class ItemSeen : MonoBehaviour
         {
             Wall.GetComponent<Renderer>().enabled = true;
         }
+        /*
+        else if(other.CompareTag("Enemy")&& EnemySeen.ONoff == 0)
+        {
+        
+        }*/
     }
 }

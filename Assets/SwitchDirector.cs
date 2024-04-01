@@ -14,7 +14,7 @@ public class SwitchDirector : MonoBehaviour
     void Update()
     {
         //左クリックで見えるようになる
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonUp(0))
         {
             Sphere.SetActive(true);//音波非表示→表示
             onoff = 1;  //見えているから1

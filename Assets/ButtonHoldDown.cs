@@ -12,6 +12,7 @@ public class ButtonHoldDown : MonoBehaviour
     private const int holdCheck = 60;
     //キーを押しているフレーム数を記録
     private float holdTime = 0;
+    private float recoveryTime = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -39,6 +40,15 @@ public class ButtonHoldDown : MonoBehaviour
             holdTime = 0;
             GaugeArray[Gauge - 1].GetComponent<Image>().enabled = false;
             Gauge--;
+        }
+
+        recoveryTime += Time.deltaTime;
+        
+        if(Gauge < 13 && recoveryTime > 60)//60秒ごとに「１」回復
+        {
+            recoveryTime = 0;
+            GaugeArray[Gauge].GetComponent<Image>().enabled = true;
+            Gauge++;
         }
     }
 }
