@@ -23,7 +23,7 @@ public class WallScript : MonoBehaviour
     void Update()
     {
         //プレイヤーが見えている時
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonUp(0))
         {
             bc.enabled = true;  //通り抜け不可
             onoff = 1;  //見えているから1

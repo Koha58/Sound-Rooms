@@ -9,7 +9,7 @@ public class Enemy : MonoBehaviour
     static public Vector3 targetPosition;
 
     public Transform Player;//プレイヤーを参照
-    float Detection = 5f; //プレイヤーを検知する範囲
+    float Detection = 10f; //プレイヤーを検知する範囲
     float ChaseSpeed = 1f;//追いかけるスピード
 
     float Enemystoptime = 0;
@@ -18,6 +18,8 @@ public class Enemy : MonoBehaviour
     public Animator animator;
 
     // [SerializeField] GameObject Sphere;
+
+    PlayerSeen PS;
 
     // Start is called before the first frame update
     void Start()
@@ -30,19 +32,31 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        GameObject obj = GameObject.Find("Player"); //Playerオブジェクトを探す
+        PS = obj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
         // 「歩く」のアニメーションを再生する
         animator.SetBool("EnemyWalk", true);
 
         float detectionPlayer = Vector3.Distance(transform.position, Player.position);//プレイヤーと敵の位置の計算
-
+        /*
         if (PlayerSeen.onoff==1)//プレイヤーが見えている時
-        {
-            if (detectionPlayer <= Detection)//プレイヤーが検知範囲に入ったら
+        {*/
+            if (detectionPlayer <= Detection && EnemySeen.ONoff == 1)//Enemyが可視化状態かつプレイヤーが検知範囲に入ったら
             {
+               if (PS.onoff == 0)
+               {
+                 for (int i = 0; i < 5; i++)//子オブジェクトの数を取得
+                 {
+                    Transform childTransform = PS.parentObject.transform.GetChild(i);
+                    PS.childObject = childTransform.gameObject;
+                    PS.childObject.GetComponent<Renderer>().enabled = true;//見える
+                 }
+                PS.onoff = 1;  //見えているから1
+               }
                 transform.LookAt(Player.transform); //プレイヤーの方向にむく
                 transform.position += transform.forward * ChaseSpeed;//プレイヤーの方向に向かう
             }
-        }
+       // }
 
         // targetPositionに向かって移動する
         transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);

@@ -6,27 +6,41 @@ using UnityEngine;
 
 public class PlayerSeen : MonoBehaviour
 {
-    SkinnedMeshRenderer mr;
     GameObject Player;  //オブジェクト名は適宜変更
 
-    static  public int onoff = 0;  //判定用（プレイヤーが見えていない時：0/プレイヤーが見えている時：1）
+    public int onoff = 0;  //判定用（プレイヤーが見えていない時：0/プレイヤーが見えている時：1）
 
     private float seentime = 0.0f; //経過時間記録用
+
+    public GameObject parentObject;
+    public GameObject childObject;
 
 
     void Start()
     {
         //最初は見えない状態
-        mr = GetComponent<SkinnedMeshRenderer>();
-        mr.enabled = false; //見えない（無効）
+        parentObject = GameObject.Find("Player");
+
+        for (int i = 0; i < 5; i++)//子オブジェクトの数を取得
+        {
+            Transform childTransform = parentObject.transform.GetChild(i);
+            childObject = childTransform.gameObject;
+            childObject.GetComponent<Renderer>().enabled = false;//見えない（無効）
+        }
     }
 
     public void Update()
     {
+        GameObject parentObject = GameObject.Find("Player");
         //左クリックで見えるようになる
         if (Input.GetMouseButtonUp(0))
         {
-            mr.enabled = true;  //見える（有効）
+            for (int i = 0; i < 5; i++)
+            {
+                Transform childTransform = parentObject.transform.GetChild(i);
+                GameObject childObject = childTransform.gameObject;
+                childObject.GetComponent<Renderer>().enabled = true;//見える（有効）
+            }
             onoff = 1;  //見えているから1
         }
 
@@ -36,7 +50,12 @@ public class PlayerSeen : MonoBehaviour
             seentime += Time.deltaTime;
             if (seentime >= 10.0f)
             {
-                mr.enabled = false; //見えない（無効）
+                for (int i = 0; i < 5; i++)
+                {
+                    Transform childTransform = parentObject.transform.GetChild(i);
+                    GameObject childObject = childTransform.gameObject;
+                    childObject.GetComponent<Renderer>().enabled = false;//見えない（無効）
+                }
                 onoff = 0;  //見えていないから0
                 seentime = 0.0f;    //経過時間をリセット
             }

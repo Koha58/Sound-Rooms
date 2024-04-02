@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.XR;
 using static Unity.VisualScripting.Metadata;
@@ -91,10 +92,10 @@ public class ItemSeen : MonoBehaviour
         {
             Wall.GetComponent<Renderer>().enabled = true;
         }
-        /*
-        else if(other.CompareTag("Enemy")&& EnemySeen.ONoff == 0)
+
+        else if(other.CompareTag("Enemy"))
         {
-        
-        }*/
+            Destroy(other.gameObject);
+        }
     }
 }
