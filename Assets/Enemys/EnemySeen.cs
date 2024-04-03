@@ -36,7 +36,7 @@ public class EnemySeen : MonoBehaviour
             }
         }
          if (ONoff == 1)//å©Ç¶ÇƒÇ¢ÇÈÇ∆Ç´
-        {
+         {
             Seetime += Time.deltaTime;
             if (Seetime >= 10.0f)
             {
@@ -46,6 +46,6 @@ public class EnemySeen : MonoBehaviour
                 Seetime = 0.0f;
                 Sphere.SetActive(false);//âπîgï\é¶Å®îÒï\é¶
             }
-        }
-    }
+         }
+    } 
 }

@@ -10,7 +10,7 @@ public class Enemy : MonoBehaviour
 
     public Transform Player;//プレイヤーを参照
     float Detection = 10f; //プレイヤーを検知する範囲
-    float ChaseSpeed = 1f;//追いかけるスピード
+    float ChaseSpeed = 0.01f;//追いかけるスピード
 
     float Enemystoptime = 0;
     float Enemystoponoff;
@@ -51,16 +51,23 @@ public class Enemy : MonoBehaviour
                     PS.childObject = childTransform.gameObject;
                     PS.childObject.GetComponent<Renderer>().enabled = true;//見える
                  }
-                PS.onoff = 1;  //見えているから1
+                 PS.onoff = 1;  //見えているから1
                }
                 transform.LookAt(Player.transform); //プレイヤーの方向にむく
                 transform.position += transform.forward * ChaseSpeed;//プレイヤーの方向に向かう
             }
-       // }
+            else if (detectionPlayer >= Detection|| PS.onoff == 0)//Playerが検知範囲に入っていないまたはPlayerが見えていない
+            {
+                // targetPositionに向かって移動する
+                 transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
+                 transform.LookAt(targetPosition);
+            }
+             
+        // }
 
         // targetPositionに向かって移動する
-        transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
-        transform.LookAt(targetPosition);
+        //transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
+        // transform.LookAt(targetPosition);
 
         // targetPositionに到着したら新しいランダムな位置を設定する
         if (transform.position == targetPosition)
@@ -76,7 +83,6 @@ public class Enemy : MonoBehaviour
                     Enemystoponoff = 0;
                 }
             }
-            
         }
     }
     private void OnTriggerEnter(Collider other)
