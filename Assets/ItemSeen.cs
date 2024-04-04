@@ -112,6 +112,7 @@ public class ItemSeen : MonoBehaviour
                 ES.SoundTime = 0.0f;
                 ES.Sphere.SetActive(true);//âπîgîÒï\é¶Å®ï\é¶
             }
+            Enemyincrease.isHidden = false;
             Destroy(other.gameObject);
         }
     }

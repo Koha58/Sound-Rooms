@@ -5,7 +5,7 @@ using UnityEngine.Events;
 
 public class Enemy : MonoBehaviour
 {
-    float speed = 3f;
+    float speed = 1f;
     static public Vector3 targetPosition;
 
     public Transform Player;//プレイヤーを参照

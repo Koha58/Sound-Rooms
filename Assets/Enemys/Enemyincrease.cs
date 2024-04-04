@@ -22,7 +22,8 @@ public class Enemyincrease : MonoBehaviour
             GameObject go = Instantiate(ebiPrefab);//コピーを生成
             //Debug.Log(go);
             int px = Random.Range(0, 20);//0以上２０以下のランダムの値を生成
-            go.transform.position = new Vector3(px, 5, 0);
+            int pz = Random.Range(0, 20);//0以上２０以下のランダムの値を生成
+            go.transform.position = new Vector3(px, 0, pz);
         }
     }
 }
