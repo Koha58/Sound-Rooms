@@ -1,15 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Enemy : MonoBehaviour
 {
-    // public GameObject characterPrefab; // 生成するキャラクターのプレハブ
     float speed = 3f;
     static public Vector3 targetPosition;
 
     public Transform Player;//プレイヤーを参照
-    float Detection = 10f; //プレイヤーを検知する範囲
+    float Detection = 1f; //プレイヤーを検知する範囲
     float ChaseSpeed = 0.01f;//追いかけるスピード
 
     float Enemystoptime = 0;
@@ -17,9 +17,8 @@ public class Enemy : MonoBehaviour
 
     public Animator animator;
 
-    // [SerializeField] GameObject Sphere;
-
     PlayerSeen PS;
+    EnemySeen ES;
 
     // Start is called before the first frame update
     void Start()
@@ -34,14 +33,14 @@ public class Enemy : MonoBehaviour
     {
         GameObject obj = GameObject.Find("Player"); //Playerオブジェクトを探す
         PS = obj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
+        GameObject eobj = GameObject.Find("Enemy"); //Playerオブジェクトを探す
+        ES = eobj.GetComponent<EnemySeen>(); //付いているスクリプトを取得
         // 「歩く」のアニメーションを再生する
         animator.SetBool("EnemyWalk", true);
 
         float detectionPlayer = Vector3.Distance(transform.position, Player.position);//プレイヤーと敵の位置の計算
-        /*
-        if (PlayerSeen.onoff==1)//プレイヤーが見えている時
-        {*/
-            if (detectionPlayer <= Detection && EnemySeen.ONoff == 1)//Enemyが可視化状態かつプレイヤーが検知範囲に入ったら
+
+            if (detectionPlayer <= Detection && ES.ONoff == 1)//Enemyが可視化状態かつプレイヤーが検知範囲に入ったら
             {
                if (PS.onoff == 0)
                {
@@ -62,8 +61,6 @@ public class Enemy : MonoBehaviour
                  transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
                  transform.LookAt(targetPosition);
             }
-             
-        // }
 
         // targetPositionに向かって移動する
         //transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
@@ -85,13 +82,13 @@ public class Enemy : MonoBehaviour
             }
         }
     }
-    private void OnTriggerEnter(Collider other)
+    private void OnDestroy()//OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Player"))
-        {
+        //if (other.gameObject.CompareTag("Player"))
+        //{
             //Destroy(gameObject);
             Enemyincrease.isHidden = false;
-        }
+        //}
     }
 
     public static Vector3 GetRandomPosition()

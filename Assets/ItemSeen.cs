@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -12,10 +13,10 @@ public class ItemSeen : MonoBehaviour
     int onoff = 0;  //判定用（見えていない時：0/見えている時：1）
 
     private float seentime = 0.0f; //経過時間記録用
-
     [SerializeField] public GameObject SeenArea;
     public GameObject ItemCanvas;
     public GameObject Wall;
+    //EnemySeen ES;
 
     void Start()
     {
@@ -95,6 +96,22 @@ public class ItemSeen : MonoBehaviour
 
         else if(other.CompareTag("Enemy"))
         {
+            EnemySeen ES;
+            GameObject eobj = GameObject.Find("Enemy");
+            ES = eobj.GetComponent<EnemySeen>(); //付いているスクリプトを取得
+            
+            if (ES.ONoff == 0)
+            {
+                var childTransforms = ES._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("EnemyParts"));
+                foreach (var item in childTransforms)
+                {
+                    //タグが"EnemyParts"である子オブジェクトを見えるようにする
+                    item.gameObject.GetComponent<Renderer>().enabled = true;
+                }
+                ES.ONoff = 1;
+                ES.SoundTime = 0.0f;
+                ES.Sphere.SetActive(true);//音波非表示→表示
+            }
             Destroy(other.gameObject);
         }
     }

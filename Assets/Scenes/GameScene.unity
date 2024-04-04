@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028331, g: 0.2257133, b: 0.3069217, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3010,7 +3010,7 @@ Transform:
   m_GameObject: {fileID: 1231797719}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.3687575, y: 0.53, z: -1.67}
+  m_LocalPosition: {x: -3.3687575, y: -1.38, z: -2.652}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -4690,7 +4690,7 @@ PrefabInstance:
     - target: {fileID: -3164662375717310761, guid: 8266a280937f7414395bc0bee7c51c5e,
         type: 3}
       propertyPath: m_TagString
-      value: Enemy
+      value: EnemyParts
       objectReference: {fileID: 0}
     - target: {fileID: -2219442636501177447, guid: 8266a280937f7414395bc0bee7c51c5e,
         type: 3}
@@ -4840,7 +4840,7 @@ PrefabInstance:
     - target: {fileID: 3654934372253022927, guid: 8266a280937f7414395bc0bee7c51c5e,
         type: 3}
       propertyPath: m_TagString
-      value: Enemy
+      value: EnemyParts
       objectReference: {fileID: 0}
     - target: {fileID: 7602401481662242191, guid: 8266a280937f7414395bc0bee7c51c5e,
         type: 3}
@@ -4905,6 +4905,10 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 8266a280937f7414395bc0bee7c51c5e,
         type: 3}
       insertIndex: -1
+      addedObject: {fileID: 1815450211}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 8266a280937f7414395bc0bee7c51c5e,
+        type: 3}
+      insertIndex: -1
       addedObject: {fileID: 1815450204}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 8266a280937f7414395bc0bee7c51c5e,
         type: 3}
@@ -4914,10 +4918,6 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 1815450210}
-    - targetCorrespondingSourceObject: {fileID: 3654934372253022927, guid: 8266a280937f7414395bc0bee7c51c5e,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1815450209}
     - targetCorrespondingSourceObject: {fileID: 3654934372253022927, guid: 8266a280937f7414395bc0bee7c51c5e,
         type: 3}
       insertIndex: -1
@@ -5070,20 +5070,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.009875536, y: 0.0030664506, z: 0.020072479}
   m_Center: {x: 0.000005374961, y: -0.00006443623, z: -0.0029526288}
---- !u!114 &1815450209
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1815450202}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 865ac37a270685b4da529c828e4a3bce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  eyes: {fileID: 1711358055}
-  Sphere: {fileID: 193930971}
 --- !u!65 &1815450210
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5105,6 +5091,22 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 2.0040197, z: 0.3031037}
   m_Center: {x: 0, y: 0.99608517, z: 0.09060347}
+--- !u!114 &1815450211
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1815450200}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 865ac37a270685b4da529c828e4a3bce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ONoff: 0
+  SoundTime: 0
+  Sphere: {fileID: 1231797719}
+  _parentTransform: {fileID: 1815450201}
 --- !u!54 &1815450212
 Rigidbody:
   m_ObjectHideFlags: 0

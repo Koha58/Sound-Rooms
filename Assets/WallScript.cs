@@ -13,6 +13,8 @@ public class WallScript : MonoBehaviour
 
     private float seentime = 0.0f; //経過時間記録用
 
+    EnemySeen ES;
+
     void Start()
     {
         //プレイヤーが見えていない時
@@ -46,12 +48,15 @@ public class WallScript : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Enemy"))
         {
-            if (EnemySeen.ONoff == 0)
+            EnemySeen ES;
+            GameObject eobj = GameObject.Find("Enemy");
+            ES = eobj.GetComponent<EnemySeen>(); //付いているスクリプトを取得
+            if (ES.ONoff == 0)
             {
                 bc.enabled = false;
                // Debug.Log("?");
             }
-            else if (EnemySeen.ONoff == 1)
+            else if (ES.ONoff == 1)
             {
                 bc.enabled = true;
                 Enemy.targetPosition = Enemy.GetRandomPosition();

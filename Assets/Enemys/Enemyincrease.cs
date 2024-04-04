@@ -16,10 +16,10 @@ public class Enemyincrease : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!isHidden)
+        if (isHidden == false)
         {
             isHidden = true;
-            GameObject go = Instantiate(ebiPrefab) as GameObject;//コピーを生成
+            GameObject go = Instantiate(ebiPrefab);//コピーを生成
             //Debug.Log(go);
             int px = Random.Range(0, 20);//0以上２０以下のランダムの値を生成
             go.transform.position = new Vector3(px, 5, 0);
