@@ -40,10 +40,11 @@ public class EnemyAttack : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Enemy"))
+        if (other.CompareTag("EnemyBack"))
         {
+            GameObject eobj = GameObject.Find("Enemy");
             Enemyincrease.isHidden = false;
-            Destroy(other.gameObject);
+            Destroy(eobj);
         }
     }
 }
