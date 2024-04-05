@@ -82,14 +82,6 @@ public class Enemy : MonoBehaviour
             }
         }
     }
-    private void OnDestroy()//OnTriggerEnter(Collider other)
-    {
-        //if (other.gameObject.CompareTag("Player"))
-        //{
-            //Destroy(gameObject);
-            Enemyincrease.isHidden = false;
-        //}
-    }
 
     public static Vector3 GetRandomPosition()
     {

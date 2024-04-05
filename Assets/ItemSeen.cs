@@ -10,13 +10,12 @@ using static Unity.VisualScripting.Metadata;
 //範囲内のアイテムの可視化・不可視化
 public class ItemSeen : MonoBehaviour
 {
-    int onoff = 0;  //判定用（見えていない時：0/見えている時：1）
+    public int onoff = 0;  //判定用（見えていない時：0/見えている時：1）
 
     private float seentime = 0.0f; //経過時間記録用
     [SerializeField] public GameObject SeenArea;
     public GameObject ItemCanvas;
     public GameObject Wall;
-    //EnemySeen ES;
 
     void Start()
     {
@@ -87,7 +86,6 @@ public class ItemSeen : MonoBehaviour
                 GameObject childObject = childTransform.gameObject;
                 childObject.GetComponent<Renderer>().enabled = true;
             }
-            ItemCanvas.GetComponent<Canvas>().enabled = true;
         }
         else if (other.CompareTag("Wall"))//接触したオブジェクトのタグが"Wall"のとき
         {
@@ -112,8 +110,7 @@ public class ItemSeen : MonoBehaviour
                 ES.SoundTime = 0.0f;
                 ES.Sphere.SetActive(true);//音波非表示→表示
             }
-            Enemyincrease.isHidden = false;
-            Destroy(other.gameObject);
+
         }
     }
 }

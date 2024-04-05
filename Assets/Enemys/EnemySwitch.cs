@@ -5,7 +5,6 @@ using UnityEngine;
 public class EnemySwitch : MonoBehaviour
 {
     [SerializeField] GameObject Sphere;
-    EnemySeen ES;
     //private float seentime = 0.0f; //Œo‰ßŽžŠÔ‹L˜^—p
     // Start is called before the first frame update
     void Start()

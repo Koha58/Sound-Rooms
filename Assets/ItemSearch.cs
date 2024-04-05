@@ -12,7 +12,9 @@ public class ItemSearch : MonoBehaviour
     public List<string> myItemList = new List<string>();
     public TextMeshProUGUI keyCountText;
     public int count;
-    
+    public GameObject ItemCanvas;
+    ItemSeen IS;
+
     private void Start()
     {
         count = 0;
@@ -20,7 +22,12 @@ public class ItemSearch : MonoBehaviour
     }
     private void Update()
     {
-        CaluculateClosetObject();
+        GameObject iobj = GameObject.Find("SeenArea");
+        IS = iobj.GetComponent<ItemSeen>(); //付いているスクリプトを取得
+        if (IS.onoff == 1)
+        {
+            CaluculateClosetObject();
+        }
     }
 
     void CaluculateClosetObject()
@@ -48,13 +55,15 @@ public class ItemSearch : MonoBehaviour
                     closetObject = null;
                 }
                 ItemSearchArea.Remove(ItemSearchArea[i]);
+                ItemCanvas.GetComponent<Canvas>().enabled = false;
             }
         }
         //PlayerSeen playerseen = GetComponent<PlayerSeen>();
         //最も近いアイテムが一定の距離内にある場合、アイテムの説明UIを表示。Eキーを押すと拾える。
         if (closetObject == null) return;
-        if (closetDistance < 1.5f /*&& playerseen.seentime <= 10.0f*/)
+        if (closetDistance < 1.5f)
         {
+            ItemCanvas.GetComponent<Canvas>().enabled = true;
             PickUp();
         }
     }
