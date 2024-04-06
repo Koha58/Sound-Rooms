@@ -1,9 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 
-public class Enemy : MonoBehaviour
+public class Enemy1 : MonoBehaviour
 {
     float speed = 1f;
     static public Vector3 targetPosition;
@@ -26,18 +25,17 @@ public class Enemy : MonoBehaviour
         // 初期位置をランダムに設定する
         targetPosition = GetRandomPosition();
         animator = GetComponent<Animator>();   //アニメーターコントローラーからアニメーションを取得する
-       
     }
 
     // Update is called once per frame
     void Update()
     {
         /*
-        GameObject obj = GameObject.Find("Player"); //Playerオブジェクトを探す
-        PS = obj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
-        GameObject eobj = GameObject.Find("Enemy"); //Playerオブジェクトを探す
-        ES = eobj.GetComponent<EnemySeen>(); //付いているスクリプトを取得
-        */
+       GameObject obj = GameObject.Find("Player"); //Playerオブジェクトを探す
+       PS = obj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
+       GameObject eobj = GameObject.Find("Enemy"); //Playerオブジェクトを探す
+       ES = eobj.GetComponent<EnemySeen>(); //付いているスクリプトを取得
+       */
 
         GameObject obj = GameObject.Find("Player"); //Playerオブジェクトを探す
         PS = obj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
@@ -49,27 +47,27 @@ public class Enemy : MonoBehaviour
 
         float detectionPlayer = Vector3.Distance(transform.position, Player.position);//プレイヤーと敵の位置の計算
 
-            if (detectionPlayer <= Detection && ES.ONoff == 1)//Enemyが可視化状態かつプレイヤーが検知範囲に入ったら
+        if (detectionPlayer <= Detection && ES.ONoff == 1)//Enemyが可視化状態かつプレイヤーが検知範囲に入ったら
+        {
+            if (PS.onoff == 0)
             {
-               if (PS.onoff == 0)
-               {
-                 for (int i = 0; i < 5; i++)//子オブジェクトの数を取得
-                 {
+                for (int i = 0; i < 5; i++)//子オブジェクトの数を取得
+                {
                     Transform childTransform = PS.parentObject.transform.GetChild(i);
                     PS.childObject = childTransform.gameObject;
                     PS.childObject.GetComponent<Renderer>().enabled = true;//見える
-                 }
-                 PS.onoff = 1;  //見えているから1
-               }
-                transform.LookAt(Player.transform); //プレイヤーの方向にむく
-                transform.position += transform.forward * ChaseSpeed;//プレイヤーの方向に向かう
+                }
+                PS.onoff = 1;  //見えているから1
             }
-            else if (detectionPlayer >= Detection|| PS.onoff == 0)//Playerが検知範囲に入っていないまたはPlayerが見えていない
-            {
-                // targetPositionに向かって移動する
-                 transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
-                 transform.LookAt(targetPosition);
-            }
+            transform.LookAt(Player.transform); //プレイヤーの方向にむく
+            transform.position += transform.forward * ChaseSpeed;//プレイヤーの方向に向かう
+        }
+        else if (detectionPlayer >= Detection || PS.onoff == 0)//Playerが検知範囲に入っていないまたはPlayerが見えていない
+        {
+            // targetPositionに向かって移動する
+            transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
+            transform.LookAt(targetPosition);
+        }
 
         // targetPositionに向かって移動する
         //transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
@@ -91,7 +89,6 @@ public class Enemy : MonoBehaviour
             }
         }
     }
-
     public static Vector3 GetRandomPosition()
     {
         // ランダムなx, y, z座標を生成する

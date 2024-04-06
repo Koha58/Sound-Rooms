@@ -95,9 +95,13 @@ public class ItemSeen : MonoBehaviour
         else if(other.CompareTag("Enemy"))
         {
             EnemySeen ES;
+            /*
             GameObject eobj = GameObject.Find("Enemy");
             ES = eobj.GetComponent<EnemySeen>(); //付いているスクリプトを取得
-            
+            */
+            GameObject eobj = GameObject.FindWithTag("Enemy");
+            ES = eobj.GetComponent<EnemySeen>(); //付いているスクリプトを取得
+
             if (ES.ONoff == 0)
             {
                 var childTransforms = ES._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("EnemyParts"));

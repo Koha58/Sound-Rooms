@@ -42,7 +42,8 @@ public class EnemyAttack : MonoBehaviour
     {
         if (other.CompareTag("EnemyBack"))
         {
-            GameObject eobj = GameObject.Find("Enemy");
+           // GameObject eobj = GameObject.Find("Enemy");
+            GameObject eobj = GameObject.FindWithTag("Enemy");
             Enemyincrease.isHidden = false;
             Destroy(eobj);
         }

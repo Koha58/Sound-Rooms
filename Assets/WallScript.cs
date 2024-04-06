@@ -49,8 +49,13 @@ public class WallScript : MonoBehaviour
         if (other.gameObject.CompareTag("Enemy"))
         {
             EnemySeen ES;
+            /*
             GameObject eobj = GameObject.Find("Enemy");
             ES = eobj.GetComponent<EnemySeen>(); //付いているスクリプトを取得
+            */
+            GameObject eobj = GameObject.FindWithTag("Enemy");
+            ES = eobj.GetComponent<EnemySeen>(); //付いているスクリプトを取得
+
             if (ES.ONoff == 0)
             {
                 bc.enabled = false;
