@@ -24,7 +24,8 @@ public class Enemy : MonoBehaviour
     void Start()
     {
         // 初期位置をランダムに設定する
-        targetPosition = GetRandomPosition();
+        //targetPosition = GetRandomPosition();
+        targetPosition = new Vector3 (6,0,-6);
         animator = GetComponent<Animator>();   //アニメーターコントローラーからアニメーションを取得する
        
     }
