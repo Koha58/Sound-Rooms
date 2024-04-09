@@ -19,12 +19,15 @@ public class Enemy1 : MonoBehaviour
     PlayerSeen PS;
     EnemySeen ES;
 
+    static public GameObject Enemy01;
+
     // Start is called before the first frame update
     void Start()
     {
         // 初期位置をランダムに設定する
         targetPosition = GetRandomPosition();
         animator = GetComponent<Animator>();   //アニメーターコントローラーからアニメーションを取得する
+       // Enemy01.SetActive(true);
     }
 
     // Update is called once per frame
@@ -39,8 +42,8 @@ public class Enemy1 : MonoBehaviour
 
         GameObject obj = GameObject.Find("Player"); //Playerオブジェクトを探す
         PS = obj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
-        GameObject eobj = GameObject.FindWithTag("Enemy"); //Playerオブジェクトを探す
-        ES = eobj.GetComponent<EnemySeen>(); //付いているスクリプトを取得
+        GameObject eobj1 = GameObject.FindWithTag("Enemy1"); //Playerオブジェクトを探す
+        ES = eobj1.GetComponent<EnemySeen>(); //付いているスクリプトを取得
 
         // 「歩く」のアニメーションを再生する
         animator.SetBool("EnemyWalk", true);

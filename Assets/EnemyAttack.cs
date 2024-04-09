@@ -7,6 +7,8 @@ public class EnemyAttack : MonoBehaviour
 {
     int onoff = 0;  //判定用（見えていない時：0/見えている時：1）
 
+    private float EnemydeathTime=0.0f;
+
     private float seentime = 0.0f; //経過時間記録用
     [SerializeField] public GameObject EnemyAttackArea;
     // Start is called before the first frame update
@@ -14,6 +16,7 @@ public class EnemyAttack : MonoBehaviour
     {
         //最初は見えない状態
         EnemyAttackArea.GetComponent<Collider>().enabled = false;
+        
     }
 
     // Update is called once per frame
@@ -42,11 +45,31 @@ public class EnemyAttack : MonoBehaviour
     {
         if (other.CompareTag("EnemyBack"))
         {
-            
            // GameObject eobj = GameObject.Find("Enemy");
             GameObject eobj = GameObject.FindWithTag("Enemy");
             Enemyincrease.isHidden = false;
             Destroy(eobj);
+        }
+
+        if (other.CompareTag("EnemyBack1"))
+        {
+            
+            // GameObject eobj = GameObject.Find("Enemy1");
+            GameObject eobj1 = GameObject.FindWithTag("Enemy1");
+            Enemyincrease1.isHidden1 = false;
+            // Enemy1.Enemy01.SetActive(false);
+            //Destroy(eobj1);
+            Debug.Log("1");
+            EnemydeathTime += Time.deltaTime;
+            if(EnemydeathTime>=1.0f)
+            {
+                Debug.Log("2");
+                //GameObject eobj1 = GameObject.FindWithTag("Enemy1");
+                //Enemyincrease1.isHidden1 = false;
+                Destroy(eobj1);
+                EnemydeathTime = 0.0f;
+            }
+           
         }
     }
 }

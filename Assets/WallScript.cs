@@ -68,5 +68,28 @@ public class WallScript : MonoBehaviour
                // Debug.Log("!");
             }
         }
+
+        if (other.gameObject.CompareTag("Enemy1"))
+        {
+            EnemySeen ES;
+            /*
+            GameObject eobj = GameObject.Find("Enemy");
+            ES = eobj.GetComponent<EnemySeen>(); //付いているスクリプトを取得
+            */
+            GameObject eobj1 = GameObject.FindWithTag("Enemy1");
+            ES = eobj1.GetComponent<EnemySeen>(); //付いているスクリプトを取得
+
+            if (ES.ONoff == 0)
+            {
+                bc.enabled = false;
+                // Debug.Log("?");
+            }
+            else if (ES.ONoff == 1)
+            {
+                bc.enabled = true;
+                Enemy.targetPosition = Enemy.GetRandomPosition();
+                // Debug.Log("!");
+            }
+        }
     }
 }
