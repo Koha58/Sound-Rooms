@@ -7,16 +7,28 @@ using UnityEngine;
 public class SwitchDirector : MonoBehaviour
 {
     [SerializeField] GameObject Sphere;
+    [SerializeField] GameObject MovingSphere;
     int onoff = 0;  //判定用（音波が見えていない時：0/音波が見えている時：1）
     private float seentime = 0.0f; //経過時間記録用
+    PlayerRun PR;
+    GameObject mobj;
 
     // Update is called once per frame
     void Update()
     {
+        mobj = GameObject.Find("Player");
+        PR = mobj.GetComponent<PlayerRun>(); //付いているスクリプトを取得
         //左クリックで見えるようになる
         if (Input.GetMouseButtonUp(0))
         {
-            Sphere.SetActive(true);//音波非表示→表示
+            if (PR.moving == 0)
+            {
+                Sphere.SetActive(true);//音波非表示→表示
+            }
+            if (PR.moving == 1)
+            {
+                MovingSphere.SetActive(true);//音波非表示→表示
+            }
             onoff = 1;  //見えているから1
         }
 
@@ -29,7 +41,18 @@ public class SwitchDirector : MonoBehaviour
                 onoff = 0;  //見えていないから0
                 seentime = 0.0f;    //経過時間をリセット
                 Sphere.SetActive(false);//音波表示→非表示
+                MovingSphere.SetActive(false);//音波表示→非表示
             }
+
+            /*
+            if (PR.moving == 0 && Sphere.SetActive = true)
+            {
+                Sphere.SetActive(true);//音波非表示→表示
+            }
+            if (PR.moving == 1)
+            {
+                MovingSphere.SetActive(true);//音波非表示→表示
+            }*/
         }
     }
 }

@@ -1,49 +1,39 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 //視点移動
 public class CameraRotator : MonoBehaviour
 {
-    public GameObject target; // 追従するオブジェクト
-    public Vector3 offset; // targetとの位置関係
+    private GameObject mainCamera;              //メインカメラ格納用
+    private GameObject playerObject;            //回転の中心となるプレイヤー格納用
+    public float rotateSpeed = 2.0f;            //回転の速さ
 
-    [SerializeField] private float distance = 4.0f; // targetとの距離
-    [SerializeField] private float polarAngle = 45.0f; // y座標のアングル
-    [SerializeField] private float azimuthalAngle = 45.0f; // x座標のアングル
-    [SerializeField] private float minPolarAngle = 5.0f;
-    [SerializeField] private float maxPolarAngle = 75.0f;
-    [SerializeField] private float mouseXSensitivity = 5.0f;
-    [SerializeField] private float mouseYSensitivity = 5.0f;
-
-    void LateUpdate()
+    //呼び出し時に実行される関数
+    void Start()
     {
-        if (Input.GetMouseButton(1))//rightキーを押している間
-        {
-            updateAngle(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
-        }
-
-        var lookAtPos = target.transform.position + offset;
-        updatePosition(lookAtPos);
-        transform.LookAt(lookAtPos);
+        //メインカメラとユニティちゃんをそれぞれ取得
+        mainCamera = Camera.main.gameObject;
+        playerObject = GameObject.Find("Player");
     }
 
-    void updateAngle(float x, float y)
-    {
-        x = azimuthalAngle - x * mouseXSensitivity;
-        azimuthalAngle = Mathf.Repeat(x, 360);
 
-        y = polarAngle + y * mouseYSensitivity;
-        polarAngle = Mathf.Clamp(y, minPolarAngle, maxPolarAngle);
+    //単位時間ごとに実行される関数
+    void Update()
+    {
+        //rotateCameraの呼び出し
+        rotateCamera();
     }
 
-    void updatePosition(Vector3 lookAtPos)
+    //カメラを回転させる関数
+    private void rotateCamera()
     {
-        var da = azimuthalAngle * Mathf.Deg2Rad;
-        var dp = polarAngle * Mathf.Deg2Rad;
-        transform.position = new Vector3(
-            lookAtPos.x + distance * Mathf.Sin(dp) * Mathf.Cos(da),
-            lookAtPos.y + distance * Mathf.Cos(dp),
-            lookAtPos.z + distance * Mathf.Sin(dp) * Mathf.Sin(da));
+        //Vector3でX,Y方向の回転の度合いを定義
+        Vector3 angle = new Vector3(Input.GetAxis("Mouse X") * rotateSpeed, Input.GetAxis("Mouse Y") * rotateSpeed, 0);
+
+        //transform.RotateAround()をしようしてメインカメラを回転させる
+        mainCamera.transform.RotateAround(playerObject.transform.position, Vector3.up, angle.x);
+        mainCamera.transform.RotateAround(playerObject.transform.position, transform.right, angle.y);
     }
 }

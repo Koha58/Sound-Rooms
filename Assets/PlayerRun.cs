@@ -10,14 +10,14 @@ public class PlayerRun : MonoBehaviour
     public float Forward = 0.03f;
     private Rigidbody rb;
     private Animator animator;
-
+    public int moving = 0;
 
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();   //アニメーターコントローラーからアニメーションを取得する
-
+        moving = 0;
     }
 
     // Update is called once per frame
@@ -27,25 +27,30 @@ public class PlayerRun : MonoBehaviour
         {
             transform.position += transform.forward * Forward;
             animator.SetBool("Run", true);
+            moving = 1;
         }
         else if (Input.GetKey(KeyCode.A))
         {
             animator.SetBool("Run", true);
             transform.Rotate(0, -1, 0);
+            moving = 1;
         }
         else if (Input.GetKey(KeyCode.S))
         {
             transform.position -= transform.forward * Forward;
             animator.SetBool("Run", true);
+            moving = 1;
         }
         else if (Input.GetKey(KeyCode.D))
         {
             animator.SetBool("Run", true);
             transform.Rotate(0, 1, 0);
+            moving = 1;
         }
         else
         {
             animator.SetBool("Run", false);
+            moving = 0;
         }
 
     }
