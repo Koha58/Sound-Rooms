@@ -43,16 +43,17 @@ public class SwitchDirector : MonoBehaviour
                 Sphere.SetActive(false);//音波表示→非表示
                 MovingSphere.SetActive(false);//音波表示→非表示
             }
-
-            /*
-            if (PR.moving == 0 && Sphere.SetActive = true)
+         
+            if (PR.moving == 0 && MovingSphere.activeSelf == true)
             {
+                MovingSphere.SetActive(false);//音波表示→非表示
                 Sphere.SetActive(true);//音波非表示→表示
             }
-            if (PR.moving == 1)
+            if (PR.moving == 1 && Sphere.activeSelf == true)
             {
                 MovingSphere.SetActive(true);//音波非表示→表示
-            }*/
+                Sphere.SetActive(false);//音波表示→非表示
+            }
         }
     }
 }
