@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028331, g: 0.2257133, b: 0.3069217, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3434,7 +3434,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &859893608
 Transform:
   m_ObjectHideFlags: 0
@@ -3639,7 +3639,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 8266a280937f7414395bc0bee7c51c5e,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -10.46
+      value: -7.73
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8266a280937f7414395bc0bee7c51c5e,
         type: 3}
@@ -3649,7 +3649,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 8266a280937f7414395bc0bee7c51c5e,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 17.74
+      value: -6.83
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8266a280937f7414395bc0bee7c51c5e,
         type: 3}
@@ -3839,7 +3839,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 8266a280937f7414395bc0bee7c51c5e,
         type: 3}
       propertyPath: m_TagString
-      value: Enemy
+      value: Enemy1
       objectReference: {fileID: 0}
     - target: {fileID: 1025375116541365439, guid: 8266a280937f7414395bc0bee7c51c5e,
         type: 3}
@@ -4299,7 +4299,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1015191181}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 50b4aa89b734d5047a3aa6c52e2d12f2, type: 3}
+  m_Script: {fileID: 11500000, guid: ee808fd0a39eaa949874289e51f717e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   ebiPrefab: {fileID: 1015191181}
@@ -4886,9 +4886,11 @@ GameObject:
   - component: {fileID: 1234480394}
   - component: {fileID: 1234480393}
   - component: {fileID: 1234480392}
+  - component: {fileID: 1234480398}
+  - component: {fileID: 1234480397}
   - component: {fileID: 1234480391}
   m_Layer: 0
-  m_Name: SoundBox
+  m_Name: SoundBox&spawnBox
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5043,7 +5045,7 @@ MeshRenderer:
   m_RenderingLayerMask: 257
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c4dcfd1cfc61d014f9e9bd1208b169b3, type: 2}
+  - {fileID: 2100000, guid: 1e30d569142d8b3408771c9f3a41a2fd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5082,12 +5084,38 @@ Transform:
   m_GameObject: {fileID: 1234480390}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1, y: 0, z: 1}
+  m_LocalPosition: {x: -0.06, y: 6, z: -0.01}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1234480397
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1234480390}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee808fd0a39eaa949874289e51f717e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ebiPrefab: {fileID: 1015191181}
+--- !u!114 &1234480398
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1234480390}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50b4aa89b734d5047a3aa6c52e2d12f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ebiPrefab: {fileID: 1815450200}
 --- !u!1 &1247375595
 GameObject:
   m_ObjectHideFlags: 0
@@ -6180,7 +6208,7 @@ GameObject:
   - component: {fileID: 1656337194}
   m_Layer: 0
   m_Name: EnemyBack
-  m_TagString: EnemyBack
+  m_TagString: EnemyBack1
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

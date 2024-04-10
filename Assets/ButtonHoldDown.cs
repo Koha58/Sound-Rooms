@@ -63,8 +63,8 @@ public class ButtonHoldDown : MonoBehaviour
         if (Input.GetMouseButtonUp(0))
         {
             MaxSound.SetActive(false);
-            SoundArray[SoundSize].SetActive(false);
-            SoundArray[SoundSize+1].SetActive(false);
+           SoundArray[SoundSize].SetActive(false);
+           SoundArray[SoundSize+1].SetActive(false);
         }
 
         recoveryTime += Time.deltaTime;

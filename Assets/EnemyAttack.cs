@@ -8,6 +8,9 @@ public class EnemyAttack : MonoBehaviour
     int onoff = 0;  //判定用（見えていない時：0/見えている時：1）
 
     private float EnemydeathTime=0.0f;
+    bool  Enemydeath = true ;
+    EnemySeen ES;
+    float Enemystop= 0.0f;
 
     private float seentime = 0.0f; //経過時間記録用
     [SerializeField] public GameObject EnemyAttackArea;
@@ -16,7 +19,8 @@ public class EnemyAttack : MonoBehaviour
     {
         //最初は見えない状態
         EnemyAttackArea.GetComponent<Collider>().enabled = false;
-        
+        GameObject eobj1 = GameObject.FindWithTag("Enemy1");
+        ES = eobj1.GetComponent<EnemySeen>(); //付いているスクリプトを取得
     }
 
     // Update is called once per frame
@@ -39,6 +43,15 @@ public class EnemyAttack : MonoBehaviour
                 seentime = 0.0f;    //経過時間をリセット
             }
         }
+
+        if (ES.ONoff == 1)
+        {
+            EnemydeathTime += Time.deltaTime;
+            if (EnemydeathTime >= 1.0f)
+            {
+                Enemydeath = false;
+            }
+        }
     }
 
     void OnTriggerEnter(Collider other)
@@ -54,22 +67,29 @@ public class EnemyAttack : MonoBehaviour
         if (other.CompareTag("EnemyBack1"))
         {
             
-            // GameObject eobj = GameObject.Find("Enemy1");
             GameObject eobj1 = GameObject.FindWithTag("Enemy1");
-            Enemyincrease1.isHidden1 = false;
-            // Enemy1.Enemy01.SetActive(false);
-            //Destroy(eobj1);
-            Debug.Log("1");
-            EnemydeathTime += Time.deltaTime;
-            if(EnemydeathTime>=1.0f)
+            ES = eobj1.GetComponent<EnemySeen>(); //付いているスクリプトを取得
+            if (ES.ONoff ==1)
             {
-                Debug.Log("2");
+                // GameObject eobj = GameObject.Find("Enemy1");
                 //GameObject eobj1 = GameObject.FindWithTag("Enemy1");
-                //Enemyincrease1.isHidden1 = false;
-                Destroy(eobj1);
-                EnemydeathTime = 0.0f;
+                Enemyincrease1.isHidden1 = false;
+                // Enemy1.Enemy01.SetActive(false);
+                //Destroy(eobj1);
+                //Debug.Log("1");
+
+                if (Enemydeath == false)
+                {
+                    //Debug.Log("2");
+                        //Debug.Log("3");
+                        //GameObject eobj1 = GameObject.FindWithTag("Enemy1");
+                        //Enemyincrease1.isHidden1 = false;
+                        Destroy(eobj1);
+                        EnemydeathTime = 0.0f;
+                        Enemydeath = true;
+                    
+                }
             }
-           
         }
     }
 }
