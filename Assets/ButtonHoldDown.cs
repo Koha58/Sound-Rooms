@@ -20,6 +20,7 @@ public class ButtonHoldDown : MonoBehaviour
     GameObject bobj;
     private int count;
     public int isOn =0;
+    public int boundHeight =0;
 
     // Start is called before the first frame update
     void Start()
@@ -44,6 +45,7 @@ public class ButtonHoldDown : MonoBehaviour
                 holdTime = 0;
                 GaugeArray[Gauge - 1].GetComponent<Image>().enabled = false;
                 Gauge--;
+                boundHeight = 0;
             }
 
             if (Input.GetMouseButton(0) && Gauge > 0)//leftキーを押している間の時間計測
@@ -54,11 +56,9 @@ public class ButtonHoldDown : MonoBehaviour
             if (Input.GetMouseButton(0) && Gauge > 0 && holdTime > 1)//leftキーを押している間
             {
                 holdTime = 0;
-                if (isOn != 3)
-                {
-                    GaugeArray[Gauge - 1].GetComponent<Image>().enabled = false;
-                    Gauge--;
-                }
+
+                GaugeArray[Gauge - 1].GetComponent<Image>().enabled = false;
+                Gauge--;
 
                 MaxSound.SetActive(true);
 
@@ -66,10 +66,18 @@ public class ButtonHoldDown : MonoBehaviour
                 {
                     if (isOn == 0)
                     {
+                        if(boundHeight == 3)
+                        {
+                            GaugeArray[Gauge].GetComponent<Image>().enabled = true;
+                            GaugeArray[Gauge + 1].GetComponent<Image>().enabled = true;
+                            GaugeArray[Gauge + 2].GetComponent<Image>().enabled = true;
+                            Gauge += 3;
+                        }
                         SoundArray[SoundSize - 1].SetActive(true);
                         SoundArray[SoundSize - 2].SetActive(false);
                         SoundArray[SoundSize - 3].SetActive(false);
                         isOn = 1;
+                        boundHeight = 1;
                     }
                     else if (isOn == 1)
                     {
@@ -77,24 +85,15 @@ public class ButtonHoldDown : MonoBehaviour
                         SoundArray[SoundSize - 2].SetActive(true);
                         SoundArray[SoundSize - 3].SetActive(false);
                         isOn = 2;
+                        boundHeight = 2;
                     }
                     else if (isOn == 2)
                     {
                         SoundArray[SoundSize - 1].SetActive(false);
                         SoundArray[SoundSize - 2].SetActive(false);
                         SoundArray[SoundSize - 3].SetActive(true);
-                        isOn = 3;
-                    }
-                    else if (isOn == 3)
-                    {
-                        SoundArray[SoundSize - 1].SetActive(false);
-                        SoundArray[SoundSize - 2].SetActive(false);
-                        SoundArray[SoundSize - 3].SetActive(true);
-                        GaugeArray[Gauge].GetComponent<Image>().enabled = true;
-                        GaugeArray[Gauge + 1].GetComponent<Image>().enabled = true;
-                        GaugeArray[Gauge + 2].GetComponent<Image>().enabled = true;
-                        Gauge += 3;
                         isOn = 0;
+                        boundHeight = 3;
                     }
                 }
             }
@@ -105,6 +104,7 @@ public class ButtonHoldDown : MonoBehaviour
             SoundArray[SoundSize - 1].SetActive(false);
             SoundArray[SoundSize - 2].SetActive(false);
             SoundArray[SoundSize - 3].SetActive(false);
+            isOn = 0;
         }
 
         recoveryTime += Time.deltaTime;
