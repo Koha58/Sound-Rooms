@@ -52,8 +52,13 @@ public class EnemyAttack : MonoBehaviour
         {
            // GameObject eobj = GameObject.Find("Enemy");
             GameObject eobj = GameObject.FindWithTag("Enemy");
-            Enemyincrease.isHidden = false;
-            Destroy(eobj);
+            ES = eobj.GetComponent<EnemySeen>(); //付いているスクリプトを取得
+            if (ES.ONoff == 1)
+            {
+                Enemyincrease.isHidden = false;
+            }
+               
+            //Destroy(eobj);
         }
 
         if (other.CompareTag("EnemyBack1"))

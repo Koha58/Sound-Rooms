@@ -5,9 +5,9 @@ using UnityEngine;
 public class Enemyincrease1 : MonoBehaviour
 {
     public GameObject ebiPrefab;
-    public GameObject DestroyPrefab;
+    public GameObject DestroyPrefab1;
     static public bool isHidden1 = true;
-    static public bool Clone = false ;
+    static public bool Clone1 = false ;
     // Start is called before the first frame update
     void Start()
     {
@@ -25,13 +25,13 @@ public class Enemyincrease1 : MonoBehaviour
             int px = Random.Range(0, 20);//0ˆÈã‚Q‚OˆÈ‰º‚Ìƒ‰ƒ“ƒ_ƒ€‚Ì’l‚ğ¶¬
             int pz = Random.Range(0, 20);//0ˆÈã‚Q‚OˆÈ‰º‚Ìƒ‰ƒ“ƒ_ƒ€‚Ì’l‚ğ¶¬
             go.transform.position = new Vector3(px, 0, pz);
-            Clone = true;
+            Clone1 = true;
         }
 
-        if (Clone == true)
+        if (Clone1 == true)
         {
-            Destroy(DestroyPrefab);
-            Clone = false;
+            Destroy(DestroyPrefab1);
+            Clone1 = false;
         }
     }
 }
