@@ -2,27 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyCube : MonoBehaviour
+public class EnemyCube1 : MonoBehaviour
 {
-    static public  bool Enemybefor=false ;
-    float befortime = 0;
+    static public bool Enemybefor1 = false;
+    float befortime1 = 0;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(Enemybefor == true)
+        if (Enemybefor1 == true)
         {
-            befortime += Time.deltaTime;
-            if( befortime >1.0f)
+            befortime1 += Time.deltaTime;
+            if (befortime1 > 1.0f)
             {
-                befortime = 0;
-                Enemybefor = false;
+                befortime1 = 0;
+                Enemybefor1 = false;
             }
         }
     }
@@ -30,7 +30,7 @@ public class EnemyCube : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Wall"))
         {
-            Enemybefor = true ;
+            Enemybefor1 = true;
         }
     }
 }
