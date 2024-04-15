@@ -50,27 +50,27 @@ public class Enemy : MonoBehaviour
 
         float detectionPlayer = Vector3.Distance(transform.position, Player.position);//プレイヤーと敵の位置の計算
 
-            if (detectionPlayer <= Detection && ES.ONoff == 1)//Enemyが可視化状態かつプレイヤーが検知範囲に入ったら
+        if (detectionPlayer <= Detection && ES.ONoff == 1)//Enemyが可視化状態かつプレイヤーが検知範囲に入ったら
+        {
+            if (PS.onoff == 0)
             {
-               if (PS.onoff == 0)
-               {
-                 for (int i = 0; i < 5; i++)//子オブジェクトの数を取得
-                 {
+                for (int i = 0; i < 5; i++)//子オブジェクトの数を取得
+                {
                     Transform childTransform = PS.parentObject.transform.GetChild(i);
                     PS.childObject = childTransform.gameObject;
                     PS.childObject.GetComponent<Renderer>().enabled = true;//見える
-                 }
-                 PS.onoff = 1;  //見えているから1
-               }
-                transform.LookAt(Player.transform); //プレイヤーの方向にむく
-                transform.position += transform.forward * ChaseSpeed;//プレイヤーの方向に向かう
+                }
+                PS.onoff = 1;  //見えているから1
             }
-            else if (detectionPlayer >= Detection|| PS.onoff == 0)//Playerが検知範囲に入っていないまたはPlayerが見えていない
-            {
+            transform.LookAt(Player.transform); //プレイヤーの方向にむく
+            transform.position += transform.forward * ChaseSpeed;//プレイヤーの方向に向かう
+        }
+        else if (detectionPlayer >= Detection || PS.onoff == 0 ||EnemyCube. Enemybefor == true)//Playerが検知範囲に入っていないまたはPlayerが見えていない
+        {
                 // targetPositionに向かって移動する
                  transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
                  transform.LookAt(targetPosition);
-            }
+        }
 
         // targetPositionに向かって移動する
         //transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);

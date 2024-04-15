@@ -62,10 +62,14 @@ public class Enemy1 : MonoBehaviour
                 }
                 PS.onoff = 1;  //見えているから1
             }
-            transform.LookAt(Player.transform); //プレイヤーの方向にむく
-            transform.position += transform.forward * ChaseSpeed;//プレイヤーの方向に向かう
+
+            if (EnemyChase.EnemyChase0 == true)
+            {
+                transform.LookAt(Player.transform); //プレイヤーの方向にむく
+                transform.position += transform.forward * ChaseSpeed;//プレイヤーの方向に向かう
+            }
         }
-        else if (detectionPlayer >= Detection || PS.onoff == 0)//Playerが検知範囲に入っていないまたはPlayerが見えていない
+        else  if (detectionPlayer >= Detection || PS.onoff == 0 || EnemyCube.Enemybefor == true)//Playerが検知範囲に入っていないまたはPlayerが見えていない
         {
             // targetPositionに向かって移動する
             transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
