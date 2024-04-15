@@ -32,6 +32,7 @@ public class Enemyincrease1 : MonoBehaviour
         {
             Destroy(DestroyPrefab1);
             Clone1 = false;
+            Enemyincrease.enemyDeathcnt++;
         }
     }
 }

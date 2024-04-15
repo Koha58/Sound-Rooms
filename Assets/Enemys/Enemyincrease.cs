@@ -8,6 +8,7 @@ public class Enemyincrease : MonoBehaviour
     public GameObject DestroyPrefab;
     static public bool isHidden = true;
     static public bool Clone = false;
+    public static int enemyDeathcnt = 0;
     // Start is called before the first frame update
     void Start()
     {
@@ -31,6 +32,7 @@ public class Enemyincrease : MonoBehaviour
         {
             Destroy(DestroyPrefab);
             Clone = false;
+            enemyDeathcnt++;
         }
     }
 }

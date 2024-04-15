@@ -10,7 +10,7 @@ public class EnemyAttack : MonoBehaviour
     //private float EnemydeathTime=0.0f;
    
     EnemySeen ES;
-   
+    ButtonHoldDown BD;
 
     private float seentime = 0.0f; //経過時間記録用
     [SerializeField] public GameObject EnemyAttackArea;
@@ -48,7 +48,9 @@ public class EnemyAttack : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("EnemyBack"))
+        GameObject hobj = GameObject.Find("GaugeManager");
+        BD = hobj.GetComponent<ButtonHoldDown>(); //付いているスクリプトを取得
+        if (other.CompareTag("EnemyBack") && BD.boundHeight >= 2)
         {
            // GameObject eobj = GameObject.Find("Enemy");
             GameObject eobj = GameObject.FindWithTag("Enemy");
@@ -61,7 +63,7 @@ public class EnemyAttack : MonoBehaviour
             //Destroy(eobj);
         }
 
-        if (other.CompareTag("EnemyBack1"))
+        if (other.CompareTag("EnemyBack1") && BD.boundHeight >= 2)
         {
             
             GameObject eobj1 = GameObject.FindWithTag("Enemy1");
