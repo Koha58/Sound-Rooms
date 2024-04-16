@@ -7,7 +7,6 @@ using UnityEngine;
 public class WallScript : MonoBehaviour
 {
     BoxCollider bc;
-    GameObject Wall;
 
     int onoff = 0;  //判定用（プレイヤーが見えていない時：0/プレイヤーが見えている時：1）
 

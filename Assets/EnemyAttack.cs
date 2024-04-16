@@ -14,6 +14,9 @@ public class EnemyAttack : MonoBehaviour
 
     private float seentime = 0.0f; //経過時間記録用
     [SerializeField] public GameObject EnemyAttackArea;
+
+    Rigidbody rb;
+    BoxSeen BS;
     // Start is called before the first frame update
     void Start()
     {
@@ -89,6 +92,16 @@ public class EnemyAttack : MonoBehaviour
                 }
                 */
             }
-        }
+        }/*
+        if (BS.Box.activeSelf == true)
+        {
+            GameObject box = GameObject.FindWithTag("Box");
+            BS = box.GetComponent<BoxSeen>(); //付いているスクリプトを取得
+            rb = BS.Box.GetComponent<Rigidbody>();
+            if (other.CompareTag("Box") && BD.boundHeight >= 2)
+            {
+                rb.AddForce(transform.forward * 160.0f, ForceMode.Acceleration);
+            }
+        }*/
     }
 }
