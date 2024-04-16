@@ -8,7 +8,7 @@ public class Enemy1 : MonoBehaviour
     static public Vector3 targetPosition;
 
     public Transform Player;//プレイヤーを参照
-    float Detection = 3f; //プレイヤーを検知する範囲
+   // float Detection = 2f; //プレイヤーを検知する範囲
     float ChaseSpeed = 0.01f;//追いかけるスピード
 
     float Enemystoptime = 0;
@@ -50,7 +50,7 @@ public class Enemy1 : MonoBehaviour
 
         float detectionPlayer = Vector3.Distance(transform.position, Player.position);//プレイヤーと敵の位置の計算
 
-        if (detectionPlayer <= Detection && ES.ONoff == 1 && (EnemyCube.Enemybefor ==false || EnemyCube1.Enemybefor1 == false))//Enemyが可視化状態かつプレイヤーが検知範囲に入ったら
+        if (detectionPlayer <= EnemyChase1.Detection && ES.ONoff == 1 && (EnemyCube.Enemybefor ==false || EnemyCube1.Enemybefor1 == false))//Enemyが可視化状態かつプレイヤーが検知範囲に入ったら
         {
             if (PS.onoff == 0)
             {
@@ -63,13 +63,13 @@ public class Enemy1 : MonoBehaviour
                 PS.onoff = 1;  //見えているから1
             }
 
-            if (EnemyChase.EnemyChase0 == true)
+            if (EnemyChase1.EnemyChase01 == true)
             {
                 transform.LookAt(Player.transform); //プレイヤーの方向にむく
                 transform.position += transform.forward * ChaseSpeed;//プレイヤーの方向に向かう
             }
         }
-        else  if (detectionPlayer >= Detection || PS.onoff == 0 || EnemyCube.Enemybefor == true)//Playerが検知範囲に入っていないまたはPlayerが見えていない
+        else  if (detectionPlayer >= EnemyChase1.Detection || PS.onoff == 0 || EnemyCube.Enemybefor == true)//Playerが検知範囲に入っていないまたはPlayerが見えていない
         {
             // targetPositionに向かって移動する
             transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);

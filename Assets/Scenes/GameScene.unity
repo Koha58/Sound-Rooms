@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028331, g: 0.2257133, b: 0.3069217, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1493,6 +1493,51 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 354783587}
   m_CullTransparentMesh: 1
+--- !u!1 &360310297
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 360310298}
+  - component: {fileID: 360310299}
+  m_Layer: 0
+  m_Name: EnemyChase
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &360310298
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 360310297}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 3.4600003, y: 2.328935, z: 6.45}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7170436669826622239}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &360310299
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 360310297}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4862d90f30b470048bbca9ecf8d7c92d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Player: {fileID: 135133355}
 --- !u!1001 &379243101
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2075,8 +2120,8 @@ Transform:
   m_GameObject: {fileID: 510514949}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.31, z: 0.72}
-  m_LocalScale: {x: 0.2, y: 1, z: 0.5}
+  m_LocalPosition: {x: 0, y: 1.09, z: 0.56}
+  m_LocalScale: {x: 0.2, y: 2, z: 0.2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1015191188}
@@ -2868,7 +2913,7 @@ GameObject:
   - component: {fileID: 577045172}
   - component: {fileID: 577045173}
   m_Layer: 0
-  m_Name: EnemyChase
+  m_Name: EnemyChase1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2883,7 +2928,7 @@ Transform:
   m_GameObject: {fileID: 577045171}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5.058758, y: 2.328935, z: 5.38}
+  m_LocalPosition: {x: 3.46, y: 2.328935, z: 6.45}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2898,7 +2943,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 577045171}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4862d90f30b470048bbca9ecf8d7c92d, type: 3}
+  m_Script: {fileID: 11500000, guid: 700d78164dfb1cd419378a888471eb21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Player: {fileID: 135133355}
@@ -4014,7 +4059,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 8266a280937f7414395bc0bee7c51c5e,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 4.18
+      value: 5.65
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8266a280937f7414395bc0bee7c51c5e,
         type: 3}
@@ -9203,7 +9248,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 8266a280937f7414395bc0bee7c51c5e,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 6.11
+      value: 10.62
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8266a280937f7414395bc0bee7c51c5e,
         type: 3}
@@ -9213,7 +9258,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 8266a280937f7414395bc0bee7c51c5e,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -6.07
+      value: -6.47
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8266a280937f7414395bc0bee7c51c5e,
         type: 3}
@@ -9687,6 +9732,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7153424251497379902}
+  - {fileID: 360310298}
   m_Father: {fileID: 1815450201}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &7221547449232215569
