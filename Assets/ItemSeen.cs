@@ -118,7 +118,7 @@ public class ItemSeen : MonoBehaviour
             BoxSeen.GetComponent<Collider>().enabled = false;
         }
 
-        else if(other.CompareTag("Enemy"))
+        else if(other.CompareTag("Enemy") || other.CompareTag("Enemy1"))
         {
             EnemySeen ES;
             /*
