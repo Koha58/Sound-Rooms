@@ -17,8 +17,8 @@ public class ItemSeen : MonoBehaviour
     [SerializeField] public GameObject SeenArea;
     public GameObject ItemCanvas;
     public GameObject Wall;
-    //public GameObject BoxSeen;
-
+    public static GameObject Box;
+    public static GameObject Box1;
     void Start()
     {
         GameObject parentObject = GameObject.Find("key 1");
@@ -35,14 +35,19 @@ public class ItemSeen : MonoBehaviour
         SeenArea.GetComponent<Collider>().enabled = false;
         ItemCanvas.GetComponent<Canvas>().enabled = false;
         Wall.GetComponent<Renderer>().enabled = false;
-        //GameObject Box = GameObject.FindWithTag("Box");
-       // Box.SetActive(false);
-        //BoxSeen.GetComponent<Collider>().enabled = false;
+        GameObject BoxSeen = GameObject.FindWithTag("BoxJudge");
+        BoxSeen.SetActive(true);
+        Box = BoxSeen.transform.Find("Box").gameObject;
+        Box.SetActive(false);
+        Box1 = BoxSeen.transform.Find("Box (1)").gameObject;
+        Box1.SetActive(false);
     }
 
     private void Update()
     {
-        //GameObject Box = GameObject.FindWithTag("Box");
+        GameObject BoxSeen = GameObject.FindWithTag("BoxJudge");
+        Box = BoxSeen.transform.Find("Box").gameObject;
+        Box1 = BoxSeen.transform.Find("Box (1)").gameObject;
         GameObject parentObject = GameObject.Find("key 1");
         //左クリックで範囲内を可視化
         if (Input.GetMouseButtonUp(0))
@@ -71,10 +76,12 @@ public class ItemSeen : MonoBehaviour
                     ItemCanvas.GetComponent<Canvas>().enabled = false;
                 }
                 Wall.GetComponent<Renderer>().enabled = false;
-                //if (Box.activeSelf== true)
-                //{
-                //    Box.SetActive(false);
-               // }
+                if (Box.activeSelf== true)
+                {
+                    Box.SetActive(false);
+                    Box1.SetActive(false);
+                    BoxSeen.GetComponent<Collider>().enabled = true;
+                }
                 onoff = 0;  //見えていないから0
                 seentime = 0.0f;    //経過時間をリセット
             }
@@ -84,7 +91,9 @@ public class ItemSeen : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        //GameObject Box = GameObject.FindWithTag("Box");
+        GameObject BoxSeen = GameObject.FindWithTag("BoxJudge");
+        Box = BoxSeen.transform.Find("Box").gameObject;
+        Box1 = BoxSeen.transform.Find("Box (1)").gameObject;
         GameObject parentObject = GameObject.Find("key 1");
         //接触したオブジェクトのタグが"Item"のとき
         if (other.CompareTag("Item") && parentObject != null)
@@ -101,12 +110,13 @@ public class ItemSeen : MonoBehaviour
         else if (other.CompareTag("Wall"))//接触したオブジェクトのタグが"Wall"のとき
         {
             Wall.GetComponent<Renderer>().enabled = true;
-        }/*
-        else if (other.CompareTag("Box"))//接触したオブジェクトのタグが"Box"のとき
+        }
+        else if (other.CompareTag("BoxJudge"))//接触したオブジェクトのタグが"BoxJudge"のとき
         {
             Box.SetActive(true);
-            BoxSeen.GetComponent<Collider>().enabled = true;
-        }*/
+            Box1.SetActive(true);
+            BoxSeen.GetComponent<Collider>().enabled = false;
+        }
 
         else if(other.CompareTag("Enemy"))
         {

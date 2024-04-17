@@ -16,7 +16,7 @@ public class EnemyAttack : MonoBehaviour
     [SerializeField] public GameObject EnemyAttackArea;
 
     Rigidbody rb;
-    BoxSeen BS;
+    //ItemSeen IS;
     // Start is called before the first frame update
     void Start()
     {
@@ -92,16 +92,17 @@ public class EnemyAttack : MonoBehaviour
                 }
                 */
             }
-        }/*
-        if (BS.Box.activeSelf == true)
+        }
+        //GameObject iobj = GameObject.Find("SeenArea");
+        //IS = iobj.GetComponent<ItemSeen>(); //付いているスクリプトを取得
+        
+        if (ItemSeen.Box.activeSelf == true)
         {
-            GameObject box = GameObject.FindWithTag("Box");
-            BS = box.GetComponent<BoxSeen>(); //付いているスクリプトを取得
-            rb = BS.Box.GetComponent<Rigidbody>();
+            rb = ItemSeen.Box.GetComponent<Rigidbody>();
             if (other.CompareTag("Box") && BD.boundHeight >= 2)
             {
-                rb.AddForce(transform.forward * 160.0f, ForceMode.Acceleration);
+                rb.AddForce(transform.forward * 250.0f, ForceMode.Force);
             }
-        }*/
+        }
     }
 }
