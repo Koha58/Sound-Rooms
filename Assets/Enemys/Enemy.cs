@@ -10,7 +10,7 @@ public class Enemy : MonoBehaviour
 
     public Transform Player;//プレイヤーを参照
     //float Detection = 2f; //プレイヤーを検知する範囲
-    float ChaseSpeed = 0.01f;//追いかけるスピード
+    float ChaseSpeed = 0.025f;//追いかけるスピード
 
     float Enemystoptime = 0;
     float Enemystoponoff;

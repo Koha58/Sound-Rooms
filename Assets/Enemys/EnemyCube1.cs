@@ -6,6 +6,7 @@ public class EnemyCube1 : MonoBehaviour
 {
     static public bool Enemybefor1 = false;
     float befortime1 = 0;
+    public float Enemytouch1 = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -28,9 +29,23 @@ public class EnemyCube1 : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
+        EnemySeen ES;
+        GameObject eobj = GameObject.FindWithTag("Enemy1");
+        ES = eobj.GetComponent<EnemySeen>(); //付いているスクリプトを取得
         if (other.gameObject.CompareTag("Wall"))
         {
-            Enemybefor1 = true;
+        
+            if (ES.ONoff == 1)
+            {
+                Enemybefor1 = true;
+                Enemytouch1++;
+
+                if (Enemytouch1 == 1)
+                {
+                    Enemy1.targetPosition =Enemy1.GetRandomPosition();
+                    Enemytouch1 = 0;
+                }
+            }
         }
     }
 }

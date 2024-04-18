@@ -31,9 +31,28 @@ public class Enemywall : MonoBehaviour
             GameObject eobj = GameObject.FindWithTag("Enemy");
             ES = eobj.GetComponent<EnemySeen>(); //付いているスクリプトを取得
 
-            if (Enemytouch == 10)
+            if (Enemytouch == 3)
             {
-                Enemy.targetPosition = new Vector3(1,0,1);
+                Enemy.targetPosition = new Vector3(5,0,5);
+                Enemytouch = 0;
+            }
+        }
+
+        if (other.gameObject.CompareTag("Enemy1"))
+        {
+            Enemytouch++;
+
+            EnemySeen ES;
+            /*
+            GameObject eobj = GameObject.Find("Enemy");
+            ES = eobj.GetComponent<EnemySeen>(); //付いているスクリプトを取得
+            */
+            GameObject eobj = GameObject.FindWithTag("Enemy1");
+            ES = eobj.GetComponent<EnemySeen>(); //付いているスクリプトを取得
+
+            if (Enemytouch == 3)
+            {
+                Enemy1.targetPosition = new Vector3(5, 0, 5);
                 Enemytouch = 0;
             }
         }
