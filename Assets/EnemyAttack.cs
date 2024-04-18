@@ -16,6 +16,9 @@ public class EnemyAttack : MonoBehaviour
     [SerializeField] public GameObject EnemyAttackArea;
 
     Rigidbody rb;
+
+    private float stayTimeF = 0;
+    private float stayTimeB = 0;
     //ItemSeen IS;
     // Start is called before the first frame update
     void Start()
@@ -53,46 +56,63 @@ public class EnemyAttack : MonoBehaviour
     {
         GameObject hobj = GameObject.Find("GaugeManager");
         BD = hobj.GetComponent<ButtonHoldDown>(); //付いているスクリプトを取得
+
+        if (other.CompareTag("EnemyForward") && BD.boundHeight >= 2)
+        {
+            stayTimeF += Time.deltaTime;
+        }
+
         if (other.CompareTag("EnemyBack") && BD.boundHeight >= 2)
         {
-           // GameObject eobj = GameObject.Find("Enemy");
-            GameObject eobj = GameObject.FindWithTag("Enemy");
-            ES = eobj.GetComponent<EnemySeen>(); //付いているスクリプトを取得
-            if (ES.ONoff == 1)
+            stayTimeB += Time.deltaTime;
+            // GameObject eobj = GameObject.Find("Enemy");
+            if (stayTimeB > stayTimeF)
             {
-                Enemyincrease.isHidden = false;
+                GameObject eobj = GameObject.FindWithTag("Enemy");
+                ES = eobj.GetComponent<EnemySeen>(); //付いているスクリプトを取得
+                if (ES.ONoff == 1)
+                {
+                    Enemyincrease.isHidden = false;
+                }
             }
-               
-            //Destroy(eobj);
+            stayTimeF = 0.0f;
+            stayTimeB = 0.0f;
+                //Destroy(eobj);
         }
 
         if (other.CompareTag("EnemyBack1") && BD.boundHeight >= 2)
         {
-            
-            GameObject eobj1 = GameObject.FindWithTag("Enemy1");
-            ES = eobj1.GetComponent<EnemySeen>(); //付いているスクリプトを取得
-            if (ES.ONoff ==1)
+            stayTimeB += Time.deltaTime;
+            if (stayTimeB > stayTimeF)
             {
-                // GameObject eobj = GameObject.Find("Enemy1");
-                //GameObject eobj1 = GameObject.FindWithTag("Enemy1");
-                Enemyincrease1.isHidden1 = false;
-                // Enemy1.Enemy01.SetActive(false);
-                //Destroy(eobj1);
-                //Debug.Log("1");
-
-                /*
-                if (Enemyincrease1.Clone==true)
+                GameObject eobj1 = GameObject.FindWithTag("Enemy1");
+                ES = eobj1.GetComponent<EnemySeen>(); //付いているスクリプトを取得
+                if (ES.ONoff == 1)
                 {
-                    //Debug.Log("2");
-                    //Debug.Log("3");
-                    //GameObject eobj1 = GameObject.FindWithTag("Enemy1");
-                    //Enemyincrease1.isHidden1 = false;
-                   // Destroy(eobj1);
-                   // Enemyincrease1.Clone = false;
+                  // GameObject eobj = GameObject.Find("Enemy1");
+                   //GameObject eobj1 = GameObject.FindWithTag("Enemy1");
+                    Enemyincrease1.isHidden1 = false;
+                        // Enemy1.Enemy01.SetActive(false);
+                        //Destroy(eobj1);
+                        //Debug.Log("1");
+
+                        /*
+                        if (Enemyincrease1.Clone==true)
+                        {
+                            //Debug.Log("2");
+                            //Debug.Log("3");
+                            //GameObject eobj1 = GameObject.FindWithTag("Enemy1");
+                            //Enemyincrease1.isHidden1 = false;
+                           // Destroy(eobj1);
+                           // Enemyincrease1.Clone = false;
+                        }
+                        */
                 }
-                */
             }
+            stayTimeF = 0.0f;
+            stayTimeB = 0.0f;
         }
+        
         //GameObject iobj = GameObject.Find("SeenArea");
         //IS = iobj.GetComponent<ItemSeen>(); //付いているスクリプトを取得
         
