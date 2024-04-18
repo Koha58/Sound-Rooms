@@ -125,4 +125,12 @@ public class EnemyAttack : MonoBehaviour
             }
         }
     }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("EnemyForward") && BD.boundHeight >= 2)
+        {
+            stayTimeF = 0.0f;
+        }
+    }
 }

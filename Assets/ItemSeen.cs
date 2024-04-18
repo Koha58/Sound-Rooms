@@ -21,7 +21,7 @@ public class ItemSeen : MonoBehaviour
     public static GameObject Box1;
     void Start()
     {
-        GameObject parentObject = GameObject.Find("key 1");
+        GameObject parentObject = GameObject.FindWithTag("Item");
 
         // 子オブジェクトの数を取得
         int childCount = parentObject.transform.childCount;
@@ -48,7 +48,7 @@ public class ItemSeen : MonoBehaviour
         GameObject BoxSeen = GameObject.FindWithTag("BoxJudge");
         Box = BoxSeen.transform.Find("Box").gameObject;
         Box1 = BoxSeen.transform.Find("Box (1)").gameObject;
-        GameObject parentObject = GameObject.Find("key 1");
+        GameObject parentObject = GameObject.FindWithTag("Item");
         //左クリックで範囲内を可視化
         if (Input.GetMouseButtonUp(0))
         {
@@ -72,9 +72,9 @@ public class ItemSeen : MonoBehaviour
                         GameObject childObject = childTransform.gameObject;
                         childObject.GetComponent<Renderer>().enabled = false;
                     }
-                    SeenArea.GetComponent<Collider>().enabled = false;//見えない（無効）
                     ItemCanvas.GetComponent<Canvas>().enabled = false;
                 }
+                SeenArea.GetComponent<Collider>().enabled = false;//見えない（無効）
                 Wall.GetComponent<Renderer>().enabled = false;
                 if (Box.activeSelf== true)
                 {
@@ -94,7 +94,7 @@ public class ItemSeen : MonoBehaviour
         GameObject BoxSeen = GameObject.FindWithTag("BoxJudge");
         Box = BoxSeen.transform.Find("Box").gameObject;
         Box1 = BoxSeen.transform.Find("Box (1)").gameObject;
-        GameObject parentObject = GameObject.Find("key 1");
+        GameObject parentObject = GameObject.FindWithTag("Item");
         //接触したオブジェクトのタグが"Item"のとき
         if (other.CompareTag("Item") && parentObject != null)
         {
