@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -14,6 +15,7 @@ public class ItemSearch : MonoBehaviour
     public int count;
     public GameObject ItemCanvas;
     ItemSeen IS;
+    public List<GameObject> itemArray = new List<GameObject>();
 
     private void Start()
     {
@@ -32,6 +34,8 @@ public class ItemSearch : MonoBehaviour
 
     void CaluculateClosetObject()
     {
+        ItemCanvas = GameObject.FindWithTag("ItemCanvas");
+        itemArray = GameObject.FindGameObjectsWithTag("Item").ToList();
         //一番近いアイテムを取得する
         float closetDistance = 1000000;
         for (int i = 0; i < ItemSearchArea.Count; i++)
@@ -45,7 +49,9 @@ public class ItemSearch : MonoBehaviour
             if (closetDistance > distance)
             {
                 closetDistance = distance;
+                ItemSearchArea[i] = itemArray[i];
                 closetObject = ItemSearchArea[i].gameObject;
+                itemArray[i] = closetObject;
             }
             //一定距離離れたらItemSearchAreaからオブジェクトを取り除く。
             if (distance > 6f)
@@ -75,6 +81,7 @@ public class ItemSearch : MonoBehaviour
             myItemList.Add(closetObject.name);
             //ItemSearchAreaからアイテムを取り除く。
             ItemSearchArea.Remove(closetObject);
+            itemArray.Remove(closetObject);
             Destroy(closetObject, 0.5f);
             closetObject = null;
             count += 1;
