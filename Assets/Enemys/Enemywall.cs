@@ -52,7 +52,7 @@ public class Enemywall : MonoBehaviour
 
             if (Enemytouch == 3)
             {
-                Enemy1.targetPosition = new Vector3(5, 0, 5);
+                Enemy1.targetPosition = new Vector3(2, 0, 2);
                 Enemytouch = 0;
             }
         }
