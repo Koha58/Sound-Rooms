@@ -23,7 +23,7 @@ public class EnemyCube : MonoBehaviour
         if(Enemybefor == true)
         {
             befortime += Time.deltaTime;
-            if( befortime >1.0f)
+            if( befortime >2.0f)
             {
                 befortime = 0;
                 Enemybefor = false;
