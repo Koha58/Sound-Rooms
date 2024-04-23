@@ -463,8 +463,10 @@ MonoBehaviour:
   myItemList: []
   keyCountText: {fileID: 1861118644}
   count: 0
-  ItemCanvas: {fileID: 1552007102}
-  itemArray: []
+  ItemCanvas: {fileID: 0}
+  canvasObject: {fileID: 0}
+  itemText: []
+  text: {fileID: 0}
 --- !u!114 &135133359
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -768,6 +770,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   onoff: 0
+  seentime: 0
   SeenArea: {fileID: 158329096}
   ItemCanvas: {fileID: 1552007102}
   Wall: {fileID: 491960240}

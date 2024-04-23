@@ -13,7 +13,7 @@ public class ItemSeen : MonoBehaviour
 {
     public int onoff = 0;  //判定用（見えていない時：0/見えている時：1）
 
-    private float seentime = 0.0f; //経過時間記録用
+    public float seentime = 0.0f; //経過時間記録用
     [SerializeField] public GameObject SeenArea;
     public GameObject ItemCanvas;
     public GameObject Wall;
