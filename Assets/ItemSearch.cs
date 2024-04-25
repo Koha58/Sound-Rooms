@@ -16,7 +16,6 @@ public class ItemSearch : MonoBehaviour
     public int count;
     public GameObject ItemCanvas;
     ItemSeen IS;
-    //public List<GameObject> itemArray = new List<GameObject>();
     public GameObject canvasObject;
     public List<GameObject> itemText = new List<GameObject>();
     public GameObject text;
@@ -25,6 +24,7 @@ public class ItemSearch : MonoBehaviour
     {
         count = 0;
         SetCountText();
+        itemText = GameObject.FindGameObjectsWithTag("itemText").ToList();
     }
     private void Update()
     {
@@ -40,16 +40,6 @@ public class ItemSearch : MonoBehaviour
     {
         ItemCanvas = GameObject.FindWithTag("ItemCanvas");
         ItemSearchArea = GameObject.FindGameObjectsWithTag("Item").ToList();
-
-        // 子オブジェクトの数を取得
-        int childCount = ItemCanvas.transform.childCount;
-        //Instantiate(childObject, new Vector3(-6.0f, 0, -6.0f), Quaternion.identity);
-        for (int i = 0; i < childCount; i++)
-        {
-            Transform childTransform = ItemCanvas.transform.GetChild(i);
-            GameObject childObject = childTransform.gameObject;
-            //childObject.GetComponent<Renderer>().enabled = false;
-        }
         itemText = GameObject.FindGameObjectsWithTag("itemText").ToList();
         //一番近いアイテムを取得する
         float closetDistance = 1000000;
@@ -65,9 +55,7 @@ public class ItemSearch : MonoBehaviour
             if (closetDistance > distance)
             {
                 closetDistance = distance;
-                //ItemSearchArea[i] = itemArray[i];
                 closetObject = ItemSearchArea[i].gameObject;
-                //itemArray[i] = closetObject;
                 canvasObject = itemText[i].gameObject;
                 text = canvasObject;
             }
@@ -89,17 +77,35 @@ public class ItemSearch : MonoBehaviour
         if (closetDistance < 1.5f)
         {
             ItemCanvas.GetComponent<Canvas>().enabled = true;
-            canvasObject.GetComponent<OverHeadMsg> ().enabled = false;
-            text.GetComponent<OverHeadMsg>().enabled = true;
+
+            itemText[0].gameObject.GetComponent<TextMeshProUGUI>().enabled = false;
+            itemText[1].gameObject.GetComponent<TextMeshProUGUI>().enabled = false;
+            //itemText[3].gameObject.GetComponent<TextMeshProUGUI>().enabled = false;
+            text.gameObject.GetComponent<TextMeshProUGUI>().enabled = true;
             PickUp();
         }
-        if(IS.seentime >= 10.0f)
+        if (IS.seentime >= 10.0f)
         {
-            if (canvasObject.GetComponent<OverHeadMsg>().enabled == false)
+            for (int i = 0; i < ItemSearchArea.Count; i++)
             {
-                canvasObject.GetComponent<OverHeadMsg>().enabled = true;
+                if (itemText[i].gameObject.activeSelf == false)
+                {
+                    itemText[i].gameObject.SetActive(true);
+                }
             }
         }
+        /*
+        for (int i = 0; i < ItemSearchArea.Count; i++)
+        {
+            if (closetDistance < 1.5f)
+            {
+                ItemCanvas.GetComponent<Canvas>().enabled = true;
+
+                itemText[i].gameObject.GetComponent<TextMeshProUGUI>().enabled = false;
+                text.gameObject.GetComponent<TextMeshProUGUI>().enabled = true;
+                PickUp();
+            }
+        }*/
     }
 
     void PickUp()
@@ -109,7 +115,6 @@ public class ItemSearch : MonoBehaviour
             myItemList.Add(closetObject.name);
             //ItemSearchAreaからアイテムを取り除く。
             ItemSearchArea.Remove(closetObject);
-            //itemArray.Remove(closetObject);
             itemText.Remove(canvasObject);
             Destroy(closetObject, 0.5f);
             closetObject = null;
