@@ -112,10 +112,28 @@ public class EnemyAttack : MonoBehaviour
             stayTimeF = 0.0f;
             stayTimeB = 0.0f;
         }
-        
+
+        if (other.CompareTag("EnemyBackG2") && BD.boundHeight >= 2)
+        {
+            stayTimeB += Time.deltaTime;
+            // GameObject eobj = GameObject.Find("Enemy");
+            if (stayTimeB > stayTimeF)
+            {
+                GameObject eobj = GameObject.FindWithTag("EnemyG2");
+                ES = eobj.GetComponent<EnemySeen>(); //付いているスクリプトを取得
+                if (ES.ONoff == 1)
+                {
+                    Enemyincrease.isHidden = false;
+                }
+            }
+            stayTimeF = 0.0f;
+            stayTimeB = 0.0f;
+            //Destroy(eobj);
+        }
+
         //GameObject iobj = GameObject.Find("SeenArea");
         //IS = iobj.GetComponent<ItemSeen>(); //付いているスクリプトを取得
-        
+
         if (ItemSeen.Box.activeSelf == true)
         {
             rb = ItemSeen.Box.GetComponent<Rigidbody>();
