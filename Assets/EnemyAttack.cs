@@ -123,12 +123,12 @@ public class EnemyAttack : MonoBehaviour
                 ES = eobj2.GetComponent<EnemySeen>(); //付いているスクリプトを取得
                 if (ES.ONoff == 1)
                 {
-<<<<<<< HEAD
+
                     EnemyincreaseG2.isHiddenG2 = false;
                     Instantiate(dropItemObj, transform.position, Quaternion.identity);
-=======
-                    Destroy(eobj);
->>>>>>> Enemy2
+
+                    Destroy(eobj2);
+
                 }
             }
             stayTimeF = 0.0f;
