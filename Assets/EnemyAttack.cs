@@ -19,7 +19,7 @@ public class EnemyAttack : MonoBehaviour
 
     private float stayTimeF = 0;
     private float stayTimeB = 0;
-    //ItemSeen IS;
+    public GameObject dropItemObj;//　落とすアイテムゲームオブジェクト
     // Start is called before the first frame update
     void Start()
     {
@@ -119,11 +119,12 @@ public class EnemyAttack : MonoBehaviour
             // GameObject eobj = GameObject.Find("Enemy");
             if (stayTimeB > stayTimeF)
             {
-                GameObject eobj = GameObject.FindWithTag("EnemyG2");
-                ES = eobj.GetComponent<EnemySeen>(); //付いているスクリプトを取得
+                GameObject eobj2 = GameObject.FindWithTag("EnemyG2");
+                ES = eobj2.GetComponent<EnemySeen>(); //付いているスクリプトを取得
                 if (ES.ONoff == 1)
                 {
-                    Enemyincrease.isHidden = false;
+                    EnemyincreaseG2.isHiddenG2 = false;
+                    Instantiate(dropItemObj, transform.position, Quaternion.identity);
                 }
             }
             stayTimeF = 0.0f;

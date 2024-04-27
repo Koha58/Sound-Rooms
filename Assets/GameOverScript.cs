@@ -22,7 +22,7 @@ public class GameOverScript : MonoBehaviour
         PlayerSeen PS;
         GameObject gobj = GameObject.Find("Player");
         PS = gobj.GetComponent<PlayerSeen>();
-        if (other.CompareTag("Enemy") || other.CompareTag("Enemy1"))
+        if (other.CompareTag("Enemy") || other.CompareTag("Enemy1") || other.CompareTag("EnemyG2"))
         {
             if (PS.onoff == 1)
             {
