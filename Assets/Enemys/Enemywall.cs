@@ -56,5 +56,24 @@ public class Enemywall : MonoBehaviour
                 Enemytouch = 0;
             }
         }
+
+        if (other.gameObject.CompareTag("EnemyG2"))
+        {
+            Enemytouch++;
+
+            EnemySeen ES;
+            /*
+            GameObject eobj = GameObject.Find("Enemy");
+            ES = eobj.GetComponent<EnemySeen>(); //付いているスクリプトを取得
+            */
+            GameObject eobj = GameObject.FindWithTag("EnemyG2");
+            ES = eobj.GetComponent<EnemySeen>(); //付いているスクリプトを取得
+
+            if (Enemytouch == 3)
+            {
+                EnemyG2.targetPosition = new Vector3(2, 0, 2);
+                Enemytouch = 0;
+            }
+        }
     }
 }

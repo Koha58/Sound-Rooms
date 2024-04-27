@@ -123,7 +123,7 @@ public class EnemyAttack : MonoBehaviour
                 ES = eobj.GetComponent<EnemySeen>(); //付いているスクリプトを取得
                 if (ES.ONoff == 1)
                 {
-                    Enemyincrease.isHidden = false;
+                    Destroy(eobj);
                 }
             }
             stayTimeF = 0.0f;

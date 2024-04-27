@@ -23,7 +23,7 @@ public class EnemySound1 : MonoBehaviour
 
         if (ES.ONoff == 1)
         {
-            source.PlayOneShot(clip);
+            //source.PlayOneShot(clip);
         }
     }
 }
