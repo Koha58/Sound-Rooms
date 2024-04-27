@@ -22,15 +22,15 @@ public class EnemyChase1 : MonoBehaviour
     void Update()
     {
 
-        GameObject eobj1 = GameObject.FindWithTag("Enemy1"); //Playerオブジェクトを探す
-        ES = eobj1.GetComponent<EnemySeen>(); //付いているスクリプトを取得
+        GameObject eobj = GameObject.FindWithTag("Enemy1"); //Playerオブジェクトを探す
+        ES = eobj.GetComponent<EnemySeen>(); //付いているスクリプトを取得
 
         // 「歩く」のアニメーションを再生する
 
 
         float detectionPlayer = Vector3.Distance(transform.position, Player.position);//プレイヤーと敵の位置の計算
 
-        if (detectionPlayer <= Detection && ES.ONoff == 1 && (EnemyCube.Enemybefor == false || EnemyCube1.Enemybefor1 == false))//Enemyが可視化状態かつプレイヤーが検知範囲に入ったら
+        if (detectionPlayer <= Detection && ES.ONoff == 1 &&( EnemyCube1.Enemybefor1 == false))//Enemyが可視化状態かつプレイヤーが検知範囲に入ったら
         {
             EnemyChase01 = true;
         }

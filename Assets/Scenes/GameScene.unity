@@ -3169,6 +3169,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -4658119955093019323, guid: 1b9a44d6a94d63b4db58e729f8fe9a3e,
+        type: 3}
+      propertyPath: m_TagString
+      value: EnemyParts
+      objectReference: {fileID: 0}
+    - target: {fileID: -1604647862903295806, guid: 1b9a44d6a94d63b4db58e729f8fe9a3e,
+        type: 3}
+      propertyPath: m_TagString
+      value: EnemyParts
+      objectReference: {fileID: 0}
     - target: {fileID: -1310883496242810317, guid: 1b9a44d6a94d63b4db58e729f8fe9a3e,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3183,6 +3193,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.z
       value: 0.20056
+      objectReference: {fileID: 0}
+    - target: {fileID: 910065602480970890, guid: 1b9a44d6a94d63b4db58e729f8fe9a3e,
+        type: 3}
+      propertyPath: m_TagString
+      value: EnemyParts
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 1b9a44d6a94d63b4db58e729f8fe9a3e,
         type: 3}
@@ -3239,10 +3254,6 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 611363899}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 1b9a44d6a94d63b4db58e729f8fe9a3e,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 611363898}
     - targetCorrespondingSourceObject: {fileID: 3654934372253022927, guid: 1b9a44d6a94d63b4db58e729f8fe9a3e,
         type: 3}
       insertIndex: -1
@@ -3375,20 +3386,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.008319453, y: 0.0030047342, z: 0.020450506}
   m_Center: {x: 0.0000009670855, y: 0.000095166135, z: -0.0030140798}
---- !u!114 &611363898
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 611363890}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 58d0d791caab71b40b8124c3953f2be4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ebiPrefab: {fileID: 611363890}
-  DestroyPrefab1: {fileID: 611363890}
 --- !u!114 &611363899
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6397,7 +6394,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1364639091}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 700d78164dfb1cd419378a888471eb21, type: 3}
+  m_Script: {fileID: 11500000, guid: 462874785c4d125429fa5c1cee6637d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Player: {fileID: 135133355}
@@ -9163,7 +9160,7 @@ GameObject:
   - component: {fileID: 2114690734}
   - component: {fileID: 2114690733}
   - component: {fileID: 2114690732}
-  - component: {fileID: 2114690731}
+  - component: {fileID: 2114690735}
   m_Layer: 0
   m_Name: EnemyCube1
   m_TagString: Untagged
@@ -9186,19 +9183,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 611363901}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2114690731
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2114690729}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3f244b9d70f0e3499ad244edd53ded5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Enemytouch1: 0
 --- !u!65 &2114690732
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -9270,6 +9254,19 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2114690729}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &2114690735
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2114690729}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a24315122f44dc498b7183c130d0b73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  EnemytouchG2: 0
 --- !u!1 &2116103261
 GameObject:
   m_ObjectHideFlags: 0

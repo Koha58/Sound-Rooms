@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy1 : MonoBehaviour
+public class EnemyG2 : MonoBehaviour
 {
     float speed = 1f;
     static public Vector3 targetPosition;
 
     public Transform Player;//プレイヤーを参照
-   // float Detection = 2f; //プレイヤーを検知する範囲
+                            // float Detection = 2f; //プレイヤーを検知する範囲
     float ChaseSpeed = 0.01f;//追いかけるスピード
 
     float Enemystoptime = 0;
@@ -27,7 +27,7 @@ public class Enemy1 : MonoBehaviour
         // 初期位置をランダムに設定する
         targetPosition = GetRandomPosition();
         animator = GetComponent<Animator>();   //アニメーターコントローラーからアニメーションを取得する
-       // Enemy01.SetActive(true);
+                                               // Enemy01.SetActive(true);
     }
 
     // Update is called once per frame
@@ -42,15 +42,15 @@ public class Enemy1 : MonoBehaviour
 
         GameObject obj = GameObject.Find("Player"); //Playerオブジェクトを探す
         PS = obj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
-        GameObject eobj1 = GameObject.FindWithTag("Enemy1"); //Playerオブジェクトを探す
-        ES = eobj1.GetComponent<EnemySeen>(); //付いているスクリプトを取得
+        GameObject eobjG2 = GameObject.FindWithTag("EnemyG2"); //Playerオブジェクトを探す
+        ES = eobjG2.GetComponent<EnemySeen>(); //付いているスクリプトを取得
 
         // 「歩く」のアニメーションを再生する
-        animator.SetBool("EnemyWalk", true);
+        //animator.SetBool("EnemyWalk", true);
 
         float detectionPlayer = Vector3.Distance(transform.position, Player.position);//プレイヤーと敵の位置の計算
 
-        if (detectionPlayer <= EnemyChase1.Detection && ES.ONoff == 1 && (EnemyCube.Enemybefor ==false || EnemyCube1.Enemybefor1 == false))//Enemyが可視化状態かつプレイヤーが検知範囲に入ったら
+        if (detectionPlayer <= EnemyChase1.Detection && ES.ONoff == 1 && (EnemyCube.Enemybefor == false || EnemyCube1.Enemybefor1 == false))//Enemyが可視化状態かつプレイヤーが検知範囲に入ったら
         {
             if (PS.onoff == 0)
             {
@@ -69,7 +69,7 @@ public class Enemy1 : MonoBehaviour
                 transform.position += transform.forward * ChaseSpeed;//プレイヤーの方向に向かう
             }
         }
-        else  if (detectionPlayer >= EnemyChase1.Detection || PS.onoff == 0 || EnemyCube.Enemybefor == true)//Playerが検知範囲に入っていないまたはPlayerが見えていない
+        else if (detectionPlayer >= EnemyChase1.Detection || PS.onoff == 0 || EnemyCubeG2.EnemybeforG2 == true)//Playerが検知範囲に入っていないまたはPlayerが見えていない
         {
             // targetPositionに向かって移動する
             transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
@@ -86,7 +86,7 @@ public class Enemy1 : MonoBehaviour
             Enemystoponoff = 1;
             if (Enemystoponoff == 1)
             {
-                animator.SetBool("EnemyWalk", false);
+                //animator.SetBool("EnemyWalk", false);
                 Enemystoptime += Time.deltaTime;
                 if (Enemystoptime > 2.0f)
                 {

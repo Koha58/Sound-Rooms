@@ -31,7 +31,7 @@ public class EnemyChase : MonoBehaviour
 
         float detectionPlayer = Vector3.Distance(transform.position, Player.position);//プレイヤーと敵の位置の計算
 
-        if (detectionPlayer <= Detection && ES.ONoff == 1 && (EnemyCube.Enemybefor == false || EnemyCube1.Enemybefor1 == false))//Enemyが可視化状態かつプレイヤーが検知範囲に入ったら
+        if (detectionPlayer <= Detection && ES.ONoff == 1 && (EnemyCube.Enemybefor == false ))//Enemyが可視化状態かつプレイヤーが検知範囲に入ったら
         {
              EnemyChase00 = true ;
         }
