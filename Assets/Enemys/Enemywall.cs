@@ -57,6 +57,25 @@ public class Enemywall : MonoBehaviour
             }
         }
 
+        if (other.gameObject.CompareTag("EnemyG1"))
+        {
+            Enemytouch++;
+
+            EnemySeen ES;
+            /*
+            GameObject eobj = GameObject.Find("Enemy");
+            ES = eobj.GetComponent<EnemySeen>(); //付いているスクリプトを取得
+            */
+            GameObject eobj = GameObject.FindWithTag("EnemyG1");
+            ES = eobj.GetComponent<EnemySeen>(); //付いているスクリプトを取得
+
+            if (Enemytouch == 3)
+            {
+                EnemyG1.targetPosition = new Vector3(2, 0, 2);
+                Enemytouch = 0;
+            }
+        }
+
         if (other.gameObject.CompareTag("EnemyG2"))
         {
             Enemytouch++;
@@ -72,6 +91,44 @@ public class Enemywall : MonoBehaviour
             if (Enemytouch == 3)
             {
                 EnemyG2.targetPosition = new Vector3(2, 0, 2);
+                Enemytouch = 0;
+            }
+        }
+
+        if (other.gameObject.CompareTag("EnemyG3"))
+        {
+            Enemytouch++;
+
+            EnemySeen ES;
+            /*
+            GameObject eobj = GameObject.Find("Enemy");
+            ES = eobj.GetComponent<EnemySeen>(); //付いているスクリプトを取得
+            */
+            GameObject eobj = GameObject.FindWithTag("EnemyG3");
+            ES = eobj.GetComponent<EnemySeen>(); //付いているスクリプトを取得
+
+            if (Enemytouch == 3)
+            {
+                EnemyG3.targetPosition = new Vector3(2, 0, 2);
+                Enemytouch = 0;
+            }
+        }
+
+        if (other.gameObject.CompareTag("EnemyG4"))
+        {
+            Enemytouch++;
+
+            EnemySeen ES;
+            /*
+            GameObject eobj = GameObject.Find("Enemy");
+            ES = eobj.GetComponent<EnemySeen>(); //付いているスクリプトを取得
+            */
+            GameObject eobj = GameObject.FindWithTag("EnemyG4");
+            ES = eobj.GetComponent<EnemySeen>(); //付いているスクリプトを取得
+
+            if (Enemytouch == 3)
+            {
+                EnemyG4.targetPosition = new Vector3(2, 0, 2);
                 Enemytouch = 0;
             }
         }

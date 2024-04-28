@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyG2 : MonoBehaviour
+public class EnemyG3 : MonoBehaviour
 {
     float speed = 1f;
     static public Vector3 targetPosition;
@@ -19,7 +19,7 @@ public class EnemyG2 : MonoBehaviour
     PlayerSeen PS;
     EnemySeen ES;
 
-    static public GameObject EnemyG02;
+    static public GameObject EnemyG03;
 
     // Start is called before the first frame update
     void Start()
@@ -42,15 +42,15 @@ public class EnemyG2 : MonoBehaviour
 
         GameObject obj = GameObject.Find("Player"); //Playerオブジェクトを探す
         PS = obj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
-        GameObject eobjG2 = GameObject.FindWithTag("EnemyG2"); //Playerオブジェクトを探す
-        ES = eobjG2.GetComponent<EnemySeen>(); //付いているスクリプトを取得
+        GameObject eobjG3 = GameObject.FindWithTag("EnemyG2"); //Playerオブジェクトを探す
+        ES = eobjG3.GetComponent<EnemySeen>(); //付いているスクリプトを取得
 
         // 「歩く」のアニメーションを再生する
         animator.SetBool("EnemyWalkG2", true);
 
         float detectionPlayer = Vector3.Distance(transform.position, Player.position);//プレイヤーと敵の位置の計算
 
-        if (detectionPlayer <= EnemyChase1.Detection && ES.ONoff == 1 && ( EnemyCubeG2.EnemybeforG2 == false))//Enemyが可視化状態かつプレイヤーが検知範囲に入ったら
+        if (detectionPlayer <= EnemyChase1.Detection && ES.ONoff == 1 && (EnemyCubeG3.EnemybeforG3 == false))//Enemyが可視化状態かつプレイヤーが検知範囲に入ったら
         {
             if (PS.onoff == 0)
             {
@@ -63,13 +63,13 @@ public class EnemyG2 : MonoBehaviour
                 PS.onoff = 1;  //見えているから1
             }
 
-            if (EnemyChaseG2.EnemyChaseG02== true)
+            if (EnemyCubeG3.EnemybeforG3 == true)
             {
                 transform.LookAt(Player.transform); //プレイヤーの方向にむく
                 transform.position += transform.forward * ChaseSpeed;//プレイヤーの方向に向かう
             }
         }
-        else if (detectionPlayer >= EnemyChaseG2.Detection || PS.onoff == 0 || EnemyCubeG2.EnemybeforG2 == true)//Playerが検知範囲に入っていないまたはPlayerが見えていない
+        else if (detectionPlayer >= EnemyChaseG3.Detection || PS.onoff == 0 || EnemyCubeG3.EnemybeforG3 == true)//Playerが検知範囲に入っていないまたはPlayerが見えていない
         {
             // targetPositionに向かって移動する
             transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);

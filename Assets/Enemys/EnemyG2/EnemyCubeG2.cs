@@ -42,7 +42,7 @@ public class EnemyCubeG2 : MonoBehaviour
 
                 if (EnemytouchG2 == 1)
                 {
-                    Enemy1.targetPosition = Enemy1.GetRandomPosition();
+                    EnemyG2.targetPosition = EnemyG2.GetRandomPosition();
                     EnemytouchG2 = 0;
                 }
             }
