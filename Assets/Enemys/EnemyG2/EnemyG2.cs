@@ -46,7 +46,7 @@ public class EnemyG2 : MonoBehaviour
         ES = eobjG2.GetComponent<EnemySeen>(); //付いているスクリプトを取得
 
         // 「歩く」のアニメーションを再生する
-        //animator.SetBool("EnemyWalk", true);
+        animator.SetBool("EnemyWalkG2", true);
 
         float detectionPlayer = Vector3.Distance(transform.position, Player.position);//プレイヤーと敵の位置の計算
 
@@ -86,7 +86,7 @@ public class EnemyG2 : MonoBehaviour
             Enemystoponoff = 1;
             if (Enemystoponoff == 1)
             {
-                //animator.SetBool("EnemyWalk", false);
+                animator.SetBool("EnemyWalkG2", false);
                 Enemystoptime += Time.deltaTime;
                 if (Enemystoptime > 2.0f)
                 {
