@@ -160,11 +160,65 @@ public class ItemSeen : MonoBehaviour
                 ES.Sphere.SetActive(true);//音波非表示→表示
             }
         }
+        else if (other.CompareTag("EnemyG1"))
+        {
+            EnemySeen ES;
+            GameObject eobj2 = GameObject.FindWithTag("EnemyG1");
+            ES = eobj2.GetComponent<EnemySeen>(); //付いているスクリプトを取得
+            if (ES.ONoff == 0)
+            {
+                var childTransforms = ES._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("EnemyParts"));
+                foreach (var item in childTransforms)
+                {
+                    //タグが"EnemyParts"である子オブジェクトを見えるようにする
+                    item.gameObject.GetComponent<Renderer>().enabled = true;
+                }
+                ES.ONoff = 1;
+                ES.SoundTime = 0.0f;
+                ES.Sphere.SetActive(true);//音波非表示→表示
+            }
+        }
         else if (other.CompareTag("EnemyG2"))
         {
             EnemySeen ES;
-            GameObject eobj2 = GameObject.FindWithTag("EnemyG2");
-            ES = eobj2.GetComponent<EnemySeen>(); //付いているスクリプトを取得
+            GameObject eobj3 = GameObject.FindWithTag("EnemyG2");
+            ES = eobj3.GetComponent<EnemySeen>(); //付いているスクリプトを取得
+            if (ES.ONoff == 0)
+            {
+                var childTransforms = ES._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("EnemyParts"));
+                foreach (var item in childTransforms)
+                {
+                    //タグが"EnemyParts"である子オブジェクトを見えるようにする
+                    item.gameObject.GetComponent<Renderer>().enabled = true;
+                }
+                ES.ONoff = 1;
+                ES.SoundTime = 0.0f;
+                ES.Sphere.SetActive(true);//音波非表示→表示
+            }
+        }
+        else if (other.CompareTag("EnemyG3"))
+        {
+            EnemySeen ES;
+            GameObject eobj4 = GameObject.FindWithTag("EnemyG3");
+            ES = eobj4.GetComponent<EnemySeen>(); //付いているスクリプトを取得
+            if (ES.ONoff == 0)
+            {
+                var childTransforms = ES._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("EnemyParts"));
+                foreach (var item in childTransforms)
+                {
+                    //タグが"EnemyParts"である子オブジェクトを見えるようにする
+                    item.gameObject.GetComponent<Renderer>().enabled = true;
+                }
+                ES.ONoff = 1;
+                ES.SoundTime = 0.0f;
+                ES.Sphere.SetActive(true);//音波非表示→表示
+            }
+        }
+        else if (other.CompareTag("EnemyG4"))
+        {
+            EnemySeen ES;
+            GameObject eobj5 = GameObject.FindWithTag("EnemyG4");
+            ES = eobj5.GetComponent<EnemySeen>(); //付いているスクリプトを取得
             if (ES.ONoff == 0)
             {
                 var childTransforms = ES._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("EnemyParts"));

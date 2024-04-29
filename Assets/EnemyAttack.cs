@@ -124,7 +124,6 @@ public class EnemyAttack : MonoBehaviour
                 if (ES.ONoff == 1)
                 {
 
-                    EnemyincreaseG2.isHiddenG2 = false;
                     Instantiate(dropItemObj, transform.position, Quaternion.identity);
 
                     Destroy(eobjG1);
@@ -147,7 +146,6 @@ public class EnemyAttack : MonoBehaviour
                 if (ES.ONoff == 1)
                 {
 
-                    EnemyincreaseG2.isHiddenG2 = false;
                     Instantiate(dropItemObj, transform.position, Quaternion.identity);
 
                     Destroy(eobj2);
@@ -170,7 +168,6 @@ public class EnemyAttack : MonoBehaviour
                 if (ES.ONoff == 1)
                 {
 
-                    //EnemyincreaseG3.isHiddenG3= false;
                     Instantiate(dropItemObj, transform.position, Quaternion.identity);
 
                     Destroy(eobj3);
@@ -193,7 +190,6 @@ public class EnemyAttack : MonoBehaviour
                 if (ES.ONoff == 1)
                 {
 
-                    //EnemyincreaseG2.isHiddenG2 = false;
                     Instantiate(dropItemObj, transform.position, Quaternion.identity);
 
                     Destroy(eobj4);
