@@ -31,9 +31,9 @@ public class Enemywall : MonoBehaviour
             GameObject eobj = GameObject.FindWithTag("Enemy");
             ES = eobj.GetComponent<EnemySeen>(); //付いているスクリプトを取得
 
-            if (Enemytouch == 3)
+            if (Enemytouch == 1)
             {
-                Enemy.targetPosition = new Vector3(5,0,5);
+                Enemy.targetPosition = Enemy.GetRandomPosition();
                 Enemytouch = 0;
             }
         }
@@ -50,9 +50,9 @@ public class Enemywall : MonoBehaviour
             GameObject eobj = GameObject.FindWithTag("Enemy1");
             ES = eobj.GetComponent<EnemySeen>(); //付いているスクリプトを取得
 
-            if (Enemytouch == 3)
+            if (Enemytouch == 1)
             {
-                Enemy1.targetPosition = new Vector3(2, 0, 2);
+                Enemy1.targetPosition = Enemy1.GetRandomPosition();
                 Enemytouch = 0;
             }
         }
@@ -69,9 +69,9 @@ public class Enemywall : MonoBehaviour
             GameObject eobj = GameObject.FindWithTag("EnemyG1");
             ES = eobj.GetComponent<EnemySeen>(); //付いているスクリプトを取得
 
-            if (Enemytouch == 3)
+            if (Enemytouch == 1)
             {
-                EnemyG1.targetPosition = new Vector3(2, 0, 2);
+                EnemyG1.targetPosition = EnemyG1.GetRandomPosition();
                 Enemytouch = 0;
             }
         }
@@ -88,9 +88,9 @@ public class Enemywall : MonoBehaviour
             GameObject eobj = GameObject.FindWithTag("EnemyG2");
             ES = eobj.GetComponent<EnemySeen>(); //付いているスクリプトを取得
 
-            if (Enemytouch == 3)
+            if (Enemytouch == 1)
             {
-                EnemyG2.targetPosition = new Vector3(2, 0, 2);
+                EnemyG2.targetPosition = EnemyG2.GetRandomPosition();
                 Enemytouch = 0;
             }
         }
@@ -107,9 +107,9 @@ public class Enemywall : MonoBehaviour
             GameObject eobj = GameObject.FindWithTag("EnemyG3");
             ES = eobj.GetComponent<EnemySeen>(); //付いているスクリプトを取得
 
-            if (Enemytouch == 3)
+            if (Enemytouch == 1)
             {
-                EnemyG3.targetPosition = new Vector3(2, 0, 2);
+                EnemyG3.targetPosition = EnemyG3.GetRandomPosition();
                 Enemytouch = 0;
             }
         }
@@ -126,9 +126,9 @@ public class Enemywall : MonoBehaviour
             GameObject eobj = GameObject.FindWithTag("EnemyG4");
             ES = eobj.GetComponent<EnemySeen>(); //付いているスクリプトを取得
 
-            if (Enemytouch == 3)
+            if (Enemytouch == 1)
             {
-                EnemyG4.targetPosition = new Vector3(2, 0, 2);
+                EnemyG4.targetPosition = EnemyG4.GetRandomPosition();
                 Enemytouch = 0;
             }
         }

@@ -5,8 +5,9 @@ using UnityEngine;
 public class EnemyChaseG2 : MonoBehaviour
 {
     public Transform Player;//プレイヤーを参照
-    static public float Detection = 6f; //プレイヤーを検知する範囲
+    static public float Detection = 5f; //プレイヤーを検知する範囲
 
+    static public float detectionPlayerG2;
 
     EnemySeen ES;
 
@@ -27,9 +28,9 @@ public class EnemyChaseG2 : MonoBehaviour
         // 「歩く」のアニメーションを再生する
 
 
-        float detectionPlayer = Vector3.Distance(transform.position, Player.position);//プレイヤーと敵の位置の計算
+        detectionPlayerG2 = Vector3.Distance(transform.position, Player.position);//プレイヤーと敵の位置の計算
 
-        if (detectionPlayer <= Detection && ES.ONoff == 1 && (EnemyCubeG2.EnemybeforG2 == false))//Enemyが可視化状態かつプレイヤーが検知範囲に入ったら
+        if (detectionPlayerG2 <= Detection && ES.ONoff == 1 && (EnemyCubeG2.EnemybeforG2 == false))//Enemyが可視化状態かつプレイヤーが検知範囲に入ったら
         {
             EnemyChaseG02 = true;
         }
