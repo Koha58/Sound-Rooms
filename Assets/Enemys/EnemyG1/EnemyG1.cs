@@ -50,7 +50,7 @@ public class EnemyG1 : MonoBehaviour
 
         float detectionPlayer = Vector3.Distance(transform.position, Player.position);//プレイヤーと敵の位置の計算
 
-        if (detectionPlayer <= EnemyChase1.Detection && ES.ONoff == 1 && (EnemyCubeG1.EnemybeforG1 == false))//Enemyが可視化状態かつプレイヤーが検知範囲に入ったら
+        if ( EnemyChaseG1.EnemyChaseG01touch == true && ES.ONoff == 1 && (EnemyCubeG1.EnemybeforG1 == false))//Enemyが可視化状態かつプレイヤーが検知範囲に入ったら
         {
             if (PS.onoff == 0)
             {
@@ -69,7 +69,7 @@ public class EnemyG1 : MonoBehaviour
                 transform.position += transform.forward * ChaseSpeed;//プレイヤーの方向に向かう
             }
         }
-        else if (detectionPlayer >= EnemyChaseG1.Detection || PS.onoff == 0 || EnemyCubeG1.EnemybeforG1 == true)//Playerが検知範囲に入っていないまたはPlayerが見えていない
+        else if (EnemyChaseG1.EnemyChaseG01touch == true || PS.onoff == 0 || EnemyCubeG1.EnemybeforG1 == true)//Playerが検知範囲に入っていないまたはPlayerが見えていない
         {
             // targetPositionに向かって移動する
             transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);

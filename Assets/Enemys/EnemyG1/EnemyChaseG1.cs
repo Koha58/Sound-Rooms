@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class EnemyChaseG1 : MonoBehaviour
 {
-    public Transform Player;//プレイヤーを参照
-    static public float Detection = 7f; //プレイヤーを検知する範囲
-
+   // public Transform Player;//プレイヤーを参照
+   // static public float Detection = 6f; //プレイヤーを検知する範囲
 
     EnemySeen ES;
 
     static public bool EnemyChaseG01 = false;
+    static public bool EnemyChaseG01touch = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -26,12 +26,25 @@ public class EnemyChaseG1 : MonoBehaviour
 
         // 「歩く」のアニメーションを再生する
 
-
+        /*
         float detectionPlayer = Vector3.Distance(transform.position, Player.position);//プレイヤーと敵の位置の計算
 
         if (detectionPlayer <= Detection && ES.ONoff == 1 && (EnemyCubeG1.EnemybeforG1 == false))//Enemyが可視化状態かつプレイヤーが検知範囲に入ったら
         {
             EnemyChaseG01 = true;
+        }
+        */
+        if (EnemyChaseG01touch == true && ES.ONoff == 1 && (EnemyCubeG1.EnemybeforG1 == false))//Enemyが可視化状態かつプレイヤーが検知範囲に入ったら
+        {
+            EnemyChaseG01 = true;
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            EnemyChaseG01touch = true ;
         }
     }
 }

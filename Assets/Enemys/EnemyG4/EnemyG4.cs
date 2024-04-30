@@ -63,7 +63,7 @@ public class EnemyG4 : MonoBehaviour
                 PS.onoff = 1;  //見えているから1
             }
 
-            if (EnemyCubeG4.EnemybeforG4 == true)
+            if (EnemyChaseG4.EnemyChaseG04 == true)
             {
                 transform.LookAt(Player.transform); //プレイヤーの方向にむく
                 transform.position += transform.forward * ChaseSpeed;//プレイヤーの方向に向かう
