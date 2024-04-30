@@ -125,6 +125,14 @@ public class EnemyAttack : MonoBehaviour
                 {
 
                     Instantiate(dropItemObj, transform.position, Quaternion.identity);
+                    // 子オブジェクトの数を取得
+                    int childCount = dropItemObj.transform.childCount;
+                    for (int i = 0; i < childCount; i++)
+                    {
+                        Transform childTransform = dropItemObj.transform.GetChild(i);
+                        GameObject childObject = childTransform.gameObject;
+                        childObject.GetComponent<Renderer>().enabled = true;
+                    }
 
                     Destroy(eobjG1);
 
@@ -147,7 +155,14 @@ public class EnemyAttack : MonoBehaviour
                 {
 
                     Instantiate(dropItemObj, transform.position, Quaternion.identity);
-
+                    // 子オブジェクトの数を取得
+                    int childCount = dropItemObj.transform.childCount;
+                    for (int i = 0; i < childCount; i++)
+                    {
+                        Transform childTransform = dropItemObj.transform.GetChild(i);
+                        GameObject childObject = childTransform.gameObject;
+                        childObject.GetComponent<Renderer>().enabled = true;
+                    }
                     Destroy(eobj2);
 
                 }
@@ -169,7 +184,14 @@ public class EnemyAttack : MonoBehaviour
                 {
 
                     Instantiate(dropItemObj, transform.position, Quaternion.identity);
-
+                    // 子オブジェクトの数を取得
+                    int childCount = dropItemObj.transform.childCount;
+                    for (int i = 0; i < childCount; i++)
+                    {
+                        Transform childTransform = dropItemObj.transform.GetChild(i);
+                        GameObject childObject = childTransform.gameObject;
+                        childObject.GetComponent<Renderer>().enabled = true;
+                    }
                     Destroy(eobj3);
 
                 }
@@ -191,7 +213,14 @@ public class EnemyAttack : MonoBehaviour
                 {
 
                     Instantiate(dropItemObj, transform.position, Quaternion.identity);
-
+                    // 子オブジェクトの数を取得
+                    int childCount = dropItemObj.transform.childCount;
+                    for (int i = 0; i < childCount; i++)
+                    {
+                        Transform childTransform = dropItemObj.transform.GetChild(i);
+                        GameObject childObject = childTransform.gameObject;
+                        childObject.GetComponent<Renderer>().enabled = true;
+                    }
                     Destroy(eobj4);
 
                 }
