@@ -284,9 +284,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 6170571}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 20ef822595fd66e4fa47aa084a026285, type: 3}
+  m_Script: {fileID: 11500000, guid: a0f32a11bb865594aae8746746213998, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Enemytouch: 0
 --- !u!4 &21086164 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9124861691456060042, guid: 2284a6b2b0e1a8047b9a36b2ab575b5f,
@@ -2528,6 +2529,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 1b9a44d6a94d63b4db58e729f8fe9a3e,
         type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 1b9a44d6a94d63b4db58e729f8fe9a3e,
+        type: 3}
       propertyPath: m_TagString
       value: EnemyG4
       objectReference: {fileID: 0}
@@ -3880,6 +3886,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 1b9a44d6a94d63b4db58e729f8fe9a3e,
         type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 1b9a44d6a94d63b4db58e729f8fe9a3e,
+        type: 3}
       propertyPath: m_TagString
       value: EnemyG3
       objectReference: {fileID: 0}
@@ -4549,9 +4560,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 572813327}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 20ef822595fd66e4fa47aa084a026285, type: 3}
+  m_Script: {fileID: 11500000, guid: a0f32a11bb865594aae8746746213998, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Enemytouch: 0
 --- !u!1 &577045171
 GameObject:
   m_ObjectHideFlags: 0
@@ -4718,9 +4730,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 595296904}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 20ef822595fd66e4fa47aa084a026285, type: 3}
+  m_Script: {fileID: 11500000, guid: a0f32a11bb865594aae8746746213998, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Enemytouch: 0
 --- !u!1001 &611363889
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7719,9 +7732,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1026572034}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 20ef822595fd66e4fa47aa084a026285, type: 3}
+  m_Script: {fileID: 11500000, guid: a0f32a11bb865594aae8746746213998, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Enemytouch: 0
 --- !u!1 &1032701081
 GameObject:
   m_ObjectHideFlags: 0
@@ -14226,6 +14240,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: EnemyG1 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 1b9a44d6a94d63b4db58e729f8fe9a3e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 1b9a44d6a94d63b4db58e729f8fe9a3e,
         type: 3}

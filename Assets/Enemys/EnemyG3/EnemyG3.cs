@@ -42,7 +42,7 @@ public class EnemyG3 : MonoBehaviour
 
         GameObject obj = GameObject.Find("Player"); //Playerオブジェクトを探す
         PS = obj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
-        GameObject eobjG3 = GameObject.FindWithTag("EnemyG2"); //Playerオブジェクトを探す
+        GameObject eobjG3 = GameObject.FindWithTag("EnemyG3"); //Playerオブジェクトを探す
         ES = eobjG3.GetComponent<EnemySeen>(); //付いているスクリプトを取得
 
         // 「歩く」のアニメーションを再生する
