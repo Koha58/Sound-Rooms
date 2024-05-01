@@ -48,9 +48,9 @@ public class EnemyG4 : MonoBehaviour
         // 「歩く」のアニメーションを再生する
         animator.SetBool("EnemyWalkG2", true);
 
-        float detectionPlayer = Vector3.Distance(transform.position, Player.position);//プレイヤーと敵の位置の計算
+       // float detectionPlayer = Vector3.Distance(transform.position, Player.position);//プレイヤーと敵の位置の計算
 
-        if (detectionPlayer <= EnemyChaseG4.Detection && ES.ONoff == 1 && (EnemyCubeG4.EnemybeforG4 == false))//Enemyが可視化状態かつプレイヤーが検知範囲に入ったら
+        if (EnemyChaseG4.detectionPlayerG4 <= EnemyChaseG4.Detection && ES.ONoff == 1 && (EnemyCubeG4.EnemybeforG4 == false))//Enemyが可視化状態かつプレイヤーが検知範囲に入ったら
         {
             if (PS.onoff == 0)
             {
@@ -69,7 +69,7 @@ public class EnemyG4 : MonoBehaviour
                 transform.position += transform.forward * ChaseSpeed;//プレイヤーの方向に向かう
             }
         }
-        else if (detectionPlayer >= EnemyChaseG4.Detection || PS.onoff == 0 || EnemyCubeG4.EnemybeforG4 == true)//Playerが検知範囲に入っていないまたはPlayerが見えていない
+        else if (EnemyChaseG4.detectionPlayerG4 >= EnemyChaseG4.Detection || PS.onoff == 0 || EnemyCubeG4.EnemybeforG4 == true)//Playerが検知範囲に入っていないまたはPlayerが見えていない
         {
             // targetPositionに向かって移動する
             transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);

@@ -6,7 +6,7 @@ public class EnemyChase1 : MonoBehaviour
 {
 
     public Transform Player;//プレイヤーを参照
-   static public  float Detection = 6f; //プレイヤーを検知する範囲
+   static public  float Detection = 5f; //プレイヤーを検知する範囲
 
 
     EnemySeen ES;
