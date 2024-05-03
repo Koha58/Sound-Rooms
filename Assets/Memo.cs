@@ -35,3 +35,5 @@ public class Memo : MonoBehaviour
         }
     }
 }
+
+   //https://vsq.co.jp/plus/tos/
