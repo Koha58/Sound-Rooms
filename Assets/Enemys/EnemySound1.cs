@@ -4,26 +4,26 @@ using UnityEngine;
 
 public class EnemySound1 : MonoBehaviour
 {
-    public AudioClip clip;
-    AudioSource source;
-    EnemySeen ES;
+    public AudioClip footstepSound;     // 足音のオーディオクリップ
+    public AudioSource audioSource;     // オーディオソース
+    public float volume = 1.0f;          // 音量
 
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        source = GetComponent<AudioSource>();
-
+        audioSource.clip = footstepSound;
+        audioSource.loop = true;
     }
 
-    // Update is called once per frame
-    void Update()
+    // 足音を再生するメソッド
+    public void PlayFootstepSound()
     {
-        GameObject eobj1 = GameObject.FindWithTag("Enemy1");
-        ES = eobj1.GetComponent<EnemySeen>(); //付いているスクリプトを取得
+        audioSource.volume = volume;
+        audioSource.Play();
+    }
 
-        if (ES.ONoff == 1)
-        {
-            source.PlayOneShot(clip);
-        }
+    // 足音の再生を停止するメソッド
+    public void StopFootstepSound()
+    {
+        audioSource.Stop();
     }
 }
