@@ -42,6 +42,10 @@ public class PlayerSeen : MonoBehaviour
                 childObject.GetComponent<Renderer>().enabled = true;//見える（有効）
             }
             onoff = 1;  //見えているから1
+            if (Record.playRecord == true)
+            {
+                Record.audioSource.Play();
+            }
         }
 
         //指定した時間が経過したらプレイヤーを見えなくする

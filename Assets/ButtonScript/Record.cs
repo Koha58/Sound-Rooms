@@ -5,10 +5,14 @@ using UnityEngine;
 public class Record : MonoBehaviour
 {
     AudioClip myclip;
-    AudioSource audioSource;
+    public static AudioSource audioSource;
     string micName = "null"; //マイクデバイスの名前
     const int samplingFrequency = 44100; //サンプリング周波数
     const int maxTime_s = 10; //最大録音時間[s]
+
+    public bool DontDestroyEnabled = true;
+
+    public static bool playRecord = false;
 
     // Start is called before the first frame update
     void Start()
@@ -19,6 +23,12 @@ public class Record : MonoBehaviour
             Debug.Log("Name: " + device);
             micName = null;
         }
+
+        if(DontDestroyEnabled)
+        {
+            DontDestroyOnLoad(this);
+        }
+
     }
 
     public void StartButton()
@@ -42,5 +52,6 @@ public class Record : MonoBehaviour
         audioSource = gameObject.GetComponent<AudioSource>();
         audioSource.clip = myclip;
         audioSource.Play();
+        playRecord = true;
     }
 }

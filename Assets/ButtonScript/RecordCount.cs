@@ -9,6 +9,9 @@ public class RecordCount : MonoBehaviour
     private int RecCount = 10;
     public float nowtime = 0;
     private bool OnButton = false;
+    public GameObject RecText;
+    public GameObject Rerecord;
+    public GameObject texPlaySound;
 
     // Start is called before the first frame update
     void Start()
@@ -23,6 +26,9 @@ public class RecordCount : MonoBehaviour
         RecCountArray[RecCount - 8].GetComponent<Image>().enabled = false;
         RecCountArray[RecCount - 9].GetComponent<Image>().enabled = false;
         RecCountArray[RecCount - 10].GetComponent<Image>().enabled = false;
+
+        Rerecord.GetComponent<Renderer>().enabled = false;
+        texPlaySound.GetComponent<Renderer>().enabled = false;
     }
 
     // Update is called once per frame
@@ -164,6 +170,15 @@ public class RecordCount : MonoBehaviour
             else
             {
                 RecCountArray[RecCount - 10].GetComponent<Image>().enabled = false;
+                OnButton = false;
+                nowtime = 0;
+                if (Rerecord.GetComponent<Renderer>().enabled == false)
+                {
+                    Rerecord.GetComponent<Renderer>().enabled = true;
+                    texPlaySound.GetComponent<Renderer>().enabled = true;
+                    RecText.GetComponent<Renderer>().enabled = false;
+                    StartButton.Startbutton.SetActive(true);
+                }
             }
         }
     }
