@@ -12,6 +12,9 @@ public class WallScript : MonoBehaviour
 
     private float seentime = 0.0f; //経過時間記録用
 
+    PlayerSeen PS;
+    GameObject wobj;
+
     EnemySeen ES;
 
     void Start()
@@ -23,8 +26,11 @@ public class WallScript : MonoBehaviour
 
     void Update()
     {
+        wobj = GameObject.Find("Player");
+        PS = wobj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
+
         //プレイヤーが見えている時
-        if (Input.GetMouseButtonUp(0))
+        if (PS.onoff == 1)
         {
             bc.enabled = true;  //通り抜け不可
             onoff = 1;  //見えているから1

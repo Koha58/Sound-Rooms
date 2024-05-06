@@ -135,7 +135,7 @@ public class EnemyAttack : MonoBehaviour
                     }
 
                     Destroy(eobjG1);
-
+                    Enemyincrease.enemyDeathcnt++;
                 }
             }
             stayTimeF = 0.0f;
@@ -164,7 +164,7 @@ public class EnemyAttack : MonoBehaviour
                         childObject.GetComponent<Renderer>().enabled = true;
                     }
                     Destroy(eobj2);
-
+                    Enemyincrease.enemyDeathcnt++;
                 }
             }
             stayTimeF = 0.0f;
@@ -193,7 +193,7 @@ public class EnemyAttack : MonoBehaviour
                         childObject.GetComponent<Renderer>().enabled = true;
                     }
                     Destroy(eobj3);
-
+                    Enemyincrease.enemyDeathcnt++;
                 }
             }
             stayTimeF = 0.0f;
@@ -222,7 +222,7 @@ public class EnemyAttack : MonoBehaviour
                         childObject.GetComponent<Renderer>().enabled = true;
                     }
                     Destroy(eobj4);
-
+                    Enemyincrease.enemyDeathcnt++;
                 }
             }
             stayTimeF = 0.0f;

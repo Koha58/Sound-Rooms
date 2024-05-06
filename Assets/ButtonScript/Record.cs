@@ -38,12 +38,8 @@ public class Record : MonoBehaviour
         //Microphone.Startで録音を開始（マイクデバイスの名前、ループするかどうか、録音時間[s], サンプリング周波数）
         //録音データはAudioClip変数に保存される
         myclip = Microphone.Start(deviceName: micName, loop: false, lengthSec: maxTime_s, frequency: samplingFrequency);
-        /*
-        if (Microphone.IsRecording(deviceName: micName) == true && maxTime_s == 10)
-        {
-            Debug.Log("recording stoped");
-            Microphone.End(deviceName: micName);
-        }*/
+
+        playRecord = true;
     }
 
     public void PlayButton()
@@ -52,6 +48,5 @@ public class Record : MonoBehaviour
         audioSource = gameObject.GetComponent<AudioSource>();
         audioSource.clip = myclip;
         audioSource.Play();
-        playRecord = true;
     }
 }
