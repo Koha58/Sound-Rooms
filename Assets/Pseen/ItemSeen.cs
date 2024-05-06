@@ -31,24 +31,37 @@ public class ItemSeen : MonoBehaviour
             GameObject childObject = childTransform.gameObject;
             childObject.GetComponent<Renderer>().enabled = false;
         }
+
+        GameObject doorObject = GameObject.Find("Door1");
+
+        // 子オブジェクトの数を取得
+        int doorparts = doorObject.transform.childCount;
+        for (int j = 0; j < doorparts; j++)
+        {
+            Transform childTransform = doorObject.transform.GetChild(j);
+            GameObject door = childTransform.gameObject;
+            door.GetComponent<Renderer>().enabled = false;
+        }
+
         //最初は見えない状態
         SeenArea.GetComponent<Collider>().enabled = false;
         ItemCanvas.GetComponent<Canvas>().enabled = false;
         Wall.GetComponent<Renderer>().enabled = false;
         GameObject BoxSeen = GameObject.FindWithTag("BoxJudge");
         BoxSeen.SetActive(true);
-        Box = BoxSeen.transform.Find("Box").gameObject;
+        Box = BoxSeen.transform.Find("cardboard (1)").gameObject;
         Box.SetActive(false);
-        Box1 = BoxSeen.transform.Find("Box (1)").gameObject;
+        Box1 = BoxSeen.transform.Find("cardboard").gameObject;
         Box1.SetActive(false);
     }
 
     private void Update()
     {
         GameObject BoxSeen = GameObject.FindWithTag("BoxJudge");
-        Box = BoxSeen.transform.Find("Box").gameObject;
-        Box1 = BoxSeen.transform.Find("Box (1)").gameObject;
+        Box = BoxSeen.transform.Find("cardboard (1)").gameObject;
+        Box1 = BoxSeen.transform.Find("cardboard").gameObject;
         GameObject parentObject = GameObject.FindWithTag("Item");
+        GameObject doorObject = GameObject.Find("Door1");
         //左クリックで範囲内を可視化
         if (Input.GetMouseButtonUp(0))
         {
@@ -76,6 +89,14 @@ public class ItemSeen : MonoBehaviour
                 }
                 SeenArea.GetComponent<Collider>().enabled = false;//見えない（無効）
                 Wall.GetComponent<Renderer>().enabled = false;
+                // 子オブジェクトの数を取得
+                int doorparts = doorObject.transform.childCount;
+                for (int j = 0; j < doorparts; j++)
+                {
+                    Transform childTransform = doorObject.transform.GetChild(j);
+                    GameObject door = childTransform.gameObject;
+                    door.GetComponent<Renderer>().enabled = false;
+                }
                 if (Box.activeSelf== true)
                 {
                     Box.SetActive(false);
@@ -92,9 +113,10 @@ public class ItemSeen : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         GameObject BoxSeen = GameObject.FindWithTag("BoxJudge");
-        Box = BoxSeen.transform.Find("Box").gameObject;
-        Box1 = BoxSeen.transform.Find("Box (1)").gameObject;
+        Box = BoxSeen.transform.Find("cardboard (1)").gameObject;
+        Box1 = BoxSeen.transform.Find("cardboard").gameObject;
         GameObject parentObject = GameObject.FindWithTag("Item");
+        GameObject doorObject = GameObject.Find("Door1");
         //接触したオブジェクトのタグが"Item"のとき
         if (other.CompareTag("Item") && parentObject != null)
         {
@@ -117,6 +139,19 @@ public class ItemSeen : MonoBehaviour
             Box1.SetActive(true);
             BoxSeen.GetComponent<Collider>().enabled = false;
         }
+        
+        else if(other.CompareTag("Door"))
+        {
+            // 子オブジェクトの数を取得
+            int doorparts = doorObject.transform.childCount;
+            for (int j = 0; j < doorparts; j++)
+            {
+                Transform childTransform = doorObject.transform.GetChild(j);
+                GameObject door = childTransform.gameObject;
+                door.GetComponent<Renderer>().enabled = true;
+            }
+        }
+
 
         else if(other.CompareTag("Enemy"))
         {
