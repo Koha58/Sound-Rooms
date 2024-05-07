@@ -19,8 +19,11 @@ public class ItemSeen : MonoBehaviour
     public GameObject Wall;
     public static GameObject Box;
     public static GameObject Box1;
+
+    PlayerSeen PS;
+    private bool parts = false;
     void Start()
-    {
+    {/*
         GameObject parentObject = GameObject.FindWithTag("Item");
 
         // 子オブジェクトの数を取得
@@ -30,7 +33,7 @@ public class ItemSeen : MonoBehaviour
             Transform childTransform = parentObject.transform.GetChild(i);
             GameObject childObject = childTransform.gameObject;
             childObject.GetComponent<Renderer>().enabled = false;
-        }
+        }*/
 
         GameObject doorObject = GameObject.Find("Door1");
 
@@ -53,29 +56,36 @@ public class ItemSeen : MonoBehaviour
         Box.SetActive(false);
         Box1 = BoxSeen.transform.Find("cardboard").gameObject;
         Box1.SetActive(false);
+
+        GameObject itobj = GameObject.Find("Player");
+        PS = itobj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
+        onoff = PS.onoff;
     }
 
     private void Update()
     {
+        GameObject itobj = GameObject.Find("Player");
+        PS = itobj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
+        onoff = PS.onoff;
         GameObject BoxSeen = GameObject.FindWithTag("BoxJudge");
         Box = BoxSeen.transform.Find("cardboard (1)").gameObject;
         Box1 = BoxSeen.transform.Find("cardboard").gameObject;
         GameObject parentObject = GameObject.FindWithTag("Item");
         GameObject doorObject = GameObject.Find("Door1");
         //左クリックで範囲内を可視化
-        if (Input.GetMouseButtonUp(0))
+        if (onoff == 1/*Input.GetMouseButtonUp(0)*/)
         {
             SeenArea.GetComponent<Collider>().enabled = true;//見える（有効）
-            onoff = 1;  //見えているから1
+            //onoff = 1;  //見えているから1
         }
 
         //指定した時間が経過したら範囲内の可視化をできなくする
-        if (onoff == 1)
+        if (onoff == 0)
         {
-            seentime += Time.deltaTime;
-            if (seentime >= 10.0f)
-            {
-                if (parentObject != null)
+            //seentime += Time.deltaTime;
+           // if (seentime >= 10.0f)
+           // {
+                if (parentObject != null && parts == true)
                 {
                     // 子オブジェクトの数を取得
                     int childCount = parentObject.transform.childCount;
@@ -85,6 +95,7 @@ public class ItemSeen : MonoBehaviour
                         GameObject childObject = childTransform.gameObject;
                         childObject.GetComponent<Renderer>().enabled = false;
                     }
+                    parts = false;
                     ItemCanvas.GetComponent<Canvas>().enabled = false;
                 }
                 SeenArea.GetComponent<Collider>().enabled = false;//見えない（無効）
@@ -103,9 +114,9 @@ public class ItemSeen : MonoBehaviour
                     Box1.SetActive(false);
                     BoxSeen.GetComponent<Collider>().enabled = true;
                 }
-                onoff = 0;  //見えていないから0
-                seentime = 0.0f;    //経過時間をリセット
-            }
+                //onoff = 0;  //見えていないから0
+                //seentime = 0.0f;    //経過時間をリセット
+           // }
         }
 
     }
@@ -118,7 +129,7 @@ public class ItemSeen : MonoBehaviour
         GameObject parentObject = GameObject.FindWithTag("Item");
         GameObject doorObject = GameObject.Find("Door1");
         //接触したオブジェクトのタグが"Item"のとき
-        if (other.CompareTag("Item") && parentObject != null)
+        if (other.CompareTag("Item") && parentObject != null && parts == false)
         {
             // 子オブジェクトの数を取得
             int childCount = parentObject.transform.childCount;
@@ -128,6 +139,7 @@ public class ItemSeen : MonoBehaviour
                 GameObject childObject = childTransform.gameObject;
                 childObject.GetComponent<Renderer>().enabled = true;
             }
+            parts = true;
         }
         else if (other.CompareTag("Wall"))//接触したオブジェクトのタグが"Wall"のとき
         {

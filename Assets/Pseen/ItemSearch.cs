@@ -14,7 +14,7 @@ public class ItemSearch : MonoBehaviour
     public List<string> myItemList = new List<string>();
     public TextMeshProUGUI keyCountText;
     public int count;
-    public GameObject ItemCanvas;
+    public  static GameObject ItemCanvas;
     ItemSeen IS;
 
     private void Start()
@@ -68,6 +68,10 @@ public class ItemSearch : MonoBehaviour
         {
             ItemCanvas.GetComponent<Canvas>().enabled = true;
             PickUp();
+        }
+        if(closetDistance > 1.5f)
+        {
+            ItemCanvas.GetComponent<Canvas>().enabled = false;
         }
     }
 
