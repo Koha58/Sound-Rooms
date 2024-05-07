@@ -5,7 +5,7 @@ using UnityEngine;
 public class EnemyChaseG3 : MonoBehaviour
 {
     public Transform Player;//プレイヤーを参照
-    static public float Detection = 5f; //プレイヤーを検知する範囲
+    static public float Detection = 7f; //プレイヤーを検知する範囲
     static public float detectionPlayerG3;
 
     EnemySeen ES;

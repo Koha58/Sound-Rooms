@@ -6,7 +6,9 @@ public class EnemyFootsteps : MonoBehaviour
 {
     public AudioClip footstepSound;     // 足音のオーディオクリップ
     public AudioSource audioSource;     // オーディオソース
-    public float volume = 0.5f;          // 音量
+    public float volume = 10f;          // 音量
+
+    public bool Soundonoff = true ;          
 
     private void Start()
     {
@@ -15,23 +17,25 @@ public class EnemyFootsteps : MonoBehaviour
 
     void Update()
     {
-        if (EnemyChase.detectionPlayer <= EnemyChase.Detection)
-        {
-            audioSource.clip = footstepSound;
-            audioSource.loop = true;
-        }
-    }
-        // 足音を再生するメソッド
-    public void PlayFootstepSound()
-    {
-        audioSource.volume = volume;
-        audioSource.Play();
-    }
 
-    // 足音の再生を停止するメソッド
-    public void StopFootstepSound()
-    {
-        audioSource.Stop();
+        EnemySeen ES;
+        GameObject eobj = GameObject.FindWithTag("Enemy");
+        ES = eobj.GetComponent<EnemySeen>(); //付いているスクリプトを取得
+        if (ES.ONoff == 1)//EnemyChaseG1.detectionPlayerG1 <= EnemyChaseG1.Detection)
+        {
+            if (Soundonoff == true)
+            {
+                audioSource.clip = footstepSound;
+                audioSource.Play();
+            }
+        }
+        if (ES.ONoff == 0)
+        {
+            if (Soundonoff == false )
+            {
+               audioSource.Stop( );
+            }
+        }
     }
 }
 
