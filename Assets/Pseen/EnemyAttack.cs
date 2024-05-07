@@ -11,6 +11,7 @@ public class EnemyAttack : MonoBehaviour
    
     EnemySeen ES;
     ButtonHoldDown BD;
+    PlayerSeen PS;
 
     private float seentime = 0.0f; //経過時間記録用
     [SerializeField] public GameObject EnemyAttackArea;
@@ -27,27 +28,35 @@ public class EnemyAttack : MonoBehaviour
         EnemyAttackArea.GetComponent<Collider>().enabled = false;
         GameObject eobj1 = GameObject.FindWithTag("Enemy1");
         ES = eobj1.GetComponent<EnemySeen>(); //付いているスクリプトを取得
+
+        GameObject itobj = GameObject.Find("Player");
+        PS = itobj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
+        onoff = PS.onoff;
     }
 
     // Update is called once per frame
     void Update()
     {
+        GameObject itobj = GameObject.Find("Player");
+        PS = itobj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
+        onoff = PS.onoff;
+
         //左クリックで範囲内を可視化
-        if (Input.GetMouseButtonUp(0))
+        if (onoff == 1 /*Input.GetMouseButtonUp(0)*/)
         {
             EnemyAttackArea.GetComponent<Collider>().enabled = true;//見える（有効）
             onoff = 1;  //見えているから1
         }
 
-        if (onoff == 1)
+        if (onoff == 0)
         {
-            seentime += Time.deltaTime;
-            if (seentime >= 10.0f)
-            {
+            //seentime += Time.deltaTime;
+            //if (seentime >= 10.0f)
+            //{
                 EnemyAttackArea.GetComponent<Collider>().enabled = false;//見えない（無効）
-                onoff = 0;  //見えていないから0
-                seentime = 0.0f;    //経過時間をリセット
-            }
+                //onoff = 0;  //見えていないから0
+                //seentime = 0.0f;    //経過時間をリセット
+            //}
         }
         
     }
