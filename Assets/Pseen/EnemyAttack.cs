@@ -13,7 +13,7 @@ public class EnemyAttack : MonoBehaviour
     ButtonHoldDown BD;
     PlayerSeen PS;
 
-    private float seentime = 0.0f; //経過時間記録用
+   // private float seentime = 0.0f; //経過時間記録用
     [SerializeField] public GameObject EnemyAttackArea;
 
     Rigidbody rb;
