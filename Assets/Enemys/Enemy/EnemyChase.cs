@@ -5,36 +5,56 @@ using UnityEngine;
 public class EnemyChase : MonoBehaviour
 {
     public Transform Player;//プレイヤーを参照
-   static public  float Detection = 7f; //プレイヤーを検知する範囲
-    static public float detectionPlayer;
+    private float Detection = 7f; //プレイヤーを検知する範囲
+    static public  bool EnemyChaseOnOff = false;//Playerの追跡のONOFF 
 
-
-    EnemySeen ES;
-  
-
-    static public bool EnemyChase00 = false;
+    private bool Enemytouch;//壁にタッチのonoff
+    private float time = 0.0f;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+      
     }
 
     // Update is called once per frame
-    void Update()
+    private  void Update()
     {
         
-        GameObject eobj1 = GameObject.FindWithTag("Enemy1"); //Playerオブジェクトを探す
-        ES = eobj1.GetComponent<EnemySeen>(); //付いているスクリプトを取得
+        GameObject eobj = GameObject.FindWithTag("Enemy");
+        EnemySeen ES = eobj.GetComponent<EnemySeen>();//EnemySeenに付いているスクリプトを取得
 
-        // 「歩く」のアニメーションを再生する
-      
+        float　detectionPlayer = Vector3.Distance(transform.position, Player.position);//プレイヤーと敵の位置の計算
 
-           detectionPlayer = Vector3.Distance(transform.position, Player.position);//プレイヤーと敵の位置の計算
-
-        if (detectionPlayer <= Detection && ES.ONoff == 1 && (EnemyCube.Enemybefor == false ))//Enemyが可視化状態かつプレイヤーが検知範囲に入ったら
+        if (detectionPlayer <= Detection && ES.ONoff == 1 && Enemytouch == false )//Enemyが可視化状態かつプレイヤーが検知範囲に入ったら
         {
-             EnemyChase00 = true ;
+             EnemyChaseOnOff = true ;
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+
+        GameObject eobj = GameObject.FindWithTag("Enemy");
+        // Enemyに付いているスクリプトを取得
+        EnemySeen ES = eobj.GetComponent<EnemySeen>();
+
+        if (other.gameObject.CompareTag("Wall"))
+        {
+            Debug.Log("!");
+            if (ES.ONoff == 1)
+            {
+                Enemytouch = true;
+
+                if (Enemytouch == true)
+                {
+                    time += Time.deltaTime;
+                    if (time > 2.0f)
+                    {
+                        Enemytouch = false;
+                    }
+                }
+            }
         }
     }
 }

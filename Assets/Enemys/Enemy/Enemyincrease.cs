@@ -4,11 +4,14 @@ using UnityEngine;
 
 public class Enemyincrease : MonoBehaviour
 {
-    public GameObject ebiPrefab;
-    public GameObject DestroyPrefab;
-    static public bool isHidden = true;
-    static public bool Clone = false;
-    public static int enemyDeathcnt = 0;
+    [SerializeField]
+    private  GameObject ebiPrefab;      //コピーするプレハブ
+    [SerializeField]
+    private  GameObject DestroyPrefab;  //破壊されるプレハブ
+    static  public  bool isHidden = true;      //
+    private bool Clone = false;         //Cloneを生み出すかのONOFF
+    static  public int enemyDeathcnt = 0;      
+
     // Start is called before the first frame update
     void Start()
     {
@@ -26,11 +29,13 @@ public class Enemyincrease : MonoBehaviour
             int px = Random.Range(0, 20);//0以上２０以下のランダムの値を生成
             int pz = Random.Range(0, 20);//0以上２０以下のランダムの値を生成
             go.transform.position = new Vector3(px, 0, pz);
-            Clone = true;
+            Clone = true; 
+
         }
+
         if (Clone == true)
         {
-            Destroy(DestroyPrefab);
+            Destroy(DestroyPrefab); 
             Clone = false;
             enemyDeathcnt++;
         }

@@ -5,52 +5,40 @@ using UnityEngine.Events;
 
 public class Enemy : MonoBehaviour
 {
-    float speed = 1f;
-    static public Vector3 targetPosition;
-
+    float speed = 1f;//移動スピード
     public Transform Player;//プレイヤーを参照
-    //float Detection = 2f; //プレイヤーを検知する範囲
-    float ChaseSpeed = 0.025f;//追いかけるスピード
+    public  Vector3 targetPosition;//Enemyの目的地
+    float ChaseSpeed = 0.025f;//Playerを追いかけるスピード
 
     float Enemystoptime = 0;
     float Enemystoponoff;
 
     public Animator animator;
 
-    PlayerSeen PS;
-    EnemySeen ES;
-
     // Start is called before the first frame update
     void Start()
     {
         // 初期位置をランダムに設定する
-        //targetPosition = GetRandomPosition();
-        targetPosition = new Vector3 (6,0,-6);
+        targetPosition = GetRandomPosition();
         animator = GetComponent<Animator>();   //アニメーターコントローラーからアニメーションを取得する
        
     }
 
     // Update is called once per frame
-    void Update()
+    private  void Update()
     {
-        /*
         GameObject obj = GameObject.Find("Player"); //Playerオブジェクトを探す
-        PS = obj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
-        GameObject eobj = GameObject.Find("Enemy"); //Playerオブジェクトを探す
-        ES = eobj.GetComponent<EnemySeen>(); //付いているスクリプトを取得
-        */
+        PlayerSeen PS = obj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
 
-        GameObject obj = GameObject.Find("Player"); //Playerオブジェクトを探す
-        PS = obj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
-        GameObject eobj = GameObject.FindWithTag("Enemy"); //Playerオブジェクトを探す
-        ES = eobj.GetComponent<EnemySeen>(); //付いているスクリプトを取得
+        GameObject eobj = GameObject.FindWithTag("Enemy");
+        EnemySeen ES = eobj.GetComponent<EnemySeen>(); // EnemySeenに付いているスクリプトを取得
+        EnemyCube EC = eobj.GetComponent<EnemyCube>();// EnemyCubeに付いているスクリプトを取得
+        EnemyChase EChase = eobj.GetComponent<EnemyChase>();// EnemyChaseに付いているスクリプトを取得
 
         // 「歩く」のアニメーションを再生する
         animator.SetBool("EnemyWalk", true);
 
-        //float detectionPlayer = Vector3.Distance(transform.position, Player.position);//プレイヤーと敵の位置の計算
-
-        if (EnemyChase.detectionPlayer <= EnemyChase.Detection && ES.ONoff == 1&& EnemyCube.Enemybefor == false)//Enemyが可視化状態かつプレイヤーが検知範囲に入ったら
+        if (EnemyChase.EnemyChaseOnOff==true)//Enemyが可視化状態かつプレイヤーが検知範囲に入ったら
         {
             if (PS.onoff == 0)
             {
@@ -63,22 +51,19 @@ public class Enemy : MonoBehaviour
                 PS.onoff = 1;  //見えているから1
             }
 
-            if (EnemyChase.EnemyChase00 == true)
+            if (PS.onoff == 1 && EnemyChase.EnemyChaseOnOff == true )//Playerが見えているとき
             {
                 transform.LookAt(Player.transform); //プレイヤーの方向にむく
                 transform.position += transform.forward * ChaseSpeed;//プレイヤーの方向に向かう
             }
+           
         }
-        else if (EnemyChase.detectionPlayer >= EnemyChase.Detection || PS.onoff == 0 ||EnemyCube. Enemybefor == true)//Playerが検知範囲に入っていないまたはPlayerが見えていない
-        {
+        else if (EnemyChase.EnemyChaseOnOff == false || PS.onoff == 0 )//Playerが検知範囲に入っていないまたはPlayerが見えていない
+        {   
                 // targetPositionに向かって移動する
                  transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
                  transform.LookAt(targetPosition);
         }
-
-        // targetPositionに向かって移動する
-        //transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
-        // transform.LookAt(targetPosition);
 
         // targetPositionに到着したら新しいランダムな位置を設定する
         if (transform.position == targetPosition)
@@ -97,7 +82,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    public static Vector3 GetRandomPosition()
+    private  Vector3 GetRandomPosition()
     {
         // ランダムなx, y, z座標を生成する
         float randomX = Random.Range(-46f, 46f);
