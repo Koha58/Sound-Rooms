@@ -13,7 +13,7 @@ public class EnemyAttack : MonoBehaviour
     ButtonHoldDown BD;
     PlayerSeen PS;
 
-   // private float seentime = 0.0f; //経過時間記録用
+    private float seentime = 0.0f; //経過時間記録用
     [SerializeField] public GameObject EnemyAttackArea;
 
     Rigidbody rb;
@@ -21,42 +21,36 @@ public class EnemyAttack : MonoBehaviour
     private float stayTimeF = 0;
     private float stayTimeB = 0;
     public GameObject dropItemObj;//　落とすアイテムゲームオブジェクト
+    public GameObject dropItemObj2;
+    public GameObject dropItemObj3;
+    public GameObject dropItemObj4;
+
     // Start is called before the first frame update
     void Start()
     {
         //最初は見えない状態
         EnemyAttackArea.GetComponent<Collider>().enabled = false;
-        GameObject eobj1 = GameObject.FindWithTag("Enemy1");
-        ES = eobj1.GetComponent<EnemySeen>(); //付いているスクリプトを取得
-
-        GameObject itobj = GameObject.Find("Player");
-        PS = itobj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
-        onoff = PS.onoff;
     }
 
     // Update is called once per frame
     void Update()
     {
-        GameObject itobj = GameObject.Find("Player");
-        PS = itobj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
-        onoff = PS.onoff;
-
         //左クリックで範囲内を可視化
-        if (onoff == 1 /*Input.GetMouseButtonUp(0)*/)
+        if (Input.GetMouseButtonUp(0))
         {
             EnemyAttackArea.GetComponent<Collider>().enabled = true;//見える（有効）
             onoff = 1;  //見えているから1
         }
 
-        if (onoff == 0)
+        if (onoff == 1)
         {
-            //seentime += Time.deltaTime;
-            //if (seentime >= 10.0f)
-            //{
+            seentime += Time.deltaTime;
+            if (seentime >= 10.0f)
+            {
                 EnemyAttackArea.GetComponent<Collider>().enabled = false;//見えない（無効）
-                //onoff = 0;  //見えていないから0
-                //seentime = 0.0f;    //経過時間をリセット
-            //}
+                onoff = 0;  //見えていないから0
+                seentime = 0.0f;    //経過時間をリセット
+            }
         }
         
     }
@@ -133,15 +127,8 @@ public class EnemyAttack : MonoBehaviour
                 if (ES.ONoff == 1)
                 {
 
-                    Instantiate(dropItemObj, transform.position, Quaternion.identity);
-                    // 子オブジェクトの数を取得
-                    int childCount = dropItemObj.transform.childCount;
-                    for (int i = 0; i < childCount; i++)
-                    {
-                        Transform childTransform = dropItemObj.transform.GetChild(i);
-                        GameObject childObject = childTransform.gameObject;
-                        childObject.GetComponent<Renderer>().enabled = true;
-                    }
+                    //Instantiate(dropItemObj, transform.position, Quaternion.identity);
+                    dropItemObj.transform.position = eobjG1.transform.position; 
 
                     Destroy(eobjG1);
                     Enemyincrease.enemyDeathcnt++;
@@ -163,15 +150,8 @@ public class EnemyAttack : MonoBehaviour
                 if (ES.ONoff == 1)
                 {
 
-                    Instantiate(dropItemObj, transform.position, Quaternion.identity);
-                    // 子オブジェクトの数を取得
-                    int childCount = dropItemObj.transform.childCount;
-                    for (int i = 0; i < childCount; i++)
-                    {
-                        Transform childTransform = dropItemObj.transform.GetChild(i);
-                        GameObject childObject = childTransform.gameObject;
-                        childObject.GetComponent<Renderer>().enabled = true;
-                    }
+                    //Instantiate(dropItemObj, transform.position, Quaternion.identity);
+                    dropItemObj2.transform.position = eobj2.transform.position;
                     Destroy(eobj2);
                     Enemyincrease.enemyDeathcnt++;
                 }
@@ -192,15 +172,8 @@ public class EnemyAttack : MonoBehaviour
                 if (ES.ONoff == 1)
                 {
 
-                    Instantiate(dropItemObj, transform.position, Quaternion.identity);
-                    // 子オブジェクトの数を取得
-                    int childCount = dropItemObj.transform.childCount;
-                    for (int i = 0; i < childCount; i++)
-                    {
-                        Transform childTransform = dropItemObj.transform.GetChild(i);
-                        GameObject childObject = childTransform.gameObject;
-                        childObject.GetComponent<Renderer>().enabled = true;
-                    }
+                    //Instantiate(dropItemObj, transform.position, Quaternion.identity);
+                    dropItemObj3.transform.position = eobj3.transform.position;
                     Destroy(eobj3);
                     Enemyincrease.enemyDeathcnt++;
                 }
@@ -221,15 +194,8 @@ public class EnemyAttack : MonoBehaviour
                 if (ES.ONoff == 1)
                 {
 
-                    Instantiate(dropItemObj, transform.position, Quaternion.identity);
-                    // 子オブジェクトの数を取得
-                    int childCount = dropItemObj.transform.childCount;
-                    for (int i = 0; i < childCount; i++)
-                    {
-                        Transform childTransform = dropItemObj.transform.GetChild(i);
-                        GameObject childObject = childTransform.gameObject;
-                        childObject.GetComponent<Renderer>().enabled = true;
-                    }
+                   // Instantiate(dropItemObj, transform.position, Quaternion.identity);
+                    dropItemObj4.transform.position = eobj4.transform.position;
                     Destroy(eobj4);
                     Enemyincrease.enemyDeathcnt++;
                 }
