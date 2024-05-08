@@ -6,6 +6,7 @@ using UnityEngine;
 public class Enemywall : MonoBehaviour
 {
     public float Enemytouch=0;
+    BoxCollider bc;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,21 +22,16 @@ public class Enemywall : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Enemy"))
         {
-            Enemytouch++;
-
-            EnemySeen ES;
-            /*
-            GameObject eobj = GameObject.Find("Enemy");
-            ES = eobj.GetComponent<EnemySeen>(); //付いているスクリプトを取得
-            */
             GameObject eobj = GameObject.FindWithTag("Enemy");
-            ES = eobj.GetComponent<EnemySeen>(); //付いているスクリプトを取得
+            Enemy E = eobj.GetComponent<Enemy>(); //Enemyに付いているスクリプトを取得
+            EnemySeen ES = eobj.GetComponent<EnemySeen>(); //EnemySeen付いているスクリプトを取得
+            EnemyChase EC = eobj.GetComponent<EnemyChase>();// EnemyCubeに付いているスクリプトを取得
 
-            if (Enemytouch == 1)
-            {
-                Enemy.targetPosition = Enemy.GetRandomPosition();
-                Enemytouch = 0;
-            }
+           
+                E.targetPosition = GetRandomPosition();
+
+            
+            
         }
 
         if (other.gameObject.CompareTag("Enemy1"))
@@ -132,5 +128,15 @@ public class Enemywall : MonoBehaviour
                 Enemytouch = 0;
             }
         }
+    }
+    private Vector3 GetRandomPosition()
+    {
+        // ランダムなx, y, z座標を生成する
+        float randomX = Random.Range(-46f, 46f);
+        float randomY = 0f;// Random.Range(-10f, 10f);
+        float randomZ = Random.Range(-46f, 46f);
+
+        // 生成した座標を返す
+        return new Vector3(randomX, randomY, randomZ);
     }
 }

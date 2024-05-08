@@ -4,12 +4,8 @@ using UnityEngine;
 
 public class EnemyCube : MonoBehaviour
 {
-    static public  bool Enemybefor=false ;
-    float befortime = 0;
-    public float Enemytouch = 0;
-
-   
-   
+    private  bool Enemytouch ;//壁にタッチのonoff
+    private float time =0.0f;
 
     // Start is called before the first frame update
     void Start()
@@ -20,32 +16,28 @@ public class EnemyCube : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Enemybefor == true)
-        {
-            befortime += Time.deltaTime;
-            if( befortime >2.0f)
-            {
-                befortime = 0;
-                Enemybefor = false;
-            }
-        }
+       
     }
     private void OnTriggerEnter(Collider other)
     {
-        EnemySeen ES;
+        
         GameObject eobj = GameObject.FindWithTag("Enemy");
-        ES = eobj.GetComponent<EnemySeen>(); //付いているスクリプトを取得
+        // Enemyに付いているスクリプトを取得
+        EnemySeen ES = eobj.GetComponent<EnemySeen>();
+
         if (other.gameObject.CompareTag("Wall"))
         {
             if (ES.ONoff == 1)
             {
-                Enemybefor = true;
-                Enemytouch++;
+                Enemytouch=true ;
 
-                if (Enemytouch == 1)
+                if (Enemytouch == true )
                 {
-                    Enemy.targetPosition = Enemy.GetRandomPosition(); 
-                    Enemytouch = 0;
+                    time+= Time.deltaTime;
+                    if (time > 2.0f)
+                    {
+                        Enemytouch = false;
+                    }
                 }
             }
         }

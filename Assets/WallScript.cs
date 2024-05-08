@@ -53,24 +53,20 @@ public class WallScript : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Enemy"))
         {
-            EnemySeen ES;
-            /*
-            GameObject eobj = GameObject.Find("Enemy");
-            ES = eobj.GetComponent<EnemySeen>(); //付いているスクリプトを取得
-            */
             GameObject eobj = GameObject.FindWithTag("Enemy");
-            ES = eobj.GetComponent<EnemySeen>(); //付いているスクリプトを取得
+            Enemy E = eobj.GetComponent<Enemy>(); //Enemyに付いているスクリプトを取得
+            EnemySeen ES = eobj.GetComponent<EnemySeen>(); //EnemySeenに付いているスクリプトを取得
 
             if (ES.ONoff == 0)
             {
                 bc.enabled = false;
-               // Debug.Log("?");
+              
             }
             else if (ES.ONoff == 1)
             {
                 bc.enabled = true;
-                Enemy.targetPosition = Enemy.GetRandomPosition();
-               // Debug.Log("!");
+                E.targetPosition = GetRandomPosition();
+              
             }
         }
 
@@ -189,4 +185,16 @@ public class WallScript : MonoBehaviour
             }
         }
     }
+    private Vector3 GetRandomPosition()
+    {
+        // ランダムなx, y, z座標を生成する
+        float randomX = Random.Range(-46f, 46f);
+        float randomY = 0f;// Random.Range(-10f, 10f);
+        float randomZ = Random.Range(-46f, 46f);
+
+        // 生成した座標を返す
+        return new Vector3(randomX, randomY, randomZ);
+    }
 }
+
+
