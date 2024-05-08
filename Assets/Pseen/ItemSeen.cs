@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 using UnityEngine.XR;
 using static Unity.VisualScripting.Metadata;
@@ -19,26 +20,48 @@ public class ItemSeen : MonoBehaviour
     public GameObject Wall;
     public static GameObject Box;
     public static GameObject Box1;
-
-    PlayerSeen PS;
+    public static GameObject[] parentObject;
+    private string objName;
 
     void Start()
     {
-        GameObject[] parentObject = GameObject.FindGameObjectsWithTag("Item");
-
-        parentObject[0].SetActive (false);
-        parentObject[1].SetActive(false);
-        parentObject[2].SetActive(false);
-        parentObject[3].SetActive(false);
-        /*
+        parentObject = GameObject.FindGameObjectsWithTag("Item");
+        GameObject Key1 = parentObject[0];
         // 子オブジェクトの数を取得
-        int childCount = parentObject.transform.childCount;
-        for (int i = 0; i < childCount; i++)
+        int childCount1 = Key1.transform.childCount;
+        for (int i = 0; i < childCount1; i++)
         {
-            Transform childTransform = parentObject.transform.GetChild(i);
+            Transform childTransform = Key1.transform.GetChild(i);
             GameObject childObject = childTransform.gameObject;
             childObject.GetComponent<Renderer>().enabled = false;
-        }*/
+        }
+        GameObject Key2 = parentObject[1];
+        // 子オブジェクトの数を取得
+        int childCount2 = Key2.transform.childCount;
+        for (int a = 0; a < childCount2; a++)
+        {
+            Transform childTransform = Key2.transform.GetChild(a);
+            GameObject childObject = childTransform.gameObject;
+            childObject.GetComponent<Renderer>().enabled = false;
+        }
+        GameObject Key3 = parentObject[2];
+        // 子オブジェクトの数を取得
+        int childCount3 = Key3.transform.childCount;
+        for (int b = 0; b < childCount3; b++)
+        {
+            Transform childTransform = Key3.transform.GetChild(b);
+            GameObject childObject = childTransform.gameObject;
+            childObject.GetComponent<Renderer>().enabled = false;
+        }
+        GameObject Key4 = parentObject[3];
+        // 子オブジェクトの数を取得
+        int childCount4 = Key4.transform.childCount;
+        for (int c = 0; c < childCount4; c++)
+        {
+            Transform childTransform = Key4.transform.GetChild(c);
+            GameObject childObject = childTransform.gameObject;
+            childObject.GetComponent<Renderer>().enabled = false;
+        }
 
         GameObject doorObject = GameObject.Find("Door1");
 
@@ -61,21 +84,14 @@ public class ItemSeen : MonoBehaviour
         Box.SetActive(false);
         Box1 = BoxSeen.transform.Find("cardboard").gameObject;
         Box1.SetActive(false);
-
-        GameObject itobj = GameObject.Find("Player");
-        PS = itobj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
-        onoff = PS.onoff;
     }
 
     private void Update()
     {
-        GameObject itobj = GameObject.Find("Player");
-        PS = itobj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
-        onoff = PS.onoff;
         GameObject BoxSeen = GameObject.FindWithTag("BoxJudge");
         Box = BoxSeen.transform.Find("cardboard (1)").gameObject;
         Box1 = BoxSeen.transform.Find("cardboard").gameObject;
-        GameObject parentObject = GameObject.FindWithTag("Item");
+        parentObject = GameObject.FindGameObjectsWithTag("Item");
         GameObject doorObject = GameObject.Find("Door1");
         //左クリックで範囲内を可視化
         if (Input.GetMouseButtonUp(0))
@@ -90,18 +106,53 @@ public class ItemSeen : MonoBehaviour
             seentime += Time.deltaTime;
             if (seentime >= 10.0f)
             {
-                if (parentObject != null)
+                if (parentObject[0] != null)
                 {
+                    GameObject Key1 = parentObject[0];
                     // 子オブジェクトの数を取得
-                    int childCount = parentObject.transform.childCount;
-                    for (int i = 0; i < childCount; i++)
+                    int childCount1 = Key1.transform.childCount;
+                    for (int i = 0; i < childCount1; i++)
                     {
-                        Transform childTransform = parentObject.transform.GetChild(i);
+                        Transform childTransform = Key1.transform.GetChild(i);
                         GameObject childObject = childTransform.gameObject;
                         childObject.GetComponent<Renderer>().enabled = false;
                     }
-                    ItemCanvas.GetComponent<Canvas>().enabled = false;
                 }
+                if (parentObject[1] != null)
+                {
+                    GameObject Key2 = parentObject[1];
+                    // 子オブジェクトの数を取得
+                    int childCount2 = Key2.transform.childCount;
+                    for (int a = 0; a < childCount2; a++)
+                    {
+                        Transform childTransform = Key2.transform.GetChild(a);
+                        GameObject childObject = childTransform.gameObject;
+                        childObject.GetComponent<Renderer>().enabled = false;
+                    }
+                }
+                if (parentObject[2] != null)
+                {
+                    GameObject Key3 = parentObject[2];
+                    int childCount3 = Key3.transform.childCount;
+                    for (int b = 0; b < childCount3; b++)
+                    {
+                        Transform childTransform = Key3.transform.GetChild(b);
+                        GameObject childObject = childTransform.gameObject;
+                        childObject.GetComponent<Renderer>().enabled = false;
+                    }
+                }
+                if (parentObject[3] != null)
+                {
+                    GameObject Key4 = parentObject[3];
+                    int childCount4 = Key4.transform.childCount;
+                    for (int c = 0; c < childCount4; c++)
+                    {
+                        Transform childTransform = Key4.transform.GetChild(c);
+                        GameObject childObject = childTransform.gameObject;
+                        childObject.GetComponent<Renderer>().enabled = false;
+                    }
+                }
+
                 SeenArea.GetComponent<Collider>().enabled = false;//見えない（無効）
                 Wall.GetComponent<Renderer>().enabled = false;
                 // 子オブジェクトの数を取得
@@ -130,11 +181,25 @@ public class ItemSeen : MonoBehaviour
         GameObject BoxSeen = GameObject.FindWithTag("BoxJudge");
         Box = BoxSeen.transform.Find("cardboard (1)").gameObject;
         Box1 = BoxSeen.transform.Find("cardboard").gameObject;
-        GameObject parentObject = GameObject.FindWithTag("Item");
+        parentObject = GameObject.FindGameObjectsWithTag("Item");
+        GameObject Key1 = parentObject[0];
+        GameObject Key2 = parentObject[1];
+        GameObject Key3 = parentObject[2];
+        GameObject Key4 = parentObject[3];
         GameObject doorObject = GameObject.Find("Door1");
+        objName = other.gameObject.name;
         //接触したオブジェクトのタグが"Item"のとき
-        if (other.CompareTag("Item") &&parentObject != null)
+        if (objName == "key 1 (1)" && parentObject[0] != null)
         {
+            // 子オブジェクトの数を取得
+            int childCount1 = Key1.transform.childCount;
+            for (int i = 0; i < childCount1; i++)
+            {
+                Transform childTransform = Key1.transform.GetChild(i);
+                GameObject childObject = childTransform.gameObject;
+                childObject.GetComponent<Renderer>().enabled = true;
+            }
+            /*
             // 子オブジェクトの数を取得
             int childCount = parentObject.transform.childCount;
             for (int i = 0; i < childCount; i++)
@@ -142,8 +207,40 @@ public class ItemSeen : MonoBehaviour
                 Transform childTransform = parentObject.transform.GetChild(i);
                 GameObject childObject = childTransform.gameObject;
                 childObject.GetComponent<Renderer>().enabled = true;
+            }*/
+        }
+        else if(objName == "key 1" && parentObject[1] != null)
+        {
+            // 子オブジェクトの数を取得
+            int childCount2 = Key2.transform.childCount;
+            for (int a = 0; a < childCount2; a++)
+            {
+                Transform childTransform = Key2.transform.GetChild(a);
+                GameObject childObject = childTransform.gameObject;
+                childObject.GetComponent<Renderer>().enabled = true;
             }
         }
+        else if (objName == "key 1 (2)" && parentObject[2] != null)
+        {
+            int childCount3 = Key3.transform.childCount;
+            for (int b = 0; b < childCount3; b++)
+            {
+                Transform childTransform = Key3.transform.GetChild(b);
+                GameObject childObject = childTransform.gameObject;
+                childObject.GetComponent<Renderer>().enabled = true;
+            }
+        }
+        else if (objName == "key 1 (3)" && parentObject[3] != null)
+        {
+            int childCount4 = Key4.transform.childCount;
+            for (int c = 0; c < childCount4; c++)
+            {
+                Transform childTransform = Key4.transform.GetChild(c);
+                GameObject childObject = childTransform.gameObject;
+                childObject.GetComponent<Renderer>().enabled = true;
+            }
+        }
+
         else if (other.CompareTag("Wall"))//接触したオブジェクトのタグが"Wall"のとき
         {
             Wall.GetComponent<Renderer>().enabled = true;

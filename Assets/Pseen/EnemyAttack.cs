@@ -11,7 +11,6 @@ public class EnemyAttack : MonoBehaviour
    
     EnemySeen ES;
     ButtonHoldDown BD;
-    PlayerSeen PS;
 
     private float seentime = 0.0f; //経過時間記録用
     [SerializeField] public GameObject EnemyAttackArea;
@@ -20,10 +19,7 @@ public class EnemyAttack : MonoBehaviour
 
     private float stayTimeF = 0;
     private float stayTimeB = 0;
-    public GameObject dropItemObj;//　落とすアイテムゲームオブジェクト
-    public GameObject dropItemObj2;
-    public GameObject dropItemObj3;
-    public GameObject dropItemObj4;
+
 
     // Start is called before the first frame update
     void Start()
@@ -127,8 +123,8 @@ public class EnemyAttack : MonoBehaviour
                 if (ES.ONoff == 1)
                 {
 
-                    //Instantiate(dropItemObj, transform.position, Quaternion.identity);
-                    dropItemObj.transform.position = eobjG1.transform.position; 
+                    //Instantiate(check1, transform.position, Quaternion.identity);
+                    ItemSeen.parentObject[0].transform.position = eobjG1.transform.position; 
 
                     Destroy(eobjG1);
                     Enemyincrease.enemyDeathcnt++;
@@ -150,8 +146,8 @@ public class EnemyAttack : MonoBehaviour
                 if (ES.ONoff == 1)
                 {
 
-                    //Instantiate(dropItemObj, transform.position, Quaternion.identity);
-                    dropItemObj2.transform.position = eobj2.transform.position;
+                    //Instantiate(check2, transform.position, Quaternion.identity);
+                    ItemSeen.parentObject[1].transform.position = eobj2.transform.position;
                     Destroy(eobj2);
                     Enemyincrease.enemyDeathcnt++;
                 }
@@ -172,8 +168,8 @@ public class EnemyAttack : MonoBehaviour
                 if (ES.ONoff == 1)
                 {
 
-                    //Instantiate(dropItemObj, transform.position, Quaternion.identity);
-                    dropItemObj3.transform.position = eobj3.transform.position;
+                    //Instantiate(check3, transform.position, Quaternion.identity);
+                    ItemSeen.parentObject[2].transform.position = eobj3.transform.position;
                     Destroy(eobj3);
                     Enemyincrease.enemyDeathcnt++;
                 }
@@ -194,8 +190,8 @@ public class EnemyAttack : MonoBehaviour
                 if (ES.ONoff == 1)
                 {
 
-                   // Instantiate(dropItemObj, transform.position, Quaternion.identity);
-                    dropItemObj4.transform.position = eobj4.transform.position;
+                    //Instantiate(check4, transform.position, Quaternion.identity);
+                    ItemSeen.parentObject[3].transform.position = eobj4.transform.position;
                     Destroy(eobj4);
                     Enemyincrease.enemyDeathcnt++;
                 }
