@@ -51,7 +51,7 @@ public class WallScript : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Enemy"))
+        if (other.gameObject.CompareTag("EnemyParts"))
         {
             GameObject eobj = GameObject.FindWithTag("Enemy");
             Enemy E = eobj.GetComponent<Enemy>(); //Enemyに付いているスクリプトを取得
@@ -70,29 +70,6 @@ public class WallScript : MonoBehaviour
             }
         }
 
-        if (other.gameObject.CompareTag("Enemy1"))
-        {
-            EnemySeen ES;
-            /*
-            GameObject eobj = GameObject.Find("Enemy");
-            ES = eobj.GetComponent<EnemySeen>(); //付いているスクリプトを取得
-            */
-            GameObject eobj1 = GameObject.FindWithTag("Enemy1");
-            ES = eobj1.GetComponent<EnemySeen>(); //付いているスクリプトを取得
-
-            if (ES.ONoff == 0)
-            {
-                bc.enabled = false;
-                // Debug.Log("?");
-            }
-            else if (ES.ONoff == 1)
-            {
-                bc.enabled = true;
-                Enemy1.targetPosition = Enemy1.GetRandomPosition();
-                // Debug.Log("!");
-            }
-        }
-
         if (other.gameObject.CompareTag("EnemyG1"))
         {
             EnemySeen ES;
@@ -101,6 +78,7 @@ public class WallScript : MonoBehaviour
             ES = eobj.GetComponent<EnemySeen>(); //付いているスクリプトを取得
             */
             GameObject eobjG1 = GameObject.FindWithTag("EnemyG1");
+            EnemyG1 E = eobjG1.GetComponent<EnemyG1>(); //Enemyに付いているスクリプトを取得
             ES = eobjG1.GetComponent<EnemySeen>(); //付いているスクリプトを取得
 
             if (ES.ONoff == 0)
@@ -111,77 +89,7 @@ public class WallScript : MonoBehaviour
             else if (ES.ONoff == 1)
             {
                 bc.enabled = true;
-                EnemyG1.targetPosition = EnemyG1.GetRandomPosition();
-                // Debug.Log("!");
-            }
-        }
-
-        if (other.gameObject.CompareTag("EnemyG2"))
-        {
-            EnemySeen ES;
-            /*
-            GameObject eobj = GameObject.Find("Enemy");
-            ES = eobj.GetComponent<EnemySeen>(); //付いているスクリプトを取得
-            */
-            GameObject eobjG2 = GameObject.FindWithTag("EnemyG2");
-            ES = eobjG2.GetComponent<EnemySeen>(); //付いているスクリプトを取得
-
-            if (ES.ONoff == 0)
-            {
-                bc.enabled = false;
-                // Debug.Log("?");
-            }
-            else if (ES.ONoff == 1)
-            {
-                bc.enabled = true;
-                EnemyG2.targetPosition = EnemyG2.GetRandomPosition();
-                // Debug.Log("!");
-            }
-        }
-
-        if (other.gameObject.CompareTag("EnemyG3"))
-        {
-            EnemySeen ES;
-            /*
-            GameObject eobj = GameObject.Find("Enemy");
-            ES = eobj.GetComponent<EnemySeen>(); //付いているスクリプトを取得
-            */
-            GameObject eobjG3 = GameObject.FindWithTag("EnemyG3");
-            ES = eobjG3.GetComponent<EnemySeen>(); //付いているスクリプトを取得
-
-            if (ES.ONoff == 0)
-            {
-                bc.enabled = false;
-                // Debug.Log("?");
-            }
-            else if (ES.ONoff == 1)
-            {
-                bc.enabled = true;
-                EnemyG3.targetPosition = EnemyG3.GetRandomPosition();
-                // Debug.Log("!");
-            }
-        }
-
-        if (other.gameObject.CompareTag("EnemyG4"))
-        {
-            EnemySeen ES;
-            /*
-            GameObject eobj = GameObject.Find("Enemy");
-            ES = eobj.GetComponent<EnemySeen>(); //付いているスクリプトを取得
-            */
-            GameObject eobjG4 = GameObject.FindWithTag("EnemyG4");
-            ES = eobjG4.GetComponent<EnemySeen>(); //付いているスクリプトを取得
-
-            if (ES.ONoff == 0)
-            {
-                bc.enabled = false;
-                // Debug.Log("?");
-            }
-            else if (ES.ONoff == 1)
-            {
-                bc.enabled = true;
-                EnemyG4.targetPosition = EnemyG4.GetRandomPosition();
-                // Debug.Log("!");
+                E.targetPosition = GetRandomPosition();
             }
         }
     }

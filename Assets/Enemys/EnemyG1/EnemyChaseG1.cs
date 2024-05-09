@@ -27,7 +27,7 @@ public class EnemyChaseG1 : MonoBehaviour
 
         // 「歩く」のアニメーションを再生する
 
-        
+        /*
         detectionPlayerG1 = Vector3.Distance(transform.position, Player.position);//プレイヤーと敵の位置の計算
 
         if (detectionPlayerG1 <= Detection && ES.ONoff == 1 && (EnemyCubeG1.EnemybeforG1 == false))//Enemyが可視化状態かつプレイヤーが検知範囲に入ったら
@@ -35,6 +35,6 @@ public class EnemyChaseG1 : MonoBehaviour
             EnemyChaseG01 = true;
         }
         
-       
+       */
     }
 }

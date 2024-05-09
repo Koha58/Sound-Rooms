@@ -9,11 +9,18 @@ public class Enemy : MonoBehaviour
     public Transform Player;//プレイヤーを参照
     public  Vector3 targetPosition;//Enemyの目的地
     float ChaseSpeed = 0.025f;//Playerを追いかけるスピード
+    private float Detection = 6f; //プレイヤーを検知する範囲
+    private  bool EnemyChaseOnOff=false ;//Playerの追跡のONOFF 
+   
 
     float Enemystoptime = 0;
     float Enemystoponoff;
 
     public Animator animator;
+
+    public  GameObject eobj;
+    public  EnemySeen ES; // EnemySeenに付いているスクリプトを取得
+   
 
     // Start is called before the first frame update
     void Start()
@@ -27,18 +34,21 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     private  void Update()
     {
+        if(ES.ONoff == 0)
+        {
+            EnemyChaseOnOff = false;
+        }
+
         GameObject obj = GameObject.Find("Player"); //Playerオブジェクトを探す
         PlayerSeen PS = obj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
 
-        GameObject eobj = GameObject.FindWithTag("Enemy");
-        EnemySeen ES = eobj.GetComponent<EnemySeen>(); // EnemySeenに付いているスクリプトを取得
-        EnemyCube EC = eobj.GetComponent<EnemyCube>();// EnemyCubeに付いているスクリプトを取得
-        EnemyChase EChase = eobj.GetComponent<EnemyChase>();// EnemyChaseに付いているスクリプトを取得
-
+        eobj = GameObject.FindWithTag("Enemy");
+        ES = eobj.GetComponent<EnemySeen>(); // EnemySeenに付いているスクリプトを取得
+       
         // 「歩く」のアニメーションを再生する
         animator.SetBool("EnemyWalk", true);
 
-        if (EnemyChase.EnemyChaseOnOff==true)//Enemyが可視化状態かつプレイヤーが検知範囲に入ったら
+        if (EnemyChaseOnOff == true)//Enemyが可視化状態かつプレイヤーが検知範囲に入ったら
         {
             if (PS.onoff == 0)
             {
@@ -51,14 +61,14 @@ public class Enemy : MonoBehaviour
                 PS.onoff = 1;  //見えているから1
             }
 
-            if (PS.onoff == 1 && EnemyChase.EnemyChaseOnOff == true )//Playerが見えているとき
+            if (PS.onoff == 1 && EnemyChaseOnOff == true&&ES.ONoff ==1 )
             {
                 transform.LookAt(Player.transform); //プレイヤーの方向にむく
                 transform.position += transform.forward * ChaseSpeed;//プレイヤーの方向に向かう
             }
            
         }
-        else if (EnemyChase.EnemyChaseOnOff == false || PS.onoff == 0 )//Playerが検知範囲に入っていないまたはPlayerが見えていない
+        else if (EnemyChaseOnOff == false || PS.onoff == 0 )//Playerが検知範囲に入っていないまたはPlayerが見えていない
         {   
                 // targetPositionに向かって移動する
                  transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
@@ -80,6 +90,7 @@ public class Enemy : MonoBehaviour
                 }
             }
         }
+
     }
 
     private  Vector3 GetRandomPosition()
@@ -91,5 +102,19 @@ public class Enemy : MonoBehaviour
 
         // 生成した座標を返す
         return new Vector3(randomX, randomY, randomZ);
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            float detectionPlayer; detectionPlayer = Vector3.Distance(transform.position, Player.position);//プレイヤーと敵の位置の計算
+
+            if (detectionPlayer <= Detection && ES.ONoff == 1)//Enemyが可視化状態かつプレイヤーが検知範囲に入ったら
+            {
+                EnemyChaseOnOff = true;
+
+        
+            }
+        }
     }
 }

@@ -67,7 +67,7 @@ public class Enemywall : MonoBehaviour
 
             if (Enemytouch == 1)
             {
-                EnemyG1.targetPosition = EnemyG1.GetRandomPosition();
+               // EnemyG1.targetPosition = EnemyG1.GetRandomPosition();
                 Enemytouch = 0;
             }
         }

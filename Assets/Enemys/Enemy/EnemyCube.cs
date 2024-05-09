@@ -8,9 +8,9 @@ public class EnemyCube : MonoBehaviour
     private float time =0.0f;
 
     // Start is called before the first frame update
-    void Start()
+    private  void Start()
     {
-       
+        Enemytouch = false;
     }
 
     // Update is called once per frame

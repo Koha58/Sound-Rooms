@@ -5,56 +5,34 @@ using UnityEngine;
 public class EnemyChase : MonoBehaviour
 {
     public Transform Player;//プレイヤーを参照
-    private float Detection = 7f; //プレイヤーを検知する範囲
-    static public  bool EnemyChaseOnOff = false;//Playerの追跡のONOFF 
+    private float Detection = 6f; //プレイヤーを検知する範囲
+    public  bool EnemyChaseOnOff;//Playerの追跡のONOFF 
 
-    private bool Enemytouch;//壁にタッチのonoff
-    private float time = 0.0f;
+    public  GameObject eobj;
+    public  GameObject eobjEC;
+    public  EnemySeen ES;
+  
 
     // Start is called before the first frame update
-    void Start()
+    private  void Start()
     {
-      
+        eobj = GameObject.FindWithTag("Enemy");
+       
+        ES = eobj.GetComponent<EnemySeen>();//EnemySeenに付いているスクリプトを取得
+
+        EnemyChaseOnOff=false ;
     }
 
     // Update is called once per frame
-    private  void Update()
+    private void Update()
     {
-        
-        GameObject eobj = GameObject.FindWithTag("Enemy");
-        EnemySeen ES = eobj.GetComponent<EnemySeen>();//EnemySeenに付いているスクリプトを取得
+        ES = eobj.GetComponent<EnemySeen>();//EnemySeenに付いているスクリプトを取得
 
-        float　detectionPlayer = Vector3.Distance(transform.position, Player.position);//プレイヤーと敵の位置の計算
+        float detectionPlayer; detectionPlayer = Vector3.Distance(transform.position, Player.position);//プレイヤーと敵の位置の計算
 
-        if (detectionPlayer <= Detection && ES.ONoff == 1 && Enemytouch == false )//Enemyが可視化状態かつプレイヤーが検知範囲に入ったら
+        if (detectionPlayer <= Detection && ES.ONoff == 1)//Enemyが可視化状態かつプレイヤーが検知範囲に入ったら
         {
-             EnemyChaseOnOff = true ;
-        }
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-
-        GameObject eobj = GameObject.FindWithTag("Enemy");
-        // Enemyに付いているスクリプトを取得
-        EnemySeen ES = eobj.GetComponent<EnemySeen>();
-
-        if (other.gameObject.CompareTag("Wall"))
-        {
-            Debug.Log("!");
-            if (ES.ONoff == 1)
-            {
-                Enemytouch = true;
-
-                if (Enemytouch == true)
-                {
-                    time += Time.deltaTime;
-                    if (time > 2.0f)
-                    {
-                        Enemytouch = false;
-                    }
-                }
-            }
+            EnemyChaseOnOff = true;
         }
     }
 }
