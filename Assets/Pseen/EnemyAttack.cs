@@ -11,6 +11,7 @@ public class EnemyAttack : MonoBehaviour
    
     EnemySeen ES;
     ButtonHoldDown BD;
+    ItemSearch ISe;
 
     private float seentime = 0.0f; //経過時間記録用
     [SerializeField] public GameObject EnemyAttackArea;
@@ -53,6 +54,8 @@ public class EnemyAttack : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
+        GameObject sobj = GameObject.Find("Player");
+        ISe = sobj.GetComponent<ItemSearch>(); //付いているスクリプトを取得
         GameObject hobj = GameObject.Find("GaugeManager");
         BD = hobj.GetComponent<ButtonHoldDown>(); //付いているスクリプトを取得
 
@@ -79,6 +82,39 @@ public class EnemyAttack : MonoBehaviour
                 //Destroy(eobj);
         }
 
+        if (other.CompareTag("EnemyBack1") && BD.boundHeight >= 2)
+        {
+            stayTimeB += Time.deltaTime;
+            if (stayTimeB > stayTimeF)
+            {
+                GameObject eobj1 = GameObject.FindWithTag("Enemy1");
+                ES = eobj1.GetComponent<EnemySeen>(); //付いているスクリプトを取得
+                if (ES.ONoff == 1)
+                {
+                  // GameObject eobj = GameObject.Find("Enemy1");
+                   //GameObject eobj1 = GameObject.FindWithTag("Enemy1");
+                    Enemyincrease1.isHidden1 = false;
+                        // Enemy1.Enemy01.SetActive(false);
+                        //Destroy(eobj1);
+                        //Debug.Log("1");
+
+                        /*
+                        if (Enemyincrease1.Clone==true)
+                        {
+                            //Debug.Log("2");
+                            //Debug.Log("3");
+                            //GameObject eobj1 = GameObject.FindWithTag("Enemy1");
+                            //Enemyincrease1.isHidden1 = false;
+                           // Destroy(eobj1);
+                           // Enemyincrease1.Clone = false;
+                        }
+                        */
+                }
+            }
+            stayTimeF = 0.0f;
+            stayTimeB = 0.0f;
+        }
+
         if (other.CompareTag("EnemyBackG1") && BD.boundHeight >= 2)
         {
             stayTimeB += Time.deltaTime;
@@ -89,10 +125,27 @@ public class EnemyAttack : MonoBehaviour
                 ES = eobjG1.GetComponent<EnemySeen>(); //付いているスクリプトを取得
                 if (ES.ONoff == 1)
                 {
-
-                    //Instantiate(check1, transform.position, Quaternion.identity);
-                    ItemSeen.parentObject[0].transform.position = eobjG1.transform.position; 
-
+                    if (ItemSeen.parentObject[0] != null)
+                    {
+                        //Instantiate(check1, transform.position, Quaternion.identity);
+                        ItemSeen.parentObject[0].transform.position = eobjG1.transform.position;
+                        ISe.closetObject = ItemSeen.parentObject[0];
+                    }
+                    else if(ItemSeen.parentObject[1] != null)
+                    {
+                        ItemSeen.parentObject[1].transform.position = eobjG1.transform.position;
+                        ISe.closetObject = ItemSeen.parentObject[1];
+                    }
+                    else if (ItemSeen.parentObject[2] != null)
+                    {
+                        ItemSeen.parentObject[2].transform.position = eobjG1.transform.position;
+                        ISe.closetObject = ItemSeen.parentObject[1];
+                    }
+                    else if (ItemSeen.parentObject[3] != null)
+                    {
+                        ItemSeen.parentObject[3].transform.position = eobjG1.transform.position;
+                        ISe.closetObject = ItemSeen.parentObject[3];
+                    }
                     Destroy(eobjG1);
                     Enemyincrease.enemyDeathcnt++;
                 }
@@ -101,6 +154,131 @@ public class EnemyAttack : MonoBehaviour
             stayTimeB = 0.0f;
             //Destroy(eobj);
         }
+
+        if (other.CompareTag("EnemyBackG2") && BD.boundHeight >= 2)
+        {
+            stayTimeB += Time.deltaTime;
+            // GameObject eobj = GameObject.Find("Enemy");
+            if (stayTimeB > stayTimeF)
+            {
+                GameObject eobj2 = GameObject.FindWithTag("EnemyG2");
+                ES = eobj2.GetComponent<EnemySeen>(); //付いているスクリプトを取得
+                if (ES.ONoff == 1)
+                {
+                    if (ItemSeen.parentObject[0] != null)
+                    {
+                        ItemSeen.parentObject[0].transform.position = eobj2.transform.position;
+                        ISe.closetObject = ItemSeen.parentObject[0];
+                    }
+                    else if (ItemSeen.parentObject[1] != null)
+                    {
+                        //Instantiate(check2, transform.position, Quaternion.identity);
+                        ItemSeen.parentObject[1].transform.position = eobj2.transform.position;
+                        ISe.closetObject = ItemSeen.parentObject[1];
+                    }
+                    else if (ItemSeen.parentObject[2] != null)
+                    {
+                        //Instantiate(check2, transform.position, Quaternion.identity);
+                        ItemSeen.parentObject[2].transform.position = eobj2.transform.position;
+                        ISe.closetObject = ItemSeen.parentObject[2];
+                    }
+                    else if (ItemSeen.parentObject[3] != null)
+                    {
+                        //Instantiate(check2, transform.position, Quaternion.identity);
+                        ItemSeen.parentObject[3].transform.position = eobj2.transform.position;
+                        ISe.closetObject = ItemSeen.parentObject[3];
+                    }
+                    Destroy(eobj2);
+                    Enemyincrease.enemyDeathcnt++;
+                }
+            }
+            stayTimeF = 0.0f;
+            stayTimeB = 0.0f;
+            //Destroy(eobj);
+        }
+
+        if (other.CompareTag("EnemyBackG3") && BD.boundHeight >= 2)
+        {
+            stayTimeB += Time.deltaTime;
+            // GameObject eobj = GameObject.Find("Enemy");
+            if (stayTimeB > stayTimeF)
+            {
+                GameObject eobj3 = GameObject.FindWithTag("EnemyG3");
+                ES = eobj3.GetComponent<EnemySeen>(); //付いているスクリプトを取得
+                if (ES.ONoff == 1)
+                {
+                    if (ItemSeen.parentObject[0] != null)
+                    {
+                        ItemSeen.parentObject[0].transform.position = eobj3.transform.position;
+                        ISe.closetObject = ItemSeen.parentObject[0];
+                    }
+                    else if (ItemSeen.parentObject[1] != null)
+                    {
+                        //Instantiate(check3, transform.position, Quaternion.identity);
+                        ItemSeen.parentObject[1].transform.position = eobj3.transform.position;
+                        ISe.closetObject = ItemSeen.parentObject[1];
+                    }
+                    else if (ItemSeen.parentObject[2] != null)
+                    {
+                        ItemSeen.parentObject[2].transform.position = eobj3.transform.position;
+                        ISe.closetObject = ItemSeen.parentObject[2];
+                    }
+                    else if (ItemSeen.parentObject[3] != null)
+                    {
+                        ItemSeen.parentObject[3].transform.position = eobj3.transform.position;
+                        ISe.closetObject = ItemSeen.parentObject[3];
+                    }
+                
+                    Destroy(eobj3);
+                    Enemyincrease.enemyDeathcnt++;
+                }
+            }
+            stayTimeF = 0.0f;
+            stayTimeB = 0.0f;
+            //Destroy(eobj);
+        }
+
+        if (other.CompareTag("EnemyBackG4") && BD.boundHeight >= 2)
+        {
+            stayTimeB += Time.deltaTime;
+            // GameObject eobj = GameObject.Find("Enemy");
+            if (stayTimeB > stayTimeF)
+            {
+                GameObject eobj4 = GameObject.FindWithTag("EnemyG4");
+                ES = eobj4.GetComponent<EnemySeen>(); //付いているスクリプトを取得
+                if (ES.ONoff == 1)
+                {
+                    if (ItemSeen.parentObject[0] != null)
+                    {
+                        ItemSeen.parentObject[0].transform.position = eobj4.transform.position;
+                        ISe.closetObject = ItemSeen.parentObject[0];
+                    }
+                    else if (ItemSeen.parentObject[1] != null)
+                    {
+                        //Instantiate(check4, transform.position, Quaternion.identity);
+                        ItemSeen.parentObject[1].transform.position = eobj4.transform.position;
+                        ISe.closetObject = ItemSeen.parentObject[1];
+                    }
+                    else if (ItemSeen.parentObject[2] != null)
+                    {
+                        ItemSeen.parentObject[2].transform.position = eobj4.transform.position;
+                        ISe.closetObject = ItemSeen.parentObject[2];
+                    }
+                    else if (ItemSeen.parentObject[3] != null)
+                    {
+                        ItemSeen.parentObject[3].transform.position = eobj4.transform.position;
+                        ISe.closetObject = ItemSeen.parentObject[3];
+                    }
+                    Destroy(eobj4);
+                    Enemyincrease.enemyDeathcnt++;
+                }
+            }
+            stayTimeF = 0.0f;
+            stayTimeB = 0.0f;
+            //Destroy(eobj);
+        }
+        //GameObject iobj = GameObject.Find("SeenArea");
+        //IS = iobj.GetComponent<ItemSeen>(); //付いているスクリプトを取得
 
         if (ItemSeen.Box.activeSelf == true)
         {
