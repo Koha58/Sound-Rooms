@@ -11,6 +11,7 @@ public class EnemyAttack : MonoBehaviour
    
     EnemySeen ES;
     ButtonHoldDown BD;
+    ItemSearch ISe;
 
     private float seentime = 0.0f; //経過時間記録用
     [SerializeField] public GameObject EnemyAttackArea;
@@ -53,6 +54,8 @@ public class EnemyAttack : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
+        GameObject sobj = GameObject.Find("Player");
+        ISe = sobj.GetComponent<ItemSearch>(); //付いているスクリプトを取得
         GameObject hobj = GameObject.Find("GaugeManager");
         BD = hobj.GetComponent<ButtonHoldDown>(); //付いているスクリプトを取得
 
@@ -122,10 +125,27 @@ public class EnemyAttack : MonoBehaviour
                 ES = eobjG1.GetComponent<EnemySeen>(); //付いているスクリプトを取得
                 if (ES.ONoff == 1)
                 {
-
-                    //Instantiate(check1, transform.position, Quaternion.identity);
-                    ItemSeen.parentObject[0].transform.position = eobjG1.transform.position; 
-
+                    if (ItemSeen.parentObject[0] != null)
+                    {
+                        //Instantiate(check1, transform.position, Quaternion.identity);
+                        ItemSeen.parentObject[0].transform.position = eobjG1.transform.position;
+                        ISe.closetObject = ItemSeen.parentObject[0];
+                    }
+                    else if(ItemSeen.parentObject[1] != null)
+                    {
+                        ItemSeen.parentObject[1].transform.position = eobjG1.transform.position;
+                        ISe.closetObject = ItemSeen.parentObject[1];
+                    }
+                    else if (ItemSeen.parentObject[2] != null)
+                    {
+                        ItemSeen.parentObject[2].transform.position = eobjG1.transform.position;
+                        ISe.closetObject = ItemSeen.parentObject[1];
+                    }
+                    else if (ItemSeen.parentObject[3] != null)
+                    {
+                        ItemSeen.parentObject[3].transform.position = eobjG1.transform.position;
+                        ISe.closetObject = ItemSeen.parentObject[3];
+                    }
                     Destroy(eobjG1);
                     Enemyincrease.enemyDeathcnt++;
                 }
@@ -145,9 +165,29 @@ public class EnemyAttack : MonoBehaviour
                 ES = eobj2.GetComponent<EnemySeen>(); //付いているスクリプトを取得
                 if (ES.ONoff == 1)
                 {
-
-                    //Instantiate(check2, transform.position, Quaternion.identity);
-                    ItemSeen.parentObject[1].transform.position = eobj2.transform.position;
+                    if (ItemSeen.parentObject[0] != null)
+                    {
+                        ItemSeen.parentObject[0].transform.position = eobj2.transform.position;
+                        ISe.closetObject = ItemSeen.parentObject[0];
+                    }
+                    else if (ItemSeen.parentObject[1] != null)
+                    {
+                        //Instantiate(check2, transform.position, Quaternion.identity);
+                        ItemSeen.parentObject[1].transform.position = eobj2.transform.position;
+                        ISe.closetObject = ItemSeen.parentObject[1];
+                    }
+                    else if (ItemSeen.parentObject[2] != null)
+                    {
+                        //Instantiate(check2, transform.position, Quaternion.identity);
+                        ItemSeen.parentObject[2].transform.position = eobj2.transform.position;
+                        ISe.closetObject = ItemSeen.parentObject[2];
+                    }
+                    else if (ItemSeen.parentObject[3] != null)
+                    {
+                        //Instantiate(check2, transform.position, Quaternion.identity);
+                        ItemSeen.parentObject[3].transform.position = eobj2.transform.position;
+                        ISe.closetObject = ItemSeen.parentObject[3];
+                    }
                     Destroy(eobj2);
                     Enemyincrease.enemyDeathcnt++;
                 }
@@ -167,9 +207,28 @@ public class EnemyAttack : MonoBehaviour
                 ES = eobj3.GetComponent<EnemySeen>(); //付いているスクリプトを取得
                 if (ES.ONoff == 1)
                 {
-
-                    //Instantiate(check3, transform.position, Quaternion.identity);
-                    ItemSeen.parentObject[2].transform.position = eobj3.transform.position;
+                    if (ItemSeen.parentObject[0] != null)
+                    {
+                        ItemSeen.parentObject[0].transform.position = eobj3.transform.position;
+                        ISe.closetObject = ItemSeen.parentObject[0];
+                    }
+                    else if (ItemSeen.parentObject[1] != null)
+                    {
+                        //Instantiate(check3, transform.position, Quaternion.identity);
+                        ItemSeen.parentObject[1].transform.position = eobj3.transform.position;
+                        ISe.closetObject = ItemSeen.parentObject[1];
+                    }
+                    else if (ItemSeen.parentObject[2] != null)
+                    {
+                        ItemSeen.parentObject[2].transform.position = eobj3.transform.position;
+                        ISe.closetObject = ItemSeen.parentObject[2];
+                    }
+                    else if (ItemSeen.parentObject[3] != null)
+                    {
+                        ItemSeen.parentObject[3].transform.position = eobj3.transform.position;
+                        ISe.closetObject = ItemSeen.parentObject[3];
+                    }
+                
                     Destroy(eobj3);
                     Enemyincrease.enemyDeathcnt++;
                 }
@@ -189,9 +248,27 @@ public class EnemyAttack : MonoBehaviour
                 ES = eobj4.GetComponent<EnemySeen>(); //付いているスクリプトを取得
                 if (ES.ONoff == 1)
                 {
-
-                    //Instantiate(check4, transform.position, Quaternion.identity);
-                    ItemSeen.parentObject[3].transform.position = eobj4.transform.position;
+                    if (ItemSeen.parentObject[0] != null)
+                    {
+                        ItemSeen.parentObject[0].transform.position = eobj4.transform.position;
+                        ISe.closetObject = ItemSeen.parentObject[0];
+                    }
+                    else if (ItemSeen.parentObject[1] != null)
+                    {
+                        //Instantiate(check4, transform.position, Quaternion.identity);
+                        ItemSeen.parentObject[1].transform.position = eobj4.transform.position;
+                        ISe.closetObject = ItemSeen.parentObject[1];
+                    }
+                    else if (ItemSeen.parentObject[2] != null)
+                    {
+                        ItemSeen.parentObject[2].transform.position = eobj4.transform.position;
+                        ISe.closetObject = ItemSeen.parentObject[2];
+                    }
+                    else if (ItemSeen.parentObject[3] != null)
+                    {
+                        ItemSeen.parentObject[3].transform.position = eobj4.transform.position;
+                        ISe.closetObject = ItemSeen.parentObject[3];
+                    }
                     Destroy(eobj4);
                     Enemyincrease.enemyDeathcnt++;
                 }

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028331, g: 0.2257133, b: 0.3069217, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -894,7 +894,6 @@ MonoBehaviour:
   SeenArea: {fileID: 158329096}
   ItemCanvas: {fileID: 1552007102}
   Wall: {fileID: 491960240}
-  parentObject: []
 --- !u!114 &158329102
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2751,12 +2750,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d69754a57dd27f0468e06f91b44ab9f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &503824622 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8209607689113787381, guid: ae99f31535f6d7a43af5057ab682ad94,
-    type: 3}
-  m_PrefabInstance: {fileID: 1146101312}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &509617297
 GameObject:
   m_ObjectHideFlags: 0
@@ -3964,12 +3957,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Player: {fileID: 135133355}
---- !u!1 &584936822 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8209607689113787381, guid: ae99f31535f6d7a43af5057ab682ad94,
-    type: 3}
-  m_PrefabInstance: {fileID: 203519263}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &595296904
 GameObject:
   m_ObjectHideFlags: 0
@@ -6006,10 +5993,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EnemyAttackArea: {fileID: 884803080}
-  dropItemObj: {fileID: 503824622}
-  dropItemObj2: {fileID: 584936822}
-  dropItemObj3: {fileID: 1299823217}
-  dropItemObj4: {fileID: 2121695210}
 --- !u!54 &884803083
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -8466,7 +8449,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1232189593
 Transform:
   m_ObjectHideFlags: 0
@@ -9058,12 +9041,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.04613289, y: 0.017496236, z: 0.016790122}
   m_Center: {x: 0.014616193, y: 0.00077193603, z: -0.000000044703484}
---- !u!1 &1299823217 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8209607689113787381, guid: ae99f31535f6d7a43af5057ab682ad94,
-    type: 3}
-  m_PrefabInstance: {fileID: 1326592623}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1301373052
 GameObject:
   m_ObjectHideFlags: 0
@@ -14107,12 +14084,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2121568735}
   m_CullTransparentMesh: 1
---- !u!1 &2121695210 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8209607689113787381, guid: ae99f31535f6d7a43af5057ab682ad94,
-    type: 3}
-  m_PrefabInstance: {fileID: 1344835051}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2129508999 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3654934372253022927, guid: 8266a280937f7414395bc0bee7c51c5e,
