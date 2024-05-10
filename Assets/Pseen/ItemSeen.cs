@@ -22,6 +22,7 @@ public class ItemSeen : MonoBehaviour
     public static GameObject Box1;
     public static GameObject[] parentObject;
     private string objName;
+    private bool keynull = false;
 
     void Start()
     {
@@ -106,50 +107,57 @@ public class ItemSeen : MonoBehaviour
             seentime += Time.deltaTime;
             if (seentime >= 10.0f)
             {
-                if (parentObject[0] != null)
+                if (!keynull)
                 {
-                    GameObject Key1 = parentObject[0];
-                    // 子オブジェクトの数を取得
-                    int childCount1 = Key1.transform.childCount;
-                    for (int i = 0; i < childCount1; i++)
+                    if (parentObject[0] != null)
                     {
-                        Transform childTransform = Key1.transform.GetChild(i);
-                        GameObject childObject = childTransform.gameObject;
-                        childObject.GetComponent<Renderer>().enabled = false;
+                        GameObject Key1 = parentObject[0];
+                        // 子オブジェクトの数を取得
+                        int childCount1 = Key1.transform.childCount;
+                        for (int i = 0; i < childCount1; i++)
+                        {
+                            Transform childTransform = Key1.transform.GetChild(i);
+                            GameObject childObject = childTransform.gameObject;
+                            childObject.GetComponent<Renderer>().enabled = false;
+                        }
                     }
-                }
-                if (parentObject[1] != null)
-                {
-                    GameObject Key2 = parentObject[1];
-                    // 子オブジェクトの数を取得
-                    int childCount2 = Key2.transform.childCount;
-                    for (int a = 0; a < childCount2; a++)
+                    else if (parentObject[1] != null)
                     {
-                        Transform childTransform = Key2.transform.GetChild(a);
-                        GameObject childObject = childTransform.gameObject;
-                        childObject.GetComponent<Renderer>().enabled = false;
+                        GameObject Key2 = parentObject[1];
+                        // 子オブジェクトの数を取得
+                        int childCount2 = Key2.transform.childCount;
+                        for (int a = 0; a < childCount2; a++)
+                        {
+                            Transform childTransform = Key2.transform.GetChild(a);
+                            GameObject childObject = childTransform.gameObject;
+                            childObject.GetComponent<Renderer>().enabled = false;
+                        }
                     }
-                }
-                if (parentObject[2] != null)
-                {
-                    GameObject Key3 = parentObject[2];
-                    int childCount3 = Key3.transform.childCount;
-                    for (int b = 0; b < childCount3; b++)
+                    else if (parentObject[2] != null)
                     {
-                        Transform childTransform = Key3.transform.GetChild(b);
-                        GameObject childObject = childTransform.gameObject;
-                        childObject.GetComponent<Renderer>().enabled = false;
+                        GameObject Key3 = parentObject[2];
+                        int childCount3 = Key3.transform.childCount;
+                        for (int b = 0; b < childCount3; b++)
+                        {
+                            Transform childTransform = Key3.transform.GetChild(b);
+                            GameObject childObject = childTransform.gameObject;
+                            childObject.GetComponent<Renderer>().enabled = false;
+                        }
                     }
-                }
-                if (parentObject[3] != null)
-                {
-                    GameObject Key4 = parentObject[3];
-                    int childCount4 = Key4.transform.childCount;
-                    for (int c = 0; c < childCount4; c++)
+                    else if (parentObject[3] != null)
                     {
-                        Transform childTransform = Key4.transform.GetChild(c);
-                        GameObject childObject = childTransform.gameObject;
-                        childObject.GetComponent<Renderer>().enabled = false;
+                        GameObject Key4 = parentObject[3];
+                        int childCount4 = Key4.transform.childCount;
+                        for (int c = 0; c < childCount4; c++)
+                        {
+                            Transform childTransform = Key4.transform.GetChild(c);
+                            GameObject childObject = childTransform.gameObject;
+                            childObject.GetComponent<Renderer>().enabled = false;
+                        }
+                    }
+                    else
+                    {
+                        keynull = true;
                     }
                 }
 
@@ -182,62 +190,203 @@ public class ItemSeen : MonoBehaviour
         Box = BoxSeen.transform.Find("cardboard (1)").gameObject;
         Box1 = BoxSeen.transform.Find("cardboard").gameObject;
         parentObject = GameObject.FindGameObjectsWithTag("Item");
-        GameObject Key1 = parentObject[0];
-        GameObject Key2 = parentObject[1];
-        GameObject Key3 = parentObject[2];
-        GameObject Key4 = parentObject[3];
         GameObject doorObject = GameObject.Find("Door1");
         objName = other.gameObject.name;
         //接触したオブジェクトのタグが"Item"のとき
-        if (objName == "key 1 (1)" && parentObject[0] != null)
+        if (objName == "key 1 (1)")
         {
-            // 子オブジェクトの数を取得
-            int childCount1 = Key1.transform.childCount;
-            for (int i = 0; i < childCount1; i++)
+            if (parentObject[0] != null)
             {
-                Transform childTransform = Key1.transform.GetChild(i);
-                GameObject childObject = childTransform.gameObject;
-                childObject.GetComponent<Renderer>().enabled = true;
+                GameObject Key1 = parentObject[0];
+                // 子オブジェクトの数を取得
+                int childCount1 = Key1.transform.childCount;
+                for (int i = 0; i < childCount1; i++)
+                {
+                    Transform childTransform = Key1.transform.GetChild(i);
+                    GameObject childObject = childTransform.gameObject;
+                    childObject.GetComponent<Renderer>().enabled = true;
+                }
             }
-            /*
-            // 子オブジェクトの数を取得
-            int childCount = parentObject.transform.childCount;
-            for (int i = 0; i < childCount; i++)
+            else if (parentObject[1] != null)
             {
-                Transform childTransform = parentObject.transform.GetChild(i);
-                GameObject childObject = childTransform.gameObject;
-                childObject.GetComponent<Renderer>().enabled = true;
-            }*/
-        }
-        else if(objName == "key 1" && parentObject[1] != null)
-        {
-            // 子オブジェクトの数を取得
-            int childCount2 = Key2.transform.childCount;
-            for (int a = 0; a < childCount2; a++)
+                GameObject Key1 = parentObject[1];
+                // 子オブジェクトの数を取得
+                int childCount1 = Key1.transform.childCount;
+                for (int i = 0; i < childCount1; i++)
+                {
+                    Transform childTransform = Key1.transform.GetChild(i);
+                    GameObject childObject = childTransform.gameObject;
+                    childObject.GetComponent<Renderer>().enabled = true;
+                }
+            }
+            else if (parentObject[2] != null)
             {
-                Transform childTransform = Key2.transform.GetChild(a);
-                GameObject childObject = childTransform.gameObject;
-                childObject.GetComponent<Renderer>().enabled = true;
+                GameObject Key1 = parentObject[2];
+                // 子オブジェクトの数を取得
+                int childCount1 = Key1.transform.childCount;
+                for (int i = 0; i < childCount1; i++)
+                {
+                    Transform childTransform = Key1.transform.GetChild(i);
+                    GameObject childObject = childTransform.gameObject;
+                    childObject.GetComponent<Renderer>().enabled = true;
+                }
+            }
+            else if (parentObject[3] != null)
+            {
+                GameObject Key1 = parentObject[3];
+                // 子オブジェクトの数を取得
+                int childCount1 = Key1.transform.childCount;
+                for (int i = 0; i < childCount1; i++)
+                {
+                    Transform childTransform = Key1.transform.GetChild(i);
+                    GameObject childObject = childTransform.gameObject;
+                    childObject.GetComponent<Renderer>().enabled = true;
+                }
             }
         }
-        else if (objName == "key 1 (2)" && parentObject[2] != null)
+        else if(objName == "key 1")
         {
-            int childCount3 = Key3.transform.childCount;
-            for (int b = 0; b < childCount3; b++)
+            if (parentObject[0] != null)
             {
-                Transform childTransform = Key3.transform.GetChild(b);
-                GameObject childObject = childTransform.gameObject;
-                childObject.GetComponent<Renderer>().enabled = true;
+                GameObject Key2 = parentObject[0];
+                // 子オブジェクトの数を取得
+                int childCount2 = Key2.transform.childCount;
+                for (int a = 0; a < childCount2; a++)
+                {
+                    Transform childTransform = Key2.transform.GetChild(a);
+                    GameObject childObject = childTransform.gameObject;
+                    childObject.GetComponent<Renderer>().enabled = true;
+                }
+            }
+            else if (parentObject[1] != null)
+            {
+                GameObject Key2 = parentObject[1];
+                // 子オブジェクトの数を取得
+                int childCount2 = Key2.transform.childCount;
+                for (int a = 0; a < childCount2; a++)
+                {
+                    Transform childTransform = Key2.transform.GetChild(a);
+                    GameObject childObject = childTransform.gameObject;
+                    childObject.GetComponent<Renderer>().enabled = true;
+                }
+            }
+            else if (parentObject[2] != null)
+            {
+                GameObject Key2 = parentObject[2];
+                // 子オブジェクトの数を取得
+                int childCount2 = Key2.transform.childCount;
+                for (int a = 0; a < childCount2; a++)
+                {
+                    Transform childTransform = Key2.transform.GetChild(a);
+                    GameObject childObject = childTransform.gameObject;
+                    childObject.GetComponent<Renderer>().enabled = true;
+                }
+            }
+            else if (parentObject[3] != null)
+            {
+                GameObject Key2 = parentObject[3];
+                // 子オブジェクトの数を取得
+                int childCount2 = Key2.transform.childCount;
+                for (int a = 0; a < childCount2; a++)
+                {
+                    Transform childTransform = Key2.transform.GetChild(a);
+                    GameObject childObject = childTransform.gameObject;
+                    childObject.GetComponent<Renderer>().enabled = true;
+                }
             }
         }
-        else if (objName == "key 1 (3)" && parentObject[3] != null)
+        else if (objName == "key 1 (2)")
         {
-            int childCount4 = Key4.transform.childCount;
-            for (int c = 0; c < childCount4; c++)
+            if (parentObject[0] != null)
             {
-                Transform childTransform = Key4.transform.GetChild(c);
-                GameObject childObject = childTransform.gameObject;
-                childObject.GetComponent<Renderer>().enabled = true;
+                GameObject Key3 = parentObject[0];
+                int childCount3 = Key3.transform.childCount;
+                for (int b = 0; b < childCount3; b++)
+                {
+                    Transform childTransform = Key3.transform.GetChild(b);
+                    GameObject childObject = childTransform.gameObject;
+                    childObject.GetComponent<Renderer>().enabled = true;
+                }
+            }
+            else if (parentObject[1] != null)
+            {
+                GameObject Key3 = parentObject[1];
+                int childCount3 = Key3.transform.childCount;
+                for (int b = 0; b < childCount3; b++)
+                {
+                    Transform childTransform = Key3.transform.GetChild(b);
+                    GameObject childObject = childTransform.gameObject;
+                    childObject.GetComponent<Renderer>().enabled = true;
+                }
+            }
+            else if (parentObject[2] != null)
+            {
+                GameObject Key3 = parentObject[2];
+                int childCount3 = Key3.transform.childCount;
+                for (int b = 0; b < childCount3; b++)
+                {
+                    Transform childTransform = Key3.transform.GetChild(b);
+                    GameObject childObject = childTransform.gameObject;
+                    childObject.GetComponent<Renderer>().enabled = true;
+                }
+            }
+            else if (parentObject[3] != null)
+            {
+                GameObject Key3 = parentObject[3];
+                int childCount3 = Key3.transform.childCount;
+                for (int b = 0; b < childCount3; b++)
+                {
+                    Transform childTransform = Key3.transform.GetChild(b);
+                    GameObject childObject = childTransform.gameObject;
+                    childObject.GetComponent<Renderer>().enabled = true;
+                }
+            }
+        }
+        else if (objName == "key 1 (3)")
+        {
+            if (parentObject[0] != null)
+            {
+                GameObject Key4 = parentObject[0];
+                int childCount4 = Key4.transform.childCount;
+                for (int c = 0; c < childCount4; c++)
+                {
+                    Transform childTransform = Key4.transform.GetChild(c);
+                    GameObject childObject = childTransform.gameObject;
+                    childObject.GetComponent<Renderer>().enabled = true;
+                }
+            }
+            else if (parentObject[1] != null)
+            {
+                GameObject Key4 = parentObject[1];
+                int childCount4 = Key4.transform.childCount;
+                for (int c = 0; c < childCount4; c++)
+                {
+                    Transform childTransform = Key4.transform.GetChild(c);
+                    GameObject childObject = childTransform.gameObject;
+                    childObject.GetComponent<Renderer>().enabled = true;
+                }
+            }
+            else if (parentObject[2] != null)
+            {
+                GameObject Key4 = parentObject[2];
+                int childCount4 = Key4.transform.childCount;
+                for (int c = 0; c < childCount4; c++)
+                {
+                    Transform childTransform = Key4.transform.GetChild(c);
+                    GameObject childObject = childTransform.gameObject;
+                    childObject.GetComponent<Renderer>().enabled = true;
+                }
+            }
+            else if (parentObject[3] != null)
+            {
+                GameObject Key4 = parentObject[3];
+                int childCount4 = Key4.transform.childCount;
+                for (int c = 0; c < childCount4; c++)
+                {
+                    Transform childTransform = Key4.transform.GetChild(c);
+                    GameObject childObject = childTransform.gameObject;
+                    childObject.GetComponent<Renderer>().enabled = true;
+                }
             }
         }
 

@@ -45,25 +45,28 @@ public class ItemSearch : MonoBehaviour
                 ItemSearchArea.Remove(ItemSearchArea[i]);
                 return;
             }
-            float distance = Vector3.Distance(transform.position, ItemSearchArea[i].transform.position);
-            if (closetDistance > distance)
+            if (closetObject != null)
             {
-                closetDistance = distance;
-                closetObject = ItemSearchArea[i].gameObject;
-            }
-            //一定距離離れたらItemSearchAreaからオブジェクトを取り除く。
-            if (distance > 6f)
-            {
-                if (closetObject == ItemSearchArea[i].gameObject)
+                float distance = Vector3.Distance(transform.position, closetObject.transform.position);
+                if (closetDistance > distance)
                 {
-                    closetObject = null;
+                    closetDistance = distance;
+                    //closetObject = ItemSearchArea[i].gameObject;
                 }
-                ItemSearchArea.Remove(ItemSearchArea[i]);
+                //一定距離離れたらItemSearchAreaからオブジェクトを取り除く。
+                if (distance > 6f || IS.onoff == 0)
+                {
+                    if (closetObject == ItemSearchArea[i].gameObject)
+                    {
+                        //closetObject = null;
+                    }
+                    ItemSearchArea.Remove(ItemSearchArea[i]);
+                }
             }
         }
         //PlayerSeen playerseen = GetComponent<PlayerSeen>();
         //最も近いアイテムが一定の距離内にある場合、アイテムの説明UIを表示。Eキーを押すと拾える。
-        if (closetObject == null) return;
+        //if (closetObject == null) return;
         if (closetDistance < 1.5f)
         {
             ItemCanvas.GetComponent<Canvas>().enabled = true;
@@ -86,6 +89,7 @@ public class ItemSearch : MonoBehaviour
             closetObject = null;
             count += 1;
             SetCountText();
+            ItemSearchArea.Clear();
         }
     }
 
