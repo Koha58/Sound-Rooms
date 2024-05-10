@@ -26,7 +26,7 @@ public class GameClear : MonoBehaviour
 
         if (other.gameObject.tag == "Door")
         {
-            if(ISe.count == 1)
+            if(ISe.count == 4)
             {
                 SceneManager.LoadScene("GameClear");
             }

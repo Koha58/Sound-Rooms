@@ -22,7 +22,7 @@ public class ItemSeen : MonoBehaviour
     public static GameObject Box1;
     public static GameObject[] parentObject;
     private string objName;
-    private bool keynull = false;
+    ItemSearch ISe;
 
     void Start()
     {
@@ -94,6 +94,8 @@ public class ItemSeen : MonoBehaviour
         Box1 = BoxSeen.transform.Find("cardboard").gameObject;
         parentObject = GameObject.FindGameObjectsWithTag("Item");
         GameObject doorObject = GameObject.Find("Door1");
+        GameObject isobj = GameObject.Find("Player");
+        ISe = isobj.GetComponent<ItemSearch>(); //付いているスクリプトを取得
         //左クリックで範囲内を可視化
         if (Input.GetMouseButtonUp(0))
         {
@@ -107,7 +109,7 @@ public class ItemSeen : MonoBehaviour
             seentime += Time.deltaTime;
             if (seentime >= 10.0f)
             {
-                if (!keynull)
+                if (ISe.count != 4)
                 {
                     if (parentObject[0] != null)
                     {
@@ -154,10 +156,6 @@ public class ItemSeen : MonoBehaviour
                             GameObject childObject = childTransform.gameObject;
                             childObject.GetComponent<Renderer>().enabled = false;
                         }
-                    }
-                    else
-                    {
-                        keynull = true;
                     }
                 }
 
