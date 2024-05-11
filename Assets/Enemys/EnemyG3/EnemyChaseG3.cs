@@ -29,9 +29,6 @@ public class EnemyChaseG3 : MonoBehaviour
 
         detectionPlayerG3 = Vector3.Distance(transform.position, Player.position);//プレイヤーと敵の位置の計算
 
-        if (detectionPlayerG3 <= Detection && ES.ONoff == 1 && (EnemyCubeG3.EnemybeforG3 == false))//Enemyが可視化状態かつプレイヤーが検知範囲に入ったら
-        {
-            EnemyChaseG03 = true;
-        }
+        
     }
 }

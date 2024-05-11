@@ -33,17 +33,19 @@ public class EnemyG1 : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if (ES.ONoff == 0)
-        {
-            EnemyChaseOnOff = false;
-        }
-
         GameObject obj = GameObject.Find("Player"); //Playerオブジェクトを探す
         PlayerSeen PS = obj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
 
         eobj = GameObject.FindWithTag("EnemyG1");
         ES = eobj.GetComponent<EnemySeen>(); // EnemySeenに付いているスクリプトを取得
 
+
+        if (ES.ONoff == 0)
+        {
+            EnemyChaseOnOff = false;
+        }
+
+       
         // 「歩く」のアニメーションを再生する
         animator.SetBool("EnemyWalkG2", true);
 

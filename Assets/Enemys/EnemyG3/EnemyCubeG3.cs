@@ -4,46 +4,40 @@ using UnityEngine;
 
 public class EnemyCubeG3 : MonoBehaviour
 {
-    static public bool EnemybeforG3 = false;
-    float befortimeG3 = 0;
-    public float EnemytouchG3 = 0;
+    private bool Enemytouch;//壁にタッチのonoff
+    private float time = 0.0f;
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-
+        Enemytouch = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (EnemybeforG3 == true)
-        {
-            befortimeG3 += Time.deltaTime;
-            if (befortimeG3 > 2.0f)
-            {
-                befortimeG3 = 0;
-                EnemybeforG3= false;
-            }
-        }
+
     }
     private void OnTriggerEnter(Collider other)
     {
-        EnemySeen ES;
+
         GameObject eobj = GameObject.FindWithTag("EnemyG3");
-        ES = eobj.GetComponent<EnemySeen>(); //付いているスクリプトを取得
+        // Enemyに付いているスクリプトを取得
+        EnemySeen ES = eobj.GetComponent<EnemySeen>();
+
         if (other.gameObject.CompareTag("Wall"))
         {
-
             if (ES.ONoff == 1)
             {
-                EnemybeforG3 = true;
-                EnemytouchG3++;
+                Enemytouch = true;
 
-                if (EnemytouchG3 == 1)
+                if (Enemytouch == true)
                 {
-                    EnemyG3.targetPosition = EnemyG3.GetRandomPosition();
-                    EnemytouchG3 = 0;
+                    time += Time.deltaTime;
+                    if (time > 2.0f)
+                    {
+                        Enemytouch = false;
+                    }
                 }
             }
         }

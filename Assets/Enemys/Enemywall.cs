@@ -71,7 +71,7 @@ public class Enemywall : MonoBehaviour
                 Enemytouch = 0;
             }
         }
-
+        /*
         if (other.gameObject.CompareTag("EnemyG2"))
         {
             Enemytouch++;
@@ -80,7 +80,7 @@ public class Enemywall : MonoBehaviour
             /*
             GameObject eobj = GameObject.Find("Enemy");
             ES = eobj.GetComponent<EnemySeen>(); //付いているスクリプトを取得
-            */
+            
             GameObject eobj = GameObject.FindWithTag("EnemyG2");
             ES = eobj.GetComponent<EnemySeen>(); //付いているスクリプトを取得
 
@@ -99,7 +99,7 @@ public class Enemywall : MonoBehaviour
             /*
             GameObject eobj = GameObject.Find("Enemy");
             ES = eobj.GetComponent<EnemySeen>(); //付いているスクリプトを取得
-            */
+            
             GameObject eobj = GameObject.FindWithTag("EnemyG3");
             ES = eobj.GetComponent<EnemySeen>(); //付いているスクリプトを取得
 
@@ -118,7 +118,7 @@ public class Enemywall : MonoBehaviour
             /*
             GameObject eobj = GameObject.Find("Enemy");
             ES = eobj.GetComponent<EnemySeen>(); //付いているスクリプトを取得
-            */
+            
             GameObject eobj = GameObject.FindWithTag("EnemyG4");
             ES = eobj.GetComponent<EnemySeen>(); //付いているスクリプトを取得
 
@@ -128,6 +128,7 @@ public class Enemywall : MonoBehaviour
                 Enemytouch = 0;
             }
         }
+        */
     }
     private Vector3 GetRandomPosition()
     {

@@ -6,7 +6,7 @@ public class EnemyFootstepsG3 : MonoBehaviour
 {
     public AudioClip footstepSound;     // 足音のオーディオクリップ
     public AudioSource audioSource;     // オーディオソース
-    public float volume = 10f;          // 音量
+    public float volume = 30f;          // 音量
     public bool Soundonoff = true;
 
     private void Start()
