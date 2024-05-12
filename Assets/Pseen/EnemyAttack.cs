@@ -17,6 +17,7 @@ public class EnemyAttack : MonoBehaviour
     [SerializeField] public GameObject EnemyAttackArea;
 
     Rigidbody rb;
+    Rigidbody rb1;
 
     private float stayTimeF = 0;
     private float stayTimeB = 0;
@@ -275,17 +276,15 @@ public class EnemyAttack : MonoBehaviour
             }
             stayTimeF = 0.0f;
             stayTimeB = 0.0f;
-            //Destroy(eobj);
         }
-        //GameObject iobj = GameObject.Find("SeenArea");
-        //IS = iobj.GetComponent<ItemSeen>(); //付いているスクリプトを取得
-
         if (ItemSeen.Box.activeSelf == true)
         {
             rb = ItemSeen.Box.GetComponent<Rigidbody>();
+            rb1 = ItemSeen.Box3.GetComponent<Rigidbody>();
             if (other.CompareTag("Box") && BD.boundHeight >= 2)
             {
                 rb.AddForce(transform.forward * 250.0f, ForceMode.Force);
+                rb1.AddForce(transform.forward * 250.0f, ForceMode.Force);
             }
         }
     }
