@@ -16,6 +16,11 @@ public class Button : MonoBehaviour
         SceneManager.LoadScene("GameScene");
     }
 
+    public void TitleButton()
+    {
+        SceneManager.LoadScene("StartScene");
+    }
+
     // Update is called once per frame
     void Update()
     {

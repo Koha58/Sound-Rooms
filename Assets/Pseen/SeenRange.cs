@@ -40,5 +40,17 @@ public class SeenRange : MonoBehaviour
         {
             this.transform.localScale = new Vector3(originSizeX + 2.9f, originSizeY, originSizeZ);
         }
+        else if (BD.boundHeight == 5)
+        {
+            this.transform.localScale = new Vector3(originSizeX + 2.9f, originSizeY, originSizeZ);
+        }
+        else if (BD.boundHeight == 6)
+        {
+            this.transform.localScale = new Vector3(originSizeX + 2.9f, originSizeY, originSizeZ);
+        }
+        else if (BD.boundHeight == 7)
+        {
+            this.transform.localScale = new Vector3(originSizeX + 2.9f, originSizeY, originSizeZ);
+        }
     }
 }
