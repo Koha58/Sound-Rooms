@@ -10,6 +10,7 @@ public class Enemy : MonoBehaviour
     public  Vector3 targetPosition;//Enemyの目的地
     float ChaseSpeed = 0.025f;//Playerを追いかけるスピード
     private float Detection = 6f; //プレイヤーを検知する範囲
+    private float detectionPlayer;
     private  bool EnemyChaseOnOff=false ;//Playerの追跡のONOFF 
    
 
@@ -108,13 +109,12 @@ public class Enemy : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            float detectionPlayer; detectionPlayer = Vector3.Distance(transform.position, Player.position);//プレイヤーと敵の位置の計算
+            detectionPlayer = Vector3.Distance(transform.position, Player.position);//プレイヤーと敵の位置の計算
 
             if (detectionPlayer <= Detection && ES.ONoff == 1)//Enemyが可視化状態かつプレイヤーが検知範囲に入ったら
             {
                 EnemyChaseOnOff = true;
 
-        
             }
         }
     }
