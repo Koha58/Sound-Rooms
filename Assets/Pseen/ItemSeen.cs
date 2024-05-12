@@ -7,7 +7,6 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 using UnityEngine.XR;
-using static Unity.VisualScripting.Metadata;
 
 //範囲内のアイテムの可視化・不可視化
 public class ItemSeen : MonoBehaviour

@@ -16,11 +16,13 @@ public class ItemSearch : MonoBehaviour
     public int count;
     public  static GameObject ItemCanvas;
     ItemSeen IS;
+    [SerializeField]AudioSource PickupSound;
 
     private void Start()
     {
         count = 0;
         SetCountText();
+        PickupSound = GetComponent<AudioSource>();
     }
     private void Update()
     {
@@ -82,6 +84,7 @@ public class ItemSearch : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
+            PickupSound.PlayOneShot(PickupSound.clip);
             myItemList.Add(closetObject.name);
             //ItemSearchAreaからアイテムを取り除く。
             ItemSearchArea.Remove(closetObject);
