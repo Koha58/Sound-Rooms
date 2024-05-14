@@ -172,7 +172,7 @@ public class ButtonHoldDown : MonoBehaviour
                         {
                             isOn = 3;
                         }
-                        else if (Enemyincrease.enemyDeathcnt == 0)
+                        else
                         {
                             isOn = 0;
                         }
@@ -187,11 +187,11 @@ public class ButtonHoldDown : MonoBehaviour
                         SoundArray[SoundSize - 5].SetActive(false);
                         SoundArray[SoundSize - 6].SetActive(false);
                         SoundArray[SoundSize - 7].SetActive(false);
-                        if (Enemyincrease.enemyDeathcnt == 2)
+                        if (Enemyincrease.enemyDeathcnt >= 2)
                         {
                             isOn = 4;
                         }
-                        else if (Enemyincrease.enemyDeathcnt == 1)
+                        else
                         {
                             isOn = 0;
                         }
@@ -206,11 +206,11 @@ public class ButtonHoldDown : MonoBehaviour
                         SoundArray[SoundSize - 5].SetActive(true);
                         SoundArray[SoundSize - 6].SetActive(false);
                         SoundArray[SoundSize - 7].SetActive(false);
-                        if (Enemyincrease.enemyDeathcnt == 3)
+                        if (Enemyincrease.enemyDeathcnt >= 3)
                         {
                             isOn = 5;
                         }
-                        else if (Enemyincrease.enemyDeathcnt == 2)
+                        else
                         {
                             isOn = 0;
                         }
@@ -225,11 +225,11 @@ public class ButtonHoldDown : MonoBehaviour
                         SoundArray[SoundSize - 5].SetActive(false);
                         SoundArray[SoundSize - 6].SetActive(true);
                         SoundArray[SoundSize - 7].SetActive(false);
-                        if (Enemyincrease.enemyDeathcnt == 4)
+                        if (Enemyincrease.enemyDeathcnt >= 4)
                         {
                             isOn = 6;
                         }
-                        else if (Enemyincrease.enemyDeathcnt == 3)
+                        else
                         {
                             isOn = 0;
                         }
@@ -244,7 +244,7 @@ public class ButtonHoldDown : MonoBehaviour
                         SoundArray[SoundSize - 5].SetActive(false);
                         SoundArray[SoundSize - 6].SetActive(false);
                         SoundArray[SoundSize - 7].SetActive(true);
-                        if (Enemyincrease.enemyDeathcnt == 4)
+                        if (Enemyincrease.enemyDeathcnt >= 5)
                         {
                             isOn = 0;
                         }
