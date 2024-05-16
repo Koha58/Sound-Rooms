@@ -9,6 +9,8 @@ public class EnemyFootstepsG : MonoBehaviour
     public float volume = 30f;          // 音量
     public bool Soundonoff = true;
 
+    EnemySeen ES;
+
     private void Start()
     {
 
@@ -16,8 +18,8 @@ public class EnemyFootstepsG : MonoBehaviour
 
     void Update()
     {
-        EnemySeen ES;
-        GameObject eobj = GameObject.FindWithTag("EnemyG1");
+      
+        GameObject eobj = GameObject.FindWithTag("EnemyG");
         ES = eobj.GetComponent<EnemySeen>(); //付いているスクリプトを取得
 
         if (ES.ONoff == 1)//EnemyChaseG1.detectionPlayerG1 <= EnemyChaseG1.Detection)

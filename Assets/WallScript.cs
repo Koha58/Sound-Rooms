@@ -70,9 +70,28 @@ public class WallScript : MonoBehaviour
             }
         }
 
+        if (other.gameObject.CompareTag("EnemyG"))
+        {
+           
+            GameObject eobjG = GameObject.FindWithTag("EnemyG");
+            EnemyG EG = eobjG.GetComponent<EnemyG>(); //Enemyに付いているスクリプトを取得
+            ES = eobjG.GetComponent<EnemySeen>(); //付いているスクリプトを取得
+
+            if (ES.ONoff == 0)
+            {
+                bc.enabled = false;
+                // Debug.Log("?");
+            }
+            else if (ES.ONoff == 1)
+            {
+                bc.enabled = true;
+                EG.targetPosition = GetRandomPosition();
+            }
+        }
+
         if (other.gameObject.CompareTag("EnemyG1"))
         {
-            EnemySeen ES;
+           
             GameObject eobjG1 = GameObject.FindWithTag("EnemyG1");
             EnemyG1 EG1 = eobjG1.GetComponent<EnemyG1>(); //Enemyに付いているスクリプトを取得
             ES = eobjG1.GetComponent<EnemySeen>(); //付いているスクリプトを取得
@@ -91,7 +110,7 @@ public class WallScript : MonoBehaviour
 
         if (other.gameObject.CompareTag("EnemyG2"))
         {
-            EnemySeen ES;
+           
             GameObject eobjG2 = GameObject.FindWithTag("EnemyG2");
             EnemyG2 EG2 = eobjG2.GetComponent<EnemyG2>(); //Enemyに付いているスクリプトを取得
             ES = eobjG2.GetComponent<EnemySeen>(); //付いているスクリプトを取得
@@ -109,7 +128,7 @@ public class WallScript : MonoBehaviour
         }
         if (other.gameObject.CompareTag("EnemyG3"))
         {
-            EnemySeen ES;
+           
             GameObject eobjG3 = GameObject.FindWithTag("EnemyG3");
             EnemyG3 EG3 = eobjG3.GetComponent<EnemyG3>(); //Enemyに付いているスクリプトを取得
             ES = eobjG3.GetComponent<EnemySeen>(); //付いているスクリプトを取得
@@ -127,7 +146,7 @@ public class WallScript : MonoBehaviour
         }
         if (other.gameObject.CompareTag("EnemyG4"))
         {
-            EnemySeen ES;
+           
             GameObject eobjG4 = GameObject.FindWithTag("EnemyG4");
             EnemyG4 EG4 = eobjG4.GetComponent<EnemyG4>(); //Enemyに付いているスクリプトを取得
             ES = eobjG4.GetComponent<EnemySeen>(); //付いているスクリプトを取得
