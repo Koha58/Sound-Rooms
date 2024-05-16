@@ -18,7 +18,7 @@ public class EnemyFootstepsG : MonoBehaviour
 
     void Update()
     {
-      
+     
         GameObject eobj = GameObject.FindWithTag("EnemyG");
         ES = eobj.GetComponent<EnemySeen>(); //付いているスクリプトを取得
 
@@ -30,6 +30,7 @@ public class EnemyFootstepsG : MonoBehaviour
                 audioSource.Play();
             }
         }
+
         if (ES.ONoff == 0)
         {
             if (Soundonoff == false)
