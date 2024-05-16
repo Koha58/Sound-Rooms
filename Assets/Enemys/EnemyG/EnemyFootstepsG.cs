@@ -9,16 +9,16 @@ public class EnemyFootstepsG : MonoBehaviour
     public float volume = 30f;          // 音量
     public bool Soundonoff = true;
 
-    EnemySeen ES;
+   public EnemySeen ES;
 
     private void Start()
     {
 
     }
 
-    void Update()
+    private  void Update()
     {
-     
+        
         GameObject eobj = GameObject.FindWithTag("EnemyG");
         ES = eobj.GetComponent<EnemySeen>(); //付いているスクリプトを取得
 

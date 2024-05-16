@@ -18,8 +18,8 @@ public class EnemyG : MonoBehaviour
 
     public Animator animator;
 
-    GameObject eobj;
-    EnemySeen ES;
+   public  GameObject eobj;
+   public  EnemySeen ES;
 
     // Start is called before the first frame update
     void Start()
@@ -31,7 +31,7 @@ public class EnemyG : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    private  void Update()
     {
          // EnemySeenに付いているスクリプトを取得
           GameObject obj = GameObject.Find("Player"); //Playerオブジェクトを探す
