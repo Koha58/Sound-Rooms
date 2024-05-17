@@ -14,13 +14,21 @@ public class ButtonHoldDown : MonoBehaviour
     private float holdTime = 0;
     private float recoveryTime = 0;
     public GameObject MaxSound;
-    public GameObject[] SoundArray = new GameObject[7];
-    private int SoundSize = 7;
+    public GameObject[] SoundArray = new GameObject[3];
+    private int SoundSize = 3;
     PlayerSeen PS;
     GameObject bobj;
     private int count;
     public int isOn =0;
     public int boundHeight =0;
+    private float originSizemX = 5.5f;
+    private float originSizemZ = 5.5f;
+    private float originSizeX = 3.5f;
+    private float originSizeZ = 3.5f;
+    private float originSize2X = 4.5f;
+    private float originSize2Z = 4.5f;
+    private float originSize3X = 5.5f;
+    private float originSize3Z = 5.5f;
 
     // Start is called before the first frame update
     void Start()
@@ -29,10 +37,6 @@ public class ButtonHoldDown : MonoBehaviour
         SoundArray[SoundSize-1].SetActive(false);
         SoundArray[SoundSize-2].SetActive(false);
         SoundArray[SoundSize-3].SetActive(false);
-        SoundArray[SoundSize-4].SetActive(false);
-        SoundArray[SoundSize - 5].SetActive(false);
-        SoundArray[SoundSize - 6].SetActive(false);
-        SoundArray[SoundSize - 7].SetActive(false);
         MaxSound.SetActive(false);
     }
 
@@ -63,87 +67,49 @@ public class ButtonHoldDown : MonoBehaviour
                 GaugeArray[Gauge - 1].GetComponent<Image>().enabled = false;
                 Gauge--;
 
-                if (Enemyincrease.enemyDeathcnt == 0)
+                for (int deathPointer = 0; deathPointer <= Enemyincrease.enemyDeathcnt; deathPointer++)
                 {
-                    MaxSound.SetActive(true);
-                }
-                else if(Enemyincrease.enemyDeathcnt == 1)
-                {
-                    MaxSound.transform.localScale = new Vector3(5.7f, 1.0f, 5.7f);
-                    MaxSound.SetActive(true);
-                }
-                else if (Enemyincrease.enemyDeathcnt == 2)
-                {
-                    MaxSound.transform.localScale = new Vector3(6.5f, 1.0f, 6.5f);
-                    MaxSound.SetActive(true);
-                }
-                else if (Enemyincrease.enemyDeathcnt == 3)
-                {
-                    MaxSound.transform.localScale = new Vector3(7.5f, 1.0f, 7.5f);
-                    MaxSound.SetActive(true);
-                }
-                else if (Enemyincrease.enemyDeathcnt == 4)
-                {
-                    MaxSound.transform.localScale = new Vector3(8.5f, 1.0f, 8.5f);
-                    MaxSound.SetActive(true);
+                    if (Enemyincrease.enemyDeathcnt == 0)
+                    {
+                        MaxSound.transform.localScale = new Vector3(originSizemX, 1.0f, originSizemZ);
+                        MaxSound.SetActive(true);
+                        SoundArray[SoundSize - 1].transform.localScale = new Vector3(originSizeX, 1.0f, originSizeZ);
+                        SoundArray[SoundSize - 2].transform.localScale = new Vector3(originSize2X, 1.0f, originSize2Z);
+                        SoundArray[SoundSize - 3].transform.localScale = new Vector3(originSize3X, 1.0f, originSize3Z);
+                    }
+                    else
+                    {
+                        MaxSound.transform.localScale = new Vector3(originSizemX+1.0f, 1.0f, originSizemZ+1.0f);
+                        MaxSound.SetActive(true);
+                        SoundArray[SoundSize - 1].transform.localScale = new Vector3(originSizeX+1.0f,1.0f,originSizeZ+1.0f);
+                        SoundArray[SoundSize - 2].transform.localScale = new Vector3(originSize2X + 1.0f, 1.0f, originSize2Z + 1.0f);
+                        SoundArray[SoundSize - 3].transform.localScale = new Vector3(originSize3X + 1.0f, 1.0f, originSize3Z + 1.0f);
+                        originSizemX++;
+                        originSizemZ++;
+                        originSizeX++;
+                        originSizeZ++;
+                        originSize2X++;
+                        originSize2Z++;
+                        originSize3X++;
+                        originSize3Z++;
+                    }
                 }
 
                 if (count % 1 == 0)
                 {
                     if (isOn == 0)
                     {
-                        if(boundHeight == 3)
+                        if (boundHeight == 3)
                         {
                             GaugeArray[Gauge].GetComponent<Image>().enabled = true;
                             GaugeArray[Gauge + 1].GetComponent<Image>().enabled = true;
                             GaugeArray[Gauge + 2].GetComponent<Image>().enabled = true;
                             Gauge += 3;
                         }
-                        else if (boundHeight == 4)
-                        {
-                            GaugeArray[Gauge].GetComponent<Image>().enabled = true;
-                            GaugeArray[Gauge + 1].GetComponent<Image>().enabled = true;
-                            GaugeArray[Gauge + 2].GetComponent<Image>().enabled = true;
-                            GaugeArray[Gauge + 3].GetComponent<Image>().enabled = true;
-                            Gauge += 4;
-                        }
-                        else if (boundHeight == 5)
-                        {
-                            GaugeArray[Gauge].GetComponent<Image>().enabled = true;
-                            GaugeArray[Gauge + 1].GetComponent<Image>().enabled = true;
-                            GaugeArray[Gauge + 2].GetComponent<Image>().enabled = true;
-                            GaugeArray[Gauge + 3].GetComponent<Image>().enabled = true;
-                            GaugeArray[Gauge + 4].GetComponent<Image>().enabled = true;
-                            Gauge += 5;
-                        }
-                        else if (boundHeight == 6)
-                        {
-                            GaugeArray[Gauge].GetComponent<Image>().enabled = true;
-                            GaugeArray[Gauge + 1].GetComponent<Image>().enabled = true;
-                            GaugeArray[Gauge + 2].GetComponent<Image>().enabled = true;
-                            GaugeArray[Gauge + 3].GetComponent<Image>().enabled = true;
-                            GaugeArray[Gauge + 4].GetComponent<Image>().enabled = true;
-                            GaugeArray[Gauge + 5].GetComponent<Image>().enabled = true;
-                            Gauge += 6;
-                        }
-                        else if (boundHeight == 7)
-                        {
-                            GaugeArray[Gauge].GetComponent<Image>().enabled = true;
-                            GaugeArray[Gauge + 1].GetComponent<Image>().enabled = true;
-                            GaugeArray[Gauge + 2].GetComponent<Image>().enabled = true;
-                            GaugeArray[Gauge + 3].GetComponent<Image>().enabled = true;
-                            GaugeArray[Gauge + 4].GetComponent<Image>().enabled = true;
-                            GaugeArray[Gauge + 5].GetComponent<Image>().enabled = true;
-                            GaugeArray[Gauge + 6].GetComponent<Image>().enabled = true;
-                            Gauge += 7;
-                        }
+
                         SoundArray[SoundSize - 1].SetActive(true);
                         SoundArray[SoundSize - 2].SetActive(false);
                         SoundArray[SoundSize - 3].SetActive(false);
-                        SoundArray[SoundSize - 4].SetActive(false);
-                        SoundArray[SoundSize - 5].SetActive(false);
-                        SoundArray[SoundSize - 6].SetActive(false);
-                        SoundArray[SoundSize - 7].SetActive(false);
                         isOn = 1;
                         boundHeight = 1;
                     }
@@ -152,10 +118,6 @@ public class ButtonHoldDown : MonoBehaviour
                         SoundArray[SoundSize - 1].SetActive(false);
                         SoundArray[SoundSize - 2].SetActive(true);
                         SoundArray[SoundSize - 3].SetActive(false);
-                        SoundArray[SoundSize - 4].SetActive(false);
-                        SoundArray[SoundSize - 5].SetActive(false);
-                        SoundArray[SoundSize - 6].SetActive(false);
-                        SoundArray[SoundSize - 7].SetActive(false);
                         isOn = 2;
                         boundHeight = 2;
                     }
@@ -164,91 +126,8 @@ public class ButtonHoldDown : MonoBehaviour
                         SoundArray[SoundSize - 1].SetActive(false);
                         SoundArray[SoundSize - 2].SetActive(false);
                         SoundArray[SoundSize - 3].SetActive(true);
-                        SoundArray[SoundSize - 4].SetActive(false);
-                        SoundArray[SoundSize - 5].SetActive(false);
-                        SoundArray[SoundSize - 6].SetActive(false);
-                        SoundArray[SoundSize - 7].SetActive(false);
-                        if (Enemyincrease.enemyDeathcnt == 1)
-                        {
-                            isOn = 3;
-                        }
-                        else
-                        {
-                            isOn = 0;
-                        }
+                        isOn = 0;
                         boundHeight = 3;
-                    }
-                    else if (isOn == 3)
-                    {
-                        SoundArray[SoundSize - 1].SetActive(false);
-                        SoundArray[SoundSize - 2].SetActive(false);
-                        SoundArray[SoundSize - 3].SetActive(false);
-                        SoundArray[SoundSize - 4].SetActive(true);
-                        SoundArray[SoundSize - 5].SetActive(false);
-                        SoundArray[SoundSize - 6].SetActive(false);
-                        SoundArray[SoundSize - 7].SetActive(false);
-                        if (Enemyincrease.enemyDeathcnt >= 2)
-                        {
-                            isOn = 4;
-                        }
-                        else
-                        {
-                            isOn = 0;
-                        }
-                        boundHeight = 4;
-                    }
-                    else if (isOn == 4)
-                    {
-                        SoundArray[SoundSize - 1].SetActive(false);
-                        SoundArray[SoundSize - 2].SetActive(false);
-                        SoundArray[SoundSize - 3].SetActive(false);
-                        SoundArray[SoundSize - 4].SetActive(false);
-                        SoundArray[SoundSize - 5].SetActive(true);
-                        SoundArray[SoundSize - 6].SetActive(false);
-                        SoundArray[SoundSize - 7].SetActive(false);
-                        if (Enemyincrease.enemyDeathcnt >= 3)
-                        {
-                            isOn = 5;
-                        }
-                        else
-                        {
-                            isOn = 0;
-                        }
-                        boundHeight = 5;
-                    }
-                    else if (isOn == 5)
-                    {
-                        SoundArray[SoundSize - 1].SetActive(false);
-                        SoundArray[SoundSize - 2].SetActive(false);
-                        SoundArray[SoundSize - 3].SetActive(false);
-                        SoundArray[SoundSize - 4].SetActive(false);
-                        SoundArray[SoundSize - 5].SetActive(false);
-                        SoundArray[SoundSize - 6].SetActive(true);
-                        SoundArray[SoundSize - 7].SetActive(false);
-                        if (Enemyincrease.enemyDeathcnt >= 4)
-                        {
-                            isOn = 6;
-                        }
-                        else
-                        {
-                            isOn = 0;
-                        }
-                        boundHeight = 6;
-                    }
-                    else if (isOn == 6)
-                    {
-                        SoundArray[SoundSize - 1].SetActive(false);
-                        SoundArray[SoundSize - 2].SetActive(false);
-                        SoundArray[SoundSize - 3].SetActive(false);
-                        SoundArray[SoundSize - 4].SetActive(false);
-                        SoundArray[SoundSize - 5].SetActive(false);
-                        SoundArray[SoundSize - 6].SetActive(false);
-                        SoundArray[SoundSize - 7].SetActive(true);
-                        if (Enemyincrease.enemyDeathcnt >= 5)
-                        {
-                            isOn = 0;
-                        }
-                        boundHeight = 7;
                     }
                 }
             }
@@ -259,10 +138,6 @@ public class ButtonHoldDown : MonoBehaviour
             SoundArray[SoundSize - 1].SetActive(false);
             SoundArray[SoundSize - 2].SetActive(false);
             SoundArray[SoundSize - 3].SetActive(false);
-            SoundArray[SoundSize - 4].SetActive(false);
-            SoundArray[SoundSize - 5].SetActive(false);
-            SoundArray[SoundSize - 6].SetActive(false);
-            SoundArray[SoundSize - 7].SetActive(false);
             isOn = 0;
         }
 
