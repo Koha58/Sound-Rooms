@@ -8,7 +8,7 @@ public class EnemyAttack : MonoBehaviour
     int onoff = 0;  //判定用（見えていない時：0/見えている時：1）
 
     //private float EnemydeathTime=0.0f;
-   
+    Enemys E;
     EnemySeen ES;
     ButtonHoldDown BD;
     ItemSearch ISe;
@@ -28,6 +28,7 @@ public class EnemyAttack : MonoBehaviour
     {
         //最初は見えない状態
         EnemyAttackArea.GetComponent<Collider>().enabled = false;
+
     }
 
     // Update is called once per frame
@@ -72,10 +73,12 @@ public class EnemyAttack : MonoBehaviour
             if (stayTimeB > stayTimeF)
             {
                 GameObject eobj = GameObject.FindWithTag("Enemy");
+                E = eobj.GetComponent<Enemys>();
                 ES = eobj.GetComponent<EnemySeen>(); //付いているスクリプトを取得
                 if (ES.ONoff == 1)
                 {
                     Enemyincrease.isHidden = false;
+                    E.isHiddens= false;
                 }
             }
             stayTimeF = 0.0f;

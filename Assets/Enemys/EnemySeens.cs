@@ -5,13 +5,11 @@ using UnityEngine;
 
 public class EnemySeens : MonoBehaviour
 {
-    public int ONoff = 0;//(0‚ªŒ©‚¦‚È‚¢G‚P‚ªŒ©‚¦‚éó‘Ôj
+    public  float  ONoff = 0;//(0‚ªŒ©‚¦‚È‚¢G‚P‚ªŒ©‚¦‚éó‘Ôj
     private float Seetime;  //Œo‰ßŽžŠÔ
-    public float SoundTime;
+    private float SoundTime;
     [SerializeField] public GameObject Sphere;
     [SerializeField] public Transform _parentTransform;
-
-    float CurrentTime;
 
     float TargetTime;
 
@@ -36,7 +34,7 @@ public class EnemySeens : MonoBehaviour
         if (ONoff == 0)//Œ©‚¦‚È‚¢‚Æ‚«
         {
             SoundTime += Time.deltaTime;
-            if (SoundTime > 10.0f)
+            if (SoundTime > TargetTime)
             {
                 foreach (var item in childTransforms)
                 {
