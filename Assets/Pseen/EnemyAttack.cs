@@ -122,32 +122,32 @@ public class EnemyAttack : MonoBehaviour
             // GameObject eobj = GameObject.Find("Enemy");
             if (stayTimeB > stayTimeF)
             {
-                GameObject eobjG1 = GameObject.FindWithTag("EnemyG");
-                ES = eobjG1.GetComponent<EnemySeen>(); //付いているスクリプトを取得
+                GameObject eobjG = GameObject.FindWithTag("EnemyG");
+                ES = eobjG.GetComponent<EnemySeen>(); //付いているスクリプトを取得
                 if (ES.ONoff == 1)
                 {
                     if (ItemSeen.parentObject[0] != null)
                     {
                         //Instantiate(check1, transform.position, Quaternion.identity);
-                        ItemSeen.parentObject[0].transform.position = eobjG1.transform.position;
+                        ItemSeen.parentObject[0].transform.position = eobjG.transform.position;
                         ISe.closetObject = ItemSeen.parentObject[0];
                     }
                     else if (ItemSeen.parentObject[1] != null)
                     {
-                        ItemSeen.parentObject[1].transform.position = eobjG1.transform.position;
+                        ItemSeen.parentObject[1].transform.position = eobjG.transform.position;
                         ISe.closetObject = ItemSeen.parentObject[1];
                     }
                     else if (ItemSeen.parentObject[2] != null)
                     {
-                        ItemSeen.parentObject[2].transform.position = eobjG1.transform.position;
+                        ItemSeen.parentObject[2].transform.position = eobjG.transform.position;
                         ISe.closetObject = ItemSeen.parentObject[1];
                     }
                     else if (ItemSeen.parentObject[3] != null)
                     {
-                        ItemSeen.parentObject[3].transform.position = eobjG1.transform.position;
+                        ItemSeen.parentObject[3].transform.position = eobjG.transform.position;
                         ISe.closetObject = ItemSeen.parentObject[3];
                     }
-                    Destroy(eobjG1);
+                    Destroy(eobjG);
                     Enemyincrease.enemyDeathcnt++;
                 }
             }
