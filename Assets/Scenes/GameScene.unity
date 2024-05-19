@@ -18795,7 +18795,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 2d65ecc922418754590158031e3e320e, type: 3}
+  m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -20797,12 +20797,11 @@ GameObject:
   - component: {fileID: 1478832273287503034}
   - component: {fileID: 3747095617040898043}
   - component: {fileID: 4297032035124961103}
-  - component: {fileID: 8952381727960845756}
   - component: {fileID: 8952381727960845757}
   - component: {fileID: 6340608774725975076}
   - component: {fileID: 661514484745404965}
   m_Layer: 0
-  m_Name: EnemyAAA
+  m_Name: Enemys
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -21173,21 +21172,6 @@ Transform:
   - {fileID: 3492059421027158393}
   m_Father: {fileID: 2434757479949641817}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8952381727960845756
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6662933797880504998}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c66095057461c354a89a64cf057a3d92, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ONoff: 0
-  Sphere: {fileID: 1566014476524288443}
-  _parentTransform: {fileID: 1478832273287503034}
 --- !u!114 &8952381727960845757
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21205,6 +21189,13 @@ MonoBehaviour:
   DestroyPrefab: {fileID: 6662933797880504998}
   isHiddens: 1
   animator: {fileID: 4297032035124961103}
+  Sphere: {fileID: 1566014476524288443}
+  _parentTransform: {fileID: 1478832273287503034}
+  SoundAttck: {fileID: 0}
+  footstepSound: {fileID: 8300000, guid: 2d65ecc922418754590158031e3e320e, type: 3}
+  audioSource: {fileID: 661514484745404965}
+  volume: 50
+  Soundonoff: 1
 --- !u!33 &8954050078361193922
 MeshFilter:
   m_ObjectHideFlags: 0
