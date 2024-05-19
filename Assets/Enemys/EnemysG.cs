@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class Enemys : MonoBehaviour
+public class EnemysG : MonoBehaviour
 {
     float speed = 1f;//移動スピード
     public Transform Player;//プレイヤーを参照
@@ -32,18 +32,18 @@ public class Enemys : MonoBehaviour
     float Enemystoptime = 0;
     float Enemystoponoff;
 
-    private float TargetTime;
+   private  float TargetTime;
 
     [SerializeField]
     private AudioClip SoundAttck;     //音を出すのオーディオクリップ
     [SerializeField]
-    private  AudioClip footstepSound;     // 足音のオーディオクリップ
+    private AudioClip footstepSound;     // 足音のオーディオクリップ
     [SerializeField]
-    private  AudioSource audioSource;     // オーディオソース
+    private AudioSource audioSource;     // オーディオソース
     [SerializeField]
-   // private float volume = 50f;          // 音量
-   
-    
+    // private float volume = 50f;          // 音量
+
+
     public bool Soundonoff = true;
 
     private Vector3 GetRandomPosition()
@@ -172,7 +172,7 @@ public class Enemys : MonoBehaviour
                 }
                 ONoff = 0;
                 Seetime = 0.0f;
-                Sphere.SetActive(false );//音波表示→非表示
+                Sphere.SetActive(false);//音波表示→非表示
             }
         }
 
@@ -180,7 +180,7 @@ public class Enemys : MonoBehaviour
         PlayerSeen PS = obj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
 
         // 「歩く」のアニメーションを再生する
-        animator.SetBool("EnemyWalk", true);
+        animator.SetBool("EnemyWalkG2", true);
 
         if (EnemyChaseOnOff == true)//Enemyが可視化状態かつプレイヤーが検知範囲に入ったら
         {
@@ -215,7 +215,7 @@ public class Enemys : MonoBehaviour
             Enemystoponoff = 1;
             if (Enemystoponoff == 1)
             {
-                animator.SetBool("EnemyWalk", false);
+                animator.SetBool("EnemyWalkG2", false);
                 Enemystoptime += Time.deltaTime;
                 if (Enemystoptime > 2.0f)
                 {
@@ -226,11 +226,11 @@ public class Enemys : MonoBehaviour
         }
 
         Increase();
-     
+
     }
-   
+
     private void OnTriggerEnter(Collider other)
-    { 
+    {
         if (other.gameObject.CompareTag("Player"))
         {
             detectionPlayer = Vector3.Distance(transform.position, Player.position);//プレイヤーと敵の位置の計算

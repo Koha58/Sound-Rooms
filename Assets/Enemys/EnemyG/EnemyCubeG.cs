@@ -23,7 +23,7 @@ public class EnemyCubeG : MonoBehaviour
 
         GameObject eobj = GameObject.FindWithTag("EnemyG");
         // Enemyに付いているスクリプトを取得
-        EnemySeen ES = eobj.GetComponent<EnemySeen>();
+        EnemysG ES = eobj.GetComponent<EnemysG>();
 
         if (other.gameObject.CompareTag("Wall"))
         {
