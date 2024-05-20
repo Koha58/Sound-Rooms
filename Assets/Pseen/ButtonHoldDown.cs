@@ -67,9 +67,9 @@ public class ButtonHoldDown : MonoBehaviour
                 GaugeArray[Gauge - 1].GetComponent<Image>().enabled = false;
                 Gauge--;
 
-                for (int deathPointer = 0; deathPointer <= Enemyincrease.enemyDeathcnt; deathPointer++)
-                {
-                    if (Enemyincrease.enemyDeathcnt == 0)
+                //for (int deathPointer = 0; deathPointer <= Enemyincrease.enemyDeathcnt; deathPointer++)
+                //{
+                    if (Enemyincrease.DeathRange == 0)
                     {
                         MaxSound.transform.localScale = new Vector3(originSizemX, 1.0f, originSizemZ);
                         MaxSound.SetActive(true);
@@ -79,21 +79,13 @@ public class ButtonHoldDown : MonoBehaviour
                     }
                     else
                     {
-                        MaxSound.transform.localScale = new Vector3(originSizemX+1.0f, 1.0f, originSizemZ+1.0f);
+                        MaxSound.transform.localScale = new Vector3(originSizemX+ Enemyincrease.DeathRange, 1.0f, originSizemZ+ Enemyincrease.DeathRange);
                         MaxSound.SetActive(true);
-                        SoundArray[SoundSize - 1].transform.localScale = new Vector3(originSizeX+1.0f,1.0f,originSizeZ+1.0f);
-                        SoundArray[SoundSize - 2].transform.localScale = new Vector3(originSize2X + 1.0f, 1.0f, originSize2Z + 1.0f);
-                        SoundArray[SoundSize - 3].transform.localScale = new Vector3(originSize3X + 1.0f, 1.0f, originSize3Z + 1.0f);
-                        originSizemX++;
-                        originSizemZ++;
-                        originSizeX++;
-                        originSizeZ++;
-                        originSize2X++;
-                        originSize2Z++;
-                        originSize3X++;
-                        originSize3Z++;
+                        SoundArray[SoundSize - 1].transform.localScale = new Vector3(originSizeX+Enemyincrease.DeathRange,1.0f,originSizeZ+Enemyincrease.DeathRange);
+                        SoundArray[SoundSize - 2].transform.localScale = new Vector3(originSize2X + Enemyincrease.DeathRange, 1.0f, originSize2Z + Enemyincrease.DeathRange);
+                        SoundArray[SoundSize - 3].transform.localScale = new Vector3(originSize3X + Enemyincrease.DeathRange, 1.0f, originSize3Z + Enemyincrease.DeathRange);
                     }
-                }
+                //}
 
                 if (count % 1 == 0)
                 {
