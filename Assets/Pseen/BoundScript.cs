@@ -5,7 +5,7 @@ using UnityEngine;
 public class BoundScript : MonoBehaviour
 {
     [SerializeField]
-    private Rigidbody Sphere; // ←バウンドさせたいオブジェクト
+    private Rigidbody Sphere; // バウンドさせたいオブジェクト
     ButtonHoldDown BD;
     GameObject hobj;
     Rigidbody rb;
@@ -38,22 +38,7 @@ public class BoundScript : MonoBehaviour
             {
                 rb.AddForce(transform.up.normalized * bounce * 2.5f, ForceMode.VelocityChange);
             }
-            else if (BD.boundHeight == 4)
-            {
-                rb.AddForce(transform.up.normalized * bounce * 3.5f, ForceMode.VelocityChange);
-            }
-            else if (BD.boundHeight == 5)
-            {
-                rb.AddForce(transform.up.normalized * bounce * 3.5f, ForceMode.VelocityChange);
-            }
-            else if (BD.boundHeight == 6)
-            {
-                rb.AddForce(transform.up.normalized * bounce * 3.5f, ForceMode.VelocityChange);
-            }
-            else if (BD.boundHeight == 7)
-            {
-                rb.AddForce(transform.up.normalized * bounce * 3.5f, ForceMode.VelocityChange);
-            }
+
         }
     }
 }

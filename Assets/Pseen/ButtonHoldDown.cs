@@ -6,15 +6,15 @@ using UnityEngine.UI;
 //マウス長押し挙動(範囲指定)
 public class ButtonHoldDown : MonoBehaviour
 {
-    public GameObject[] GaugeArray = new GameObject[13];
+    public GameObject[] GaugeArray = new GameObject[13];//右上のゲージのメモリを格納している配列
     private int Gauge = 13;
     //長押しと判定するフレーム数を管理
     private const int holdCheck = 60;
     //キーを押しているフレーム数を記録
     private float holdTime = 0;
-    private float recoveryTime = 0;
-    public GameObject MaxSound;
-    public GameObject[] SoundArray = new GameObject[3];
+    private float recoveryTime = 0;//回復までの時間
+    public GameObject MaxSound;//音の広がりの最大値
+    public GameObject[] SoundArray = new GameObject[3];//音の広がりの円を格納している配列
     private int SoundSize = 3;
     PlayerSeen PS;
     GameObject bobj;
@@ -43,6 +43,13 @@ public class ButtonHoldDown : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        if (Input.GetKeyDown(KeyCode.R))//確認用(消すやつ)
+        {
+            Enemyincrease.enemyDeathcnt++;
+            Enemyincrease.DeathRange += 1.0f;
+            Debug.Log("R");
+        }
         bobj = GameObject.Find("Player");
         PS = bobj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
         count += 1;
@@ -67,25 +74,22 @@ public class ButtonHoldDown : MonoBehaviour
                 GaugeArray[Gauge - 1].GetComponent<Image>().enabled = false;
                 Gauge--;
 
-                //for (int deathPointer = 0; deathPointer <= Enemyincrease.enemyDeathcnt; deathPointer++)
-                //{
-                    if (Enemyincrease.DeathRange == 0)
-                    {
-                        MaxSound.transform.localScale = new Vector3(originSizemX, 1.0f, originSizemZ);
-                        MaxSound.SetActive(true);
-                        SoundArray[SoundSize - 1].transform.localScale = new Vector3(originSizeX, 1.0f, originSizeZ);
-                        SoundArray[SoundSize - 2].transform.localScale = new Vector3(originSize2X, 1.0f, originSize2Z);
-                        SoundArray[SoundSize - 3].transform.localScale = new Vector3(originSize3X, 1.0f, originSize3Z);
-                    }
-                    else
-                    {
-                        MaxSound.transform.localScale = new Vector3(originSizemX+ Enemyincrease.DeathRange, 1.0f, originSizemZ+ Enemyincrease.DeathRange);
-                        MaxSound.SetActive(true);
-                        SoundArray[SoundSize - 1].transform.localScale = new Vector3(originSizeX+Enemyincrease.DeathRange,1.0f,originSizeZ+Enemyincrease.DeathRange);
-                        SoundArray[SoundSize - 2].transform.localScale = new Vector3(originSize2X + Enemyincrease.DeathRange, 1.0f, originSize2Z + Enemyincrease.DeathRange);
-                        SoundArray[SoundSize - 3].transform.localScale = new Vector3(originSize3X + Enemyincrease.DeathRange, 1.0f, originSize3Z + Enemyincrease.DeathRange);
-                    }
-                //}
+                if (Enemyincrease.DeathRange == 0)
+                {
+                    MaxSound.transform.localScale = new Vector3(originSizemX, 1.0f, originSizemZ);
+                    MaxSound.SetActive(true);
+                    SoundArray[SoundSize - 1].transform.localScale = new Vector3(originSizeX, 1.0f, originSizeZ);
+                    SoundArray[SoundSize - 2].transform.localScale = new Vector3(originSize2X, 1.0f, originSize2Z);
+                    SoundArray[SoundSize - 3].transform.localScale = new Vector3(originSize3X, 1.0f, originSize3Z);
+                }
+                else
+                {
+                    MaxSound.transform.localScale = new Vector3(originSizemX + (3 * Enemyincrease.DeathRange), 1.0f, originSizemZ + (3 * Enemyincrease.DeathRange));
+                    MaxSound.SetActive(true);
+                    SoundArray[SoundSize - 1].transform.localScale = new Vector3(originSizeX + Enemyincrease.DeathRange, 1.0f, originSizeZ + Enemyincrease.DeathRange);
+                    SoundArray[SoundSize - 2].transform.localScale = new Vector3(originSize2X + (2 * Enemyincrease.DeathRange), 1.0f, originSize2Z + (2 * Enemyincrease.DeathRange));
+                    SoundArray[SoundSize - 3].transform.localScale = new Vector3(originSize3X + (3 * Enemyincrease.DeathRange), 1.0f, originSize3Z + (3 * Enemyincrease.DeathRange));
+                }
 
                 if (count % 1 == 0)
                 {

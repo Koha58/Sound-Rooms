@@ -202,7 +202,6 @@ public class EnemyAttack : MonoBehaviour
         if (other.CompareTag("EnemyBackG2") && BD.boundHeight >= 2)
         {
             stayTimeB += Time.deltaTime;
-            // GameObject eobj = GameObject.Find("Enemy");
             if (stayTimeB > stayTimeF)
             {
                 GameObject eobj2 = GameObject.FindWithTag("EnemyG2");
@@ -216,19 +215,16 @@ public class EnemyAttack : MonoBehaviour
                     }
                     else if (ItemSeen.parentObject[1] != null)
                     {
-                        //Instantiate(check2, transform.position, Quaternion.identity);
                         ItemSeen.parentObject[1].transform.position = eobj2.transform.position;
                         ISe.closetObject = ItemSeen.parentObject[1];
                     }
                     else if (ItemSeen.parentObject[2] != null)
                     {
-                        //Instantiate(check2, transform.position, Quaternion.identity);
                         ItemSeen.parentObject[2].transform.position = eobj2.transform.position;
                         ISe.closetObject = ItemSeen.parentObject[2];
                     }
                     else if (ItemSeen.parentObject[3] != null)
                     {
-                        //Instantiate(check2, transform.position, Quaternion.identity);
                         ItemSeen.parentObject[3].transform.position = eobj2.transform.position;
                         ISe.closetObject = ItemSeen.parentObject[3];
                     }

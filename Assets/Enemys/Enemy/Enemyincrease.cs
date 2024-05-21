@@ -10,8 +10,8 @@ public class Enemyincrease : MonoBehaviour
     private  GameObject DestroyPrefab;  //破壊されるプレハブ
     static  public  bool isHidden = true;      //
     private bool Clone = false;         //Cloneを生み出すかのONOFF
-    static  public int enemyDeathcnt = 0;  
-    public static float DeathRange = 1.0f;
+    static  public int enemyDeathcnt = 0;  //Enemyが死んだ数
+    public static float DeathRange = 0f;//Enemyが死ぬと広がる範囲
 
     // Start is called before the first frame update
     void Start()
@@ -41,5 +41,6 @@ public class Enemyincrease : MonoBehaviour
             enemyDeathcnt++;
             DeathRange += 1.0f;
         }
+
     }
 }
