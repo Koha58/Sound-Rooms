@@ -4,11 +4,10 @@ using UnityEngine;
 
 public class Enemyincrease : MonoBehaviour
 {
-    [SerializeField]
-    private  GameObject ebiPrefab;      //コピーするプレハブ
-    [SerializeField]
-    private  GameObject DestroyPrefab;  //破壊されるプレハブ
-    static  public  bool isHidden = true;      //
+   
+    public  GameObject ebiPrefab;      //コピーするプレハブ
+    public  GameObject DestroyPrefab;  //破壊されるプレハブ
+    public  bool isHidden = true;      //
     private bool Clone = false;         //Cloneを生み出すかのONOFF
     static  public int enemyDeathcnt = 0;  //Enemyが死んだ数
     public static float DeathRange = 0f;//Enemyが死ぬと広がる範囲

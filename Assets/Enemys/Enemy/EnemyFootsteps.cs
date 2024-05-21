@@ -8,8 +8,9 @@ public class EnemyFootsteps : MonoBehaviour
     public AudioSource audioSource;     // オーディオソース
     public float volume = 10f;          // 音量
 
-    public bool Soundonoff = true ;          
+    public bool Soundonoff = true ;
 
+   
     private void Start()
     {
       
@@ -36,6 +37,8 @@ public class EnemyFootsteps : MonoBehaviour
                audioSource.Stop( );
             }
         }
+
+
     }
 }
 

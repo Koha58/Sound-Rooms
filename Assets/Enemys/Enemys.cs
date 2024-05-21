@@ -13,19 +13,11 @@ public class Enemys : MonoBehaviour
     private float detectionPlayer;//プレイヤーと敵の位置の計算を格納する値
     private bool EnemyChaseOnOff = false;//Playerの追跡のONOFF 
 
-    [SerializeField]
-    private GameObject ebiPrefab;      //コピーするプレハブ
-    [SerializeField]
-    private GameObject DestroyPrefab;  //破壊されるプレハブ
-    public bool isHiddens = true;      //
-    private bool Clone = false;         //Cloneを生み出すかのONOFF
-    static public int enemyDeathcnt = 0;
-
     public Animator animator; //アニメーションの格納
 
     public  float ONoff = 0;//(0が見えない；１が見える状態）
     private float Seetime;  //経過時間
-    private float SoundTime;//経過時間
+    public  float SoundTime;//経過時間
     [SerializeField] public GameObject Sphere;
     [SerializeField] public Transform _parentTransform;
 
@@ -55,27 +47,6 @@ public class Enemys : MonoBehaviour
 
         // 生成した座標を返す
         return new Vector3(randomX, randomY, randomZ);
-    }
-
-    private void Increase()
-    {
-        if (isHiddens == false)
-        {
-            isHiddens = true;
-            GameObject go = Instantiate(ebiPrefab);//コピーを生成
-            //Debug.Log(go);
-            int px = Random.Range(0, 20);//0以上２０以下のランダムの値を生成
-            int pz = Random.Range(0, 20);//0以上２０以下のランダムの値を生成
-            go.transform.position = new Vector3(px, 0, pz);
-            Clone = true;
-        }
-
-        if (Clone == true)
-        {
-            Destroy(DestroyPrefab);
-            Clone = false;
-            enemyDeathcnt++;
-        }
     }
 
     private void Sound()
@@ -224,9 +195,6 @@ public class Enemys : MonoBehaviour
                 }
             }
         }
-
-        Increase();
-     
     }
    
     private void OnTriggerEnter(Collider other)

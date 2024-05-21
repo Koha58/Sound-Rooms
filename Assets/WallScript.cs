@@ -55,6 +55,7 @@ public class WallScript : MonoBehaviour
         {
             GameObject eobj = GameObject.FindWithTag("Enemy");
             Enemys E = eobj.GetComponent<Enemys>(); //Enemyに付いているスクリプトを取得
+            EnemySeen ES = eobj.GetComponent<EnemySeen>(); //Enemyに付いているスクリプトを取得
 
             if (E.ONoff == 0)
             {

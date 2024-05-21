@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class Enemyincrease1 : MonoBehaviour
 {
-    public GameObject ebiPrefab;
-    public GameObject DestroyPrefab1;
-    static public bool isHidden1 = true;
-    static public bool Clone1 = false ;
+    [SerializeField ]
+    private  GameObject ebiPrefab;
+    [SerializeField]
+    private  GameObject DestroyPrefab1;
+    public bool isHidden1 = true;
+    private  bool Clone1 = false ;
     // Start is called before the first frame update
     void Start()
     {

@@ -8,8 +8,6 @@ public class EnemyAttack : MonoBehaviour
     int onoff = 0;  //判定用（見えていない時：0/見えている時：1）
 
     //private float EnemydeathTime=0.0f;
-    Enemys E;
-    EnemySeen ES;
     ButtonHoldDown BD;
     ItemSearch ISe;
 
@@ -73,50 +71,16 @@ public class EnemyAttack : MonoBehaviour
             if (stayTimeB > stayTimeF)
             {
                 GameObject eobj = GameObject.FindWithTag("Enemy");
-                E = eobj.GetComponent<Enemys>();
-                ES = eobj.GetComponent<EnemySeen>(); //付いているスクリプトを取得
-                if (ES.ONoff == 1)
+                Enemys  E = eobj.GetComponent<Enemys>();
+                Enemyincrease EI = eobj.GetComponent<Enemyincrease>(); //付いているスクリプトを取得
+                if (E.ONoff == 1)
                 {
-                    Enemyincrease.isHidden = false;
-                    E.isHiddens= false;
+                   EI.isHidden = false;
                 }
             }
             stayTimeF = 0.0f;
             stayTimeB = 0.0f;
                 //Destroy(eobj);
-        }
-
-        if (other.CompareTag("EnemyBack1") && BD.boundHeight >= 2)
-        {
-            stayTimeB += Time.deltaTime;
-            if (stayTimeB > stayTimeF)
-            {
-                GameObject eobj1 = GameObject.FindWithTag("Enemy1");
-                ES = eobj1.GetComponent<EnemySeen>(); //付いているスクリプトを取得
-                if (ES.ONoff == 1)
-                {
-                  // GameObject eobj = GameObject.Find("Enemy1");
-                   //GameObject eobj1 = GameObject.FindWithTag("Enemy1");
-                    Enemyincrease1.isHidden1 = false;
-                        // Enemy1.Enemy01.SetActive(false);
-                        //Destroy(eobj1);
-                        //Debug.Log("1");
-
-                        /*
-                        if (Enemyincrease1.Clone==true)
-                        {
-                            //Debug.Log("2");
-                            //Debug.Log("3");
-                            //GameObject eobj1 = GameObject.FindWithTag("Enemy1");
-                            //Enemyincrease1.isHidden1 = false;
-                           // Destroy(eobj1);
-                           // Enemyincrease1.Clone = false;
-                        }
-                        */
-                }
-            }
-            stayTimeF = 0.0f;
-            stayTimeB = 0.0f;
         }
 
         if (other.CompareTag("EnemyBackG") && BD.boundHeight >= 2)
@@ -126,8 +90,9 @@ public class EnemyAttack : MonoBehaviour
             if (stayTimeB > stayTimeF)
             {
                 GameObject eobjG = GameObject.FindWithTag("EnemyG");
-                ES = eobjG.GetComponent<EnemySeen>(); //付いているスクリプトを取得
-                if (ES.ONoff == 1)
+
+                EnemysG ESG = eobjG.GetComponent<EnemysG>(); //付いているスクリプトを取得
+                if (ESG.ONoff == 1)
                 {
                     if (ItemSeen.parentObject[0] != null)
                     {
@@ -158,7 +123,7 @@ public class EnemyAttack : MonoBehaviour
             stayTimeB = 0.0f;
             //Destroy(eobj);
         }
-
+/*
         if (other.CompareTag("EnemyBackG1") && BD.boundHeight >= 2)
         {
             stayTimeB += Time.deltaTime;
@@ -316,6 +281,7 @@ public class EnemyAttack : MonoBehaviour
             stayTimeF = 0.0f;
             stayTimeB = 0.0f;
         }
+        */
         if (ItemSeen.Box.activeSelf == true)
         {
             rb = ItemSeen.Box.GetComponent<Rigidbody>();
