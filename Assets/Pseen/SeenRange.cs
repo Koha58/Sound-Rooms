@@ -5,15 +5,22 @@ using UnityEngine;
 //SeenAreaのサイズ変更
 public class SeenRange : MonoBehaviour
 {
-    private float originSizeX = 3.3f;
+    private float originSizeX = 2.3f;
     private float originSizeY = 2.0f;
     private float originSizeZ = 2.0f;
+    private float originSizeSX = 3.3f;
+    private float originSizeSY = 2.0f;
+    private float originSizeSZ = 2.0f;
+    private float originSizeMX = 4.3f;
+    private float originSizeMY = 2.0f;
+    private float originSizeMZ = 2.0f;
+    private float originSizeLX = 5.3f;
+    private float originSizeLY = 2.0f;
+    private float originSizeLZ = 2.0f;
     // 変更前の値
     private int preHeight;
     ButtonHoldDown BD;
-    private int low = 0;
-    private int middle = 0;
-    private int high = 0;
+   
 
     // Start is called before the first frame update
     void Start()
@@ -26,58 +33,32 @@ public class SeenRange : MonoBehaviour
     {
         GameObject hobj = GameObject.Find("GaugeManager");
         BD = hobj.GetComponent<ButtonHoldDown>(); //付いているスクリプトを取得
-        
-        for (int boundSize = 0; boundSize <= BD.boundHeight; boundSize++)
+
+        if (preHeight != Enemyincrease.enemyDeathcnt)
         {
-            if (BD.boundHeight == 0)
-            {
-                transform.localScale = new Vector3(originSizeX, originSizeY, originSizeZ);
-            }          
-            else if (BD.boundHeight == 1)
-            {
-                transform.localScale = new Vector3(originSizeX + 0.6f, originSizeY, originSizeZ + 0.4f);
-            }
-            else if (BD.boundHeight == 2)
-            {
-                transform.localScale = new Vector3(originSizeX + 1.2f, originSizeY, originSizeZ + 1.0f);
-            }
-            else if (BD.boundHeight == 3)
-            {
-                transform.localScale = new Vector3(originSizeX + 2.0f, originSizeY, originSizeZ + 2.3f);
-            }
+            originSizeX += 1.0f;
+            originSizeSX += 1.0f;
+            originSizeMX += 2.0f;
+            originSizeLX += 3.0f;
+
+            preHeight++;
         }
-        /*
-        if(preHeight != Enemyincrease.enemyDeathcnt)
+
+        if(BD.boundHeight == 0)
         {
-            if(BD.boundHeight == 1)
-            {
-                if(low == 0)
-                {
-                    low++;
-                    transform.localScale = new Vector3(originSizeX + 1.0f, originSizeY, originSizeZ);
-                    originSizeX += 1.0f;
-                }
-                transform.localScale = new Vector3(originSizeX, originSizeY, originSizeZ);
-            }
-            else if (BD.boundHeight == 2)
-            {
-                if(low == 1)
-                {
-                    originSizeX -= 1.0f;
-                    low--;
-                }
-                if(middle == 0)
-                {
-                    middle++;
-                    transform.localScale = new Vector3(originSizeX + 2.0f, originSizeY, originSizeZ);
-                    originSizeX += 2.0f;
-                }
-                transform.localScale = new Vector3(originSizeX + 2.0f, originSizeY, originSizeZ);
-            }
-            else
-            {
-                transform.localScale = new Vector3(originSizeX + 3.0f, originSizeY, originSizeZ);
-            }
-        }*/
+            transform.localScale = new Vector3(originSizeX, originSizeY, originSizeZ);
+        }
+        else if (BD.boundHeight == 1)
+        {
+            transform.localScale = new Vector3(originSizeSX, originSizeSY, originSizeSZ);
+        }
+        else if (BD.boundHeight == 2)
+        {
+            transform.localScale = new Vector3(originSizeMX, originSizeMY, originSizeMZ);
+        }
+        else
+        {
+            transform.localScale = new Vector3(originSizeLX, originSizeLY, originSizeLZ);
+        }
     }
 }
