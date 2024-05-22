@@ -12,15 +12,69 @@ public class EnemyFailurework : MonoBehaviour
     private Transform target; // Playerの位置
     private bool isPatrolling = true; // 巡回中かどうか
 
-    private Animator animator; // アニメーターコンポーネント
+    public float ONoff = 0;//(0が見えない；１が見える状態）
+    private float Seetime;  //経過時間
+    public float SoundTime;//経過時間
+    [SerializeField] public GameObject Sphere;
+    [SerializeField] public Transform _parentTransform;
 
-    void Start()
+    public Animator animator; //アニメーションの格納
+
+    [SerializeField]
+    private AudioClip SoundAttck;     //音を出すのオーディオクリップ
+    [SerializeField]
+    private AudioClip footstepSound;     // 足音のオーディオクリップ
+    [SerializeField]
+    private AudioSource audioSource;     // オーディオソース
+    [SerializeField]
+
+    public bool Soundonoff = true;
+
+    private void Sound()
+    {
+        if (ONoff == 0)//EnemyChaseG1.detectionPlayerG1 <= EnemyChaseG1.Detection)
+        {
+            if (Soundonoff == true)
+            {
+                audioSource.clip = footstepSound;
+                audioSource.Play();
+            }
+        }
+        if (ONoff == 1)
+        {
+            if (Soundonoff == false)
+            {
+                audioSource.Stop();
+            }
+        }
+    }
+
+    private void AttackSiund()
+    {
+        if (ONoff == 1)//EnemyChaseG1.detectionPlayerG1 <= EnemyChaseG1.Detection)
+        {
+            if (Soundonoff == true)
+            {
+                audioSource.clip = SoundAttck;
+                audioSource.Play();
+            }
+        }
+        if (ONoff == 0)
+        {
+            if (Soundonoff == false)
+            {
+                audioSource.Stop();
+            }
+        }
+    }
+
+    private  void Start()
     {
         animator = GetComponent<Animator>();
         MoveToNextPatrolPoint();
     }
 
-    void Update()
+    private  void Update()
     {
         if (target != null)
         {

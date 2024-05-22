@@ -449,6 +449,7 @@ public class ItemSeen : MonoBehaviour
            
             GameObject eobj = GameObject.FindWithTag("Enemy");
             Enemys E = eobj.GetComponent<Enemys>(); //付いているスクリプトを取得
+            EnemyFailurework EFW = eobj.GetComponent<EnemyFailurework>();
 
             if (E.ONoff == 0)
             {
@@ -461,6 +462,22 @@ public class ItemSeen : MonoBehaviour
                 E.ONoff = 1;
                 E.SoundTime = 0.0f;
                 E.Sphere.SetActive(true);//音波非表示→表示
+
+            }
+
+            if ( EFW.ONoff == 0)
+            {
+                var childTransforms = EFW._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("EnemyParts"));
+                foreach (var item in childTransforms)
+                {
+                    //タグが"EnemyParts"である子オブジェクトを見えるようにする
+                    item.gameObject.GetComponent<Renderer>().enabled = true;
+                }
+
+                EFW.ONoff = 1;
+                EFW.SoundTime = 0.0f;
+                EFW.Sphere.SetActive(true);//音波非表示→表示
+
             }
 
         }

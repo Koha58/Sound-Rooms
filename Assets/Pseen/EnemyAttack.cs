@@ -73,7 +73,8 @@ public class EnemyAttack : MonoBehaviour
                 GameObject eobj = GameObject.FindWithTag("Enemy");
                 Enemys  E = eobj.GetComponent<Enemys>();
                 Enemyincrease EI = eobj.GetComponent<Enemyincrease>(); //付いているスクリプトを取得
-                if (E.ONoff == 1)
+                EnemyFailurework EFW = eobj.GetComponent<EnemyFailurework>();
+                if (E.ONoff == 1||EFW.ONoff==1)
                 {
                    EI.isHidden = false;
                 }

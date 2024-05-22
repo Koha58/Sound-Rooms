@@ -55,14 +55,14 @@ public class WallScript : MonoBehaviour
         {
             GameObject eobj = GameObject.FindWithTag("Enemy");
             Enemys E = eobj.GetComponent<Enemys>(); //Enemyに付いているスクリプトを取得
-            EnemySeen ES = eobj.GetComponent<EnemySeen>(); //Enemyに付いているスクリプトを取得
+           // EnemyFailurework EFW= eobj.GetComponent<EnemyFailurework>();    
 
-            if (E.ONoff == 0)
+            if (E.ONoff == 0 )//||EFW.ONoff==0 )
             {
                 bc.enabled = false;
               
             }
-            else if (E.ONoff == 1)
+            else if (E.ONoff == 1)//|| EFW.ONoff == 1)
             {
                 bc.enabled = true;
                 E.targetPosition = GetRandomPosition();
