@@ -63,7 +63,7 @@ public class EnemyAttack : MonoBehaviour
         {
             stayTimeF += Time.deltaTime;
         }
-
+        
         if (other.CompareTag("EnemyBack") && BD.boundHeight >= 2)
         {
             stayTimeB += Time.deltaTime;
@@ -73,8 +73,7 @@ public class EnemyAttack : MonoBehaviour
                 GameObject eobj = GameObject.FindWithTag("Enemy");
                 Enemys  E = eobj.GetComponent<Enemys>();
                 Enemyincrease EI = eobj.GetComponent<Enemyincrease>(); //付いているスクリプトを取得
-                EnemyFailurework EFW = eobj.GetComponent<EnemyFailurework>();
-                if (E.ONoff == 1||EFW.ONoff==1)
+                if (E.ONoff == 1)
                 {
                    EI.isHidden = false;
                 }
@@ -82,6 +81,26 @@ public class EnemyAttack : MonoBehaviour
             stayTimeF = 0.0f;
             stayTimeB = 0.0f;
                 //Destroy(eobj);
+        }
+        
+        if (other.CompareTag("EnemysBack") && BD.boundHeight >= 2)
+        {
+            stayTimeB += Time.deltaTime;
+            // GameObject eobj = GameObject.Find("Enemy");
+            GameObject eobj = GameObject.FindWithTag("Enemys");
+            if (stayTimeB > stayTimeF)
+            {
+               // GameObject eobj = GameObject.FindWithTag("Enemys");
+                Enemyincrease EI = eobj.GetComponent<Enemyincrease>(); //付いているスクリプトを取得
+                EnemyFailurework EFW = eobj.GetComponent<EnemyFailurework>();
+                if  (EFW.ONoff == 1)
+                {
+                    EI.isHidden = false;
+                }
+            }
+            stayTimeF = 0.0f;
+            stayTimeB = 0.0f;
+            //Destroy(eobj);
         }
 
         if (other.CompareTag("EnemyBackG") && BD.boundHeight >= 2)

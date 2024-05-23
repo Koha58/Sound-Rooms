@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class EnemyFailurework : MonoBehaviour
@@ -76,6 +77,38 @@ public class EnemyFailurework : MonoBehaviour
 
     private  void Update()
     {
+        var childTransforms = _parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("EnemyParts"));
+        if (ONoff == 1)//見えないとき
+        {
+            SoundTime += Time.deltaTime;
+            if (SoundTime > 10.0f)
+            {
+                foreach (var item in childTransforms)
+                {
+                    //タグが"EnemyParts"である子オブジェクトを見えるようにする
+                    item.gameObject.GetComponent<Renderer>().enabled = true;
+                }
+                ONoff = 1;
+                SoundTime = 0.0f;
+                Sphere.SetActive(true);//音波非表示→表示
+            }
+        }
+        if (ONoff == 0)//見えているとき
+        {
+            Seetime += Time.deltaTime;
+            if (Seetime >= 10.0f)
+            {
+                foreach (var item in childTransforms)
+                {
+                    //タグが"EnemyParts"である子オブジェクトを見えなくする
+                    item.gameObject.GetComponent<Renderer>().enabled = false;
+                }
+                ONoff = 0;
+                Seetime = 0.0f;
+                Sphere.SetActive(false);//音波表示→非表示
+            }
+        }
+
         if (target != null)
         {
             // Playerがいる場合は追いかける
@@ -93,7 +126,10 @@ public class EnemyFailurework : MonoBehaviour
                 Invoke("MoveToNextPatrolPoint", patrolInterval);
             }
         }
+
+     
     }
+
 
     void MoveToNextPatrolPoint()
     {

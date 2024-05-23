@@ -21,7 +21,7 @@ public class EnemyCube : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         
-        GameObject eobj = GameObject.FindWithTag("Enemy");
+        GameObject eobj = GameObject.FindWithTag("Enemys");
         // Enemyに付いているスクリプトを取得
         Enemys ES = eobj.GetComponent<Enemys>();
 

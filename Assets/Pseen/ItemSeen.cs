@@ -82,7 +82,7 @@ public class ItemSeen : MonoBehaviour
         SeenArea.GetComponent<Collider>().enabled = false;
         ItemCanvas.GetComponent<Canvas>().enabled = false;
         Walls = GameObject.FindGameObjectsWithTag("Wall");
-        foreach(GameObject Wall in Walls)
+        foreach (GameObject Wall in Walls)
         {
             Wall.GetComponent<Renderer>().enabled = false;
         }
@@ -192,7 +192,7 @@ public class ItemSeen : MonoBehaviour
                     GameObject door = childTransform.gameObject;
                     door.GetComponent<Renderer>().enabled = false;
                 }
-                if (Box.activeSelf== true)
+                if (Box.activeSelf == true)
                 {
                     Box.SetActive(false);
                     Box1.SetActive(false);
@@ -270,7 +270,7 @@ public class ItemSeen : MonoBehaviour
                 }
             }
         }
-        else if(objName == "key 1")
+        else if (objName == "key 1")
         {
             if (parentObject[0] != null)
             {
@@ -430,8 +430,8 @@ public class ItemSeen : MonoBehaviour
             Box5.SetActive(true);
             BoxSeen.GetComponent<Collider>().enabled = false;
         }
-        
-        else if(other.CompareTag("Door"))
+
+        else if (other.CompareTag("Door"))
         {
             // 子オブジェクトの数を取得
             int doorparts = doorObject.transform.childCount;
@@ -444,28 +444,34 @@ public class ItemSeen : MonoBehaviour
         }
 
 
-        else if(other.CompareTag("Enemy"))
+        if (other.CompareTag("Enemy"))
         {
-           
-            GameObject eobj = GameObject.FindWithTag("Enemy");
-            Enemys E = eobj.GetComponent<Enemys>(); //付いているスクリプトを取得
-            EnemyFailurework EFW = eobj.GetComponent<EnemyFailurework>();
 
-            if (E.ONoff == 0)
+            GameObject eobj = GameObject.FindWithTag("Enemy");
+            Enemys Es = eobj.GetComponent<Enemys>(); //付いているスクリプトを取得
+
+            if (Es.ONoff == 0)
             {
-                var childTransforms = E._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("EnemyParts"));
+                var childTransforms = Es._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("EnemyParts"));
                 foreach (var item in childTransforms)
                 {
                     //タグが"EnemyParts"である子オブジェクトを見えるようにする
                     item.gameObject.GetComponent<Renderer>().enabled = true;
                 }
-                E.ONoff = 1;
-                E.SoundTime = 0.0f;
-                E.Sphere.SetActive(true);//音波非表示→表示
+                Es.ONoff = 1;
+                Es.SoundTime = 0.0f;
+                Es.Sphere.SetActive(true);//音波非表示→表示
 
             }
 
-            if ( EFW.ONoff == 0)
+        }
+
+        else if (other.CompareTag("EnemyFailurework"))
+        {
+            GameObject eobj = GameObject.FindWithTag("EnemyFailurework");
+            EnemyFailurework EFW = eobj.GetComponent<EnemyFailurework>();
+
+            if (EFW.ONoff == 0)
             {
                 var childTransforms = EFW._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("EnemyParts"));
                 foreach (var item in childTransforms)
@@ -481,7 +487,8 @@ public class ItemSeen : MonoBehaviour
             }
 
         }
-        else if(other.CompareTag("Enemy1"))
+
+        else if (other.CompareTag("Enemy1"))
         {
             EnemySeen ES;
             GameObject eobj1 = GameObject.FindWithTag("Enemy1");
@@ -573,3 +580,4 @@ public class ItemSeen : MonoBehaviour
         }
     }
 }
+
