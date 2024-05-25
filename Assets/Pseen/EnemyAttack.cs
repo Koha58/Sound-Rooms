@@ -92,11 +92,13 @@ public class EnemyAttack : MonoBehaviour
             {
                // GameObject eobj = GameObject.FindWithTag("Enemys");
                 Enemyincrease EI = eobj.GetComponent<Enemyincrease>(); //付いているスクリプトを取得
-                EnemyFailurework EFW = eobj.GetComponent<EnemyFailurework>();
+              
+                /*EnemyFailurework EFW = eobj.GetComponent<EnemyFailurework>();
                 if  (EFW.ONoff == 1)
                 {
                     EI.isHidden = false;
                 }
+                */
             }
             stayTimeF = 0.0f;
             stayTimeB = 0.0f;

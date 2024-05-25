@@ -68,6 +68,7 @@ public class WallScript : MonoBehaviour
               
             }
         }
+        /*
         if (other.gameObject.CompareTag("EnemyFailurework"))
         {
 
@@ -87,7 +88,7 @@ public class WallScript : MonoBehaviour
             }
 
         }
-
+        */
         if (other.gameObject.CompareTag("EnemyG"))
         {
            

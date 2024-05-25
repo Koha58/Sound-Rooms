@@ -5,11 +5,12 @@ using UnityEngine;
 
 public class EnemyFailurework : MonoBehaviour
 {
-    public Transform[] patrolPoints; // 巡回ポイントの配列
-    public float patrolInterval = 2f; // 巡回の間隔
-    public float chaseSpeed = 5f; // Playerを追いかける速度
+    public Transform[] PatrolPoints; // 巡回ポイントの配列
+    private float patrolInterval = 2f; // 巡回の間隔
+    private float chaseSpeed = 2f; // Playerを追いかける速度
+    private float MoveSpeed = 2f; // 動く速度
 
-    private int currentPointIndex = 0; // 現在の巡回ポイントのインデックス
+    public int CurrentPointIndex = 0; // 現在の巡回ポイントのインデックス
     private Transform target; // Playerの位置
     private bool isPatrolling = true; // 巡回中かどうか
 
@@ -18,70 +19,63 @@ public class EnemyFailurework : MonoBehaviour
     public float SoundTime;//経過時間
     [SerializeField] public GameObject Sphere;
     [SerializeField] public Transform _parentTransform;
+    public Transform Player;//プレイヤーを参照
 
-    public Animator animator; //アニメーションの格納
-
-    [SerializeField]
-    private AudioClip SoundAttck;     //音を出すのオーディオクリップ
-    [SerializeField]
-    private AudioClip footstepSound;     // 足音のオーディオクリップ
-    [SerializeField]
-    private AudioSource audioSource;     // オーディオソース
-    [SerializeField]
-
-    public bool Soundonoff = true;
-
-    private void Sound()
-    {
-        if (ONoff == 0)//EnemyChaseG1.detectionPlayerG1 <= EnemyChaseG1.Detection)
-        {
-            if (Soundonoff == true)
-            {
-                audioSource.clip = footstepSound;
-                audioSource.Play();
-            }
-        }
-        if (ONoff == 1)
-        {
-            if (Soundonoff == false)
-            {
-                audioSource.Stop();
-            }
-        }
-    }
-
-    private void AttackSiund()
-    {
-        if (ONoff == 1)//EnemyChaseG1.detectionPlayerG1 <= EnemyChaseG1.Detection)
-        {
-            if (Soundonoff == true)
-            {
-                audioSource.clip = SoundAttck;
-                audioSource.Play();
-            }
-        }
-        if (ONoff == 0)
-        {
-            if (Soundonoff == false)
-            {
-                audioSource.Stop();
-            }
-        }
-    }
+    private float TargetTime;
 
     private  void Start()
     {
-        animator = GetComponent<Animator>();
-        MoveToNextPatrolPoint();
+        //tagが"EnemyParts"である子オブジェクトのTransformのコレクションを取得
+        var childTransforms = _parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("EnemyParts"));
+
+        foreach (var item in childTransforms)
+        {
+            //タグが"EnemyParts"である子オブジェクトを見えなくする
+            item.gameObject.GetComponent<Renderer>().enabled = false;
+        }
+
+        //animator = GetComponent<Animator>();
+        NextPatrolPoint();
     }
 
     private  void Update()
     {
+        Switch();
+   
+        GameObject obj = GameObject.Find("Player"); //Playerオブジェクトを探す
+        PlayerSeen PS = obj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
+        if (target != null)
+        {
+            if (PS.onoff == 1 && ONoff == 1)
+            {
+                transform.LookAt(Player.transform); //プレイヤーの方向にむく
+                transform.position = Vector3.MoveTowards(transform.position, target.position, chaseSpeed * Time.deltaTime);
+            }
+        }
+        else if (isPatrolling )
+        {
+            // 巡回中の場合は巡回ポイントに向かう
+            transform.position = Vector3.MoveTowards(transform.position, PatrolPoints[CurrentPointIndex].position, MoveSpeed * Time.deltaTime);
+            if (transform.position == PatrolPoints[CurrentPointIndex].position)
+            {
+                // 巡回ポイントに到達したら一定時間停止し、次の巡回ポイントに移動する
+               // animator.SetTrigger("ShakeHead");
+                isPatrolling = false;
+                Invoke("NextPatrolPoint", patrolInterval);
+                transform.LookAt(PatrolPoints[CurrentPointIndex].transform); 
+            }
+        }
+    }
+
+    void Switch()
+    {
+        float randomTime = Random.Range(5f, 10f);
+        TargetTime = randomTime;
         var childTransforms = _parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("EnemyParts"));
-        if (ONoff == 1)//見えないとき
+        if (ONoff == 0)//見えないとき
         {
             SoundTime += Time.deltaTime;
-            if (SoundTime > 10.0f)
+            if (SoundTime >= TargetTime)
             {
                 foreach (var item in childTransforms)
                 {
@@ -91,9 +85,17 @@ public class EnemyFailurework : MonoBehaviour
                 ONoff = 1;
                 SoundTime = 0.0f;
                 Sphere.SetActive(true);//音波非表示→表示
+                GameObject Chase = GameObject.FindWithTag("Chase");
+                EnemyChase EC = Chase.GetComponent<EnemyChase>(); //EnemyFailurework付いているスクリプトを取得
+                EC.Chase = false;
+
+                if (EC.Chase == false)
+                {
+                    target = null;  
+                }
             }
         }
-        if (ONoff == 0)//見えているとき
+        if (ONoff == 1)//見えているとき
         {
             Seetime += Time.deltaTime;
             if (Seetime >= 10.0f)
@@ -108,38 +110,16 @@ public class EnemyFailurework : MonoBehaviour
                 Sphere.SetActive(false);//音波表示→非表示
             }
         }
-
-        if (target != null)
-        {
-            // Playerがいる場合は追いかける
-            transform.position = Vector3.MoveTowards(transform.position, target.position, chaseSpeed * Time.deltaTime);
-        }
-        else if (isPatrolling)
-        {
-            // 巡回中の場合は巡回ポイントに向かう
-            transform.position = Vector3.MoveTowards(transform.position, patrolPoints[currentPointIndex].position, chaseSpeed * Time.deltaTime);
-            if (transform.position == patrolPoints[currentPointIndex].position)
-            {
-                // 巡回ポイントに到達したら一定時間停止し、次の巡回ポイントに移動する
-               // animator.SetTrigger("ShakeHead");
-                isPatrolling = false;
-                Invoke("MoveToNextPatrolPoint", patrolInterval);
-            }
-        }
-
-     
     }
 
-
-    void MoveToNextPatrolPoint()
+    void NextPatrolPoint()
     {
         // 次の巡回ポイントへのインデックスを更新
-        currentPointIndex++;
-        if (currentPointIndex >= patrolPoints.Length)
+        CurrentPointIndex++;
+        if (CurrentPointIndex >= PatrolPoints.Length)
         {
-            currentPointIndex = 0;
+            CurrentPointIndex = 0;
         }
-
         // 巡回中に戻る
         isPatrolling = true;
     }
@@ -148,18 +128,29 @@ public class EnemyFailurework : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            // Playerを検知したら追いかける
-            target = other.transform;
-        }
-    }
+            GameObject Chase = GameObject.FindWithTag("Chase");
+            EnemyChase EC= Chase.GetComponent<EnemyChase>(); //EnemyFailurework付いているスクリプトを取得
 
-    void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            // Playerが範囲外に出たら追跡をやめる
-            target = null;
+            GameObject obj = GameObject.Find("Player"); //Playerオブジェクトを探す
+            PlayerSeen PS = obj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
+
+            if (EC.Chase == true && PS.onoff == 1)
+            {
+                target = other.transform;  // Playerを検知したら追いかける
+            }
         }
+        /*
+        if (ONoff == 1)
+        {
+            if (other.CompareTag("Wall"))
+            {
+                
+              PatrolPoints[CurrentPointIndex] = PatrolPoints[CurrentPointIndex--];
+
+            }
+            
+        }
+        */
     }
 }
 

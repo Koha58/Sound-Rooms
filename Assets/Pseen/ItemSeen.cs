@@ -443,7 +443,7 @@ public class ItemSeen : MonoBehaviour
             }
         }
 
-
+        /*
         if (other.CompareTag("Enemy"))
         {
 
@@ -465,7 +465,7 @@ public class ItemSeen : MonoBehaviour
             }
 
         }
-
+        /*
         else if (other.CompareTag("EnemyFailurework"))
         {
             GameObject eobj = GameObject.FindWithTag("EnemyFailurework");
@@ -487,6 +487,7 @@ public class ItemSeen : MonoBehaviour
             }
 
         }
+        */
 
         else if (other.CompareTag("Enemy1"))
         {

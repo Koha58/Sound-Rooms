@@ -21,13 +21,13 @@ public class EnemyCube : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         
-        GameObject eobj = GameObject.FindWithTag("Enemys");
+        GameObject eobj = GameObject.FindWithTag("Enemy");
         // Enemyに付いているスクリプトを取得
-        Enemys ES = eobj.GetComponent<Enemys>();
+        EnemyFailurework EF = eobj.GetComponent<EnemyFailurework>();
 
         if (other.gameObject.CompareTag("Wall"))
         {
-            if (ES.ONoff == 1)
+            if (EF.ONoff == 1)
             {
                 Enemytouch=true ;
 
