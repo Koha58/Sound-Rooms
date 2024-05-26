@@ -25,7 +25,53 @@ public class EnemyFailurework : MonoBehaviour
 
     public Animator animator; //アニメーションの格納
 
-    private  void Start()
+    [SerializeField]
+    private AudioClip SoundAttck;     //音を出すのオーディオクリップ
+    [SerializeField]
+    private AudioClip footstepSound;     // 足音のオーディオクリップ
+    [SerializeField]
+    private AudioSource audioSource;     // オーディオソース
+    [SerializeField]
+    public bool Soundonoff = true;
+
+    private void Sound()
+    {
+        if (ONoff == 0)//EnemyChaseG1.detectionPlayerG1 <= EnemyChaseG1.Detection)
+        {
+            if (Soundonoff == true)
+            {
+                audioSource.clip = footstepSound;
+                audioSource.Play();
+            }
+        }
+        if (ONoff == 1)
+        {
+            if (Soundonoff == false)
+            {
+                audioSource.Stop();
+            }
+        }
+    }
+
+    private void AttackSiund()
+    {
+        if (ONoff == 1)//EnemyChaseG1.detectionPlayerG1 <= EnemyChaseG1.Detection)
+        {
+            if (Soundonoff == true)
+            {
+                audioSource.clip = SoundAttck;
+                audioSource.Play();
+            }
+        }
+        if (ONoff == 0)
+        {
+            if (Soundonoff == false)
+            {
+                audioSource.Stop();
+            }
+        }
+    }
+    private void Start()
     {
         //tagが"EnemyParts"である子オブジェクトのTransformのコレクションを取得
         var childTransforms = _parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("EnemyParts"));
@@ -43,6 +89,10 @@ public class EnemyFailurework : MonoBehaviour
     private  void Update()
     {
         Switch();
+
+        Sound();
+
+        AttackSiund();
 
         // 「歩く」のアニメーションを再生する
         animator.SetBool("EnemyWalk", true);
