@@ -51,23 +51,28 @@ public class WallScript : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
+        /*
         if (other.gameObject.CompareTag("Enemy"))
         {
             GameObject eobj = GameObject.FindWithTag("Enemy");
-            Enemys E = eobj.GetComponent<Enemys>(); //Enemyに付いているスクリプトを取得
+            EnemyFailurework EF = eobj.GetComponent<EnemyFailurework>(); //Enemyに付いているスクリプトを取得
            
-            if (E.ONoff == 0 )//||EFW.ONoff==0 )
+            if (EF.ONoff == 0 )//||EFW.ONoff==0 )
             {
                 bc.enabled = false;
               
+
             }
-            else if (E.ONoff == 1)//|| EFW.ONoff == 1)
+            else if (EF.ONoff == 1)//|| EFW.ONoff == 1)
             {
                 bc.enabled = true;
-               // E.targetPosition = GetRandomPosition();
-              
+                EF.PatrolPoints[EF.CurrentPointIndex] = EF.PatrolPoints[EF.CurrentPointIndex--];
+                // E.targetPosition = GetRandomPosition();
+
             }
         }
+
+        */
         /*
         if (other.gameObject.CompareTag("EnemyFailurework"))
         {

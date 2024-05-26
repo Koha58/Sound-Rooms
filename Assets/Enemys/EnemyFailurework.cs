@@ -23,6 +23,8 @@ public class EnemyFailurework : MonoBehaviour
 
     private float TargetTime;
 
+    public Animator animator; //アニメーションの格納
+
     private  void Start()
     {
         //tagが"EnemyParts"である子オブジェクトのTransformのコレクションを取得
@@ -41,13 +43,19 @@ public class EnemyFailurework : MonoBehaviour
     private  void Update()
     {
         Switch();
-   
+
+        // 「歩く」のアニメーションを再生する
+        animator.SetBool("EnemyWalk", true);
+
+
         GameObject obj = GameObject.Find("Player"); //Playerオブジェクトを探す
         PlayerSeen PS = obj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
         if (target != null)
         {
             if (PS.onoff == 1 && ONoff == 1)
             {
+                animator.SetBool("EnemyWalk", false);
+                animator.SetBool("EnemyRun", true);
                 transform.LookAt(Player.transform); //プレイヤーの方向にむく
                 transform.position = Vector3.MoveTowards(transform.position, target.position, chaseSpeed * Time.deltaTime);
             }
@@ -59,10 +67,10 @@ public class EnemyFailurework : MonoBehaviour
             if (transform.position == PatrolPoints[CurrentPointIndex].position)
             {
                 // 巡回ポイントに到達したら一定時間停止し、次の巡回ポイントに移動する
-               // animator.SetTrigger("ShakeHead");
+                // animator.SetTrigger("ShakeHead");
                 isPatrolling = false;
                 Invoke("NextPatrolPoint", patrolInterval);
-                transform.LookAt(PatrolPoints[CurrentPointIndex].transform); 
+                transform.LookAt(PatrolPoints[CurrentPointIndex].transform);
             }
         }
     }
@@ -129,7 +137,7 @@ public class EnemyFailurework : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             GameObject Chase = GameObject.FindWithTag("Chase");
-            EnemyChase EC= Chase.GetComponent<EnemyChase>(); //EnemyFailurework付いているスクリプトを取得
+            EnemyChase EC = Chase.GetComponent<EnemyChase>(); //EnemyFailurework付いているスクリプトを取得
 
             GameObject obj = GameObject.Find("Player"); //Playerオブジェクトを探す
             PlayerSeen PS = obj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
@@ -138,19 +146,8 @@ public class EnemyFailurework : MonoBehaviour
             {
                 target = other.transform;  // Playerを検知したら追いかける
             }
-        }
-        /*
-        if (ONoff == 1)
-        {
-            if (other.CompareTag("Wall"))
-            {
-                
-              PatrolPoints[CurrentPointIndex] = PatrolPoints[CurrentPointIndex--];
 
-            }
-            
         }
-        */
     }
 }
 
