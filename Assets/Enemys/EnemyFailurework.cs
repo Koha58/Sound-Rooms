@@ -34,6 +34,8 @@ public class EnemyFailurework : MonoBehaviour
     [SerializeField]
     public bool Soundonoff = true;
 
+    public GameObject Chase;
+    public EnemyChase EC;
     private void Sound()
     {
         if (ONoff == 0)//EnemyChaseG1.detectionPlayerG1 <= EnemyChaseG1.Detection)
@@ -186,8 +188,8 @@ public class EnemyFailurework : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            GameObject Chase = GameObject.FindWithTag("Chase");
-            EnemyChase EC = Chase.GetComponent<EnemyChase>(); //EnemyFailurework付いているスクリプトを取得
+            Chase = GameObject.FindWithTag("Chase");
+            EC = Chase.GetComponent<EnemyChase>(); //EnemyFailurework付いているスクリプトを取得
 
             GameObject obj = GameObject.Find("Player"); //Playerオブジェクトを探す
             PlayerSeen PS = obj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
@@ -196,7 +198,7 @@ public class EnemyFailurework : MonoBehaviour
             {
                 target = other.transform;  // Playerを検知したら追いかける
             }
-
+            
         }
     }
 }

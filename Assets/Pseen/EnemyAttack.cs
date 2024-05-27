@@ -67,44 +67,20 @@ public class EnemyAttack : MonoBehaviour
         if (other.CompareTag("EnemyBack") && BD.boundHeight >= 2)
         {
             stayTimeB += Time.deltaTime;
-            // GameObject eobj = GameObject.Find("Enemy");
             if (stayTimeB > stayTimeF)
             {
                 GameObject eobj = GameObject.FindWithTag("Enemy");
-                Enemys  E = eobj.GetComponent<Enemys>();
+                EnemyFailurework EF = eobj.GetComponent<EnemyFailurework>();
                 Enemyincrease EI = eobj.GetComponent<Enemyincrease>(); //付いているスクリプトを取得
-                if (E.ONoff == 1)
+                if (EF.ONoff == 1)
                 {
                    EI.isHidden = false;
                 }
             }
             stayTimeF = 0.0f;
             stayTimeB = 0.0f;
-                //Destroy(eobj);
         }
         
-        if (other.CompareTag("EnemysBack") && BD.boundHeight >= 2)
-        {
-            stayTimeB += Time.deltaTime;
-            // GameObject eobj = GameObject.Find("Enemy");
-            GameObject eobj = GameObject.FindWithTag("Enemys");
-            if (stayTimeB > stayTimeF)
-            {
-               // GameObject eobj = GameObject.FindWithTag("Enemys");
-                Enemyincrease EI = eobj.GetComponent<Enemyincrease>(); //付いているスクリプトを取得
-              
-                /*EnemyFailurework EFW = eobj.GetComponent<EnemyFailurework>();
-                if  (EFW.ONoff == 1)
-                {
-                    EI.isHidden = false;
-                }
-                */
-            }
-            stayTimeF = 0.0f;
-            stayTimeB = 0.0f;
-            //Destroy(eobj);
-        }
-
         if (other.CompareTag("EnemyBackG") && BD.boundHeight >= 2)
         {
             stayTimeB += Time.deltaTime;
