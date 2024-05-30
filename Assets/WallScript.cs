@@ -51,7 +51,7 @@ public class WallScript : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        /*
+        
         if (other.gameObject.CompareTag("Enemy"))
         {
             GameObject eobj = GameObject.FindWithTag("Enemy");
@@ -60,19 +60,21 @@ public class WallScript : MonoBehaviour
             if (EF.ONoff == 0 )//||EFW.ONoff==0 )
             {
                 bc.enabled = false;
-              
-
             }
             else if (EF.ONoff == 1)//|| EFW.ONoff == 1)
             {
                 bc.enabled = true;
-                EF.PatrolPoints[EF.CurrentPointIndex] = EF.PatrolPoints[EF.CurrentPointIndex--];
-                // E.targetPosition = GetRandomPosition();
-
+                if (EF.CurrentPointIndex <= 2) {
+                    EF.PatrolPoints[EF.CurrentPointIndex] = EF.PatrolPoints[EF.CurrentPointIndex -1];
+                }
+                else if(EF.CurrentPointIndex == 0)
+                {
+                    EF.PatrolPoints[EF.CurrentPointIndex] = EF.PatrolPoints[EF.CurrentPointIndex++];
+                }
             }
         }
-
-        */
+        
+        
         /*
         if (other.gameObject.CompareTag("EnemyFailurework"))
         {
