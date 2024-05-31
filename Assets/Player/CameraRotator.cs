@@ -13,7 +13,7 @@ public class CameraRotator : MonoBehaviour
     //呼び出し時に実行される関数
     void Start()
     {
-        //メインカメラとユニティちゃんをそれぞれ取得
+        //メインカメラとプレイヤーをそれぞれ取得
         mainCamera = Camera.main.gameObject;
         playerObject = GameObject.Find("Player");
     }

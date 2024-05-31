@@ -69,12 +69,12 @@ public class ItemSearch : MonoBehaviour
         //PlayerSeen playerseen = GetComponent<PlayerSeen>();
         //最も近いアイテムが一定の距離内にある場合、アイテムの説明UIを表示。Eキーを押すと拾える。
         //if (closetObject == null) return;
-        if (closetDistance < 1.5f)
+        if (closetDistance < 1.5f && IS.onoff == 1)
         {
             ItemCanvas.GetComponent<Canvas>().enabled = true;
             PickUp();
         }
-        if(closetDistance > 1.5f)
+        if(closetDistance > 1.5f && IS.onoff == 1)
         {
             ItemCanvas.GetComponent<Canvas>().enabled = false;
         }
