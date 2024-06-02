@@ -149,7 +149,8 @@ public class Enemys : MonoBehaviour
 
         GameObject obj = GameObject.Find("Player"); //Playerオブジェクトを探す
         PlayerSeen PS = obj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
-
+        //tagが"PlayerParts"である子オブジェクトのTransformのコレクションを取得
+        var childTransforms_player = PS._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
         // 「歩く」のアニメーションを再生する
         animator.SetBool("EnemyWalk", true);
 
@@ -157,11 +158,10 @@ public class Enemys : MonoBehaviour
         {
             if (PS.onoff == 0)
             {
-                for (int i = 0; i < 5; i++)//子オブジェクトの数を取得
+                foreach (var playerParts in childTransforms_player)
                 {
-                    Transform childTransform = PS.parentObject.transform.GetChild(i);
-                    PS.childObject = childTransform.gameObject;
-                    PS.childObject.GetComponent<Renderer>().enabled = true;//見える
+                    //タグが"PlayerParts"である子オブジェクトを見えるようにする
+                    playerParts.gameObject.GetComponent<Renderer>().enabled = true;
                 }
                 PS.onoff = 1;  //見えているから1
             }
