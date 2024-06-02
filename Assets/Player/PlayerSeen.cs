@@ -1,45 +1,42 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 //プレイヤーの可視化・不可視化
 
 public class PlayerSeen : MonoBehaviour
 {
-    GameObject Player;  //オブジェクト名は適宜変更
-
     public int onoff = 0;  //判定用（プレイヤーが見えていない時：0/プレイヤーが見えている時：1）
 
     private float seentime = 0.0f; //経過時間記録用
 
-    public GameObject parentObject;
-    public GameObject childObject;
+    [SerializeField] public Transform _parentTransform;
 
 
     void Start()
     {
-        //最初は見えない状態
-        parentObject = GameObject.Find("Player");
+        //tagが"PlayerParts"である子オブジェクトのTransformのコレクションを取得
+        var childTransforms = _parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
 
-        for (int i = 0; i < 5; i++)//子オブジェクトの数を取得
+        foreach (var playerParts in childTransforms)
         {
-            Transform childTransform = parentObject.transform.GetChild(i);
-            childObject = childTransform.gameObject;
-            childObject.GetComponent<Renderer>().enabled = false;//見えない（無効）
+            //タグが"PlayerParts"である子オブジェクトを見えなくする
+            playerParts.gameObject.GetComponent<Renderer>().enabled = false;
         }
     }
 
     public void Update()
     {
-        GameObject parentObject = GameObject.Find("Player");
+        //tagが"PlayerParts"である子オブジェクトのTransformのコレクションを取得
+        var childTransforms = _parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
         //左クリックで見えるようになる
         if (Input.GetMouseButtonUp(0))
         {
-            for (int i = 0; i < 5; i++)
+            foreach (var playerParts in childTransforms)
             {
-                Transform childTransform = parentObject.transform.GetChild(i);
-                GameObject childObject = childTransform.gameObject;
-                childObject.GetComponent<Renderer>().enabled = true;//見える（有効）
+                //タグが"PlayerParts"である子オブジェクトを見えなくする
+                playerParts.gameObject.GetComponent<Renderer>().enabled = true;
             }
             onoff = 1;  //見えているから1
             if (Record.playRecord == true)
@@ -54,11 +51,10 @@ public class PlayerSeen : MonoBehaviour
             seentime += Time.deltaTime;
             if (seentime >= 10.0f)
             {
-                for (int i = 0; i < 5; i++)
+                foreach (var playerParts in childTransforms)
                 {
-                    Transform childTransform = parentObject.transform.GetChild(i);
-                    GameObject childObject = childTransform.gameObject;
-                    childObject.GetComponent<Renderer>().enabled = false;//見えない（無効）
+                    //タグが"PlayerParts"である子オブジェクトを見えなくする
+                    playerParts.gameObject.GetComponent<Renderer>().enabled = false;
                 }
                 onoff = 0;  //見えていないから0
                 seentime = 0.0f;    //経過時間をリセット
