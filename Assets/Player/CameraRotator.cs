@@ -32,7 +32,7 @@ public class CameraRotator : MonoBehaviour
         //Vector3でX,Y方向の回転の度合いを定義
         Vector3 angle = new Vector3(Input.GetAxis("Mouse X") * rotateSpeed, Input.GetAxis("Mouse Y") * rotateSpeed, 0);
 
-        //transform.RotateAround()をしようしてメインカメラを回転させる
+        //transform.RotateAround()を使用してメインカメラを回転させる
         mainCamera.transform.RotateAround(playerObject.transform.position, Vector3.up, angle.x);
         mainCamera.transform.RotateAround(playerObject.transform.position, transform.right, angle.y);
     }

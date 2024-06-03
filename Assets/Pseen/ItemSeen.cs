@@ -507,24 +507,25 @@ public class ItemSeen : MonoBehaviour
                 ES.Sphere.SetActive(true);//音波非表示→表示
             }
         }
-        else if (other.CompareTag("EnemyG1"))
+        else if (other.CompareTag("EnemyG"))
         {
-            EnemySeen ES;
-            GameObject eobj2 = GameObject.FindWithTag("EnemyG1");
-            ES = eobj2.GetComponent<EnemySeen>(); //付いているスクリプトを取得
-            if (ES.ONoff == 0)
+            EnemysG EsG;
+            //EnemySeen ES;
+            //GameObject eobj2 = GameObject.FindWithTag("EnemyG");
+            EsG = other.gameObject.GetComponent<EnemysG>(); //付いているスクリプトを取得
+            if (EsG.ONoff == 0)
             {
-                var childTransforms = ES._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("EnemyParts"));
+                var childTransforms = EsG._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("EnemyParts"));
                 foreach (var item in childTransforms)
                 {
                     //タグが"EnemyParts"である子オブジェクトを見えるようにする
                     item.gameObject.GetComponent<Renderer>().enabled = true;
                 }
-                ES.ONoff = 1;
-                ES.SoundTime = 0.0f;
-                ES.Sphere.SetActive(true);//音波非表示→表示
+                EsG.ONoff = 1;
+                EsG.SoundTime = 0.0f;
+                EsG.Sphere.SetActive(true);//音波非表示→表示
             }
-        }
+        }/*
         else if (other.CompareTag("EnemyG2"))
         {
             EnemySeen ES;
@@ -578,7 +579,7 @@ public class ItemSeen : MonoBehaviour
                 ES.SoundTime = 0.0f;
                 ES.Sphere.SetActive(true);//音波非表示→表示
             }
-        }
+        }*/
     }
 }
 

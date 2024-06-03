@@ -25,7 +25,7 @@ public class EnemysG : MonoBehaviour
 
     public  float ONoff = 0;//(0が見えない；１が見える状態）
     private float Seetime;  //経過時間
-    private float SoundTime;//経過時間
+    public float SoundTime;//経過時間
     [SerializeField] public GameObject Sphere;
     [SerializeField] public Transform _parentTransform;
 

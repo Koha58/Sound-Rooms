@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028331, g: 0.2257133, b: 0.3069217, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2105,7 +2105,7 @@ PrefabInstance:
     - target: {fileID: 366839212972223988, guid: bf75af8564529b146ac19ab10eb8865d,
         type: 3}
       propertyPath: m_TagString
-      value: Untagged
+      value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 4920047662373816145, guid: bf75af8564529b146ac19ab10eb8865d,
         type: 3}
@@ -8145,6 +8145,12 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1659303294 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8209607689113787381, guid: ae99f31535f6d7a43af5057ab682ad94,
+    type: 3}
+  m_PrefabInstance: {fileID: 203519263}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1662652512 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8586046032975707095, guid: d13a1c18d4de717409027647c3d1cd83,
@@ -11299,6 +11305,16 @@ PrefabInstance:
       propertyPath: m_TagString
       value: PlayerParts
       objectReference: {fileID: 0}
+    - target: {fileID: 6447319461231784795, guid: 46909d51fabcb1e499e50df7b0a13ec1,
+        type: 3}
+      propertyPath: PickupSound
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6447319461231784795, guid: 46909d51fabcb1e499e50df7b0a13ec1,
+        type: 3}
+      propertyPath: closetObject
+      value: 
+      objectReference: {fileID: 1659303294}
     - target: {fileID: 6447319461231784795, guid: 46909d51fabcb1e499e50df7b0a13ec1,
         type: 3}
       propertyPath: keyCountText

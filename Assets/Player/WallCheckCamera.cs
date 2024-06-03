@@ -8,7 +8,7 @@ public class WallCheckCamera : MonoBehaviour
     private GameObject Parent;
 
     private Vector3 Position;
-    //     光線 投射する
+    //光線投射する
     private RaycastHit Hit;//レイキャストによる情報を得るための構造体
 
     private float Distance;
