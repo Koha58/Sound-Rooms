@@ -11,6 +11,7 @@ public class Enemyincrease : MonoBehaviour
     private bool Clone = false;         //Cloneを生み出すかのONOFF
     static  public int enemyDeathcnt = 0;  //Enemyが死んだ数
     public static float DeathRange = 0f;//Enemyが死ぬと広がる範囲
+    private float ParticleTime;
 
     // Start is called before the first frame update
     void Start()
@@ -23,16 +24,20 @@ public class Enemyincrease : MonoBehaviour
     {
         if (isHidden == false)
         {
-            isHidden = true;
             GetComponent<ParticleSystem>().Play();
-            GameObject go = Instantiate(ebiPrefab);//コピーを生成
-            //Debug.Log(go);
-            int px = -90;//0以上２０以下のランダムの値を生成
-            int pz = 80;//0以上２０以下のランダムの値を生成
-            go.transform.position = new Vector3(px, 0, pz);
-            
-            Clone = true; 
+            ParticleTime += Time.deltaTime;
+            if (ParticleTime>1f)
+            {
+                isHidden = true;
+                GameObject go = Instantiate(ebiPrefab);//コピーを生成
+                                                       //Debug.Log(go);
+                int px = -90;//0以上２０以下のランダムの値を生成
+                int pz = 80;//0以上２０以下のランダムの値を生成
+                go.transform.position = new Vector3(px, 0, pz);
 
+                Clone = true;
+                ParticleTime = 0;
+            }
         }
 
         if (Clone == true)

@@ -123,6 +123,7 @@ public class EnemyFailurework : MonoBehaviour
                 isPatrolling = false;
                 Invoke("NextPatrolPoint", patrolInterval);
                 transform.LookAt(PatrolPoints[CurrentPointIndex].transform);
+                animator.SetBool("EnemyRun", false);
             }
         }
     }
@@ -182,6 +183,7 @@ public class EnemyFailurework : MonoBehaviour
         }
         // èÑâÒíÜÇ…ñﬂÇÈ
         isPatrolling = true;
+        animator.SetBool("EnemyRun", false);
     }
 
     void OnTriggerEnter(Collider other)

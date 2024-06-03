@@ -34,25 +34,7 @@ public class Enemywall : MonoBehaviour
             
         }
 
-        if (other.gameObject.CompareTag("Enemy1"))
-        {
-            Enemytouch++;
-
-            EnemySeen ES;
-            /*
-            GameObject eobj = GameObject.Find("Enemy");
-            ES = eobj.GetComponent<EnemySeen>(); //付いているスクリプトを取得
-            */
-            GameObject eobj = GameObject.FindWithTag("Enemy1");
-            ES = eobj.GetComponent<EnemySeen>(); //付いているスクリプトを取得
-
-            if (Enemytouch == 1)
-            {
-                Enemy1.targetPosition = Enemy1.GetRandomPosition();
-                Enemytouch = 0;
-            }
-        }
-
+    
         if (other.gameObject.CompareTag("EnemyG1"))
         {
             Enemytouch++;
