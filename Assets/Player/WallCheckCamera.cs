@@ -31,7 +31,7 @@ public class WallCheckCamera : MonoBehaviour
     {
         if (Physics.CheckSphere(Parent.transform.position, 0.3f, Mask))
         {
-            transform.position = Vector3.Lerp(transform.position, Parent.transform.position, 0);
+            transform.position = Vector3.Lerp(transform.position, Parent.transform.position, 1);
             //絶対座標軸上の座標値
             //Vector3.Lerp:直線上にある２つのベクトル間を補間する関数
             //https://qiita.com/aimy-07/items/ad0d99191da21c0adbc3
