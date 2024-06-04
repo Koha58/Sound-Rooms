@@ -9,8 +9,6 @@ public class EnemysG : MonoBehaviour
     public Transform Player;//プレイヤーを参照
     public  Vector3 targetPosition;//Enemyの目的地
     float ChaseSpeed = 0.025f;//Playerを追いかけるスピード
-    private float Detection = 5f; //プレイヤーを検知する範囲
-    private float detectionPlayer;//プレイヤーと敵の位置の計算を格納する値
     private bool EnemyChaseOnOff = false;//Playerの追跡のONOFF 
 
     [SerializeField]
@@ -45,6 +43,9 @@ public class EnemysG : MonoBehaviour
 
 
     public bool Soundonoff = true;
+
+    public GameObject GChase;
+    public EnemysGChase EC;
 
     private Vector3 GetRandomPosition()
     {
@@ -158,6 +159,7 @@ public class EnemysG : MonoBehaviour
                 ONoff = 1;
                 SoundTime = 0.0f;
                 Sphere.SetActive(true);//音波非表示→表示
+                EnemyChaseOnOff = false;
             }
         }
         if (ONoff == 1)//見えているとき
@@ -229,16 +231,21 @@ public class EnemysG : MonoBehaviour
 
     }
 
-    private void OnTriggerEnter(Collider other)
+    void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Player"))
+        if (other.CompareTag("Player"))
         {
-            detectionPlayer = Vector3.Distance(transform.position, Player.position);//プレイヤーと敵の位置の計算
+            GChase = GameObject.FindWithTag("GChase");
+            EC = GChase.GetComponent<EnemysGChase>(); //EnemyFailurework付いているスクリプトを取得
 
-            if (detectionPlayer <= Detection && ONoff == 1)//Enemyが可視化状態かつプレイヤーが検知範囲に入ったら
+            GameObject obj = GameObject.Find("Player"); //Playerオブジェクトを探す
+            PlayerSeen PS = obj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
+
+            if (EC.GChase == true && PS.onoff == 1)
             {
                 EnemyChaseOnOff = true;
             }
+
         }
     }
 }
