@@ -20,7 +20,6 @@ public class EnemyCube : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        
         GameObject eobj = GameObject.FindWithTag("Enemy");
         // Enemyに付いているスクリプトを取得
         EnemyFailurework EF = eobj.GetComponent<EnemyFailurework>();
