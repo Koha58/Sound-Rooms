@@ -160,6 +160,7 @@ public class EnemysG : MonoBehaviour
                 SoundTime = 0.0f;
                 Sphere.SetActive(true);//音波非表示→表示
                 EnemyChaseOnOff = false;
+                animator.SetBool("EnemyG_Run", false);
             }
         }
         if (ONoff == 1)//見えているとき
@@ -183,10 +184,11 @@ public class EnemysG : MonoBehaviour
         //tagが"PlayerParts"である子オブジェクトのTransformのコレクションを取得
         var childTransforms_player = PS._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
         // 「歩く」のアニメーションを再生する
-        animator.SetBool("EnemyWalkG2", true);
+        animator.SetBool("EnemyGWalk", true);
 
         if (EnemyChaseOnOff == true)//Enemyが可視化状態かつプレイヤーが検知範囲に入ったら
         {
+            animator.SetBool("EnemyGRun", true);
             if (PS.onoff == 0)
             {
                 foreach (var playerParts in childTransforms_player)
@@ -217,7 +219,8 @@ public class EnemysG : MonoBehaviour
             Enemystoponoff = 1;
             if (Enemystoponoff == 1)
             {
-                animator.SetBool("EnemyWalkG2", false);
+                animator.SetBool("EnemyGWalk", false);
+
                 Enemystoptime += Time.deltaTime;
                 if (Enemystoptime > 2.0f)
                 {
