@@ -86,6 +86,9 @@ public class EnemyFailurework : MonoBehaviour
 
         //animator = GetComponent<Animator>();
         NextPatrolPoint();
+
+        Chase = GameObject.FindWithTag("Chase");
+        EC = Chase.GetComponent<EnemyChase>();
     }
 
     private  void Update()
@@ -148,7 +151,6 @@ public class EnemyFailurework : MonoBehaviour
                 Sphere.SetActive(true);//音波非表示→表示
                 GameObject Chase = GameObject.FindWithTag("Chase");
                 EnemyChase EC = Chase.GetComponent<EnemyChase>(); //EnemyFailurework付いているスクリプトを取得
-                EC.Chase = false;
 
                 if (EC.Chase == false)
                 {
@@ -191,7 +193,7 @@ public class EnemyFailurework : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             Chase = GameObject.FindWithTag("Chase");
-            EC = Chase.GetComponent<EnemyChase>(); //EnemyFailurework付いているスクリプトを取得
+            EC = Chase.GetComponent<EnemyChase>(); 
 
             GameObject obj = GameObject.Find("Player"); //Playerオブジェクトを探す
             PlayerSeen PS = obj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得

@@ -160,7 +160,7 @@ public class EnemysG : MonoBehaviour
                 SoundTime = 0.0f;
                 Sphere.SetActive(true);//‰¹”g”ñ•\¦¨•\¦
                 EnemyChaseOnOff = false;
-                animator.SetBool("EnemyG_Run", false);
+                animator.SetBool("EnemyGRun", false);
             }
         }
         if (ONoff == 1)//Œ©‚¦‚Ä‚¢‚é‚Æ‚«
