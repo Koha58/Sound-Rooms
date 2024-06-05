@@ -36,6 +36,9 @@ public class EnemyFailurework : MonoBehaviour
 
     public GameObject Chase;
     public EnemyChase EC;
+
+    float time;
+
     private void Sound()
     {
         if (ONoff == 0)//EnemyChaseG1.detectionPlayerG1 <= EnemyChaseG1.Detection)
@@ -117,16 +120,22 @@ public class EnemyFailurework : MonoBehaviour
         }
         else if (isPatrolling )
         {
-            // 巡回中の場合は巡回ポイントに向かう
+      
+                // 巡回中の場合は巡回ポイントに向かう
             transform.position = Vector3.MoveTowards(transform.position, PatrolPoints[CurrentPointIndex].position, MoveSpeed * Time.deltaTime);
             if (transform.position == PatrolPoints[CurrentPointIndex].position)
             {
                 // 巡回ポイントに到達したら一定時間停止し、次の巡回ポイントに移動する
                 // animator.SetTrigger("ShakeHead");
-                isPatrolling = false;
-                Invoke("NextPatrolPoint", patrolInterval);
-                transform.LookAt(PatrolPoints[CurrentPointIndex].transform);
-                animator.SetBool("EnemyRun", false);
+                time += Time.deltaTime;
+                if (time >= 2f)
+                {
+                    isPatrolling = false;
+                    Invoke("NextPatrolPoint", patrolInterval);
+                    transform.LookAt(PatrolPoints[CurrentPointIndex].transform);
+                    animator.SetBool("EnemyRun", false);
+                    time = 0;
+                }
             }
         }
     }
