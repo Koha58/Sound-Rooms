@@ -67,6 +67,7 @@ public class EnemyAttack : MonoBehaviour
         if (other.CompareTag("EnemyBack") && BD.boundHeight >= 2)
         {
             stayTimeB += Time.deltaTime;
+           
             if (stayTimeB > stayTimeF)
             {
                 GameObject eobj = GameObject.FindWithTag("Enemy");
@@ -84,6 +85,7 @@ public class EnemyAttack : MonoBehaviour
         if (other.CompareTag("EnemyBackG") && BD.boundHeight >= 2)
         {
             stayTimeB += Time.deltaTime;
+            
             // GameObject eobj = GameObject.Find("Enemy");
             if (stayTimeB > stayTimeF)
             {
