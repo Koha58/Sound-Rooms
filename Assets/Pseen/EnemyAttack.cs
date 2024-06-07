@@ -37,6 +37,7 @@ public class EnemyAttack : MonoBehaviour
         {
             EnemyAttackArea.GetComponent<Collider>().enabled = true;//見える（有効）
             onoff = 1;  //見えているから1
+            this.transform.localScale = new Vector3(4, 4, 4);
         }
 
         if (onoff == 1)
@@ -66,10 +67,12 @@ public class EnemyAttack : MonoBehaviour
         
         if (other.CompareTag("EnemyBack") && BD.boundHeight >= 2)
         {
-            stayTimeB += Time.deltaTime;
-           
+            // stayTimeB += Time.deltaTime;
+            stayTimeB = 10;
+            Debug.Log("?");
             if (stayTimeB > stayTimeF)
             {
+                Debug.Log("!");
                 GameObject eobj = GameObject.FindWithTag("Enemy");
                 EnemyFailurework EF = eobj.GetComponent<EnemyFailurework>();
                 Enemyincrease EI = eobj.GetComponent<Enemyincrease>(); //付いているスクリプトを取得
@@ -84,13 +87,13 @@ public class EnemyAttack : MonoBehaviour
         
         if (other.CompareTag("EnemyBackG") && BD.boundHeight >= 2)
         {
-            stayTimeB += Time.deltaTime;
-            
-            // GameObject eobj = GameObject.Find("Enemy");
+            // stayTimeB += Time.deltaTime;
+            stayTimeB = 10;
+            Debug.Log("?");
             if (stayTimeB > stayTimeF)
             {
                 GameObject eobjG = GameObject.FindWithTag("EnemyG");
-
+                Debug.Log("!");
                 EnemysG ESG = eobjG.GetComponent<EnemysG>(); //付いているスクリプトを取得
                 if (ESG.ONoff == 1)
                 {
