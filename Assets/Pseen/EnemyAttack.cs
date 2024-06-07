@@ -37,7 +37,7 @@ public class EnemyAttack : MonoBehaviour
         {
             EnemyAttackArea.GetComponent<Collider>().enabled = true;//å©Ç¶ÇÈÅióLå¯Åj
             onoff = 1;  //å©Ç¶ÇƒÇ¢ÇÈÇ©ÇÁ1
-            this.transform.localScale = new Vector3(4, 4, 4);
+            //this.transform.localScale = new Vector3(4, 4, 4);
         }
 
         if (onoff == 1)
