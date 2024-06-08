@@ -6,34 +6,21 @@ using UnityEngine.UIElements;
 //視点移動
 public class CameraRotator : MonoBehaviour
 {
-    private GameObject mainCamera;              //メインカメラ格納用
-    private GameObject playerObject;            //回転の中心となるプレイヤー格納用
-    public float rotateSpeed = 2.0f;            //回転の速さ
+    Transform cameraTrans;
+    [SerializeField] Transform playerTrans;
 
-    //呼び出し時に実行される関数
-    void Start()
+    [SerializeField] Vector3 cameraVec;  //Vector3(0, 1, -1)
+    [SerializeField] Vector3 cameraRot;  //Vector3(45, 0, 0)
+
+    void Awake()
     {
-        //メインカメラとプレイヤーをそれぞれ取得
-        mainCamera = Camera.main.gameObject;
-        playerObject = GameObject.Find("Player");
+        cameraTrans = transform;
+        cameraTrans.rotation = Quaternion.Euler(cameraRot);
     }
 
-
-    //単位時間ごとに実行される関数
-    void Update()
+    void LateUpdate()
     {
-        //rotateCameraの呼び出し
-        rotateCamera();
+        cameraTrans.position = playerTrans.position + cameraVec;
     }
 
-    //カメラを回転させる関数
-    private void rotateCamera()
-    {
-        //Vector3でX,Y方向の回転の度合いを定義
-        Vector3 angle = new Vector3(Input.GetAxis("Mouse X") * rotateSpeed, Input.GetAxis("Mouse Y") * rotateSpeed, 0);
-
-        //transform.RotateAround()を使用してメインカメラを回転させる
-        mainCamera.transform.RotateAround(playerObject.transform.position, Vector3.up, angle.x);
-        mainCamera.transform.RotateAround(playerObject.transform.position, transform.right, angle.y);
-    }
 }
