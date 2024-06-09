@@ -18,7 +18,7 @@ public class CameraRotator : MonoBehaviour
         cameraTrans.rotation = Quaternion.Euler(cameraRot);
     }
 
-    void LateUpdate()
+    private void FixedUpdate()
     {
         cameraTrans.position = playerTrans.position + cameraVec;
     }

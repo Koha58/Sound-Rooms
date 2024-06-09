@@ -151,8 +151,8 @@ public class PlayerRun : MonoBehaviour
              animator.SetBool("Walking", false);
              animator.SetBool("Running", false);
              moving = 0;
-            walk = false;
-            run = false;
+             walk = false;
+             run = false;
         }
 
         //------ƒvƒŒƒCƒ„[‚Ì‰ñ“]------
