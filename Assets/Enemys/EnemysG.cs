@@ -78,7 +78,7 @@ public class EnemysG : MonoBehaviour
             enemyDeathcnt++;
         }
     }
-
+    /*
     private void Sound()
     {
         if (ONoff == 0)//EnemyChaseG1.detectionPlayerG1 <= EnemyChaseG1.Detection)
@@ -116,7 +116,7 @@ public class EnemysG : MonoBehaviour
             }
         }
     }
-
+    */
     // Start is called before the first frame update
     void Start()
     {
@@ -136,9 +136,9 @@ public class EnemysG : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        Sound();
+       // Sound();
 
-        AttackSiund();
+       // AttackSiund();
 
         float randomTime = Random.Range(5f, 10f);
 

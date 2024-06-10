@@ -24,21 +24,24 @@ public class EnemyFailurework : MonoBehaviour
     private float TargetTime;
 
     public Animator animator; //アニメーションの格納
-
+    /*
     [SerializeField]
     private AudioClip SoundAttck;     //音を出すのオーディオクリップ
     [SerializeField]
     private AudioClip footstepSound;     // 足音のオーディオクリップ
+    */
     [SerializeField]
-    private AudioSource audioSource;     // オーディオソース
+    private AudioSource AudioSource1;     // オーディオソース
     [SerializeField]
-    public bool Soundonoff = true;
+    private AudioSource AudioSource2;     // オーディオソース
+    [SerializeField]
+    public bool Soundonoff ;
 
     public GameObject Chase;
     public EnemyChase EC;
 
     float time;
-
+    /*
     private void Sound()
     {
         if (ONoff == 0)//EnemyChaseG1.detectionPlayerG1 <= EnemyChaseG1.Detection)
@@ -76,6 +79,7 @@ public class EnemyFailurework : MonoBehaviour
             }
         }
     }
+    */
     private void Start()
     {
         //tagが"EnemyParts"である子オブジェクトのTransformのコレクションを取得
@@ -98,12 +102,10 @@ public class EnemyFailurework : MonoBehaviour
     {
         Switch();
 
-        Sound();
-
-        AttackSiund();
-
         // 「歩く」のアニメーションを再生する
         animator.SetBool("EnemyWalk", true);
+
+        
 
 
         GameObject obj = GameObject.Find("Player"); //Playerオブジェクトを探す
@@ -147,6 +149,7 @@ public class EnemyFailurework : MonoBehaviour
         var childTransforms = _parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("EnemyParts"));
         if (ONoff == 0)//見えないとき
         {
+            Soundonoff = true;
             SoundTime += Time.deltaTime;
             if (SoundTime >= TargetTime)
             {
@@ -169,6 +172,7 @@ public class EnemyFailurework : MonoBehaviour
         }
         if (ONoff == 1)//見えているとき
         {
+            Soundonoff = false;
             Seetime += Time.deltaTime;
             if (Seetime >= 10.0f)
             {
@@ -181,6 +185,18 @@ public class EnemyFailurework : MonoBehaviour
                 Seetime = 0.0f;
                 Sphere.SetActive(false);//音波表示→非表示
             }
+        }
+
+
+        if(Soundonoff==true)
+        {
+            AudioSource1.Play();
+            AudioSource2.Stop();
+        }
+        if (Soundonoff == false)
+        {
+            AudioSource2.Play();
+            AudioSource1.Stop();
         }
     }
 
