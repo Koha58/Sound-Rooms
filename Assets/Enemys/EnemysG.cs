@@ -44,8 +44,6 @@ public class EnemysG : MonoBehaviour
 
     public bool Soundonoff = true;
 
-    public GameObject GChase;
-    public EnemysGChase EC;
 
     private Vector3 GetRandomPosition()
     {
@@ -78,45 +76,7 @@ public class EnemysG : MonoBehaviour
             enemyDeathcnt++;
         }
     }
-    /*
-    private void Sound()
-    {
-        if (ONoff == 0)//EnemyChaseG1.detectionPlayerG1 <= EnemyChaseG1.Detection)
-        {
-            if (Soundonoff == true)
-            {
-                audioSource.clip = footstepSound;
-                audioSource.Play();
-            }
-        }
-        if (ONoff == 1)
-        {
-            if (Soundonoff == false)
-            {
-                audioSource.Stop();
-            }
-        }
-    }
-
-    private void AttackSiund()
-    {
-        if (ONoff == 1)//EnemyChaseG1.detectionPlayerG1 <= EnemyChaseG1.Detection)
-        {
-            if (Soundonoff == true)
-            {
-                audioSource.clip = SoundAttck;
-                audioSource.Play();
-            }
-        }
-        if (ONoff == 0)
-        {
-            if (Soundonoff == false)
-            {
-                audioSource.Stop();
-            }
-        }
-    }
-    */
+   
     // Start is called before the first frame update
     void Start()
     {
@@ -238,8 +198,8 @@ public class EnemysG : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            GChase = GameObject.FindWithTag("GChase");
-            EC = GChase.GetComponent<EnemysGChase>(); //EnemyFailurework付いているスクリプトを取得
+           GameObject GChase = GameObject.FindWithTag("GChase");
+           EnemysGChase EC = GChase.GetComponent<EnemysGChase>(); //EnemyFailurework付いているスクリプトを取得
 
             GameObject obj = GameObject.Find("Player"); //Playerオブジェクトを探す
             PlayerSeen PS = obj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得

@@ -63,14 +63,16 @@ public class WallScript : MonoBehaviour
             }
             else if (EF.ONoff == 1)//|| EFW.ONoff == 1)
             {
+                /*
                 bc.enabled = true;
                 if (EF.CurrentPointIndex <= 2) {
-                    EF.PatrolPoints[EF.CurrentPointIndex] = EF.PatrolPoints[EF.CurrentPointIndex -1];
+                    EF.PatrolPoints[EF.CurrentPointIndex] = EF.PatrolPoints[EF.CurrentPointIndex-1];
                 }
                 else if(EF.CurrentPointIndex == 0)
                 {
                     EF.PatrolPoints[EF.CurrentPointIndex] = EF.PatrolPoints[EF.CurrentPointIndex++];
                 }
+                */
             }
         }
         

@@ -19,14 +19,14 @@ public class EnemyDestroySize : MonoBehaviour
         EnemyFailurework EF = eobj.GetComponent<EnemyFailurework>(); //Enemyに付いているスクリプトを取得
         if(EF.ONoff == 1)
         {
-           // StartCoroutine("ScaleUp");
+            StartCoroutine("ScaleUp");
         }
 
     }
 
     IEnumerator ScaleUp()
     {
-        for (i = 1; i < 3; i += 0.1f)
+        for (i = 50; i < 200; i += 1f)
         {
             this.transform.localScale = new Vector3(i, i, i);
             yield return new WaitForSeconds(0.1f);

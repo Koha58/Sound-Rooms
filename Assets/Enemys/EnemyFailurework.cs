@@ -37,49 +37,9 @@ public class EnemyFailurework : MonoBehaviour
     [SerializeField]
     public bool Soundonoff ;
 
-    public GameObject Chase;
-    public EnemyChase EC;
 
     float time;
-    /*
-    private void Sound()
-    {
-        if (ONoff == 0)//EnemyChaseG1.detectionPlayerG1 <= EnemyChaseG1.Detection)
-        {
-            if (Soundonoff == true)
-            {
-                audioSource.clip = footstepSound;
-                audioSource.Play();
-            }
-        }
-        if (ONoff == 1)
-        {
-            if (Soundonoff == false)
-            {
-                audioSource.Stop();
-            }
-        }
-    }
-
-    private void AttackSiund()
-    {
-        if (ONoff == 1)//EnemyChaseG1.detectionPlayerG1 <= EnemyChaseG1.Detection)
-        {
-            if (Soundonoff == true)
-            {
-                audioSource.clip = SoundAttck;
-                audioSource.Play();
-            }
-        }
-        if (ONoff == 0)
-        {
-            if (Soundonoff == false)
-            {
-                audioSource.Stop();
-            }
-        }
-    }
-    */
+   
     private void Start()
     {
         //tagが"EnemyParts"である子オブジェクトのTransformのコレクションを取得
@@ -94,8 +54,8 @@ public class EnemyFailurework : MonoBehaviour
         //animator = GetComponent<Animator>();
         NextPatrolPoint();
 
-        Chase = GameObject.FindWithTag("Chase");
-        EC = Chase.GetComponent<EnemyChase>();
+       GameObject Chase = GameObject.FindWithTag("Chase");
+       EnemyChase EC = Chase.GetComponent<EnemyChase>();
     }
 
     private  void Update()
@@ -217,13 +177,13 @@ public class EnemyFailurework : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            Chase = GameObject.FindWithTag("Chase");
-            EC = Chase.GetComponent<EnemyChase>(); 
+           GameObject Chase = GameObject.FindWithTag("Chase");
+           EnemyChase EC = Chase.GetComponent<EnemyChase>(); 
 
             GameObject obj = GameObject.Find("Player"); //Playerオブジェクトを探す
             PlayerSeen PS = obj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
 
-            if (EC.Chase == true && PS.onoff == 1)
+            if (EC.Chase == true &&EC.Wall==false&& PS.onoff == 1)
             {
                 target = other.transform;  // Playerを検知したら追いかける
             }
