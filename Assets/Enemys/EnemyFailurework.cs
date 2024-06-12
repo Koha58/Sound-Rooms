@@ -24,17 +24,7 @@ public class EnemyFailurework : MonoBehaviour
     private float TargetTime;
 
     public Animator animator; //アニメーションの格納
-    /*
-    [SerializeField]
-    private AudioClip SoundAttck;     //音を出すのオーディオクリップ
-    [SerializeField]
-    private AudioClip footstepSound;     // 足音のオーディオクリップ
-    */
-    [SerializeField]
-    private AudioSource AudioSource1;     // オーディオソース
-    [SerializeField]
-    private AudioSource AudioSource2;     // オーディオソース
-    [SerializeField]
+   
     public bool Soundonoff ;
 
 
@@ -55,7 +45,7 @@ public class EnemyFailurework : MonoBehaviour
         NextPatrolPoint();
 
        GameObject Chase = GameObject.FindWithTag("Chase");
-       EnemyChase EC = Chase.GetComponent<EnemyChase>();
+        EnemyChase EC = Chase.GetComponent<EnemyChase>();
     }
 
     private  void Update()
@@ -145,18 +135,6 @@ public class EnemyFailurework : MonoBehaviour
                 Seetime = 0.0f;
                 Sphere.SetActive(false);//音波表示→非表示
             }
-        }
-
-
-        if(Soundonoff==true)
-        {
-            AudioSource1.Play();
-            AudioSource2.Stop();
-        }
-        if (Soundonoff == false)
-        {
-            AudioSource2.Play();
-            AudioSource1.Stop();
         }
     }
 

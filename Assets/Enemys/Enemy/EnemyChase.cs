@@ -30,7 +30,9 @@ public class EnemyChase : MonoBehaviour
         {
             Wallonoff += Time.deltaTime;
             if (Wallonoff >= 5f)
-                Wall= false;
+            {
+                Wall = false;
+            }
         }
     }
 

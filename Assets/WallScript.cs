@@ -56,7 +56,13 @@ public class WallScript : MonoBehaviour
         {
             GameObject eobj = GameObject.FindWithTag("Enemy");
             EnemyFailurework EF = eobj.GetComponent<EnemyFailurework>(); //Enemyに付いているスクリプトを取得
-           
+            /*
+            GameObject Chase = GameObject.FindWithTag("Chase");
+            EnemyChase EC = Chase.GetComponent<EnemyChase>();
+
+            EC.Wall = true;
+            */
+
             if (EF.ONoff == 0 )//||EFW.ONoff==0 )
             {
                 bc.enabled = false;
