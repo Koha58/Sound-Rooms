@@ -40,7 +40,6 @@ public class EnemyChase : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-           
            Chase = true;
         }
         if (other.gameObject.CompareTag("Wall"))

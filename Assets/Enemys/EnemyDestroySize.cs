@@ -5,10 +5,13 @@ using UnityEngine;
 public class EnemyDestroySize : MonoBehaviour
 {
     float i;
+     MeshRenderer Ring;
     // Start is called before the first frame update
     void Start()
     {
         StartCoroutine("ScaleUp");
+        Ring=GetComponent<MeshRenderer>();
+     
     }
 
     // Update is called once per frame
@@ -17,9 +20,14 @@ public class EnemyDestroySize : MonoBehaviour
 
         GameObject eobj = GameObject.FindWithTag("Enemy");
         EnemyFailurework EF = eobj.GetComponent<EnemyFailurework>(); //Enemyに付いているスクリプトを取得
-        if(EF.ONoff == 1)
+        if (EF.ONoff == 0)
+        {
+           // Ring.enabled = false;
+        }
+        if (EF.ONoff == 1)
         {
             StartCoroutine("ScaleUp");
+           // Ring.enabled = true;
         }
 
     }
