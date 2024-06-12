@@ -11,7 +11,7 @@ public class EnemyAttack : MonoBehaviour
     ButtonHoldDown BD;
     ItemSearch ISe;
 
-    private float seentime = 0.0f; //経過時間記録用
+    //private float seentime = 0.0f; //経過時間記録用
     [SerializeField] public GameObject EnemyAttackArea;
 
     Rigidbody rb;
@@ -19,6 +19,8 @@ public class EnemyAttack : MonoBehaviour
 
     private float stayTimeF = 0;
     private float stayTimeB = 0;
+
+    LevelMeter levelMeter;
 
 
     // Start is called before the first frame update
@@ -32,8 +34,11 @@ public class EnemyAttack : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        GameObject soundobj = GameObject.Find("SoundVolume");
+        levelMeter = soundobj.GetComponent<LevelMeter>(); //付いているスクリプトを取得
+
         //左クリックで範囲内を可視化
-        if (Input.GetMouseButtonUp(0))
+        if (/*Input.GetMouseButtonUp(0) ||*/ levelMeter.nowdB > 0.0f)
         {
             EnemyAttackArea.GetComponent<Collider>().enabled = true;//見える（有効）
             onoff = 1;  //見えているから1
@@ -42,12 +47,12 @@ public class EnemyAttack : MonoBehaviour
 
         if (onoff == 1)
         {
-            seentime += Time.deltaTime;
-            if (seentime >= 10.0f)
+            //seentime += Time.deltaTime;
+            if (/*seentime >= 10.0f*/levelMeter.nowdB <= 0.5f)
             {
                 EnemyAttackArea.GetComponent<Collider>().enabled = false;//見えない（無効）
                 onoff = 0;  //見えていないから0
-                seentime = 0.0f;    //経過時間をリセット
+                //seentime = 0.0f;    //経過時間をリセット
             }
         }
         
@@ -60,12 +65,12 @@ public class EnemyAttack : MonoBehaviour
         GameObject hobj = GameObject.Find("GaugeManager");
         BD = hobj.GetComponent<ButtonHoldDown>(); //付いているスクリプトを取得
 
-        if (other.CompareTag("EnemyForward") && BD.boundHeight >= 2)
+        if (other.CompareTag("EnemyForward") /*&& BD.boundHeight >= 2*/)
         {
             stayTimeF += Time.deltaTime;
         }
         
-        if (other.CompareTag("EnemyBack") && BD.boundHeight >= 2)
+        if (other.CompareTag("EnemyBack") /*&& BD.boundHeight >= 2*/)
         {
             // stayTimeB += Time.deltaTime;
             stayTimeB = 10;
@@ -85,7 +90,7 @@ public class EnemyAttack : MonoBehaviour
             stayTimeB = 0.0f;
         }
         
-        if (other.CompareTag("EnemyBackG") && BD.boundHeight >= 2)
+        if (other.CompareTag("EnemyBackG") /*&& BD.boundHeight >= 2*/)
         {
             // stayTimeB += Time.deltaTime;
             stayTimeB = 10;
