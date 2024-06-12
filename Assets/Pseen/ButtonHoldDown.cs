@@ -43,13 +43,6 @@ public class ButtonHoldDown : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-        if (Input.GetKeyDown(KeyCode.R))//確認用(消すやつ)
-        {
-            Enemyincrease.enemyDeathcnt++;
-            Enemyincrease.DeathRange += 1.0f;
-            Debug.Log("R");
-        }
         bobj = GameObject.Find("Player");
         PS = bobj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
         count += 1;

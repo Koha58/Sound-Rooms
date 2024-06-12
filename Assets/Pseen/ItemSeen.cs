@@ -26,6 +26,7 @@ public class ItemSeen : MonoBehaviour
     public static GameObject[] parentObject;
     private string objName;
     ItemSearch ISe;
+    LevelMeter levelMeter;
 
     void Start()
     {
@@ -112,12 +113,19 @@ public class ItemSeen : MonoBehaviour
         Box3 = BoxSeen.transform.Find("cardboard (3)").gameObject;
         Box4 = BoxSeen.transform.Find("cardboard (4)").gameObject;
         Box5 = BoxSeen.transform.Find("cardboard (5)").gameObject;
+
         parentObject = GameObject.FindGameObjectsWithTag("Item");
+
         GameObject doorObject = GameObject.Find("Door1");
+
         GameObject isobj = GameObject.Find("Player");
         ISe = isobj.GetComponent<ItemSearch>(); //付いているスクリプトを取得
+
+        GameObject soundobj = GameObject.Find("SoundVolume");
+        levelMeter = soundobj.GetComponent<LevelMeter>(); //付いているスクリプトを取得
+
         //左クリックで範囲内を可視化
-        if (Input.GetMouseButtonUp(0))
+        if (/*Input.GetMouseButtonUp(0)*/levelMeter.nowdB > 0.0f)
         {
             SeenArea.GetComponent<Collider>().enabled = true;//見える（有効）
             onoff = 1;  //見えているから1
@@ -126,8 +134,8 @@ public class ItemSeen : MonoBehaviour
         //指定した時間が経過したら範囲内の可視化をできなくする
         if (onoff == 1)
         {
-            seentime += Time.deltaTime;
-            if (seentime >= 10.0f)
+            //seentime += Time.deltaTime;
+            if (/*seentime >= 10.0f*/levelMeter.nowdB <= 0.0f)
             {
                 if (ISe.count != 4)
                 {

@@ -20,6 +20,8 @@ public class LevelMeter : MonoBehaviour
     [SerializeField]
     private MicAudioSource micAS = null;
 
+    public float nowdB;
+
     void Awake()
     {
         //更新する対象のImageを取得
@@ -30,9 +32,18 @@ public class LevelMeter : MonoBehaviour
     {
         //dB値からlevelMeterImage用のfillAountの値に変換
         float fillAmountValue = dB_ToFillAmountValue(micAS.now_dB);
-
-        //fillAmount値更新
-        this.levelMeterImage.fillAmount = fillAmountValue;
+        if (Input.GetMouseButton(0))
+        {
+            //fillAmount値更新
+            this.levelMeterImage.fillAmount = fillAmountValue;
+            nowdB = fillAmountValue;
+        }
+        else
+        {
+            //fillAmount値更新
+            this.levelMeterImage.fillAmount = 0.0f;
+            nowdB = 0.0f;
+        }
     }
 
     /// <summary>
