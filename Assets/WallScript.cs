@@ -55,7 +55,7 @@ public class WallScript : MonoBehaviour
         if (other.gameObject.CompareTag("Enemy"))
         {
             GameObject eobj = GameObject.FindWithTag("Enemy");
-            EnemyFailurework EF = eobj.GetComponent<EnemyFailurework>(); //Enemyに付いているスクリプトを取得
+            Enemy E = eobj.GetComponent<Enemy>(); //Enemyに付いているスクリプトを取得
             /*
             GameObject Chase = GameObject.FindWithTag("Chase");
             EnemyChase EC = Chase.GetComponent<EnemyChase>();
@@ -63,11 +63,11 @@ public class WallScript : MonoBehaviour
             EC.Wall = true;
             */
 
-            if (EF.ONoff == 0 )//||EFW.ONoff==0 )
+            if (E.ONoff == 0 )//||EFW.ONoff==0 )
             {
                 bc.enabled = false;
             }
-            else if (EF.ONoff == 1)//|| EFW.ONoff == 1)
+            else if (E.ONoff == 1)//|| EFW.ONoff == 1)
             {
                 /*
                 bc.enabled = true;

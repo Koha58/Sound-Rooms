@@ -19,12 +19,12 @@ public class EnemyDestroySize : MonoBehaviour
     {
 
         GameObject eobj = GameObject.FindWithTag("Enemy");
-        EnemyFailurework EF = eobj.GetComponent<EnemyFailurework>(); //Enemyに付いているスクリプトを取得
-        if (EF.ONoff == 0)
+        Enemy E = eobj.GetComponent<Enemy>(); //Enemyに付いているスクリプトを取得
+        if (E.ONoff == 0)
         {
            // Ring.enabled = false;
         }
-        if (EF.ONoff == 1)
+        if (E.ONoff == 1)
         {
             StartCoroutine("ScaleUp");
            // Ring.enabled = true;

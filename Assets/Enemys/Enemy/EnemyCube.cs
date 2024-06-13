@@ -22,11 +22,11 @@ public class EnemyCube : MonoBehaviour
     {
         GameObject eobj = GameObject.FindWithTag("Enemy");
         // Enemyに付いているスクリプトを取得
-        EnemyFailurework EF = eobj.GetComponent<EnemyFailurework>();
+        Enemy E = eobj.GetComponent<Enemy>();
 
         if (other.gameObject.CompareTag("Wall"))
         {
-            if (EF.ONoff == 1)
+            if (E.ONoff == 1)
             {
                 Enemytouch=true ;
 

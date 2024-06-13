@@ -9,20 +9,22 @@ public class Enemy : MonoBehaviour
     float speed = 1f;//移動スピード
     public Transform Player;//プレイヤーを参照
     public  Vector3 targetPosition;//Enemyの目的地
-    float ChaseSpeed = 0.025f;//Playerを追いかけるスピード
-    private float Detection = 6f; //プレイヤーを検知する範囲
-    private float detectionPlayer;
+    float ChaseSpeed = 0.02f;//Playerを追いかけるスピード
     private  bool EnemyChaseOnOff=false ;//Playerの追跡のONOFF 
-   
+
+    public float ONoff = 0;//(0が見えない；１が見える状態）
+    private float Seetime;  //経過時間
+    public float SoundTime;//経過時間
 
     float Enemystoptime = 0;
     float Enemystoponoff;
 
     public Animator animator;
 
-    public  GameObject eobj;
-    public  EnemySeen ES; // EnemySeenに付いているスクリプトを取得
-   
+   [SerializeField] public GameObject Ring;
+   [SerializeField] public Transform _parentTransform;
+ 
+    private float TargetTime;
 
     // Start is called before the first frame update
     void Start()
@@ -30,21 +32,21 @@ public class Enemy : MonoBehaviour
         // 初期位置をランダムに設定する
         targetPosition = GetRandomPosition();
         animator = GetComponent<Animator>();   //アニメーターコントローラーからアニメーションを取得する
-       
+
+        GameObject Chase = GameObject.FindWithTag("Chase");
+        EnemyChase EC = Chase.GetComponent<EnemyChase>();
     }
 
     // Update is called once per frame
     private  void Update()
     {
-
+        Switch();
         GameObject obj = GameObject.Find("Player"); //Playerオブジェクトを探す
         PlayerSeen PS = obj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
         //tagが"PlayerParts"である子オブジェクトのTransformのコレクションを取得
         var childTransforms = PS._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
-        eobj = GameObject.FindWithTag("Enemy");
-        ES = eobj.GetComponent<EnemySeen>(); // EnemySeenに付いているスクリプトを取得
 
-        if (ES.ONoff == 0)
+        if (ONoff == 0)
         {
             EnemyChaseOnOff = false;
         }
@@ -64,7 +66,7 @@ public class Enemy : MonoBehaviour
                 PS.onoff = 1;  //見えているから1
             }
 
-            if (PS.onoff == 1 && EnemyChaseOnOff == true&&ES.ONoff ==1 )
+            if (PS.onoff == 1 && EnemyChaseOnOff == true&&ONoff ==1 )
             {
                 transform.LookAt(Player.transform); //プレイヤーの方向にむく
                 transform.position += transform.forward * ChaseSpeed;//プレイヤーの方向に向かう
@@ -106,16 +108,59 @@ public class Enemy : MonoBehaviour
         // 生成した座標を返す
         return new Vector3(randomX, randomY, randomZ);
     }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            detectionPlayer = Vector3.Distance(transform.position, Player.position);//プレイヤーと敵の位置の計算
+            GameObject Chase = GameObject.FindWithTag("Chase");
+            EnemyChase EC = Chase.GetComponent<EnemyChase>();
 
-            if (detectionPlayer <= Detection && ES.ONoff == 1)//Enemyが可視化状態かつプレイヤーが検知範囲に入ったら
+            GameObject obj = GameObject.Find("Player"); //Playerオブジェクトを探す
+            PlayerSeen PS = obj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
+
+            if (EC.Chase == true && EC.Wall == false && PS.onoff == 1)
             {
                 EnemyChaseOnOff = true;
+            }
+        }
+    }
 
+    void Switch()
+    {
+        float randomTime = Random.Range(5f, 10f);
+        TargetTime = randomTime;
+        var childTransforms = _parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("EnemyParts"));
+        if (ONoff == 0)//見えないとき
+        {
+            SoundTime += Time.deltaTime;
+            if (SoundTime >= TargetTime)
+            {
+                foreach (var item in childTransforms)
+                {
+                    //タグが"EnemyParts"である子オブジェクトを見えるようにする
+                    item.gameObject.GetComponent<Renderer>().enabled = true;
+                }
+                ONoff = 1;
+                SoundTime = 0.0f;
+                Ring.SetActive(true);//音波非表示→表示
+                GameObject Chase = GameObject.FindWithTag("Chase");
+                EnemyChase EC = Chase.GetComponent<EnemyChase>(); //EnemyFailurework付いているスクリプトを取得
+            }
+        }
+        if (ONoff == 1)//見えているとき
+        {
+            Seetime += Time.deltaTime;
+            if (Seetime >= 10.0f)
+            {
+                foreach (var item in childTransforms)
+                {
+                    //タグが"EnemyParts"である子オブジェクトを見えなくする
+                    item.gameObject.GetComponent<Renderer>().enabled = false;
+                }
+                ONoff = 0;
+                Seetime = 0.0f;
+                Ring.SetActive(false);//音波表示→非表示
             }
         }
     }
