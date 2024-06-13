@@ -68,43 +68,52 @@ public class EnemyAttack : MonoBehaviour
         if (other.CompareTag("EnemyForward") /*&& BD.boundHeight >= 2*/)
         {
             stayTimeF += Time.deltaTime;
+            if (other.CompareTag("EnemyBack") /*&& BD.boundHeight >= 2*/)
+            {
+                if (stayTimeF < 10)
+                {
+                    other.GetComponent<Collider>().enabled = false;
+                }
+                other.GetComponent<Collider>().enabled = true;
+            }
+            stayTimeF = 0.0f;
         }
         
         if (other.CompareTag("EnemyBack") /*&& BD.boundHeight >= 2*/)
         {
-            // stayTimeB += Time.deltaTime;
-            stayTimeB = 10;
+            stayTimeB += Time.deltaTime;
             Debug.Log("?");
-            if (stayTimeB > stayTimeF)
+
+            Debug.Log("!");
+            GameObject eobj = GameObject.FindWithTag("Enemy");
+            EnemyFailurework EF = eobj.GetComponent<EnemyFailurework>();
+            Enemyincrease EI = eobj.GetComponent<Enemyincrease>(); //付いているスクリプトを取得
+            if (EF.ONoff == 1)
             {
-                Debug.Log("!");
-                GameObject eobj = GameObject.FindWithTag("Enemy");
-                EnemyFailurework EF = eobj.GetComponent<EnemyFailurework>();
-                Enemyincrease EI = eobj.GetComponent<Enemyincrease>(); //付いているスクリプトを取得
-                if (EF.ONoff == 1)
-                {
-                   EI.isHidden = false;
-                }
+                EI.isHidden = false;
             }
-            stayTimeF = 0.0f;
+            if (other.CompareTag("EnemyForward"))
+            {
+                if (stayTimeB < 10)
+                {
+                    other.GetComponent<Collider>().enabled = false;
+                }
+                other.GetComponent<Collider>().enabled = true;
+            }
             stayTimeB = 0.0f;
         }
         
         if (other.CompareTag("EnemyBackG") /*&& BD.boundHeight >= 2*/)
         {
-            // stayTimeB += Time.deltaTime;
-            stayTimeB = 10;
+            stayTimeB += Time.deltaTime;
             Debug.Log("?");
-            if (stayTimeB > stayTimeF)
-            {
-                GameObject eobjG = GameObject.FindWithTag("EnemyG");
+            GameObject eobjG = GameObject.FindWithTag("EnemyG");
                 Debug.Log("!");
                 EnemysG ESG = eobjG.GetComponent<EnemysG>(); //付いているスクリプトを取得
                 if (ESG.ONoff == 1)
                 {
                     if (ItemSeen.parentObject[0] != null)
                     {
-                        //Instantiate(check1, transform.position, Quaternion.identity);
                         ItemSeen.parentObject[0].transform.position = eobjG.transform.position;
                         ISe.closetObject = ItemSeen.parentObject[0];
                     }
@@ -126,8 +135,15 @@ public class EnemyAttack : MonoBehaviour
                     Destroy(eobjG);
                     Enemyincrease.enemyDeathcnt++;
                 }
+
+            if (other.CompareTag("EnemyForward") /*&& BD.boundHeight >= 2*/)
+            {
+                if (stayTimeB < 10)
+                {
+                    other.GetComponent<Collider>().enabled = false;
+                }
+                other.GetComponent<Collider>().enabled = true;
             }
-            stayTimeF = 0.0f;
             stayTimeB = 0.0f;
             //Destroy(eobj);
         }
@@ -301,12 +317,12 @@ public class EnemyAttack : MonoBehaviour
             }
         }
     }
-
+    /*
     private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("EnemyForward") && BD.boundHeight >= 2)
         {
             stayTimeF = 0.0f;
         }
-    }
+    }*/
 }
