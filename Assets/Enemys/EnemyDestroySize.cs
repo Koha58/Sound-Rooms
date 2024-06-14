@@ -26,7 +26,7 @@ public class EnemyDestroySize : MonoBehaviour
         }
         if (E.ONoff == 1)
         {
-            StartCoroutine("ScaleUp");
+           // StartCoroutine("ScaleUp");
            // Ring.enabled = true;
         }
 
