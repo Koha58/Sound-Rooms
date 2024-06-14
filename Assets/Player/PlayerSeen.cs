@@ -42,10 +42,6 @@ public class PlayerSeen : MonoBehaviour
                 playerParts.gameObject.GetComponent<Renderer>().enabled = true;
             }
             onoff = 1;  //見えているから1
-            if (Record.playRecord == true)
-            {
-                Record.audioSource.Play();
-            }
         }
 
         //指定した時間が経過したらプレイヤーを見えなくする
