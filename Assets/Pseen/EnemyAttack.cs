@@ -84,13 +84,14 @@ public class EnemyAttack : MonoBehaviour
             stayTimeB += Time.deltaTime;
             Debug.Log("?");
 
-            Debug.Log("!");
             GameObject eobj = GameObject.FindWithTag("Enemy");
-            EnemyFailurework EF = eobj.GetComponent<EnemyFailurework>();
+            Enemy E = eobj.GetComponent<Enemy>();
+            EnemyController EC = eobj.GetComponent<EnemyController>();
             Enemyincrease EI = eobj.GetComponent<Enemyincrease>(); //付いているスクリプトを取得
-            if (EF.ONoff == 1)
+            if (EC.ONoff == 1)
             {
                 EI.isHidden = false;
+                Debug.Log("!");
             }
             if (other.CompareTag("EnemyForward"))
             {
@@ -136,7 +137,7 @@ public class EnemyAttack : MonoBehaviour
                     Enemyincrease.enemyDeathcnt++;
                 }
 
-            if (other.CompareTag("EnemyForward") /*&& BD.boundHeight >= 2*/)
+            if (other.CompareTag("EnemyGForward") /*&& BD.boundHeight >= 2*/)
             {
                 if (stayTimeB < 10)
                 {
