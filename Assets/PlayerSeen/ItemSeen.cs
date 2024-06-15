@@ -451,6 +451,7 @@ public class ItemSeen : MonoBehaviour
             }
         }
 
+
         else if (other.CompareTag("Enemy1"))
         {
             EnemySeen ES;
@@ -459,35 +460,85 @@ public class ItemSeen : MonoBehaviour
             if (ES.ONoff == 0)
             {
                 var childTransforms = ES._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("EnemyParts"));
-                foreach (var item in childTransforms)
-                {
-                    //タグが"EnemyParts"である子オブジェクトを見えるようにする
-                    item.gameObject.GetComponent<Renderer>().enabled = true;
-                }
-                ES.ONoff = 1;
-                ES.SoundTime = 0.0f;
-                ES.Sphere.SetActive(true);//音波非表示→表示
             }
-        }
-        else if (other.CompareTag("EnemyG"))
-        {
-            EnemysG EsG;
-            //EnemySeen ES;
-            //GameObject eobj2 = GameObject.FindWithTag("EnemyG");
-            EsG = other.gameObject.GetComponent<EnemysG>(); //付いているスクリプトを取得
-            if (EsG.ONoff == 0)
+
+            /*
+            if (other.CompareTag("Enemy"))
             {
-                var childTransforms = EsG._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("EnemyParts"));
-                foreach (var item in childTransforms)
+
+                GameObject eobj = GameObject.FindWithTag("Enemy");
+                Enemys Es = eobj.GetComponent<Enemys>(); //付いているスクリプトを取得
+
+                if (Es.ONoff == 0)
                 {
-                    //タグが"EnemyParts"である子オブジェクトを見えるようにする
-                    item.gameObject.GetComponent<Renderer>().enabled = true;
+                    var childTransforms = Es._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("EnemyParts"));
+
+                    foreach (var item in childTransforms)
+                    {
+                        //タグが"EnemyParts"である子オブジェクトを見えるようにする
+                        item.gameObject.GetComponent<Renderer>().enabled = true;
+                    }
+
+                    ES.ONoff = 1;
+                    ES.SoundTime = 0.0f;
+                    ES.Sphere.SetActive(true);//音波非表示→表示
                 }
-                EsG.ONoff = 1;
-                EsG.SoundTime = 0.0f;
-                EsG.Sphere.SetActive(true);//音波非表示→表示
             }
+
+                    Es.ONoff = 1;
+                    Es.SoundTime = 0.0f;
+                    Es.Sphere.SetActive(true);//音波非表示→表示
+
+                }
+
+            }
+            /*
+            else if (other.CompareTag("EnemyFailurework"))
+            {
+                GameObject eobj = GameObject.FindWithTag("EnemyFailurework");
+                EnemyFailurework EFW = eobj.GetComponent<EnemyFailurework>();
+
+                if (EFW.ONoff == 0)
+                {
+                    var childTransforms = EFW._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("EnemyParts"));
+                    foreach (var item in childTransforms)
+                    {
+                        //タグが"EnemyParts"である子オブジェクトを見えるようにする
+                        item.gameObject.GetComponent<Renderer>().enabled = true;
+                    }
+
+                    EFW.ONoff = 1;
+                    EFW.SoundTime = 0.0f;
+                    EFW.Sphere.SetActive(true);//音波非表示→表示
+
+                }
+
+            }
+            */
+
+            else if (other.CompareTag("EnemyG"))
+            {
+                EnemysG EsG;
+                //EnemySeen ES;
+                //GameObject eobj2 = GameObject.FindWithTag("EnemyG");
+                EsG = other.gameObject.GetComponent<EnemysG>(); //付いているスクリプトを取得
+                if (EsG.ONoff == 0)
+                {
+                    var childTransforms = EsG._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("EnemyParts"));
+                    foreach (var item in childTransforms)
+                    {
+                        //タグが"EnemyParts"である子オブジェクトを見えるようにする
+                        item.gameObject.GetComponent<Renderer>().enabled = true;
+                    }
+                    EsG.ONoff = 1;
+                    EsG.SoundTime = 0.0f;
+                    EsG.Sphere.SetActive(true);//音波非表示→表示
+                }
+            }
+            
         }
     }
 }
+
+
 
