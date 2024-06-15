@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 //Enemyに音をぶつける挙動
-public class EnemyAttack : MonoBehaviour
+public class EnemyAttackNew : MonoBehaviour
 {
     int onoff = 0;  //判定用（見えていない時：0/見えている時：1）
 

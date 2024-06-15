@@ -451,7 +451,7 @@ public class ItemSeen : MonoBehaviour
             }
         }
 
-<<<<<<< HEAD:Assets/PlayerSeen/ItemSeen.cs
+
         else if (other.CompareTag("Enemy1"))
         {
             EnemySeen ES;
@@ -460,80 +460,85 @@ public class ItemSeen : MonoBehaviour
             if (ES.ONoff == 0)
             {
                 var childTransforms = ES._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("EnemyParts"));
-=======
-        /*
-        if (other.CompareTag("Enemy"))
-        {
+            }
 
-            GameObject eobj = GameObject.FindWithTag("Enemy");
-            Enemys Es = eobj.GetComponent<Enemys>(); //•t‚¢‚Ä‚¢‚éƒXƒNƒŠƒvƒg‚ğæ“¾
-
-            if (Es.ONoff == 0)
+            /*
+            if (other.CompareTag("Enemy"))
             {
-                var childTransforms = Es._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("EnemyParts"));
->>>>>>> Enemy2.0.7.ï¼’:Assets/Pseen/ItemSeen.cs
-                foreach (var item in childTransforms)
+
+                GameObject eobj = GameObject.FindWithTag("Enemy");
+                Enemys Es = eobj.GetComponent<Enemys>(); //•t‚¢‚Ä‚¢‚éƒXƒNƒŠƒvƒg‚ğæ“¾
+
+                if (Es.ONoff == 0)
                 {
-                    //ƒ^ƒO‚ª"EnemyParts"‚Å‚ ‚éqƒIƒuƒWƒFƒNƒg‚ğŒ©‚¦‚é‚æ‚¤‚É‚·‚é
-                    item.gameObject.GetComponent<Renderer>().enabled = true;
+                    var childTransforms = Es._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("EnemyParts"));
+
+                    foreach (var item in childTransforms)
+                    {
+                        //ƒ^ƒO‚ª"EnemyParts"‚Å‚ ‚éqƒIƒuƒWƒFƒNƒg‚ğŒ©‚¦‚é‚æ‚¤‚É‚·‚é
+                        item.gameObject.GetComponent<Renderer>().enabled = true;
+                    }
+
+                    ES.ONoff = 1;
+                    ES.SoundTime = 0.0f;
+                    ES.Sphere.SetActive(true);//‰¹”g”ñ•\¦¨•\¦
                 }
-<<<<<<< HEAD:Assets/PlayerSeen/ItemSeen.cs
-                ES.ONoff = 1;
-                ES.SoundTime = 0.0f;
-                ES.Sphere.SetActive(true);//‰¹”g”ñ•\¦¨•\¦
-            }
-        }
-=======
-                Es.ONoff = 1;
-                Es.SoundTime = 0.0f;
-                Es.Sphere.SetActive(true);//‰¹”g”ñ•\¦¨•\¦
-
             }
 
-        }
-        /*
-        else if (other.CompareTag("EnemyFailurework"))
-        {
-            GameObject eobj = GameObject.FindWithTag("EnemyFailurework");
-            EnemyFailurework EFW = eobj.GetComponent<EnemyFailurework>();
+                    Es.ONoff = 1;
+                    Es.SoundTime = 0.0f;
+                    Es.Sphere.SetActive(true);//‰¹”g”ñ•\¦¨•\¦
 
-            if (EFW.ONoff == 0)
-            {
-                var childTransforms = EFW._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("EnemyParts"));
-                foreach (var item in childTransforms)
-                {
-                    //ƒ^ƒO‚ª"EnemyParts"‚Å‚ ‚éqƒIƒuƒWƒFƒNƒg‚ğŒ©‚¦‚é‚æ‚¤‚É‚·‚é
-                    item.gameObject.GetComponent<Renderer>().enabled = true;
                 }
 
-                EFW.ONoff = 1;
-                EFW.SoundTime = 0.0f;
-                EFW.Sphere.SetActive(true);//‰¹”g”ñ•\¦¨•\¦
-
             }
-
-        }
-        */
->>>>>>> Enemy2.0.7.ï¼’:Assets/Pseen/ItemSeen.cs
-        else if (other.CompareTag("EnemyG"))
-        {
-            EnemysG EsG;
-            //EnemySeen ES;
-            //GameObject eobj2 = GameObject.FindWithTag("EnemyG");
-            EsG = other.gameObject.GetComponent<EnemysG>(); //•t‚¢‚Ä‚¢‚éƒXƒNƒŠƒvƒg‚ğæ“¾
-            if (EsG.ONoff == 0)
+            /*
+            else if (other.CompareTag("EnemyFailurework"))
             {
-                var childTransforms = EsG._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("EnemyParts"));
-                foreach (var item in childTransforms)
+                GameObject eobj = GameObject.FindWithTag("EnemyFailurework");
+                EnemyFailurework EFW = eobj.GetComponent<EnemyFailurework>();
+
+                if (EFW.ONoff == 0)
                 {
-                    //ƒ^ƒO‚ª"EnemyParts"‚Å‚ ‚éqƒIƒuƒWƒFƒNƒg‚ğŒ©‚¦‚é‚æ‚¤‚É‚·‚é
-                    item.gameObject.GetComponent<Renderer>().enabled = true;
+                    var childTransforms = EFW._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("EnemyParts"));
+                    foreach (var item in childTransforms)
+                    {
+                        //ƒ^ƒO‚ª"EnemyParts"‚Å‚ ‚éqƒIƒuƒWƒFƒNƒg‚ğŒ©‚¦‚é‚æ‚¤‚É‚·‚é
+                        item.gameObject.GetComponent<Renderer>().enabled = true;
+                    }
+
+                    EFW.ONoff = 1;
+                    EFW.SoundTime = 0.0f;
+                    EFW.Sphere.SetActive(true);//‰¹”g”ñ•\¦¨•\¦
+
                 }
-                EsG.ONoff = 1;
-                EsG.SoundTime = 0.0f;
-                EsG.Sphere.SetActive(true);//‰¹”g”ñ•\¦¨•\¦
+
             }
+            */
+
+            else if (other.CompareTag("EnemyG"))
+            {
+                EnemysG EsG;
+                //EnemySeen ES;
+                //GameObject eobj2 = GameObject.FindWithTag("EnemyG");
+                EsG = other.gameObject.GetComponent<EnemysG>(); //•t‚¢‚Ä‚¢‚éƒXƒNƒŠƒvƒg‚ğæ“¾
+                if (EsG.ONoff == 0)
+                {
+                    var childTransforms = EsG._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("EnemyParts"));
+                    foreach (var item in childTransforms)
+                    {
+                        //ƒ^ƒO‚ª"EnemyParts"‚Å‚ ‚éqƒIƒuƒWƒFƒNƒg‚ğŒ©‚¦‚é‚æ‚¤‚É‚·‚é
+                        item.gameObject.GetComponent<Renderer>().enabled = true;
+                    }
+                    EsG.ONoff = 1;
+                    EsG.SoundTime = 0.0f;
+                    EsG.Sphere.SetActive(true);//‰¹”g”ñ•\¦¨•\¦
+                }
+            }
+            
         }
     }
 }
+
+
 
