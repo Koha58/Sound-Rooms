@@ -10,10 +10,13 @@ public class EnemyChase : MonoBehaviour
     public bool Wall=false;
     private float Wallonoff;
 
+    float i;
+    public MeshRenderer Ring;
+
     // Start is called before the first frame update
     private  void Start()
     {
-      
+        Ring = GetComponent<MeshRenderer>();
     }
 
     // Update is called once per frame
@@ -34,6 +37,18 @@ public class EnemyChase : MonoBehaviour
                 Wall = false;
             }
         }
+
+        GameObject eobj = GameObject.FindWithTag("Enemy");
+        EnemyController EC = eobj.GetComponent<EnemyController>(); //Enemyに付いているスクリプトを取得
+        if (EC.ONoff == 0)
+        {
+            i = 0;
+            // Ring.enabled = false;
+        }
+        if (EC.ONoff == 1)
+        {
+            StartCoroutine("ScaleUp");
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -45,6 +60,15 @@ public class EnemyChase : MonoBehaviour
         if (other.gameObject.CompareTag("Wall"))
         {
             Wall = true;
+        }
+    }
+
+    IEnumerator ScaleUp()
+    {
+        for (i = 50; i < 200; i += 1f)
+        {
+            this.transform.localScale = new Vector3(i, i, i);
+            yield return new WaitForSeconds(0.1f);
         }
     }
 }

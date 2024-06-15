@@ -118,7 +118,7 @@ public class EnemysG : MonoBehaviour
                 }
                 ONoff = 1;
                 SoundTime = 0.0f;
-                Sphere.SetActive(true);//音波非表示→表示
+                ///Sphere.SetActive(true);//音波非表示→表示
                 EnemyChaseOnOff = false;
                 animator.SetBool("EnemyGRun", false);
             }
