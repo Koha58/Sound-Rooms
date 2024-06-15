@@ -129,16 +129,16 @@ public class EnemyController : MonoBehaviour
     {
         float randomTime = Random.Range(5f, 10f);
         TargetTime = randomTime;
-        var childTransforms = _parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("EnemyParts"));
+       // var childTransforms = _parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("EnemyParts"));
         if (ONoff == 0)//見えないとき
         {
             SoundTime += Time.deltaTime;
             if (SoundTime >= TargetTime)
             {
-                foreach (var item in childTransforms)
+                //foreach (var item in childTransforms)
                 {
                     //タグが"EnemyParts"である子オブジェクトを見えるようにする
-                    item.gameObject.GetComponent<Renderer>().enabled = true;
+                   // item.gameObject.GetComponent<Renderer>().enabled = true;
                 }
                 ONoff = 1;
                 SoundTime = 0.0f;
@@ -152,10 +152,10 @@ public class EnemyController : MonoBehaviour
             Seetime += Time.deltaTime;
             if (Seetime >= 10.0f)
             {
-                foreach (var item in childTransforms)
+                //foreach (var item in childTransforms)
                 {
                     //タグが"EnemyParts"である子オブジェクトを見えなくする
-                    item.gameObject.GetComponent<Renderer>().enabled = false;
+                   // item.gameObject.GetComponent<Renderer>().enabled = false;
                 }
                 ONoff = 0;
                 Seetime = 0.0f;
