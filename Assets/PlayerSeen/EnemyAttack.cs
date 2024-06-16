@@ -17,7 +17,9 @@ public class EnemyAttack : MonoBehaviour
     Rigidbody rb1;
 
     private float stayTimeF = 0;
+    private float stayTimeFG = 0;
     private float stayTimeB = 0;
+    private float stayTimeBG = 0;
 
     LevelMeter levelMeter;
 
@@ -56,7 +58,7 @@ public class EnemyAttack : MonoBehaviour
         
     }
 
-    void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         GameObject sobj = GameObject.Find("Player");
         ISe = sobj.GetComponent<ItemSearch>(); //•t‚¢‚Ä‚¢‚éƒXƒNƒŠƒvƒg‚ðŽæ“¾
@@ -75,18 +77,31 @@ public class EnemyAttack : MonoBehaviour
             }
             stayTimeF = 0.0f;
         }
-        
+
+        //“GG‚Ì³–Ê‚É“–‚½‚Á‚½Žž
+        if (other.CompareTag("EnemyGForward") /*&& BD.boundHeight >= 2*/)
+        {
+            stayTimeFG += Time.deltaTime;
+            if (other.CompareTag("EnemyBackG") /*&& BD.boundHeight >= 2*/)
+            {
+                if (stayTimeFG < 10)//”wŒã‚É“–‚½‚Á‚½Žž‚É”»’è‚µ‚È‚¢‚æ‚¤‚É‚·‚é
+                {
+                    other.GetComponent<Collider>().enabled = false;
+                }
+                other.GetComponent<Collider>().enabled = true;
+            }
+            stayTimeFG = 0.0f;
+        }
+
         //“G‚Ì”wŒã‚É“–‚½‚Á‚½Žž
         if (other.CompareTag("EnemyBack") /*&& BD.boundHeight >= 2*/)
         {
             stayTimeB += Time.deltaTime;
             Debug.Log("?");
-
-            Debug.Log("!");
             GameObject eobj = GameObject.FindWithTag("Enemy");
-            EnemyFailurework EF = eobj.GetComponent<EnemyFailurework>();
+            EnemyController EC = eobj.GetComponent<EnemyController>();
             Enemyincrease EI = eobj.GetComponent<Enemyincrease>(); //•t‚¢‚Ä‚¢‚éƒXƒNƒŠƒvƒg‚ðŽæ“¾
-            if (EF.ONoff == 1)
+            if (EC.ONoff == 1)
             {
                 EI.isHidden = false;
             }
@@ -105,8 +120,7 @@ public class EnemyAttack : MonoBehaviour
         //“GG‚Ì”wŒã‚É“–‚½‚Á‚½Žž
         if (other.CompareTag("EnemyBackG") /*&& BD.boundHeight >= 2*/)
         {
-            stayTimeB += Time.deltaTime;
-            Debug.Log("?");
+            stayTimeBG += Time.deltaTime;
             GameObject eobjG = GameObject.FindWithTag("EnemyG");
             Debug.Log("!");
             EnemysG ESG = eobjG.GetComponent<EnemysG>(); //•t‚¢‚Ä‚¢‚éƒXƒNƒŠƒvƒg‚ðŽæ“¾
@@ -136,17 +150,16 @@ public class EnemyAttack : MonoBehaviour
                 Enemyincrease.enemyDeathcnt++;
             }
 
-            //“G‚Ì³–Ê‚É“–‚½‚Á‚½Žž
-            if (other.CompareTag("EnemyForward") /*&& BD.boundHeight >= 2*/)
+            //“GG‚Ì³–Ê‚É“–‚½‚Á‚½Žž
+            if (other.CompareTag("EnemyGForward") /*&& BD.boundHeight >= 2*/)
             {
-                if (stayTimeB < 10)//³–Ê‚É“–‚½‚Á‚½Žž‚É”»’è‚µ‚È‚¢‚æ‚¤‚É‚·‚é
+                if (stayTimeBG < 10)//³–Ê‚É“–‚½‚Á‚½Žž‚É”»’è‚µ‚È‚¢‚æ‚¤‚É‚·‚é
                 {
                     other.GetComponent<Collider>().enabled = false;
                 }
                 other.GetComponent<Collider>().enabled = true;
             }
-            stayTimeB = 0.0f;
-            //Destroy(eobj);
+            stayTimeBG = 0.0f;
         }
 
         if (ItemSeen.Box.activeSelf == true)

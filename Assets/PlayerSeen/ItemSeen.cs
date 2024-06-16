@@ -452,15 +452,7 @@ public class ItemSeen : MonoBehaviour
         }
 
 
-        else if (other.CompareTag("Enemy1"))
-        {
-            EnemySeen ES;
-            GameObject eobj1 = GameObject.FindWithTag("Enemy1");
-            ES = eobj1.GetComponent<EnemySeen>(); //付いているスクリプトを取得
-            if (ES.ONoff == 0)
-            {
-                var childTransforms = ES._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("EnemyParts"));
-            }
+       
 
             /*
             if (other.CompareTag("Enemy"))
@@ -536,7 +528,7 @@ public class ItemSeen : MonoBehaviour
                 }
             }
             
-        }
+        
     }
 }
 

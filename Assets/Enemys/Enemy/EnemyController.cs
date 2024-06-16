@@ -142,7 +142,7 @@ public class EnemyController : MonoBehaviour
                 }
                 ONoff = 1;
                 SoundTime = 0.0f;
-                Ring.SetActive(true);//音波非表示→表示
+                //Ring.SetActive(true);//音波非表示→表示
                 GameObject Chase = GameObject.FindWithTag("Chase");
                 EnemyChase EC = Chase.GetComponent<EnemyChase>(); //EnemyFailurework付いているスクリプトを取得
             }
@@ -159,7 +159,7 @@ public class EnemyController : MonoBehaviour
                 }
                 ONoff = 0;
                 Seetime = 0.0f;
-                Ring.SetActive(false);//音波表示→非表示
+             //   Ring.SetActive(false);//音波表示→非表示
             }
         }
     }
