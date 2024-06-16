@@ -124,16 +124,17 @@ public class EnemyController : MonoBehaviour
                 EnemyChaseOnOff = true;
             }
         }
-
+        /*
         if (EC.Wall==true)
         {
             Debug.Log("!!");
             //transform.Rotate(new Vector3(0, 180, 0));
             targetPosition = GetRandomPosition();
         }
+        */
     }
 
-    void Switch()
+    private void Switch()
     {
         float randomTime = Random.Range(5f, 10f);
         TargetTime = randomTime;

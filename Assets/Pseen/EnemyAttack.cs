@@ -58,7 +58,7 @@ public class EnemyAttackNew : MonoBehaviour
         
     }
 
-    void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         GameObject sobj = GameObject.Find("Player");
         ISe = sobj.GetComponent<ItemSearch>(); //付いているスクリプトを取得
