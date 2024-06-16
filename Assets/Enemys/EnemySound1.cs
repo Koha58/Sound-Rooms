@@ -6,12 +6,21 @@ public class EnemySound1 : MonoBehaviour
 {
     public AudioClip footstepSound;     // 足音のオーディオクリップ
     public AudioSource audioSource;     // オーディオソース
-    public float volume = 40f;          // 音量
+    public float volume = 1f;          // 音量
 
     private void Start()
     {
         audioSource.clip = footstepSound;
-        audioSource.loop = true;
+    }
+
+    private void Update()
+    {
+        GameObject eobj = GameObject.FindWithTag("Enemy");
+        EnemyController EC = eobj.GetComponent<EnemyController>();
+        if (EC.ONoff == 1)
+        {
+            audioSource.clip = footstepSound;
+        }
     }
 
     // 足音を再生するメソッド

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.NetworkInformation;
 using UnityEngine;
 
 public class EnemyController : MonoBehaviour
@@ -20,7 +21,7 @@ public class EnemyController : MonoBehaviour
 
    // public Animator animator;
 
-    [SerializeField] public GameObject Ring;
+   public MeshRenderer Enemy;
     [SerializeField] public Transform _parentTransform;
 
     private float TargetTime;
@@ -30,8 +31,9 @@ public class EnemyController : MonoBehaviour
     {
         // 初期位置をランダムに設定する
         targetPosition = GetRandomPosition();
-      //  animator = GetComponent<Animator>();   //アニメーターコントローラーからアニメーションを取得する
-
+        //  animator = GetComponent<Animator>();   //アニメーターコントローラーからアニメーションを取得する    
+        Enemy = GetComponent<MeshRenderer>();
+        Enemy.enabled = true;
         GameObject Chase = GameObject.FindWithTag("Chase");
         EnemyChase EC = Chase.GetComponent<EnemyChase>();
     }
@@ -110,11 +112,10 @@ public class EnemyController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        GameObject Chase = GameObject.FindWithTag("Chase");
+        EnemyChase EC = Chase.GetComponent<EnemyChase>();
         if (other.gameObject.CompareTag("Player"))
         {
-            GameObject Chase = GameObject.FindWithTag("Chase");
-            EnemyChase EC = Chase.GetComponent<EnemyChase>();
-
             GameObject obj = GameObject.Find("Player"); //Playerオブジェクトを探す
             PlayerSeen PS = obj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
 
@@ -122,6 +123,13 @@ public class EnemyController : MonoBehaviour
             {
                 EnemyChaseOnOff = true;
             }
+        }
+
+        if (EC.Wall==true)
+        {
+            Debug.Log("!!");
+            //transform.Rotate(new Vector3(0, 180, 0));
+            targetPosition = GetRandomPosition();
         }
     }
 
@@ -142,7 +150,7 @@ public class EnemyController : MonoBehaviour
                 }
                 ONoff = 1;
                 SoundTime = 0.0f;
-                //Ring.SetActive(true);//音波非表示→表示
+                Enemy.enabled = true;
                 GameObject Chase = GameObject.FindWithTag("Chase");
                 EnemyChase EC = Chase.GetComponent<EnemyChase>(); //EnemyFailurework付いているスクリプトを取得
             }
@@ -159,7 +167,7 @@ public class EnemyController : MonoBehaviour
                 }
                 ONoff = 0;
                 Seetime = 0.0f;
-             //   Ring.SetActive(false);//音波表示→非表示
+                Enemy.enabled = false;
             }
         }
     }

@@ -17,6 +17,7 @@ public class EnemyChase : MonoBehaviour
     private  void Start()
     {
         Ring = GetComponent<MeshRenderer>();
+        StartCoroutine("ScaleUp");
     }
 
     // Update is called once per frame
@@ -42,12 +43,13 @@ public class EnemyChase : MonoBehaviour
         EnemyController EC = eobj.GetComponent<EnemyController>(); //Enemyに付いているスクリプトを取得
         if (EC.ONoff == 0)
         {
-            i = 0;
-            // Ring.enabled = false;
+            i = 100;
+           Ring.enabled = false;
         }
         if (EC.ONoff == 1)
         {
-            StartCoroutine("ScaleUp");
+            Ring.enabled = true;
+          //  StartCoroutine("ScaleUp");
         }
     }
 
@@ -55,17 +57,19 @@ public class EnemyChase : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
+            Debug.Log("Play");
            Chase = true;
         }
         if (other.gameObject.CompareTag("Wall"))
         {
             Wall = true;
+            Debug.Log("Wall");
         }
     }
 
     IEnumerator ScaleUp()
     {
-        for (i = 50; i < 200; i += 1f)
+        for (i = 100; i < 200; i += 1f)
         {
             this.transform.localScale = new Vector3(i, i, i);
             yield return new WaitForSeconds(0.1f);
