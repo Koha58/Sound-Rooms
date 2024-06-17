@@ -311,7 +311,7 @@ public class EnemyAttackNew : MonoBehaviour
         {
             rb = ItemSeen.Box.GetComponent<Rigidbody>();
             rb1 = ItemSeen.Box3.GetComponent<Rigidbody>();
-            if (other.CompareTag("Box") && BD.boundHeight >= 2)
+            if (other.CompareTag("Box"))
             {
                 rb.AddForce(transform.forward * 250.0f, ForceMode.Force);
                 rb1.AddForce(transform.forward * 250.0f, ForceMode.Force);
