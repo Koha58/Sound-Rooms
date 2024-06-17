@@ -12,29 +12,20 @@ public class EnemySound : MonoBehaviour
     private void Start()
     {
         audioSource = GetComponent<AudioSource>();
+        StartCoroutine(PlayAudioClips());
     }
 
-    private void Update()
+    private IEnumerator PlayAudioClips()
     {
-        GameObject eobj = GameObject.FindWithTag("Enemy");
-        EnemyController EC = eobj.GetComponent<EnemyController>();
-        if (EC.ONoff == 0)
+        while (true)
         {
-            PlayNextClip();
-        }
-        if (EC.ONoff == 1)
-        {
-            PlayNextClip();
-        }
-    }
+            audioSource.clip = audioClips[currentClipIndex];
+            audioSource.Play();
 
-    private void PlayNextClip()
-    {
-        // 次の音声のインデックスを更新する
-        currentClipIndex = (currentClipIndex + 1) % audioClips.Length;
+            yield return new WaitForSeconds(audioSource.clip.length); // 現在の音声の再生が終了するまで待つ
 
-        // 次の音声をオーディオソースに設定して再生する
-        audioSource.clip = audioClips[currentClipIndex];
-        audioSource.Play();
+            // インデックスを次の音声に更新
+            currentClipIndex = (currentClipIndex + 1) % audioClips.Length;
+        }
     }
 }

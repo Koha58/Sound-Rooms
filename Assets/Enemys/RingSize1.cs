@@ -33,7 +33,7 @@ public class RingSize1 : MonoBehaviour
 
     IEnumerator ScaleUp1()
     {
-        for (i = 5; i < 30; i += 1f)
+        for (i = 5; i < 30; i += 3f)
         {
             this.transform.localScale = new Vector3(i, i, i);
             yield return new WaitForSeconds(0.1f);

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.NetworkInformation;
+using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEngine;
 
 public class EnemyController : MonoBehaviour
@@ -19,12 +20,16 @@ public class EnemyController : MonoBehaviour
     float Enemystoptime = 0;
     float Enemystoponoff;
 
-   // public Animator animator;
+    private float Chaseonoff;
 
-   public MeshRenderer Enemy;
+    // public Animator animator;
+
+    public MeshRenderer Enemy;
     [SerializeField] public Transform _parentTransform;
 
     private float TargetTime;
+
+    public GameObject Chase;
 
     // Start is called before the first frame update
     void Start()
@@ -34,7 +39,6 @@ public class EnemyController : MonoBehaviour
         //  animator = GetComponent<Animator>();   //アニメーターコントローラーからアニメーションを取得する    
         Enemy = GetComponent<MeshRenderer>();
         Enemy.enabled = true;
-        GameObject Chase = GameObject.FindWithTag("Chase");
         EnemyChase EC = Chase.GetComponent<EnemyChase>();
     }
 
@@ -96,7 +100,6 @@ public class EnemyController : MonoBehaviour
                 }
             }
         }
-
     }
 
     private Vector3 GetRandomPosition()
@@ -112,26 +115,32 @@ public class EnemyController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        GameObject Chase = GameObject.FindWithTag("Chase");
         EnemyChase EC = Chase.GetComponent<EnemyChase>();
         if (other.gameObject.CompareTag("Player"))
         {
             GameObject obj = GameObject.Find("Player"); //Playerオブジェクトを探す
             PlayerSeen PS = obj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
 
-            if (EC.Chase == true && EC.Wall == false && PS.onoff == 1)
+            if (EC.Chase == true && PS.onoff == 1) //EC.Wall == false
             {
                 EnemyChaseOnOff = true;
             }
+            
         }
-        /*
-        if (EC.Wall==true)
+       
+        if (EnemyChaseOnOff == false&&EC.Wall==true)
         {
             Debug.Log("!!");
             //transform.Rotate(new Vector3(0, 180, 0));
             targetPosition = GetRandomPosition();
         }
-        */
+
+        if ( EnemyChaseOnOff == true && EC.Wall == true)
+        {
+            Debug.Log("!?");
+            EnemyChaseOnOff = false;
+        }
+
     }
 
     private void Switch()
