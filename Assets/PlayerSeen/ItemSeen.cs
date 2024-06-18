@@ -16,12 +16,7 @@ public class ItemSeen : MonoBehaviour
     [SerializeField] public GameObject SeenArea;
     public GameObject ItemCanvas;
     public GameObject[] Walls;
-    public static GameObject Box;
-    //public static GameObject Box1;
-    //public static GameObject Box2;
-    //public static GameObject Box3;
-    //public static GameObject Box4;
-    //public static GameObject Box5;
+    public GameObject[] Boxes;
     public static GameObject[] parentObject;
     private string objName;
 
@@ -82,46 +77,33 @@ public class ItemSeen : MonoBehaviour
         //最初は見えない状態
         SeenArea.GetComponent<Collider>().enabled = false;
         ItemCanvas.GetComponent<Canvas>().enabled = false;
+
         Walls = GameObject.FindGameObjectsWithTag("Wall");
         foreach (GameObject Wall in Walls)
         {
             Wall.GetComponent<Renderer>().enabled = false;
         }
 
-        GameObject BoxSeen = GameObject.FindWithTag("BoxJudge");
-        BoxSeen.SetActive(true);
+        //GameObject BoxSeen = GameObject.FindWithTag("BoxJudge");
+        //BoxSeen.SetActive(true);
 
-        Box = GameObject.FindWithTag("Box");
-        //Rigidbodyを取得
-        var rb = Box.GetComponent<Rigidbody>();
-        //移動も回転もしないようにする
-        rb.constraints = RigidbodyConstraints.FreezeAll;
-        Box.GetComponent<Renderer>().enabled = false;
-        //Box = BoxSeen.transform.Find("cardboard (1)").gameObject;
-        //Box.SetActive(false);
-        //Box1 = BoxSeen.transform.Find("cardboard").gameObject;
-        //Box1.SetActive(false);
-        //Box2 = BoxSeen.transform.Find("cardboard (2)").gameObject;
-        //Box2.SetActive(false);
-        //Box3 = BoxSeen.transform.Find("cardboard (3)").gameObject;
-        //Box3.SetActive(false);
-        //Box4 = BoxSeen.transform.Find("cardboard (4)").gameObject;
-        //Box4.SetActive(false);
-        //Box5 = BoxSeen.transform.Find("cardboard (5)").gameObject;
-        //Box5.SetActive(false);
+        Boxes = GameObject.FindGameObjectsWithTag("Box");
+
+        foreach (GameObject Box in Boxes)
+        {
+            //Rigidbodyを取得
+            var rb = Box.GetComponent<Rigidbody>();
+            //移動も回転もしないようにする
+            rb.constraints = RigidbodyConstraints.FreezeAll;
+            Box.GetComponent<Renderer>().enabled = false;
+        }
     }
 
     private void Update()
     {
         Walls = GameObject.FindGameObjectsWithTag("Wall");
-        GameObject BoxSeen = GameObject.FindWithTag("BoxJudge");
-        Box = GameObject.FindWithTag("Box");
-        //Box = BoxSeen.transform.Find("cardboard (1)").gameObject;
-        //Box1 = BoxSeen.transform.Find("cardboard").gameObject;
-        //Box2 = BoxSeen.transform.Find("cardboard (2)").gameObject;
-        //Box3 = BoxSeen.transform.Find("cardboard (3)").gameObject;
-        //Box4 = BoxSeen.transform.Find("cardboard (4)").gameObject;
-        //Box5 = BoxSeen.transform.Find("cardboard (5)").gameObject;
+
+        Boxes = GameObject.FindGameObjectsWithTag("Box");
 
         parentObject = GameObject.FindGameObjectsWithTag("Item");
 
@@ -196,10 +178,12 @@ public class ItemSeen : MonoBehaviour
                 }
 
                 SeenArea.GetComponent<Collider>().enabled = false;//見えない（無効）
+
                 foreach (GameObject Wall in Walls)
                 {
                     Wall.GetComponent<Renderer>().enabled = false;
                 }
+
                 // 子オブジェクトの数を取得
                 int doorparts = doorObject.transform.childCount;
                 for (int j = 0; j < doorparts; j++)
@@ -208,18 +192,14 @@ public class ItemSeen : MonoBehaviour
                     GameObject door = childTransform.gameObject;
                     door.GetComponent<Renderer>().enabled = false;
                 }
-                if (Box.GetComponent<Renderer>().enabled == true)
+
+                foreach (GameObject Box in Boxes)
                 {
-                    //Box.SetActive(false);
-                    //Box1.SetActive(false);
-                    //Box2.SetActive(false);
-                    //Box3.SetActive(false);
-                    //Box4.SetActive(false);
-                    //Box5.SetActive(false);
-
+                    //Rigidbodyを取得
+                    var rb = Box.GetComponent<Rigidbody>();
+                    //移動も回転もしないようにする
+                    rb.constraints = RigidbodyConstraints.FreezeAll;
                     Box.GetComponent<Renderer>().enabled = false;
-
-                    BoxSeen.GetComponent<Collider>().enabled = true;
                 }
                 onoff = 0;  //見えていないから0
             }
@@ -229,11 +209,6 @@ public class ItemSeen : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        Walls = GameObject.FindGameObjectsWithTag("Wall");
-        GameObject BoxSeen = GameObject.FindWithTag("BoxJudge");
-        Box = GameObject.FindWithTag("Box");
-        //Box = BoxSeen.transform.Find("cardboard (1)").gameObject;
-        //Box1 = BoxSeen.transform.Find("cardboard").gameObject;
         parentObject = GameObject.FindGameObjectsWithTag("Item");
         GameObject doorObject = GameObject.Find("Door1");
         objName = other.gameObject.name;
@@ -441,16 +416,7 @@ public class ItemSeen : MonoBehaviour
         }
         else if (other.CompareTag("Box"))//接触したオブジェクトのタグが"Box"のとき
         {
-            //Box.SetActive(true);
-            //Box1.SetActive(true);
-            //Box2.SetActive(true);
-            //Box3.SetActive(true);
-            //Box4.SetActive(true);
-            //Box5.SetActive(true);
-
             other.GetComponent<Renderer>().enabled = true;
-
-            BoxSeen.GetComponent<Collider>().enabled = false;
         }
 
         else if (other.CompareTag("Door"))

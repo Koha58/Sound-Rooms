@@ -37,7 +37,7 @@ public class SeenRange : MonoBehaviour
             preHeight++;
         }
 
-        originSizeX = (levelMeter.nowdB * 20) + plusSize;
+        originSizeX = (levelMeter.nowdB * 10) + plusSize;
 
         transform.localScale = new Vector3(originSizeX, originSizeY, originSizeZ);
 

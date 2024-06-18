@@ -9,11 +9,9 @@ public class EnemyAttack : MonoBehaviour
 
     ItemSearch ISe;
 
-    //private float seentime = 0.0f; //経過時間記録用
     [SerializeField] public GameObject EnemyAttackArea;
 
     Rigidbody rb;
-   // Rigidbody rb1;
 
     private float stayTimeF = 0;
     private float stayTimeFG = 0;
@@ -160,21 +158,13 @@ public class EnemyAttack : MonoBehaviour
 
         if (other.CompareTag("Box"))
         {
-            //rb = ItemSeen.Box.GetComponent<Rigidbody>();
-            //rb1 = ItemSeen.Box3.GetComponent<Rigidbody>();
-            //if (other.CompareTag("Box"))
-            //{
-            //    rb.AddForce(transform.forward * 250.0f, ForceMode.Force);
-            //    rb1.AddForce(transform.forward * 250.0f, ForceMode.Force);
-            //}
-
             //Rigidbodyを取得
             rb = other.GetComponent<Rigidbody>();
 
             //移動、回転を可能にする
             rb.constraints = RigidbodyConstraints.None;
 
-            rb.AddForce(transform.forward * 250.0f, ForceMode.Force);
+            rb.AddForce(transform.forward * 500.0f, ForceMode.Force);
         }
     }
 }

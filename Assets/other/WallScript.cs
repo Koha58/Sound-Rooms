@@ -10,12 +10,9 @@ public class WallScript : MonoBehaviour
 
     int onoff = 0;  //判定用（プレイヤーが見えていない時：0/プレイヤーが見えている時：1）
 
-    private float seentime = 0.0f; //経過時間記録用
+    LevelMeter levelMeter;
 
-    PlayerSeen PS;
-    GameObject wobj;
-
-  //  EnemySeen ES;
+    //  EnemySeen ES;
 
     void Start()
     {
@@ -26,25 +23,24 @@ public class WallScript : MonoBehaviour
 
     void Update()
     {
-        wobj = GameObject.Find("Player");
-        PS = wobj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
+
+        GameObject soundobj = GameObject.Find("SoundVolume");
+        levelMeter = soundobj.GetComponent<LevelMeter>(); //付いているスクリプトを取得
 
         //プレイヤーが見えている時
-        if (PS.onoff == 1)
+        if (levelMeter.nowdB > 0.0f)
         {
             bc.enabled = true;  //通り抜け不可
             onoff = 1;  //見えているから1
         }
 
-        //指定した時間が経過したら通り抜け可能にする
+        //プレイヤーが見えていないとき
         if (onoff == 1)
         {
-            seentime += Time.deltaTime;
-            if (seentime >= 10.0f)
+            if (levelMeter.nowdB <= 0.0f)
             {
                 bc.enabled = false; //通り抜け可能
                 onoff = 0;  //見えていないから0
-                seentime = 0.0f;    //経過時間をリセット
             }
         }
 

@@ -48,8 +48,8 @@ public class CircleSizeControll : MonoBehaviour
                 preHeight++;
             }
 
-            originSizeX = (levelMeter.nowdB * 20) + plusSize;
-            originSizeZ = (levelMeter.nowdB * 20) + plusSize;
+            originSizeX = (levelMeter.nowdB * 10) + plusSize;
+            originSizeZ = (levelMeter.nowdB * 10) + plusSize;
 
             Sound.transform.localScale = new Vector3(originSizeX, 1, originSizeZ);
 
