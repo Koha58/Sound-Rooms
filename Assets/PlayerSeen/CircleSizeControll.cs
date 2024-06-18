@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 //マウス長押し挙動(範囲指定)
-public class ButtonHoldDown : MonoBehaviour
+public class CircleSizeControll : MonoBehaviour
 {
     public GameObject MaxSound;//音の広がりの最大値
     public GameObject Sound; //音の広がりの円

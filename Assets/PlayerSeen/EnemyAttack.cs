@@ -7,14 +7,13 @@ public class EnemyAttack : MonoBehaviour
 {
     int onoff = 0;  //判定用（見えていない時：0/見えている時：1）
 
-    //private float EnemydeathTime=0.0f;
     ItemSearch ISe;
 
     //private float seentime = 0.0f; //経過時間記録用
     [SerializeField] public GameObject EnemyAttackArea;
 
     Rigidbody rb;
-    Rigidbody rb1;
+   // Rigidbody rb1;
 
     private float stayTimeF = 0;
     private float stayTimeFG = 0;
@@ -37,22 +36,19 @@ public class EnemyAttack : MonoBehaviour
         GameObject soundobj = GameObject.Find("SoundVolume");
         levelMeter = soundobj.GetComponent<LevelMeter>(); //付いているスクリプトを取得
 
-        //左クリックで範囲内を可視化
-        if (/*Input.GetMouseButtonUp(0) ||*/ levelMeter.nowdB > 0.0f)
+        //音を出すことで範囲内を可視化
+        if (levelMeter.nowdB > 0.0f)
         {
             EnemyAttackArea.GetComponent<Collider>().enabled = true;//見える（有効）
             onoff = 1;  //見えているから1
-            //this.transform.localScale = new Vector3(4, 4, 4);
         }
 
         if (onoff == 1)
         {
-            //seentime += Time.deltaTime;
-            if (/*seentime >= 10.0f*/levelMeter.nowdB <= 0.5f)
+            if (levelMeter.nowdB <= 0.5f)
             {
                 EnemyAttackArea.GetComponent<Collider>().enabled = false;//見えない（無効）
                 onoff = 0;  //見えていないから0
-                //seentime = 0.0f;    //経過時間をリセット
             }
         }
         
@@ -64,10 +60,10 @@ public class EnemyAttack : MonoBehaviour
         ISe = sobj.GetComponent<ItemSearch>(); //付いているスクリプトを取得
 
         //敵の正面に当たった時
-        if (other.CompareTag("EnemyForward") /*&& BD.boundHeight >= 2*/)
+        if (other.CompareTag("EnemyForward"))
         {
             stayTimeF += Time.deltaTime;
-            if (other.CompareTag("EnemyBack") /*&& BD.boundHeight >= 2*/)
+            if (other.CompareTag("EnemyBack"))
             {
                 if (stayTimeF < 10)//背後に当たった時に判定しないようにする
                 {
@@ -79,10 +75,10 @@ public class EnemyAttack : MonoBehaviour
         }
 
         //敵Gの正面に当たった時
-        if (other.CompareTag("EnemyGForward") /*&& BD.boundHeight >= 2*/)
+        if (other.CompareTag("EnemyGForward"))
         {
             stayTimeFG += Time.deltaTime;
-            if (other.CompareTag("EnemyBackG") /*&& BD.boundHeight >= 2*/)
+            if (other.CompareTag("EnemyBackG"))
             {
                 if (stayTimeFG < 10)//背後に当たった時に判定しないようにする
                 {
@@ -94,7 +90,7 @@ public class EnemyAttack : MonoBehaviour
         }
 
         //敵の背後に当たった時
-        if (other.CompareTag("EnemyBack") /*&& BD.boundHeight >= 2*/)
+        if (other.CompareTag("EnemyBack"))
         {
             stayTimeB += Time.deltaTime;
             Debug.Log("?");
@@ -118,7 +114,7 @@ public class EnemyAttack : MonoBehaviour
         }
 
         //敵Gの背後に当たった時
-        if (other.CompareTag("EnemyBackG") /*&& BD.boundHeight >= 2*/)
+        if (other.CompareTag("EnemyBackG"))
         {
             stayTimeBG += Time.deltaTime;
             GameObject eobjG = GameObject.FindWithTag("EnemyG");
@@ -151,7 +147,7 @@ public class EnemyAttack : MonoBehaviour
             }
 
             //敵Gの正面に当たった時
-            if (other.CompareTag("EnemyGForward") /*&& BD.boundHeight >= 2*/)
+            if (other.CompareTag("EnemyGForward"))
             {
                 if (stayTimeBG < 10)//正面に当たった時に判定しないようにする
                 {
@@ -162,23 +158,23 @@ public class EnemyAttack : MonoBehaviour
             stayTimeBG = 0.0f;
         }
 
-        if (ItemSeen.Box.activeSelf == true)
+        if (other.CompareTag("Box"))
         {
-            rb = ItemSeen.Box.GetComponent<Rigidbody>();
-            rb1 = ItemSeen.Box3.GetComponent<Rigidbody>();
-            if (other.CompareTag("Box"))
-            {
-                rb.AddForce(transform.forward * 250.0f, ForceMode.Force);
-                rb1.AddForce(transform.forward * 250.0f, ForceMode.Force);
-            }
+            //rb = ItemSeen.Box.GetComponent<Rigidbody>();
+            //rb1 = ItemSeen.Box3.GetComponent<Rigidbody>();
+            //if (other.CompareTag("Box"))
+            //{
+            //    rb.AddForce(transform.forward * 250.0f, ForceMode.Force);
+            //    rb1.AddForce(transform.forward * 250.0f, ForceMode.Force);
+            //}
+
+            //Rigidbodyを取得
+            rb = other.GetComponent<Rigidbody>();
+
+            //移動、回転を可能にする
+            rb.constraints = RigidbodyConstraints.None;
+
+            rb.AddForce(transform.forward * 250.0f, ForceMode.Force);
         }
     }
-    /*
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("EnemyForward") && BD.boundHeight >= 2)
-        {
-            stayTimeF = 0.0f;
-        }
-    }*/
 }

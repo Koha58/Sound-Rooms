@@ -73,7 +73,7 @@ public class ItemSearch : MonoBehaviour
             ItemCanvas.GetComponent<Canvas>().enabled = true;
             PickUp();
         }
-        if(closetDistance > 1.5f || IS.onoff == 0)
+        if(closetDistance >= 1.5f || IS.onoff == 0)
         {
             ItemCanvas.GetComponent<Canvas>().enabled = false;
         }
