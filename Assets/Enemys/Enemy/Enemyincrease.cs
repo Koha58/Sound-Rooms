@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Enemyincrease : MonoBehaviour
 {
-   
     public  GameObject ebiPrefab;      //コピーするプレハブ
     public  GameObject DestroyPrefab;  //破壊されるプレハブ
     public  bool isHidden = true;      //
@@ -19,16 +18,16 @@ public class Enemyincrease : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if (isHidden == false)
         {
                 isHidden = true;
                 GameObject go = Instantiate(ebiPrefab);//コピーを生成
                                                        //Debug.Log(go);
-                float px = Random.Range(-90f, 90f); ;//0以上２０以下のランダムの値を生成
-                float pz = Random.Range(-90f, 90f); ;//0以上２０以下のランダムの値を生成
-                go.transform.position = new Vector3(px, 0, pz);
+                float px = Random.Range(90f, 70f); ;//0以上２０以下のランダムの値を生成
+                float pz = Random.Range(-90f, -70f); ;//0以上２０以下のランダムの値を生成
+                go.transform.position = new Vector3(px, 1, pz);
 
                 Clone = true;
         }
