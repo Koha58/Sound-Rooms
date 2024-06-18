@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Net.NetworkInformation;
 using UnityEngine;
 
 public class EnemyChase : MonoBehaviour
@@ -10,10 +11,12 @@ public class EnemyChase : MonoBehaviour
     public bool Wall=false;
     private float Wallonoff;
 
+   // [SerializeField] public GameObject EnemyArea;
+
     // Start is called before the first frame update
     private  void Start()
     {
-      
+        //EnemyArea.GetComponent<Collider>().enabled = false;
     }
 
     // Update is called once per frame

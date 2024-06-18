@@ -10,7 +10,7 @@ public class EnemyController : MonoBehaviour
     float speed = 1f;//移動スピード
     public Transform Player;//プレイヤーを参照
     public Vector3 targetPosition;//Enemyの目的地
-    float ChaseSpeed = 0.02f;//Playerを追いかけるスピード
+    float ChaseSpeed = 0.05f;//Playerを追いかけるスピード
     private bool EnemyChaseOnOff = false;//Playerの追跡のONOFF 
 
     public float ONoff = 0;//(0が見えない；１が見える状態）
@@ -31,11 +31,14 @@ public class EnemyController : MonoBehaviour
 
     public GameObject Chase;
 
+    public GameObject EnemyGetRandomPosition;
+
     // Start is called before the first frame update
     void Start()
     {
+        EnemyGetRandomPosition EGRP = EnemyGetRandomPosition.GetComponent<EnemyGetRandomPosition>();
         // 初期位置をランダムに設定する
-        targetPosition = GetRandomPosition();
+        targetPosition =EGRP. GetRandomPosition();
         //  animator = GetComponent<Animator>();   //アニメーターコントローラーからアニメーションを取得する    
         Enemy = GetComponent<MeshRenderer>();
         Enemy.enabled = true;
@@ -95,13 +98,14 @@ public class EnemyController : MonoBehaviour
                 Enemystoptime += Time.deltaTime;
                 if (Enemystoptime > 2.0f)
                 {
-                    targetPosition = GetRandomPosition();
+                    EnemyGetRandomPosition EGRP = EnemyGetRandomPosition.GetComponent<EnemyGetRandomPosition>();
+                    targetPosition = EGRP.GetRandomPosition();
                     Enemystoponoff = 0;
                 }
             }
         }
     }
-
+    /*
     private Vector3 GetRandomPosition()
     {
         // ランダムなx, y, z座標を生成する
@@ -112,7 +116,7 @@ public class EnemyController : MonoBehaviour
         // 生成した座標を返す
         return new Vector3(randomX, randomY, randomZ);
     }
-
+    */
     private void OnTriggerEnter(Collider other)
     {
         EnemyChase EC = Chase.GetComponent<EnemyChase>();
@@ -132,7 +136,8 @@ public class EnemyController : MonoBehaviour
         {
             Debug.Log("!!");
             //transform.Rotate(new Vector3(0, 180, 0));
-            targetPosition = GetRandomPosition();
+            EnemyGetRandomPosition EGRP = EnemyGetRandomPosition.GetComponent<EnemyGetRandomPosition>();
+            targetPosition = EGRP.GetRandomPosition();
         }
 
         if ( EnemyChaseOnOff == true && EC.Wall == true)
