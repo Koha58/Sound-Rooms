@@ -103,18 +103,7 @@ public class EnemyGController : MonoBehaviour
             }
         }
     }
-    /*
-    private Vector3 GetRandomPosition()
-    {
-        // ƒ‰ƒ“ƒ_ƒ€‚Èx, y, zÀ•W‚ğ¶¬‚·‚é
-        float randomX = Random.Range(-46f, 46f);
-        float randomY = 0f;// Random.Range(-10f, 10f);
-        float randomZ = Random.Range(-46f, 46f);
-
-        // ¶¬‚µ‚½À•W‚ğ•Ô‚·
-        return new Vector3(randomX, randomY, randomZ);
-    }
-    */
+ 
     private void OnTriggerEnter(Collider other)
     {
         EnemyChase EC = Chase.GetComponent<EnemyChase>();

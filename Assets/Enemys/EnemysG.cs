@@ -11,14 +11,6 @@ public class EnemysG : MonoBehaviour
     float ChaseSpeed = 0.025f;//Playerを追いかけるスピード
     private bool EnemyChaseOnOff = false;//Playerの追跡のONOFF 
 
-    [SerializeField]
-    private GameObject ebiPrefab;      //コピーするプレハブ
-    [SerializeField]
-    private GameObject DestroyPrefab;  //破壊されるプレハブ
-    public bool isHiddens = true;      //
-    private bool Clone = false;         //Cloneを生み出すかのONOFF
-    static public int enemyDeathcnt = 0;
-
     public Animator animator; //アニメーションの格納
 
     public  float ONoff = 0;//(0が見えない；１が見える状態）
@@ -32,19 +24,6 @@ public class EnemysG : MonoBehaviour
 
    private  float TargetTime;
 
-    [SerializeField]
-    private AudioClip SoundAttck;     //音を出すのオーディオクリップ
-    [SerializeField]
-    private AudioClip footstepSound;     // 足音のオーディオクリップ
-    [SerializeField]
-    private AudioSource audioSource;     // オーディオソース
-    [SerializeField]
-    // private float volume = 50f;          // 音量
-
-
-    public bool Soundonoff = true;
-
-
     private Vector3 GetRandomPosition()
     {
         // ランダムなx, z座標を生成する
@@ -56,27 +35,6 @@ public class EnemysG : MonoBehaviour
         return new Vector3(randomX, randomY, randomZ);
     }
 
-    private void Increase()
-    {
-        if (isHiddens == false)
-        {
-            isHiddens = true;
-            GameObject go = Instantiate(ebiPrefab);//コピーを生成
-            //Debug.Log(go);
-            int px = Random.Range(0, 20);//0以上２０以下のランダムの値を生成
-            int pz = Random.Range(0, 20);//0以上２０以下のランダムの値を生成
-            go.transform.position = new Vector3(px, 0, pz);
-            Clone = true;
-        }
-
-        if (Clone == true)
-        {
-            Destroy(DestroyPrefab);
-            Clone = false;
-            enemyDeathcnt++;
-        }
-    }
-   
     // Start is called before the first frame update
     void Start()
     {
@@ -189,9 +147,6 @@ public class EnemysG : MonoBehaviour
                 }
             }
         }
-
-        Increase();
-
     }
 
     void OnTriggerEnter(Collider other)

@@ -116,7 +116,6 @@ public class EnemyAttack : MonoBehaviour
         {
             stayTimeBG += Time.deltaTime;
             GameObject eobjG = GameObject.FindWithTag("EnemyG");
-            Debug.Log("!");
             EnemyGController EGC = eobjG.GetComponent<EnemyGController>(); //付いているスクリプトを取得
             if (EGC.ONoff == 1)
             {

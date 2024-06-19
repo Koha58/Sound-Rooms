@@ -52,12 +52,7 @@ public class WallScript : MonoBehaviour
         {
             GameObject eobj = GameObject.FindWithTag("Enemy");
             EnemyController EC = eobj.GetComponent<EnemyController>(); //Enemyに付いているスクリプトを取得
-            /*
-            GameObject Chase = GameObject.FindWithTag("Chase");
-            EnemyChase EC = Chase.GetComponent<EnemyChase>();
-
-            EC.Wall = true;
-            */
+   
 
             if (EC.ONoff == 0 )//||EFW.ONoff==0 )
             {
@@ -68,13 +63,45 @@ public class WallScript : MonoBehaviour
                 bc.enabled = true;
             }
         }
-      
+
+        if (other.gameObject.CompareTag("Chase"))
+        {
+            GameObject eobj = GameObject.FindWithTag("Enemy");
+            EnemyController EC = eobj.GetComponent<EnemyController>(); //Enemyに付いているスクリプトを取得
+
+
+            if (EC.ONoff == 0)//||EFW.ONoff==0 )
+            {
+                bc.enabled = false;
+            }
+            else if (EC.ONoff == 1)//|| EFW.ONoff == 1)
+            {
+                bc.enabled = true;
+            }
+        }
+
         if (other.gameObject.CompareTag("EnemyG"))
         {
            
             GameObject eobjG = GameObject.FindWithTag("EnemyG");
-            EnemysG EG = eobjG.GetComponent<EnemysG>(); //Enemyに付いているスクリプトを取得
+            EnemyGController EG = eobjG.GetComponent<EnemyGController>(); //Enemyに付いているスクリプトを取得
       
+            if (EG.ONoff == 0)
+            {
+                bc.enabled = false;
+                // Debug.Log("?");
+            }
+            else if (EG.ONoff == 1)
+            {
+                bc.enabled = true;
+            }
+        }
+
+        if (other.gameObject.CompareTag("GChase"))
+        {
+
+            GameObject eobjG = GameObject.FindWithTag("EnemyG");
+            EnemyGController EG = eobjG.GetComponent<EnemyGController>(); //Enemyに付いているスクリプトを取得
 
             if (EG.ONoff == 0)
             {
@@ -84,20 +111,9 @@ public class WallScript : MonoBehaviour
             else if (EG.ONoff == 1)
             {
                 bc.enabled = true;
-                EG.targetPosition = GetRandomPosition();
             }
         }
-       
-    }
-    private Vector3 GetRandomPosition()
-    {
-        // ランダムなx, y, z座標を生成する
-        float randomX = Random.Range(-46f, 46f);
-        float randomY = 0f;// Random.Range(-10f, 10f);
-        float randomZ = Random.Range(-46f, 46f);
 
-        // 生成した座標を返す
-        return new Vector3(randomX, randomY, randomZ);
     }
 }
 
