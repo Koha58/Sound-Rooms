@@ -117,8 +117,8 @@ public class EnemyAttack : MonoBehaviour
             stayTimeBG += Time.deltaTime;
             GameObject eobjG = GameObject.FindWithTag("EnemyG");
             Debug.Log("!");
-            EnemysG ESG = eobjG.GetComponent<EnemysG>(); //付いているスクリプトを取得
-            if (ESG.ONoff == 1)
+            EnemyGController EGC = eobjG.GetComponent<EnemyGController>(); //付いているスクリプトを取得
+            if (EGC.ONoff == 1)
             {
                 if (ItemSeen.parentObject[0] != null)
                 {

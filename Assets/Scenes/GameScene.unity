@@ -5585,9 +5585,8 @@ GameObject:
   - component: {fileID: 977148657}
   - component: {fileID: 977148656}
   - component: {fileID: 977148655}
-  - component: {fileID: 977148654}
+  - component: {fileID: 977148660}
   - component: {fileID: 977148653}
-  - component: {fileID: 977148652}
   - component: {fileID: 977148651}
   - component: {fileID: 977148650}
   m_Layer: 0
@@ -5596,7 +5595,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!82 &977148650
 AudioSource:
   m_ObjectHideFlags: 0
@@ -5708,21 +5707,6 @@ MonoBehaviour:
   audioClips:
   - {fileID: 8300000, guid: 2d65ecc922418754590158031e3e320e, type: 3}
   - {fileID: 8300000, guid: ed921e3f75e149e4fbff85fae1382016, type: 3}
---- !u!114 &977148652
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 977148649}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 50b4aa89b734d5047a3aa6c52e2d12f2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ebiPrefab: {fileID: 977148649}
-  DestroyPrefab: {fileID: 977148649}
-  isHidden: 1
 --- !u!114 &977148653
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5735,26 +5719,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 081d5996364f4f649aa7aa9de074be6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &977148654
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 977148649}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 03b083c73d8895c42873ca59ae770089, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Player: {fileID: 135133355}
-  targetPosition: {x: 0, y: 0, z: 0}
-  ONoff: 0
-  SoundTime: 0
-  Enemy: {fileID: 977148657}
-  _parentTransform: {fileID: 977148659}
-  Chase: {fileID: 1463834802}
-  EnemyGetRandomPosition: {fileID: 977148649}
 --- !u!54 &977148655
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -5875,6 +5839,26 @@ Transform:
   - {fileID: 641814971}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &977148660
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 977148649}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f820e68681bd9204c8b0fbe7bb181cf1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Player: {fileID: 135133355}
+  targetPosition: {x: 0, y: 0, z: 0}
+  ONoff: 0
+  SoundTime: 0
+  Enemy: {fileID: 977148657}
+  _parentTransform: {fileID: 977148659}
+  Chase: {fileID: 1463834802}
+  EnemyGetRandomPosition: {fileID: 977148649}
 --- !u!1 &990346683
 GameObject:
   m_ObjectHideFlags: 0
