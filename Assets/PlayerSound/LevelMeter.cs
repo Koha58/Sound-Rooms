@@ -10,7 +10,7 @@ public class LevelMeter : MonoBehaviour
 
     //このdBでlevelMeter表示の下限に到達する
     [SerializeField]
-    private float dB_Min = -80.0f;
+    private float dB_Min = -60.0f;
 
     //このdBでlevelMeter表示の上限に到達する
     [SerializeField]
