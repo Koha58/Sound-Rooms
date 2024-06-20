@@ -19,6 +19,7 @@ public class RingSize1 : MonoBehaviour
     {
         GameObject eobj = GameObject.FindWithTag("Enemy");
         EnemyController EC = eobj.GetComponent<EnemyController>(); //Enemyに付いているスクリプトを取得
+ 
         if (EC.ONoff == 0)
         {
             i = 5;
@@ -29,6 +30,7 @@ public class RingSize1 : MonoBehaviour
             Ring.enabled = true;
             //  StartCoroutine("ScaleUp");
         }
+
     }
 
     IEnumerator ScaleUp1()

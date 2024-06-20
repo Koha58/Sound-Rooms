@@ -120,16 +120,18 @@ public class EnemyController : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         EnemyChase EC = Chase.GetComponent<EnemyChase>();
+
         if (other.gameObject.CompareTag("Player"))
         {
             GameObject obj = GameObject.Find("Player"); //Playerオブジェクトを探す
             PlayerSeen PS = obj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
-
-            if (EC.Chase == true && PS.onoff == 1) //EC.Wall == false
+            if (EC.Wall == false)
             {
-                EnemyChaseOnOff = true;
+                if (EC.Chase == true && PS.onoff == 1) //EC.Wall == false
+                {
+                    EnemyChaseOnOff = true;
+                }
             }
-            
         }
        
         if (EnemyChaseOnOff == false&&EC.Wall==true)
@@ -138,12 +140,6 @@ public class EnemyController : MonoBehaviour
             //transform.Rotate(new Vector3(0, 180, 0));
             EnemyGetRandomPosition EGRP = EnemyGetRandomPosition.GetComponent<EnemyGetRandomPosition>();
             targetPosition = EGRP.GetRandomPosition();
-        }
-
-        if ( EnemyChaseOnOff == true && EC.Wall == true)
-        {
-            Debug.Log("!?");
-            EnemyChaseOnOff = false;
         }
 
     }

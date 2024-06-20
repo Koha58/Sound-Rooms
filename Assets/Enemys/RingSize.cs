@@ -9,17 +9,21 @@ public class RingSize : MonoBehaviour
     public MeshRenderer Ring;
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         Ring = GetComponent<MeshRenderer>();
         StartCoroutine("ScaleUp1");
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         GameObject eobj = GameObject.FindWithTag("Enemy");
         EnemyController EC = eobj.GetComponent<EnemyController>(); //Enemyに付いているスクリプトを取得
+        /*
+        GameObject eobjG = GameObject.FindWithTag("EnemyG");
+        EnemyGController EGC = eobj.GetComponent<EnemyGController>(); //Enemyに付いているスクリプトを取得
+        */
         if (EC.ONoff == 0)
         {
             i = 50;
@@ -30,6 +34,18 @@ public class RingSize : MonoBehaviour
             Ring.enabled = true;
             //  StartCoroutine("ScaleUp");
         }
+        /*
+        if (EGC.ONoff == 0)
+        {
+            i = 50;
+            Ring.enabled = false;
+        }
+        if (EGC.ONoff == 1)
+        {
+            Ring.enabled = true;
+            //  StartCoroutine("ScaleUp");
+        }
+        */
     }
 
     IEnumerator ScaleUp1()
