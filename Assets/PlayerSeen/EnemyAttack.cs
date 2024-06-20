@@ -11,8 +11,6 @@ public class EnemyAttack : MonoBehaviour
 
     [SerializeField] public GameObject EnemyAttackArea;
 
-    Rigidbody rb;
-
     private float stayTimeF = 0;
     private float stayTimeFG = 0;
     private float stayTimeB = 0;
@@ -43,7 +41,7 @@ public class EnemyAttack : MonoBehaviour
 
         if (onoff == 1)
         {
-            if (levelMeter.nowdB <= 0.5f)
+            if (levelMeter.nowdB <= 0.3f)
             {
                 EnemyAttackArea.GetComponent<Collider>().enabled = false;//見えない（無効）
                 onoff = 0;  //見えていないから0
@@ -158,7 +156,7 @@ public class EnemyAttack : MonoBehaviour
         if (other.CompareTag("Box"))
         {
             //Rigidbodyを取得
-            rb = other.GetComponent<Rigidbody>();
+            var rb = other.GetComponent<Rigidbody>();
 
             //移動、回転を可能にする
             rb.constraints = RigidbodyConstraints.None;

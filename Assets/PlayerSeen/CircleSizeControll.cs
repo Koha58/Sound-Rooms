@@ -53,8 +53,10 @@ public class CircleSizeControll : MonoBehaviour
 
             Sound.transform.localScale = new Vector3(originSizeX, 1, originSizeZ);
 
-            originSizemX = originSizemX + plusSize;
-            originSizemZ = originSizemZ + plusSize;
+            originSizemX = 10.3f + plusSize;
+            originSizemZ = 10.3f + plusSize;
+
+            MaxSound.transform.localScale = new Vector3(originSizemX, 1, originSizemZ);
 
             Sound.SetActive(true);
             MaxSound.SetActive(true);
