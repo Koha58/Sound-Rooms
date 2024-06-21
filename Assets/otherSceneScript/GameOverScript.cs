@@ -38,5 +38,13 @@ public class GameOverScript : MonoBehaviour
             }
         }
 
+        if (other.CompareTag("EnemyG"))
+        {
+            if (PS.onoff == 1)
+            {
+                SceneManager.LoadScene("GameOver");
+            }
+        }
+
     }
 }

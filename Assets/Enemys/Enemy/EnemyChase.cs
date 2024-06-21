@@ -20,7 +20,7 @@ public class EnemyChase : MonoBehaviour
     }
 
     // Update is called once per frame
-    public void Update()
+    private void Update()
     {
         if (Chase == true)
         {
@@ -43,13 +43,13 @@ public class EnemyChase : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            Debug.Log("Play");
+           // Debug.Log("Play");
            Chase = true;
         }
         if (other.gameObject.CompareTag("Wall"))
         {
             Wall = true;
-            Debug.Log("Wall");
+           // Debug.Log("Wall");
         }
     }
 

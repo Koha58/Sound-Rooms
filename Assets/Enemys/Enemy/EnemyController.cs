@@ -8,9 +8,9 @@ using UnityEngine;
 public class EnemyController : MonoBehaviour
 {
     float speed = 1f;//移動スピード
-    public Transform Player;//プレイヤーを参照
+    public GameObject Player;//プレイヤーを参照
     public Vector3 targetPosition;//Enemyの目的地
-    float ChaseSpeed = 0.05f;//Playerを追いかけるスピード
+    float ChaseSpeed = 0.02f;//Playerを追いかけるスピード
     private bool EnemyChaseOnOff = false;//Playerの追跡のONOFF 
 
     public float ONoff = 0;//(0が見えない；１が見える状態）
@@ -32,6 +32,8 @@ public class EnemyController : MonoBehaviour
     public GameObject Chase;
 
     public GameObject EnemyGetRandomPosition;
+
+    private bool TouchWall = false;
 
     // Start is called before the first frame update
     void Start()
@@ -104,19 +106,15 @@ public class EnemyController : MonoBehaviour
                 }
             }
         }
-    }
-    /*
-    private Vector3 GetRandomPosition()
-    {
-        // ランダムなx, y, z座標を生成する
-        float randomX = Random.Range(-46f, 46f);
-        float randomY = 0f;// Random.Range(-10f, 10f);
-        float randomZ = Random.Range(-46f, 46f);
 
-        // 生成した座標を返す
-        return new Vector3(randomX, randomY, randomZ);
+        if(TouchWall==true)
+        {
+            //EnemyGetRandomPosition EGRP = EnemyGetRandomPosition.GetComponent<EnemyGetRandomPosition>();
+            //targetPosition = EGRP.GetRandomPosition();
+            TouchWall = false;
+        }
     }
-    */
+  
     private void OnTriggerEnter(Collider other)
     {
         EnemyChase EC = Chase.GetComponent<EnemyChase>();
@@ -136,10 +134,10 @@ public class EnemyController : MonoBehaviour
        
         if (EnemyChaseOnOff == false&&EC.Wall==true)
         {
-            Debug.Log("!!");
+            TouchWall = true;
             //transform.Rotate(new Vector3(0, 180, 0));
-            EnemyGetRandomPosition EGRP = EnemyGetRandomPosition.GetComponent<EnemyGetRandomPosition>();
-            targetPosition = EGRP.GetRandomPosition();
+            //EnemyGetRandomPosition EGRP = EnemyGetRandomPosition.GetComponent<EnemyGetRandomPosition>();
+            //targetPosition = EGRP.GetRandomPosition();
         }
 
     }

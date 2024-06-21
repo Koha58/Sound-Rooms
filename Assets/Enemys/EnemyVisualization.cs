@@ -10,9 +10,9 @@ using UnityEngine.XR;
 
 public class EnemyVisualization : MonoBehaviour
 {
-    public int onoff = 0;  //判定用（見えていない時：0/見えている時：1）
+   // public int onoff = 0;  //判定用（見えていない時：0/見えている時：1）
 
-    [SerializeField] public GameObject SeenArea;
+    [SerializeField] public GameObject Ring;
     public GameObject ItemCanvas;
     public GameObject[] Walls;
     public GameObject[] Boxes;
@@ -77,7 +77,7 @@ public class EnemyVisualization : MonoBehaviour
         }
 
         //最初は見えない状態
-        SeenArea.GetComponent<Collider>().enabled = false;
+        Ring.GetComponent<Collider>().enabled = false;
         ItemCanvas.GetComponent<Canvas>().enabled = false;
 
         Walls = GameObject.FindGameObjectsWithTag("Wall");
@@ -114,26 +114,24 @@ public class EnemyVisualization : MonoBehaviour
         GameObject eobj = GameObject.FindWithTag("Enemy");
         EnemyController EC = eobj.GetComponent<EnemyController>(); //Enemyに付いているスクリプトを取得
 
-      //  GameObject soundobj = GameObject.Find("SoundVolume");
-       // levelMeter = soundobj.GetComponent<LevelMeter>(); //付いているスクリプトを取得
-
         //音を出すと範囲内を可視化
         if (EC.ONoff==1)//levelMeter.nowdB > 0.0f)
         {
-            Debug.Log("0");
-            SeenArea.GetComponent<Collider>().enabled = true;//見える（有効）
-            onoff = 1;  //見えているから1
+            Ring.GetComponent<Collider>().enabled = true;//見える（有効）
+            // onoff = 1;  //見えているから1
         }
 
-        //音が出ていなければ、範囲内の可視化をできなくする
-        if (onoff == 1)
+        if (EC.ONoff == 0)//levelMeter.nowdB > 0.0f)
         {
-            // if (levelMeter.nowdB <= 0.0f)
-            // {
-            Debug.Log("1");
+           // Debug.Log("9");
+            Ring.GetComponent<Collider>().enabled =false;//見える（有効）
+           // onoff = 0;  //見えているから1
+        }
+        
+    
+           /*
             if (ISe.count != 4)
             {
-                Debug.Log("2");
                 if (parentObject[0] != null)
                 {
                         GameObject Key1 = parentObject[0];
@@ -182,8 +180,8 @@ public class EnemyVisualization : MonoBehaviour
                     }
             }
 
-            Debug.Log("3");
-            SeenArea.GetComponent<Collider>().enabled = false;//見えない（無効）
+            
+            Ring.GetComponent<Collider>().enabled = false;//見えない（無効）
 
                 foreach (GameObject Wall in Walls)
                 {
@@ -207,10 +205,7 @@ public class EnemyVisualization : MonoBehaviour
                     rb.constraints = RigidbodyConstraints.FreezeAll;
                     Box.GetComponent<Renderer>().enabled = false;
                 }
-                onoff = 0;  //見えていないから0
-           // }
-        }
-
+               */
     }
 
     private void OnTriggerEnter(Collider other)
@@ -418,7 +413,6 @@ public class EnemyVisualization : MonoBehaviour
 
         if (other.CompareTag("Wall"))//接触したオブジェクトのタグが"Wall"のとき
         {
-            Debug.Log("5");
             other.gameObject.GetComponent<Renderer>().enabled = true;
         }
         if (other.CompareTag("Box"))//接触したオブジェクトのタグが"Box"のとき
