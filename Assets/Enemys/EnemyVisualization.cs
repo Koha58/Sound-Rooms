@@ -120,6 +120,7 @@ public class EnemyVisualization : MonoBehaviour
         //音を出すと範囲内を可視化
         if (EC.ONoff==1)//levelMeter.nowdB > 0.0f)
         {
+            Debug.Log("0");
             SeenArea.GetComponent<Collider>().enabled = true;//見える（有効）
             onoff = 1;  //見えているから1
         }
@@ -145,7 +146,7 @@ public class EnemyVisualization : MonoBehaviour
                             childObject.GetComponent<Renderer>().enabled = false;
                         }
                 }
-                    else if (parentObject[1] != null)
+                else if (parentObject[1] != null)
                     {
                         GameObject Key2 = parentObject[1];
                         // 子オブジェクトの数を取得
@@ -156,9 +157,9 @@ public class EnemyVisualization : MonoBehaviour
                             GameObject childObject = childTransform.gameObject;
                             childObject.GetComponent<Renderer>().enabled = false;
                         }
-                    }
-                    else if (parentObject[2] != null)
-                    {
+                }
+                else if (parentObject[2] != null)
+                {
                         GameObject Key3 = parentObject[2];
                         int childCount3 = Key3.transform.childCount;
                         for (int b = 0; b < childCount3; b++)
@@ -167,7 +168,7 @@ public class EnemyVisualization : MonoBehaviour
                             GameObject childObject = childTransform.gameObject;
                             childObject.GetComponent<Renderer>().enabled = false;
                         }
-                    }
+                }
                     else if (parentObject[3] != null)
                     {
                         GameObject Key4 = parentObject[3];
