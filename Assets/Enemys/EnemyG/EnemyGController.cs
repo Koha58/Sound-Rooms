@@ -27,7 +27,7 @@ public class EnemyGController : MonoBehaviour
 
     private float TargetTime;
 
-    public GameObject Chase;
+    public GameObject GChase;
 
     public GameObject EnemyGGetRandomPosition;
 
@@ -42,7 +42,7 @@ public class EnemyGController : MonoBehaviour
         //  animator = GetComponent<Animator>();   //アニメーターコントローラーからアニメーションを取得する    
         Enemy = GetComponent<MeshRenderer>();
         Enemy.enabled = true;
-        EnemyChase EC = Chase.GetComponent<EnemyChase>();
+        EnemysGChase EGC = GChase.GetComponent<EnemysGChase>();
     }
 
     // Update is called once per frame
@@ -107,7 +107,7 @@ public class EnemyGController : MonoBehaviour
 
         if (TouchWall == true)
         {
-            Debug.Log("!");
+          
             //EnemyGetRandomPosition EGRP = EnemyGetRandomPosition.GetComponent<EnemyGetRandomPosition>();
             //targetPosition = EGRP.GetRandomPosition();
             TouchWall = false;
@@ -116,21 +116,21 @@ public class EnemyGController : MonoBehaviour
  
     private void OnTriggerEnter(Collider other)
     {
-        EnemyChase EC = Chase.GetComponent<EnemyChase>();
+        EnemysGChase EGC = GChase.GetComponent<EnemysGChase>();
         if (other.gameObject.CompareTag("Player"))
         {
             GameObject obj = GameObject.Find("Player"); //Playerオブジェクトを探す
             PlayerSeen PS = obj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
-            if (EC.Wall == false)
+            if (EGC.GWall == false)
             {
-                if (EC.Chase == true && PS.onoff == 1) //EC.Wall == false
+                if (EGC.GChase == true && PS.onoff == 1) //EC.Wall == false
                 {
                     EnemyChaseOnOff = true;
                 }
             }
         }
 
-        if (EnemyChaseOnOff == false && EC.Wall == true)
+        if (EnemyChaseOnOff == false && EGC.GWall == true)
         {
            TouchWall=true;  
             //transform.Rotate(new Vector3(0, 180, 0));

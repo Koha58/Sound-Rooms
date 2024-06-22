@@ -10,11 +10,16 @@ public class BoxScript : MonoBehaviour
 
     LevelMeter levelMeter;
 
+    public bool RingOnOff;
+
+    MeshRenderer Box;
+
     void Start()
     {
         //プレイヤーが見えていない時
         bc = GetComponent<BoxCollider>();
         bc.enabled = false; //通り抜け可能
+        Box = GetComponent<MeshRenderer>();
     }
 
     void Update()
@@ -37,6 +42,44 @@ public class BoxScript : MonoBehaviour
             {
                 bc.enabled = false; //通り抜け可能
                 onoff = 0;  //見えていないから0
+            }
+        }
+
+        GameObject eobj = GameObject.FindWithTag("Enemy");
+        EnemyController EC = eobj.GetComponent<EnemyController>(); //Enemyに付いているスクリプトを取得
+        bc = GetComponent<BoxCollider>();
+
+        if (EC.ONoff == 0)//||EFW.ONoff==0 )
+        {
+            bc.enabled = false;
+            RingOnOff = false;
+            Box.enabled = false;
+        }
+        else if (EC.ONoff == 1)//|| EFW.ONoff == 1)
+        {
+            bc.enabled = true;
+
+        }
+
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Visualization"))
+        {
+            GameObject eobj = GameObject.FindWithTag("Enemy");
+            EnemyController EC = eobj.GetComponent<EnemyController>(); //Enemyに付いているスクリプトを取得
+
+            if (RingOnOff == true)
+            {
+                if (EC.ONoff == 0)//||EFW.ONoff==0 )
+                {
+                    bc.enabled = false;
+                }
+                else if (EC.ONoff == 1)//|| EFW.ONoff == 1)
+                {
+                    bc.enabled = true;
+                }
             }
         }
 

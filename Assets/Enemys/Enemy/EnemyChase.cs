@@ -43,8 +43,18 @@ public class EnemyChase : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-           // Debug.Log("Play");
-           Chase = true;
+
+            GameObject eobj = GameObject.FindWithTag("Enemy");
+            EnemyController EC = eobj.GetComponent<EnemyController>(); //Enemyに付いているスクリプトを取得
+
+            float detectionPlayer = Vector3.Distance(transform.position, Player.position);//プレイヤーと敵の位置の計算
+            if (detectionPlayer <=5 && EC.ONoff == 1)//Enemyが可視化状態かつプレイヤーが検知範囲に入ったら
+            {
+                Chase = true;
+            }
+
+            // Debug.Log("Play");
+           //   Chase = true;
         }
         if (other.gameObject.CompareTag("Wall"))
         {
