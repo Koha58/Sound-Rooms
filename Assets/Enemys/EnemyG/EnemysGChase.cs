@@ -7,8 +7,7 @@ public class EnemysGChase : MonoBehaviour
     public Transform Player;//プレイヤーを参照
     public bool GChase = false;
     private float Chaseonoff;
-    public bool GWall = false;
-    private float Wallonoff;
+    public float detectionPlayer;
 
     // [SerializeField] public GameObject EnemyArea;
 
@@ -27,38 +26,19 @@ public class EnemysGChase : MonoBehaviour
             if (Chaseonoff >= 0.5f)
                 GChase = false;
         }
-
-        if (GWall == true)
-        {
-            Wallonoff += Time.deltaTime;
-            if (Wallonoff >= 5f)
-            {
-                GWall = false;
-            }
-        }
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
-
             GameObject eobj = GameObject.FindWithTag("EnemyG");
             EnemyGController EGC = eobj.GetComponent<EnemyGController>(); //Enemyに付いているスクリプトを取得
 
-            float detectionPlayer = Vector3.Distance(transform.position, Player.position);//プレイヤーと敵の位置の計算
-            if (detectionPlayer <= 5 && EGC.ONoff == 1)//Enemyが可視化状態かつプレイヤーが検知範囲に入ったら
-            {
                 GChase = true;
-            }
-
+            
             // Debug.Log("Play");
-            //   Chase = true;
-        }
-        if (other.gameObject.CompareTag("Wall"))
-        {
-            GWall = true;
-            // Debug.Log("Wall");
+            // GChase = true;
         }
     }
 }

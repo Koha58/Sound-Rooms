@@ -118,11 +118,12 @@ public class Enemy : MonoBehaviour
 
             GameObject obj = GameObject.Find("Player"); //Playerオブジェクトを探す
             PlayerSeen PS = obj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
-
+            /*
             if (EC.Chase == true && EC.Wall == false && PS.onoff == 1)
             {
                 EnemyChaseOnOff = true;
             }
+            */
         }
     }
 

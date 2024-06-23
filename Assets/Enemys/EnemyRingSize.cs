@@ -8,6 +8,12 @@ public class EnemyRingSize : MonoBehaviour
     float i;
     public MeshRenderer Ring;
 
+    // public MeshRenderer Wall;
+
+    // public BoxCollider bc;
+
+    //public bool RingOnOff;
+
     // Start is called before the first frame update
     private void Start()
     {
@@ -31,7 +37,21 @@ public class EnemyRingSize : MonoBehaviour
             Ring.enabled = true;
             //  StartCoroutine("ScaleUp");
         }
+        /*
+        bc = GetComponent<BoxCollider>();
 
+        if (EC.ONoff == 0)//||EFW.ONoff==0 )
+        {
+            bc.enabled = false;
+            RingOnOff = false;
+            Wall.enabled = false;
+        }
+        else if (EC.ONoff == 1)//|| EFW.ONoff == 1)
+        {
+            bc.enabled = true;
+
+        }
+        */
     }
 
     IEnumerator ScaleUp()

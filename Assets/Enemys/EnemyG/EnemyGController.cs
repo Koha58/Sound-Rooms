@@ -8,7 +8,7 @@ public class EnemyGController : MonoBehaviour
     float speed = 1f;//移動スピード
     public Transform Player;//プレイヤーを参照
     public Vector3 targetPosition;//Enemyの目的地
-    float ChaseSpeed = 0.02f;//Playerを追いかけるスピード
+    float ChaseSpeed = 0.03f;//Playerを追いかけるスピード
     private bool EnemyChaseOnOff = false;//Playerの追跡のONOFF 
 
     public float ONoff = 0;//(0が見えない；１が見える状態）
@@ -19,6 +19,8 @@ public class EnemyGController : MonoBehaviour
     float Enemystoponoff;
 
     private float Chaseonoff;
+    public GameObject EnemyWall;
+
 
     // public Animator animator;
 
@@ -43,6 +45,7 @@ public class EnemyGController : MonoBehaviour
         Enemy = GetComponent<MeshRenderer>();
         Enemy.enabled = true;
         EnemysGChase EGC = GChase.GetComponent<EnemysGChase>();
+        Enemywall EW = EnemyWall.GetComponent<Enemywall>();
     }
 
     // Update is called once per frame
@@ -117,11 +120,12 @@ public class EnemyGController : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         EnemysGChase EGC = GChase.GetComponent<EnemysGChase>();
+        Enemywall EW = EnemyWall.GetComponent<Enemywall>();
         if (other.gameObject.CompareTag("Player"))
         {
             GameObject obj = GameObject.Find("Player"); //Playerオブジェクトを探す
             PlayerSeen PS = obj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
-            if (EGC.GWall == false)
+            if (EW.Wall == false)
             {
                 if (EGC.GChase == true && PS.onoff == 1) //EC.Wall == false
                 {
@@ -130,7 +134,7 @@ public class EnemyGController : MonoBehaviour
             }
         }
 
-        if (EnemyChaseOnOff == false && EGC.GWall == true)
+        if (EnemyChaseOnOff == false && EW.Wall == true)
         {
            TouchWall=true;  
             //transform.Rotate(new Vector3(0, 180, 0));

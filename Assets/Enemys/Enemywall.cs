@@ -5,54 +5,38 @@ using UnityEngine;
 
 public class Enemywall : MonoBehaviour
 {
-    BoxCollider bc;
 
-   public bool RingOnOff;
-    //  EnemySeen ES;
+    public bool Wall = false;
+    private float Wallonoff;
+  
+    // [SerializeField] public GameObject EnemyArea;
 
-    void Start()
+    // Start is called before the first frame update
+    private void Start()
     {
-        //プレイヤーが見えていない時
-        bc = GetComponent<BoxCollider>();
-        bc.enabled = false; //通り抜け可能
+        //EnemyArea.GetComponent<Collider>().enabled = false;
     }
 
-    void Update()
+    // Update is called once per frame
+    private void Update()
     {
-        GameObject eobj = GameObject.FindWithTag("Enemy");
-        EnemyController EC = eobj.GetComponent<EnemyController>(); //Enemyに付いているスクリプトを取得
-        bc = GetComponent<BoxCollider>();
-
-        if (EC.ONoff == 0)//||EFW.ONoff==0 )
+        if (Wall == true)
         {
-            bc.enabled = false;
-            RingOnOff = false;
-        }
-        else if (EC.ONoff == 1)//|| EFW.ONoff == 1)
-        {
-            bc.enabled = true;
-        }
-
-    }
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.CompareTag("Visualization"))
-        {
-            GameObject eobj = GameObject.FindWithTag("Enemy");
-            EnemyController EC = eobj.GetComponent<EnemyController>(); //Enemyに付いているスクリプトを取得
-
-            if (RingOnOff == true)
+            Wallonoff += Time.deltaTime;
+            if (Wallonoff >= 5f)
             {
-                if (EC.ONoff == 0)//||EFW.ONoff==0 )
-                {
-                    bc.enabled = false;
-                }
-                else if (EC.ONoff == 1)//|| EFW.ONoff == 1)
-                {
-                    bc.enabled = true;
-                }
+                Wall = false;
             }
         }
 
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Wall"))
+        {
+            Wall = true;
+            // Debug.Log("Wall");
+        }
     }
 }
