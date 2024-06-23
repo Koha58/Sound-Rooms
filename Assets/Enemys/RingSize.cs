@@ -7,6 +7,7 @@ public class RingSize : MonoBehaviour
 
     float i;
     public MeshRenderer Ring;
+   public EnemyController EC;
 
     // Start is called before the first frame update
     private void Start()
@@ -19,7 +20,7 @@ public class RingSize : MonoBehaviour
     private void Update()
     {
         GameObject eobj = GameObject.FindWithTag("Enemy");
-        EnemyController EC = eobj.GetComponent<EnemyController>(); //Enemyに付いているスクリプトを取得
+       /* EnemyController*/ EC = eobj.GetComponent<EnemyController>(); //Enemyに付いているスクリプトを取得
         /*
         GameObject eobjG = GameObject.FindWithTag("EnemyG");
         EnemyGController EGC = eobj.GetComponent<EnemyGController>(); //Enemyに付いているスクリプトを取得

@@ -18,6 +18,7 @@ public class inWallScript : MonoBehaviour
         bc = GetComponent<BoxCollider>();
         bc.enabled = false; //通り抜け可能
         Wall = GetComponent<MeshRenderer>();
+
     }
 
     void Update()
@@ -43,37 +44,27 @@ public class inWallScript : MonoBehaviour
                 onoff = 0;  //見えていないから0
             }
         }
-        
+        /*
         GameObject eobj = GameObject.FindWithTag("Enemy");
         EnemyController EC = eobj.GetComponent<EnemyController>(); //Enemyに付いているスクリプトを取得
-        GameObject eobjG = GameObject.FindWithTag("EnemyG");
-        EnemyGController EGC = eobjG.GetComponent<EnemyGController>(); //Enemyに付いているスクリプトを取得
+        //GameObject eobjG = GameObject.FindWithTag("EnemyG");
+        //EnemyGController EGC = eobjG.GetComponent<EnemyGController>(); //Enemyに付いているスクリプトを取得
         if (EC.ONoff == 0)//||EFW.ONoff==0 )
         {
-           
             bc.enabled = false;
         }
-        if (EGC.ONoff == 0)//||EFW.ONoff==0 )
-        {
-          
-            bc.enabled = false;
-        }
+        
 
         if (EC.ONoff == 1)//|| EFW.ONoff == 1)
         {
             bc.enabled = true;
         }
-
-        if (EGC.ONoff == 1)//|| EFW.ONoff == 1)
-        {
-            bc.enabled = true;
-        }
-
+        */
     }
     
     private void OnTriggerEnter(Collider other)
     {
-        
+        /*
         if (other.gameObject.CompareTag("Visualization"))
         {
             GameObject eobj = GameObject.FindWithTag("Enemy");
@@ -91,7 +82,7 @@ public class inWallScript : MonoBehaviour
                     bc.enabled = true;
                 }
             
-        }
+        }*/
         
     }
 }

@@ -5,59 +5,32 @@ using System.Linq;
 
 public class EnemySeen : MonoBehaviour
 {
-    public int ONoff = 0;//(0が見えない；１が見える状態）
-    private float Seetime;  //経過時間
     public  float SoundTime;
-    [SerializeField] public GameObject Sphere;
-    [SerializeField] public Transform _parentTransform;
+    [SerializeField] public GameObject EnemyBody;
+
+    //public SkinnedMeshRenderer SkinnedMeshRendererEnemyBody;
 
     // Start is called before the first frame update
     void Start()
     {
-        //tagが"EnemyParts"である子オブジェクトのTransformのコレクションを取得
-        var childTransforms = _parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("EnemyParts"));
-
-        foreach (var item in childTransforms)
-        {
-            //タグが"EnemyParts"である子オブジェクトを見えなくする
-            item.gameObject.GetComponent<Renderer>().enabled = false;
-        }
+        //SkinnedMeshRendererEnemyBody = GetComponent<SkinnedMeshRenderer>();
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        //tagが"EnemyParts"である子オブジェクトのTransformのコレクションを取得
-        var childTransforms = _parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("EnemyParts"));
-        if (ONoff == 0)//見えないとき
+        GameObject eobj = GameObject.FindWithTag("Enemy");
+        EnemyController EC = eobj.GetComponent<EnemyController>(); //Enemyに付いているスクリプトを取得
+        if (EC.ONoff == 0)//見えないとき
         {
-            SoundTime += Time.deltaTime;
-            if (SoundTime > 10.0f)
-            {              
-                foreach (var item in childTransforms)
-                {
-                    //タグが"EnemyParts"である子オブジェクトを見えるようにする
-                    item.gameObject.GetComponent<Renderer>().enabled = true;
-                }
-                ONoff = 1;
-                SoundTime = 0.0f;
-                Sphere.SetActive(true);//音波非表示→表示
-            }
+                EnemyBody.SetActive(false);//音波非表示→表示
+           // SkinnedMeshRendererEnemyBody.enabled = false;
         }
-         if (ONoff == 1)//見えているとき
+         if (EC.ONoff == 1)//見えているとき
          {
-            Seetime += Time.deltaTime;
-            if (Seetime >= 10.0f)
-            {
-                foreach (var item in childTransforms)
-                {
-                    //タグが"EnemyParts"である子オブジェクトを見えなくする
-                    item.gameObject.GetComponent<Renderer>().enabled = false;
-                }
-                ONoff = 0;
-                Seetime = 0.0f;
-                Sphere.SetActive(false);//音波表示→非表示
-            }
-         }
+                EnemyBody.SetActive(true);//音波表示→非表示
+            //SkinnedMeshRendererEnemyBody.enabled = true;
+
+        }
     } 
 }

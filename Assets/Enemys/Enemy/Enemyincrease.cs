@@ -27,7 +27,7 @@ public class Enemyincrease : MonoBehaviour
                                                        //Debug.Log(go);
                 float px = Random.Range(90f, 70f); ;//0ˆÈã‚Q‚OˆÈ‰º‚Ìƒ‰ƒ“ƒ_ƒ€‚Ì’l‚ğ¶¬
                 float pz = Random.Range(-90f, -70f); ;//0ˆÈã‚Q‚OˆÈ‰º‚Ìƒ‰ƒ“ƒ_ƒ€‚Ì’l‚ğ¶¬
-                go.transform.position = new Vector3(px, 1, pz);
+                go.transform.position = new Vector3(px, 0, pz);
 
                 Clone = true;
         }

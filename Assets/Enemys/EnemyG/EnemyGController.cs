@@ -22,9 +22,9 @@ public class EnemyGController : MonoBehaviour
     public GameObject EnemyWall;
 
 
-    // public Animator animator;
+     //public Animator animator;
 
-    public MeshRenderer Enemy;
+   // public MeshRenderer Enemy;
     [SerializeField] public Transform _parentTransform;
 
     private float TargetTime;
@@ -36,16 +36,18 @@ public class EnemyGController : MonoBehaviour
     // Start is called before the first frame update
     private bool TouchWall = false;
 
+    Enemywall EW;
+
     void Start()
     {
         EnemyGGetRandomPosition EGRP = EnemyGGetRandomPosition.GetComponent<EnemyGGetRandomPosition>();
         // 初期位置をランダムに設定する
         targetPosition = EGRP.GetRandomPositionG();
-        //  animator = GetComponent<Animator>();   //アニメーターコントローラーからアニメーションを取得する    
-        Enemy = GetComponent<MeshRenderer>();
-        Enemy.enabled = true;
+        //animator = GetComponent<Animator>();   //アニメーターコントローラーからアニメーションを取得する    
+       // Enemy = GetComponent<MeshRenderer>();
+      //  Enemy.enabled = true;
         EnemysGChase EGC = GChase.GetComponent<EnemysGChase>();
-        Enemywall EW = EnemyWall.GetComponent<Enemywall>();
+         EW = EnemyWall.GetComponent<Enemywall>();
     }
 
     // Update is called once per frame
@@ -63,7 +65,7 @@ public class EnemyGController : MonoBehaviour
         }
 
         // 「歩く」のアニメーションを再生する
-        // animator.SetBool("EnemyWalk", true);
+       // animator.SetBool("EnemyGWalk", true);
 
         if (EnemyChaseOnOff == true)//Enemyが可視化状態かつプレイヤーが検知範囲に入ったら
         {
@@ -80,19 +82,21 @@ public class EnemyGController : MonoBehaviour
             if (PS.onoff == 1 && EnemyChaseOnOff == true && ONoff == 1)
             {
                 transform.LookAt(Player.transform); //プレイヤーの方向にむく
-                transform.position += transform.forward * ChaseSpeed;//プレイヤーの方向に向かう
+                transform.localPosition += transform.forward * ChaseSpeed;//プレイヤーの方向に向かう
             }
 
         }
         else if (EnemyChaseOnOff == false || PS.onoff == 0)//Playerが検知範囲に入っていないまたはPlayerが見えていない
         {
             // targetPositionに向かって移動する
-            transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
+            transform.localPosition = Vector3.MoveTowards(transform.localPosition, targetPosition, speed * Time.deltaTime);
             transform.LookAt(targetPosition);
+            // 「走る」のアニメーションを再生する
+           // animator.SetBool("EnemyGRun", true);
         }
 
         // targetPositionに到着したら新しいランダムな位置を設定する
-        if (transform.position == targetPosition)
+        if (transform.localPosition == targetPosition)
         {
             Enemystoponoff = 1;
             if (Enemystoponoff == 1)
@@ -120,7 +124,7 @@ public class EnemyGController : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         EnemysGChase EGC = GChase.GetComponent<EnemysGChase>();
-        Enemywall EW = EnemyWall.GetComponent<Enemywall>();
+         EW = EnemyWall.GetComponent<Enemywall>();
         if (other.gameObject.CompareTag("Player"))
         {
             GameObject obj = GameObject.Find("Player"); //Playerオブジェクトを探す
@@ -147,20 +151,20 @@ public class EnemyGController : MonoBehaviour
     {
         float randomTime = Random.Range(5f, 10f);
         TargetTime = randomTime;
-        // var childTransforms = _parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("EnemyParts"));
+        var childTransforms = _parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("EnemyParts"));
         if (ONoff == 0)//見えないとき
         {
             SoundTime += Time.deltaTime;
             if (SoundTime >= TargetTime)
             {
-                //foreach (var item in childTransforms)
+                foreach (var item in childTransforms)
                 {
                     //タグが"EnemyParts"である子オブジェクトを見えるようにする
-                    // item.gameObject.GetComponent<Renderer>().enabled = true;
+                     item.gameObject.GetComponent<Renderer>().enabled = true;
                 }
                 ONoff = 1;
                 SoundTime = 0.0f;
-                Enemy.enabled = true;
+                //Enemy.enabled = true;
                 GameObject Chase = GameObject.FindWithTag("Chase");
                 EnemyChase EC = Chase.GetComponent<EnemyChase>(); //EnemyFailurework付いているスクリプトを取得
             }
@@ -170,14 +174,14 @@ public class EnemyGController : MonoBehaviour
             Seetime += Time.deltaTime;
             if (Seetime >= 10.0f)
             {
-                //foreach (var item in childTransforms)
+                foreach (var item in childTransforms)
                 {
                     //タグが"EnemyParts"である子オブジェクトを見えなくする
-                    // item.gameObject.GetComponent<Renderer>().enabled = false;
+                     item.gameObject.GetComponent<Renderer>().enabled = false;
                 }
                 ONoff = 0;
                 Seetime = 0.0f;
-                Enemy.enabled = false;
+                //Enemy.enabled = false;
             }
         }
     }

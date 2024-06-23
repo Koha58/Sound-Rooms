@@ -48,20 +48,13 @@ public class WallScript : MonoBehaviour
         
         GameObject eobj = GameObject.FindWithTag("Enemy");
         EnemyController EC = eobj.GetComponent<EnemyController>(); //Enemyに付いているスクリプトを取得
-        GameObject eobjG = GameObject.FindWithTag("EnemyG");
-        EnemyGController EGC = eobjG.GetComponent<EnemyGController>(); //Enemyに付いているスクリプトを取得
+     
         if (EC.ONoff == 0)//||EFW.ONoff==0 )
         {
            bc.enabled = false;
             Wall.enabled = false;
         }
 
-        if (EGC.ONoff == 0)//||EFW.ONoff==0 )
-        {
-            bc.enabled = false;
-            Wall.enabled = false;
-        }
-  
     }
 
     private void OnTriggerEnter(Collider other)
@@ -70,33 +63,18 @@ public class WallScript : MonoBehaviour
         {
             GameObject eobj = GameObject.FindWithTag("Enemy");
             EnemyController EC = eobj.GetComponent<EnemyController>(); //Enemyに付いているスクリプトを取得
-            GameObject eobjG = GameObject.FindWithTag("EnemyG");
-            EnemyGController EGC = eobjG.GetComponent<EnemyGController>(); //Enemyに付いているスクリプトを取得
-
-            if (EC.ONoff == 0)//||EFW.ONoff==0 )
-            {
+            /*
                 bc.enabled = false;
                 // RingOnOff = false;
                 Wall.enabled = false;
-            }
+           */
 
             if (EC.ONoff == 1)//|| EFW.ONoff == 1)
             {
                 bc.enabled = true;
             }
-
-            if (EGC.ONoff == 0)//||EFW.ONoff==0 )
-            {
-                bc.enabled = false;
-                //  RingOnOff = false;
-                Wall.enabled = false;
-            }
-
-            if (EGC.ONoff == 1)//|| EFW.ONoff == 1)
-            {
-                bc.enabled = true;
-            }
         }
+
         /*
         if (other.gameObject.CompareTag("Player"))
         {

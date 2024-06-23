@@ -24,6 +24,7 @@ public class EnemyAttack : MonoBehaviour
     {
         //最初は見えない状態
         EnemyAttackArea.GetComponent<Collider>().enabled = false;
+       
     }
 
     // Update is called once per frame
@@ -89,13 +90,14 @@ public class EnemyAttack : MonoBehaviour
         if (other.CompareTag("EnemyBack"))
         {
             stayTimeB += Time.deltaTime;
-            Debug.Log("?");
             GameObject eobj = GameObject.FindWithTag("Enemy");
             EnemyController EC = eobj.GetComponent<EnemyController>();
             Enemyincrease EI = eobj.GetComponent<Enemyincrease>(); //付いているスクリプトを取得
+
             if (EC.ONoff == 1)
             {
                 EI.isHidden = false;
+                Debug.Log("?");
             }
             //正面に当たった時に判定しないようにする
             if (other.CompareTag("EnemyForward"))

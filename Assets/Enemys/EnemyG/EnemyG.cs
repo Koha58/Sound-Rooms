@@ -8,9 +8,9 @@ public class EnemyG : MonoBehaviour
     float speed = 1f;//移動スピード
     public Transform Player;//プレイヤーを参照
     public Vector3 targetPosition;//Enemyの目的地
-    float ChaseSpeed = 0.025f;//Playerを追いかけるスピード
-    private float Detection = 6f; //プレイヤーを検知する範囲
-    private float detectionPlayer;
+   // float ChaseSpeed = 0.025f;//Playerを追いかけるスピード
+   // private float Detection = 6f; //プレイヤーを検知する範囲
+    //private float detectionPlayer;
     private bool EnemyChaseOnOff = false;//Playerの追跡のONOFF 
 
 
@@ -42,12 +42,12 @@ public class EnemyG : MonoBehaviour
         eobj = GameObject.FindWithTag("EnemyG");
         ES = eobj.GetComponent<EnemySeen>(); // EnemySeenに付いているスクリプトを取得
 
-
+        /*
         if (ES.ONoff == 0)
         {
             EnemyChaseOnOff = false;
         }
-
+        */
 
         // 「歩く」のアニメーションを再生する
         animator.SetBool("EnemyWalkG2", true);
@@ -63,13 +63,13 @@ public class EnemyG : MonoBehaviour
                 }
                 PS.onoff = 1;  //見えているから1
             }
-
+            /*
             if (PS.onoff == 1 && EnemyChaseOnOff == true && ES.ONoff == 1)
             {
                 transform.LookAt(Player.transform); //プレイヤーの方向にむく
                 transform.position += transform.forward * ChaseSpeed;//プレイヤーの方向に向かう
             }
-
+            */
         }
         else if (EnemyChaseOnOff == false || PS.onoff == 0)//Playerが検知範囲に入っていないまたはPlayerが見えていない
         {
@@ -110,13 +110,14 @@ public class EnemyG : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            detectionPlayer = Vector3.Distance(transform.position, Player.position);//プレイヤーと敵の位置の計算
-
+            //detectionPlayer = Vector3.Distance(transform.position, Player.position);//プレイヤーと敵の位置の計算
+            /*
             if (detectionPlayer <= Detection && ES.ONoff == 1)//Enemyが可視化状態かつプレイヤーが検知範囲に入ったら
             {
                 EnemyChaseOnOff = true;
 
             }
+            */
         }
     }
 }

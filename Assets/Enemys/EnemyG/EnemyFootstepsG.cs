@@ -21,7 +21,7 @@ public class EnemyFootstepsG : MonoBehaviour
         
         GameObject eobj = GameObject.FindWithTag("EnemyG");
         ES = eobj.GetComponent<EnemySeen>(); //付いているスクリプトを取得
-
+        /*
         if (ES.ONoff == 1)//EnemyChaseG1.detectionPlayerG1 <= EnemyChaseG1.Detection)
         {
             if (Soundonoff == true)
@@ -38,5 +38,6 @@ public class EnemyFootstepsG : MonoBehaviour
                 audioSource.Stop();
             }
         }
+        */
     }
 }

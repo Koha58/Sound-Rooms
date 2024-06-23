@@ -6,19 +6,20 @@ public class RingSize1 : MonoBehaviour
 {
     float i;
     public MeshRenderer Ring;
+   public EnemyController EC;
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         Ring = GetComponent<MeshRenderer>();
         StartCoroutine("ScaleUp1");
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         GameObject eobj = GameObject.FindWithTag("Enemy");
-        EnemyController EC = eobj.GetComponent<EnemyController>(); //Enemyに付いているスクリプトを取得
+        /*EnemyController*/ EC = eobj.GetComponent<EnemyController>(); //Enemyに付いているスクリプトを取得
  
         if (EC.ONoff == 0)
         {

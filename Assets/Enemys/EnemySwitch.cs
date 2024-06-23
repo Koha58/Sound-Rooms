@@ -15,6 +15,7 @@ public class EnemySwitch : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        /*
         EnemySeen ES;
         GameObject eobj = GameObject.Find("Enemy");
         ES = eobj.GetComponent<EnemySeen>(); //付いているスクリプトを取得
@@ -30,5 +31,6 @@ public class EnemySwitch : MonoBehaviour
             Sphere.SetActive(false);//音波表示→非表示
 
         }
+        */
     }
 }
