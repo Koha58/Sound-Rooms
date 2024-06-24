@@ -14,7 +14,7 @@ public class ItemSeen : MonoBehaviour
     public int onoff = 0;  //判定用（見えていない時：0/見えている時：1）
 
     [SerializeField] public GameObject SeenArea;
-    public GameObject ItemCanvas;
+    //public GameObject ItemCanvas;
     public GameObject[] Walls;
     public GameObject[] Boxes;
     public static GameObject[] parentObject;
@@ -76,7 +76,7 @@ public class ItemSeen : MonoBehaviour
 
         //最初は見えない状態
         SeenArea.GetComponent<Collider>().enabled = false;
-        ItemCanvas.GetComponent<Canvas>().enabled = false;
+        //ItemCanvas.GetComponent<Canvas>().enabled = false;
 
         Walls = GameObject.FindGameObjectsWithTag("Wall");
         foreach (GameObject Wall in Walls)

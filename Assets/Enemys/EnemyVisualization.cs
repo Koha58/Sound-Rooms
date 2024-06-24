@@ -81,7 +81,7 @@ public class EnemyVisualization : MonoBehaviour
 
         //Å‰‚ÍŒ©‚¦‚È‚¢ó‘Ô
         Ring.GetComponent<Collider>().enabled = false;
-        ItemCanvas.GetComponent<Canvas>().enabled = false;
+        //ItemCanvas.GetComponent<Canvas>().enabled = false;
 
         Walls = GameObject.FindGameObjectsWithTag("Wall");
         foreach (GameObject Wall in Walls)
