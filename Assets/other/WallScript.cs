@@ -15,15 +15,20 @@ public class WallScript : MonoBehaviour
 
     MeshRenderer Wall;
 
+    float WallCount;    
+
     void Start()
     {
+        GameObject eobj = GameObject.FindWithTag("Enemy");
+        EnemyController EC = eobj.GetComponent<EnemyController>(); //Enemyに付いているスクリプトを取得
+      
         //プレイヤーが見えていない時
         bc = GetComponent<BoxCollider>();
         bc.enabled = false; //通り抜け可能
         Wall = GetComponent<MeshRenderer>();
     }
 
-    void Update()
+    private void Update()
     {
 
         GameObject soundobj = GameObject.Find("SoundVolume");
@@ -45,14 +50,21 @@ public class WallScript : MonoBehaviour
                 onoff = 0;  //見えていないから0
             }
         }
-        
+
         GameObject eobj = GameObject.FindWithTag("Enemy");
         EnemyController EC = eobj.GetComponent<EnemyController>(); //Enemyに付いているスクリプトを取得
-     
+
         if (EC.ONoff == 0)//||EFW.ONoff==0 )
         {
-           bc.enabled = false;
+            // bc.enabled = false;
             Wall.enabled = false;
+        }
+
+        WallCount += Time.deltaTime;
+        if (WallCount >= 0.5f)
+        {
+            bc.enabled = false;
+            WallCount = 0;
         }
 
     }
@@ -63,41 +75,42 @@ public class WallScript : MonoBehaviour
         {
             GameObject eobj = GameObject.FindWithTag("Enemy");
             EnemyController EC = eobj.GetComponent<EnemyController>(); //Enemyに付いているスクリプトを取得
-            /*
-                bc.enabled = false;
-                // RingOnOff = false;
-                Wall.enabled = false;
-           */
 
             if (EC.ONoff == 1)//|| EFW.ONoff == 1)
             {
-                bc.enabled = true;
+                Wall.enabled = true;
             }
         }
 
-        /*
-        if (other.gameObject.CompareTag("Player"))
+        if (other.gameObject.CompareTag("Enemy"))
         {
-            GameObject soundobj = GameObject.Find("SoundVolume");
-            levelMeter = soundobj.GetComponent<LevelMeter>(); //付いているスクリプトを取得
-
-            //プレイヤーが見えている時
-            if (levelMeter.nowdB > 0.0f)
+            GameObject eobj = GameObject.FindWithTag("Enemy");
+            EnemyController EC = eobj.GetComponent<EnemyController>(); //Enemyに付いているスクリプトを取得
+            if (EC.ONoff == 1)//|| EFW.ONoff == 1)
             {
-                bc.enabled = true;  //通り抜け不可
-                onoff = 1;  //見えているから1
-            }
-
-            //プレイヤーが見えていないとき
-            if (onoff == 1)
-            {
-                if (levelMeter.nowdB <= 0.0f)
+                bc.enabled = true;
+                WallCount += Time.deltaTime;
+                if (WallCount >= 0.5f || EC.ONoff == 0)
                 {
-                    bc.enabled = false; //通り抜け可能
-                    onoff = 0;  //見えていないから0
+                    bc.enabled = false;
                 }
             }
-        }*/
+        }
+
+        if (other.gameObject.CompareTag("EnemyG"))
+        {
+            GameObject eobjG = GameObject.FindWithTag("EnemyG");
+            EnemyGController EGC = eobjG.GetComponent<EnemyGController>(); //Enemyに付いているスクリプトを取得
+            if (EGC.ONoff == 1)//|| EFW.ONoff == 1)
+            {
+                bc.enabled = true;
+                WallCount += Time.deltaTime;
+                if (WallCount >= 0.5f|| EGC.ONoff ==0)
+                {
+                    bc.enabled = false;
+                }
+            }
+        }
     }
 }
 

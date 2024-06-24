@@ -12,6 +12,8 @@ public class inWallScript : MonoBehaviour
 
     MeshRenderer Wall;
 
+    float WallCount;
+
     void Start()
     {
         //プレイヤーが見えていない時
@@ -44,45 +46,51 @@ public class inWallScript : MonoBehaviour
                 onoff = 0;  //見えていないから0
             }
         }
-        /*
-        GameObject eobj = GameObject.FindWithTag("Enemy");
-        EnemyController EC = eobj.GetComponent<EnemyController>(); //Enemyに付いているスクリプトを取得
-        //GameObject eobjG = GameObject.FindWithTag("EnemyG");
-        //EnemyGController EGC = eobjG.GetComponent<EnemyGController>(); //Enemyに付いているスクリプトを取得
-        if (EC.ONoff == 0)//||EFW.ONoff==0 )
+
+        WallCount += Time.deltaTime;
+        if (WallCount >= 0.5f)
         {
             bc.enabled = false;
+            WallCount = 0;
         }
-        
-
-        if (EC.ONoff == 1)//|| EFW.ONoff == 1)
-        {
-            bc.enabled = true;
-        }
-        */
     }
     
     private void OnTriggerEnter(Collider other)
     {
-        /*
-        if (other.gameObject.CompareTag("Visualization"))
+        
+        if (other.gameObject.CompareTag("EnemyWall"))
         {
             GameObject eobj = GameObject.FindWithTag("Enemy");
             EnemyController EC = eobj.GetComponent<EnemyController>(); //Enemyに付いているスクリプトを取得
+
+            if (EC.ONoff == 1)//|| EFW.ONoff == 1)
+            {
+                bc.enabled = true;
+            }
+                WallCount += Time.deltaTime;
+                if (WallCount >= 0.5f|| EC.ONoff ==0) 
+                { 
+                    bc.enabled = false;
+                }
+
+        }
+
+        if (other.gameObject.CompareTag("EnemyGwall"))
+        {
             GameObject eobjG = GameObject.FindWithTag("EnemyG");
             EnemyGController EGC = eobjG.GetComponent<EnemyGController>(); //Enemyに付いているスクリプトを取得
 
-                if (EC.ONoff == 1)//|| EFW.ONoff == 1)
+            if (EGC.ONoff == 1)//|| EFW.ONoff == 1)
+            {
+                bc.enabled = true;
+                WallCount += Time.deltaTime;
+                if (WallCount >= 0.5f|| EGC.ONoff ==0)
                 {
-                    bc.enabled = true;
+                    bc.enabled = false;
                 }
+            }
 
-                if (EGC.ONoff == 1)//|| EFW.ONoff == 1)
-                {
-                    bc.enabled = true;
-                }
-            
-        }*/
-        
+        }
+
     }
 }

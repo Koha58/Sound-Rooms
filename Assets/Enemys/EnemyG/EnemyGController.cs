@@ -22,7 +22,7 @@ public class EnemyGController : MonoBehaviour
     public GameObject EnemyWall;
 
 
-     //public Animator animator;
+    Animator animator;
 
    // public MeshRenderer Enemy;
     [SerializeField] public Transform _parentTransform;
@@ -38,12 +38,14 @@ public class EnemyGController : MonoBehaviour
 
     Enemywall EW;
 
+    private float TouchWallCount;
+
     void Start()
     {
         EnemyGGetRandomPosition EGRP = EnemyGGetRandomPosition.GetComponent<EnemyGGetRandomPosition>();
         // 初期位置をランダムに設定する
         targetPosition = EGRP.GetRandomPositionG();
-        //animator = GetComponent<Animator>();   //アニメーターコントローラーからアニメーションを取得する    
+        animator = GetComponent<Animator>();   //アニメーターコントローラーからアニメーションを取得する    
        // Enemy = GetComponent<MeshRenderer>();
       //  Enemy.enabled = true;
         EnemysGChase EGC = GChase.GetComponent<EnemysGChase>();
@@ -65,7 +67,7 @@ public class EnemyGController : MonoBehaviour
         }
 
         // 「歩く」のアニメーションを再生する
-       // animator.SetBool("EnemyGWalk", true);
+        animator.SetBool("EnemyGWalk", true);
 
         if (EnemyChaseOnOff == true)//Enemyが可視化状態かつプレイヤーが検知範囲に入ったら
         {
@@ -83,6 +85,8 @@ public class EnemyGController : MonoBehaviour
             {
                 transform.LookAt(Player.transform); //プレイヤーの方向にむく
                 transform.localPosition += transform.forward * ChaseSpeed;//プレイヤーの方向に向かう
+               // 「走る」のアニメーションを再生する
+                 animator.SetBool("EnemyGRun", true);
             }
 
         }
@@ -91,8 +95,7 @@ public class EnemyGController : MonoBehaviour
             // targetPositionに向かって移動する
             transform.localPosition = Vector3.MoveTowards(transform.localPosition, targetPosition, speed * Time.deltaTime);
             transform.LookAt(targetPosition);
-            // 「走る」のアニメーションを再生する
-           // animator.SetBool("EnemyGRun", true);
+           
         }
 
         // targetPositionに到着したら新しいランダムな位置を設定する
@@ -140,10 +143,16 @@ public class EnemyGController : MonoBehaviour
 
         if (EnemyChaseOnOff == false && EW.Wall == true)
         {
-           TouchWall=true;  
+           TouchWall=true;
             //transform.Rotate(new Vector3(0, 180, 0));
-           // EnemyGGetRandomPosition EGRP = EnemyGGetRandomPosition.GetComponent<EnemyGGetRandomPosition>();
-           // targetPosition = EGRP.GetRandomPositionG();
+            EnemyGGetRandomPosition EGRP = EnemyGGetRandomPosition.GetComponent<EnemyGGetRandomPosition>();
+            targetPosition = EGRP.GetRandomPositionG();
+
+            TouchWallCount += Time.deltaTime;
+            if (TouchWallCount >= 3.0f)
+            {
+                TouchWall = false;
+            }
         }
     }
 

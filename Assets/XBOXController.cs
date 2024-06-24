@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class XBOXController : MonoBehaviour
 {
+
+    //移動用の変数
+   // float x, z;
+
+    //スピード調整用の変数
+   // float speed = 0.1f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -59,6 +66,19 @@ public class XBOXController : MonoBehaviour
         {
             Debug.Log("stick:" + hori1 + "," + vert1);
         }
+        /*上の変数を入れてからここをUpdateに入れれば動きます
+        x = 0;
+        z = 0;
+
+        x = Input.GetAxisRaw("Horizontal") * speed;
+        z = Input.GetAxisRaw("Vertical") * speed;
+
+        transform.position += new Vector3(x, 0, z);
+        */
+
+        //ボタンの追加方法
+        //https://dkrevel.com/unity-explain/input-manager/
+        //https://hakonebox.hatenablog.com/entry/2018/04/15/125152#Input-Manager%E3%81%A7%E5%85%A5%E5%8A%9B%E8%A8%AD%E5%AE%9A
 
     }
 }

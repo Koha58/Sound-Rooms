@@ -5434,7 +5434,6 @@ MonoBehaviour:
   targetPosition: {x: 0, y: 0, z: 0}
   ONoff: 0
   SoundTime: 0
-  animator: {fileID: 0}
   _parentTransform: {fileID: 543450651862445434}
   Chase: {fileID: 908268675}
   EnemyWall: {fileID: 1986321256}
@@ -10799,7 +10798,7 @@ GameObject:
   - component: {fileID: 1407836367}
   m_Layer: 0
   m_Name: EnemyWall
-  m_TagString: Untagged
+  m_TagString: EnemyGwall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10851,8 +10850,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 5}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1, y: 1, z: 2.0114746}
+  m_Center: {x: 0, y: 0, z: -1.4942627}
 --- !u!1 &1409623170 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 366839212972223988, guid: bf75af8564529b146ac19ab10eb8865d,
@@ -11669,7 +11668,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 0}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
@@ -15600,7 +15600,7 @@ GameObject:
   - component: {fileID: 1986321257}
   m_Layer: 0
   m_Name: EnemyWall
-  m_TagString: Untagged
+  m_TagString: EnemyWall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -15637,8 +15637,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 5}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1, y: 1, z: 1.937851}
+  m_Center: {x: 0, y: 0, z: -1.5310745}
 --- !u!4 &1986321259
 Transform:
   m_ObjectHideFlags: 0
@@ -17316,12 +17316,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 543450651862445434}
+  - component: {fileID: 919132147670284227}
   - component: {fileID: 665446668}
+  - component: {fileID: 919132147670284229}
   - component: {fileID: 665446667}
   - component: {fileID: 665446666}
   - component: {fileID: 665446665}
   - component: {fileID: 919132147670284225}
-  - component: {fileID: 919132147670284226}
+  - component: {fileID: 919132147670284228}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -17344,7 +17346,28 @@ MonoBehaviour:
   ebiPrefab: {fileID: 919132147670284224}
   DestroyPrefab: {fileID: 919132147670284224}
   isHidden: 1
---- !u!114 &919132147670284226
+--- !u!95 &919132147670284227
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919132147670284224}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 79befac522ba0c74a8b90cf2f9cb1610, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &919132147670284228
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -17353,11 +17376,33 @@ MonoBehaviour:
   m_GameObject: {fileID: 919132147670284224}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 865ac37a270685b4da529c828e4a3bce, type: 3}
+  m_Script: {fileID: 11500000, guid: e009c8a995f140f49adde081ae141a21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SoundTime: 0
-  EnemyBody: {fileID: 8595085849443973915}
+  Enemys: {fileID: 919132147670284229}
+--- !u!136 &919132147670284229
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919132147670284224}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 1
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &919132148486420449
 GameObject:
   m_ObjectHideFlags: 0
@@ -17367,11 +17412,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 543450652221435227}
+  - component: {fileID: 919132148486420455}
   - component: {fileID: 919132148486420451}
+  - component: {fileID: 919132148486420456}
   - component: {fileID: 919132148486420450}
   - component: {fileID: 919132148486420453}
   - component: {fileID: 919132148486420452}
   - component: {fileID: 919132148486420454}
+  - component: {fileID: 919132148486420457}
   m_Layer: 0
   m_Name: EnemyG
   m_TagString: EnemyG
@@ -17476,6 +17524,63 @@ MonoBehaviour:
   EnemyBody: {fileID: 3144580190415114536}
   Key: {fileID: 4573940404558845331}
   Ring: {fileID: 3396913583628590116}
+--- !u!95 &919132148486420455
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919132148486420449}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b254e4b071316a448a4bae3a8eb7a4fe, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!136 &919132148486420456
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919132148486420449}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 1
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &919132148486420457
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919132148486420449}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f602e0720de5ca42b05bcf1289872c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  EnemysG: {fileID: 919132148486420456}
 --- !u!1 &960827814774840736
 GameObject:
   m_ObjectHideFlags: 0
@@ -18141,7 +18246,6 @@ MonoBehaviour:
   targetPosition: {x: 0, y: 0, z: 0}
   ONoff: 0
   SoundTime: 0
-  animator: {fileID: 0}
   _parentTransform: {fileID: 3402819619239866065}
   Chase: {fileID: 5626923985235222966}
   EnemyWall: {fileID: 244817202}
@@ -18806,6 +18910,16 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6599820592365034817, guid: d13a1c18d4de717409027647c3d1cd83,
+        type: 3}
+      propertyPath: EC
+      value: 
+      objectReference: {fileID: 665446666}
+    - target: {fileID: 6599820592365034817, guid: d13a1c18d4de717409027647c3d1cd83,
+        type: 3}
+      propertyPath: EGC
+      value: 
+      objectReference: {fileID: 919132148486420453}
     - target: {fileID: 8586046032975707095, guid: d13a1c18d4de717409027647c3d1cd83,
         type: 3}
       propertyPath: m_LocalPosition.x

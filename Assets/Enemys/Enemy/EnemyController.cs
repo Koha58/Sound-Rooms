@@ -22,7 +22,7 @@ public class EnemyController : MonoBehaviour
 
     private float Chaseonoff;
 
-    public Animator animator;
+    Animator animator;
 
    // public MeshRenderer Enemy;
     [SerializeField] public Transform _parentTransform;
@@ -35,6 +35,7 @@ public class EnemyController : MonoBehaviour
     public GameObject EnemyGetRandomPosition;
 
     private bool TouchWall = false;
+    private float TouchWallCount;
 
     // Start is called before the first frame update
     void Start()
@@ -64,7 +65,7 @@ public class EnemyController : MonoBehaviour
         }
 
          //「歩く」のアニメーションを再生する
-         //animator.SetBool("EnemyWalk", true);
+         animator.SetBool("EnemyWalk", true);
 
         if (EnemyChaseOnOff == true)//Enemyが可視化状態かつプレイヤーが検知範囲に入ったら
         {
@@ -82,6 +83,8 @@ public class EnemyController : MonoBehaviour
             {
                 transform.LookAt(Player.transform); //プレイヤーの方向にむく
                 transform.localPosition += transform.forward * ChaseSpeed;//プレイヤーの方向に向かう
+                //「走る」のアニメーションを再生する
+                animator.SetBool("EnemyRun", true);
             }
 
         }
@@ -90,8 +93,6 @@ public class EnemyController : MonoBehaviour
             // targetPositionに向かって移動する
             transform.localPosition = Vector3.MoveTowards(transform.localPosition, targetPosition, speed * Time.deltaTime);
             transform.LookAt(targetPosition);
-            //「走る」のアニメーションを再生する
-            //animator.SetBool("EnemyRun", true);
 
         }
 
@@ -113,9 +114,13 @@ public class EnemyController : MonoBehaviour
 
         if(TouchWall==true)
         {
-           // EnemyGetRandomPosition EGRP = EnemyGetRandomPosition.GetComponent<EnemyGetRandomPosition>();
-           // targetPosition = EGRP.GetRandomPosition();
-            TouchWall = false;
+            EnemyGetRandomPosition EGRP = EnemyGetRandomPosition.GetComponent<EnemyGetRandomPosition>();
+            targetPosition = EGRP.GetRandomPosition();
+            TouchWallCount += Time.deltaTime;
+            if (TouchWallCount >= 3.0f)
+            {
+                TouchWall = false;
+            }
         }
     }
   
