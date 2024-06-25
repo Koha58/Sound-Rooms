@@ -13,7 +13,7 @@ public class EnemyVisualization : MonoBehaviour
    // public int onoff = 0;  //判定用（見えていない時：0/見えている時：1）
 
     [SerializeField] public GameObject Ring;
-    public GameObject ItemCanvas;
+    //public GameObject ItemCanvas;
     public GameObject[] Walls;
     public GameObject[] Boxes;
     public static GameObject[] parentObject;
@@ -23,50 +23,15 @@ public class EnemyVisualization : MonoBehaviour
     //LevelMeter levelMeter;
     [SerializeField] public Transform _parentTransform;
 
+    bool PlayerOnoff;
+    float OnoffTime;
+
     //bool keyOnoff=false;
 
     private void Start()
     {
         GameObject eobj = GameObject.FindWithTag("Enemy");
         EnemyController EC = eobj.GetComponent<EnemyController>(); //Enemyに付いているスクリプトを取得
-
-        parentObject = GameObject.FindGameObjectsWithTag("Item");
-        GameObject Key1 = parentObject[0];
-        // 子オブジェクトの数を取得
-        int childCount1 = Key1.transform.childCount;
-        for (int i = 0; i < childCount1; i++)
-        {
-            Transform childTransform = Key1.transform.GetChild(i);
-            GameObject childObject = childTransform.gameObject;
-            childObject.GetComponent<Renderer>().enabled = false;
-        }
-        GameObject Key2 = parentObject[1];
-        // 子オブジェクトの数を取得
-        int childCount2 = Key2.transform.childCount;
-        for (int a = 0; a < childCount2; a++)
-        {
-            Transform childTransform = Key2.transform.GetChild(a);
-            GameObject childObject = childTransform.gameObject;
-            childObject.GetComponent<Renderer>().enabled = false;
-        }
-        GameObject Key3 = parentObject[2];
-        // 子オブジェクトの数を取得
-        int childCount3 = Key3.transform.childCount;
-        for (int b = 0; b < childCount3; b++)
-        {
-            Transform childTransform = Key3.transform.GetChild(b);
-            GameObject childObject = childTransform.gameObject;
-            childObject.GetComponent<Renderer>().enabled = false;
-        }
-        GameObject Key4 = parentObject[3];
-        // 子オブジェクトの数を取得
-        int childCount4 = Key4.transform.childCount;
-        for (int c = 0; c < childCount4; c++)
-        {
-            Transform childTransform = Key4.transform.GetChild(c);
-            GameObject childObject = childTransform.gameObject;
-            childObject.GetComponent<Renderer>().enabled = false;
-        }
 
         GameObject doorObject = GameObject.Find("Door1");
 
@@ -103,6 +68,10 @@ public class EnemyVisualization : MonoBehaviour
 
     private void Update()
     {
+        GameObject obj = GameObject.Find("Player"); //Playerオブジェクトを探す
+        PlayerSeen PS = obj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
+        var childTransforms = PS._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
+
         Walls = GameObject.FindGameObjectsWithTag("Wall");
 
         Boxes = GameObject.FindGameObjectsWithTag("Box");
@@ -131,10 +100,45 @@ public class EnemyVisualization : MonoBehaviour
             Ring.GetComponent<Collider>().enabled =false;//見える（有効）
            // onoff = 0;  //見えているから1
         }
-        /*
-        if (keyOnoff == true)
+
+        if (PlayerOnoff == true)
         {
-            if (ISe.count != 4)
+            foreach (var playerParts in childTransforms)
+            {
+                //タグが"PlayerParts"である子オブジェクトを見えるようにする
+                playerParts.gameObject.GetComponent<Renderer>().enabled = true;
+            }
+            PS.onoff = 1;  //見えているから1
+        }
+
+
+        if (PS.onoff == 1)
+        {
+            OnoffTime += Time.deltaTime;
+            if (OnoffTime >= 3.0f)
+            {
+                PS.onoff = 0;
+                foreach (var playerParts in childTransforms)
+                {
+                    //タグが"PlayerParts"である子オブジェクトを見えるようにする
+                    playerParts.gameObject.GetComponent<Renderer>().enabled = false;
+                }
+                OnoffTime = 0;
+            }
+        }
+
+        if (EC.ONoff == 0 || OnoffTime >= 3.0f)//levelMeter.nowdB > 0.0f)
+        {
+            PS.onoff = 0;
+            foreach (var playerParts in childTransforms)
+            {
+                //タグが"PlayerParts"である子オブジェクトを見えるようにする
+                playerParts.gameObject.GetComponent<Renderer>().enabled = false;
+            }
+            OnoffTime = 0;
+
+            //接触したオブジェクトのタグが"Item"のとき
+            if (objName == "key 1 (1)")
             {
                 if (parentObject[0] != null)
                 {
@@ -146,6 +150,62 @@ public class EnemyVisualization : MonoBehaviour
                         Transform childTransform = Key1.transform.GetChild(i);
                         GameObject childObject = childTransform.gameObject;
                         childObject.GetComponent<Renderer>().enabled = false;
+                        //keyOnoff = true;
+                    }
+                }
+                else if (parentObject[1] != null)
+                {
+                    GameObject Key1 = parentObject[1];
+                    // 子オブジェクトの数を取得
+                    int childCount1 = Key1.transform.childCount;
+                    for (int i = 0; i < childCount1; i++)
+                    {
+                        Transform childTransform = Key1.transform.GetChild(i);
+                        GameObject childObject = childTransform.gameObject;
+                        childObject.GetComponent<Renderer>().enabled = false;
+                        //keyOnoff = true;
+                    }
+                }
+                else if (parentObject[2] != null)
+                {
+                    GameObject Key1 = parentObject[2];
+                    // 子オブジェクトの数を取得
+                    int childCount1 = Key1.transform.childCount;
+                    for (int i = 0; i < childCount1; i++)
+                    {
+                        Transform childTransform = Key1.transform.GetChild(i);
+                        GameObject childObject = childTransform.gameObject;
+                        childObject.GetComponent<Renderer>().enabled = false;
+                        //keyOnoff = true;
+                    }
+                }
+                else if (parentObject[3] != null)
+                {
+                    GameObject Key1 = parentObject[3];
+                    // 子オブジェクトの数を取得
+                    int childCount1 = Key1.transform.childCount;
+                    for (int i = 0; i < childCount1; i++)
+                    {
+                        Transform childTransform = Key1.transform.GetChild(i);
+                        GameObject childObject = childTransform.gameObject;
+                        childObject.GetComponent<Renderer>().enabled = false;
+                        //keyOnoff = true;
+                    }
+                }
+            }
+            else if (objName == "key 1")
+            {
+                if (parentObject[0] != null)
+                {
+                    GameObject Key2 = parentObject[0];
+                    // 子オブジェクトの数を取得
+                    int childCount2 = Key2.transform.childCount;
+                    for (int a = 0; a < childCount2; a++)
+                    {
+                        Transform childTransform = Key2.transform.GetChild(a);
+                        GameObject childObject = childTransform.gameObject;
+                        childObject.GetComponent<Renderer>().enabled = false;
+                        //keyOnoff = true;
                     }
                 }
                 else if (parentObject[1] != null)
@@ -158,6 +218,60 @@ public class EnemyVisualization : MonoBehaviour
                         Transform childTransform = Key2.transform.GetChild(a);
                         GameObject childObject = childTransform.gameObject;
                         childObject.GetComponent<Renderer>().enabled = false;
+                        //keyOnoff = true;
+                    }
+                }
+                else if (parentObject[2] != null)
+                {
+                    GameObject Key2 = parentObject[2];
+                    // 子オブジェクトの数を取得
+                    int childCount2 = Key2.transform.childCount;
+                    for (int a = 0; a < childCount2; a++)
+                    {
+                        Transform childTransform = Key2.transform.GetChild(a);
+                        GameObject childObject = childTransform.gameObject;
+                        childObject.GetComponent<Renderer>().enabled = false;
+                        //keyOnoff = true;
+                    }
+                }
+                else if (parentObject[3] != null)
+                {
+                    GameObject Key2 = parentObject[3];
+                    // 子オブジェクトの数を取得
+                    int childCount2 = Key2.transform.childCount;
+                    for (int a = 0; a < childCount2; a++)
+                    {
+                        Transform childTransform = Key2.transform.GetChild(a);
+                        GameObject childObject = childTransform.gameObject;
+                        childObject.GetComponent<Renderer>().enabled = false;
+                        //keyOnoff = true;
+                    }
+                }
+            }
+            else if (objName == "key 1 (2)")
+            {
+                if (parentObject[0] != null)
+                {
+                    GameObject Key3 = parentObject[0];
+                    int childCount3 = Key3.transform.childCount;
+                    for (int b = 0; b < childCount3; b++)
+                    {
+                        Transform childTransform = Key3.transform.GetChild(b);
+                        GameObject childObject = childTransform.gameObject;
+                        childObject.GetComponent<Renderer>().enabled = false;
+                        //keyOnoff = true;
+                    }
+                }
+                else if (parentObject[1] != null)
+                {
+                    GameObject Key3 = parentObject[1];
+                    int childCount3 = Key3.transform.childCount;
+                    for (int b = 0; b < childCount3; b++)
+                    {
+                        Transform childTransform = Key3.transform.GetChild(b);
+                        GameObject childObject = childTransform.gameObject;
+                        childObject.GetComponent<Renderer>().enabled = false;
+                        //keyOnoff = true;
                     }
                 }
                 else if (parentObject[2] != null)
@@ -169,6 +283,58 @@ public class EnemyVisualization : MonoBehaviour
                         Transform childTransform = Key3.transform.GetChild(b);
                         GameObject childObject = childTransform.gameObject;
                         childObject.GetComponent<Renderer>().enabled = false;
+                        ////keyOnoff = true;
+                    }
+                }
+                else if (parentObject[3] != null)
+                {
+                    GameObject Key3 = parentObject[3];
+                    int childCount3 = Key3.transform.childCount;
+                    for (int b = 0; b < childCount3; b++)
+                    {
+                        Transform childTransform = Key3.transform.GetChild(b);
+                        GameObject childObject = childTransform.gameObject;
+                        childObject.GetComponent<Renderer>().enabled = false;
+                        //keyOnoff = true;
+                    }
+                }
+            }
+            else if (objName == "key 1 (3)")
+            {
+                if (parentObject[0] != null)
+                {
+                    GameObject Key4 = parentObject[0];
+                    int childCount4 = Key4.transform.childCount;
+                    for (int c = 0; c < childCount4; c++)
+                    {
+                        Transform childTransform = Key4.transform.GetChild(c);
+                        GameObject childObject = childTransform.gameObject;
+                        childObject.GetComponent<Renderer>().enabled = false;
+                        //keyOnoff = true;
+                    }
+                }
+                else if (parentObject[1] != null)
+                {
+                    GameObject Key4 = parentObject[1];
+                    int childCount4 = Key4.transform.childCount;
+                    for (int c = 0; c < childCount4; c++)
+                    {
+                        Transform childTransform = Key4.transform.GetChild(c);
+                        GameObject childObject = childTransform.gameObject;
+                        childObject.GetComponent<Renderer>().enabled = false;
+                        //keyOnoff = true;
+                    }
+                }
+                else if (parentObject[2] != null)
+                {
+                    GameObject Key4 = parentObject[2];
+                    int childCount4 = Key4.transform.childCount;
+                    for (int c = 0; c < childCount4; c++)
+                    {
+                        Transform childTransform = Key4.transform.GetChild(c);
+                        GameObject childObject = childTransform.gameObject;
+                        childObject.GetComponent<Renderer>().enabled = false;
+                        //keyOnoff = true;
                     }
                 }
                 else if (parentObject[3] != null)
@@ -180,36 +346,11 @@ public class EnemyVisualization : MonoBehaviour
                         Transform childTransform = Key4.transform.GetChild(c);
                         GameObject childObject = childTransform.gameObject;
                         childObject.GetComponent<Renderer>().enabled = false;
+                        //keyOnoff = true;
                     }
                 }
             }
-
-            Ring.GetComponent<Collider>().enabled = false;//見えない（無効）
-
-            foreach (GameObject Wall in Walls)
-            {
-                Wall.GetComponent<Renderer>().enabled = false;
-            }
-
-            // 子オブジェクトの数を取得
-            int doorparts = doorObject.transform.childCount;
-            for (int j = 0; j < doorparts; j++)
-            {
-                Transform childTransform = doorObject.transform.GetChild(j);
-                GameObject door = childTransform.gameObject;
-                door.GetComponent<Renderer>().enabled = false;
-            }
-
-            foreach (GameObject Box in Boxes)
-            {
-                //Rigidbodyを取得
-                var rb = Box.GetComponent<Rigidbody>();
-                //移動も回転もしないようにする
-                rb.constraints = RigidbodyConstraints.FreezeAll;
-                Box.GetComponent<Renderer>().enabled = false;
-            }
         }
-        */
     }
 
     private void OnTriggerEnter(Collider other)
@@ -454,7 +595,13 @@ public class EnemyVisualization : MonoBehaviour
 
         if(other.CompareTag("Player"))
         {
-           
+            GameObject obj = GameObject.Find("Player"); //Playerオブジェクトを探す
+            PlayerSeen PS = obj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
+            var childTransforms = PS._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
+            if (PS.onoff == 0)
+            {
+                PlayerOnoff = true;
+            }
         }
     }
 }

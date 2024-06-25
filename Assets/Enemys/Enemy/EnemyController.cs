@@ -7,10 +7,10 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
-    float speed = 1f;//移動スピード
+    float speed = 3f;//移動スピード
     public GameObject Player;//プレイヤーを参照
     public Vector3 targetPosition;//Enemyの目的地
-    float ChaseSpeed = 0.03f;//Playerを追いかけるスピード
+    float ChaseSpeed = 0.05f;//Playerを追いかけるスピード
     private bool EnemyChaseOnOff = false;//Playerの追跡のONOFF 
 
     public float ONoff = 0;//(0が見えない；１が見える状態）
