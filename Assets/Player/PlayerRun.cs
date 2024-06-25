@@ -59,7 +59,7 @@ public class PlayerRun : MonoBehaviour
         moveSpeed = Vector3.zero;
 
         //ï‡Ç≠Ç∆Ç´
-        if (Input.GetKey(KeyCode.W))
+        if (Input.GetKey(KeyCode.W) || Input.GetAxisRaw("Vertical") < 0)
         {
             moveSpeed = moveSpeedIn * cameraForward;
             animator.SetBool("Walking", true);
@@ -69,7 +69,7 @@ public class PlayerRun : MonoBehaviour
             run = false;
         }
 
-        if (Input.GetKey(KeyCode.A))
+        if (Input.GetKey(KeyCode.A) || Input.GetAxisRaw("Horizontal") < 0)
         {
             moveSpeed = -moveSpeedIn * cameraRight;
             animator.SetBool("Walking", true);
@@ -79,7 +79,7 @@ public class PlayerRun : MonoBehaviour
             run = false;
         }
 
-        if (Input.GetKey(KeyCode.S))
+        if (Input.GetKey(KeyCode.S) || Input.GetAxisRaw("Vertical") > 0)
         {
             moveSpeed = -moveSpeedIn * cameraForward;
             animator.SetBool("Walking", true);
@@ -89,7 +89,7 @@ public class PlayerRun : MonoBehaviour
             run = false;
         }
 
-        if (Input.GetKey(KeyCode.D))
+        if (Input.GetKey(KeyCode.D) || Input.GetAxisRaw("Horizontal") > 0)
         {
             moveSpeed = moveSpeedIn * cameraRight;
             animator.SetBool("Walking", true);
@@ -100,7 +100,7 @@ public class PlayerRun : MonoBehaviour
         }
 
         //ëñÇÈÇ∆Ç´
-        if (Input.GetKey(KeyCode.W) && Input.GetMouseButton(1))
+        if (Input.GetKey(KeyCode.W) && Input.GetMouseButton(1) || Input.GetAxisRaw("Vertical") < 0 && Input.GetKey("joystick button 5"))
         {
             moveSpeed = moveSpeedIn * cameraForward;
             animator.SetBool("Walking", false);
@@ -110,7 +110,7 @@ public class PlayerRun : MonoBehaviour
             walk = false;
         }
 
-        if (Input.GetKey(KeyCode.A) && Input.GetMouseButton(1))
+        if (Input.GetKey(KeyCode.A) && Input.GetMouseButton(1) || Input.GetAxisRaw("Horizontal") < 0 && Input.GetKey("joystick button 5"))
         {
             moveSpeed = -moveSpeedIn * cameraRight;
             animator.SetBool("Walking", false);
@@ -120,7 +120,7 @@ public class PlayerRun : MonoBehaviour
             walk = false;
         }
 
-        if (Input.GetKey(KeyCode.S) && Input.GetMouseButton(1))
+        if (Input.GetKey(KeyCode.S) && Input.GetMouseButton(1) || Input.GetAxisRaw("Vertical") > 0 && Input.GetKey("joystick button 5"))
         {
             moveSpeed = -moveSpeedIn * cameraForward;
             animator.SetBool("Walking", false);
@@ -130,7 +130,7 @@ public class PlayerRun : MonoBehaviour
             walk = false;
         }
 
-        if (Input.GetKey(KeyCode.D) && Input.GetMouseButton(1))
+        if (Input.GetKey(KeyCode.D) && Input.GetMouseButton(1) || Input.GetAxisRaw("Horizontal") > 0 && Input.GetKey("joystick button 5"))
         {
             moveSpeed = moveSpeedIn * cameraRight;
             animator.SetBool("Walking", false);
@@ -144,7 +144,8 @@ public class PlayerRun : MonoBehaviour
         Move();
 
         //äµê´Çè¡Ç∑
-        if (Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.S) || Input.GetKeyUp(KeyCode.D))
+        if (Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.S) || Input.GetKeyUp(KeyCode.D) 
+            || Input.GetAxisRaw("Vertical") == 0)
         {
              playerRb.velocity = Vector3.zero;
              playerRb.angularVelocity = Vector3.zero;
