@@ -7,8 +7,6 @@ public class EnemysGChase : MonoBehaviour
     public Transform Player;//プレイヤーを参照
     public bool GChase = false;
     private float Chaseonoff;
-    public float detectionPlayer;
-
     // [SerializeField] public GameObject EnemyArea;
 
     // Start is called before the first frame update
@@ -23,7 +21,7 @@ public class EnemysGChase : MonoBehaviour
         if (GChase == true)
         {
             Chaseonoff += Time.deltaTime;
-            if (Chaseonoff >= 0.5f)
+            if (Chaseonoff >= 5f)
                 GChase = false;
         }
     }

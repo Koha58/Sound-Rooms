@@ -8,8 +8,6 @@ public class EnemyChase : MonoBehaviour
     public Transform Player;//プレイヤーを参照
     public  bool Chase=false;
     private float Chaseonoff;
-    public float detectionPlayer;
-
 
     // [SerializeField] public GameObject EnemyArea;
 
@@ -25,7 +23,7 @@ public class EnemyChase : MonoBehaviour
         if (Chase == true)
         {
             Chaseonoff += Time.deltaTime;
-            if (Chaseonoff>=0.5f)
+            if (Chaseonoff>=5f)
             Chase = false;
         }
 
@@ -39,7 +37,7 @@ public class EnemyChase : MonoBehaviour
             GameObject eobj = GameObject.FindWithTag("Enemy");
             EnemyController EC = eobj.GetComponent<EnemyController>(); //Enemyに付いているスクリプトを取得
 
-                Chase = true;
+            Chase = true;
             
             // Debug.Log("Play");
             //Chase = true;

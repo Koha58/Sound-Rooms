@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
-    float speed = 3f;//移動スピード
+    float speed = 1f;//移動スピード
     public GameObject Player;//プレイヤーを参照
     public Vector3 targetPosition;//Enemyの目的地
     float ChaseSpeed = 0.05f;//Playerを追いかけるスピード
@@ -20,14 +20,10 @@ public class EnemyController : MonoBehaviour
     float Enemystoptime = 0;
     float Enemystoponoff;
 
-    private float Chaseonoff;
-
     Animator animator;
 
    // public MeshRenderer Enemy;
     [SerializeField] public Transform _parentTransform;
-
-    private float TargetTime;
 
     public GameObject Chase;
     public GameObject EnemyWall;
@@ -114,13 +110,14 @@ public class EnemyController : MonoBehaviour
 
         if(TouchWall==true)
         {
-            EnemyGetRandomPosition EGRP = EnemyGetRandomPosition.GetComponent<EnemyGetRandomPosition>();
-            targetPosition = EGRP.GetRandomPosition();
-            TouchWallCount += Time.deltaTime;
-            if (TouchWallCount >= 3.0f)
-            {
-                TouchWall = false;
-            }
+            /* EnemyGetRandomPosition EGRP = EnemyGetRandomPosition.GetComponent<EnemyGetRandomPosition>();
+             targetPosition = EGRP.GetRandomPosition();
+             TouchWallCount += Time.deltaTime;
+             if (TouchWallCount >= 3.0f)
+             {
+                 TouchWall = false;
+             }*/
+            TouchWall = false;
         }
     }
   
@@ -141,26 +138,35 @@ public class EnemyController : MonoBehaviour
                 }
             }
         }
-       
+
+        if (EnemyChaseOnOff == true && EW.Wall == true)
+        {
+            EnemyChaseOnOff = false;
+        }
+
         if (EnemyChaseOnOff == false&&EW.Wall==true)
         {
             TouchWall = true;
-            //transform.Rotate(new Vector3(0, 180, 0));
-            //EnemyGetRandomPosition EGRP = EnemyGetRandomPosition.GetComponent<EnemyGetRandomPosition>();
-            //targetPosition = EGRP.GetRandomPosition();
+            EnemyGetRandomPosition ERP = EnemyGetRandomPosition.GetComponent<EnemyGetRandomPosition>();
+            targetPosition = ERP.GetRandomPosition();
+
+            TouchWallCount += Time.deltaTime;
+            if (TouchWallCount >= 3.0f)
+            {
+                TouchWall = false;
+            }
         }
 
     }
 
     private void Switch()
     {
-        float randomTime = Random.Range(5f, 10f);
-        TargetTime = randomTime;
         var childTransforms = _parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("EnemyParts"));
         if (ONoff == 0)//見えないとき
         {
+            float randomTime = Random.Range(7f, 15f);
             SoundTime += Time.deltaTime;
-            if (SoundTime >= TargetTime)
+            if (SoundTime >= randomTime)
             {
                 foreach (var item in childTransforms)
                 {
@@ -172,6 +178,7 @@ public class EnemyController : MonoBehaviour
                 //Enemy.enabled = true;
             }
         }
+
         if (ONoff == 1)//見えているとき
         {
             Seetime += Time.deltaTime;
@@ -184,7 +191,6 @@ public class EnemyController : MonoBehaviour
                }
                 ONoff = 0;
                 Seetime = 0.0f;
-                //Enemy.enabled = false;
                
             }
         }

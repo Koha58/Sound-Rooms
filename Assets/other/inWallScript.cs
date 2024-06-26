@@ -47,17 +47,11 @@ public class inWallScript : MonoBehaviour
             }
         }
 
-        WallCount += Time.deltaTime;
-        if (WallCount >= 0.5f)
-        {
-            bc.enabled = false;
-            WallCount = 0;
-        }
     }
     
     private void OnTriggerEnter(Collider other)
     {
-        
+        /*
         if (other.gameObject.CompareTag("EnemyWall"))
         {
             GameObject eobj = GameObject.FindWithTag("Enemy");
@@ -67,12 +61,6 @@ public class inWallScript : MonoBehaviour
             {
                 bc.enabled = true;
             }
-                WallCount += Time.deltaTime;
-                if (WallCount >= 0.5f|| EC.ONoff ==0) 
-                { 
-                    bc.enabled = false;
-                }
-
         }
 
         if (other.gameObject.CompareTag("EnemyGwall"))
@@ -83,14 +71,10 @@ public class inWallScript : MonoBehaviour
             if (EGC.ONoff == 1)//|| EFW.ONoff == 1)
             {
                 bc.enabled = true;
-                WallCount += Time.deltaTime;
-                if (WallCount >= 0.5f|| EGC.ONoff ==0)
-                {
-                    bc.enabled = false;
-                }
             }
 
         }
+        */
 
     }
 }

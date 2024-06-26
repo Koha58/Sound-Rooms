@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class EnemyGController : MonoBehaviour
 {
-    float speed = 3f;//移動スピード
+    float speed = 1f;//移動スピード
     public Transform Player;//プレイヤーを参照
     public Vector3 targetPosition;//Enemyの目的地
     float ChaseSpeed = 0.05f;//Playerを追いかけるスピード
@@ -18,16 +18,12 @@ public class EnemyGController : MonoBehaviour
     float Enemystoptime = 0;
     float Enemystoponoff;
 
-    private float Chaseonoff;
     public GameObject EnemyWall;
-
 
     Animator animator;
 
    // public MeshRenderer Enemy;
     [SerializeField] public Transform _parentTransform;
-
-    private float TargetTime;
 
     public GameObject GChase;
 
@@ -141,6 +137,11 @@ public class EnemyGController : MonoBehaviour
             }
         }
 
+        if (EnemyChaseOnOff == true && EW.Wall == true)
+        {
+            EnemyChaseOnOff = false;
+        }
+
         if (EnemyChaseOnOff == false && EW.Wall == true)
         {
            TouchWall=true;
@@ -158,13 +159,12 @@ public class EnemyGController : MonoBehaviour
 
     private void Switch()
     {
-        float randomTime = Random.Range(5f, 10f);
-        TargetTime = randomTime;
+        float randomTime = Random.Range(5f, 15f);
         var childTransforms = _parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("EnemyParts"));
         if (ONoff == 0)//見えないとき
         {
             SoundTime += Time.deltaTime;
-            if (SoundTime >= TargetTime)
+            if (SoundTime >= randomTime)
             {
                 foreach (var item in childTransforms)
                 {

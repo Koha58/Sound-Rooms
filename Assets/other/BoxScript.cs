@@ -47,6 +47,9 @@ public class BoxScript : MonoBehaviour
 
         GameObject eobj = GameObject.FindWithTag("Enemy");
         EnemyController EC = eobj.GetComponent<EnemyController>(); //Enemyに付いているスクリプトを取得
+        GameObject eobjG = GameObject.FindWithTag("EnemyG");
+        EnemyGController EGC = eobjG.GetComponent<EnemyGController>(); //Enemyに付いているスクリプトを取得
+
         bc = GetComponent<BoxCollider>();
 
         if (EC.ONoff == 0)//||EFW.ONoff==0 )
@@ -61,6 +64,18 @@ public class BoxScript : MonoBehaviour
 
         }
 
+        if (EGC.ONoff == 0)//||EFW.ONoff==0 )
+        {
+            bc.enabled = false;
+            RingOnOff = false;
+            Box.enabled = false;
+        }
+        else if (EGC.ONoff == 1)//|| EFW.ONoff == 1)
+        {
+            bc.enabled = true;
+
+        }
+
     }
 
     private void OnTriggerEnter(Collider other)
@@ -69,6 +84,8 @@ public class BoxScript : MonoBehaviour
         {
             GameObject eobj = GameObject.FindWithTag("Enemy");
             EnemyController EC = eobj.GetComponent<EnemyController>(); //Enemyに付いているスクリプトを取得
+            GameObject eobjG = GameObject.FindWithTag("EnemyG");
+            EnemyGController EGC = eobj.GetComponent<EnemyGController>(); //Enemyに付いているスクリプトを取得
 
             if (RingOnOff == true)
             {
@@ -77,6 +94,15 @@ public class BoxScript : MonoBehaviour
                     bc.enabled = false;
                 }
                 else if (EC.ONoff == 1)//|| EFW.ONoff == 1)
+                {
+                    bc.enabled = true;
+                }
+
+                if (EGC.ONoff == 0)//||EFW.ONoff==0 )
+                {
+                    bc.enabled = false;
+                }
+                else if (EGC.ONoff == 1)//|| EFW.ONoff == 1)
                 {
                     bc.enabled = true;
                 }
