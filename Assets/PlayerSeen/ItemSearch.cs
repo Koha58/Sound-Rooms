@@ -81,7 +81,7 @@ public class ItemSearch : MonoBehaviour
 
     void PickUp()
     {
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown("joystick button 2"))
         {
             PickupSound.PlayOneShot(PickupSound.clip);
             myItemList.Add(closetObject.name);

@@ -32,7 +32,7 @@ public class LevelMeter : MonoBehaviour
     {
         //dB値からlevelMeterImage用のfillAountの値に変換
         float fillAmountValue = dB_ToFillAmountValue(micAS.now_dB);
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButton(0) || Input.GetKey("joystick button 0"))
         {
             //fillAmount値更新
             this.levelMeterImage.fillAmount = fillAmountValue;
