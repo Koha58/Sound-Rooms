@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class inWallScript : MonoBehaviour
@@ -25,6 +26,9 @@ public class inWallScript : MonoBehaviour
 
     void Update()
     {
+        GameObject obj = GameObject.Find("Player"); //Playerオブジェクトを探す
+        PlayerSeen PS = obj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
+        var childTransforms = PS._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
 
         GameObject soundobj = GameObject.Find("SoundVolume");
         levelMeter = soundobj.GetComponent<LevelMeter>(); //付いているスクリプトを取得
@@ -51,7 +55,7 @@ public class inWallScript : MonoBehaviour
     
     private void OnTriggerEnter(Collider other)
     {
-        /*
+        
         if (other.gameObject.CompareTag("EnemyWall"))
         {
             GameObject eobj = GameObject.FindWithTag("Enemy");
@@ -74,7 +78,24 @@ public class inWallScript : MonoBehaviour
             }
 
         }
-        */
 
+
+        if (other.CompareTag("Player"))
+        {
+            GameObject eobj = GameObject.FindWithTag("Enemy");
+            EnemyController EC = eobj.GetComponent<EnemyController>(); //Enemyに付いているスクリプトを取得
+            EnemyChase EChase = eobj.GetComponent<EnemyChase>(); //Enemyに付いているスクリプトを取得
+            GameObject obj = GameObject.Find("Player"); //Playerオブジェクトを探す
+            PlayerSeen PS = obj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
+            var childTransforms = PS._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
+            if (PS.onoff == 1)
+            {
+                bc.enabled = true;
+            }
+            else if (PS.onoff == 0) 
+            {
+                bc.enabled = false;
+            }
+        }
     }
 }

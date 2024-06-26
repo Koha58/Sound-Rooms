@@ -10,7 +10,6 @@ using UnityEngine.XR;
 
 public class EnemyGVisualization : MonoBehaviour
 {
-
     // public int onoff = 0;  //判定用（見えていない時：0/見えている時：1）
 
     [SerializeField] public GameObject Ring;
@@ -27,13 +26,14 @@ public class EnemyGVisualization : MonoBehaviour
     bool PlayerOnoff;
     float OnoffTime;
 
-    //bool keyOnoff=false;
     LevelMeter levelMeter;
+    //bool keyOnoff=false;
+
     private void Start()
     {
         GameObject eobjG = GameObject.FindWithTag("EnemyG");
         EnemyGController EGC = eobjG.GetComponent<EnemyGController>(); //Enemyに付いているスクリプトを取得
-        EnemysGChase EGChase = eobjG.GetComponent<EnemysGChase>(); //Enemyに付いているスクリプトを取得
+        EnemysGChase EChase = eobjG.GetComponent<EnemysGChase>(); //Enemyに付いているスクリプトを取得
 
         GameObject doorObject = GameObject.Find("Door1");
 
@@ -97,6 +97,7 @@ public class EnemyGVisualization : MonoBehaviour
         if (EGC.ONoff == 0)//levelMeter.nowdB > 0.0f)
         {
             Ring.GetComponent<Collider>().enabled = false;//見える（有効）
+                                                          // onoff = 0;  //見えているから1
         }
 
         if (PlayerOnoff == true)
@@ -108,6 +109,7 @@ public class EnemyGVisualization : MonoBehaviour
             }
             PS.onoff = 1;  //見えているから1
         }
+
 
         if (PlayerOnoff == false)
         {
@@ -143,7 +145,7 @@ public class EnemyGVisualization : MonoBehaviour
         if (PS.onoff == 1)
         {
             OnoffTime += Time.deltaTime;
-            if (OnoffTime >= 3.0f)
+            if (OnoffTime >= 5.0f)
             {
                 PS.onoff = 0;
                 PlayerOnoff = false;
@@ -614,33 +616,25 @@ public class EnemyGVisualization : MonoBehaviour
 
         if (other.CompareTag("Player"))
         {
+            GameObject eobjG = GameObject.FindWithTag("EnemyG");
+            EnemyGController EGC = eobjG.GetComponent<EnemyGController>(); //Enemyに付いているスクリプトを取得
+            EnemysGChase EGChase = eobjG.GetComponent<EnemysGChase>(); //Enemyに付いているスクリプトを取得
             GameObject obj = GameObject.Find("Player"); //Playerオブジェクトを探す
             PlayerSeen PS = obj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
             var childTransforms = PS._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
             if (PS.onoff == 0)
             {
                 PlayerOnoff = true;
-                foreach (var playerParts in childTransforms)
-                {
-                    //タグが"PlayerParts"である子オブジェクトを見えるようにする
-                    playerParts.gameObject.GetComponent<Renderer>().enabled = true;
-                }
-                PS.onoff = 1;
-            }
-        }
-
-        if (!other.CompareTag("Player"))
-        {
-            GameObject obj = GameObject.Find("Player"); //Playerオブジェクトを探す
-            PlayerSeen PS = obj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
-            var childTransforms = PS._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
-            if (PS.onoff == 0)
-            {
-                PlayerOnoff = false;
             }
         }
     }
 }
+
+
+
+
+
+
 
 
 

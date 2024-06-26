@@ -10,7 +10,7 @@ using UnityEngine.XR;
 
 public class EnemyVisualization : MonoBehaviour
 {
-   // public int onoff = 0;  //判定用（見えていない時：0/見えている時：1）
+    // public int onoff = 0;  //判定用（見えていない時：0/見えている時：1）Visualization
 
     [SerializeField] public GameObject Ring;
     //public GameObject ItemCanvas;
@@ -145,7 +145,7 @@ public class EnemyVisualization : MonoBehaviour
         if (PS.onoff == 1)
         {
             OnoffTime += Time.deltaTime;
-            if (OnoffTime >= 3.0f)
+            if (OnoffTime >= 5.0f)
             {
                 PS.onoff = 0;
                 PlayerOnoff = false;
