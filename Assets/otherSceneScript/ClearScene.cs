@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class StartManager : MonoBehaviour
+public class ClearScene : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()
@@ -14,16 +14,14 @@ public class StartManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown("joystick button 0"))
+        if (Input.GetKeyDown("joystick button 0"))
         {
-            SceneManager.LoadScene("GameScene");
+            SceneManager.LoadScene("StartScene");
         }
-        
-    }
 
-    public void OnStart()
-    {
-        //StartSound.PlayOneShot(StartSound.clip);
-        SceneManager.LoadScene("GameScene");
+        if(Input.GetMouseButtonDown(0))
+        {
+            SceneManager.LoadScene("StartScene");
+        }
     }
 }
