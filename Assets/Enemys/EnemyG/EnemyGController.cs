@@ -8,7 +8,7 @@ public class EnemyGController : MonoBehaviour
     float speed = 1f;//移動スピード
     public Transform Player;//プレイヤーを参照
     public Vector3 targetPosition;//Enemyの目的地
-    float ChaseSpeed = 0.05f;//Playerを追いかけるスピード
+    float ChaseSpeed = 0.035f;//Playerを追いかけるスピード
     private bool EnemyChaseOnOff = false;//Playerの追跡のONOFF 
 
     public float ONoff = 0;//(0が見えない；１が見える状態）
@@ -128,12 +128,14 @@ public class EnemyGController : MonoBehaviour
         {
             GameObject obj = GameObject.Find("Player"); //Playerオブジェクトを探す
             PlayerSeen PS = obj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
-            if (EW.Wall == false)
+
+            if (EGC.GChase == true && PS.onoff == 1) //EC.Wall == false
             {
-                if (EGC.GChase == true && PS.onoff == 1) //EC.Wall == false
+                if (EW.Wall == false)
                 {
                     EnemyChaseOnOff = true;
                 }
+
             }
         }
 

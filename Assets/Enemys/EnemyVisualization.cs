@@ -28,6 +28,7 @@ public class EnemyVisualization : MonoBehaviour
 
     LevelMeter levelMeter;
     //bool keyOnoff=false;
+   // public EnemyChase EnemyChase;
 
     private void Start()
     {
@@ -87,6 +88,7 @@ public class EnemyVisualization : MonoBehaviour
 
         GameObject eobj = GameObject.FindWithTag("Enemy");
         EnemyController EC = eobj.GetComponent<EnemyController>(); //Enemyに付いているスクリプトを取得
+       // EnemyChase EChase = eobj.GetComponent<EnemyChase>(); //Enemyに付いているスクリプトを取得
 
         //音を出すと範囲内を可視化
         if (EC.ONoff==1)//levelMeter.nowdB > 0.0f)
@@ -108,10 +110,11 @@ public class EnemyVisualization : MonoBehaviour
                 playerParts.gameObject.GetComponent<Renderer>().enabled = true;
             }
             PS.onoff = 1;  //見えているから1
+          //  EnemyChase.Chase = true;
         }
 
      
-        if(PlayerOnoff == false)
+     /*   if(PlayerOnoff == false)
         {
             GameObject soundobj = GameObject.Find("SoundVolume");
             levelMeter = soundobj.GetComponent<LevelMeter>(); //付いているスクリプトを取得
@@ -140,7 +143,7 @@ public class EnemyVisualization : MonoBehaviour
                     }
                 }
             }
-        }
+        }*/
 
         if (PS.onoff == 1)
         {
@@ -616,9 +619,6 @@ public class EnemyVisualization : MonoBehaviour
 
         if(other.CompareTag("Player"))
         {
-            GameObject eobj = GameObject.FindWithTag("Enemy");
-            EnemyController EC = eobj.GetComponent<EnemyController>(); //Enemyに付いているスクリプトを取得
-            EnemyChase EChase = eobj.GetComponent<EnemyChase>(); //Enemyに付いているスクリプトを取得
             GameObject obj = GameObject.Find("Player"); //Playerオブジェクトを探す
             PlayerSeen PS = obj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
             var childTransforms = PS._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));

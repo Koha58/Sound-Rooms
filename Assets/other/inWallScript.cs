@@ -56,7 +56,7 @@ public class inWallScript : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         
-        if (other.gameObject.CompareTag("EnemyWall"))
+      /*  if (other.gameObject.CompareTag("EnemyWall"))
         {
             GameObject eobj = GameObject.FindWithTag("Enemy");
             EnemyController EC = eobj.GetComponent<EnemyController>(); //Enemyに付いているスクリプトを取得
@@ -77,7 +77,7 @@ public class inWallScript : MonoBehaviour
                 bc.enabled = true;
             }
 
-        }
+        }*/
 
 
         if (other.CompareTag("Player"))
