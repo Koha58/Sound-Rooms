@@ -33,9 +33,13 @@ public class EnemyController : MonoBehaviour
     private bool TouchWall = false;
     private float TouchWallCount;
 
+    Rigidbody EnemyRB;
+
     // Start is called before the first frame update
     void Start()
     {
+        EnemyRB = GetComponent<Rigidbody>();
+
         EnemyGetRandomPosition EGRP = EnemyGetRandomPosition.GetComponent<EnemyGetRandomPosition>();
         // ‰ŠúˆÊ’u‚ğƒ‰ƒ“ƒ_ƒ€‚Éİ’è‚·‚é
         targetPosition =EGRP. GetRandomPosition();
