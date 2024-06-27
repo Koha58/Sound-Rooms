@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class EnemysWalls : MonoBehaviour
 {
-  /*  float WallCount;
+  /*  BoxCollider bc;
+
+    float WallCount;
     // Start is called before the first frame update
     void Start()
     {

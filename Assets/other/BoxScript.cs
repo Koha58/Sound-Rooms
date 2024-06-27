@@ -47,8 +47,8 @@ public class BoxScript : MonoBehaviour
 
         GameObject eobj = GameObject.FindWithTag("Enemy");
         EnemyController EC = eobj.GetComponent<EnemyController>(); //Enemyに付いているスクリプトを取得
-        GameObject eobjG = GameObject.FindWithTag("EnemyG");
-        EnemyGController EGC = eobjG.GetComponent<EnemyGController>(); //Enemyに付いているスクリプトを取得
+       // GameObject eobjG = GameObject.FindWithTag("EnemyG");
+      //  EnemyGController EGC = eobjG.GetComponent<EnemyGController>(); //Enemyに付いているスクリプトを取得
 
         bc = GetComponent<BoxCollider>();
 
@@ -63,7 +63,7 @@ public class BoxScript : MonoBehaviour
             bc.enabled = true;
 
         }
-
+        /*
         if (EGC.ONoff == 0)//||EFW.ONoff==0 )
         {
             bc.enabled = false;
@@ -75,7 +75,7 @@ public class BoxScript : MonoBehaviour
             bc.enabled = true;
 
         }
-
+        */
     }
 
     private void OnTriggerEnter(Collider other)

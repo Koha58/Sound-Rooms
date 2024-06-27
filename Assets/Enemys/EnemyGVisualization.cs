@@ -28,6 +28,7 @@ public class EnemyGVisualization : MonoBehaviour
 
     LevelMeter levelMeter;
     //bool keyOnoff=false;
+   // public EnemysGChase EnemysGChase;
 
     private void Start()
     {
@@ -70,6 +71,10 @@ public class EnemyGVisualization : MonoBehaviour
 
     private void Update()
     {
+        GameObject eobjG = GameObject.FindWithTag("EnemyG");
+        EnemyGController EGC = eobjG.GetComponent<EnemyGController>(); //Enemyに付いているスクリプトを取得
+        //EnemysGChase EGChase = eobjG.GetComponent<EnemysGChase>(); //Enemyに付いているスクリプトを取得
+
         GameObject obj = GameObject.Find("Player"); //Playerオブジェクトを探す
         PlayerSeen PS = obj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
         var childTransforms = PS._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
@@ -85,8 +90,7 @@ public class EnemyGVisualization : MonoBehaviour
         GameObject isobj = GameObject.Find("Player");
         ISe = isobj.GetComponent<ItemSearch>(); //付いているスクリプトを取得
 
-        GameObject eobjG = GameObject.FindWithTag("EnemyG");
-        EnemyGController EGC = eobjG.GetComponent<EnemyGController>(); //Enemyに付いているスクリプトを取得
+
 
         //音を出すと範囲内を可視化
         if (EGC.ONoff == 1)//levelMeter.nowdB > 0.0f)
@@ -108,6 +112,7 @@ public class EnemyGVisualization : MonoBehaviour
                 playerParts.gameObject.GetComponent<Renderer>().enabled = true;
             }
             PS.onoff = 1;  //見えているから1
+           // EnemysGChase.GChase = true;
         }
 
 
@@ -616,9 +621,6 @@ public class EnemyGVisualization : MonoBehaviour
 
         if (other.CompareTag("Player"))
         {
-            GameObject eobjG = GameObject.FindWithTag("EnemyG");
-            EnemyGController EGC = eobjG.GetComponent<EnemyGController>(); //Enemyに付いているスクリプトを取得
-            EnemysGChase EGChase = eobjG.GetComponent<EnemysGChase>(); //Enemyに付いているスクリプトを取得
             GameObject obj = GameObject.Find("Player"); //Playerオブジェクトを探す
             PlayerSeen PS = obj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
             var childTransforms = PS._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
