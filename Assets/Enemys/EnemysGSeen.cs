@@ -27,5 +27,19 @@ public class EnemysGSeen : MonoBehaviour
             //SkinnedMeshRendererEnemyBody.enabled = true;
 
         }
+
+        GameObject eobjG1 = GameObject.FindWithTag("EnemyG");
+        EnemyGController EGC1 = eobjG.GetComponent<EnemyGController>(); //Enemyに付いているスクリプトを取得
+        if (EGC1.ONoff == 0)//見えないとき
+        {
+            EnemysG.enabled = false;//音波非表示→表示
+                                    // SkinnedMeshRendererEnemyBody.enabled = false;
+        }
+        if (EGC1.ONoff == 1)//見えているとき
+        {
+            EnemysG.enabled = true;//音波表示→非表示
+            //SkinnedMeshRendererEnemyBody.enabled = true;
+
+        }
     }
 }

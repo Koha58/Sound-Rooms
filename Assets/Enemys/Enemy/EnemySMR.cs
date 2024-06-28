@@ -13,7 +13,7 @@ public class EnemySMR : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         GameObject eobj = GameObject.FindWithTag("Enemy");
         EnemyController EC = eobj.GetComponent<EnemyController>(); //Enemyに付いているスクリプトを取得
@@ -25,5 +25,16 @@ public class EnemySMR : MonoBehaviour
         {
           SkinnedMeshRendererEnemyBody.enabled = true;
         }
+
+     /*   GameObject eobj1 = GameObject.FindWithTag("Enemy1");
+        EnemyController EC1 = eobj1.GetComponent<EnemyController>(); //Enemyに付いているスクリプトを取得
+        if (EC1.ONoff == 0)//見えないとき
+        {
+            SkinnedMeshRendererEnemyBody.enabled = false;
+        }
+        if (EC1.ONoff == 1)//見えているとき
+        {
+            SkinnedMeshRendererEnemyBody.enabled = true;
+        }*/
     }
 }

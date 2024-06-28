@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class EnemyGController : MonoBehaviour
+public class EnemyController1 : MonoBehaviour
 {
     float speed = 1f;//移動スピード
-    public Transform Player;//プレイヤーを参照
+    public GameObject Player;//プレイヤーを参照
     public Vector3 targetPosition;//Enemyの目的地
     float ChaseSpeed = 0.035f;//Playerを追いかけるスピード
     private bool EnemyChaseOnOff = false;//Playerの追跡のONOFF 
@@ -18,34 +18,34 @@ public class EnemyGController : MonoBehaviour
     float Enemystoptime = 0;
     float Enemystoponoff;
 
-    public GameObject EnemyWall;
-
     Animator animator;
 
-   // public MeshRenderer Enemy;
+    // public MeshRenderer Enemy;
     [SerializeField] public Transform _parentTransform;
 
-    public GameObject GChase;
+    public GameObject Chase;
+    public GameObject EnemyWall;
 
-    public GameObject EnemyGGetRandomPosition;
+    public GameObject EnemyGetRandomPosition;
 
-    // Start is called before the first frame update
     private bool TouchWall = false;
-
-    Enemywall EW;
-
     private float TouchWallCount;
 
+    Rigidbody EnemyRB;
+
+    // Start is called before the first frame update
     void Start()
     {
-        EnemyGGetRandomPosition EGRP = EnemyGGetRandomPosition.GetComponent<EnemyGGetRandomPosition>();
+        EnemyRB = GetComponent<Rigidbody>();
+
+        EnemyGetRandomPosition EGRP = EnemyGetRandomPosition.GetComponent<EnemyGetRandomPosition>();
         // 初期位置をランダムに設定する
-        targetPosition = EGRP.GetRandomPositionG();
+        targetPosition = EGRP.GetRandomPosition();
         animator = GetComponent<Animator>();   //アニメーターコントローラーからアニメーションを取得する    
-       // Enemy = GetComponent<MeshRenderer>();
-      //  Enemy.enabled = true;
-        EnemysGChase EGC = GChase.GetComponent<EnemysGChase>();
-         EW = EnemyWall.GetComponent<Enemywall>();
+        // Enemy = GetComponent<MeshRenderer>();
+        // Enemy.enabled = true;
+        EnemyChase EC = Chase.GetComponent<EnemyChase>();
+        Enemywall EW = EnemyWall.GetComponent<Enemywall>();
     }
 
     // Update is called once per frame
@@ -62,8 +62,8 @@ public class EnemyGController : MonoBehaviour
             EnemyChaseOnOff = false;
         }
 
-        // 「歩く」のアニメーションを再生する
-        animator.SetBool("EnemyGWalk", true);
+        //「歩く」のアニメーションを再生する
+        animator.SetBool("EnemyWalk", true);
 
         if (EnemyChaseOnOff == true)//Enemyが可視化状態かつプレイヤーが検知範囲に入ったら
         {
@@ -81,8 +81,8 @@ public class EnemyGController : MonoBehaviour
             {
                 transform.LookAt(Player.transform); //プレイヤーの方向にむく
                 transform.localPosition += transform.forward * ChaseSpeed;//プレイヤーの方向に向かう
-               // 「走る」のアニメーションを再生する
-                 animator.SetBool("EnemyGRun", true);
+                //「走る」のアニメーションを再生する
+                animator.SetBool("EnemyRun", true);
             }
 
         }
@@ -91,7 +91,7 @@ public class EnemyGController : MonoBehaviour
             // targetPositionに向かって移動する
             transform.localPosition = Vector3.MoveTowards(transform.localPosition, targetPosition, speed * Time.deltaTime);
             transform.LookAt(targetPosition);
-           
+
         }
 
         // targetPositionに到着したら新しいランダムな位置を設定する
@@ -100,12 +100,11 @@ public class EnemyGController : MonoBehaviour
             Enemystoponoff = 1;
             if (Enemystoponoff == 1)
             {
-                // animator.SetBool("EnemyWalk", false);
                 Enemystoptime += Time.deltaTime;
                 if (Enemystoptime > 2.0f)
                 {
-                    EnemyGGetRandomPosition EGRP = EnemyGGetRandomPosition.GetComponent<EnemyGGetRandomPosition>();
-                    targetPosition = EGRP.GetRandomPositionG();
+                    EnemyGetRandomPosition EGRP = EnemyGetRandomPosition.GetComponent<EnemyGetRandomPosition>();
+                    targetPosition = EGRP.GetRandomPosition();
                     Enemystoponoff = 0;
                 }
             }
@@ -113,30 +112,35 @@ public class EnemyGController : MonoBehaviour
 
         if (TouchWall == true)
         {
-          
-            //EnemyGetRandomPosition EGRP = EnemyGetRandomPosition.GetComponent<EnemyGetRandomPosition>();
-            //targetPosition = EGRP.GetRandomPosition();
+            /* EnemyGetRandomPosition EGRP = EnemyGetRandomPosition.GetComponent<EnemyGetRandomPosition>();
+             targetPosition = EGRP.GetRandomPosition();
+             TouchWallCount += Time.deltaTime;
+             if (TouchWallCount >= 3.0f)
+             {
+                 TouchWall = false;
+             }*/
             TouchWall = false;
         }
     }
- 
+
     private void OnTriggerEnter(Collider other)
     {
-        EnemysGChase EGC = GChase.GetComponent<EnemysGChase>();
-         EW = EnemyWall.GetComponent<Enemywall>();
+        EnemyChase EC = Chase.GetComponent<EnemyChase>();
+        Enemywall EW = EnemyWall.GetComponent<Enemywall>();
+
         if (other.gameObject.CompareTag("Player"))
         {
             GameObject obj = GameObject.Find("Player"); //Playerオブジェクトを探す
             PlayerSeen PS = obj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
 
-            if (EGC.GChase == true && PS.onoff == 1) //EC.Wall == false
+            if (EC.Chase == true && PS.onoff == 1) //EC.Wall == false
             {
                 if (EW.Wall == false)
                 {
                     EnemyChaseOnOff = true;
                 }
-
             }
+
         }
 
         if (EnemyChaseOnOff == true && EW.Wall == true)
@@ -146,10 +150,9 @@ public class EnemyGController : MonoBehaviour
 
         if (EnemyChaseOnOff == false && EW.Wall == true)
         {
-           TouchWall=true;
-            //transform.Rotate(new Vector3(0, 180, 0));
-            EnemyGGetRandomPosition EGRP = EnemyGGetRandomPosition.GetComponent<EnemyGGetRandomPosition>();
-            targetPosition = EGRP.GetRandomPositionG();
+            TouchWall = true;
+            EnemyGetRandomPosition ERP = EnemyGetRandomPosition.GetComponent<EnemyGetRandomPosition>();
+            targetPosition = ERP.GetRandomPosition();
 
             TouchWallCount += Time.deltaTime;
             if (TouchWallCount >= 3.0f)
@@ -157,26 +160,29 @@ public class EnemyGController : MonoBehaviour
                 TouchWall = false;
             }
         }
+
     }
 
     private void Switch()
     {
-        float randomTime = Random.Range(5f, 15f);
         var childTransforms = _parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("EnemyParts"));
         if (ONoff == 0)//見えないとき
         {
+            float randomTime = Random.Range(7f, 15f);
             SoundTime += Time.deltaTime;
             if (SoundTime >= randomTime)
             {
                 foreach (var item in childTransforms)
                 {
                     //タグが"EnemyParts"である子オブジェクトを見えるようにする
-                     item.gameObject.GetComponent<Renderer>().enabled = true;
+                    item.gameObject.GetComponent<Renderer>().enabled = true;
                 }
                 ONoff = 1;
                 SoundTime = 0.0f;
+                //Enemy.enabled = true;
             }
         }
+
         if (ONoff == 1)//見えているとき
         {
             Seetime += Time.deltaTime;
@@ -185,11 +191,11 @@ public class EnemyGController : MonoBehaviour
                 foreach (var item in childTransforms)
                 {
                     //タグが"EnemyParts"である子オブジェクトを見えなくする
-                     item.gameObject.GetComponent<Renderer>().enabled = false;
+                    item.gameObject.GetComponent<Renderer>().enabled = false;
                 }
                 ONoff = 0;
                 Seetime = 0.0f;
-                //Enemy.enabled = false;
+
             }
         }
     }

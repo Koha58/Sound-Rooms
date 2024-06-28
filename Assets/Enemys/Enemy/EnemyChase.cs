@@ -33,14 +33,7 @@ public class EnemyChase : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-
-            GameObject eobj = GameObject.FindWithTag("Enemy");
-            EnemyController EC = eobj.GetComponent<EnemyController>(); //Enemyに付いているスクリプトを取得
-
             Chase = true;
-            
-            // Debug.Log("Play");
-            //Chase = true;
         }
     }
 

@@ -31,7 +31,21 @@ public class RIngGSize : MonoBehaviour
             Ring.enabled = true;
             //  StartCoroutine("ScaleUp");
         }
-       
+
+        GameObject eobjG1 = GameObject.FindWithTag("EnemyG");
+        EnemyGController EGC1 = eobjG1.GetComponent<EnemyGController>(); //Enemyに付いているスクリプトを取得
+
+        if (EGC1.ONoff == 0)
+        {
+            i = 50;
+            Ring.enabled = false;
+        }
+        if (EGC1.ONoff == 1)
+        {
+            Ring.enabled = true;
+            //  StartCoroutine("ScaleUp");
+        }
+
     }
 
     IEnumerator ScaleUp1()

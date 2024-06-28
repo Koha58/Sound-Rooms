@@ -2,24 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemysSeen : MonoBehaviour
+public class EnemysSeen1 : MonoBehaviour
 {
     public CapsuleCollider Enemys;
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     private void Update()
     {
-        GameObject eobj = GameObject.FindWithTag("Enemy");
+        GameObject eobj = GameObject.FindWithTag("Enemy1");
         EnemyController EC = eobj.GetComponent<EnemyController>(); //Enemyに付いているスクリプトを取得
         if (EC.ONoff == 0)//見えないとき
         {
-            Enemys.enabled=false;//音波非表示→表示
-                                       // SkinnedMeshRendererEnemyBody.enabled = false;
+            Enemys.enabled = false;//音波非表示→表示
+                                   // SkinnedMeshRendererEnemyBody.enabled = false;
         }
         if (EC.ONoff == 1)//見えているとき
         {

@@ -64,15 +64,16 @@ public class WallScript : MonoBehaviour
         {
             GameObject eobj = GameObject.FindWithTag("Enemy");
             EnemyController EC = eobj.GetComponent<EnemyController>(); //Enemyに付いているスクリプトを取得
-            //GameObject eobjG = GameObject.FindWithTag("EnemyG");
-            //EnemyGController EGC = eobjG.GetComponent<EnemyGController>(); //Enemyに付いているスクリプトを取得
 
             if (EC.ONoff == 1)//|| EFW.ONoff == 1)
             {
                 Wall.enabled = true;
             }
 
-           /* if (EGC.ONoff == 1)//|| EFW.ONoff == 1)
+        /*    GameObject eobj1 = GameObject.FindWithTag("Enemy1");
+            EnemyController EC1 = eobj1.GetComponent<EnemyController>(); //Enemyに付いているスクリプトを取得
+
+            if (EC1.ONoff == 1)//|| EFW.ONoff == 1)
             {
                 Wall.enabled = true;
             }*/

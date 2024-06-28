@@ -32,7 +32,21 @@ public class EnemyRingSize : MonoBehaviour
             Ring.enabled = true;
             //  StartCoroutine("ScaleUp");
         }
-        
+
+        GameObject eobj1 = GameObject.FindWithTag("Enemy1");
+        EnemyController EC1 = eobj.GetComponent<EnemyController>(); //Enemyに付いているスクリプトを取得
+
+        if (EC1.ONoff == 0)
+        {
+            i = 100;
+            Ring.enabled = false;
+        }
+        if (EC1.ONoff == 1)
+        {
+            Ring.enabled = true;
+            //  StartCoroutine("ScaleUp");
+        }
+
     }
 
     IEnumerator ScaleUp()
