@@ -72,41 +72,11 @@ public class EnemyAttack : MonoBehaviour
             stayTimeF = 0.0f;
         }
 
-        //ìGÇÃê≥ñ Ç…ìñÇΩÇ¡ÇΩéû
-        if (other.CompareTag("EnemyForward1"))
-        {
-            stayTimeF += Time.deltaTime;
-            if (other.CompareTag("EnemyBack1"))
-            {
-                if (stayTimeF < 10)//îwå„Ç…ìñÇΩÇ¡ÇΩéûÇ…îªíËÇµÇ»Ç¢ÇÊÇ§Ç…Ç∑ÇÈ
-                {
-                    other.GetComponent<Collider>().enabled = false;
-                }
-                other.GetComponent<Collider>().enabled = true;
-            }
-            stayTimeF = 0.0f;
-        }
-
         //ìGGÇÃê≥ñ Ç…ìñÇΩÇ¡ÇΩéû
         if (other.CompareTag("EnemyGForward"))
         {
             stayTimeFG += Time.deltaTime;
             if (other.CompareTag("EnemyBackG"))
-            {
-                if (stayTimeFG < 10)//îwå„Ç…ìñÇΩÇ¡ÇΩéûÇ…îªíËÇµÇ»Ç¢ÇÊÇ§Ç…Ç∑ÇÈ
-                {
-                    other.GetComponent<Collider>().enabled = false;
-                }
-                other.GetComponent<Collider>().enabled = true;
-            }
-            stayTimeFG = 0.0f;
-        }
-
-        //ìGGÇÃê≥ñ Ç…ìñÇΩÇ¡ÇΩéû
-        if (other.CompareTag("EnemyGForward1"))
-        {
-            stayTimeFG += Time.deltaTime;
-            if (other.CompareTag("EnemyBackG1"))
             {
                 if (stayTimeFG < 10)//îwå„Ç…ìñÇΩÇ¡ÇΩéûÇ…îªíËÇµÇ»Ç¢ÇÊÇ§Ç…Ç∑ÇÈ
                 {
@@ -129,31 +99,6 @@ public class EnemyAttack : MonoBehaviour
             if (EC.ONoff == 1)
             {
                 EI.isHidden = false;
-                Debug.Log("?");
-            }
-            //ê≥ñ Ç…ìñÇΩÇ¡ÇΩéûÇ…îªíËÇµÇ»Ç¢ÇÊÇ§Ç…Ç∑ÇÈ
-            if (other.CompareTag("EnemyForward"))
-            {
-                if (stayTimeB < 10)
-                {
-                    other.GetComponent<Collider>().enabled = false;
-                }
-                other.GetComponent<Collider>().enabled = true;
-            }
-            stayTimeB = 0.0f;
-        }
-
-        if (other.CompareTag("EnemyBack1"))
-        {
-            stayTimeB += Time.deltaTime;
-            GameObject eobj1 = GameObject.FindWithTag("Enemy1");
-            EnemyController EC1 = eobj1.GetComponent<EnemyController>();
-            Enemyincrease1 EI1 = eobj1.GetComponent<Enemyincrease1>(); //ïtÇ¢ÇƒÇ¢ÇÈÉXÉNÉäÉvÉgÇéÊìæ
-            //Rigidbody EnemyR = eobj.GetComponent<Rigidbody>();
-
-            if (EC1.ONoff == 1)
-            {
-                EI1.isHidden = false;
                 Debug.Log("?");
             }
             //ê≥ñ Ç…ìñÇΩÇ¡ÇΩéûÇ…îªíËÇµÇ»Ç¢ÇÊÇ§Ç…Ç∑ÇÈ
@@ -202,50 +147,6 @@ public class EnemyAttack : MonoBehaviour
 
             //ìGGÇÃê≥ñ Ç…ìñÇΩÇ¡ÇΩéû
             if (other.CompareTag("EnemyGForward"))
-            {
-                if (stayTimeBG < 10)//ê≥ñ Ç…ìñÇΩÇ¡ÇΩéûÇ…îªíËÇµÇ»Ç¢ÇÊÇ§Ç…Ç∑ÇÈ
-                {
-                    other.GetComponent<Collider>().enabled = false;
-                }
-                other.GetComponent<Collider>().enabled = true;
-            }
-            stayTimeBG = 0.0f;
-        }
-
-        //ìGGÇÃîwå„Ç…ìñÇΩÇ¡ÇΩéû
-        if (other.CompareTag("EnemyBackG1"))
-        {
-            stayTimeBG += Time.deltaTime;
-            GameObject eobjG = GameObject.FindWithTag("EnemyG1");
-            EnemyGController EGC1 = eobjG.GetComponent<EnemyGController>(); //ïtÇ¢ÇƒÇ¢ÇÈÉXÉNÉäÉvÉgÇéÊìæ
-            if (EGC1.ONoff == 1)
-            {
-                if (ItemSeen.parentObject[0] != null)
-                {
-                    ItemSeen.parentObject[0].transform.position = eobjG.transform.position;
-                    ISe.closetObject = ItemSeen.parentObject[0];
-                }
-                else if (ItemSeen.parentObject[1] != null)
-                {
-                    ItemSeen.parentObject[1].transform.position = eobjG.transform.position;
-                    ISe.closetObject = ItemSeen.parentObject[1];
-                }
-                else if (ItemSeen.parentObject[2] != null)
-                {
-                    ItemSeen.parentObject[2].transform.position = eobjG.transform.position;
-                    ISe.closetObject = ItemSeen.parentObject[1];
-                }
-                else if (ItemSeen.parentObject[3] != null)
-                {
-                    ItemSeen.parentObject[3].transform.position = eobjG.transform.position;
-                    ISe.closetObject = ItemSeen.parentObject[3];
-                }
-                Destroy(eobjG);
-                Enemyincrease.enemyDeathcnt++;
-            }
-
-            //ìGGÇÃê≥ñ Ç…ìñÇΩÇ¡ÇΩéû
-            if (other.CompareTag("EnemyGForward1"))
             {
                 if (stayTimeBG < 10)//ê≥ñ Ç…ìñÇΩÇ¡ÇΩéûÇ…îªíËÇµÇ»Ç¢ÇÊÇ§Ç…Ç∑ÇÈ
                 {

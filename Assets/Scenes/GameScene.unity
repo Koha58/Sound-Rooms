@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028331, g: 0.2257133, b: 0.3069217, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3424,7 +3424,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &484140468
 Transform:
   m_ObjectHideFlags: 0
@@ -5069,29 +5069,7 @@ MonoBehaviour:
   Chase: {fileID: 908268675}
   EnemyWall: {fileID: 1986321256}
   EnemyGetRandomPosition: {fileID: 919132147670284224}
---- !u!136 &665446667
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 919132147670284224}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.2713623
-  m_Height: 2.092546
-  m_Direction: 1
-  m_Center: {x: 0, y: 1.1, z: 0}
+  SkinnedMeshRendererEnemyBody: {fileID: 2323183363800151647}
 --- !u!54 &665446668
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -5725,7 +5703,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &737578023
 Transform:
   m_ObjectHideFlags: 0
@@ -14454,7 +14432,6 @@ GameObject:
   - component: {fileID: 1938244796}
   - component: {fileID: 1938244795}
   - component: {fileID: 1938244794}
-  - component: {fileID: 1938244798}
   - component: {fileID: 1938244793}
   - component: {fileID: 1938244792}
   m_Layer: 0
@@ -14606,20 +14583,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1938244790}
   m_Mesh: {fileID: -4172089705709640510, guid: 8b9658ba616d7e5438f9604ec0ae753e, type: 3}
---- !u!114 &1938244798
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1938244790}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4862d90f30b470048bbca9ecf8d7c92d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Player: {fileID: 135133355}
-  Chase: 0
 --- !u!1 &1940692139
 GameObject:
   m_ObjectHideFlags: 0
@@ -16732,7 +16695,6 @@ GameObject:
   - component: {fileID: 919132147670284227}
   - component: {fileID: 665446668}
   - component: {fileID: 919132147670284229}
-  - component: {fileID: 665446667}
   - component: {fileID: 665446666}
   - component: {fileID: 665446665}
   - component: {fileID: 919132147670284225}
@@ -17984,9 +17946,10 @@ MonoBehaviour:
   ONoff: 0
   SoundTime: 0
   _parentTransform: {fileID: 3402819619239866065}
-  Chase: {fileID: 5626923985235222966}
+  Chase: {fileID: 0}
   EnemyWall: {fileID: 244817202}
   EnemyGetRandomPosition: {fileID: 4779600382028842235}
+  SkinnedMeshRendererEnemyBody: {fileID: 0}
 --- !u!1 &2498778763721904080
 GameObject:
   m_ObjectHideFlags: 0
@@ -18665,29 +18628,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5348113589333734572}
   m_Mesh: {fileID: -4172089705709640510, guid: 8b9658ba616d7e5438f9604ec0ae753e, type: 3}
---- !u!136 &3314059412227816923
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8731206576285216684}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.19683266
-  m_Height: 2.05657
-  m_Direction: 1
-  m_Center: {x: -0.0090065, y: 1.0420227, z: 0.048028946}
 --- !u!1 &3341912604655839403
 GameObject:
   m_ObjectHideFlags: 0
@@ -18916,20 +18856,6 @@ Transform:
   - {fileID: 2987888917072627446}
   m_Father: {fileID: 7281292837225772704}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3644580229445665636
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4193243884779938992}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c72b8ff57209e4b4595d3cb7a56b6566, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Player: {fileID: 135133355}
-  GChase: 0
 --- !u!4 &3661388830058067279
 Transform:
   m_ObjectHideFlags: 0
@@ -19499,7 +19425,6 @@ GameObject:
   - component: {fileID: 8753156195981945581}
   - component: {fileID: 2875960588768280251}
   - component: {fileID: 4050036921840066741}
-  - component: {fileID: 3644580229445665636}
   - component: {fileID: 4363356764381961076}
   - component: {fileID: 7612271822127724180}
   m_Layer: 0
@@ -20239,7 +20164,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5270696386105752513
 Transform:
   m_ObjectHideFlags: 0
@@ -20782,9 +20707,10 @@ MonoBehaviour:
   ONoff: 0
   SoundTime: 0
   _parentTransform: {fileID: 1525036509102630187}
-  Chase: {fileID: 2616464988781826395}
+  Chase: {fileID: 0}
   EnemyWall: {fileID: 533606693202471093}
   EnemyGetRandomPosition: {fileID: 108023127033564122}
+  SkinnedMeshRendererEnemyBody: {fileID: 0}
 --- !u!137 &6028881324909344830
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 0
@@ -21204,7 +21130,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!95 &6545302872013793277
 Animator:
   serializedVersion: 5
@@ -22526,7 +22452,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3204010407058144445}
   - component: {fileID: 2323183363800151647}
-  - component: {fileID: 8595085849443973916}
   m_Layer: 0
   m_Name: EnemyBody
   m_TagString: EnemyParts
@@ -22534,18 +22459,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &8595085849443973916
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8595085849443973915}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3c78d18a14924f94c8ee0c06d65c9cc4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &8605344956421996851
 GameObject:
   m_ObjectHideFlags: 0
@@ -22637,7 +22550,6 @@ GameObject:
   - component: {fileID: 4704348532938340441}
   - component: {fileID: 7743405588183020577}
   - component: {fileID: 2906247136848556799}
-  - component: {fileID: 3314059412227816923}
   - component: {fileID: 427840967204329052}
   - component: {fileID: 1138851554356430640}
   - component: {fileID: 2045872818445147608}
@@ -22647,7 +22559,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!23 &8753156195981945581
 MeshRenderer:
   m_ObjectHideFlags: 0

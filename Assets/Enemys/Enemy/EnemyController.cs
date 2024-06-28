@@ -10,7 +10,7 @@ public class EnemyController : MonoBehaviour
     float speed = 1f;//移動スピード
     public GameObject Player;//プレイヤーを参照
     public Vector3 targetPosition;//Enemyの目的地
-    float ChaseSpeed = 0.035f;//Playerを追いかけるスピード
+    float ChaseSpeed = 0.05f;//Playerを追いかけるスピード
     private bool EnemyChaseOnOff = false;//Playerの追跡のONOFF 
 
     public float ONoff = 0;//(0が見えない；１が見える状態）
@@ -20,9 +20,8 @@ public class EnemyController : MonoBehaviour
     float Enemystoptime = 0;
     float Enemystoponoff;
 
-    Animator animator;
+    //Animator animator;
 
-   // public MeshRenderer Enemy;
     [SerializeField] public Transform _parentTransform;
 
     public GameObject Chase;
@@ -30,24 +29,16 @@ public class EnemyController : MonoBehaviour
 
     public GameObject EnemyGetRandomPosition;
 
-    private bool TouchWall = false;
-    private float TouchWallCount;
-
-    Rigidbody EnemyRB;
+    public SkinnedMeshRenderer SkinnedMeshRendererEnemyBody;
 
     // Start is called before the first frame update
     void Start()
     {
-        EnemyRB = GetComponent<Rigidbody>();
-
         EnemyGetRandomPosition EGRP = EnemyGetRandomPosition.GetComponent<EnemyGetRandomPosition>();
         // 初期位置をランダムに設定する
         targetPosition =EGRP. GetRandomPosition();
-        animator = GetComponent<Animator>();   //アニメーターコントローラーからアニメーションを取得する    
-        // Enemy = GetComponent<MeshRenderer>();
-        // Enemy.enabled = true;
-        EnemyChase EC = Chase.GetComponent<EnemyChase>();
-        Enemywall EW = EnemyWall.GetComponent<Enemywall>();
+        SkinnedMeshRendererEnemyBody.enabled = false;
+        //animator = GetComponent<Animator>();   //アニメーターコントローラーからアニメーションを取得する    
     }
 
     // Update is called once per frame
@@ -60,42 +51,30 @@ public class EnemyController : MonoBehaviour
         var childTransforms = PS._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
 
         if (ONoff == 0)
-        {
-            EnemyChaseOnOff = false;
-        }
-
+        EnemyChaseOnOff = false;
+        
          //「歩く」のアニメーションを再生する
-         animator.SetBool("EnemyWalk", true);
+         //animator.SetBool("EnemyWalk", true);
 
         if (EnemyChaseOnOff == true)//Enemyが可視化状態かつプレイヤーが検知範囲に入ったら
         {
-            if (PS.onoff == 0)
-            {
-                foreach (var playerParts in childTransforms)
-                {
-                    //タグが"PlayerParts"である子オブジェクトを見えるようにする
-                    playerParts.gameObject.GetComponent<Renderer>().enabled = true;
-                }
-                PS.onoff = 1;  //見えているから1
-            }
-
+            Debug.Log("!?");
             if (PS.onoff == 1 && EnemyChaseOnOff == true && ONoff == 1)
             {
+                transform.position = transform.forward * ChaseSpeed;//プレイヤーの方向に向かう
                 transform.LookAt(Player.transform); //プレイヤーの方向にむく
-                transform.localPosition += transform.forward * ChaseSpeed;//プレイヤーの方向に向かう
-                //「走る」のアニメーションを再生する
-                animator.SetBool("EnemyRun", true);
+                                                    //「走る」のアニメーションを再生する
+                                                    //animator.SetBool("EnemyRun", true);
+                Debug.Log("!!");
             }
-
         }
         else if (EnemyChaseOnOff == false || PS.onoff == 0)//Playerが検知範囲に入っていないまたはPlayerが見えていない
         {
             // targetPositionに向かって移動する
-            transform.localPosition = Vector3.MoveTowards(transform.localPosition, targetPosition, speed * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
             transform.LookAt(targetPosition);
-
         }
-
+        
         // targetPositionに到着したら新しいランダムな位置を設定する
         if (transform.localPosition == targetPosition)
         {
@@ -111,18 +90,6 @@ public class EnemyController : MonoBehaviour
                 }
             }
         }
-
-        if(TouchWall==true)
-        {
-            /* EnemyGetRandomPosition EGRP = EnemyGetRandomPosition.GetComponent<EnemyGetRandomPosition>();
-             targetPosition = EGRP.GetRandomPosition();
-             TouchWallCount += Time.deltaTime;
-             if (TouchWallCount >= 3.0f)
-             {
-                 TouchWall = false;
-             }*/
-            TouchWall = false;
-        }
     }
   
     private void OnTriggerEnter(Collider other)
@@ -135,32 +102,18 @@ public class EnemyController : MonoBehaviour
             GameObject obj = GameObject.Find("Player"); //Playerオブジェクトを探す
             PlayerSeen PS = obj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
 
-            if (EC.Chase == true && PS.onoff == 1) //EC.Wall == false
+            if (EC.Chase == true && PS.onoff == 1)
             {
-                if (EW.Wall == false)
-                {
-                    EnemyChaseOnOff = true;
-                }
+                EnemyChaseOnOff = true;
+                Debug.Log("!?");
             }
-            
-        }
 
-        if (EnemyChaseOnOff == true && EW.Wall == true)
-        {
-            EnemyChaseOnOff = false;
         }
 
         if (EnemyChaseOnOff == false&&EW.Wall==true)
         {
-            TouchWall = true;
             EnemyGetRandomPosition ERP = EnemyGetRandomPosition.GetComponent<EnemyGetRandomPosition>();
             targetPosition = ERP.GetRandomPosition();
-
-            TouchWallCount += Time.deltaTime;
-            if (TouchWallCount >= 3.0f)
-            {
-                TouchWall = false;
-            }
         }
 
     }
@@ -170,10 +123,12 @@ public class EnemyController : MonoBehaviour
         var childTransforms = _parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("EnemyParts"));
         if (ONoff == 0)//見えないとき
         {
+            EnemyChase EC = Chase.GetComponent<EnemyChase>();
             float randomTime = Random.Range(7f, 15f);
             SoundTime += Time.deltaTime;
             if (SoundTime >= randomTime)
             {
+                SkinnedMeshRendererEnemyBody.enabled = false;
                 foreach (var item in childTransforms)
                 {
                     //タグが"EnemyParts"である子オブジェクトを見えるようにする
@@ -181,7 +136,6 @@ public class EnemyController : MonoBehaviour
                 }
                 ONoff = 1;
                 SoundTime = 0.0f;
-                //Enemy.enabled = true;
             }
         }
 
@@ -190,6 +144,7 @@ public class EnemyController : MonoBehaviour
             Seetime += Time.deltaTime;
             if (Seetime >= 10.0f)
             {
+               SkinnedMeshRendererEnemyBody.enabled =true;
                foreach (var item in childTransforms)
                {
                     //タグが"EnemyParts"である子オブジェクトを見えなくする
@@ -197,7 +152,6 @@ public class EnemyController : MonoBehaviour
                }
                 ONoff = 0;
                 Seetime = 0.0f;
-               
             }
         }
     }

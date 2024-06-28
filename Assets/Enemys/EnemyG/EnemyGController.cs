@@ -67,35 +67,26 @@ public class EnemyGController : MonoBehaviour
 
         if (EnemyChaseOnOff == true)//Enemyが可視化状態かつプレイヤーが検知範囲に入ったら
         {
-            if (PS.onoff == 0)
-            {
-                foreach (var playerParts in childTransforms)
-                {
-                    //タグが"PlayerParts"である子オブジェクトを見えるようにする
-                    playerParts.gameObject.GetComponent<Renderer>().enabled = true;
-                }
-                PS.onoff = 1;  //見えているから1
-            }
-
             if (PS.onoff == 1 && EnemyChaseOnOff == true && ONoff == 1)
             {
+                transform.position = transform.forward * ChaseSpeed;//プレイヤーの方向に向かう
                 transform.LookAt(Player.transform); //プレイヤーの方向にむく
-                transform.localPosition += transform.forward * ChaseSpeed;//プレイヤーの方向に向かう
                // 「走る」のアニメーションを再生する
                  animator.SetBool("EnemyGRun", true);
+                Debug.Log("!!");
             }
 
         }
         else if (EnemyChaseOnOff == false || PS.onoff == 0)//Playerが検知範囲に入っていないまたはPlayerが見えていない
         {
             // targetPositionに向かって移動する
-            transform.localPosition = Vector3.MoveTowards(transform.localPosition, targetPosition, speed * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
             transform.LookAt(targetPosition);
            
         }
 
         // targetPositionに到着したら新しいランダムな位置を設定する
-        if (transform.localPosition == targetPosition)
+        if (transform.position == targetPosition)
         {
             Enemystoponoff = 1;
             if (Enemystoponoff == 1)
@@ -130,18 +121,7 @@ public class EnemyGController : MonoBehaviour
             PlayerSeen PS = obj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
 
             if (EGC.GChase == true && PS.onoff == 1) //EC.Wall == false
-            {
-                if (EW.Wall == false)
-                {
-                    EnemyChaseOnOff = true;
-                }
-
-            }
-        }
-
-        if (EnemyChaseOnOff == true && EW.Wall == true)
-        {
-            EnemyChaseOnOff = false;
+            EnemyChaseOnOff = true;
         }
 
         if (EnemyChaseOnOff == false && EW.Wall == true)
@@ -194,5 +174,3 @@ public class EnemyGController : MonoBehaviour
         }
     }
 }
-
-

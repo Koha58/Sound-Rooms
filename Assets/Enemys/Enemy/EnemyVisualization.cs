@@ -32,10 +32,6 @@ public class EnemyVisualization : MonoBehaviour
 
     private void Start()
     {
-        GameObject eobj = GameObject.FindWithTag("Enemy");
-        EnemyController EC = eobj.GetComponent<EnemyController>(); //Enemyに付いているスクリプトを取得
-        EnemyChase EChase = eobj.GetComponent<EnemyChase>(); //Enemyに付いているスクリプトを取得
-
         GameObject doorObject = GameObject.Find("Door1");
 
         // 子オブジェクトの数を取得
@@ -88,8 +84,7 @@ public class EnemyVisualization : MonoBehaviour
 
         GameObject eobj = GameObject.FindWithTag("Enemy");
         EnemyController EC = eobj.GetComponent<EnemyController>(); //Enemyに付いているスクリプトを取得
-       // EnemyChase EChase = eobj.GetComponent<EnemyChase>(); //Enemyに付いているスクリプトを取得
-
+       
         //音を出すと範囲内を可視化
         if (EC.ONoff==1)//levelMeter.nowdB > 0.0f)
         {
@@ -99,22 +94,20 @@ public class EnemyVisualization : MonoBehaviour
         if (EC.ONoff == 0)//levelMeter.nowdB > 0.0f)
         {
             Ring.GetComponent<Collider>().enabled =false;//見える（有効）
-           // onoff = 0;  //見えているから1
         }
 
         if (PlayerOnoff == true)
         {
+            PS.onoff = 1;  //見えているから1
             foreach (var playerParts in childTransforms)
             {
                 //タグが"PlayerParts"である子オブジェクトを見えるようにする
                 playerParts.gameObject.GetComponent<Renderer>().enabled = true;
             }
-            PS.onoff = 1;  //見えているから1
-          //  EnemyChase.Chase = true;
         }
 
      
-     /*   if(PlayerOnoff == false)
+        if(PlayerOnoff == false)
         {
             GameObject soundobj = GameObject.Find("SoundVolume");
             levelMeter = soundobj.GetComponent<LevelMeter>(); //付いているスクリプトを取得
@@ -143,7 +136,7 @@ public class EnemyVisualization : MonoBehaviour
                     }
                 }
             }
-        }*/
+        }
 
         if (PS.onoff == 1)
         {
@@ -625,6 +618,20 @@ public class EnemyVisualization : MonoBehaviour
             if (PS.onoff == 0)
             {
                 PlayerOnoff = true;
+            }
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            GameObject obj = GameObject.Find("Player"); //Playerオブジェクトを探す
+            PlayerSeen PS = obj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
+            var childTransforms = PS._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
+            if (PS.onoff == 0)
+            {
+                PlayerOnoff = false;
             }
         }
     }
