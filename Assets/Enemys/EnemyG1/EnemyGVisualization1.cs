@@ -2,13 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using System.Text.RegularExpressions;
-using Unity.VisualScripting;
-using UnityEngine.SceneManagement;
-using UnityEngine.UIElements;
-using UnityEngine.XR;
 
-public class EnemyVisualization : MonoBehaviour
+public class EnemyGVisualization1 : MonoBehaviour
 {
     // public int onoff = 0;  //判定用（見えていない時：0/見えている時：1）Visualization
 
@@ -80,18 +75,18 @@ public class EnemyVisualization : MonoBehaviour
         GameObject isobj = GameObject.Find("Player");
         ISe = isobj.GetComponent<ItemSearch>(); //付いているスクリプトを取得
 
-        GameObject eobj = GameObject.FindWithTag("Enemy");
-        EnemyController EC = eobj.GetComponent<EnemyController>(); //Enemyに付いているスクリプトを取得
-       
+        GameObject eobjG1 = GameObject.FindWithTag("EnemyG1");
+        EnemyGController1 EGC1 = eobjG1.GetComponent<EnemyGController1>(); //Enemyに付いているスクリプトを取得
+
         //音を出すと範囲内を可視化
-        if (EC.ONoff==1)//levelMeter.nowdB > 0.0f)
+        if (EGC1.ONoff == 1)//levelMeter.nowdB > 0.0f)
         {
             Ring.GetComponent<Collider>().enabled = true;//見える（有効）
         }
 
-        if (EC.ONoff == 0)//levelMeter.nowdB > 0.0f)
+        if (EGC1.ONoff == 0)//levelMeter.nowdB > 0.0f)
         {
-            Ring.GetComponent<Collider>().enabled =false;//見える（有効）
+            Ring.GetComponent<Collider>().enabled = false;//見える（有効）
         }
 
         if (PlayerOnoff == true)
@@ -104,8 +99,8 @@ public class EnemyVisualization : MonoBehaviour
             }
         }
 
-     
-        if(PlayerOnoff == false)
+
+        if (PlayerOnoff == false)
         {
             GameObject soundobj = GameObject.Find("SoundVolume");
             levelMeter = soundobj.GetComponent<LevelMeter>(); //付いているスクリプトを取得
@@ -494,7 +489,7 @@ public class EnemyVisualization : MonoBehaviour
                     Transform childTransform = Key3.transform.GetChild(b);
                     GameObject childObject = childTransform.gameObject;
                     childObject.GetComponent<Renderer>().enabled = true;
-                        //keyOnoff = true;
+                    //keyOnoff = true;
                 }
             }
             else if (parentObject[1] != null)
@@ -607,7 +602,7 @@ public class EnemyVisualization : MonoBehaviour
             }
         }
 
-        if(other.CompareTag("Player"))
+        if (other.CompareTag("Player"))
         {
             GameObject obj = GameObject.Find("Player"); //Playerオブジェクトを探す
             PlayerSeen PS = obj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得

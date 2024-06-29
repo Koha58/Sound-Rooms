@@ -18,17 +18,14 @@ public class EnemyAttack : MonoBehaviour
 
     LevelMeter levelMeter;
 
-    bool FOn;
-    bool FOn1;
-    float FT;
+    bool Des;
+    bool DesG;
 
     // Start is called before the first frame update
     void Start()
     {
         //最初は見えない状態
         EnemyAttackArea.GetComponent<Collider>().enabled = false;
-
-
     }
 
     // Update is called once per frame
@@ -58,15 +55,6 @@ public class EnemyAttack : MonoBehaviour
         GameObject eobj1 = GameObject.FindWithTag("Enemy1");
         EnemyController1 EC1 = eobj1.GetComponent<EnemyController1>();
 
-        if (FOn == true|| FOn1 == true)
-        {
-            FT += Time.deltaTime;
-            if (FT > 1.0f)
-            {
-                FOn = false;
-                FOn1 = false;
-            }
-        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -86,8 +74,12 @@ public class EnemyAttack : MonoBehaviour
                 }
                 other.GetComponent<Collider>().enabled = true;
             }
-            stayTimeF = 0.0f;
-            FOn = true;
+            //stayTimeF = 0.0f;
+            if (stayTimeB <= stayTimeF)
+            {
+                Des = false;
+                stayTimeF += 10.0f;
+            }
             Debug.Log("!%");
         }
 
@@ -103,8 +95,12 @@ public class EnemyAttack : MonoBehaviour
                 }
                 other.GetComponent<Collider>().enabled = true;
             }
-            stayTimeF = 0.0f;
-            FOn1 = true;
+           // stayTimeF = 0.0f;
+            if (stayTimeB <= stayTimeF)
+            {
+                Des = false;
+                stayTimeF += 10.0f;
+            }
             Debug.Log("!%");
         }
 
@@ -120,7 +116,32 @@ public class EnemyAttack : MonoBehaviour
                 }
                 other.GetComponent<Collider>().enabled = true;
             }
-            stayTimeFG = 0.0f;
+
+            if (stayTimeBG <= stayTimeFG)
+            {
+                DesG = false;
+                stayTimeF += 10.0f;
+            }
+        }
+
+        //敵Gの正面に当たった時
+        if (other.CompareTag("EnemyGForward1"))
+        {
+            stayTimeFG += Time.deltaTime;
+            if (other.CompareTag("EnemyBackG1"))
+            {
+                if (stayTimeFG < 10)//背後に当たった時に判定しないようにする
+                {
+                    other.GetComponent<Collider>().enabled = false;
+                }
+                other.GetComponent<Collider>().enabled = true;
+            }
+
+            if (stayTimeBG <= stayTimeFG)
+            {
+                DesG = false;
+                stayTimeF += 10.0f;
+            }
         }
 
         //敵の背後に当たった時
@@ -131,15 +152,18 @@ public class EnemyAttack : MonoBehaviour
             EnemyController EC = eobj.GetComponent<EnemyController>();
             Enemyincrease EI = eobj.GetComponent<Enemyincrease>(); //付いているスクリプトを取得
             //Rigidbody EnemyR = eobj.GetComponent<Rigidbody>();
-
-            if (EC.ONoff == 1)
+            if (stayTimeB >= stayTimeF)
             {
-                if (FOn == true)
-                {
+                Des = true;
+                stayTimeF = 0.0f;
+            }
+            if (EC.ONoff == 1 && Des == true)
+            {
                     EI.isHidden = false;
                     Debug.Log("?");
-                }
+                    Des = false;
             }
+
             //正面に当たった時に判定しないようにする
             if (other.CompareTag("EnemyForward"))
             {
@@ -159,16 +183,20 @@ public class EnemyAttack : MonoBehaviour
             GameObject eobj1 = GameObject.FindWithTag("Enemy1");
             EnemyController1 EC1 = eobj1.GetComponent<EnemyController1>();
             Enemyincrease1 EI1 = eobj1.GetComponent<Enemyincrease1>(); //付いているスクリプトを取得
-            //Rigidbody EnemyR = eobj.GetComponent<Rigidbody>();
 
-            if (EC1.ONoff == 1)
+            if (stayTimeB >= stayTimeF)
             {
-                if (FOn1==true)
-                {
-                    EI1.isHidden = false;
-                    Debug.Log("!");
-                }
+                Des = true;
+                stayTimeF = 0.0f;
             }
+
+            if (EC1.ONoff == 1 && Des == true)
+            {
+                    EI1.isHidden = false;
+                    Debug.Log("?");
+                    Des = false;
+            }
+
             //正面に当たった時に判定しないようにする
             if (other.CompareTag("EnemyForward1"))
             {
@@ -187,7 +215,12 @@ public class EnemyAttack : MonoBehaviour
             stayTimeBG += Time.deltaTime;
             GameObject eobjG = GameObject.FindWithTag("EnemyG");
             EnemyGController EGC = eobjG.GetComponent<EnemyGController>(); //付いているスクリプトを取得
-            if (EGC.ONoff == 1)
+            if (stayTimeBG <= stayTimeFG)
+            {
+                DesG = true;
+                stayTimeFG = 0.0f;
+            }
+            if (EGC.ONoff == 1 && DesG == true)
             {
                 if (ItemSeen.parentObject[0] != null)
                 {
@@ -215,6 +248,56 @@ public class EnemyAttack : MonoBehaviour
 
             //敵Gの正面に当たった時
             if (other.CompareTag("EnemyGForward"))
+            {
+                if (stayTimeBG < 10)//正面に当たった時に判定しないようにする
+                {
+                    other.GetComponent<Collider>().enabled = false;
+                }
+                other.GetComponent<Collider>().enabled = true;
+            }
+            stayTimeBG = 0.0f;
+        }
+
+        //敵Gの背後に当たった時
+        if (other.CompareTag("EnemyBackG1"))
+        {
+            stayTimeBG += Time.deltaTime;
+            GameObject eobjG1 = GameObject.FindWithTag("EnemyG1");
+            EnemyGController1 EGC1 = eobjG1.GetComponent<EnemyGController1>(); //付いているスクリプトを取得
+            if (stayTimeBG <= stayTimeFG)
+            {
+                DesG = true;
+                stayTimeFG = 0.0f;
+            }
+
+            if (EGC1.ONoff == 1 && DesG == true)
+            {
+                if (ItemSeen.parentObject[0] != null)
+                {
+                    ItemSeen.parentObject[0].transform.position = eobjG1.transform.position;
+                    ISe.closetObject = ItemSeen.parentObject[0];
+                }
+                else if (ItemSeen.parentObject[1] != null)
+                {
+                    ItemSeen.parentObject[1].transform.position = eobjG1.transform.position;
+                    ISe.closetObject = ItemSeen.parentObject[1];
+                }
+                else if (ItemSeen.parentObject[2] != null)
+                {
+                    ItemSeen.parentObject[2].transform.position = eobjG1.transform.position;
+                    ISe.closetObject = ItemSeen.parentObject[1];
+                }
+                else if (ItemSeen.parentObject[3] != null)
+                {
+                    ItemSeen.parentObject[3].transform.position = eobjG1.transform.position;
+                    ISe.closetObject = ItemSeen.parentObject[3];
+                }
+                Destroy(eobjG1);
+                Enemyincrease.enemyDeathcnt++;
+            }
+
+            //敵Gの正面に当たった時
+            if (other.CompareTag("EnemyGForward1"))
             {
                 if (stayTimeBG < 10)//正面に当たった時に判定しないようにする
                 {

@@ -1,11 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.NetworkInformation;
-using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEngine;
 
-public class EnemyController : MonoBehaviour
+public class EnemyGController1 : MonoBehaviour
 {
     float speed = 1f;//移動スピード
     public GameObject Player;//プレイヤーを参照
@@ -23,23 +21,27 @@ public class EnemyController : MonoBehaviour
     //Animator animator;
 
     public Transform _parentTransform;
-    public EnemyChase Chase;
+    public EnemysGChase GChase;
     public GameObject EnemyWall;
-    public GameObject EnemyGetRandomPosition;
-    public SkinnedMeshRenderer SkinnedMeshRendererEnemyBody;
+    public GameObject EnemyGGetRandomPosition;
+    public SkinnedMeshRenderer SkinnedMeshRendererEnemyGBody;
+    public SkinnedMeshRenderer SkinnedMeshRendererEnemyGKey;
+    public SkinnedMeshRenderer SkinnedMeshRendererEnemyGRing;
 
     float TimeWall;
     float PTime;
 
     // Start is called before the first frame update
-    private  void Start()
+    private void Start()
     {
         ONoff = 0;
         EnemyChaseOnOff = false;
-        EnemyGetRandomPosition EGRP = EnemyGetRandomPosition.GetComponent<EnemyGetRandomPosition>();
+        EnemyGGetRandomPosition EGRP = EnemyGGetRandomPosition.GetComponent<EnemyGGetRandomPosition>();
         // 初期位置をランダムに設定する
-        targetPosition =EGRP. GetRandomPosition();
-        SkinnedMeshRendererEnemyBody.enabled = false;
+        targetPosition = EGRP.GetRandomPositionG();
+        SkinnedMeshRendererEnemyGBody.enabled = false;
+        SkinnedMeshRendererEnemyGKey.enabled = false;
+        SkinnedMeshRendererEnemyGRing.enabled = false;
         //animator = GetComponent<Animator>();   //アニメーターコントローラーからアニメーションを取得する    
     }
 
@@ -50,7 +52,7 @@ public class EnemyController : MonoBehaviour
         PlayerSeen PS = obj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
         //tagが"PlayerParts"である子オブジェクトのTransformのコレクションを取得
         var childTransforms = PS._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
-        EnemyChase EC = Chase.GetComponent<EnemyChase>();
+        EnemysGChase EGC = GChase.GetComponent<EnemysGChase>();
         Enemywall EW = EnemyWall.GetComponent<Enemywall>();
 
         //「歩く」のアニメーションを再生する
@@ -58,12 +60,12 @@ public class EnemyController : MonoBehaviour
 
         Switch();
 
-        if (EC.Chase == true )//&& PS.onoff == 1 && ONoff == 1)
+        if (EGC.GChase == true)//&& PS.onoff == 1 && ONoff == 1)
         {
             EnemyChaseOnOff = true;
         }
 
-        if (ONoff == 0|| EC.Chase == false)
+        if (ONoff == 0 || EGC.GChase == false)
         {
             EnemyChaseOnOff = false;
         }
@@ -71,10 +73,10 @@ public class EnemyController : MonoBehaviour
         if (EnemyChaseOnOff == false && EW.Wall == true)
         {
             TimeWall += Time.deltaTime;
-            if( TimeWall > 4.0f) 
+            if (TimeWall > 4.0f)
             {
-                EnemyGetRandomPosition ERP = EnemyGetRandomPosition.GetComponent<EnemyGetRandomPosition>();
-                targetPosition = ERP.GetRandomPosition();
+                EnemyGGetRandomPosition EGRP = EnemyGGetRandomPosition.GetComponent<EnemyGGetRandomPosition>();
+                targetPosition = EGRP.GetRandomPositionG();
                 TimeWall = 0.0f;
             }
         }
@@ -83,9 +85,8 @@ public class EnemyController : MonoBehaviour
         {
             transform.LookAt(Player.transform); //プレイヤーの方向にむく
             transform.position += transform.forward * ChaseSpeed;//プレイヤーの方向に向かう
-                //「走る」のアニメーションを再生する
-                //animator.SetBool("EnemyRun", true);
-            
+                                                                 //「走る」のアニメーションを再生する
+                                                                 //animator.SetBool("EnemyRun", true);
         }
         else if (EnemyChaseOnOff == false || PS.onoff == 0)//Playerが検知範囲に入っていないまたはPlayerが見えていない
         {
@@ -93,7 +94,7 @@ public class EnemyController : MonoBehaviour
             transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
             transform.LookAt(targetPosition);
         }
-        
+
         // targetPositionに到着したら新しいランダムな位置を設定する
         if (transform.localPosition == targetPosition)
         {
@@ -103,25 +104,27 @@ public class EnemyController : MonoBehaviour
                 Enemystoptime += Time.deltaTime;
                 if (Enemystoptime > 2.0f)
                 {
-                    EnemyGetRandomPosition EGRP = EnemyGetRandomPosition.GetComponent<EnemyGetRandomPosition>();
-                    targetPosition = EGRP.GetRandomPosition();
+                    EnemyGGetRandomPosition EGRP = EnemyGGetRandomPosition.GetComponent<EnemyGGetRandomPosition>();
+                    targetPosition = EGRP.GetRandomPositionG();
                     Enemystoponoff = 0;
                 }
             }
         }
     }
-  
+
     private void Switch()
     {
         var childTransforms = _parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("EnemyParts"));
         if (ONoff == 0)//見えないとき
         {
-            EnemyChase EC = Chase.GetComponent<EnemyChase>();
+            EnemysGChase EGC = GChase.GetComponent<EnemysGChase>();
             float randomTime = Random.Range(7f, 15f);
             SoundTime += Time.deltaTime;
             if (SoundTime >= randomTime)
             {
-                SkinnedMeshRendererEnemyBody.enabled = false;
+                SkinnedMeshRendererEnemyGBody.enabled = false;
+                SkinnedMeshRendererEnemyGKey.enabled = false;
+                SkinnedMeshRendererEnemyGRing.enabled = false;
                 foreach (var item in childTransforms)
                 {
                     //タグが"EnemyParts"である子オブジェクトを見えるようにする
@@ -137,12 +140,14 @@ public class EnemyController : MonoBehaviour
             Seetime += Time.deltaTime;
             if (Seetime >= 10.0f)
             {
-               SkinnedMeshRendererEnemyBody.enabled =true;
-               foreach (var item in childTransforms)
-               {
+                SkinnedMeshRendererEnemyGBody.enabled = true;
+                SkinnedMeshRendererEnemyGKey.enabled = true;
+                SkinnedMeshRendererEnemyGRing.enabled = true;
+                foreach (var item in childTransforms)
+                {
                     //タグが"EnemyParts"である子オブジェクトを見えなくする
                     item.gameObject.GetComponent<Renderer>().enabled = false;
-               }
+                }
                 ONoff = 0;
                 Seetime = 0.0f;
             }
@@ -157,10 +162,10 @@ public class EnemyController : MonoBehaviour
             PS = gobj.GetComponent<PlayerSeen>();
 
             PTime += Time.deltaTime;
-            if(PTime>0.01999f)
+            if (PTime > 0.01999f)
             {
                 PS.onoff = 1;
-                PTime=0.0f;
+                PTime = 0.0f;
             }
         }
 
@@ -169,8 +174,8 @@ public class EnemyController : MonoBehaviour
             TimeWall += Time.deltaTime;
             if (TimeWall > 0.5f)
             {
-                EnemyGetRandomPosition EGRP = EnemyGetRandomPosition.GetComponent<EnemyGetRandomPosition>();
-                targetPosition = EGRP.GetRandomPosition();
+                EnemyGGetRandomPosition EGRP = EnemyGGetRandomPosition.GetComponent<EnemyGGetRandomPosition>();
+                targetPosition = EGRP.GetRandomPositionG();
                 TimeWall = 0.0f;
             }
         }
@@ -180,10 +185,11 @@ public class EnemyController : MonoBehaviour
             TimeWall += Time.deltaTime;
             if (TimeWall > 0.5f)
             {
-                EnemyGetRandomPosition EGRP = EnemyGetRandomPosition.GetComponent<EnemyGetRandomPosition>();
-                targetPosition = EGRP.GetRandomPosition();
+                EnemyGGetRandomPosition EGRP = EnemyGGetRandomPosition.GetComponent<EnemyGGetRandomPosition>();
+                targetPosition = EGRP.GetRandomPositionG();
                 TimeWall = 0.0f;
             }
         }
     }
 }
+

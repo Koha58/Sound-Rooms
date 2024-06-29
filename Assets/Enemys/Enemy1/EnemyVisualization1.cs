@@ -19,7 +19,7 @@ public class EnemyVisualization1 : MonoBehaviour
     //LevelMeter levelMeter;
     [SerializeField] public Transform _parentTransform;
 
-    bool PlayerOnoff;
+    //bool PlayerOnoff;
     float OnoffTime;
 
     LevelMeter levelMeter;
@@ -92,59 +92,17 @@ public class EnemyVisualization1 : MonoBehaviour
             Ring.GetComponent<Collider>().enabled = false;//見える（有効）
         }
 
-        if (PlayerOnoff == true)
-        {
-            PS.onoff = 1;  //見えているから1
-            foreach (var playerParts in childTransforms)
-            {
-                //タグが"PlayerParts"である子オブジェクトを見えるようにする
-                playerParts.gameObject.GetComponent<Renderer>().enabled = true;
-            }
-        }
-
-
-        if (PlayerOnoff == false)
-        {
-            GameObject soundobj = GameObject.Find("SoundVolume");
-            levelMeter = soundobj.GetComponent<LevelMeter>(); //付いているスクリプトを取得
-
-            //プレイヤーが見えている時
-            if (levelMeter.nowdB > 0.0f)
-            {
-                PS.onoff = 1;  //見えているから1
-                foreach (var playerParts in childTransforms)
-                {
-                    //タグが"PlayerParts"である子オブジェクトを見えるようにする
-                    playerParts.gameObject.GetComponent<Renderer>().enabled = true;
-                }
-            }
-
-            //プレイヤーが見えていないとき
-            if (PS.onoff == 1)
-            {
-                if (levelMeter.nowdB <= 0.0f)
-                {
-                    PS.onoff = 0;  //見えていないから0
-                    foreach (var playerParts in childTransforms)
-                    {
-                        //タグが"PlayerParts"である子オブジェクトを見えるようにする
-                        playerParts.gameObject.GetComponent<Renderer>().enabled = false;
-                    }
-                }
-            }
-        }
-
         if (PS.onoff == 1)
         {
             OnoffTime += Time.deltaTime;
             if (OnoffTime >= 5.0f)
             {
-                PlayerOnoff = false;
-                foreach (var playerParts in childTransforms)
+                //PlayerOnoff = false;
+               /* foreach (var playerParts in childTransforms)
                 {
                     //タグが"PlayerParts"である子オブジェクトを見えるようにする
                     playerParts.gameObject.GetComponent<Renderer>().enabled = false;
-                }
+                }*/
                 OnoffTime = 0;
 
 
@@ -612,7 +570,13 @@ public class EnemyVisualization1 : MonoBehaviour
             var childTransforms = PS._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
             if (PS.onoff == 0)
             {
-                PlayerOnoff = true;
+                PS.onoff = 1;  //見えているから1
+                foreach (var playerParts in childTransforms)
+                {
+                    //タグが"PlayerParts"である子オブジェクトを見えるようにする
+                    playerParts.gameObject.GetComponent<Renderer>().enabled = true;
+                }
+              
             }
         }
     }
@@ -626,7 +590,12 @@ public class EnemyVisualization1 : MonoBehaviour
             var childTransforms = PS._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
             if (PS.onoff == 1)
             {
-                PlayerOnoff = false;
+              /*  foreach (var playerParts in childTransforms)
+                {
+                    //タグが"PlayerParts"である子オブジェクトを見えるようにする
+                    playerParts.gameObject.GetComponent<Renderer>().enabled = false;
+                }
+                PS.onoff = 0;*/
             }
         }
     }

@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class EnemyGSMR : MonoBehaviour
 {
-    SkinnedMeshRenderer SkinnedMeshRendererEnemyBody;
+ /*   SkinnedMeshRenderer SkinnedMeshRendererEnemyBody;
 
     // Start is called before the first frame update
     void Start()
@@ -27,4 +27,5 @@ public class EnemyGSMR : MonoBehaviour
             SkinnedMeshRendererEnemyBody.enabled = true;
         }
     }
+ */
 }

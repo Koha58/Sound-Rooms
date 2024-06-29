@@ -59,8 +59,8 @@ public class WallScript : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Visualization"))
-        {
+       if (other.gameObject.CompareTag("Visualization"))
+       {
             GameObject eobj = GameObject.FindWithTag("Enemy");
             EnemyController EC = eobj.GetComponent<EnemyController>(); //Enemyに付いているスクリプトを取得
 
@@ -76,7 +76,24 @@ public class WallScript : MonoBehaviour
             {
                 Wall.enabled = true;
             }
-        }
+       }
+      /*      GameObject eobjG = GameObject.FindWithTag("EnemyG");
+            EnemyGController EGC = eobjG.GetComponent<EnemyGController>(); //Enemyに付いているスクリプトを取得
+
+            if (EGC.ONoff == 1)//|| EFW.ONoff == 1)
+            {
+                Wall.enabled = true;
+            }
+
+            GameObject eobjG1 = GameObject.FindWithTag("EnemyG1");
+            EnemyGController1 EGC1 = eobjG1.GetComponent<EnemyGController1>(); //Enemyに付いているスクリプトを取得
+
+            if (EGC1.ONoff == 1)//|| EFW.ONoff == 1)
+            {
+                Wall.enabled = true;
+            }
+
+        }*/
 
         if (other.gameObject.CompareTag("EnemyWall"))
         {
@@ -84,6 +101,7 @@ public class WallScript : MonoBehaviour
             EnemyController EC = eobj.GetComponent<EnemyController>(); //Enemyに付いているスクリプトを取得
             if (EC.ONoff == 1)//|| EFW.ONoff == 1)
             {
+                Wall.enabled = true;
                 bc.enabled = true;
             }
 
@@ -91,20 +109,31 @@ public class WallScript : MonoBehaviour
             EnemyController1 EC1= eobj1.GetComponent<EnemyController1>(); //Enemyに付いているスクリプトを取得
             if (EC1.ONoff == 1)//|| EFW.ONoff == 1)
             {
+                Wall.enabled = true;
                 bc.enabled = true;
             }
         }
 
-        if (other.gameObject.CompareTag("EnemyGwall"))
+    /*    if (other.gameObject.CompareTag("EnemyGwall"))
         {
             GameObject eobjG = GameObject.FindWithTag("EnemyG");
             EnemyGController EGC = eobjG.GetComponent<EnemyGController>(); //Enemyに付いているスクリプトを取得
             if (EGC.ONoff == 1)//|| EFW.ONoff == 1)
             {
+                Wall.enabled = true;
                 bc.enabled = true;
                 //Debug.Log("##");
             }
-        }
+
+            GameObject eobjG1 = GameObject.FindWithTag("EnemyG1");
+            EnemyGController1 EGC1 = eobjG1.GetComponent<EnemyGController1>(); //Enemyに付いているスクリプトを取得
+            if (EGC1.ONoff == 1)//|| EFW.ONoff == 1)
+            {
+                Wall.enabled = true;
+                bc.enabled = true;
+                //Debug.Log("##");
+            }
+        }*/
     }
 
     private void OnTriggerExit(Collider other)
@@ -113,7 +142,6 @@ public class WallScript : MonoBehaviour
         {
             bc.enabled = false;
             Wall.enabled = false;
-            Debug.Log("!!");
         }
     }
 }

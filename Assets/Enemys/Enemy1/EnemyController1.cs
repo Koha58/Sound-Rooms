@@ -163,6 +163,17 @@ public class EnemyController1 : MonoBehaviour
             }
         }
 
+        if (other.gameObject.CompareTag("Wall"))
+        {
+            TimeWall += Time.deltaTime;
+            if (TimeWall > 0.5f)
+            {
+                EnemyGetRandomPosition EGRP = EnemyGetRandomPosition.GetComponent<EnemyGetRandomPosition>();
+                targetPosition = EGRP.GetRandomPosition();
+                TimeWall = 0.0f;
+            }
+        }
+
         if (other.gameObject.CompareTag("InWall"))
         {
             TimeWall += Time.deltaTime;

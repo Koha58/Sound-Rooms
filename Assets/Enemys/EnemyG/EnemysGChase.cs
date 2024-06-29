@@ -26,4 +26,12 @@ public class EnemysGChase : MonoBehaviour
             GChase = true;
         }
     }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            GChase = false;
+        }
+    }
 }
