@@ -629,7 +629,7 @@ public class EnemyVisualization : MonoBehaviour
             GameObject obj = GameObject.Find("Player"); //Playerオブジェクトを探す
             PlayerSeen PS = obj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
             var childTransforms = PS._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
-            if (PS.onoff == 0)
+            if (PS.onoff == 1)
             {
                 PlayerOnoff = false;
             }

@@ -6,7 +6,7 @@ using UnityEngine;
 public class EnemyChase : MonoBehaviour
 {
     public Transform Player;//プレイヤーを参照
-    public  bool Chase=false;
+    public bool Chase=false;
   
     // Start is called before the first frame update
     private  void Start()
@@ -25,6 +25,14 @@ public class EnemyChase : MonoBehaviour
         if (other.gameObject.CompareTag("Player"))
         {
             Chase = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            Chase = false;
         }
     }
 

@@ -49,13 +49,12 @@ public class WallScript : MonoBehaviour
         }
 
         WallCount += Time.deltaTime;
-        if (WallCount >= 7f)
+        if(WallCount>=7.0f)
         {
             bc.enabled = false;
             Wall.enabled = false;
             WallCount = 0;
         }
-
     }
 
     private void OnTriggerEnter(Collider other)
@@ -69,14 +68,6 @@ public class WallScript : MonoBehaviour
             {
                 Wall.enabled = true;
             }
-
-        /*    GameObject eobj1 = GameObject.FindWithTag("Enemy1");
-            EnemyController EC1 = eobj1.GetComponent<EnemyController>(); //Enemyに付いているスクリプトを取得
-
-            if (EC1.ONoff == 1)//|| EFW.ONoff == 1)
-            {
-                Wall.enabled = true;
-            }*/
         }
 
         if (other.gameObject.CompareTag("EnemyWall"))
@@ -86,6 +77,7 @@ public class WallScript : MonoBehaviour
             if (EC.ONoff == 1)//|| EFW.ONoff == 1)
             {
                 bc.enabled = true;
+                Debug.Log("##");
             }
         }
 
@@ -96,8 +88,18 @@ public class WallScript : MonoBehaviour
             if (EGC.ONoff == 1)//|| EFW.ONoff == 1)
             {
                 bc.enabled = true;
+                //Debug.Log("##");
             }
+        }
+    }
 
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("Visualization"))
+        {
+            bc.enabled = false;
+            Wall.enabled = false;
+            Debug.Log("!!");
         }
     }
 }
