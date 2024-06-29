@@ -143,7 +143,6 @@ public class EnemyVisualization : MonoBehaviour
             OnoffTime += Time.deltaTime;
             if (OnoffTime >= 5.0f)
             {
-                PS.onoff = 0;
                 PlayerOnoff = false;
                 foreach (var playerParts in childTransforms)
                 {
@@ -636,8 +635,3 @@ public class EnemyVisualization : MonoBehaviour
         }
     }
 }
-
-
-
-
-

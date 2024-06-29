@@ -24,7 +24,6 @@ public class Enemywall : MonoBehaviour
         if (other.gameObject.CompareTag("Wall"))
         {
             Wall = true;
-            // Debug.Log("Wall");
         }
     }
 

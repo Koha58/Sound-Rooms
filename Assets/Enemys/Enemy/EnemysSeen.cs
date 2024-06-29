@@ -27,19 +27,5 @@ public class EnemysSeen : MonoBehaviour
             //SkinnedMeshRendererEnemyBody.enabled = true;
 
         }
-
-        GameObject eobj1 = GameObject.FindWithTag("Enemy1");
-        EnemyController EC1 = eobj.GetComponent<EnemyController>(); //Enemyに付いているスクリプトを取得
-        if (EC1.ONoff == 0)//見えないとき
-        {
-            Enemys.enabled = false;//音波非表示→表示
-                                   // SkinnedMeshRendererEnemyBody.enabled = false;
-        }
-        if (EC1.ONoff == 1)//見えているとき
-        {
-            Enemys.enabled = true;//音波表示→非表示
-            //SkinnedMeshRendererEnemyBody.enabled = true;
-
-        }
     }
 }

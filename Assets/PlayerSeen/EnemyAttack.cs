@@ -18,6 +18,9 @@ public class EnemyAttack : MonoBehaviour
 
     LevelMeter levelMeter;
 
+    bool FOn;
+    bool FOn1;
+    float FT;
 
     // Start is called before the first frame update
     void Start()
@@ -49,7 +52,21 @@ public class EnemyAttack : MonoBehaviour
                 onoff = 0;  //å©Ç¶ÇƒÇ¢Ç»Ç¢Ç©ÇÁ0
             }
         }
-        
+
+        GameObject eobj = GameObject.FindWithTag("Enemy");
+        EnemyController EC = eobj.GetComponent<EnemyController>();
+        GameObject eobj1 = GameObject.FindWithTag("Enemy1");
+        EnemyController1 EC1 = eobj1.GetComponent<EnemyController1>();
+
+        if (FOn == true|| FOn1 == true)
+        {
+            FT += Time.deltaTime;
+            if (FT > 1.0f)
+            {
+                FOn = false;
+                FOn1 = false;
+            }
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -70,6 +87,25 @@ public class EnemyAttack : MonoBehaviour
                 other.GetComponent<Collider>().enabled = true;
             }
             stayTimeF = 0.0f;
+            FOn = true;
+            Debug.Log("!%");
+        }
+
+        //ìGÇÃê≥ñ Ç…ìñÇΩÇ¡ÇΩéû
+        if (other.CompareTag("EnemyForward1"))
+        {
+            stayTimeF += Time.deltaTime;
+            if (other.CompareTag("EnemyBack1"))
+            {
+                if (stayTimeF < 10)//îwå„Ç…ìñÇΩÇ¡ÇΩéûÇ…îªíËÇµÇ»Ç¢ÇÊÇ§Ç…Ç∑ÇÈ
+                {
+                    other.GetComponent<Collider>().enabled = false;
+                }
+                other.GetComponent<Collider>().enabled = true;
+            }
+            stayTimeF = 0.0f;
+            FOn1 = true;
+            Debug.Log("!%");
         }
 
         //ìGGÇÃê≥ñ Ç…ìñÇΩÇ¡ÇΩéû
@@ -98,11 +134,43 @@ public class EnemyAttack : MonoBehaviour
 
             if (EC.ONoff == 1)
             {
-                EI.isHidden = false;
-                Debug.Log("?");
+                if (FOn == true)
+                {
+                    EI.isHidden = false;
+                    Debug.Log("?");
+                }
             }
             //ê≥ñ Ç…ìñÇΩÇ¡ÇΩéûÇ…îªíËÇµÇ»Ç¢ÇÊÇ§Ç…Ç∑ÇÈ
             if (other.CompareTag("EnemyForward"))
+            {
+                if (stayTimeB < 10)
+                {
+                    other.GetComponent<Collider>().enabled = false;
+                }
+                other.GetComponent<Collider>().enabled = true;
+            }
+            stayTimeB = 0.0f;
+        }
+
+        //ìGÇÃîwå„Ç…ìñÇΩÇ¡ÇΩéû
+        if (other.CompareTag("EnemyBack1"))
+        {
+            stayTimeB += Time.deltaTime;
+            GameObject eobj1 = GameObject.FindWithTag("Enemy1");
+            EnemyController1 EC1 = eobj1.GetComponent<EnemyController1>();
+            Enemyincrease1 EI1 = eobj1.GetComponent<Enemyincrease1>(); //ïtÇ¢ÇƒÇ¢ÇÈÉXÉNÉäÉvÉgÇéÊìæ
+            //Rigidbody EnemyR = eobj.GetComponent<Rigidbody>();
+
+            if (EC1.ONoff == 1)
+            {
+                if (FOn1==true)
+                {
+                    EI1.isHidden = false;
+                    Debug.Log("!");
+                }
+            }
+            //ê≥ñ Ç…ìñÇΩÇ¡ÇΩéûÇ…îªíËÇµÇ»Ç¢ÇÊÇ§Ç…Ç∑ÇÈ
+            if (other.CompareTag("EnemyForward1"))
             {
                 if (stayTimeB < 10)
                 {

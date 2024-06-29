@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class EnemyVisualization1 : MonoBehaviour
 {
+
+    // public int onoff = 0;  //判定用（見えていない時：0/見えている時：1）Visualization
+
     [SerializeField] public GameObject Ring;
     //public GameObject ItemCanvas;
     public GameObject[] Walls;
@@ -25,10 +28,6 @@ public class EnemyVisualization1 : MonoBehaviour
 
     private void Start()
     {
-        GameObject eobj1 = GameObject.FindWithTag("Enemy1");
-        EnemyController EC1 = eobj1.GetComponent<EnemyController>(); //Enemyに付いているスクリプトを取得
-        EnemyChase EChase1 = eobj1.GetComponent<EnemyChase>(); //Enemyに付いているスクリプトを取得
-
         GameObject doorObject = GameObject.Find("Door1");
 
         // 子オブジェクトの数を取得
@@ -80,8 +79,8 @@ public class EnemyVisualization1 : MonoBehaviour
         ISe = isobj.GetComponent<ItemSearch>(); //付いているスクリプトを取得
 
         GameObject eobj1 = GameObject.FindWithTag("Enemy1");
-        EnemyController EC1 = eobj1.GetComponent<EnemyController>(); //Enemyに付いているスクリプトを取得
-                                                                 
+        EnemyController1 EC1 = eobj1.GetComponent<EnemyController1>(); //Enemyに付いているスクリプトを取得
+
         //音を出すと範囲内を可視化
         if (EC1.ONoff == 1)//levelMeter.nowdB > 0.0f)
         {
@@ -91,18 +90,48 @@ public class EnemyVisualization1 : MonoBehaviour
         if (EC1.ONoff == 0)//levelMeter.nowdB > 0.0f)
         {
             Ring.GetComponent<Collider>().enabled = false;//見える（有効）
-                                                          // onoff = 0;  //見えているから1
         }
 
         if (PlayerOnoff == true)
         {
+            PS.onoff = 1;  //見えているから1
             foreach (var playerParts in childTransforms)
             {
                 //タグが"PlayerParts"である子オブジェクトを見えるようにする
                 playerParts.gameObject.GetComponent<Renderer>().enabled = true;
             }
-            PS.onoff = 1;  //見えているから1
-                           //  EnemyChase.Chase = true;
+        }
+
+
+        if (PlayerOnoff == false)
+        {
+            GameObject soundobj = GameObject.Find("SoundVolume");
+            levelMeter = soundobj.GetComponent<LevelMeter>(); //付いているスクリプトを取得
+
+            //プレイヤーが見えている時
+            if (levelMeter.nowdB > 0.0f)
+            {
+                PS.onoff = 1;  //見えているから1
+                foreach (var playerParts in childTransforms)
+                {
+                    //タグが"PlayerParts"である子オブジェクトを見えるようにする
+                    playerParts.gameObject.GetComponent<Renderer>().enabled = true;
+                }
+            }
+
+            //プレイヤーが見えていないとき
+            if (PS.onoff == 1)
+            {
+                if (levelMeter.nowdB <= 0.0f)
+                {
+                    PS.onoff = 0;  //見えていないから0
+                    foreach (var playerParts in childTransforms)
+                    {
+                        //タグが"PlayerParts"である子オブジェクトを見えるようにする
+                        playerParts.gameObject.GetComponent<Renderer>().enabled = false;
+                    }
+                }
+            }
         }
 
         if (PS.onoff == 1)
@@ -110,7 +139,6 @@ public class EnemyVisualization1 : MonoBehaviour
             OnoffTime += Time.deltaTime;
             if (OnoffTime >= 5.0f)
             {
-                PS.onoff = 0;
                 PlayerOnoff = false;
                 foreach (var playerParts in childTransforms)
                 {
@@ -585,6 +613,20 @@ public class EnemyVisualization1 : MonoBehaviour
             if (PS.onoff == 0)
             {
                 PlayerOnoff = true;
+            }
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            GameObject obj = GameObject.Find("Player"); //Playerオブジェクトを探す
+            PlayerSeen PS = obj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
+            var childTransforms = PS._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
+            if (PS.onoff == 1)
+            {
+                PlayerOnoff = false;
             }
         }
     }

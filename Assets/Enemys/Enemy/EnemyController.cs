@@ -29,10 +29,12 @@ public class EnemyController : MonoBehaviour
     public SkinnedMeshRenderer SkinnedMeshRendererEnemyBody;
 
     float TimeWall;
+    float PTime;
 
     // Start is called before the first frame update
     private  void Start()
     {
+        ONoff = 0;
         EnemyChaseOnOff = false;
         EnemyGetRandomPosition EGRP = EnemyGetRandomPosition.GetComponent<EnemyGetRandomPosition>();
         // èâä˙à íuÇÉâÉìÉ_ÉÄÇ…ê›íËÇ∑ÇÈ
@@ -73,6 +75,7 @@ public class EnemyController : MonoBehaviour
             {
                 EnemyGetRandomPosition ERP = EnemyGetRandomPosition.GetComponent<EnemyGetRandomPosition>();
                 targetPosition = ERP.GetRandomPosition();
+                TimeWall = 0.0f;
             }
         }
 
@@ -142,6 +145,33 @@ public class EnemyController : MonoBehaviour
                }
                 ONoff = 0;
                 Seetime = 0.0f;
+            }
+        }
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            PlayerSeen PS;
+            GameObject gobj = GameObject.Find("Player");
+            PS = gobj.GetComponent<PlayerSeen>();
+
+            PTime += Time.deltaTime;
+            if(PTime>0.01999f)
+            {
+                PS.onoff = 1;
+                PTime=0.0f;
+            }
+        }
+
+        if (other.gameObject.CompareTag("InWall"))
+        {
+            TimeWall += Time.deltaTime;
+            if (TimeWall > 0.5f)
+            {
+                EnemyGetRandomPosition EGRP = EnemyGetRandomPosition.GetComponent<EnemyGetRandomPosition>();
+                targetPosition = EGRP.GetRandomPosition();
+                TimeWall = 0.0f;
             }
         }
     }

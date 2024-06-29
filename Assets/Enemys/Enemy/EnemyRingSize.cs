@@ -10,6 +10,9 @@ public class EnemyRingSize : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
+        GameObject eobj = GameObject.FindWithTag("Enemy");
+        EnemyController EC = eobj.GetComponent<EnemyController>(); //Enemyに付いているスクリプトを取得
+        EC.ONoff = 0;
         StartCoroutine("ScaleUp");
         Ring = GetComponent<MeshRenderer>();
     }

@@ -14,7 +14,7 @@ public class EnemysSeen1 : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        GameObject eobj = GameObject.FindWithTag("Enemy1");
+        GameObject eobj = GameObject.FindWithTag("Enemy");
         EnemyController EC = eobj.GetComponent<EnemyController>(); //Enemyに付いているスクリプトを取得
         if (EC.ONoff == 0)//見えないとき
         {

@@ -22,6 +22,7 @@ public class GameOverScript : MonoBehaviour
         PlayerSeen PS;
         GameObject gobj = GameObject.Find("Player");
         PS = gobj.GetComponent<PlayerSeen>();
+
         if (other.CompareTag("EnemyParts") )
         {
             if (PS.onoff == 1)
@@ -31,6 +32,14 @@ public class GameOverScript : MonoBehaviour
         }
 
         if (other.CompareTag("Enemy"))
+        {
+            if (PS.onoff == 1)
+            {
+                SceneManager.LoadScene("GameOver");
+            }
+        }
+
+        if (other.CompareTag("Enemy1"))
         {
             if (PS.onoff == 1)
             {

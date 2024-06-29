@@ -56,35 +56,8 @@ public class inWallScript : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         
-      /*  if (other.gameObject.CompareTag("EnemyWall"))
-        {
-            GameObject eobj = GameObject.FindWithTag("Enemy");
-            EnemyController EC = eobj.GetComponent<EnemyController>(); //Enemyに付いているスクリプトを取得
-
-            if (EC.ONoff == 1)//|| EFW.ONoff == 1)
-            {
-                bc.enabled = true;
-            }
-        }
-
-        if (other.gameObject.CompareTag("EnemyGwall"))
-        {
-            GameObject eobjG = GameObject.FindWithTag("EnemyG");
-            EnemyGController EGC = eobjG.GetComponent<EnemyGController>(); //Enemyに付いているスクリプトを取得
-
-            if (EGC.ONoff == 1)//|| EFW.ONoff == 1)
-            {
-                bc.enabled = true;
-            }
-
-        }*/
-
-
         if (other.CompareTag("Player"))
         {
-            GameObject eobj = GameObject.FindWithTag("Enemy");
-            EnemyController EC = eobj.GetComponent<EnemyController>(); //Enemyに付いているスクリプトを取得
-            EnemyChase EChase = eobj.GetComponent<EnemyChase>(); //Enemyに付いているスクリプトを取得
             GameObject obj = GameObject.Find("Player"); //Playerオブジェクトを探す
             PlayerSeen PS = obj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
             var childTransforms = PS._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));

@@ -459,7 +459,34 @@ public class ItemSeen : MonoBehaviour
            // EC.Sphere.SetActive(true);//音波非表示→表示
         }
 
-      
+        if (other.CompareTag("Enemy1"))
+        {
+
+            GameObject eobj1 = GameObject.FindWithTag("Enemy1");
+            EnemyController1 EC1 = eobj1.GetComponent<EnemyController1>(); //付いているスクリプトを取得
+
+            if (EC1.ONoff == 0)
+            {
+                var childTransforms = EC1._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("EnemyParts"));
+
+                foreach (var item in childTransforms)
+                {
+                    //タグが"EnemyParts"である子オブジェクトを見えるようにする
+                    item.gameObject.GetComponent<Renderer>().enabled = true;
+                }
+
+                EC1.ONoff = 1;
+                EC1.SoundTime = 0.0f;
+                // EC.Sphere.SetActive(true);//音波非表示→表示
+            }
+
+
+            EC1.ONoff = 1;
+            EC1.SoundTime = 0.0f;
+            // EC.Sphere.SetActive(true);//音波非表示→表示
+        }
+
+
         else if (other.CompareTag("EnemyG"))
         {
             EnemyGController EGC;

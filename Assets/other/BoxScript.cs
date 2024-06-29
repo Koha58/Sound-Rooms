@@ -47,8 +47,10 @@ public class BoxScript : MonoBehaviour
 
         GameObject eobj = GameObject.FindWithTag("Enemy");
         EnemyController EC = eobj.GetComponent<EnemyController>(); //Enemyに付いているスクリプトを取得
-       // GameObject eobjG = GameObject.FindWithTag("EnemyG");
-      //  EnemyGController EGC = eobjG.GetComponent<EnemyGController>(); //Enemyに付いているスクリプトを取得
+        GameObject eobj1 = GameObject.FindWithTag("Enemy1");
+        EnemyController1 EC1 = eobj1.GetComponent<EnemyController1>(); //Enemyに付いているスクリプトを取得
+        // GameObject eobjG = GameObject.FindWithTag("EnemyG");
+        //  EnemyGController EGC = eobjG.GetComponent<EnemyGController>(); //Enemyに付いているスクリプトを取得
 
         bc = GetComponent<BoxCollider>();
 
@@ -59,6 +61,18 @@ public class BoxScript : MonoBehaviour
             Box.enabled = false;
         }
         else if (EC.ONoff == 1)//|| EFW.ONoff == 1)
+        {
+            bc.enabled = true;
+
+        }
+
+        if (EC1.ONoff == 0)//||EFW.ONoff==0 )
+        {
+            bc.enabled = false;
+            RingOnOff = false;
+            Box.enabled = false;
+        }
+        else if (EC1.ONoff == 1)//|| EFW.ONoff == 1)
         {
             bc.enabled = true;
 
