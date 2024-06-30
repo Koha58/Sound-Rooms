@@ -19,13 +19,18 @@ public class EnemyController1 : MonoBehaviour
     float Enemystoptime = 0;
     float Enemystoponoff;
 
-    //Animator animator;
+    public Animator animator;
 
     public Transform _parentTransform;
     public EnemyChase Chase;
     public GameObject EnemyWall;
     public GameObject EnemyGetRandomPosition;
     public SkinnedMeshRenderer SkinnedMeshRendererEnemyBody;
+   // public MeshRenderer Ear;
+   // public MeshRenderer Eey;
+
+    public string Ears = "EnemyEar";
+    public string Eeys = "EnemyEey";
 
     float TimeWall;
     float PTime;
@@ -33,13 +38,17 @@ public class EnemyController1 : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
+       // Ear = GameObject.Find(Ears).GetComponent<MeshRenderer>();
+       // Eey = GameObject.Find(Eeys).GetComponent<MeshRenderer>();
         ONoff = 0;
         EnemyChaseOnOff = false;
-        EnemyGetRandomPosition EGRP = EnemyGetRandomPosition.GetComponent<EnemyGetRandomPosition>();
+        EnemyGetRandomPosition1 EGRP1 = EnemyGetRandomPosition.GetComponent<EnemyGetRandomPosition1>();
         // 初期位置をランダムに設定する
-        targetPosition = EGRP.GetRandomPosition();
+        targetPosition = EGRP1.GetRandomPosition();
         SkinnedMeshRendererEnemyBody.enabled = false;
-        //animator = GetComponent<Animator>();   //アニメーターコントローラーからアニメーションを取得する    
+       // Ear.GetComponent<Collider>().enabled = false;//見える（有効）
+       // Eey.GetComponent<Collider>().enabled = false;//見える（有効）
+        animator = GetComponent<Animator>();   //アニメーターコントローラーからアニメーションを取得する    
     }
 
     // Update is called once per frame
@@ -53,7 +62,7 @@ public class EnemyController1 : MonoBehaviour
         Enemywall EW = EnemyWall.GetComponent<Enemywall>();
 
         //「歩く」のアニメーションを再生する
-        //animator.SetBool("EnemyWalk", true);
+        animator.SetBool("EnemyWalk", true);
 
         Switch();
 
@@ -72,8 +81,8 @@ public class EnemyController1 : MonoBehaviour
             TimeWall += Time.deltaTime;
             if (TimeWall > 4.0f)
             {
-                EnemyGetRandomPosition ERP = EnemyGetRandomPosition.GetComponent<EnemyGetRandomPosition>();
-                targetPosition = ERP.GetRandomPosition();
+                EnemyGetRandomPosition1 ERP1 = EnemyGetRandomPosition.GetComponent<EnemyGetRandomPosition1>();
+                targetPosition = ERP1.GetRandomPosition();
                 TimeWall = 0.0f;
             }
         }
@@ -121,6 +130,8 @@ public class EnemyController1 : MonoBehaviour
             if (SoundTime >= randomTime)
             {
                 SkinnedMeshRendererEnemyBody.enabled = false;
+                //Ear.GetComponent<Collider>().enabled = false;//見える（有効）
+                //Eey.GetComponent<Collider>().enabled = false;//見える（有効）
                 foreach (var item in childTransforms)
                 {
                     //タグが"EnemyParts"である子オブジェクトを見えるようにする
@@ -137,6 +148,8 @@ public class EnemyController1 : MonoBehaviour
             if (Seetime >= 10.0f)
             {
                 SkinnedMeshRendererEnemyBody.enabled = true;
+                //Ear.GetComponent<Collider>().enabled = true;//見える（有効）
+                //Eey.GetComponent<Collider>().enabled = true;//見える（有効）
                 foreach (var item in childTransforms)
                 {
                     //タグが"EnemyParts"である子オブジェクトを見えなくする
@@ -168,8 +181,8 @@ public class EnemyController1 : MonoBehaviour
             TimeWall += Time.deltaTime;
             if (TimeWall > 0.5f)
             {
-                EnemyGetRandomPosition EGRP = EnemyGetRandomPosition.GetComponent<EnemyGetRandomPosition>();
-                targetPosition = EGRP.GetRandomPosition();
+                EnemyGetRandomPosition1 EGRP1 = EnemyGetRandomPosition.GetComponent<EnemyGetRandomPosition1>();
+                targetPosition = EGRP1.GetRandomPosition();
                 TimeWall = 0.0f;
             }
         }
@@ -179,8 +192,8 @@ public class EnemyController1 : MonoBehaviour
             TimeWall += Time.deltaTime;
             if (TimeWall > 0.5f)
             {
-                EnemyGetRandomPosition EGRP = EnemyGetRandomPosition.GetComponent<EnemyGetRandomPosition>();
-                targetPosition = EGRP.GetRandomPosition();
+                EnemyGetRandomPosition1 EGRP1 = EnemyGetRandomPosition.GetComponent<EnemyGetRandomPosition1>();
+                targetPosition = EGRP1.GetRandomPosition();
                 TimeWall = 0.0f;
             }
         }
