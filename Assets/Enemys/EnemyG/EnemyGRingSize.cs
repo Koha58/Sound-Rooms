@@ -6,12 +6,14 @@ public class EnemyGRingSize : MonoBehaviour
 {
     float i;
     public MeshRenderer Ring;
+    public GameObject RingG;
 
     // Start is called before the first frame update
     private void Start()
     {
         StartCoroutine("ScaleUp");
         Ring = GetComponent<MeshRenderer>();
+        RingG.GetComponent<Collider>().enabled = false;//見える（有効）
     }
 
     // Update is called once per frame
@@ -24,10 +26,12 @@ public class EnemyGRingSize : MonoBehaviour
         {
             i = 100;
             Ring.enabled = false;
+            RingG.GetComponent<Collider>().enabled = false;//見える（有効）
         }
         if (EGC.ONoff == 1)
         {
             Ring.enabled = true;
+            RingG.GetComponent<Collider>().enabled = false;//見える（有効）
             //  StartCoroutine("ScaleUp");
         }
 

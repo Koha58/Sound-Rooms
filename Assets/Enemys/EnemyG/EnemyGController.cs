@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class EnemyGController : MonoBehaviour
 {
@@ -18,7 +19,7 @@ public class EnemyGController : MonoBehaviour
     float Enemystoptime = 0;
     float Enemystoponoff;
 
-    //Animator animator;
+    public Animator animator;
 
     public Transform _parentTransform;
     public EnemysGChase GChase;
@@ -27,6 +28,11 @@ public class EnemyGController : MonoBehaviour
     public SkinnedMeshRenderer SkinnedMeshRendererEnemyGBody;
     public SkinnedMeshRenderer SkinnedMeshRendererEnemyGKey;
     public SkinnedMeshRenderer SkinnedMeshRendererEnemyGRing;
+   // public MeshRenderer Ear;
+   // public MeshRenderer Eey;
+
+    public string Ears = "EnemyEar";
+    public string Eeys = "EnemyEey";
 
     float TimeWall;
     float PTime;
@@ -34,6 +40,8 @@ public class EnemyGController : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
+       // Ear=GameObject.Find(Ears).GetComponent<MeshRenderer>();
+       // Eey=GameObject.Find(Eeys).GetComponent<MeshRenderer>();  
         ONoff = 0;
         EnemyChaseOnOff = false;
         EnemyGGetRandomPosition EGRP = EnemyGGetRandomPosition.GetComponent<EnemyGGetRandomPosition>();
@@ -42,7 +50,9 @@ public class EnemyGController : MonoBehaviour
         SkinnedMeshRendererEnemyGBody.enabled = false;
         SkinnedMeshRendererEnemyGKey.enabled = false;
         SkinnedMeshRendererEnemyGRing.enabled = false;
-        //animator = GetComponent<Animator>();   //アニメーターコントローラーからアニメーションを取得する    
+       // Ear.GetComponent<Collider>().enabled = false;//見える（有効）
+       // Eey.GetComponent<Collider>().enabled = false;//見える（有効）
+        animator = GetComponent<Animator>();   //アニメーターコントローラーからアニメーションを取得する    
     }
 
     // Update is called once per frame
@@ -56,7 +66,7 @@ public class EnemyGController : MonoBehaviour
         Enemywall EW = EnemyWall.GetComponent<Enemywall>();
 
         //「歩く」のアニメーションを再生する
-        //animator.SetBool("EnemyWalk", true);
+        animator.SetBool("EnemyWalk", true);
 
         Switch();
 
@@ -125,6 +135,8 @@ public class EnemyGController : MonoBehaviour
                 SkinnedMeshRendererEnemyGBody.enabled = false;
                 SkinnedMeshRendererEnemyGKey.enabled = false;
                 SkinnedMeshRendererEnemyGRing.enabled = false;
+               // Ear.GetComponent<Collider>().enabled = false;//見える（有効）
+               // Eey.GetComponent<Collider>().enabled = false;//見える（有効）
                 foreach (var item in childTransforms)
                 {
                     //タグが"EnemyParts"である子オブジェクトを見えるようにする
@@ -143,6 +155,8 @@ public class EnemyGController : MonoBehaviour
                 SkinnedMeshRendererEnemyGBody.enabled = true;
                 SkinnedMeshRendererEnemyGKey.enabled = true;
                 SkinnedMeshRendererEnemyGRing.enabled = true;
+               // Ear.GetComponent<Collider>().enabled = true;//見える（有効）
+               // Eey.GetComponent<Collider>().enabled = true;//見える（有効）
                 foreach (var item in childTransforms)
                 {
                     //タグが"EnemyParts"である子オブジェクトを見えなくする

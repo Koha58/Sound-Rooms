@@ -504,6 +504,60 @@ public class ItemSeen : MonoBehaviour
                 // EsG.Sphere.SetActive(true);//音波非表示→表示
             }
         }
+
+        else if (other.CompareTag("EnemyG1"))
+        {
+            EnemyGController1 EGC1;
+            EGC1 = other.gameObject.GetComponent<EnemyGController1>(); //付いているスクリプトを取得
+            if (EGC1.ONoff == 0)
+            {
+                var childTransforms = EGC1._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("EnemyParts"));
+                foreach (var item in childTransforms)
+                {
+                    //タグが"EnemyParts"である子オブジェクトを見えるようにする
+                    item.gameObject.GetComponent<Renderer>().enabled = true;
+                }
+                EGC1.ONoff = 1;
+                EGC1.SoundTime = 0.0f;
+                // EsG.Sphere.SetActive(true);//音波非表示→表示
+            }
+        }
+
+        else if (other.CompareTag("EnemyG2"))
+        {
+            EnemyGController2 EGC2;
+            EGC2 = other.gameObject.GetComponent<EnemyGController2>(); //付いているスクリプトを取得
+            if (EGC2.ONoff == 0)
+            {
+                var childTransforms = EGC2._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("EnemyParts"));
+                foreach (var item in childTransforms)
+                {
+                    //タグが"EnemyParts"である子オブジェクトを見えるようにする
+                    item.gameObject.GetComponent<Renderer>().enabled = true;
+                }
+                EGC2.ONoff = 1;
+                EGC2.SoundTime = 0.0f;
+                // EsG.Sphere.SetActive(true);//音波非表示→表示
+            }
+        }
+
+        else if (other.CompareTag("EnemyG3"))
+        {
+            EnemyGController3 EGC3;
+            EGC3 = other.gameObject.GetComponent<EnemyGController3>(); //付いているスクリプトを取得
+            if (EGC3.ONoff == 0)
+            {
+                var childTransforms = EGC3._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("EnemyParts"));
+                foreach (var item in childTransforms)
+                {
+                    //タグが"EnemyParts"である子オブジェクトを見えるようにする
+                    item.gameObject.GetComponent<Renderer>().enabled = true;
+                }
+                EGC3.ONoff = 1;
+                EGC3.SoundTime = 0.0f;
+                // EsG.Sphere.SetActive(true);//音波非表示→表示
+            }
+        }
     }
 }
 

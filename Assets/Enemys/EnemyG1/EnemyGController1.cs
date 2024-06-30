@@ -18,7 +18,7 @@ public class EnemyGController1 : MonoBehaviour
     float Enemystoptime = 0;
     float Enemystoponoff;
 
-    //Animator animator;
+    public Animator animator;
 
     public Transform _parentTransform;
     public EnemysGChase GChase;
@@ -27,6 +27,11 @@ public class EnemyGController1 : MonoBehaviour
     public SkinnedMeshRenderer SkinnedMeshRendererEnemyGBody;
     public SkinnedMeshRenderer SkinnedMeshRendererEnemyGKey;
     public SkinnedMeshRenderer SkinnedMeshRendererEnemyGRing;
+    //public MeshRenderer Ear;
+    //public MeshRenderer Eey;
+
+    //public string Ears = "EnemyEar";
+    //public string Eeys = "EnemyEey";
 
     float TimeWall;
     float PTime;
@@ -34,15 +39,20 @@ public class EnemyGController1 : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
+
+        //Ear = GameObject.Find(Ears).GetComponent<MeshRenderer>();
+        //Eey = GameObject.Find(Eeys).GetComponent<MeshRenderer>();
         ONoff = 0;
         EnemyChaseOnOff = false;
-        EnemyGGetRandomPosition EGRP = EnemyGGetRandomPosition.GetComponent<EnemyGGetRandomPosition>();
+        EnemyGGetRandomPosition1 EGRP1 = EnemyGGetRandomPosition.GetComponent<EnemyGGetRandomPosition1>();
         // 初期位置をランダムに設定する
-        targetPosition = EGRP.GetRandomPositionG();
+        targetPosition = EGRP1.GetRandomPositionG();
         SkinnedMeshRendererEnemyGBody.enabled = false;
         SkinnedMeshRendererEnemyGKey.enabled = false;
         SkinnedMeshRendererEnemyGRing.enabled = false;
-        //animator = GetComponent<Animator>();   //アニメーターコントローラーからアニメーションを取得する    
+        //Ear.GetComponent<Collider>().enabled = false;//見える（有効）
+        //Eey.GetComponent<Collider>().enabled = false;//見える（有効）
+        animator = GetComponent<Animator>();   //アニメーターコントローラーからアニメーションを取得する    
     }
 
     // Update is called once per frame
@@ -56,7 +66,7 @@ public class EnemyGController1 : MonoBehaviour
         Enemywall EW = EnemyWall.GetComponent<Enemywall>();
 
         //「歩く」のアニメーションを再生する
-        //animator.SetBool("EnemyWalk", true);
+        animator.SetBool("EnemyWalk", true);
 
         Switch();
 
@@ -75,8 +85,8 @@ public class EnemyGController1 : MonoBehaviour
             TimeWall += Time.deltaTime;
             if (TimeWall > 4.0f)
             {
-                EnemyGGetRandomPosition EGRP = EnemyGGetRandomPosition.GetComponent<EnemyGGetRandomPosition>();
-                targetPosition = EGRP.GetRandomPositionG();
+                EnemyGGetRandomPosition1 EGRP1 = EnemyGGetRandomPosition.GetComponent<EnemyGGetRandomPosition1>();
+                targetPosition = EGRP1.GetRandomPositionG();
                 TimeWall = 0.0f;
             }
         }
@@ -104,8 +114,8 @@ public class EnemyGController1 : MonoBehaviour
                 Enemystoptime += Time.deltaTime;
                 if (Enemystoptime > 2.0f)
                 {
-                    EnemyGGetRandomPosition EGRP = EnemyGGetRandomPosition.GetComponent<EnemyGGetRandomPosition>();
-                    targetPosition = EGRP.GetRandomPositionG();
+                    EnemyGGetRandomPosition1 EGRP1 = EnemyGGetRandomPosition.GetComponent<EnemyGGetRandomPosition1>();
+                    targetPosition = EGRP1.GetRandomPositionG();
                     Enemystoponoff = 0;
                 }
             }
@@ -125,6 +135,8 @@ public class EnemyGController1 : MonoBehaviour
                 SkinnedMeshRendererEnemyGBody.enabled = false;
                 SkinnedMeshRendererEnemyGKey.enabled = false;
                 SkinnedMeshRendererEnemyGRing.enabled = false;
+                //Ear.GetComponent<Collider>().enabled = false;//見える（有効）
+               // Eey.GetComponent<Collider>().enabled = false;//見える（有効）
                 foreach (var item in childTransforms)
                 {
                     //タグが"EnemyParts"である子オブジェクトを見えるようにする
@@ -143,6 +155,8 @@ public class EnemyGController1 : MonoBehaviour
                 SkinnedMeshRendererEnemyGBody.enabled = true;
                 SkinnedMeshRendererEnemyGKey.enabled = true;
                 SkinnedMeshRendererEnemyGRing.enabled = true;
+              //  Ear.GetComponent<Collider>().enabled = true;//見える（有効）
+                //Eey.GetComponent<Collider>().enabled = true;//見える（有効）
                 foreach (var item in childTransforms)
                 {
                     //タグが"EnemyParts"である子オブジェクトを見えなくする
@@ -174,8 +188,8 @@ public class EnemyGController1 : MonoBehaviour
             TimeWall += Time.deltaTime;
             if (TimeWall > 0.5f)
             {
-                EnemyGGetRandomPosition EGRP = EnemyGGetRandomPosition.GetComponent<EnemyGGetRandomPosition>();
-                targetPosition = EGRP.GetRandomPositionG();
+                EnemyGGetRandomPosition1 EGRP1 = EnemyGGetRandomPosition.GetComponent<EnemyGGetRandomPosition1>();
+                targetPosition = EGRP1.GetRandomPositionG();
                 TimeWall = 0.0f;
             }
         }
@@ -185,8 +199,8 @@ public class EnemyGController1 : MonoBehaviour
             TimeWall += Time.deltaTime;
             if (TimeWall > 0.5f)
             {
-                EnemyGGetRandomPosition EGRP = EnemyGGetRandomPosition.GetComponent<EnemyGGetRandomPosition>();
-                targetPosition = EGRP.GetRandomPositionG();
+                EnemyGGetRandomPosition1 EGRP1 = EnemyGGetRandomPosition.GetComponent<EnemyGGetRandomPosition1>();
+                targetPosition = EGRP1.GetRandomPositionG();
                 TimeWall = 0.0f;
             }
         }

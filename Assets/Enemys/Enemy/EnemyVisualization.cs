@@ -10,9 +10,7 @@ using UnityEngine.XR;
 
 public class EnemyVisualization : MonoBehaviour
 {
-    // public int onoff = 0;  //判定用（見えていない時：0/見えている時：1）Visualization
-
-    [SerializeField] public GameObject Ring;
+    public float onoff = 0;  //判定用（見えていない時：0/見えている時：1）Visualization
     //public GameObject ItemCanvas;
     public GameObject[] Walls;
     public GameObject[] Boxes;
@@ -28,8 +26,80 @@ public class EnemyVisualization : MonoBehaviour
 
     LevelMeter levelMeter;
 
+
+    public SkinnedMeshRenderer Player;
+    public SkinnedMeshRenderer Player1;
+    public SkinnedMeshRenderer Player2;
+    public SkinnedMeshRenderer Player3;
+    public SkinnedMeshRenderer Player4;
+    public SkinnedMeshRenderer Player5;
+    public SkinnedMeshRenderer Player6;
+    public SkinnedMeshRenderer Player7;
+    public SkinnedMeshRenderer Player8;
+    public SkinnedMeshRenderer Player9;
+    public SkinnedMeshRenderer Player10;
+    public SkinnedMeshRenderer Player11;
+    public SkinnedMeshRenderer Player12;
+    public SkinnedMeshRenderer Player13;
+    public SkinnedMeshRenderer Player14;
+    public SkinnedMeshRenderer Player15;
+
+
+    public string Player0;
+    public string Player01;
+    public string Player02;
+    public string Player03;
+    public string Player04;
+    public string Player05;
+    public string Player06;
+    public string Player07;
+    public string Player08;
+    public string Player09;
+    public string Player010;
+    public string Player011;
+    public string Player012;
+    public string Player013;
+    public string Player014;
+    public string Player015;
+
+
     private void Start()
     {
+
+        Player = GameObject.Find(Player0).GetComponent<SkinnedMeshRenderer>();
+        Player1 = GameObject.Find(Player01).GetComponent<SkinnedMeshRenderer>();
+        Player2 = GameObject.Find(Player02).GetComponent<SkinnedMeshRenderer>();
+        Player3 = GameObject.Find(Player03).GetComponent<SkinnedMeshRenderer>();
+        Player4 = GameObject.Find(Player04).GetComponent<SkinnedMeshRenderer>();
+        Player5 = GameObject.Find(Player05).GetComponent<SkinnedMeshRenderer>();
+        Player6 = GameObject.Find(Player06).GetComponent<SkinnedMeshRenderer>();
+        Player7 = GameObject.Find(Player07).GetComponent<SkinnedMeshRenderer>();
+        Player8 = GameObject.Find(Player08).GetComponent<SkinnedMeshRenderer>();
+        Player9 = GameObject.Find(Player09).GetComponent<SkinnedMeshRenderer>();
+        Player10 = GameObject.Find(Player010).GetComponent<SkinnedMeshRenderer>();
+        Player11 = GameObject.Find(Player011).GetComponent<SkinnedMeshRenderer>();
+        Player12 = GameObject.Find(Player012).GetComponent<SkinnedMeshRenderer>();
+        Player13 = GameObject.Find(Player013).GetComponent<SkinnedMeshRenderer>();
+        Player14 = GameObject.Find(Player014).GetComponent<SkinnedMeshRenderer>();
+        Player15 = GameObject.Find(Player015).GetComponent<SkinnedMeshRenderer>();
+
+        Player.enabled = false;
+        Player1.enabled = false;
+        Player2.enabled = false;
+        Player3.enabled = false;
+        Player4.enabled = false;
+        Player5.enabled = false;
+        Player6.enabled = false;
+        Player7.enabled = false;
+        Player8.enabled = false;
+        Player9.enabled = false;
+        Player10.enabled = false;
+        Player11.enabled = false;
+        Player12.enabled = false;
+        Player13.enabled = false;
+        Player14.enabled = false;
+
+
         GameObject doorObject = GameObject.Find("Door1");
 
         // 子オブジェクトの数を取得
@@ -40,9 +110,6 @@ public class EnemyVisualization : MonoBehaviour
             GameObject door = childTransform.gameObject;
             door.GetComponent<Renderer>().enabled = false;
         }
-
-        //最初は見えない状態
-        Ring.GetComponent<Collider>().enabled = false;
         //ItemCanvas.GetComponent<Canvas>().enabled = false;
 
         Walls = GameObject.FindGameObjectsWithTag("Wall");
@@ -80,75 +147,49 @@ public class EnemyVisualization : MonoBehaviour
         GameObject isobj = GameObject.Find("Player");
         ISe = isobj.GetComponent<ItemSearch>(); //付いているスクリプトを取得
 
-        GameObject eobj = GameObject.FindWithTag("Enemy");
-        EnemyController EC = eobj.GetComponent<EnemyController>(); //Enemyに付いているスクリプトを取得
-       
-        //音を出すと範囲内を可視化
-        if (EC.ONoff==1)//levelMeter.nowdB > 0.0f)
-        {
-            Ring.GetComponent<Collider>().enabled = true;//見える（有効）
-        }
-
-        if (EC.ONoff == 0)//levelMeter.nowdB > 0.0f)
-        {
-            Ring.GetComponent<Collider>().enabled =false;//見える（有効）
-        }
-
         if (PlayerOnoff == true)
         {
             PS.onoff = 1;  //見えているから1
-            foreach (var playerParts in childTransforms)
-            {
-                //タグが"PlayerParts"である子オブジェクトを見えるようにする
-                playerParts.gameObject.GetComponent<Renderer>().enabled = true;
-            }
+            onoff = 1;
+            Player.enabled = true;
+            Player1.enabled = true;
+            Player2.enabled = true;
+            Player3.enabled = true;
+            Player4.enabled = true;
+            Player5.enabled = true;
+            Player6.enabled = true;
+            Player7.enabled = true;
+            Player8.enabled = true;
+            Player9.enabled = true;
+            Player10.enabled = true;
+            Player11.enabled = true;
+            Player12.enabled = true;
+            Player13.enabled = true;
+            Player14.enabled = true;
+
         }
 
-     
-        if(PlayerOnoff == false)
+        if (PlayerOnoff == false)
         {
-            GameObject soundobj = GameObject.Find("SoundVolume");
-            levelMeter = soundobj.GetComponent<LevelMeter>(); //付いているスクリプトを取得
-
-            //プレイヤーが見えている時
-            if (levelMeter.nowdB > 0.0f)
-            {
-                PS.onoff = 1;  //見えているから1
-                foreach (var playerParts in childTransforms)
-                {
-                    //タグが"PlayerParts"である子オブジェクトを見えるようにする
-                    playerParts.gameObject.GetComponent<Renderer>().enabled = true;
-                }
-            }
-
-            //プレイヤーが見えていないとき
-            if (PS.onoff == 1)
-            {
-                if (levelMeter.nowdB <= 0.0f)
-                {
-                    PS.onoff = 0;  //見えていないから0
-                    foreach (var playerParts in childTransforms)
-                    {
-                        //タグが"PlayerParts"である子オブジェクトを見えるようにする
-                        playerParts.gameObject.GetComponent<Renderer>().enabled = false;
-                    }
-                }
-            }
-        }
-
-        if (PS.onoff == 1)
-        {
+            Player.enabled = false;
+            Player1.enabled = false;
+            Player2.enabled = false;
+            Player3.enabled = false;
+            Player4.enabled = false;
+            Player5.enabled = false;
+            Player6.enabled = false;
+            Player7.enabled = false;
+            Player8.enabled = false;
+            Player9.enabled = false;
+            Player10.enabled = false;
+            Player11.enabled = false;
+            Player12.enabled = false;
+            Player13.enabled = false;
+            Player14.enabled = false;
             OnoffTime += Time.deltaTime;
             if (OnoffTime >= 5.0f)
             {
-                PlayerOnoff = false;
-                foreach (var playerParts in childTransforms)
-                {
-                    //タグが"PlayerParts"である子オブジェクトを見えるようにする
-                    playerParts.gameObject.GetComponent<Renderer>().enabled = false;
-                }
                 OnoffTime = 0;
-
 
                 //接触したオブジェクトのタグが"Item"のとき
                 if (objName == "key 1 (1)")
@@ -367,7 +408,7 @@ public class EnemyVisualization : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         parentObject = GameObject.FindGameObjectsWithTag("Item");
         GameObject doorObject = GameObject.Find("Door1");
@@ -494,7 +535,7 @@ public class EnemyVisualization : MonoBehaviour
                     Transform childTransform = Key3.transform.GetChild(b);
                     GameObject childObject = childTransform.gameObject;
                     childObject.GetComponent<Renderer>().enabled = true;
-                        //keyOnoff = true;
+                    //keyOnoff = true;
                 }
             }
             else if (parentObject[1] != null)
@@ -607,7 +648,7 @@ public class EnemyVisualization : MonoBehaviour
             }
         }
 
-        if(other.CompareTag("Player"))
+        if (other.CompareTag("Player"))
         {
             GameObject obj = GameObject.Find("Player"); //Playerオブジェクトを探す
             PlayerSeen PS = obj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
@@ -615,6 +656,22 @@ public class EnemyVisualization : MonoBehaviour
             if (PS.onoff == 0)
             {
                 PlayerOnoff = true;
+                Player.enabled = true;
+                Player1.enabled = true;
+                Player2.enabled = true;
+                Player3.enabled = true;
+                Player4.enabled = true;
+                Player5.enabled = true;
+                Player6.enabled = true;
+                Player7.enabled = true;
+                Player8.enabled = true;
+                Player9.enabled = true;
+                Player10.enabled = true;
+                Player11.enabled = true;
+                Player12.enabled = true;
+                Player13.enabled = true;
+                Player14.enabled = true;
+                Player15.enabled = true;
             }
         }
     }
@@ -628,7 +685,22 @@ public class EnemyVisualization : MonoBehaviour
             var childTransforms = PS._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
             if (PS.onoff == 1)
             {
-                PlayerOnoff = false;
+                onoff = 0;
+                Player.enabled = false;
+                Player1.enabled = false;
+                Player2.enabled = false;
+                Player3.enabled = false;
+                Player4.enabled = false;
+                Player5.enabled = false;
+                Player6.enabled = false;
+                Player7.enabled = false;
+                Player8.enabled = false;
+                Player9.enabled = false;
+                Player10.enabled = false;
+                Player11.enabled = false;
+                Player12.enabled = false;
+                Player13.enabled = false;
+                Player14.enabled = false;
             }
         }
     }
