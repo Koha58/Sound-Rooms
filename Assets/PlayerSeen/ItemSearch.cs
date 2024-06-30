@@ -14,7 +14,7 @@ public class ItemSearch : MonoBehaviour
     public List<string> myItemList = new List<string>();
     public TextMeshProUGUI keyCountText;
     public int count;
-    //public  static GameObject ItemCanvas;
+    public  static GameObject ItemGetText;
     ItemSeen IS;
     [SerializeField]AudioSource PickupSound;
 
@@ -23,6 +23,9 @@ public class ItemSearch : MonoBehaviour
         count = 0;
         SetCountText();
         PickupSound = GetComponent<AudioSource>();
+
+        ItemGetText = GameObject.Find("ItemGetUI");
+        ItemGetText.GetComponent<Image>().enabled = false;
     }
     private void Update()
     {
@@ -36,7 +39,7 @@ public class ItemSearch : MonoBehaviour
 
     void CaluculateClosetObject()
     {
-        //ItemCanvas = GameObject.FindWithTag("ItemCanvas");
+        ItemGetText = GameObject.Find("ItemGetUI");
         ItemSearchArea = GameObject.FindGameObjectsWithTag("Item").ToList();
         //ˆê”Ô‹ß‚¢ƒAƒCƒeƒ€‚ðŽæ“¾‚·‚é
         float closetDistance = 1000000;
@@ -70,12 +73,12 @@ public class ItemSearch : MonoBehaviour
         //if (closetObject == null) return;
         if (closetDistance < 1.5f && IS.onoff == 1)
         {
-            //ItemCanvas.GetComponent<Canvas>().enabled = true;
+            ItemGetText.GetComponent<Image>().enabled = true;
             PickUp();
         }
         if(closetDistance >= 1.5f || IS.onoff == 0)
         {
-            //ItemCanvas.GetComponent<Canvas>().enabled = false;
+            ItemGetText.GetComponent<Image>().enabled = false;
         }
     }
 
