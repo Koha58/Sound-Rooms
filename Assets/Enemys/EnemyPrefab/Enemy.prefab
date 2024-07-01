@@ -1489,7 +1489,7 @@ GameObject:
   - component: {fileID: 121479481286423813}
   - component: {fileID: 5823586994372491255}
   - component: {fileID: 4277623459748268780}
-  - component: {fileID: 8659498916372604577}
+  - component: {fileID: 5392982034480225483}
   m_Layer: 0
   m_Name: Ring
   m_TagString: Visualization
@@ -1610,7 +1610,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &8659498916372604577
+--- !u!114 &5392982034480225483
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1619,45 +1619,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 6992958931360982476}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1107e809d89f7734c93893b35c2f564a, type: 3}
+  m_Script: {fileID: 11500000, guid: 5880b6d11dbd40542aaf971e797eb30f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onoff: 0
+  Ring: {fileID: 6992958931360982476}
   Walls: []
   Boxes: []
-  _parentTransform: {fileID: 0}
-  Player: {fileID: 0}
-  Player1: {fileID: 0}
-  Player2: {fileID: 0}
-  Player3: {fileID: 0}
-  Player4: {fileID: 0}
-  Player5: {fileID: 0}
-  Player6: {fileID: 0}
-  Player7: {fileID: 0}
-  Player8: {fileID: 0}
-  Player9: {fileID: 0}
-  Player10: {fileID: 0}
-  Player11: {fileID: 0}
-  Player12: {fileID: 0}
-  Player13: {fileID: 0}
-  Player14: {fileID: 0}
-  Player15: {fileID: 0}
-  Player0: Body
-  Player01: bra
-  Player02: clothes.above
-  Player03: hair.mesh.000
-  Player04: hair.mesh.001
-  Player05: hair.mesh.002
-  Player06: hair.mesh.003
-  Player07: hair.mesh.004
-  Player08: hair.mesh.005
-  Player09: hair.mesh.006
-  Player010: hair.mesh.007
-  Player011: hair.mesh.008
-  Player012: hair.mesh.009
-  Player013: hair.mesh.010
-  Player014: shoes
-  Player015: underwear
+  _parentTransform: {fileID: 3432238962289307084}
 --- !u!1 &7441333549487775137
 GameObject:
   m_ObjectHideFlags: 0

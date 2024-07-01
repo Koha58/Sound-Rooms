@@ -23,12 +23,9 @@ public class GameOverScript : MonoBehaviour
         GameObject gobj = GameObject.Find("Player");
         PS = gobj.GetComponent<PlayerSeen>();
 
-            GameObject eobj = GameObject.FindWithTag("Visualization");
-            EnemyVisualization EV = eobj.GetComponent<EnemyVisualization>(); //Enemyに付いているスクリプトを取得
-
         if (other.CompareTag("EnemyParts") )
         {
-            if (PS.onoff == 1||EV.onoff==1)
+            if (PS.onoff == 1)
             {
                 SceneManager.LoadScene("GameOver");
             }
@@ -36,7 +33,7 @@ public class GameOverScript : MonoBehaviour
 
         if (other.CompareTag("Enemy"))
         {
-            if (PS.onoff == 1 || EV.onoff == 1)
+            if (PS.onoff == 1)
             {
                 SceneManager.LoadScene("GameOver");
             }
@@ -44,7 +41,7 @@ public class GameOverScript : MonoBehaviour
 
         if (other.CompareTag("Enemy1"))
         {
-            if (PS.onoff == 1 || EV.onoff == 1)
+            if (PS.onoff == 1)
             {
                 SceneManager.LoadScene("GameOver");
             }
@@ -52,7 +49,7 @@ public class GameOverScript : MonoBehaviour
 
         if (other.CompareTag("EnemyG"))
         {
-            if (PS.onoff == 1 || EV.onoff == 1)
+            if (PS.onoff == 1)
             {
                 SceneManager.LoadScene("GameOver");
             }
@@ -60,7 +57,7 @@ public class GameOverScript : MonoBehaviour
 
         if (other.CompareTag("EnemyG1"))
         {
-            if (PS.onoff == 1 || EV.onoff == 1)
+            if (PS.onoff == 1)
             {
                 SceneManager.LoadScene("GameOver");
             }
@@ -68,7 +65,7 @@ public class GameOverScript : MonoBehaviour
 
         if (other.CompareTag("EnemyG2"))
         {
-            if (PS.onoff == 1 || EV.onoff == 1)
+            if (PS.onoff == 1)
             {
                 SceneManager.LoadScene("GameOver");
             }
@@ -76,7 +73,7 @@ public class GameOverScript : MonoBehaviour
 
         if (other.CompareTag("EnemyG3"))
         {
-            if (PS.onoff == 1 || EV.onoff == 1)
+            if (PS.onoff == 1)
             {
                 SceneManager.LoadScene("GameOver");
             }

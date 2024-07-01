@@ -18,9 +18,9 @@ public class EnemyGGetRandomPosition1 : MonoBehaviour
     public Vector3 GetRandomPositionG()
     {
         // ƒ‰ƒ“ƒ_ƒ€‚Èx, y, zÀ•W‚ğ¶¬‚·‚é
-        float randomX = Random.Range(60f, 40f);
+        float randomX = Random.Range(50f, 30f);
         float randomY = 0f;// Random.Range(-10f, 10f);
-        float randomZ = Random.Range(-60f, -40f);
+        float randomZ = Random.Range(-95f, -75f);
 
         // ¶¬‚µ‚½À•W‚ğ•Ô‚·
         return new Vector3(randomX, randomY, randomZ);

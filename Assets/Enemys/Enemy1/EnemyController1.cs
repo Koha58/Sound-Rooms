@@ -26,11 +26,8 @@ public class EnemyController1 : MonoBehaviour
     public GameObject EnemyWall;
     public GameObject EnemyGetRandomPosition;
     public SkinnedMeshRenderer SkinnedMeshRendererEnemyBody;
-   // public MeshRenderer Ear;
-   // public MeshRenderer Eey;
-
-    public string Ears = "EnemyEar";
-    public string Eeys = "EnemyEey";
+    public MeshRenderer Ear;
+    public MeshRenderer Eey;
 
     float TimeWall;
     float PTime;
@@ -38,16 +35,14 @@ public class EnemyController1 : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
-       // Ear = GameObject.Find(Ears).GetComponent<MeshRenderer>();
-       // Eey = GameObject.Find(Eeys).GetComponent<MeshRenderer>();
         ONoff = 0;
         EnemyChaseOnOff = false;
         EnemyGetRandomPosition1 EGRP1 = EnemyGetRandomPosition.GetComponent<EnemyGetRandomPosition1>();
         // 初期位置をランダムに設定する
         targetPosition = EGRP1.GetRandomPosition();
         SkinnedMeshRendererEnemyBody.enabled = false;
-       // Ear.GetComponent<Collider>().enabled = false;//見える（有効）
-       // Eey.GetComponent<Collider>().enabled = false;//見える（有効）
+        Ear.GetComponent<MeshRenderer>().enabled = false;//見える（有効）
+        Eey.GetComponent<MeshRenderer>().enabled = false;//見える（有効）
         animator = GetComponent<Animator>();   //アニメーターコントローラーからアニメーションを取得する    
     }
 
@@ -111,8 +106,8 @@ public class EnemyController1 : MonoBehaviour
                 Enemystoptime += Time.deltaTime;
                 if (Enemystoptime > 2.0f)
                 {
-                    EnemyGetRandomPosition EGRP = EnemyGetRandomPosition.GetComponent<EnemyGetRandomPosition>();
-                    targetPosition = EGRP.GetRandomPosition();
+                    EnemyGetRandomPosition1 EGRP1 = EnemyGetRandomPosition.GetComponent<EnemyGetRandomPosition1>();
+                    targetPosition = EGRP1.GetRandomPosition();
                     Enemystoponoff = 0;
                 }
             }
@@ -125,13 +120,13 @@ public class EnemyController1 : MonoBehaviour
         if (ONoff == 0)//見えないとき
         {
             EnemyChase EC = Chase.GetComponent<EnemyChase>();
-            float randomTime = Random.Range(7f, 15f);
+            float randomTime = Random.Range(10f, 15f);
             SoundTime += Time.deltaTime;
             if (SoundTime >= randomTime)
             {
                 SkinnedMeshRendererEnemyBody.enabled = false;
-                //Ear.GetComponent<Collider>().enabled = false;//見える（有効）
-                //Eey.GetComponent<Collider>().enabled = false;//見える（有効）
+                Ear.GetComponent<MeshRenderer>().enabled = false;//見える（有効）
+                Eey.GetComponent<MeshRenderer>().enabled = false;//見える（有効）
                 foreach (var item in childTransforms)
                 {
                     //タグが"EnemyParts"である子オブジェクトを見えるようにする
@@ -148,8 +143,8 @@ public class EnemyController1 : MonoBehaviour
             if (Seetime >= 10.0f)
             {
                 SkinnedMeshRendererEnemyBody.enabled = true;
-                //Ear.GetComponent<Collider>().enabled = true;//見える（有効）
-                //Eey.GetComponent<Collider>().enabled = true;//見える（有効）
+                Ear.GetComponent<MeshRenderer>().enabled = true;//見える（有効）
+                Eey.GetComponent<MeshRenderer>().enabled = true;//見える（有効）
                 foreach (var item in childTransforms)
                 {
                     //タグが"EnemyParts"である子オブジェクトを見えなくする

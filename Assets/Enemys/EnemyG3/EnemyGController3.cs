@@ -28,11 +28,8 @@ public class EnemyGController3 : MonoBehaviour
     public SkinnedMeshRenderer SkinnedMeshRendererEnemyGBody;
     public SkinnedMeshRenderer SkinnedMeshRendererEnemyGKey;
     public SkinnedMeshRenderer SkinnedMeshRendererEnemyGRing;
-   // public MeshRenderer Ear;
-   // public MeshRenderer Eey;
-
-   //  public string Ears = "EnemyEar";
-   //  public string Eeys = "EnemyEey";
+    public MeshRenderer Ear;
+    public MeshRenderer Eey;
 
     float TimeWall;
     float PTime;
@@ -40,9 +37,6 @@ public class EnemyGController3 : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
-
-      //  Ear = GameObject.Find(Ears).GetComponent<MeshRenderer>();
-      //  Eey = GameObject.Find(Eeys).GetComponent<MeshRenderer>();
         ONoff = 0;
         EnemyChaseOnOff = false;
         EnemyGGetRandomPosition3 EGRP3 = EnemyGGetRandomPosition.GetComponent<EnemyGGetRandomPosition3>();
@@ -51,8 +45,8 @@ public class EnemyGController3 : MonoBehaviour
         SkinnedMeshRendererEnemyGBody.enabled = false;
         SkinnedMeshRendererEnemyGKey.enabled = false;
         SkinnedMeshRendererEnemyGRing.enabled = false;
-       // Ear.GetComponent<Collider>().enabled = false;//見える（有効）
-        //Eey.GetComponent<Collider>().enabled = false;//見える（有効）
+        Ear.GetComponent<MeshRenderer>().enabled = false;//見える（有効）
+        Eey.GetComponent<MeshRenderer>().enabled = false;//見える（有効）
         animator = GetComponent<Animator>();   //アニメーターコントローラーからアニメーションを取得する    
     }
 
@@ -129,15 +123,15 @@ public class EnemyGController3 : MonoBehaviour
         if (ONoff == 0)//見えないとき
         {
             EnemysGChase EGC = GChase.GetComponent<EnemysGChase>();
-            float randomTime = Random.Range(7f, 15f);
+            float randomTime = Random.Range(10f, 15f);
             SoundTime += Time.deltaTime;
             if (SoundTime >= randomTime)
             {
                 SkinnedMeshRendererEnemyGBody.enabled = false;
                 SkinnedMeshRendererEnemyGKey.enabled = false;
                 SkinnedMeshRendererEnemyGRing.enabled = false;
-               // Ear.GetComponent<Collider>().enabled = false;//見える（有効）
-               // Eey.GetComponent<Collider>().enabled = false;//見える（有効）
+                Ear.GetComponent<MeshRenderer>().enabled = false;//見える（有効）
+                Eey.GetComponent<MeshRenderer>().enabled = false;//見える（有効）
                 foreach (var item in childTransforms)
                 {
                     //タグが"EnemyParts"である子オブジェクトを見えるようにする
@@ -156,8 +150,8 @@ public class EnemyGController3 : MonoBehaviour
                 SkinnedMeshRendererEnemyGBody.enabled = true;
                 SkinnedMeshRendererEnemyGKey.enabled = true;
                 SkinnedMeshRendererEnemyGRing.enabled = true;
-                //Ear.GetComponent<Collider>().enabled = true;//見える（有効）
-               // Eey.GetComponent<Collider>().enabled = true;//見える（有効）
+                Ear.GetComponent<MeshRenderer>().enabled = true;//見える（有効）
+                Eey.GetComponent<MeshRenderer>().enabled = true;//見える（有効）
                 foreach (var item in childTransforms)
                 {
                     //タグが"EnemyParts"である子オブジェクトを見えなくする

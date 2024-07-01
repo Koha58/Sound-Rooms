@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028331, g: 0.2257133, b: 0.3069217, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -784,6 +784,12 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 49289949}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &50165762 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 8012164827827010236, guid: a24e955ffa04329469d0ffb36fd9af93,
+    type: 3}
+  m_PrefabInstance: {fileID: 628660551}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &70560903
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1697,6 +1703,8 @@ MonoBehaviour:
   SkinnedMeshRendererEnemyGBody: {fileID: 947428930}
   SkinnedMeshRendererEnemyGKey: {fileID: 167217733}
   SkinnedMeshRendererEnemyGRing: {fileID: 1319595758}
+  Ear: {fileID: 0}
+  Eey: {fileID: 0}
 --- !u!1 &138242773
 GameObject:
   m_ObjectHideFlags: 0
@@ -2750,6 +2758,12 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1131473456}
   m_SourcePrefab: {fileID: 100100000, guid: bf75af8564529b146ac19ab10eb8865d, type: 3}
+--- !u!23 &252468683 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 8012164827827010236, guid: a24e955ffa04329469d0ffb36fd9af93,
+    type: 3}
+  m_PrefabInstance: {fileID: 1621698367}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &286636445
 GameObject:
   m_ObjectHideFlags: 0
@@ -2902,6 +2916,12 @@ Transform:
   - {fileID: 686726469}
   m_Father: {fileID: 1100101455}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!23 &296623902 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 8012164827827010236, guid: a24e955ffa04329469d0ffb36fd9af93,
+    type: 3}
+  m_PrefabInstance: {fileID: 1746467454}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &314272310 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 366839212972223988, guid: bf75af8564529b146ac19ab10eb8865d,
@@ -5126,6 +5146,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1448992605}
   m_PrefabAsset: {fileID: 0}
+--- !u!23 &569481071 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 8012164827827010236, guid: a24e955ffa04329469d0ffb36fd9af93,
+    type: 3}
+  m_PrefabInstance: {fileID: 2088257357}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &572813327
 GameObject:
   m_ObjectHideFlags: 0
@@ -5269,6 +5295,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1409782644}
   m_PrefabAsset: {fileID: 0}
+--- !u!23 &576819961 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 3845705279818387787, guid: a24e955ffa04329469d0ffb36fd9af93,
+    type: 3}
+  m_PrefabInstance: {fileID: 1746467454}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &580556395
 GameObject:
   m_ObjectHideFlags: 0
@@ -5323,7 +5355,7 @@ PrefabInstance:
     - target: {fileID: 1217889758192577256, guid: 1ca8ed3957ad6da458975c8d16e44822,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -90.2
+      value: -95.84
       objectReference: {fileID: 0}
     - target: {fileID: 1217889758192577256, guid: 1ca8ed3957ad6da458975c8d16e44822,
         type: 3}
@@ -5492,7 +5524,7 @@ PrefabInstance:
       addedObject: {fileID: 586252799}
     - targetCorrespondingSourceObject: {fileID: 6992958931360982476, guid: 1ca8ed3957ad6da458975c8d16e44822,
         type: 3}
-      insertIndex: 5
+      insertIndex: -1
       addedObject: {fileID: 586252803}
   m_SourcePrefab: {fileID: 100100000, guid: 1ca8ed3957ad6da458975c8d16e44822, type: 3}
 --- !u!1 &586252791 stripped
@@ -5610,8 +5642,8 @@ MonoBehaviour:
   EnemyWall: {fileID: 586252793}
   EnemyGetRandomPosition: {fileID: 586252791}
   SkinnedMeshRendererEnemyBody: {fileID: 586252792}
-  Ears: EnemyEar
-  Eeys: EnemyEey
+  Ear: {fileID: 1777071587}
+  Eey: {fileID: 1251545880}
 --- !u!114 &586252803
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6095,7 +6127,7 @@ PrefabInstance:
     - target: {fileID: 725101712044797212, guid: a24e955ffa04329469d0ffb36fd9af93,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 725101712044797212, guid: a24e955ffa04329469d0ffb36fd9af93,
         type: 3}
@@ -6105,12 +6137,12 @@ PrefabInstance:
     - target: {fileID: 2102117847163385295, guid: a24e955ffa04329469d0ffb36fd9af93,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 55.66556
+      value: -30
       objectReference: {fileID: 0}
     - target: {fileID: 2102117847163385295, guid: a24e955ffa04329469d0ffb36fd9af93,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.00000023841858
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2102117847163385295, guid: a24e955ffa04329469d0ffb36fd9af93,
         type: 3}
@@ -6180,7 +6212,7 @@ PrefabInstance:
       addedObject: {fileID: 628660562}
     - targetCorrespondingSourceObject: {fileID: 2575565114887982714, guid: a24e955ffa04329469d0ffb36fd9af93,
         type: 3}
-      insertIndex: 5
+      insertIndex: -1
       addedObject: {fileID: 628660565}
   m_SourcePrefab: {fileID: 100100000, guid: a24e955ffa04329469d0ffb36fd9af93, type: 3}
 --- !u!1 &628660552 stripped
@@ -6297,6 +6329,8 @@ MonoBehaviour:
   SkinnedMeshRendererEnemyGBody: {fileID: 628660555}
   SkinnedMeshRendererEnemyGKey: {fileID: 628660554}
   SkinnedMeshRendererEnemyGRing: {fileID: 628660553}
+  Ear: {fileID: 1867191673}
+  Eey: {fileID: 50165762}
 --- !u!114 &628660565
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6728,6 +6762,8 @@ MonoBehaviour:
   EnemyWall: {fileID: 1986321256}
   EnemyGetRandomPosition: {fileID: 919132147670284224}
   SkinnedMeshRendererEnemyBody: {fileID: 2323183363800151647}
+  Ear: {fileID: 0}
+  Eey: {fileID: 0}
 --- !u!54 &665446668
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -8159,6 +8195,12 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 859893607}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &863933970 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 6073232513176658092, guid: 1ca8ed3957ad6da458975c8d16e44822,
+    type: 3}
+  m_PrefabInstance: {fileID: 1913240972}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &866295094
 GameObject:
   m_ObjectHideFlags: 0
@@ -11173,6 +11215,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1623758586}
   m_PrefabAsset: {fileID: 0}
+--- !u!23 &1251545880 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 6073232513176658092, guid: 1ca8ed3957ad6da458975c8d16e44822,
+    type: 3}
+  m_PrefabInstance: {fileID: 586252790}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1259555827 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8586046032975707095, guid: d13a1c18d4de717409027647c3d1cd83,
@@ -12281,8 +12329,8 @@ MonoBehaviour:
   EnemyWall: {fileID: 1769388292}
   EnemyGetRandomPosition: {fileID: 1349521477}
   SkinnedMeshRendererEnemyBody: {fileID: 322908895}
-  Ears: EnemyEar
-  Eeys: EnemyEey
+  Ear: {fileID: 0}
+  Eey: {fileID: 0}
 --- !u!114 &1349521488
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14528,7 +14576,7 @@ PrefabInstance:
     - target: {fileID: 725101712044797212, guid: a24e955ffa04329469d0ffb36fd9af93,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 725101712044797212, guid: a24e955ffa04329469d0ffb36fd9af93,
         type: 3}
@@ -14538,7 +14586,7 @@ PrefabInstance:
     - target: {fileID: 2102117847163385295, guid: a24e955ffa04329469d0ffb36fd9af93,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 67.05043
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 2102117847163385295, guid: a24e955ffa04329469d0ffb36fd9af93,
         type: 3}
@@ -14613,7 +14661,7 @@ PrefabInstance:
       addedObject: {fileID: 1621698378}
     - targetCorrespondingSourceObject: {fileID: 2575565114887982714, guid: a24e955ffa04329469d0ffb36fd9af93,
         type: 3}
-      insertIndex: 5
+      insertIndex: -1
       addedObject: {fileID: 1621698381}
   m_SourcePrefab: {fileID: 100100000, guid: a24e955ffa04329469d0ffb36fd9af93, type: 3}
 --- !u!1 &1621698368 stripped
@@ -14730,6 +14778,8 @@ MonoBehaviour:
   SkinnedMeshRendererEnemyGBody: {fileID: 1621698371}
   SkinnedMeshRendererEnemyGKey: {fileID: 1621698370}
   SkinnedMeshRendererEnemyGRing: {fileID: 1621698369}
+  Ear: {fileID: 1637490105}
+  Eey: {fileID: 252468683}
 --- !u!114 &1621698381
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14847,6 +14897,12 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8586046032975707095, guid: d13a1c18d4de717409027647c3d1cd83,
     type: 3}
   m_PrefabInstance: {fileID: 1764437659}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &1637490105 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 3845705279818387787, guid: a24e955ffa04329469d0ffb36fd9af93,
+    type: 3}
+  m_PrefabInstance: {fileID: 1621698367}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1648777008
 GameObject:
@@ -16310,12 +16366,12 @@ PrefabInstance:
     - target: {fileID: 2102117847163385295, guid: a24e955ffa04329469d0ffb36fd9af93,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 47.897755
+      value: 80
       objectReference: {fileID: 0}
     - target: {fileID: 2102117847163385295, guid: a24e955ffa04329469d0ffb36fd9af93,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.000000059604645
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2102117847163385295, guid: a24e955ffa04329469d0ffb36fd9af93,
         type: 3}
@@ -16385,7 +16441,7 @@ PrefabInstance:
       addedObject: {fileID: 1746467465}
     - targetCorrespondingSourceObject: {fileID: 2575565114887982714, guid: a24e955ffa04329469d0ffb36fd9af93,
         type: 3}
-      insertIndex: 5
+      insertIndex: -1
       addedObject: {fileID: 1746467468}
   m_SourcePrefab: {fileID: 100100000, guid: a24e955ffa04329469d0ffb36fd9af93, type: 3}
 --- !u!1 &1746467455 stripped
@@ -16502,8 +16558,8 @@ MonoBehaviour:
   SkinnedMeshRendererEnemyGBody: {fileID: 1746467458}
   SkinnedMeshRendererEnemyGKey: {fileID: 1746467457}
   SkinnedMeshRendererEnemyGRing: {fileID: 1746467456}
-  Ears: EnemyEar
-  Eeys: EnemyEey
+  Ear: {fileID: 576819961}
+  Eey: {fileID: 296623902}
 --- !u!114 &1746467468
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16896,6 +16952,12 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1349521485}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!23 &1777071587 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 1065809085297136289, guid: 1ca8ed3957ad6da458975c8d16e44822,
+    type: 3}
+  m_PrefabInstance: {fileID: 586252790}
+  m_PrefabAsset: {fileID: 0}
 --- !u!137 &1784463837 stripped
 SkinnedMeshRenderer:
   m_CorrespondingSourceObject: {fileID: 5594001706036165986, guid: 46909d51fabcb1e499e50df7b0a13ec1,
@@ -17565,7 +17627,7 @@ PrefabInstance:
     - target: {fileID: 8281158163438209939, guid: 7576d9a051e911c4ebaffeb66f1a3e88,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 63.33
+      value: 56.69
       objectReference: {fileID: 0}
     - target: {fileID: 8281158163438209939, guid: 7576d9a051e911c4ebaffeb66f1a3e88,
         type: 3}
@@ -17575,7 +17637,7 @@ PrefabInstance:
     - target: {fileID: 8281158163438209939, guid: 7576d9a051e911c4ebaffeb66f1a3e88,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -93.13
+      value: -90.64
       objectReference: {fileID: 0}
     - target: {fileID: 8281158163438209939, guid: 7576d9a051e911c4ebaffeb66f1a3e88,
         type: 3}
@@ -17620,7 +17682,7 @@ PrefabInstance:
     - target: {fileID: 8766051985095905577, guid: 7576d9a051e911c4ebaffeb66f1a3e88,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -18042,6 +18104,12 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6756741481902576509, guid: aba5db4e6ab8f6749a53494eac860531,
     type: 3}
   m_PrefabInstance: {fileID: 1864267615}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &1867191673 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 3845705279818387787, guid: a24e955ffa04329469d0ffb36fd9af93,
+    type: 3}
+  m_PrefabInstance: {fileID: 628660551}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1870111856
 GameObject:
@@ -18644,7 +18712,7 @@ PrefabInstance:
     - target: {fileID: 1217889758192577256, guid: 1ca8ed3957ad6da458975c8d16e44822,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 1217889758192577256, guid: 1ca8ed3957ad6da458975c8d16e44822,
         type: 3}
@@ -18654,7 +18722,7 @@ PrefabInstance:
     - target: {fileID: 1217889758192577256, guid: 1ca8ed3957ad6da458975c8d16e44822,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -82.5
+      value: -73.55
       objectReference: {fileID: 0}
     - target: {fileID: 1217889758192577256, guid: 1ca8ed3957ad6da458975c8d16e44822,
         type: 3}
@@ -18823,7 +18891,7 @@ PrefabInstance:
       addedObject: {fileID: 1913240981}
     - targetCorrespondingSourceObject: {fileID: 6992958931360982476, guid: 1ca8ed3957ad6da458975c8d16e44822,
         type: 3}
-      insertIndex: 5
+      insertIndex: -1
       addedObject: {fileID: 1913240985}
   m_SourcePrefab: {fileID: 100100000, guid: 1ca8ed3957ad6da458975c8d16e44822, type: 3}
 --- !u!1 &1913240973 stripped
@@ -18941,6 +19009,8 @@ MonoBehaviour:
   EnemyWall: {fileID: 1913240975}
   EnemyGetRandomPosition: {fileID: 1913240973}
   SkinnedMeshRendererEnemyBody: {fileID: 1913240974}
+  Ear: {fileID: 2115732462}
+  Eey: {fileID: 863933970}
 --- !u!114 &1913240985
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20488,7 +20558,7 @@ PrefabInstance:
     - target: {fileID: 725101712044797212, guid: a24e955ffa04329469d0ffb36fd9af93,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 725101712044797212, guid: a24e955ffa04329469d0ffb36fd9af93,
         type: 3}
@@ -20498,7 +20568,7 @@ PrefabInstance:
     - target: {fileID: 2102117847163385295, guid: a24e955ffa04329469d0ffb36fd9af93,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 72.00941
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 2102117847163385295, guid: a24e955ffa04329469d0ffb36fd9af93,
         type: 3}
@@ -20573,7 +20643,7 @@ PrefabInstance:
       addedObject: {fileID: 2088257368}
     - targetCorrespondingSourceObject: {fileID: 2575565114887982714, guid: a24e955ffa04329469d0ffb36fd9af93,
         type: 3}
-      insertIndex: 5
+      insertIndex: -1
       addedObject: {fileID: 2088257371}
   m_SourcePrefab: {fileID: 100100000, guid: a24e955ffa04329469d0ffb36fd9af93, type: 3}
 --- !u!1 &2088257358 stripped
@@ -20690,6 +20760,8 @@ MonoBehaviour:
   SkinnedMeshRendererEnemyGBody: {fileID: 2088257361}
   SkinnedMeshRendererEnemyGKey: {fileID: 2088257360}
   SkinnedMeshRendererEnemyGRing: {fileID: 2088257359}
+  Ear: {fileID: 2136757470}
+  Eey: {fileID: 569481071}
 --- !u!114 &2088257371
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20834,6 +20906,12 @@ Transform:
   - {fileID: 1753283673}
   m_Father: {fileID: 137202893}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!23 &2115732462 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 1065809085297136289, guid: 1ca8ed3957ad6da458975c8d16e44822,
+    type: 3}
+  m_PrefabInstance: {fileID: 1913240972}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2116721764
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -21104,6 +21182,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1071200330}
   m_PrefabAsset: {fileID: 0}
+--- !u!23 &2136757470 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 3845705279818387787, guid: a24e955ffa04329469d0ffb36fd9af93,
+    type: 3}
+  m_PrefabInstance: {fileID: 2088257357}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2144558040
 GameObject:
   m_ObjectHideFlags: 0
@@ -21281,8 +21365,8 @@ MonoBehaviour:
   SkinnedMeshRendererEnemyGBody: {fileID: 8033139015451228009}
   SkinnedMeshRendererEnemyGKey: {fileID: 6028881324909344830}
   SkinnedMeshRendererEnemyGRing: {fileID: 1889780282697350072}
-  Ears: EnemyEar
-  Eeys: EnemyEey
+  Ear: {fileID: 0}
+  Eey: {fileID: 0}
 --- !u!4 &543450651862445434
 Transform:
   m_ObjectHideFlags: 0

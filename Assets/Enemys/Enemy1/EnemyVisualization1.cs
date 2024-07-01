@@ -75,19 +75,6 @@ public class EnemyVisualization1 : MonoBehaviour
         GameObject isobj = GameObject.Find("Player");
         ISe = isobj.GetComponent<ItemSearch>(); //付いているスクリプトを取得
 
-        GameObject eobj1 = GameObject.FindWithTag("Enemy1");
-        EnemyController1 EC1 = eobj1.GetComponent<EnemyController1>(); //Enemyに付いているスクリプトを取得
-
-        //音を出すと範囲内を可視化
-        if (EC1.ONoff == 1)//levelMeter.nowdB > 0.0f)
-        {
-            Ring.GetComponent<Collider>().enabled = true;//見える（有効）
-        }
-
-        if (EC1.ONoff == 0)//levelMeter.nowdB > 0.0f)
-        {
-            Ring.GetComponent<Collider>().enabled = false;//見える（有効）
-        }
 
         if (PlayerOnoff == true)
         {
