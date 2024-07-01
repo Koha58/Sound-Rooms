@@ -15,7 +15,7 @@ public class WallScript : MonoBehaviour
 
     MeshRenderer Wall;
 
-    float WallCount;    
+    float WallCount;
 
     void Start()
     {
@@ -27,7 +27,6 @@ public class WallScript : MonoBehaviour
 
     private void Update()
     {
-
         GameObject soundobj = GameObject.Find("SoundVolume");
         levelMeter = soundobj.GetComponent<LevelMeter>(); //付いているスクリプトを取得
 
@@ -48,92 +47,82 @@ public class WallScript : MonoBehaviour
             }
         }
 
-        WallCount += Time.deltaTime;
-        if(WallCount>=7.0f)
+        if (Wall.enabled == true)
         {
-            bc.enabled = false;
-            Wall.enabled = false;
-            WallCount = 0;
+            WallCount += Time.deltaTime;
+            if (WallCount >= 5.0f)
+            {
+                bc.enabled = false;
+                Wall.enabled = false;
+                WallCount = 0;
+            }
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
-       if (other.gameObject.CompareTag("Visualization"))
-       {
-            GameObject eobj = GameObject.FindWithTag("Enemy");
-            EnemyController EC = eobj.GetComponent<EnemyController>(); //Enemyに付いているスクリプトを取得
-
-            if (EC.ONoff == 1)//|| EFW.ONoff == 1)
-            {
-                Wall.enabled = true;
-            }
-
-            GameObject eobj1 = GameObject.FindWithTag("Enemy1");
-            EnemyController1 EC1 = eobj1.GetComponent<EnemyController1>(); //Enemyに付いているスクリプトを取得
-
-            if (EC1.ONoff == 1)//|| EFW.ONoff == 1)
-            {
-                Wall.enabled = true;
-            }
-       }
-      /*      GameObject eobjG = GameObject.FindWithTag("EnemyG");
-            EnemyGController EGC = eobjG.GetComponent<EnemyGController>(); //Enemyに付いているスクリプトを取得
-
-            if (EGC.ONoff == 1)//|| EFW.ONoff == 1)
-            {
-                Wall.enabled = true;
-            }
-
-            GameObject eobjG1 = GameObject.FindWithTag("EnemyG1");
-            EnemyGController1 EGC1 = eobjG1.GetComponent<EnemyGController1>(); //Enemyに付いているスクリプトを取得
-
-            if (EGC1.ONoff == 1)//|| EFW.ONoff == 1)
-            {
-                Wall.enabled = true;
-            }
-
-        }*/
-
-        if (other.gameObject.CompareTag("EnemyWall"))
+        if (other.gameObject.CompareTag("Visualization"))
         {
-            GameObject eobj = GameObject.FindWithTag("Enemy");
-            EnemyController EC = eobj.GetComponent<EnemyController>(); //Enemyに付いているスクリプトを取得
-            if (EC.ONoff == 1)//|| EFW.ONoff == 1)
+            Wall.enabled = true;
+
+            if (other.gameObject.CompareTag("EnemyWall"))
             {
-                Wall.enabled = true;
-                bc.enabled = true;
+                GameObject eobj = GameObject.FindWithTag("Enemy");
+                EnemyController EC = eobj.GetComponent<EnemyController>(); //Enemyに付いているスクリプトを取得
+                if (EC.ONoff == 1)//|| EFW.ONoff == 1)
+                {
+                    Wall.enabled = true;
+                    bc.enabled = true;
+                }
+
+                GameObject eobj1 = GameObject.FindWithTag("Enemy1");
+                EnemyController1 EC1 = eobj1.GetComponent<EnemyController1>(); //Enemyに付いているスクリプトを取得
+                if (EC1.ONoff == 1)//|| EFW.ONoff == 1)
+                {
+                    Wall.enabled = true;
+                    bc.enabled = true;
+                }
             }
 
-            GameObject eobj1 = GameObject.FindWithTag("Enemy1");
-            EnemyController1 EC1= eobj1.GetComponent<EnemyController1>(); //Enemyに付いているスクリプトを取得
-            if (EC1.ONoff == 1)//|| EFW.ONoff == 1)
+            if (other.gameObject.CompareTag("EnemyGwall"))
             {
-                Wall.enabled = true;
-                bc.enabled = true;
+                GameObject eobjG = GameObject.FindWithTag("EnemyG");
+                EnemyGController EGC = eobjG.GetComponent<EnemyGController>(); //Enemyに付いているスクリプトを取得
+                if (EGC.ONoff == 1)//|| EFW.ONoff == 1)
+                {
+                    Wall.enabled = true;
+                    bc.enabled = true;
+                }
+
+                GameObject eobjG1 = GameObject.FindWithTag("EnemyG1");
+                EnemyGController1 EGC1 = eobjG1.GetComponent<EnemyGController1>(); //Enemyに付いているスクリプトを取得
+                if (EGC1.ONoff == 1)//|| EFW.ONoff == 1)
+                {
+                    Wall.enabled = true;
+                    bc.enabled = true;
+                }
+
+
+                GameObject eobjG2 = GameObject.FindWithTag("EnemyG2");
+                EnemyGController2 EGC2 = eobjG2.GetComponent<EnemyGController2>(); //Enemyに付いているスクリプトを取得
+
+                if (EGC2.ONoff == 1)//|| EFW.ONoff == 1)
+                {
+                    Wall.enabled = true;
+                    bc.enabled = true;
+                }
+
+                GameObject eobjG3 = GameObject.FindWithTag("EnemyG3");
+                EnemyGController3 EGC3 = eobjG3.GetComponent<EnemyGController3>(); //Enemyに付いているスクリプトを取得
+
+                if (EGC3.ONoff == 1)//|| EFW.ONoff == 1)
+                {
+                    Wall.enabled = true;
+                    bc.enabled = true;
+                    Debug.Log("1.6");
+                }
             }
         }
-
-    /*    if (other.gameObject.CompareTag("EnemyGwall"))
-        {
-            GameObject eobjG = GameObject.FindWithTag("EnemyG");
-            EnemyGController EGC = eobjG.GetComponent<EnemyGController>(); //Enemyに付いているスクリプトを取得
-            if (EGC.ONoff == 1)//|| EFW.ONoff == 1)
-            {
-                Wall.enabled = true;
-                bc.enabled = true;
-                //Debug.Log("##");
-            }
-
-            GameObject eobjG1 = GameObject.FindWithTag("EnemyG1");
-            EnemyGController1 EGC1 = eobjG1.GetComponent<EnemyGController1>(); //Enemyに付いているスクリプトを取得
-            if (EGC1.ONoff == 1)//|| EFW.ONoff == 1)
-            {
-                Wall.enabled = true;
-                bc.enabled = true;
-                //Debug.Log("##");
-            }
-        }*/
     }
 
     private void OnTriggerExit(Collider other)

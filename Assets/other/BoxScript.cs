@@ -14,6 +14,8 @@ public class BoxScript : MonoBehaviour
 
     MeshRenderer Box;
 
+    float BoxCount;
+
     void Start()
     {
         //プレイヤーが見えていない時
@@ -45,113 +47,33 @@ public class BoxScript : MonoBehaviour
             }
         }
 
-        GameObject eobj = GameObject.FindWithTag("Enemy");
-        EnemyController EC = eobj.GetComponent<EnemyController>(); //Enemyに付いているスクリプトを取得
-        GameObject eobj1 = GameObject.FindWithTag("Enemy1");
-        EnemyController1 EC1 = eobj1.GetComponent<EnemyController1>(); //Enemyに付いているスクリプトを取得
-        
-        bc = GetComponent<BoxCollider>();
-
-        if (EC.ONoff == 0)//||EFW.ONoff==0 )
+        if (Box.enabled == true)
         {
-            bc.enabled = false;
-            RingOnOff = false;
-            Box.enabled = false;
-        }
-        else if (EC.ONoff == 1)//|| EFW.ONoff == 1)
-        {
-            bc.enabled = true;
-
-        }
-
-        if (EC1.ONoff == 0)//||EFW.ONoff==0 )
-        {
-            bc.enabled = false;
-            RingOnOff = false;
-            Box.enabled = false;
-        }
-        else if (EC1.ONoff == 1)//|| EFW.ONoff == 1)
-        {
-            bc.enabled = true;
-
-        }
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.CompareTag("Visualization"))
-        {
-            GameObject eobj = GameObject.FindWithTag("Enemy");
-            EnemyController EC = eobj.GetComponent<EnemyController>(); //Enemyに付いているスクリプトを取得
-            GameObject eobj1 = GameObject.FindWithTag("Enemy1");
-            EnemyController1 EC1 = eobj.GetComponent<EnemyController1>(); //Enemyに付いているスクリプトを取得
-
-            GameObject eobjG = GameObject.FindWithTag("EnemyG");
-            EnemyGController EGC = eobjG.GetComponent<EnemyGController>(); //Enemyに付いているスクリプトを取得
-            GameObject eobjG1 = GameObject.FindWithTag("EnemyG1");
-            EnemyGController1 EGC1 = eobjG1.GetComponent<EnemyGController1>(); //Enemyに付いているスクリプトを取得
-            GameObject eobjG2 = GameObject.FindWithTag("EnemyG2");
-            EnemyGController2 EGC2 = eobjG2.GetComponent<EnemyGController2>(); //Enemyに付いているスクリプトを取得
-            GameObject eobjG3 = GameObject.FindWithTag("EnemyG3");
-            EnemyGController3 EGC3 = eobjG3.GetComponent<EnemyGController3>(); //Enemyに付いているスクリプトを取得
-
-            if (RingOnOff == true)
+            BoxCount += Time.deltaTime;
+            if (BoxCount >= 5.0f)
             {
-                if (EC.ONoff == 0)//||EFW.ONoff==0 )
-                {
-                    bc.enabled = false;
-                }
-                else if (EC.ONoff == 1)//|| EFW.ONoff == 1)
-                {
-                    bc.enabled = true;
-                }
-
-                if (EC1.ONoff == 0)//||EFW.ONoff==0 )
-                {
-                    bc.enabled = false;
-                }
-                else if (EC1.ONoff == 1)//|| EFW.ONoff == 1)
-                {
-                    bc.enabled = true;
-                }
-
-                if (EGC.ONoff == 0)//||EFW.ONoff==0 )
-                {
-                    bc.enabled = false;
-                }
-                else if (EGC.ONoff == 1)//|| EFW.ONoff == 1)
-                {
-                    bc.enabled = true;
-                }
-
-                if (EGC1.ONoff == 0)//||EFW.ONoff==0 )
-                {
-                    bc.enabled = false;
-                }
-                else if (EGC1.ONoff == 1)//|| EFW.ONoff == 1)
-                {
-                    bc.enabled = true;
-                }
-
-                if (EGC2.ONoff == 0)//||EFW.ONoff==0 )
-                {
-                    bc.enabled = false;
-                }
-                else if (EGC2.ONoff == 1)//|| EFW.ONoff == 1)
-                {
-                    bc.enabled = true;
-                }
-
-                if (EGC3.ONoff == 0)//||EFW.ONoff==0 )
-                {
-                    bc.enabled = false;
-                }
-                else if (EGC3.ONoff == 1)//|| EFW.ONoff == 1)
-                {
-                    bc.enabled = true;
-                }
+                bc.enabled = false;
+                Box.enabled = false;
+                BoxCount = 0;
             }
         }
 
+    }
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.CompareTag("Visualization"))
+        {
+            Box.enabled = true;
+            bc.enabled = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("Visualization"))
+        {
+            bc.enabled = false;
+            Box.enabled = false;
+        }
     }
 }

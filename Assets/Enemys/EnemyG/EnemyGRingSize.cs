@@ -31,7 +31,7 @@ public class EnemyGRingSize : MonoBehaviour
         if (EGC.ONoff == 1)
         {
             Ring.enabled = true;
-            RingG.GetComponent<Collider>().enabled = false;//見える（有効）
+            RingG.GetComponent<Collider>().enabled = true;//見える（有効）
             //  StartCoroutine("ScaleUp");
         }
 
