@@ -50,7 +50,7 @@ public class BoxScript : MonoBehaviour
         if (Box.enabled == true)
         {
             BoxCount += Time.deltaTime;
-            if (BoxCount >= 5.0f)
+            if (BoxCount >= 7.0f)
             {
                 bc.enabled = false;
                 Box.enabled = false;

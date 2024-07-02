@@ -7,6 +7,7 @@ public class EnemyChase : MonoBehaviour
 {
     public Transform Player;//プレイヤーを参照
     public bool Chase=false;
+    float ChaseTime;
   
     // Start is called before the first frame update
     private  void Start()
@@ -17,7 +18,16 @@ public class EnemyChase : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-     
+        if(Chase==true)
+        {
+            ChaseTime += Time.deltaTime;
+            if(ChaseTime >10.0f)
+            {
+                Chase = false;
+                ChaseTime = 0;
+            }
+        }
+        
     }
 
     private void OnTriggerStay(Collider other)
@@ -28,12 +38,12 @@ public class EnemyChase : MonoBehaviour
         }
     }
 
-    private void OnTriggerExit(Collider other)
+  /*private void OnTriggerExit(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
             Chase = false;
         }
-    }
+    }*/
 
 }

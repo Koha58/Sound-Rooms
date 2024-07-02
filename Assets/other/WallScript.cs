@@ -50,7 +50,7 @@ public class WallScript : MonoBehaviour
         if (Wall.enabled == true)
         {
             WallCount += Time.deltaTime;
-            if (WallCount >= 5.0f)
+            if (WallCount >= 7.0f)
             {
                 bc.enabled = false;
                 Wall.enabled = false;
@@ -64,6 +64,12 @@ public class WallScript : MonoBehaviour
         if (other.gameObject.CompareTag("Visualization"))
         {
             Wall.enabled = true;
+            GameObject obj = GameObject.Find("Player"); //Playerオブジェクトを探す
+            PlayerSeen PS = obj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
+            if (PS.onoff == 1)
+            {
+                bc.enabled = true;
+            }
 
             if (other.gameObject.CompareTag("EnemyWall"))
             {
