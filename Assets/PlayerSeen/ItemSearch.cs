@@ -14,7 +14,7 @@ public class ItemSearch : MonoBehaviour
     public List<string> myItemList = new List<string>();
     public TextMeshProUGUI keyCountText;
     public int count;
-    public  static GameObject ItemGetText;
+    public  GameObject ItemGetText;
     ItemSeen IS;
     [SerializeField]AudioSource PickupSound;
 
@@ -24,8 +24,8 @@ public class ItemSearch : MonoBehaviour
         SetCountText();
         PickupSound = GetComponent<AudioSource>();
 
-        ItemGetText = GameObject.Find("ItemGetUI");
-        ItemGetText.GetComponent<Image>().enabled = false;
+        //ItemGetText = GameObject.Find("ItemGetUI");
+        //ItemGetText.GetComponent<Image>().enabled = false;
     }
     private void Update()
     {
@@ -39,7 +39,7 @@ public class ItemSearch : MonoBehaviour
 
     void CaluculateClosetObject()
     {
-        ItemGetText = GameObject.Find("ItemGetUI");
+        //ItemGetText = GameObject.Find("ItemGetUI");
         ItemSearchArea = GameObject.FindGameObjectsWithTag("Item").ToList();
         //一番近いアイテムを取得する
         float closetDistance = 1000000;
@@ -71,15 +71,15 @@ public class ItemSearch : MonoBehaviour
         }
         //最も近いアイテムが一定の距離内にある場合、アイテムの説明UIを表示。Eキーを押すと拾える。
         //if (closetObject == null) return;
-        if (closetDistance < 1.5f && IS.onoff == 1)
-        {
-            ItemGetText.GetComponent<Image>().enabled = true;
-            PickUp();
-        }
-        if(closetDistance >= 1.5f || IS.onoff == 0)
-        {
-            ItemGetText.GetComponent<Image>().enabled = false;
-        }
+        //if (closetDistance < 1.5f && IS.onoff == 1)
+        //{
+        //    ItemGetText.GetComponent<Image>().enabled = true;
+        //    PickUp();
+        //}
+        //if(closetDistance >= 1.5f || IS.onoff == 0)
+        //{
+        //    ItemGetText.GetComponent<Image>().enabled = false;
+        //}
     }
 
     void PickUp()

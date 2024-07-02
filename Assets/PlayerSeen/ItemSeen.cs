@@ -5,8 +5,9 @@ using System.Text.RegularExpressions;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UIElements;
+//using UnityEngine.UIElements;
 using UnityEngine.XR;
+using UnityEngine.UI;
 
 //範囲内のアイテムの可視化・不可視化
 public class ItemSeen : MonoBehaviour
@@ -23,8 +24,13 @@ public class ItemSeen : MonoBehaviour
     ItemSearch ISe;
     LevelMeter levelMeter;
 
+    public GameObject ItemGetText;
+
     void Start()
     {
+        ItemGetText = GameObject.Find("ItemGetUI");
+        ItemGetText.GetComponent<Image>().enabled = false;
+
         parentObject = GameObject.FindGameObjectsWithTag("Item");
         GameObject Key1 = parentObject[0];
         // 子オブジェクトの数を取得
@@ -101,6 +107,8 @@ public class ItemSeen : MonoBehaviour
 
     private void Update()
     {
+        ItemGetText = GameObject.Find("ItemGetUI");
+
         Walls = GameObject.FindGameObjectsWithTag("Wall");
 
         Boxes = GameObject.FindGameObjectsWithTag("Box");
@@ -178,6 +186,8 @@ public class ItemSeen : MonoBehaviour
                 }
 
                 SeenArea.GetComponent<Collider>().enabled = false;//見えない（無効）
+
+                ItemGetText.GetComponent<Image>().enabled = false;
 
                 foreach (GameObject Wall in Walls)
                 {
@@ -263,6 +273,8 @@ public class ItemSeen : MonoBehaviour
                     childObject.GetComponent<Renderer>().enabled = true;
                 }
             }
+
+            ItemGetText.GetComponent<Image>().enabled = true;
         }
         else if (objName == "key 1")
         {
@@ -314,6 +326,8 @@ public class ItemSeen : MonoBehaviour
                     childObject.GetComponent<Renderer>().enabled = true;
                 }
             }
+
+            ItemGetText.GetComponent<Image>().enabled = true;
         }
         else if (objName == "key 1 (2)")
         {
@@ -361,6 +375,8 @@ public class ItemSeen : MonoBehaviour
                     childObject.GetComponent<Renderer>().enabled = true;
                 }
             }
+
+            ItemGetText.GetComponent<Image>().enabled = true;
         }
         else if (objName == "key 1 (3)")
         {
@@ -408,6 +424,8 @@ public class ItemSeen : MonoBehaviour
                     childObject.GetComponent<Renderer>().enabled = true;
                 }
             }
+
+            ItemGetText.GetComponent<Image>().enabled = true;
         }
 
         else if (other.CompareTag("Wall"))//接触したオブジェクトのタグが"Wall"のとき
