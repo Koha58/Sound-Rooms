@@ -14,7 +14,7 @@ public class ItemSearch : MonoBehaviour
     public List<string> myItemList = new List<string>();
     public TextMeshProUGUI keyCountText;
     public int count;
-    public  GameObject ItemGetText;
+    //public  GameObject ItemGetText;
     ItemSeen IS;
     [SerializeField]AudioSource PickupSound;
 
@@ -71,11 +71,10 @@ public class ItemSearch : MonoBehaviour
         }
         //最も近いアイテムが一定の距離内にある場合、アイテムの説明UIを表示。Eキーを押すと拾える。
         //if (closetObject == null) return;
-        //if (closetDistance < 1.5f && IS.onoff == 1)
-        //{
-        //    ItemGetText.GetComponent<Image>().enabled = true;
-        //    PickUp();
-        //}
+        if (closetDistance < 1.5f && IS.onoff == 1)
+        {
+            PickUp();
+        }
         //if(closetDistance >= 1.5f || IS.onoff == 0)
         //{
         //    ItemGetText.GetComponent<Image>().enabled = false;
