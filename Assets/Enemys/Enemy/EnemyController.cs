@@ -11,7 +11,7 @@ public class EnemyController : MonoBehaviour
     float speed = 1f;//移動スピード
     public GameObject Player;//プレイヤーを参照
     Vector3 targetPosition;//Enemyの目的地
-    float ChaseSpeed = 0.12f;//Playerを追いかけるスピード
+    float ChaseSpeed = 0.07f;//Playerを追いかけるスピード
     private bool EnemyChaseOnOff;//Playerの追跡のONOFF 
 
     public float ONoff = 0;//(0が見えない；１が見える状態）
@@ -126,7 +126,7 @@ public class EnemyController : MonoBehaviour
         if (ONoff == 0)//見えないとき
         {
             EnemyChase EC = Chase.GetComponent<EnemyChase>();
-            float randomTime = Random.Range(7f, 15f);
+            float randomTime = Random.Range(10f, 15f);
             SoundTime += Time.deltaTime;
             if (SoundTime >= randomTime)
             {

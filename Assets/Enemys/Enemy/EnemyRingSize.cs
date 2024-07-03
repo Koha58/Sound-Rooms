@@ -27,7 +27,7 @@ public class EnemyRingSize : MonoBehaviour
      
         if (EC.ONoff == 0)
         {
-            i = 100;
+            i = 200;
             Ring.enabled = false;
             Ring.GetComponent<Collider>().enabled = false;//å©Ç¶ÇÈÅióLå¯Åj
         }
@@ -41,7 +41,7 @@ public class EnemyRingSize : MonoBehaviour
 
     IEnumerator ScaleUp()
     {
-        for (i = 150; i < 200; i += 5f)
+        for (i = 200; i < 400; i += 5f)
         {
             this.transform.localScale = new Vector3(i, i, i);
             yield return new WaitForSeconds(0.1f);

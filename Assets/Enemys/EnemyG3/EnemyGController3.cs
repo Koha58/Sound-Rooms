@@ -9,7 +9,7 @@ public class EnemyGController3 : MonoBehaviour
     float speed = 1f;//移動スピード
     public GameObject Player;//プレイヤーを参照
     Vector3 targetPosition;//Enemyの目的地
-    float ChaseSpeed = 0.12f;//Playerを追いかけるスピード
+    float ChaseSpeed = 0.07f;//Playerを追いかけるスピード
     private bool EnemyChaseOnOff;//Playerの追跡のONOFF 
 
     public float ONoff = 0;//(0が見えない；１が見える状態）
