@@ -62,6 +62,8 @@ public class EnemyGController3 : MonoBehaviour
 
         //「歩く」のアニメーションを再生する
         animator.SetBool("EnemyWalk", true);
+        //「走る」のアニメーションを再生する
+        animator.SetBool("EnemyRun", false);
 
         Switch();
 
@@ -90,8 +92,10 @@ public class EnemyGController3 : MonoBehaviour
         {
             transform.LookAt(Player.transform); //プレイヤーの方向にむく
             transform.position += transform.forward * ChaseSpeed;//プレイヤーの方向に向かう
-                                                                 //「走る」のアニメーションを再生する
-                                                                 //animator.SetBool("EnemyRun", true);
+            //「歩く」のアニメーションを停止
+            animator.SetBool("EnemyWalk", false);
+            //「走る」のアニメーションを再生する
+            animator.SetBool("EnemyRun", true);
         }
         else if (EnemyChaseOnOff == false || PS.onoff == 0)//Playerが検知範囲に入っていないまたはPlayerが見えていない
         {
