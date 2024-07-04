@@ -26,10 +26,6 @@ public class inWallScript : MonoBehaviour
 
     void Update()
     {
-        GameObject obj = GameObject.Find("Player"); //Playerオブジェクトを探す
-        PlayerSeen PS = obj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
-        var childTransforms = PS._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
-
         GameObject soundobj = GameObject.Find("SoundVolume");
         levelMeter = soundobj.GetComponent<LevelMeter>(); //付いているスクリプトを取得
 
@@ -50,24 +46,19 @@ public class inWallScript : MonoBehaviour
                 onoff = 0;  //見えていないから0
             }
         }
-
     }
-    
-    private void OnTriggerEnter(Collider other)
+
+    private void OnTriggerStay(Collider other)
     {
-        
-        if (other.CompareTag("Player"))
+        if (other.gameObject.CompareTag("Player"))
         {
             GameObject obj = GameObject.Find("Player"); //Playerオブジェクトを探す
             PlayerSeen PS = obj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
-            var childTransforms = PS._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
             if (PS.onoff == 1)
             {
+                Wall.enabled = true;
                 bc.enabled = true;
-            }
-            else if (PS.onoff == 0) 
-            {
-                bc.enabled = false;
+                Debug.Log("inWall");
             }
         }
     }

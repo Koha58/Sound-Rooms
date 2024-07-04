@@ -30,6 +30,9 @@ public class WallScript : MonoBehaviour
         GameObject soundobj = GameObject.Find("SoundVolume");
         levelMeter = soundobj.GetComponent<LevelMeter>(); //付いているスクリプトを取得
 
+        GameObject obj = GameObject.Find("Player"); //Playerオブジェクトを探す
+        PlayerSeen PS = obj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
+
         //プレイヤーが見えている時
         if (levelMeter.nowdB > 0.0f)
         {
@@ -46,7 +49,7 @@ public class WallScript : MonoBehaviour
                 onoff = 0;  //見えていないから0
             }
         }
-
+  
         if (Wall.enabled == true)
         {
             WallCount += Time.deltaTime;
@@ -61,15 +64,20 @@ public class WallScript : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.CompareTag("Visualization"))
+        if (other.gameObject.CompareTag("Player"))
         {
-            Wall.enabled = true;
             GameObject obj = GameObject.Find("Player"); //Playerオブジェクトを探す
             PlayerSeen PS = obj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
             if (PS.onoff == 1)
             {
+                Wall.enabled = true;
                 bc.enabled = true;
+                Debug.Log("Wall");
             }
+        }
+
+        if (other.gameObject.CompareTag("Visualization"))
+        {
 
             if (other.gameObject.CompareTag("EnemyWall"))
             {
