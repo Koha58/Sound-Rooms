@@ -33,6 +33,7 @@ public class EnemyGController : MonoBehaviour
 
     float TimeWall;
     float PTime;
+    bool SeenArea;
 
     // Start is called before the first frame update
     private void Start()
@@ -47,7 +48,8 @@ public class EnemyGController : MonoBehaviour
         SkinnedMeshRendererEnemyGRing.enabled = false;
         Ear.GetComponent<MeshRenderer>().enabled = false;//見える（有効）
         Eey.GetComponent<MeshRenderer>().enabled = false;//見える（有効）
-        animator = GetComponent<Animator>();   //アニメーターコントローラーからアニメーションを取得する    
+        animator = GetComponent<Animator>();   //アニメーターコントローラーからアニメーションを取得する
+        SeenArea = false;
     }
 
     // Update is called once per frame
@@ -64,6 +66,19 @@ public class EnemyGController : MonoBehaviour
         animator.SetBool("EnemyWalk", true);
         //「走る」のアニメーションを再生する
         animator.SetBool("EnemyRun", false);
+
+        if (SeenArea == true)
+        {
+            SeenArea = false;
+            ONoff = 0;
+            Enemystoptime = 0.0f;
+            SkinnedMeshRendererEnemyGBody.enabled = false;
+            SkinnedMeshRendererEnemyGKey.enabled = false;
+            SkinnedMeshRendererEnemyGRing.enabled = false;
+            Ear.GetComponent<MeshRenderer>().enabled = false;//見える（有効）
+            Eey.GetComponent<MeshRenderer>().enabled = false;//見える（有効）
+            Debug.Log("EnemySSS");
+        }
 
         Switch();
 
@@ -202,6 +217,38 @@ public class EnemyGController : MonoBehaviour
                 targetPosition = EGRP.GetRandomPositionG();
                 TimeWall = 0.0f;
             }
+        }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.CompareTag("SeenArea"))
+        {
+            SeenArea = true;
+            ONoff = 1;
+            SoundTime = 0.0f;
+            SkinnedMeshRendererEnemyGBody.enabled = true;
+            SkinnedMeshRendererEnemyGKey.enabled = true;
+            SkinnedMeshRendererEnemyGRing.enabled = true;
+            Ear.GetComponent<MeshRenderer>().enabled = true;//見える（有効）
+            Eey.GetComponent<MeshRenderer>().enabled = true;//見える（有効）
+            Debug.Log("Enemy");
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("SeenArea"))
+        {
+            SeenArea = false;
+            ONoff = 0;
+            Enemystoptime = 0.0f;
+            SkinnedMeshRendererEnemyGBody.enabled = false;
+            SkinnedMeshRendererEnemyGKey.enabled = false;
+            SkinnedMeshRendererEnemyGRing.enabled = false;
+            Ear.GetComponent<MeshRenderer>().enabled = false;//見える（有効）
+            Eey.GetComponent<MeshRenderer>().enabled = false;//見える（有効）
+            Debug.Log("EnemySSS");
         }
     }
 }
