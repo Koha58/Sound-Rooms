@@ -77,8 +77,7 @@ public class EnemyGController2 : MonoBehaviour
             SkinnedMeshRendererEnemyGKey.enabled = false;
             SkinnedMeshRendererEnemyGRing.enabled = false;
             Ear.GetComponent<MeshRenderer>().enabled = false;//見える（有効）
-            Eey.GetComponent<MeshRenderer>().enabled = false;//見える（有効）
-            Debug.Log("EnemySSS");
+            Eey.GetComponent<MeshRenderer>().enabled = false;
         }
 
         Switch();
@@ -231,8 +230,7 @@ public class EnemyGController2 : MonoBehaviour
             SkinnedMeshRendererEnemyGKey.enabled = true;
             SkinnedMeshRendererEnemyGRing.enabled = true;
             Ear.GetComponent<MeshRenderer>().enabled = true;//見える（有効）
-            Eey.GetComponent<MeshRenderer>().enabled = true;//見える（有効）
-            Debug.Log("Enemy");
+            Eey.GetComponent<MeshRenderer>().enabled = true;
         }
     }
 
@@ -247,8 +245,7 @@ public class EnemyGController2 : MonoBehaviour
             SkinnedMeshRendererEnemyGKey.enabled = false;
             SkinnedMeshRendererEnemyGRing.enabled = false;
             Ear.GetComponent<MeshRenderer>().enabled = false;//見える（有効）
-            Eey.GetComponent<MeshRenderer>().enabled = false;//見える（有効）
-            Debug.Log("EnemySSS");
+            Eey.GetComponent<MeshRenderer>().enabled = false;
         }
     }
 }
