@@ -16209,7 +16209,7 @@ PrefabInstance:
     - target: {fileID: 725101712044797212, guid: a24e955ffa04329469d0ffb36fd9af93,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 725101712044797212, guid: a24e955ffa04329469d0ffb36fd9af93,
         type: 3}
@@ -17262,9 +17262,12 @@ MonoBehaviour:
   Chase: {fileID: 908268676}
   EnemyWall: {fileID: 1986321256}
   EnemyGetRandomPosition: {fileID: 919132147670284224}
+  EnemysSeen: {fileID: 0}
   SkinnedMeshRendererEnemyBody: {fileID: 2323183363800151647}
   Ear: {fileID: 0}
   Eey: {fileID: 0}
+  SeenArea: 0
+  Des: 0
 --- !u!54 &665446668
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -38564,7 +38567,7 @@ PrefabInstance:
     - target: {fileID: 725101712044797212, guid: a24e955ffa04329469d0ffb36fd9af93,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 725101712044797212, guid: a24e955ffa04329469d0ffb36fd9af93,
         type: 3}
@@ -42197,7 +42200,7 @@ PrefabInstance:
     - target: {fileID: 725101712044797212, guid: a24e955ffa04329469d0ffb36fd9af93,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 725101712044797212, guid: a24e955ffa04329469d0ffb36fd9af93,
         type: 3}
@@ -47993,6 +47996,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2732419621085104423, guid: 1ca8ed3957ad6da458975c8d16e44822,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2944997127451683822, guid: 1ca8ed3957ad6da458975c8d16e44822,
         type: 3}
       propertyPath: m_TagString
@@ -48127,7 +48135,7 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3291731727494699424, guid: 1ca8ed3957ad6da458975c8d16e44822,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1913240981}
+      addedObject: {fileID: 1913240993}
     - targetCorrespondingSourceObject: {fileID: 6992958931360982476, guid: 1ca8ed3957ad6da458975c8d16e44822,
         type: 3}
       insertIndex: -1
@@ -48187,19 +48195,6 @@ MeshRenderer:
     type: 3}
   m_PrefabInstance: {fileID: 1913240972}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1913240981
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1913240973}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e009c8a995f140f49adde081ae141a21, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Enemys: {fileID: 1913240977}
 --- !u!114 &1913240982
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -48247,9 +48242,12 @@ MonoBehaviour:
   Chase: {fileID: 1913240976}
   EnemyWall: {fileID: 1913240975}
   EnemyGetRandomPosition: {fileID: 1913240973}
+  EnemysSeen: {fileID: 1913240973}
   SkinnedMeshRendererEnemyBody: {fileID: 1913240974}
   Ear: {fileID: 2115732462}
   Eey: {fileID: 863933970}
+  SeenArea: 0
+  Des: 0
 --- !u!114 &1913240985
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -48270,6 +48268,19 @@ Animator:
     type: 3}
   m_PrefabInstance: {fileID: 1913240972}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1913240993
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1913240973}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e009c8a995f140f49adde081ae141a21, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Enemys: {fileID: 1913240977}
 --- !u!1 &1913334073 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 366839212972223988, guid: bf75af8564529b146ac19ab10eb8865d,
@@ -51949,7 +51960,7 @@ PrefabInstance:
     - target: {fileID: 725101712044797212, guid: a24e955ffa04329469d0ffb36fd9af93,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 725101712044797212, guid: a24e955ffa04329469d0ffb36fd9af93,
         type: 3}
@@ -54308,7 +54319,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e009c8a995f140f49adde081ae141a21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Enemys: {fileID: 919132147670284229}
+  Enemys: {fileID: 0}
 --- !u!65 &936814751313827358
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -72,7 +72,7 @@ public class WallScript : MonoBehaviour
             {
                 Wall.enabled = true;
                 bc.enabled = true;
-                Debug.Log("Wall");
+                //Debug.Log("Wall");
             }
         }
 
@@ -133,7 +133,7 @@ public class WallScript : MonoBehaviour
                 {
                     Wall.enabled = true;
                     bc.enabled = true;
-                    Debug.Log("1.6");
+                   // Debug.Log("1.6");
                 }
             }
         }

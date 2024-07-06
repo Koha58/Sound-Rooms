@@ -81,6 +81,7 @@ public class EnemyAttack : MonoBehaviour
                 }
                 other.GetComponent<Collider>().enabled = true;
             }
+            stayTimeF = 0;
         }
 
         //ìGÇÃê≥ñ Ç…ìñÇΩÇ¡ÇΩéû
@@ -97,6 +98,7 @@ public class EnemyAttack : MonoBehaviour
                 }
                 other.GetComponent<Collider>().enabled = true;
             }
+            stayTimeF = 0;
         }
 
         //ìGGÇÃê≥ñ Ç…ìñÇΩÇ¡ÇΩéû
@@ -113,6 +115,7 @@ public class EnemyAttack : MonoBehaviour
                 }
                 other.GetComponent<Collider>().enabled = true;
             }
+            stayTimeFG = 0;
         }
 
         //ìGGÇÃê≥ñ Ç…ìñÇΩÇ¡ÇΩéû
@@ -129,6 +132,7 @@ public class EnemyAttack : MonoBehaviour
                 }
                 other.GetComponent<Collider>().enabled = true;
             }
+            stayTimeFG = 0;
         }
 
         //ìGGÇÃê≥ñ Ç…ìñÇΩÇ¡ÇΩéû
@@ -145,6 +149,7 @@ public class EnemyAttack : MonoBehaviour
                 }
                 other.GetComponent<Collider>().enabled = true;
             }
+            stayTimeFG = 0;
         }
 
         //ìGGÇÃê≥ñ Ç…ìñÇΩÇ¡ÇΩéû
@@ -161,6 +166,7 @@ public class EnemyAttack : MonoBehaviour
                 }
                 other.GetComponent<Collider>().enabled = true;
             }
+            stayTimeFG = 0;
         }
 
         //ìGÇÃîwå„Ç…ìñÇΩÇ¡ÇΩéû
@@ -170,19 +176,17 @@ public class EnemyAttack : MonoBehaviour
             GameObject eobj = GameObject.FindWithTag("Enemy");
             EnemyController EC = eobj.GetComponent<EnemyController>();
             Enemyincrease EI = eobj.GetComponent<Enemyincrease>();
-            if (stayTimeB <= stayTimeF)
-            {
-                stayTimeB += 20f;
-            }
 
             if (stayTimeB >= stayTimeF)
             {
-                Debug.Log("09");
+                eobj.GetComponent<ParticleSystem>().Play();
                 if (F == false)
                 {
+                    EC.Des = true;
                     EI.isHidden = false;
                     Debug.Log("?");
                 }
+                
             }
             
             //ê≥ñ Ç…ìñÇΩÇ¡ÇΩéûÇ…îªíËÇµÇ»Ç¢ÇÊÇ§Ç…Ç∑ÇÈ
@@ -204,11 +208,7 @@ public class EnemyAttack : MonoBehaviour
             GameObject eobj1 = GameObject.FindWithTag("Enemy1");
             EnemyController1 EC1 = eobj1.GetComponent<EnemyController1>();
             Enemyincrease1 EI1 = eobj1.GetComponent<Enemyincrease1>(); //ïtÇ¢ÇƒÇ¢ÇÈÉXÉNÉäÉvÉgÇéÊìæ
-            if (stayTimeB <= stayTimeF)
-            {
-                stayTimeB += 20f;
-            }
-
+        
             if (stayTimeB >= stayTimeF)
             {
                 if (F == false)
@@ -246,6 +246,7 @@ public class EnemyAttack : MonoBehaviour
             {
                 if (F == false)
                 {
+                    Debug.Log("?");
                     if (ItemSeen.parentObject[0] != null)
                     {
                         ItemSeen.parentObject[0].transform.position = eobjG.transform.position;
@@ -299,6 +300,7 @@ public class EnemyAttack : MonoBehaviour
             {
                 if (F == false)
                 {
+                    Debug.Log("?");
                     if (ItemSeen.parentObject[0] != null)
                     {
                         ItemSeen.parentObject[0].transform.position = eobjG1.transform.position;
@@ -351,6 +353,7 @@ public class EnemyAttack : MonoBehaviour
             {
                 if (F == false)
                 {
+                    Debug.Log("?");
                     if (ItemSeen.parentObject[0] != null)
                     {
                         ItemSeen.parentObject[0].transform.position = eobjG2.transform.position;
@@ -404,6 +407,7 @@ public class EnemyAttack : MonoBehaviour
             {
                 if (F == false)
                 {
+                    Debug.Log("?");
                     if (ItemSeen.parentObject[0] != null)
                     {
                         ItemSeen.parentObject[0].transform.position = eobjG3.transform.position;

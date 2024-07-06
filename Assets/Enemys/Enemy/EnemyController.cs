@@ -5,6 +5,7 @@ using System.Net.NetworkInformation;
 using Unity.VisualScripting;
 using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class EnemyController : MonoBehaviour
 {
@@ -27,13 +28,18 @@ public class EnemyController : MonoBehaviour
     public EnemyChase Chase;
     public GameObject EnemyWall;
     public GameObject EnemyGetRandomPosition;
+    public GameObject EnemysSeen;
     public SkinnedMeshRenderer SkinnedMeshRendererEnemyBody;
     public MeshRenderer Ear;
     public MeshRenderer Eey;
 
+   // public CapsuleCollider Enemys;
+
     float TimeWall;
     float PTime;
-    bool SeenArea;
+    public bool SeenArea;
+
+    public bool Des;
 
     // Start is called before the first frame update
     private  void Start()
@@ -41,13 +47,13 @@ public class EnemyController : MonoBehaviour
         ONoff = 0;
         EnemyChaseOnOff = false;
         EnemyGetRandomPosition EGRP = EnemyGetRandomPosition.GetComponent<EnemyGetRandomPosition>();
-        // 初期位置をランダムに設定する
         targetPosition =EGRP. GetRandomPosition();
         SkinnedMeshRendererEnemyBody.enabled = false;
         Ear.GetComponent<MeshRenderer>().enabled = false;//見える（有効）
         Eey.GetComponent<MeshRenderer>().enabled = false;//見える（有効）
         animator = GetComponent<Animator>();   //アニメーターコントローラーからアニメーションを取得する
         SeenArea = false;
+        Des= false;
     }
 
     // Update is called once per frame
@@ -59,20 +65,21 @@ public class EnemyController : MonoBehaviour
         var childTransforms = PS._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
         EnemyChase EC = Chase.GetComponent<EnemyChase>();
         Enemywall EW = EnemyWall.GetComponent<Enemywall>();
-
         //「歩く」のアニメーションを再生する
         animator.SetBool("EnemyWalk", true);
         //「走る」のアニメーションを再生する
         animator.SetBool("EnemyRun", false);
 
         if(SeenArea==true)
-        {   
+        {
             SeenArea = false;
             ONoff = 0;
             Enemystoptime = 0.0f;
             SkinnedMeshRendererEnemyBody.enabled = false;
             Ear.GetComponent<MeshRenderer>().enabled = false;//見える（有効）
             Eey.GetComponent<MeshRenderer>().enabled = false;
+            EnemysSeen EsS = EnemysSeen.GetComponent<EnemysSeen>();
+            EsS.Enemys.enabled = false;
         }
 
         Switch();
@@ -137,7 +144,6 @@ public class EnemyController : MonoBehaviour
         var childTransforms = _parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("EnemyParts"));
         if (ONoff == 0)//見えないとき
         {
-            EnemyChase EC = Chase.GetComponent<EnemyChase>();
             float randomTime = Random.Range(10f, 15f);
             SoundTime += Time.deltaTime;
             if (SoundTime >= randomTime)
@@ -160,10 +166,10 @@ public class EnemyController : MonoBehaviour
             Seetime += Time.deltaTime;
             if (Seetime >= 10.0f)
             {
-               SkinnedMeshRendererEnemyBody.enabled =true;
+                SkinnedMeshRendererEnemyBody.enabled =true;
                 Ear.GetComponent<MeshRenderer>().enabled = true;//見える（有効）
                 Eey.GetComponent<MeshRenderer>().enabled = true;//見える（有効）
-                foreach (var item in childTransforms)
+               foreach (var item in childTransforms)
                {
                     //タグが"EnemyParts"である子オブジェクトを見えなくする
                     item.gameObject.GetComponent<Renderer>().enabled = false;
@@ -222,7 +228,8 @@ public class EnemyController : MonoBehaviour
             SkinnedMeshRendererEnemyBody.enabled = true;
             Ear.GetComponent<MeshRenderer>().enabled = true;//見える（有効）
             Eey.GetComponent<MeshRenderer>().enabled = true;//見える（有効）
-            //Debug.Log("Enemy");
+            EnemysSeen EsS = EnemysSeen.GetComponent<EnemysSeen>();
+            EsS.Enemys.enabled = true;
         }
     }
 
@@ -236,7 +243,6 @@ public class EnemyController : MonoBehaviour
             SkinnedMeshRendererEnemyBody.enabled = false;
             Ear.GetComponent<MeshRenderer>().enabled = false;//見える（有効）
             Eey.GetComponent<MeshRenderer>().enabled = false;//見える（有効）
-            //Debug.Log("EnemySSS");
         }
     }
 }

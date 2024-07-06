@@ -8,7 +8,7 @@ public class EnemysSeen : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        Enemys.enabled = false;//音波非表示→表示
     }
 
     // Update is called once per frame
@@ -18,14 +18,11 @@ public class EnemysSeen : MonoBehaviour
         EnemyController EC = eobj.GetComponent<EnemyController>(); //Enemyに付いているスクリプトを取得
         if (EC.ONoff == 0)//見えないとき
         {
-            Enemys.enabled=false;//音波非表示→表示
-                                       // SkinnedMeshRendererEnemyBody.enabled = false;
+            Enemys.enabled = false;//音波非表示→表示
         }
         if (EC.ONoff == 1)//見えているとき
         {
             Enemys.enabled = true;//音波表示→非表示
-            //SkinnedMeshRendererEnemyBody.enabled = true;
-
         }
     }
 }
