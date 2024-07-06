@@ -231,7 +231,6 @@ public class EnemyGController : MonoBehaviour
             SkinnedMeshRendererEnemyGRing.enabled = true;
             Ear.GetComponent<MeshRenderer>().enabled = true;//見える（有効）
             Eey.GetComponent<MeshRenderer>().enabled = true;//見える（有効）
-            Debug.Log("Enemy");
         }
     }
 
@@ -247,7 +246,6 @@ public class EnemyGController : MonoBehaviour
             SkinnedMeshRendererEnemyGRing.enabled = false;
             Ear.GetComponent<MeshRenderer>().enabled = false;//見える（有効）
             Eey.GetComponent<MeshRenderer>().enabled = false;//見える（有効）
-            Debug.Log("EnemySSS");
         }
     }
 }

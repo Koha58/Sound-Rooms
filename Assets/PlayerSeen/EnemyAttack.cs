@@ -18,9 +18,10 @@ public class EnemyAttack : MonoBehaviour
 
     LevelMeter levelMeter;
 
-    bool Des;
-    bool DesG;
+    bool F;
 
+    float Foff;
+ 
     // Start is called before the first frame update
     void Start()
     {
@@ -49,9 +50,19 @@ public class EnemyAttack : MonoBehaviour
                 onoff = 0;  //見えていないから0
             }
         }
+
+        if(F==true)
+        {
+            Foff += Time.deltaTime;
+            if(Foff >1.0f)
+            {
+                F=false;
+                Foff = 0.0f;
+            }
+        }
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         GameObject sobj = GameObject.Find("Player");
         ISe = sobj.GetComponent<ItemSearch>(); //付いているスクリプトを取得
@@ -60,6 +71,8 @@ public class EnemyAttack : MonoBehaviour
         if (other.CompareTag("EnemyForward"))
         {
             stayTimeF += Time.deltaTime;
+            F = true;
+            Debug.Log("!%");
             if (other.CompareTag("EnemyBack"))
             {
                 if (stayTimeF < 10)//背後に当たった時に判定しないようにする
@@ -68,19 +81,14 @@ public class EnemyAttack : MonoBehaviour
                 }
                 other.GetComponent<Collider>().enabled = true;
             }
-            //stayTimeF = 0.0f;
-            if (stayTimeB <= stayTimeF)
-            {
-                Des = false;
-                stayTimeF += 10.0f;
-            }
-            Debug.Log("!%");
         }
 
         //敵の正面に当たった時
         if (other.CompareTag("EnemyForward1"))
         {
             stayTimeF += Time.deltaTime;
+            F = true;
+            Debug.Log("!%");
             if (other.CompareTag("EnemyBack1"))
             {
                 if (stayTimeF < 10)//背後に当たった時に判定しないようにする
@@ -89,19 +97,14 @@ public class EnemyAttack : MonoBehaviour
                 }
                 other.GetComponent<Collider>().enabled = true;
             }
-            // stayTimeF = 0.0f;
-            if (stayTimeB <= stayTimeF)
-            {
-                Des = false;
-                stayTimeF += 10.0f;
-            }
-            Debug.Log("!%");
         }
 
         //敵Gの正面に当たった時
         if (other.CompareTag("EnemyGForward"))
         {
             stayTimeFG += Time.deltaTime;
+            F = true;
+            Debug.Log("!%");
             if (other.CompareTag("EnemyBackG"))
             {
                 if (stayTimeFG < 10)//背後に当たった時に判定しないようにする
@@ -110,18 +113,14 @@ public class EnemyAttack : MonoBehaviour
                 }
                 other.GetComponent<Collider>().enabled = true;
             }
-
-            if (stayTimeBG <= stayTimeFG)
-            {
-                DesG = false;
-                stayTimeF += 10.0f;
-            }
         }
 
         //敵Gの正面に当たった時
         if (other.CompareTag("EnemyGForward1"))
         {
             stayTimeFG += Time.deltaTime;
+            F = true;
+            Debug.Log("!%");
             if (other.CompareTag("EnemyBackG1"))
             {
                 if (stayTimeFG < 10)//背後に当たった時に判定しないようにする
@@ -130,18 +129,14 @@ public class EnemyAttack : MonoBehaviour
                 }
                 other.GetComponent<Collider>().enabled = true;
             }
-
-            if (stayTimeBG <= stayTimeFG)
-            {
-                DesG = false;
-                stayTimeF += 10.0f;
-            }
         }
 
         //敵Gの正面に当たった時
         if (other.CompareTag("EnemyGForward2"))
         {
             stayTimeFG += Time.deltaTime;
+            F = true;
+            Debug.Log("!%");
             if (other.CompareTag("EnemyBackG2"))
             {
                 if (stayTimeFG < 10)//背後に当たった時に判定しないようにする
@@ -150,18 +145,14 @@ public class EnemyAttack : MonoBehaviour
                 }
                 other.GetComponent<Collider>().enabled = true;
             }
-
-            if (stayTimeBG <= stayTimeFG)
-            {
-                DesG = false;
-                stayTimeF += 10.0f;
-            }
         }
 
         //敵Gの正面に当たった時
         if (other.CompareTag("EnemyGForward3"))
         {
             stayTimeFG += Time.deltaTime;
+            F = true;
+            Debug.Log("!%");
             if (other.CompareTag("EnemyBackG3"))
             {
                 if (stayTimeFG < 10)//背後に当たった時に判定しないようにする
@@ -169,12 +160,6 @@ public class EnemyAttack : MonoBehaviour
                     other.GetComponent<Collider>().enabled = false;
                 }
                 other.GetComponent<Collider>().enabled = true;
-            }
-
-            if (stayTimeBG <= stayTimeFG)
-            {
-                DesG = false;
-                stayTimeF += 10.0f;
             }
         }
 
@@ -184,20 +169,22 @@ public class EnemyAttack : MonoBehaviour
             stayTimeB += Time.deltaTime;
             GameObject eobj = GameObject.FindWithTag("Enemy");
             EnemyController EC = eobj.GetComponent<EnemyController>();
-            Enemyincrease EI = eobj.GetComponent<Enemyincrease>(); //付いているスクリプトを取得
-                                                                   //Rigidbody EnemyR = eobj.GetComponent<Rigidbody>();
-            if (stayTimeB >= stayTimeF)
+            Enemyincrease EI = eobj.GetComponent<Enemyincrease>();
+            if (stayTimeB <= stayTimeF)
             {
-                Des = true;
-                stayTimeF = 0.0f;
-            }
-            if ( Des == true)
-            {
-                EI.isHidden = false;
-                Debug.Log("?");
-                Des = false;
+                stayTimeB += 20f;
             }
 
+            if (stayTimeB >= stayTimeF)
+            {
+                Debug.Log("09");
+                if (F == false)
+                {
+                    EI.isHidden = false;
+                    Debug.Log("?");
+                }
+            }
+            
             //正面に当たった時に判定しないようにする
             if (other.CompareTag("EnemyForward"))
             {
@@ -217,18 +204,18 @@ public class EnemyAttack : MonoBehaviour
             GameObject eobj1 = GameObject.FindWithTag("Enemy1");
             EnemyController1 EC1 = eobj1.GetComponent<EnemyController1>();
             Enemyincrease1 EI1 = eobj1.GetComponent<Enemyincrease1>(); //付いているスクリプトを取得
+            if (stayTimeB <= stayTimeF)
+            {
+                stayTimeB += 20f;
+            }
 
             if (stayTimeB >= stayTimeF)
             {
-                Des = true;
-                stayTimeF = 0.0f;
-            }
-
-            if ( Des == true)
-            {
-                EI1.isHidden = false;
-                Debug.Log("?");
-                Des = false;
+                if (F == false)
+                {
+                    EI1.isHidden = false;
+                    Debug.Log("?");
+                }
             }
 
             //正面に当たった時に判定しないようにする
@@ -249,35 +236,39 @@ public class EnemyAttack : MonoBehaviour
             stayTimeBG += Time.deltaTime;
             GameObject eobjG = GameObject.FindWithTag("EnemyG");
             EnemyGController EGC = eobjG.GetComponent<EnemyGController>(); //付いているスクリプトを取得
+
             if (stayTimeBG <= stayTimeFG)
             {
-                DesG = true;
-                stayTimeFG = 0.0f;
+                stayTimeBG += 20f;
             }
-            if (DesG == true)
+
+            if (stayTimeBG >= stayTimeFG)
             {
-                if (ItemSeen.parentObject[0] != null)
+                if (F == false)
                 {
-                    ItemSeen.parentObject[0].transform.position = eobjG.transform.position;
-                    ISe.closetObject = ItemSeen.parentObject[0];
+                    if (ItemSeen.parentObject[0] != null)
+                    {
+                        ItemSeen.parentObject[0].transform.position = eobjG.transform.position;
+                        ISe.closetObject = ItemSeen.parentObject[0];
+                    }
+                    else if (ItemSeen.parentObject[1] != null)
+                    {
+                        ItemSeen.parentObject[1].transform.position = eobjG.transform.position;
+                        ISe.closetObject = ItemSeen.parentObject[1];
+                    }
+                    else if (ItemSeen.parentObject[2] != null)
+                    {
+                        ItemSeen.parentObject[2].transform.position = eobjG.transform.position;
+                        ISe.closetObject = ItemSeen.parentObject[1];
+                    }
+                    else if (ItemSeen.parentObject[3] != null)
+                    {
+                        ItemSeen.parentObject[3].transform.position = eobjG.transform.position;
+                        ISe.closetObject = ItemSeen.parentObject[3];
+                    }
+                    Destroy(eobjG);
+                    Enemyincrease.enemyDeathcnt++;
                 }
-                else if (ItemSeen.parentObject[1] != null)
-                {
-                    ItemSeen.parentObject[1].transform.position = eobjG.transform.position;
-                    ISe.closetObject = ItemSeen.parentObject[1];
-                }
-                else if (ItemSeen.parentObject[2] != null)
-                {
-                    ItemSeen.parentObject[2].transform.position = eobjG.transform.position;
-                    ISe.closetObject = ItemSeen.parentObject[1];
-                }
-                else if (ItemSeen.parentObject[3] != null)
-                {
-                    ItemSeen.parentObject[3].transform.position = eobjG.transform.position;
-                    ISe.closetObject = ItemSeen.parentObject[3];
-                }
-                Destroy(eobjG);
-                Enemyincrease.enemyDeathcnt++;
             }
 
             //敵Gの正面に当たった時
@@ -297,39 +288,41 @@ public class EnemyAttack : MonoBehaviour
         {
             stayTimeBG += Time.deltaTime;
             GameObject eobjG1 = GameObject.FindWithTag("EnemyG1");
-            EnemyGController1 EGC1 = eobjG1.GetComponent<EnemyGController1>(); //付いているスクリプトを取得
+            EnemyGController1 EGC1 = eobjG1.GetComponent<EnemyGController1>();
+
             if (stayTimeBG <= stayTimeFG)
             {
-                DesG = true;
-                stayTimeFG = 0.0f;
+                stayTimeBG += 20f;
             }
 
-            if (DesG == true)
+            if (stayTimeBG >= stayTimeFG)
             {
-                if (ItemSeen.parentObject[0] != null)
+                if (F == false)
                 {
-                    ItemSeen.parentObject[0].transform.position = eobjG1.transform.position;
-                    ISe.closetObject = ItemSeen.parentObject[0];
+                    if (ItemSeen.parentObject[0] != null)
+                    {
+                        ItemSeen.parentObject[0].transform.position = eobjG1.transform.position;
+                        ISe.closetObject = ItemSeen.parentObject[0];
+                    }
+                    else if (ItemSeen.parentObject[1] != null)
+                    {
+                        ItemSeen.parentObject[1].transform.position = eobjG1.transform.position;
+                        ISe.closetObject = ItemSeen.parentObject[1];
+                    }
+                    else if (ItemSeen.parentObject[2] != null)
+                    {
+                        ItemSeen.parentObject[2].transform.position = eobjG1.transform.position;
+                        ISe.closetObject = ItemSeen.parentObject[1];
+                    }
+                    else if (ItemSeen.parentObject[3] != null)
+                    {
+                        ItemSeen.parentObject[3].transform.position = eobjG1.transform.position;
+                        ISe.closetObject = ItemSeen.parentObject[3];
+                    }
+                    Destroy(eobjG1);
+                    Enemyincrease.enemyDeathcnt++;
                 }
-                else if (ItemSeen.parentObject[1] != null)
-                {
-                    ItemSeen.parentObject[1].transform.position = eobjG1.transform.position;
-                    ISe.closetObject = ItemSeen.parentObject[1];
-                }
-                else if (ItemSeen.parentObject[2] != null)
-                {
-                    ItemSeen.parentObject[2].transform.position = eobjG1.transform.position;
-                    ISe.closetObject = ItemSeen.parentObject[1];
-                }
-                else if (ItemSeen.parentObject[3] != null)
-                {
-                    ItemSeen.parentObject[3].transform.position = eobjG1.transform.position;
-                    ISe.closetObject = ItemSeen.parentObject[3];
-                }
-                Destroy(eobjG1);
-                Enemyincrease.enemyDeathcnt++;
             }
-
             //敵Gの正面に当たった時
             if (other.CompareTag("EnemyGForward1"))
             {
@@ -347,37 +340,40 @@ public class EnemyAttack : MonoBehaviour
         {
             stayTimeBG += Time.deltaTime;
             GameObject eobjG2 = GameObject.FindWithTag("EnemyG2");
-            EnemyGController2 EGC2 = eobjG2.GetComponent<EnemyGController2>(); //付いているスクリプトを取得
+            EnemyGController2 EGC2 = eobjG2.GetComponent<EnemyGController2>();
+
             if (stayTimeBG <= stayTimeFG)
             {
-                DesG = true;
-                stayTimeFG = 0.0f;
+                stayTimeBG += 20f;
             }
 
-            if ( DesG == true)
+            if (stayTimeBG >= stayTimeFG)
             {
-                if (ItemSeen.parentObject[0] != null)
+                if (F == false)
                 {
-                    ItemSeen.parentObject[0].transform.position = eobjG2.transform.position;
-                    ISe.closetObject = ItemSeen.parentObject[0];
+                    if (ItemSeen.parentObject[0] != null)
+                    {
+                        ItemSeen.parentObject[0].transform.position = eobjG2.transform.position;
+                        ISe.closetObject = ItemSeen.parentObject[0];
+                    }
+                    else if (ItemSeen.parentObject[1] != null)
+                    {
+                        ItemSeen.parentObject[1].transform.position = eobjG2.transform.position;
+                        ISe.closetObject = ItemSeen.parentObject[1];
+                    }
+                    else if (ItemSeen.parentObject[2] != null)
+                    {
+                        ItemSeen.parentObject[2].transform.position = eobjG2.transform.position;
+                        ISe.closetObject = ItemSeen.parentObject[1];
+                    }
+                    else if (ItemSeen.parentObject[3] != null)
+                    {
+                        ItemSeen.parentObject[3].transform.position = eobjG2.transform.position;
+                        ISe.closetObject = ItemSeen.parentObject[3];
+                    }
+                    Destroy(eobjG2);
+                    Enemyincrease.enemyDeathcnt++;
                 }
-                else if (ItemSeen.parentObject[1] != null)
-                {
-                    ItemSeen.parentObject[1].transform.position = eobjG2.transform.position;
-                    ISe.closetObject = ItemSeen.parentObject[1];
-                }
-                else if (ItemSeen.parentObject[2] != null)
-                {
-                    ItemSeen.parentObject[2].transform.position = eobjG2.transform.position;
-                    ISe.closetObject = ItemSeen.parentObject[1];
-                }
-                else if (ItemSeen.parentObject[3] != null)
-                {
-                    ItemSeen.parentObject[3].transform.position = eobjG2.transform.position;
-                    ISe.closetObject = ItemSeen.parentObject[3];
-                }
-                Destroy(eobjG2);
-                Enemyincrease.enemyDeathcnt++;
             }
 
             //敵Gの正面に当たった時
@@ -397,37 +393,40 @@ public class EnemyAttack : MonoBehaviour
         {
             stayTimeBG += Time.deltaTime;
             GameObject eobjG3 = GameObject.FindWithTag("EnemyG3");
-            EnemyGController3 EGC3 = eobjG3.GetComponent<EnemyGController3>(); //付いているスクリプトを取得
+            EnemyGController3 EGC3 = eobjG3.GetComponent<EnemyGController3>();
+
             if (stayTimeBG <= stayTimeFG)
             {
-                DesG = true;
-                stayTimeFG = 0.0f;
+                stayTimeBG += 20f;
             }
 
-            if (DesG == true)
+            if (stayTimeBG >= stayTimeFG)
             {
-                if (ItemSeen.parentObject[0] != null)
+                if (F == false)
                 {
-                    ItemSeen.parentObject[0].transform.position = eobjG3.transform.position;
-                    ISe.closetObject = ItemSeen.parentObject[0];
+                    if (ItemSeen.parentObject[0] != null)
+                    {
+                        ItemSeen.parentObject[0].transform.position = eobjG3.transform.position;
+                        ISe.closetObject = ItemSeen.parentObject[0];
+                    }
+                    else if (ItemSeen.parentObject[1] != null)
+                    {
+                        ItemSeen.parentObject[1].transform.position = eobjG3.transform.position;
+                        ISe.closetObject = ItemSeen.parentObject[1];
+                    }
+                    else if (ItemSeen.parentObject[2] != null)
+                    {
+                        ItemSeen.parentObject[2].transform.position = eobjG3.transform.position;
+                        ISe.closetObject = ItemSeen.parentObject[1];
+                    }
+                    else if (ItemSeen.parentObject[3] != null)
+                    {
+                        ItemSeen.parentObject[3].transform.position = eobjG3.transform.position;
+                        ISe.closetObject = ItemSeen.parentObject[3];
+                    }
+                    Destroy(eobjG3);
+                    Enemyincrease.enemyDeathcnt++;
                 }
-                else if (ItemSeen.parentObject[1] != null)
-                {
-                    ItemSeen.parentObject[1].transform.position = eobjG3.transform.position;
-                    ISe.closetObject = ItemSeen.parentObject[1];
-                }
-                else if (ItemSeen.parentObject[2] != null)
-                {
-                    ItemSeen.parentObject[2].transform.position = eobjG3.transform.position;
-                    ISe.closetObject = ItemSeen.parentObject[1];
-                }
-                else if (ItemSeen.parentObject[3] != null)
-                {
-                    ItemSeen.parentObject[3].transform.position = eobjG3.transform.position;
-                    ISe.closetObject = ItemSeen.parentObject[3];
-                }
-                Destroy(eobjG3);
-                Enemyincrease.enemyDeathcnt++;
             }
 
             //敵Gの正面に当たった時
