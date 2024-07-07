@@ -560,7 +560,7 @@ public class EnemyAttack : MonoBehaviour
             {
                 if (F == false)
                 {
-                    EC.Des = true;
+                    GetComponent<ParticleSystem>().Play();
                     EI.isHidden = false;
                     Debug.Log("?");
                 }
