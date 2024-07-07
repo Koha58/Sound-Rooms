@@ -2029,6 +2029,72 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 456645398}
   m_SourcePrefab: {fileID: 100100000, guid: 7576d9a051e911c4ebaffeb66f1a3e88, type: 3}
+--- !u!1 &96635048
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 96635050}
+  - component: {fileID: 96635049}
+  - component: {fileID: 96635051}
+  m_Layer: 0
+  m_Name: Attentioncheck
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!65 &96635049
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 96635048}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 5, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!4 &96635050
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 96635048}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 54.84, y: 0.7, z: -73.15}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &96635051
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 96635048}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 644f3a169b7f1ab4e9c01b0ae2312172, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &97467812
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -49476,9 +49542,9 @@ RectTransform:
   - {fileID: 1678542807}
   - {fileID: 502680589}
   - {fileID: 1648777009}
-  - {fileID: 1063497627}
   - {fileID: 515319289}
   - {fileID: 513244973}
+  - {fileID: 1063497627}
   - {fileID: 2016573480}
   - {fileID: 1404363741}
   m_Father: {fileID: 0}
@@ -49500,7 +49566,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0073d096b7fd8143bbc784fc59ad2a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  needAttention: 0
 --- !u!1001 &1871669367
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -60159,6 +60224,7 @@ SceneRoots:
   - {fileID: 1010845284}
   - {fileID: 1992438642}
   - {fileID: 394949882}
+  - {fileID: 96635050}
   - {fileID: 1275068913}
   - {fileID: 1247375596}
   - {fileID: 843248965}

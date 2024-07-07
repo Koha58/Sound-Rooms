@@ -13,8 +13,7 @@ public class GameSceneButton : MonoBehaviour
     private GameObject AttentionTextUI;
     private GameObject AttentionButton;
 
-    public bool needAttention = false;
-    private float AttentionCount = 0f;
+    public static bool needAttention = false;
 
     // Start is called before the first frame update
     void Start()
@@ -40,28 +39,31 @@ public class GameSceneButton : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        AttentionCount += Time.deltaTime;
-        if (AttentionCount > 30)
-        {
-            needAttention = true;
-        }
 
-        if (Input.GetKeyDown("joystick button 7"))
+        if (Input.GetKeyDown("joystick button 7"))//メニュー ボタン 
         {
             OperationExplanation.GetComponent<Image>().enabled = true;
             closeButton.GetComponent<Image>().enabled = true;
         }
 
-        if (Input.GetKeyDown("joystick button 1"))
+        if (Input.GetKeyDown(KeyCode.B)||Input.GetKeyDown("joystick button 1"))//B
         {
             closeButton.GetComponent<Image>().enabled = false;
             OperationExplanation.GetComponent<Image>().enabled = false;
+            AttentionUI.GetComponent<Image>().enabled = false;
         }
 
         if (needAttention)
         {
+            if (Input.GetKeyDown(KeyCode.Y) || Input.GetKeyDown("joystick button 3"))//Y
+            {
+                AttentionUI.GetComponent<Image>().enabled = true;
+                closeButton.GetComponent<Image>().enabled = true;
+            }
+
             AttentionTextUI.GetComponent<Image>().enabled = true;
             AttentionButton.GetComponent<Image>().enabled = true;
+
         }
 
     }
@@ -77,7 +79,6 @@ public class GameSceneButton : MonoBehaviour
         closeButton.GetComponent<Image>().enabled = false;
         OperationExplanation.GetComponent<Image>().enabled = false;
         AttentionUI.GetComponent<Image>().enabled = false;
-        needAttention = false;
     }
 
     public void AttentionUIButton()
