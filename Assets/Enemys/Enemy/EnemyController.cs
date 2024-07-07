@@ -70,7 +70,7 @@ public class EnemyController : MonoBehaviour
         //「走る」のアニメーションを再生する
         animator.SetBool("EnemyRun", false);
 
-        if(SeenArea==true)
+        if (SeenArea==true)
         {
             SeenArea = false;
             ONoff = 0;
@@ -81,6 +81,11 @@ public class EnemyController : MonoBehaviour
             EnemysSeen EsS = EnemysSeen.GetComponent<EnemysSeen>();
             EsS.Enemys.enabled = false;
         }
+
+     /*   if(Des==true)
+        {
+            GetComponent<ParticleSystem>().Play();
+        }*/
 
         Switch();
 
