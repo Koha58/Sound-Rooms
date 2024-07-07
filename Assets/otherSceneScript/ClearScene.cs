@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class ClearScene : MonoBehaviour
 {
+    private float stayTime = 0f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -14,14 +16,12 @@ public class ClearScene : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown("joystick button 0"))
+        stayTime += Time.deltaTime;
+
+        if (stayTime > 10f)
         {
             SceneManager.LoadScene("StartScene");
         }
 
-        if(Input.GetMouseButtonDown(0))
-        {
-            SceneManager.LoadScene("StartScene");
-        }
     }
 }
