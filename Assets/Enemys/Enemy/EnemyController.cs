@@ -82,11 +82,6 @@ public class EnemyController : MonoBehaviour
             EsS.Enemys.enabled = false;
         }
 
-     /*   if(Des==true)
-        {
-            GetComponent<ParticleSystem>().Play();
-        }*/
-
         Switch();
 
         if (EC.Chase == true )//&& PS.onoff == 1 && ONoff == 1)

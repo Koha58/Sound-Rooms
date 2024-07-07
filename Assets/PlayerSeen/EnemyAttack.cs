@@ -591,6 +591,7 @@ public class EnemyAttack : MonoBehaviour
             {
                 if (F == false)
                 {
+                    GetComponent<ParticleSystem>().Play();
                     EI1.isHidden = false;
                     Debug.Log("?");
                 }
@@ -624,6 +625,7 @@ public class EnemyAttack : MonoBehaviour
             {
                 if (F == false)
                 {
+                    GetComponent<ParticleSystem>().Play();
                     Debug.Log("?");
                     if (ItemSeen.parentObject[0] != null)
                     {
@@ -678,6 +680,7 @@ public class EnemyAttack : MonoBehaviour
             {
                 if (F == false)
                 {
+                    GetComponent<ParticleSystem>().Play();
                     Debug.Log("?");
                     if (ItemSeen.parentObject[0] != null)
                     {
@@ -731,6 +734,7 @@ public class EnemyAttack : MonoBehaviour
             {
                 if (F == false)
                 {
+                    GetComponent<ParticleSystem>().Play();
                     Debug.Log("?");
                     if (ItemSeen.parentObject[0] != null)
                     {
@@ -785,6 +789,7 @@ public class EnemyAttack : MonoBehaviour
             {
                 if (F == false)
                 {
+                    GetComponent<ParticleSystem>().Play();
                     Debug.Log("?");
                     if (ItemSeen.parentObject[0] != null)
                     {
