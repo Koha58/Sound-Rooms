@@ -15805,6 +15805,11 @@ PrefabInstance:
       propertyPath: m_TagString
       value: EnemyForward1
       objectReference: {fileID: 0}
+    - target: {fileID: 3049009065177341155, guid: 1ca8ed3957ad6da458975c8d16e44822,
+        type: 3}
+      propertyPath: Sound
+      value: 
+      objectReference: {fileID: 8300000, guid: bcbbe06df04f8474db0b725c7f9ca2b5, type: 3}
     - target: {fileID: 3291731727494699424, guid: 1ca8ed3957ad6da458975c8d16e44822,
         type: 3}
       propertyPath: m_Name
@@ -50889,7 +50894,7 @@ PrefabInstance:
         type: 3}
       propertyPath: Sound
       value: 
-      objectReference: {fileID: 8300000, guid: 4f976526098808443b4ad7b460f138e8, type: 3}
+      objectReference: {fileID: 8300000, guid: 13e345539146fda4abbe3fb54e84c3b6, type: 3}
     - target: {fileID: 3049009065177341155, guid: 1ca8ed3957ad6da458975c8d16e44822,
         type: 3}
       propertyPath: Sound1
@@ -50898,7 +50903,7 @@ PrefabInstance:
     - target: {fileID: 3049009065177341155, guid: 1ca8ed3957ad6da458975c8d16e44822,
         type: 3}
       propertyPath: volume
-      value: 100
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 3049009065177341155, guid: 1ca8ed3957ad6da458975c8d16e44822,
         type: 3}
@@ -50915,9 +50920,59 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Enemy
       objectReference: {fileID: 0}
+    - target: {fileID: 4230026014431026191, guid: 1ca8ed3957ad6da458975c8d16e44822,
+        type: 3}
+      propertyPath: Loop
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4230026014431026191, guid: 1ca8ed3957ad6da458975c8d16e44822,
+        type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: bcbbe06df04f8474db0b725c7f9ca2b5, type: 3}
+    - target: {fileID: 5152706859973078923, guid: 1ca8ed3957ad6da458975c8d16e44822,
+        type: 3}
+      propertyPath: Sound1
+      value: 
+      objectReference: {fileID: 8300000, guid: 13e345539146fda4abbe3fb54e84c3b6, type: 3}
+    - target: {fileID: 5152706859973078923, guid: 1ca8ed3957ad6da458975c8d16e44822,
+        type: 3}
+      propertyPath: volume
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 5283417887368246581, guid: 1ca8ed3957ad6da458975c8d16e44822,
+        type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 13e345539146fda4abbe3fb54e84c3b6, type: 3}
     - target: {fileID: 5283417887368246581, guid: 1ca8ed3957ad6da458975c8d16e44822,
         type: 3}
       propertyPath: m_PlayOnAwake
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5696627036082156252, guid: 1ca8ed3957ad6da458975c8d16e44822,
+        type: 3}
+      propertyPath: Loop
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5696627036082156252, guid: 1ca8ed3957ad6da458975c8d16e44822,
+        type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 13e345539146fda4abbe3fb54e84c3b6, type: 3}
+    - target: {fileID: 5696627036082156252, guid: 1ca8ed3957ad6da458975c8d16e44822,
+        type: 3}
+      propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5696627036082156252, guid: 1ca8ed3957ad6da458975c8d16e44822,
+        type: 3}
+      propertyPath: reverbZoneMixCustomCurve.m_Curve.Array.data[0].value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5736592241470453743, guid: 1ca8ed3957ad6da458975c8d16e44822,
+        type: 3}
+      propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6073232513176658092, guid: 1ca8ed3957ad6da458975c8d16e44822,
@@ -51030,7 +51085,8 @@ PrefabInstance:
       propertyPath: _parentTransform
       value: 
       objectReference: {fileID: 1913240978}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1133092720911534799, guid: 1ca8ed3957ad6da458975c8d16e44822, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
