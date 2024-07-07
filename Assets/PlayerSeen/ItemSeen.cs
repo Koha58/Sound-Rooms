@@ -18,6 +18,7 @@ public class ItemSeen : MonoBehaviour
     //public GameObject ItemCanvas;
     public GameObject[] Walls;
     public GameObject[] Boxes;
+    public GameObject[] Objects;
     public static GameObject[] parentObject;
     private string objName;
 
@@ -103,6 +104,14 @@ public class ItemSeen : MonoBehaviour
             rb.constraints = RigidbodyConstraints.FreezeAll;
             Box.GetComponent<Renderer>().enabled = false;
         }
+
+        Objects = GameObject.FindGameObjectsWithTag("Object");
+
+        foreach (GameObject Object in Objects)
+        {
+            Object.GetComponent<Renderer>().enabled = false;
+            Object.GetComponent<Collider>().enabled = false;
+        }
     }
 
     private void Update()
@@ -127,6 +136,12 @@ public class ItemSeen : MonoBehaviour
         if (levelMeter.nowdB > 0.0f)
         {
             SeenArea.GetComponent<Collider>().enabled = true;//見える（有効）
+
+            foreach (GameObject Object in Objects)
+            {
+                Object.GetComponent<Collider>().enabled = true;
+            }
+
             onoff = 1;  //見えているから1
         }
 
@@ -210,6 +225,12 @@ public class ItemSeen : MonoBehaviour
                     //移動も回転もしないようにする
                     rb.constraints = RigidbodyConstraints.FreezeAll;
                     Box.GetComponent<Renderer>().enabled = false;
+                }
+
+                foreach (GameObject Object in Objects)
+                {
+                    Object.GetComponent<Renderer>().enabled = false;
+                    Object.GetComponent<Collider>().enabled = false;
                 }
                 onoff = 0;  //見えていないから0
             }
@@ -433,6 +454,10 @@ public class ItemSeen : MonoBehaviour
             other.gameObject.GetComponent<Renderer>().enabled = true;
         }
         else if (other.CompareTag("Box"))//接触したオブジェクトのタグが"Box"のとき
+        {
+            other.GetComponent<Renderer>().enabled = true;
+        }
+        else if(other.CompareTag("Object"))//接触したオブジェクトのタグが"Object"のとき
         {
             other.GetComponent<Renderer>().enabled = true;
         }
