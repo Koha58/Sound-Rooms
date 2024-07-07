@@ -15813,7 +15813,7 @@ PrefabInstance:
     - target: {fileID: 3291731727494699424, guid: 1ca8ed3957ad6da458975c8d16e44822,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3291731727494699424, guid: 1ca8ed3957ad6da458975c8d16e44822,
         type: 3}
@@ -50885,6 +50885,26 @@ PrefabInstance:
       propertyPath: m_TagString
       value: EnemyForward
       objectReference: {fileID: 0}
+    - target: {fileID: 3049009065177341155, guid: 1ca8ed3957ad6da458975c8d16e44822,
+        type: 3}
+      propertyPath: Sound
+      value: 
+      objectReference: {fileID: 8300000, guid: 4f976526098808443b4ad7b460f138e8, type: 3}
+    - target: {fileID: 3049009065177341155, guid: 1ca8ed3957ad6da458975c8d16e44822,
+        type: 3}
+      propertyPath: Sound1
+      value: 
+      objectReference: {fileID: 8300000, guid: f596cdbdb5ef6f84fad05296719e172f, type: 3}
+    - target: {fileID: 3049009065177341155, guid: 1ca8ed3957ad6da458975c8d16e44822,
+        type: 3}
+      propertyPath: volume
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 3049009065177341155, guid: 1ca8ed3957ad6da458975c8d16e44822,
+        type: 3}
+      propertyPath: footstepSound
+      value: 
+      objectReference: {fileID: 8300000, guid: bcbbe06df04f8474db0b725c7f9ca2b5, type: 3}
     - target: {fileID: 3291731727494699424, guid: 1ca8ed3957ad6da458975c8d16e44822,
         type: 3}
       propertyPath: m_Name
@@ -50895,11 +50915,26 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Enemy
       objectReference: {fileID: 0}
+    - target: {fileID: 5283417887368246581, guid: 1ca8ed3957ad6da458975c8d16e44822,
+        type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6073232513176658092, guid: 1ca8ed3957ad6da458975c8d16e44822,
         type: 3}
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6158389007057274915, guid: 1ca8ed3957ad6da458975c8d16e44822,
+        type: 3}
+      propertyPath: volume
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 6158389007057274915, guid: 1ca8ed3957ad6da458975c8d16e44822,
+        type: 3}
+      propertyPath: footstepSound
+      value: 
+      objectReference: {fileID: 8300000, guid: f596cdbdb5ef6f84fad05296719e172f, type: 3}
     - target: {fileID: 6724192040969322379, guid: 1ca8ed3957ad6da458975c8d16e44822,
         type: 3}
       propertyPath: Player
@@ -51015,10 +51050,6 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 1913240993}
-    - targetCorrespondingSourceObject: {fileID: 1546069448953565103, guid: 1ca8ed3957ad6da458975c8d16e44822,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2143834660}
     - targetCorrespondingSourceObject: {fileID: 6992958931360982476, guid: 1ca8ed3957ad6da458975c8d16e44822,
         type: 3}
       insertIndex: -1
@@ -56940,33 +56971,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aba5db4e6ab8f6749a53494eac860531, type: 3}
---- !u!1 &2143834658 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1546069448953565103, guid: 1ca8ed3957ad6da458975c8d16e44822,
-    type: 3}
-  m_PrefabInstance: {fileID: 1913240972}
-  m_PrefabAsset: {fileID: 0}
---- !u!65 &2143834660
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2143834658}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.008794088, y: 0.011404867, z: 0.02162547}
-  m_Center: {x: 0.000017506612, y: 0.00028797204, z: -0.0031735518}
 --- !u!1 &2144558040
 GameObject:
   m_ObjectHideFlags: 0
