@@ -1695,6 +1695,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8065109259353609948}
   - component: {fileID: 4200822003798606620}
+  - component: {fileID: 2957645465024475278}
   m_Layer: 0
   m_Name: EnemyBody
   m_TagString: EnemyParts
@@ -1800,6 +1801,27 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.00011082739, y: -0.0014396757, z: 0.004193904}
     m_Extent: {x: 0.04788717, y: 0.059347995, z: 0.016676543}
   m_DirtyAABB: 0
+--- !u!65 &2957645465024475278
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7932330036520386871}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.0071131177, y: 0.007274495, z: 0.021904476}
+  m_Center: {x: -0.00004645868, y: 0.000056605935, z: -0.0034428274}
 --- !u!1 &8444141383902414171
 GameObject:
   m_ObjectHideFlags: 0
