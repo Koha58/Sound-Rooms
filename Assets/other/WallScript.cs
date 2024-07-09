@@ -96,6 +96,78 @@ public class WallScript : MonoBehaviour
                     Wall.enabled = true;
                     bc.enabled = true;
                 }
+
+                GameObject eobj2 = GameObject.FindWithTag("Enemy2");
+                EnemyController2 EC2 = eobj2.GetComponent<EnemyController2>(); //Enemyに付いているスクリプトを取得
+                if (EC2.ONoff == 1)//|| EFW.ONoff == 1)
+                {
+                    Wall.enabled = true;
+                    bc.enabled = true;
+                }
+
+                GameObject eobj3 = GameObject.FindWithTag("Enemy3");
+                EnemyController3 EC3 = eobj3.GetComponent<EnemyController3>(); //Enemyに付いているスクリプトを取得
+                if (EC3.ONoff == 1)//|| EFW.ONoff == 1)
+                {
+                    Wall.enabled = true;
+                    bc.enabled = true;
+                }
+
+                GameObject eobj4 = GameObject.FindWithTag("Enemy4");
+                EnemyController4 EC4 = eobj4.GetComponent<EnemyController4>(); //Enemyに付いているスクリプトを取得
+                if (EC4.ONoff == 1)//|| EFW.ONoff == 1)
+                {
+                    Wall.enabled = true;
+                    bc.enabled = true;
+                }
+
+                GameObject eobj5 = GameObject.FindWithTag("Enemy5");
+                EnemyController5 EC5 = eobj5.GetComponent<EnemyController5>(); //Enemyに付いているスクリプトを取得
+                if (EC5.ONoff == 1)//|| EFW.ONoff == 1)
+                {
+                    Wall.enabled = true;
+                    bc.enabled = true;
+                }
+
+                GameObject eobj6 = GameObject.FindWithTag("Enemy6");
+                EnemyController6 EC6= eobj6.GetComponent<EnemyController6>(); //Enemyに付いているスクリプトを取得
+                if (EC6.ONoff == 1)//|| EFW.ONoff == 1)
+                {
+                    Wall.enabled = true;
+                    bc.enabled = true;
+                }
+
+                GameObject eobj7 = GameObject.FindWithTag("Enemy7");
+                EnemyController7 EC7 = eobj7.GetComponent<EnemyController7>(); //Enemyに付いているスクリプトを取得
+                if (EC7.ONoff == 1)//|| EFW.ONoff == 1)
+                {
+                    Wall.enabled = true;
+                    bc.enabled = true;
+                }
+
+                GameObject eobj8 = GameObject.FindWithTag("Enemy8");
+                EnemyController8 EC8 = eobj8.GetComponent<EnemyController8>(); //Enemyに付いているスクリプトを取得
+                if (EC8.ONoff == 1)//|| EFW.ONoff == 1)
+                {
+                    Wall.enabled = true;
+                    bc.enabled = true;
+                }
+
+                GameObject eobj9 = GameObject.FindWithTag("Enemy9");
+                EnemyController9 EC9 = eobj9.GetComponent<EnemyController9>(); //Enemyに付いているスクリプトを取得
+                if (EC9.ONoff == 1)//|| EFW.ONoff == 1)
+                {
+                    Wall.enabled = true;
+                    bc.enabled = true;
+                }
+
+                GameObject eobj10 = GameObject.FindWithTag("Enemy10");
+                EnemyController10 EC10 = eobj10.GetComponent<EnemyController10>(); //Enemyに付いているスクリプトを取得
+                if (EC10.ONoff == 1)//|| EFW.ONoff == 1)
+                {
+                    Wall.enabled = true;
+                    bc.enabled = true;
+                }
             }
 
             if (other.gameObject.CompareTag("EnemyGwall"))

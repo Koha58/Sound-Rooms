@@ -4,15 +4,32 @@ using UnityEngine;
 
 public class Enemy9Sound2 : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    // public AudioClip Sound;     // 足音のオーディオクリップ
+    public AudioClip Sound2;     // 足音のオーディオクリップ
+    public AudioSource audioSource;     // オーディオソース
+    public float volume = 40f;          // 音量
+
+    private void Start()
     {
-        
+
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        
+        audioSource.clip = Sound2;
+        GameObject eobj9 = GameObject.FindWithTag("Enemy9");
+        EnemyController9 EC9 = eobj9.GetComponent<EnemyController9>();
+        if (EC9.ONoff == 1)
+        {
+            audioSource.enabled = true;
+            audioSource.loop = true;
+            audioSource.volume = volume;
+        }
+
+        if (EC9.ONoff == 0)
+        {
+            audioSource.enabled = false;
+        }
     }
+
 }

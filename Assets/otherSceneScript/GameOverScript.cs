@@ -81,7 +81,7 @@ public class GameOverScript : MonoBehaviour
                 SceneManager.LoadScene("GameOver");
             }
         }
-
+        
     }
     private void OnTriggerEnter(Collider other)
     {
