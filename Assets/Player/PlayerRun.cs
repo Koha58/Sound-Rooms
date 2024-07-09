@@ -44,6 +44,8 @@ public class PlayerRun : MonoBehaviour
         playerRb = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();   //アニメーターコントローラーからアニメーションを取得する
         pastPos = transform.position;
+
+        Application.targetFrameRate = 60;
     }
 
     void Update()
