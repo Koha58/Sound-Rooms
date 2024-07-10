@@ -122,8 +122,8 @@ public class EnemyController6 : MonoBehaviour
                 Enemystoptime += Time.deltaTime;
                 if (Enemystoptime > 2.0f)
                 {
-                    EnemyGetRandomPosition5 EGRP5 = EnemyGetRandomPosition.GetComponent<EnemyGetRandomPosition5>();
-                    targetPosition = EGRP5.GetRandomPosition();
+                    EnemyGetRandomPosition6 EGRP6 = EnemyGetRandomPosition.GetComponent<EnemyGetRandomPosition6>();
+                    targetPosition = EGRP6.GetRandomPosition();
                     Enemystoponoff = 0;
                 }
             }
