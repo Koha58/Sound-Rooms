@@ -135,7 +135,7 @@ public class EnemyController8 : MonoBehaviour
         if (ONoff == 0)//Œ©‚¦‚È‚¢‚Æ‚«
         {
             EnemyChase EC = Chase.GetComponent<EnemyChase>();
-            float randomTime = Random.Range(5f, 15f);
+            float randomTime = Random.Range(10f, 15f);
             SoundTime += Time.deltaTime;
             if (SoundTime >= randomTime)
             {

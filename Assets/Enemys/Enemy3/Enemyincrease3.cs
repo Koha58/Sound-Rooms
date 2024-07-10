@@ -25,8 +25,8 @@ public class Enemyincrease3 : MonoBehaviour
             isHidden = true;
             GameObject go = Instantiate(ebiPrefab);//コピーを生成
                                                    //Debug.Log(go);
-            float px = Random.Range(-85f, 20f); ;//0以上２０以下のランダムの値を生成
-            float pz = Random.Range(95f, 195f); ;//0以上２０以下のランダムの値を生成
+            float px = Random.Range(95f, 173f); ;//0以上２０以下のランダムの値を生成
+            float pz = Random.Range(-180f, -135f); ;//0以上２０以下のランダムの値を生成
             go.transform.position = new Vector3(px, 0, pz);
 
             Clone = true;
