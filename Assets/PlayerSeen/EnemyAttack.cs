@@ -19,6 +19,7 @@ public class EnemyAttack : MonoBehaviour
     LevelMeter levelMeter;
 
     bool F;
+    float Fon;
 
     float Foff;
  
@@ -450,7 +451,10 @@ public class EnemyAttack : MonoBehaviour
         if (other.CompareTag("EnemyForward"))
         {
             stayTimeF += Time.deltaTime;
-            F = true;
+            if(stayTimeF > 0.1f)
+            {
+                F = true;
+            }
             if (other.CompareTag("EnemyBack"))
             {
                 if (stayTimeF < 10)//”wŒã‚É“–‚½‚Á‚½Žž‚É”»’è‚µ‚È‚¢‚æ‚¤‚É‚·‚é
@@ -466,8 +470,10 @@ public class EnemyAttack : MonoBehaviour
         if (other.CompareTag("EnemyForward1"))
         {
             stayTimeF += Time.deltaTime;
-            F = true;
-            Debug.Log("!%");
+            if (stayTimeF > 0.1f)
+            {
+                F = true;
+            }
             if (other.CompareTag("EnemyBack1"))
             {
                 if (stayTimeF < 10)//”wŒã‚É“–‚½‚Á‚½Žž‚É”»’è‚µ‚È‚¢‚æ‚¤‚É‚·‚é
@@ -483,7 +489,10 @@ public class EnemyAttack : MonoBehaviour
         if (other.CompareTag("EnemyForward2"))
         {
             stayTimeF += Time.deltaTime;
-            F = true;
+            if (stayTimeF > 0.1f)
+            {
+                F = true;
+            }
             if (other.CompareTag("EnemyBack2"))
             {
                 if (stayTimeF < 10)//”wŒã‚É“–‚½‚Á‚½Žž‚É”»’è‚µ‚È‚¢‚æ‚¤‚É‚·‚é
@@ -498,7 +507,10 @@ public class EnemyAttack : MonoBehaviour
         if (other.CompareTag("EnemyForward3"))
         {
             stayTimeF += Time.deltaTime;
-            F = true;
+            if (stayTimeF > 0.1f)
+            {
+                F = true;
+            }
             if (other.CompareTag("EnemyBack3"))
             {
                 if (stayTimeF < 10)//”wŒã‚É“–‚½‚Á‚½Žž‚É”»’è‚µ‚È‚¢‚æ‚¤‚É‚·‚é
@@ -513,7 +525,10 @@ public class EnemyAttack : MonoBehaviour
         if (other.CompareTag("EnemyForward4"))
         {
             stayTimeF += Time.deltaTime;
-            F = true;
+            if (stayTimeF > 0.1f)
+            {
+                F = true;
+            }
             if (other.CompareTag("EnemyBack4"))
             {
                 if (stayTimeF < 10)//”wŒã‚É“–‚½‚Á‚½Žž‚É”»’è‚µ‚È‚¢‚æ‚¤‚É‚·‚é
@@ -528,7 +543,10 @@ public class EnemyAttack : MonoBehaviour
         if (other.CompareTag("EnemyForward5"))
         {
             stayTimeF += Time.deltaTime;
-            F = true;
+            if (stayTimeF > 0.1f)
+            {
+                F = true;
+            }
             if (other.CompareTag("EnemyBack5"))
             {
                 if (stayTimeF < 10)//”wŒã‚É“–‚½‚Á‚½Žž‚É”»’è‚µ‚È‚¢‚æ‚¤‚É‚·‚é
@@ -543,7 +561,10 @@ public class EnemyAttack : MonoBehaviour
         if (other.CompareTag("EnemyForward6"))
         {
             stayTimeF += Time.deltaTime;
-            F = true;
+            if (stayTimeF > 0.1f)
+            {
+                F = true;
+            }
             if (other.CompareTag("EnemyBack6"))
             {
                 if (stayTimeF < 10)//”wŒã‚É“–‚½‚Á‚½Žž‚É”»’è‚µ‚È‚¢‚æ‚¤‚É‚·‚é
@@ -558,7 +579,10 @@ public class EnemyAttack : MonoBehaviour
         if (other.CompareTag("EnemyForward7"))
         {
             stayTimeF += Time.deltaTime;
-            F = true;
+            if (stayTimeF > 0.1f)
+            {
+                F = true;
+            }
             if (other.CompareTag("EnemyBack7"))
             {
                 if (stayTimeF < 10)//”wŒã‚É“–‚½‚Á‚½Žž‚É”»’è‚µ‚È‚¢‚æ‚¤‚É‚·‚é
@@ -573,7 +597,10 @@ public class EnemyAttack : MonoBehaviour
         if (other.CompareTag("EnemyForward8"))
         {
             stayTimeF += Time.deltaTime;
-            F = true;
+            if (stayTimeF > 0.1f)
+            {
+                F = true;
+            }
             if (other.CompareTag("EnemyBack8"))
             {
                 if (stayTimeF < 10)//”wŒã‚É“–‚½‚Á‚½Žž‚É”»’è‚µ‚È‚¢‚æ‚¤‚É‚·‚é
@@ -588,7 +615,10 @@ public class EnemyAttack : MonoBehaviour
         if (other.CompareTag("EnemyForward9"))
         {
             stayTimeF += Time.deltaTime;
-            F = true;
+            if (stayTimeF > 0.1f)
+            {
+                F = true;
+            }
             if (other.CompareTag("EnemyBack9"))
             {
                 if (stayTimeF < 10)//”wŒã‚É“–‚½‚Á‚½Žž‚É”»’è‚µ‚È‚¢‚æ‚¤‚É‚·‚é
@@ -603,7 +633,10 @@ public class EnemyAttack : MonoBehaviour
         if (other.CompareTag("EnemyForward10"))
         {
             stayTimeF += Time.deltaTime;
-            F = true;
+            if (stayTimeF > 0.1f)
+            {
+                F = true;
+            }
             if (other.CompareTag("EnemyBack10"))
             {
                 if (stayTimeF < 10)//”wŒã‚É“–‚½‚Á‚½Žž‚É”»’è‚µ‚È‚¢‚æ‚¤‚É‚·‚é
@@ -619,8 +652,10 @@ public class EnemyAttack : MonoBehaviour
         if (other.CompareTag("EnemyGForward"))
         {
             stayTimeFG += Time.deltaTime;
-            F = true;
-            Debug.Log("!%");
+            if (stayTimeF > 0.1f)
+            {
+                F = true;
+            }
             if (other.CompareTag("EnemyBackG"))
             {
                 if (stayTimeFG < 10)//”wŒã‚É“–‚½‚Á‚½Žž‚É”»’è‚µ‚È‚¢‚æ‚¤‚É‚·‚é
@@ -636,7 +671,10 @@ public class EnemyAttack : MonoBehaviour
         if (other.CompareTag("EnemyGForward1"))
         {
             stayTimeFG += Time.deltaTime;
-            F = true;
+            if (stayTimeF > 0.1f)
+            {
+                F = true;
+            }
             if (other.CompareTag("EnemyBackG1"))
             {
                 if (stayTimeFG < 10)//”wŒã‚É“–‚½‚Á‚½Žž‚É”»’è‚µ‚È‚¢‚æ‚¤‚É‚·‚é
@@ -652,8 +690,10 @@ public class EnemyAttack : MonoBehaviour
         if (other.CompareTag("EnemyGForward2"))
         {
             stayTimeFG += Time.deltaTime;
-            F = true;
-            Debug.Log("!%");
+            if (stayTimeF > 0.1f)
+            {
+                F = true;
+            }
             if (other.CompareTag("EnemyBackG2"))
             {
                 if (stayTimeFG < 10)//”wŒã‚É“–‚½‚Á‚½Žž‚É”»’è‚µ‚È‚¢‚æ‚¤‚É‚·‚é
@@ -669,8 +709,10 @@ public class EnemyAttack : MonoBehaviour
         if (other.CompareTag("EnemyGForward3"))
         {
             stayTimeFG += Time.deltaTime;
-            F = true;
-            Debug.Log("!%");
+            if (stayTimeF > 0.1f)
+            {
+                F = true;
+            }
             if (other.CompareTag("EnemyBackG3"))
             {
                 if (stayTimeFG < 10)//”wŒã‚É“–‚½‚Á‚½Žž‚É”»’è‚µ‚È‚¢‚æ‚¤‚É‚·‚é
@@ -726,7 +768,6 @@ public class EnemyAttack : MonoBehaviour
                 {
                     GetComponent<ParticleSystem>().Play();
                     EI1.isHidden = false;
-                    Debug.Log("?");
                 }
             }
 
@@ -755,7 +796,6 @@ public class EnemyAttack : MonoBehaviour
                 {
                     GetComponent<ParticleSystem>().Play();
                     EI2.isHidden = false;
-                    Debug.Log("?");
                 }
             }
 
@@ -784,7 +824,6 @@ public class EnemyAttack : MonoBehaviour
                 {
                     GetComponent<ParticleSystem>().Play();
                     EI3.isHidden = false;
-                    Debug.Log("?");
                 }
             }
 
@@ -812,7 +851,6 @@ public class EnemyAttack : MonoBehaviour
                 {
                     GetComponent<ParticleSystem>().Play();
                     EI4.isHidden = false;
-                    Debug.Log("?");
                 }
             }
 
@@ -840,7 +878,6 @@ public class EnemyAttack : MonoBehaviour
                 {
                     GetComponent<ParticleSystem>().Play();
                     EI5.isHidden = false;
-                    Debug.Log("?");
                 }
             }
 
@@ -868,7 +905,6 @@ public class EnemyAttack : MonoBehaviour
                 {
                     GetComponent<ParticleSystem>().Play();
                     EI6.isHidden = false;
-                    Debug.Log("?");
                 }
             }
 
@@ -897,7 +933,6 @@ public class EnemyAttack : MonoBehaviour
                 {
                     GetComponent<ParticleSystem>().Play();
                     EI7.isHidden = false;
-                    Debug.Log("?");
                 }
             }
 
@@ -926,7 +961,6 @@ public class EnemyAttack : MonoBehaviour
                 {
                     GetComponent<ParticleSystem>().Play();
                     EI8.isHidden = false;
-                    Debug.Log("?");
                 }
             }
 
@@ -955,7 +989,6 @@ public class EnemyAttack : MonoBehaviour
                 {
                     GetComponent<ParticleSystem>().Play();
                     EI9.isHidden = false;
-                    Debug.Log("?");
                 }
             }
 
@@ -983,7 +1016,6 @@ public class EnemyAttack : MonoBehaviour
                 {
                     GetComponent<ParticleSystem>().Play();
                     EI10.isHidden = false;
-                    Debug.Log("?");
                 }
             }
 
@@ -1016,7 +1048,6 @@ public class EnemyAttack : MonoBehaviour
                 if (F == false)
                 {
                     GetComponent<ParticleSystem>().Play();
-                    Debug.Log("?");
                     if (ItemSeen.parentObject[0] != null)
                     {
                         ItemSeen.parentObject[0].transform.position = eobjG.transform.position;
