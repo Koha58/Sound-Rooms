@@ -8,7 +8,6 @@ public class EnemyVisualization1 : MonoBehaviour
     public GameObject Ring;
     private string objName;
     public EnemyChase Chase;
-    public EnemysGChase GChase;
 
     ItemSearch ISe;
 
@@ -54,10 +53,10 @@ public class EnemyVisualization1 : MonoBehaviour
             GameObject obj = GameObject.Find("Player"); //Playerオブジェクトを探す
             PlayerSeen PS = obj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
             var childTransforms = PS._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
-           // EnemyChase EC = Chase.GetComponent<EnemyChase>();
+            EnemyChase EC = Chase.GetComponent<EnemyChase>();
             //EnemysGChase EGC = GChase.GetComponent<EnemysGChase>();
-           // if (EC.Vi == true || EGC.ViG == true)
-           // {
+            if (EC.Vi == true)
+            {
                 if (PS.onoff == 0)
                 {
                     PS.onoff = 1;  //見えているから1
@@ -67,7 +66,7 @@ public class EnemyVisualization1 : MonoBehaviour
                         playerParts.gameObject.GetComponent<Renderer>().enabled = true;
                     }
                 }
-            //}
+            }
         }
     }
 }

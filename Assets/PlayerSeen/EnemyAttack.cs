@@ -637,7 +637,6 @@ public class EnemyAttack : MonoBehaviour
         {
             stayTimeFG += Time.deltaTime;
             F = true;
-            Debug.Log("!%");
             if (other.CompareTag("EnemyBackG1"))
             {
                 if (stayTimeFG < 10)//”wŒã‚É“–‚½‚Á‚½Žž‚É”»’è‚µ‚È‚¢‚æ‚¤‚É‚·‚é
@@ -1072,7 +1071,6 @@ public class EnemyAttack : MonoBehaviour
                 if (F == false)
                 {
                     GetComponent<ParticleSystem>().Play();
-                    Debug.Log("?");
                     if (ItemSeen.parentObject[0] != null)
                     {
                         ItemSeen.parentObject[0].transform.position = eobjG1.transform.position;

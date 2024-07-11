@@ -19,22 +19,8 @@ public class EnemyGRingSize : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        GameObject eobjG = GameObject.FindWithTag("EnemyG");
-        EnemyGController EGC = eobjG.GetComponent<EnemyGController>(); //Enemyに付いているスクリプトを取得
-
-        if (EGC.ONoff == 0)
-        {
-            i = 50;
-            Ring.enabled = false;
-            RingG.GetComponent<Collider>().enabled = false;//見える（有効）
-        }
-        if (EGC.ONoff == 1)
-        {
-            Ring.enabled = true;
-            RingG.GetComponent<Collider>().enabled = true;//見える（有効）
-            //  StartCoroutine("ScaleUp");
-        }
-
+        Ring.enabled = false;
+        RingG.GetComponent<Collider>().enabled = false;//見える（有効）
     }
 
     IEnumerator ScaleUp()
