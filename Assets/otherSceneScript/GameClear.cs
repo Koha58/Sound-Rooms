@@ -24,7 +24,7 @@ public class GameClear : MonoBehaviour
         GameObject cobj = GameObject.Find("Player");
         ISe = cobj.GetComponent<ItemSearch>(); //付いているスクリプトを取得
 
-        if (other.gameObject.tag == "Door")
+        if (other.gameObject.name == "Door1")
         {
             if(ISe.count == 4)
             {

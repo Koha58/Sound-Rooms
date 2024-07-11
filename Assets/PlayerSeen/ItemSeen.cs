@@ -8,6 +8,7 @@ using UnityEngine.SceneManagement;
 //using UnityEngine.UIElements;
 using UnityEngine.XR;
 using UnityEngine.UI;
+using UnityEngine.ProBuilder.MeshOperations;
 
 //範囲内のアイテムの可視化・不可視化
 public class ItemSeen : MonoBehaviour
@@ -19,6 +20,7 @@ public class ItemSeen : MonoBehaviour
     public GameObject[] Walls;
     public GameObject[] Boxes;
     public GameObject[] Objects;
+    public GameObject[] Doors;
     public static GameObject[] parentObject;
     private string objName;
 
@@ -111,6 +113,13 @@ public class ItemSeen : MonoBehaviour
         {
             Object.GetComponent<Renderer>().enabled = false;
             Object.GetComponent<Collider>().enabled = false;
+        }
+
+        Doors = GameObject.FindGameObjectsWithTag("Door");
+
+        foreach (GameObject Door in Doors)
+        {
+            Door.GetComponent<Collider>().enabled = false;
         }
     }
 
@@ -231,6 +240,11 @@ public class ItemSeen : MonoBehaviour
                 {
                     Object.GetComponent<Renderer>().enabled = false;
                     Object.GetComponent<Collider>().enabled = false;
+                }
+
+                foreach (GameObject Door in Doors)
+                {
+                    Door.GetComponent<Collider>().enabled = false;
                 }
                 onoff = 0;  //見えていないから0
             }
@@ -461,8 +475,12 @@ public class ItemSeen : MonoBehaviour
         {
             other.GetComponent<Renderer>().enabled = true;
         }
-
         else if (other.CompareTag("Door"))
+        {
+            other.GetComponent<Collider>().enabled = true;
+        }
+
+        else if (objName == "Door1")
         {
             // 子オブジェクトの数を取得
             int doorparts = doorObject.transform.childCount;
