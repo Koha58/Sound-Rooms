@@ -24,7 +24,128 @@ public class GameOverScript : MonoBehaviour
         GameObject gobj = GameObject.Find("Player");
         PS = gobj.GetComponent<PlayerSeen>();
 
-        if (other.CompareTag("EnemyParts"))
+        if (other.CompareTag("Enemy"))
+        {
+            if (PS.onoff == 1)
+            {
+                //Debug.Log("1");
+                SceneManager.LoadScene("GameOver");
+            }
+        }
+
+        if (other.CompareTag("Enemy1"))
+        {
+            if (PS.onoff == 1)
+            {
+                //Debug.Log("1");
+                SceneManager.LoadScene("GameOver");
+            }
+        }
+
+        if (other.CompareTag("Enemy2"))
+        {
+            if (PS.onoff == 1)
+            {
+                //Debug.Log("1");
+                SceneManager.LoadScene("GameOver");
+            }
+        }
+
+        if (other.CompareTag("Enemy3"))
+        {
+            if (PS.onoff == 1)
+            {
+                //Debug.Log("1");
+                SceneManager.LoadScene("GameOver");
+            }
+        }
+
+        if (other.CompareTag("Enemy4"))
+        {
+            if (PS.onoff == 1)
+            {
+                //Debug.Log("1");
+                SceneManager.LoadScene("GameOver");
+            }
+        }
+
+        if (other.CompareTag("Enemy5"))
+        {
+            if (PS.onoff == 1)
+            {
+                //Debug.Log("1");
+                SceneManager.LoadScene("GameOver");
+            }
+        }
+        if (other.CompareTag("Enemy6"))
+        {
+            if (PS.onoff == 1)
+            {
+                //Debug.Log("1");
+                SceneManager.LoadScene("GameOver");
+            }
+        }
+        if (other.CompareTag("Enemy7"))
+        {
+            if (PS.onoff == 1)
+            {
+                //Debug.Log("1");
+                SceneManager.LoadScene("GameOver");
+            }
+        }
+        if (other.CompareTag("Enemy"))
+        {
+            if (PS.onoff == 1)
+            {
+                //Debug.Log("1");
+                SceneManager.LoadScene("GameOver");
+            }
+        }
+        if (other.CompareTag("Enemy9"))
+        {
+            if (PS.onoff == 1)
+            {
+                //Debug.Log("1");
+                SceneManager.LoadScene("GameOver");
+            }
+        }
+        if (other.CompareTag("Enemy10"))
+        {
+            if (PS.onoff == 1)
+            {
+                //Debug.Log("1");
+                SceneManager.LoadScene("GameOver");
+            }
+        }
+
+        if (other.CompareTag("EnemyG"))
+        {
+            if (PS.onoff == 1)
+            {
+                //Debug.Log("1");
+                SceneManager.LoadScene("GameOver");
+            }
+        }
+
+        if (other.CompareTag("EnemyG1"))
+        {
+            if (PS.onoff == 1)
+            {
+                //Debug.Log("1");
+                SceneManager.LoadScene("GameOver");
+            }
+        }
+
+        if (other.CompareTag("EnemyG2"))
+        {
+            if (PS.onoff == 1)
+            {
+                //Debug.Log("1");
+                SceneManager.LoadScene("GameOver");
+            }
+        }
+
+        if (other.CompareTag("EnemyG3"))
         {
             if (PS.onoff == 1)
             {
@@ -33,7 +154,7 @@ public class GameOverScript : MonoBehaviour
             }
         }
     }
-    private void OnTriggerEnter(Collider other)
+ /*   private void OnTriggerEnter(Collider other)
     {
         PlayerSeen PS;
         GameObject gobj = GameObject.Find("Player");
@@ -48,5 +169,5 @@ public class GameOverScript : MonoBehaviour
             }
         }
 
-    }
+    }*/
 }
