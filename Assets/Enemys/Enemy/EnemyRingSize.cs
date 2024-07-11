@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class EnemyRingSize : MonoBehaviour
@@ -27,21 +28,20 @@ public class EnemyRingSize : MonoBehaviour
      
         if (EC.ONoff == 0)
         {
-            i = 200;
-            Ring.enabled = false;
-            Ring.GetComponent<Collider>().enabled = false;//見える（有効）
+            i = 50;
+            Ring.GetComponent<MeshRenderer>().enabled = false;
+            Ring0.GetComponent<Collider>().enabled = false;//見える（有効）
         }
         if (EC.ONoff == 1)
         {
-            Ring.enabled = true;
-            Ring.GetComponent<Collider>().enabled = true;//見える（有効）
-            //  StartCoroutine("ScaleUp");
+            Ring.GetComponent<MeshRenderer>().enabled = true;
+            Ring0.GetComponent<Collider>().enabled = true;//見える（有効）
         }
     }
 
     IEnumerator ScaleUp()
     {
-        for (i = 200; i < 400; i += 5f)
+        for (i = 50; i < 200; i += 5f)
         {
             this.transform.localScale = new Vector3(i, i, i);
             yield return new WaitForSeconds(0.1f);

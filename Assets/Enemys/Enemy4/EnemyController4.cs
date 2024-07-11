@@ -24,6 +24,7 @@ public class EnemyController4 : MonoBehaviour
     public EnemyChase Chase;
     public GameObject EnemyWall;
     public GameObject EnemyGetRandomPosition;
+    public GameObject EnemysSeen4;
     public SkinnedMeshRenderer SkinnedMeshRendererEnemyBody;
     public MeshRenderer Ear;
     public MeshRenderer Eey;
@@ -74,17 +75,7 @@ public class EnemyController4 : MonoBehaviour
 
         Switch();
 
-        if (EC.Chase == true)//&& PS.onoff == 1 && ONoff == 1)
-        {
-            EnemyChaseOnOff = true;
-        }
-
-        if (ONoff == 0 || EC.Chase == false)
-        {
-            EnemyChaseOnOff = false;
-        }
-
-        if (EnemyChaseOnOff == false && EW.Wall == true)
+        if (EW.Wall == true)
         {
             TimeWall += Time.deltaTime;
             if (TimeWall > 4.0f)
@@ -95,10 +86,16 @@ public class EnemyController4 : MonoBehaviour
             }
         }
 
-        if (EnemyChaseOnOff == true)//Enemyが可視化状態かつプレイヤーが検知範囲に入ったら
+        if (EC.Chase == true)//Enemyが可視化状態かつプレイヤーが検知範囲に入ったら
         {
             transform.LookAt(Player.transform); //プレイヤーの方向にむく
             transform.position += transform.forward * ChaseSpeed;//プレイヤーの方向に向かう
+            ONoff = 1f;
+            SkinnedMeshRendererEnemyBody.enabled = true;
+            Ear.GetComponent<MeshRenderer>().enabled = true;//見える（有効）
+            Eey.GetComponent<MeshRenderer>().enabled = true;//見える（有効）
+            EnemysSeen4 EsS = EnemysSeen4.GetComponent<EnemysSeen4>();
+            EsS.Enemys.enabled = true;
             //「歩く」のアニメーションを停止
             animator.SetBool("EnemyWalk", false);
             //「走る」のアニメーションを再生する

@@ -24,7 +24,7 @@ public class EnemyGRingSize2 : MonoBehaviour
 
         if (EGC2.ONoff == 0)
         {
-            i = 200;
+            i = 50;
             Ring.enabled = false;
             RingG2.GetComponent<Collider>().enabled = false;//å©Ç¶ÇÈÅióLå¯Åj
         }
@@ -39,7 +39,7 @@ public class EnemyGRingSize2 : MonoBehaviour
 
     IEnumerator ScaleUp()
     {
-        for (i = 200; i < 400; i += 5f)
+        for (i = 50; i < 200; i += 5f)
         {
             this.transform.localScale = new Vector3(i, i, i);
             yield return new WaitForSeconds(0.1f);

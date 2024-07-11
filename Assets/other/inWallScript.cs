@@ -58,7 +58,6 @@ public class inWallScript : MonoBehaviour
             {
                 Wall.enabled = true;
                 bc.enabled = true;
-                Debug.Log("inWall");
             }
         }
     }

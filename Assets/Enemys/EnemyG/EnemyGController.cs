@@ -25,6 +25,7 @@ public class EnemyGController : MonoBehaviour
     public EnemysGChase GChase;
     public GameObject EnemyWall;
     public GameObject EnemyGGetRandomPosition;
+    public GameObject EnemysSeenG;
     public SkinnedMeshRenderer SkinnedMeshRendererEnemyGBody;
     public SkinnedMeshRenderer SkinnedMeshRendererEnemyGKey;
     public SkinnedMeshRenderer SkinnedMeshRendererEnemyGRing;
@@ -81,16 +82,6 @@ public class EnemyGController : MonoBehaviour
 
         Switch();
 
-        if (EGC.GChase == true)//&& PS.onoff == 1 && ONoff == 1)
-        {
-            EnemyChaseOnOff = true;
-        }
-
-        if (ONoff == 0 || EGC.GChase == false||EW.Wall==true)
-        {
-            EnemyChaseOnOff = false;
-        }
-
         if (EnemyChaseOnOff == false && EW.Wall == true)
         {
             TimeWall += Time.deltaTime;
@@ -102,10 +93,16 @@ public class EnemyGController : MonoBehaviour
             }
         }
 
-        if (EnemyChaseOnOff == true)//Enemyが可視化状態かつプレイヤーが検知範囲に入ったら
+        if (EGC.GChase == true)//Enemyが可視化状態かつプレイヤーが検知範囲に入ったら
         {
             transform.LookAt(Player.transform); //プレイヤーの方向にむく
             transform.position += transform.forward * ChaseSpeed;//プレイヤーの方向に向かう
+            ONoff = 1f;
+            SkinnedMeshRendererEnemyGBody.enabled = true;
+            Ear.GetComponent<MeshRenderer>().enabled = true;//見える（有効）
+            Eey.GetComponent<MeshRenderer>().enabled = true;//見える（有効）
+            EnemysGSeen EsS = EnemysSeenG.GetComponent<EnemysGSeen>();
+            EsS.EnemysG.enabled = true;
             //「歩く」のアニメーションを停止
             animator.SetBool("EnemyWalk", false);
             //「走る」のアニメーションを再生する

@@ -41,7 +41,7 @@ public class EnemyRingSize4 : MonoBehaviour
 
     IEnumerator ScaleUp()
     {
-        for (i = 200; i < 400; i += 5f)
+        for (i = 50; i < 200; i += 5f)
         {
             this.transform.localScale = new Vector3(i, i, i);
             yield return new WaitForSeconds(0.1f);
