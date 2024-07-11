@@ -451,7 +451,6 @@ public class EnemyAttack : MonoBehaviour
         {
             stayTimeF += Time.deltaTime;
             F = true;
-            Debug.Log("!%");
             if (other.CompareTag("EnemyBack"))
             {
                 if (stayTimeF < 10)//”wŒã‚É“–‚½‚Á‚½Žž‚É”»’è‚µ‚È‚¢‚æ‚¤‚É‚·‚é
@@ -698,7 +697,6 @@ public class EnemyAttack : MonoBehaviour
                 {
                     GetComponent<ParticleSystem>().Play();
                     EI.isHidden = false;
-                    Debug.Log("?");
                 }
                 
             }
