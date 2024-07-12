@@ -44,6 +44,7 @@ public class GameSceneButton : MonoBehaviour
         {
             OperationExplanation.GetComponent<Image>().enabled = true;
             closeButton.GetComponent<Image>().enabled = true;
+            Time.timeScale = 0;
         }
 
         if (Input.GetKeyDown(KeyCode.B)||Input.GetKeyDown("joystick button 1"))//B
@@ -51,6 +52,7 @@ public class GameSceneButton : MonoBehaviour
             closeButton.GetComponent<Image>().enabled = false;
             OperationExplanation.GetComponent<Image>().enabled = false;
             AttentionUI.GetComponent<Image>().enabled = false;
+            Time.timeScale = 1;
         }
 
         if (needAttention)
@@ -59,11 +61,11 @@ public class GameSceneButton : MonoBehaviour
             {
                 AttentionUI.GetComponent<Image>().enabled = true;
                 closeButton.GetComponent<Image>().enabled = true;
+                Time.timeScale = 0;
             }
 
             AttentionTextUI.GetComponent<Image>().enabled = true;
             AttentionButton.GetComponent<Image>().enabled = true;
-
         }
 
     }
@@ -72,6 +74,7 @@ public class GameSceneButton : MonoBehaviour
     {
         OperationExplanation.GetComponent<Image>().enabled = true;
         closeButton.GetComponent<Image>().enabled = true;
+        Time.timeScale = 0;
     }
 
     public void CloseButton()
@@ -79,11 +82,13 @@ public class GameSceneButton : MonoBehaviour
         closeButton.GetComponent<Image>().enabled = false;
         OperationExplanation.GetComponent<Image>().enabled = false;
         AttentionUI.GetComponent<Image>().enabled = false;
+        Time.timeScale = 1;
     }
 
     public void AttentionUIButton()
     {
         AttentionUI.GetComponent<Image>().enabled = true;
         closeButton.GetComponent<Image>().enabled = true;
+        Time.timeScale = 0;
     }
 }
