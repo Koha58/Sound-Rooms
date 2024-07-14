@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class PrototypeController : MonoBehaviour
 {
@@ -26,7 +28,37 @@ public class PrototypeController : MonoBehaviour
     //サウンド
     public AudioClip FootstepsSound;// 足音のオーディオクリップ
     public AudioClip VisualizationSound;// 可視化時のオーディオクリップ
-    public AudioSource audioSource;// オーディオソース
+    public AudioSource audioSource1;// オーディオソース
+    public AudioSource audioSource2;// オーディオソース
+
+    //前後判定orPlayerを追いかける
+    public Transform TargetPlayer;
+    float ChaseSpeed = 0.05f;//Playerを追いかけるスピード
+                             // bool FrontorBack;//(前： true/後: false)
+
+    //Wallに当たった時
+    // public Transform TransformWall;
+
+    private void Chase()
+    {
+        float detectionPlayer = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
+
+        if (detectionPlayer <= 10)//プレイヤーが検知範囲に入ったら
+        {
+            Debug.Log("追跡");
+            transform.LookAt(TargetPlayer.transform); //プレイヤーの方向にむく
+            transform.position += transform.forward * ChaseSpeed;//プレイヤーの方向に向かう
+        }
+    }
+
+    private void Destroy()
+    {
+        float detectionPlayer = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
+        if (detectionPlayer <= 5)//プレイヤーが検知範囲に入ったら
+        {
+         
+        }
+    }
 
     private void NextPatrolPoint() //次のポイント
     {
@@ -39,7 +71,9 @@ public class PrototypeController : MonoBehaviour
     {
         if (onoff == 0)//見えないとき
         {
-            audioSource.clip = FootstepsSound;//足音のオーディオクリップをオーディオソースに入れる
+            audioSource1.clip = FootstepsSound;//足音のオーディオクリップをオーディオソースに入れる
+            audioSource1.enabled =true;
+            audioSource1.PlayOneShot(FootstepsSound);
             PrototypeCapsuleCollider.enabled = false;//当たり判定OFF
             //3DモデルのRendererを見えない状態
             PrototypeBodySkinnedMeshRenderer.enabled = false;
@@ -51,6 +85,7 @@ public class PrototypeController : MonoBehaviour
             ONTime += Time.deltaTime;
             if (ONTime >= VisualizationRandom)//ランダムで出された値より大きかったら見えるようにする
             {
+                audioSource1.enabled = false;
                 onoff = 1;
                 ONTime = 0;
             }
@@ -58,7 +93,9 @@ public class PrototypeController : MonoBehaviour
 
         if (onoff == 1)//見えているとき
         {
-            audioSource.clip = VisualizationSound;// 可視化時のオーディオクリップをオーディオソースに入れる
+            audioSource2.clip = VisualizationSound;// 可視化時のオーディオクリップをオーディオソースに入れる
+            audioSource2.enabled = true;
+            audioSource2.PlayOneShot(VisualizationSound);
             PrototypeCapsuleCollider.enabled = true;//当たり判定ON
            　//3DモデルのRendererを見える状態
             PrototypeBodySkinnedMeshRenderer.enabled =true;
@@ -70,6 +107,7 @@ public class PrototypeController : MonoBehaviour
             OFFTime += Time.deltaTime;
             if (OFFTime >= 10.0f)//10秒以上経ったら見えなくする
             {
+                audioSource2.enabled = false;
                 onoff = 0;
                 OFFTime = 0;
             }
@@ -90,6 +128,7 @@ public class PrototypeController : MonoBehaviour
         PrototypeRingSkinnedMeshRenderer.enabled = false;
         Ear.GetComponent<MeshRenderer>().enabled = false;
         Eey.GetComponent<MeshRenderer>().enabled = false;
+
     }
 
     // Update is called once per frame
@@ -98,10 +137,24 @@ public class PrototypeController : MonoBehaviour
         Visualization();
 
         transform.position = Vector3.MoveTowards(transform.position, PatrolPoints[CurrentPointIndex].position, MoveSpeed * Time.deltaTime);
-        
+        transform.LookAt(PatrolPoints[CurrentPointIndex].transform);//次のポイントの方向を向く
+
         if (transform.position == PatrolPoints[CurrentPointIndex].position)// 次の巡回ポイントへのインデックスを更新
             NextPatrolPoint();
 
-    }
+        Vector3 Position = TargetPlayer.position - transform.position; // ターゲットの位置と自身の位置の差を計算
+        bool isFront = Vector3.Dot(Position, transform.forward) > 0;  // ターゲットが自身の前方にあるかどうか判定
+        bool isBack = Vector3.Dot(Position, transform.forward) < 0;  // ターゲットが自身の後方にあるかどうか判定
 
+        if (isFront) //ターゲットが自身の前方にあるなら
+        {
+            Chase();
+            //FrontorBack = true;
+        }
+        else if (isBack)// ターゲットが自身の後方にあるなら
+        {
+            Destroy();
+            //FrontorBack=false;
+        }
+    }
 }
