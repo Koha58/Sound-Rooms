@@ -24,6 +24,15 @@ public class GameOverScript : MonoBehaviour
         GameObject gobj = GameObject.Find("Player");
         PS = gobj.GetComponent<PlayerSeen>();
 
+        if(other.CompareTag("GameOverBox"))
+        {
+            if (PS.onoff == 1)
+            {
+                //Debug.Log("1");
+                SceneManager.LoadScene("GameOver");
+            }
+        }
+
         if (other.CompareTag("Enemy"))
         {
             if (PS.onoff == 1)

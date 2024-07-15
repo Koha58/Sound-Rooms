@@ -909,6 +909,18 @@ public class EnemyAttack : MonoBehaviour
                 Destroy(Prototype);
             }
         }
+
+        if (other.CompareTag("Prototype1"))
+        {
+            GameObject Prototype = GameObject.FindWithTag("Prototype1");
+            PrototypeController1 Prot1 = Prototype.GetComponent<PrototypeController1>();
+            Enemyincrease EI = Prototype.GetComponent<Enemyincrease>();
+            if (Prot1.DestroyONOFF == true)
+            {
+                GetComponent<ParticleSystem>().Play();
+                EI.isHidden = false;
+            }
+        }
     }
 
     /*  private void OnTriggerEnter(Collider other)

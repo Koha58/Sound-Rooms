@@ -1,11 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UIElements;
 
-public class PrototypeController : MonoBehaviour
+public class PrototypeController1 : MonoBehaviour
 {
     //課題
     /*1音
@@ -27,8 +25,6 @@ public class PrototypeController : MonoBehaviour
 
     //3DモデルのRendererのONOFF
     public SkinnedMeshRenderer PrototypeBodySkinnedMeshRenderer;
-    public SkinnedMeshRenderer PrototypeKeySkinnedMeshRenderer;
-    public SkinnedMeshRenderer PrototypeRingSkinnedMeshRenderer;
     public MeshRenderer Ear;
     public MeshRenderer Eey;
 
@@ -98,7 +94,7 @@ public class PrototypeController : MonoBehaviour
         }
         */
         float detectionInWall = Vector3.Distance(transform.position, InWall.transform.position);//InWallと敵の位置の計算
-        if (detectionInWall <=1.5f)
+        if (detectionInWall <= 1.5f)
         {
             CurrentPointIndex--;
             if (CurrentPointIndex <= PatrolPoints.Length)//巡回ポイントが最後まで行ったら最初に戻る
@@ -115,8 +111,6 @@ public class PrototypeController : MonoBehaviour
             GameOverBoxCapsuleCollider.enabled = false;//当たり判定OFF
             //3DモデルのRendererを見えない状態
             PrototypeBodySkinnedMeshRenderer.enabled = false;
-            PrototypeKeySkinnedMeshRenderer.enabled = false;
-            PrototypeRingSkinnedMeshRenderer.enabled = false;
             Ear.GetComponent<MeshRenderer>().enabled = false;
             Eey.GetComponent<MeshRenderer>().enabled = false;
 
@@ -133,10 +127,8 @@ public class PrototypeController : MonoBehaviour
             audioSource2.clip = VisualizationSound;// 可視化時のオーディオクリップをオーディオソースに入れる
             audioSource2.enabled = true;
             GameOverBoxCapsuleCollider.enabled = true;//当たり判定ON
-           //3DモデルのRendererを見える状態
+                                                      //3DモデルのRendererを見える状態
             PrototypeBodySkinnedMeshRenderer.enabled = true;
-            PrototypeKeySkinnedMeshRenderer.enabled = true;
-            PrototypeRingSkinnedMeshRenderer.enabled = true;
             Ear.GetComponent<MeshRenderer>().enabled = true;
             Eey.GetComponent<MeshRenderer>().enabled = true;
 
@@ -162,7 +154,7 @@ public class PrototypeController : MonoBehaviour
                 }
             }
 
-                OFFTime += Time.deltaTime;
+            OFFTime += Time.deltaTime;
             if (OFFTime >= 10.0f)//10秒以上経ったら見えなくする
             {
                 audioSource2.enabled = false;
@@ -182,8 +174,6 @@ public class PrototypeController : MonoBehaviour
 
         //3DモデルのRendererを見えない状態
         PrototypeBodySkinnedMeshRenderer.enabled = false;
-        PrototypeKeySkinnedMeshRenderer.enabled = false;
-        PrototypeRingSkinnedMeshRenderer.enabled = false;
         Ear.GetComponent<MeshRenderer>().enabled = false;
         Eey.GetComponent<MeshRenderer>().enabled = false;
 
@@ -232,12 +222,10 @@ public class PrototypeController : MonoBehaviour
             GameOverBoxCapsuleCollider.enabled = true;//当たり判定ON
            　//3DモデルのRendererを見える状態
             PrototypeBodySkinnedMeshRenderer.enabled = true;
-            PrototypeKeySkinnedMeshRenderer.enabled = true;
-            PrototypeRingSkinnedMeshRenderer.enabled = true;
             Ear.GetComponent<MeshRenderer>().enabled = true;
             Eey.GetComponent<MeshRenderer>().enabled = true;
 
-            if (FrontorBack==false)
+            if (FrontorBack == false)
             {
                 float detectionPlayer = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
 
