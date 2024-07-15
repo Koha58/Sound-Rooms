@@ -91706,7 +91706,7 @@ GameObject:
   - component: {fileID: 926380407226083165}
   m_Layer: 0
   m_Name: Prototype
-  m_TagString: Untagged
+  m_TagString: Prototype
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -91776,7 +91776,7 @@ MonoBehaviour:
   - {fileID: 785107265}
   - {fileID: 1225947527}
   - {fileID: 994099801}
-  onoff: 0
+  ONOFF: 0
   PrototypeCapsuleCollider: {fileID: 926380407226083161}
   PrototypeBodySkinnedMeshRenderer: {fileID: 3128886400322583666}
   PrototypeKeySkinnedMeshRenderer: {fileID: 4968497199350994182}
@@ -91788,6 +91788,8 @@ MonoBehaviour:
   audioSource1: {fileID: 926380407226083164}
   audioSource2: {fileID: 926380407226083165}
   TargetPlayer: {fileID: 135133355}
+  FrontorBack: 0
+  DestroyONOFF: 0
 --- !u!136 &926380407226083161
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -91869,7 +91871,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 5607e4b0f79a5fb4c8cbb288f41c4317, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -91965,7 +91967,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: f567dd352db8c4e48bab999504515bf0, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
