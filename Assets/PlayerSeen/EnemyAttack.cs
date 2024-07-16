@@ -946,6 +946,37 @@ public class EnemyAttack : MonoBehaviour
                     Destroy(Prototype);
                 }
             }
+
+            if (Prototype[1] = GameObject.Find("Prototype"))
+            {
+                GameObject Prototype = GameObject.Find("Prototype (100)");
+                PrototypeController Prot = Prototype.GetComponent<PrototypeController>();
+                if (Prot.DestroyONOFF == true)
+                {
+                    GetComponent<ParticleSystem>().Play();
+                    if (ItemSeen.parentObject[0] != null)
+                    {
+                        ItemSeen.parentObject[0].transform.position = Prototype.transform.position;
+                        ISe.closetObject = ItemSeen.parentObject[0];
+                    }
+                    else if (ItemSeen.parentObject[1] != null)
+                    {
+                        ItemSeen.parentObject[1].transform.position = Prototype.transform.position;
+                        ISe.closetObject = ItemSeen.parentObject[1];
+                    }
+                    else if (ItemSeen.parentObject[2] != null)
+                    {
+                        ItemSeen.parentObject[2].transform.position = Prototype.transform.position;
+                        ISe.closetObject = ItemSeen.parentObject[1];
+                    }
+                    else if (ItemSeen.parentObject[3] != null)
+                    {
+                        ItemSeen.parentObject[3].transform.position = Prototype.transform.position;
+                        ISe.closetObject = ItemSeen.parentObject[3];
+                    }
+                    Destroy(Prototype);
+                }
+            }
         }
 
         if (other.CompareTag("Prototype1"))

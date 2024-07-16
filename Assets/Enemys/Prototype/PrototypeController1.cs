@@ -39,24 +39,24 @@ public class PrototypeController1 : MonoBehaviour
     public bool FrontorBack;//(前： true/後: false)
 
     //Playerを追跡
-    float ChaseSpeed = 0.2f;//Playerを追いかけるスピード
+    float ChaseSpeed = 0.4f;//Playerを追いかけるスピード
     bool ChaseONOFF;
 
     //Destroyの判定
     public bool DestroyONOFF;//(DestroyON： true/DestroyOFF: false)
 
     //Wallに当たった時
-    //public GameObject Wall;
     public GameObject InWall;
+    private bool TouchWall;
 
     private void Chase()
     {
         GameObject gobj = GameObject.Find("Player"); //Playerオブジェクトを探す
         PlayerSeen PS = gobj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
 
-        float detectionPlayer = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
+        float ChasePlayer = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
 
-        if (detectionPlayer <= 10f)//プレイヤーが検知範囲に入ったら
+        if (ChasePlayer <= 30f)//プレイヤーが検知範囲に入ったら
         {
             if (PS.onoff == 1)//プレイヤーが可視化していたら
             {
@@ -82,7 +82,7 @@ public class PrototypeController1 : MonoBehaviour
             CurrentPointIndex = 0;
     }
 
-    private void TouchWall()
+    private void TouchWalls()
     {
         /*
         float detectionWall = Vector3.Distance(transform.position, Wall.transform.position);//Wallと敵の位置の計算
@@ -94,12 +94,15 @@ public class PrototypeController1 : MonoBehaviour
         }
         */
         float detectionInWall = Vector3.Distance(transform.position, InWall.transform.position);//InWallと敵の位置の計算
-        if (detectionInWall <= 1.5f)
+        if (detectionInWall <= 3f)
         {
+            TouchWall = true;
             CurrentPointIndex--;
             if (CurrentPointIndex <= PatrolPoints.Length)//巡回ポイントが最後まで行ったら最初に戻る
                 CurrentPointIndex = 0;
         }
+        else
+            TouchWall = false;
     }
 
     private void Visualization()//自身の可視化のON OFF
@@ -140,9 +143,9 @@ public class PrototypeController1 : MonoBehaviour
                 var childTransforms = PS._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
                 if (PS.onoff == 0)
                 {
-                    float detectionPlayer = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
+                    float VisualizationPlayer = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
 
-                    if (detectionPlayer <= 10f)//プレイヤーが検知範囲に入ったら
+                    if (VisualizationPlayer <= 30f)//プレイヤーが検知範囲に入ったら
                     {
                         PS.onoff = 1;  //見えているから1
                         foreach (var playerParts in childTransforms)
@@ -183,9 +186,9 @@ public class PrototypeController1 : MonoBehaviour
     private void Update()
     {
         Visualization();
-        TouchWall();
+        TouchWalls();
 
-        if (ChaseONOFF == false)
+        if (ChaseONOFF == false || TouchWall == true)
         {
             transform.position = Vector3.MoveTowards(transform.position, PatrolPoints[CurrentPointIndex].position, MoveSpeed * Time.deltaTime);
             transform.LookAt(PatrolPoints[CurrentPointIndex].transform);//次のポイントの方向を向く

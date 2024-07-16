@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028331, g: 0.2257133, b: 0.3069217, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -46133,7 +46133,7 @@ GameObject:
   - component: {fileID: 981323945}
   - component: {fileID: 981323944}
   m_Layer: 0
-  m_Name: Prototype (2)
+  m_Name: Prototype (100)
   m_TagString: Prototype
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -46360,7 +46360,7 @@ MonoBehaviour:
   TargetPlayer: {fileID: 135133355}
   FrontorBack: 0
   DestroyONOFF: 0
-  InWall: {fileID: 843248964}
+  InWall: {fileID: 0}
 --- !u!136 &981323947
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -59079,7 +59079,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!82 &1301672368
 AudioSource:
   m_ObjectHideFlags: 0
@@ -59303,7 +59303,7 @@ MonoBehaviour:
   TargetPlayer: {fileID: 135133355}
   FrontorBack: 0
   DestroyONOFF: 0
-  InWall: {fileID: 843248964}
+  InWall: {fileID: 0}
 --- !u!136 &1301672371
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -98476,7 +98476,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 84
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!95 &926380407226083163
 Animator:
   serializedVersion: 5
@@ -98509,7 +98509,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 5607e4b0f79a5fb4c8cbb288f41c4317, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 1
@@ -98605,7 +98605,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: f567dd352db8c4e48bab999504515bf0, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -99538,7 +99538,7 @@ PrefabInstance:
     - target: {fileID: 7827430829178605435, guid: 46909d51fabcb1e499e50df7b0a13ec1,
         type: 3}
       propertyPath: Prototype.Array.size
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7827430829178605435, guid: 46909d51fabcb1e499e50df7b0a13ec1,
         type: 3}
@@ -99554,10 +99554,15 @@ PrefabInstance:
         type: 3}
       propertyPath: Prototype.Array.data[2]
       value: 
-      objectReference: {fileID: 698656883955989761}
+      objectReference: {fileID: 981323943}
     - target: {fileID: 7827430829178605435, guid: 46909d51fabcb1e499e50df7b0a13ec1,
         type: 3}
       propertyPath: Prototype.Array.data[3]
+      value: 
+      objectReference: {fileID: 698656883955989761}
+    - target: {fileID: 7827430829178605435, guid: 46909d51fabcb1e499e50df7b0a13ec1,
+        type: 3}
+      propertyPath: Prototype.Array.data[4]
       value: 
       objectReference: {fileID: 1695150382}
     - target: {fileID: 8727382343185881509, guid: 46909d51fabcb1e499e50df7b0a13ec1,
