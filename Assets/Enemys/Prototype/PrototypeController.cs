@@ -11,6 +11,8 @@ public class PrototypeController : MonoBehaviour
     /*1音
      2それぞれ別々に破壊
      3物の可視化
+     4Wallの当たり判定
+   　5Wallが間にあった時
     */
 
     //移動
@@ -50,7 +52,8 @@ public class PrototypeController : MonoBehaviour
     public bool DestroyONOFF;//(DestroyON： true/DestroyOFF: false)
 
     //Wallに当たった時
-    public GameObject InWall;
+    //public GameObject[] Walls;
+   // public GameObject InWall;
     private bool TouchWall;
 
     private void Chase()
@@ -89,8 +92,26 @@ public class PrototypeController : MonoBehaviour
 
     private void TouchWalls()
     {
+        /*
+        foreach (GameObject Wall in Walls)
+        {
+            float detectionWall = Vector3.Distance(transform.position, Wall.transform.position);//InWallと敵の位置の計算
+            if (detectionWall <= 1.5f)
+            {
+                TouchWall = true;
+                CurrentPointIndex--;
+                if (CurrentPointIndex <= PatrolPoints.Length)//巡回ポイントが最後まで行ったら最初に戻る
+                    CurrentPointIndex = 0;
+            }
+            else
+            {
+                TouchWall = false;
+            }
+        }
+        */
+       /* 
         float detectionInWall = Vector3.Distance(transform.position, InWall.transform.position);//InWallと敵の位置の計算
-        if (detectionInWall <= 3f)
+        if (detectionInWall <= 1.5f)
         {
             TouchWall = true;
             CurrentPointIndex--;
@@ -100,7 +121,7 @@ public class PrototypeController : MonoBehaviour
         else
         {
             TouchWall = false;
-        }
+        }*/
     }
 
     private void Visualization()//自身の可視化のON OFF
@@ -184,6 +205,9 @@ public class PrototypeController : MonoBehaviour
         Ear.GetComponent<MeshRenderer>().enabled = false;
         Eey.GetComponent<MeshRenderer>().enabled = false;
 
+        //Wallをすべて取得
+       // Walls = GameObject.FindGameObjectsWithTag("Wall");
+
     }
 
     // Update is called once per frame
@@ -209,6 +233,11 @@ public class PrototypeController : MonoBehaviour
         if (isFront) //ターゲットが自身の前方にあるなら
         {
             Chase();
+          /*float Wall= Vector3.Distance(transform.position, TargetPlayer.position);
+            if (Wall <= 30f)//壁が検知範囲に入ったら
+            {
+
+            }*/
             FrontorBack = true;
         }
         else if (isBack)// ターゲットが自身の後方にあるなら
@@ -234,7 +263,7 @@ public class PrototypeController : MonoBehaviour
             Ear.GetComponent<MeshRenderer>().enabled = true;
             Eey.GetComponent<MeshRenderer>().enabled = true;
 
-            if (FrontorBack==false)
+            if (FrontorBack == false)
             {
                 float detectionPlayer = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
 
