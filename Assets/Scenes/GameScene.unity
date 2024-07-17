@@ -35440,7 +35440,7 @@ GameObject:
   - component: {fileID: 717788786}
   m_Layer: 0
   m_Name: Plane
-  m_TagString: InWall
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -46360,6 +46360,8 @@ MonoBehaviour:
   TargetPlayer: {fileID: 135133355}
   FrontorBack: 0
   DestroyONOFF: 0
+  Walls: []
+  InWalls: []
 --- !u!136 &981323947
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -59302,6 +59304,8 @@ MonoBehaviour:
   TargetPlayer: {fileID: 135133355}
   FrontorBack: 0
   DestroyONOFF: 0
+  Walls: []
+  InWalls: []
 --- !u!136 &1301672371
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -98424,6 +98428,8 @@ MonoBehaviour:
   TargetPlayer: {fileID: 135133355}
   FrontorBack: 0
   DestroyONOFF: 0
+  Walls: []
+  InWalls: []
 --- !u!136 &926380407226083161
 CapsuleCollider:
   m_ObjectHideFlags: 0

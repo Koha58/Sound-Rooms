@@ -52,9 +52,10 @@ public class PrototypeController : MonoBehaviour
     public bool DestroyONOFF;//(DestroyON： true/DestroyOFF: false)
 
     //Wallに当たった時
-    //public GameObject[] Walls;
-   // public GameObject InWall;
+    public GameObject[] Walls;
+    public GameObject[] InWalls;
     private bool TouchWall;
+    float WallONOFF = 0.0f;
 
     private void Chase()
     {
@@ -90,39 +91,16 @@ public class PrototypeController : MonoBehaviour
             CurrentPointIndex = 0;
     }
 
-    private void TouchWalls()
-    {
-        /*
-        foreach (GameObject Wall in Walls)
+  private void TouchWalls()
+  {
+        if (TouchWall == true)
         {
-            float detectionWall = Vector3.Distance(transform.position, Wall.transform.position);//InWallと敵の位置の計算
-            if (detectionWall <= 1.5f)
-            {
-                TouchWall = true;
-                CurrentPointIndex--;
-                if (CurrentPointIndex <= PatrolPoints.Length)//巡回ポイントが最後まで行ったら最初に戻る
-                    CurrentPointIndex = 0;
-            }
-            else
-            {
-                TouchWall = false;
-            }
+            WallONOFF += Time.deltaTime;
+            if (WallONOFF > 3f)
+                TouchWall = false;//Wall判定
         }
-        */
-       /* 
-        float detectionInWall = Vector3.Distance(transform.position, InWall.transform.position);//InWallと敵の位置の計算
-        if (detectionInWall <= 1.5f)
-        {
-            TouchWall = true;
-            CurrentPointIndex--;
-            if (CurrentPointIndex <= PatrolPoints.Length)//巡回ポイントが最後まで行ったら最初に戻る
-                CurrentPointIndex = 0;
-        }
-        else
-        {
-            TouchWall = false;
-        }*/
-    }
+
+  }
 
     private void Visualization()//自身の可視化のON OFF
     {
@@ -131,8 +109,8 @@ public class PrototypeController : MonoBehaviour
             audioSource1.clip = FootstepsSound;//足音のオーディオクリップをオーディオソースに入れる
             audioSource1.enabled = true;
             GameOverBoxCapsuleCollider.enabled = false;//当たり判定OFF
-            //3DモデルのRendererを見えない状態
-            PrototypeBodySkinnedMeshRenderer.enabled = false;
+         　 //3DモデルのRendererを見えない状態
+         　 PrototypeBodySkinnedMeshRenderer.enabled = false;
             PrototypeKeySkinnedMeshRenderer.enabled = false;
             PrototypeRingSkinnedMeshRenderer.enabled = false;
             Ear.GetComponent<MeshRenderer>().enabled = false;
@@ -170,11 +148,19 @@ public class PrototypeController : MonoBehaviour
 
                     if (VisualizationPlayer <= 30f)//プレイヤーが検知範囲に入ったら
                     {
-                        PS.onoff = 1;  //見えているから1
-                        foreach (var playerParts in childTransforms)
+                        foreach (GameObject InWall in InWalls)
                         {
-                            //タグが"PlayerParts"である子オブジェクトを見えるようにする
-                            playerParts.gameObject.GetComponent<Renderer>().enabled = true;
+                            float detectionInWall = Vector3.Distance(transform.position, InWall.transform.position);//InWallと敵の位置の計算
+                            if (detectionInWall <= 15f)
+                            {
+                                Debug.Log("1234");
+                                PS.onoff = 1;  //見えているから1
+                                foreach (var playerParts in childTransforms)
+                                {
+                                    //タグが"PlayerParts"である子オブジェクトを見えるようにする
+                                    playerParts.gameObject.GetComponent<Renderer>().enabled = true;
+                                }
+                            }
                         }
                     }
                 }
@@ -206,7 +192,9 @@ public class PrototypeController : MonoBehaviour
         Eey.GetComponent<MeshRenderer>().enabled = false;
 
         //Wallをすべて取得
-       // Walls = GameObject.FindGameObjectsWithTag("Wall");
+         Walls = GameObject.FindGameObjectsWithTag("Wall");
+        //InWallをすべて取得
+         InWalls = GameObject.FindGameObjectsWithTag("InWall");
 
     }
 
@@ -272,6 +260,15 @@ public class PrototypeController : MonoBehaviour
                     DestroyONOFF = true;
                 }
             }
+        }
+
+        if (other.CompareTag("InWall")|| other.CompareTag("Wall"))
+        {
+            TouchWall = true;
+            
+            CurrentPointIndex--;
+            if (CurrentPointIndex <= PatrolPoints.Length)//巡回ポイントが最後まで行ったら最初に戻る
+                CurrentPointIndex = 0;
         }
     }
 }
