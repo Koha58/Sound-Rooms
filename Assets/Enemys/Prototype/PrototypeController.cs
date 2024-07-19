@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.Burst.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
+using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
 
 public class PrototypeController : MonoBehaviour
 {
@@ -55,6 +57,9 @@ public class PrototypeController : MonoBehaviour
     public GameObject[] InWalls;
     private bool TouchWall;
     float WallONOFF = 0.0f;
+
+    public GameObject Player;
+    public GameObject Prototype;
 
     private void Chase()
     {
@@ -147,18 +152,59 @@ public class PrototypeController : MonoBehaviour
 
                     if (VisualizationPlayer <= 30f)//プレイヤーが検知範囲に入ったら
                     {
-                        foreach (GameObject InWall in InWalls)
+                        Ray ray;
+                        RaycastHit hit;
+                        Vector3 direction;   // Rayを飛ばす方向
+                        float distance = 50;    // Rayを飛ばす距離
+
+                        // Rayを飛ばす方向を計算
+                        Vector3 temp = Player.transform.position - transform.position;
+                        direction = temp.normalized;
+
+                        ray = new Ray(transform.position, direction);  // Rayを飛ばす
+                        Debug.DrawRay(ray.origin, ray.direction * distance, Color.red);  // Rayをシーン上に描画
+
+                        // Rayが最初に当たった物体を調べる
+                        if (Physics.Raycast(ray.origin, ray.direction * distance, out hit))
                         {
-                            float detectionInWall = Vector3.Distance(transform.position, InWall.transform.position);//InWallと敵の位置の計算
-                            if (detectionInWall <= 25f )
+                            if (hit.collider.CompareTag("Player"))
                             {
-                                PS.onoff = 1;  //見えているから1
-                                foreach (var playerParts in childTransforms)
-                                {
-                                    //タグが"PlayerParts"である子オブジェクトを見えるようにする
-                                    playerParts.gameObject.GetComponent<Renderer>().enabled = true;
-                                }
+                                Debug.Log("プレイヤー発見");
                             }
+
+                            if (hit.collider.gameObject.CompareTag("Wall") || (hit.collider.gameObject.CompareTag("InWall")))
+                            {
+                                Debug.Log("プレイヤーとの間に壁がある");
+                            }
+                            /* float distance =Vector3.Distance(Prototype.transform.position, Player.transform.position);
+
+                             RaycastHit hit;
+
+                             bool hasWall=Physics.Raycast(Player.transform.position,Prototype.transform.position -Player.transform.position,out hit,distance);
+
+                             if (hasWall && (hit.collider.gameObject.CompareTag("Wall") || (hit.collider.gameObject.CompareTag("InWall"))))
+                             {
+                                 PS.onoff = 1;  //見えているから1
+                                 foreach (var playerParts in childTransforms)
+                                 {
+                                     //タグが"PlayerParts"である子オブジェクトを見えるようにする
+                                     playerParts.gameObject.GetComponent<Renderer>().enabled = true;
+                                 }
+                             }*/
+                            /*
+                            foreach (GameObject InWall in InWalls)
+                            {
+                                float detectionInWall = Vector3.Distance(transform.position, InWall.transform.position);//InWallと敵の位置の計算
+                                if (detectionInWall <= 25f )
+                                {
+                                    PS.onoff = 1;  //見えているから1
+                                    foreach (var playerParts in childTransforms)
+                                    {
+                                        //タグが"PlayerParts"である子オブジェクトを見えるようにする
+                                        playerParts.gameObject.GetComponent<Renderer>().enabled = true;
+                                    }
+                                }
+                            }*/
                         }
                     }
                 }
@@ -267,6 +313,35 @@ public class PrototypeController : MonoBehaviour
             CurrentPointIndex--;
             if (CurrentPointIndex <= PatrolPoints.Length)//巡回ポイントが最後まで行ったら最初に戻る
                 CurrentPointIndex = 0;
+        }
+
+        if (other.CompareTag("Player"))
+        {
+            Ray ray;
+            RaycastHit hit;
+            Vector3 direction;   // Rayを飛ばす方向
+            float distance = 50;    // Rayを飛ばす距離
+
+            // Rayを飛ばす方向を計算
+            Vector3 temp = other.transform.position - transform.position;
+            direction = temp.normalized;
+
+            ray = new Ray(transform.position, direction);  // Rayを飛ばす
+            Debug.DrawRay(ray.origin, ray.direction * distance, Color.red);  // Rayをシーン上に描画
+
+            // Rayが最初に当たった物体を調べる
+            if (Physics.Raycast(ray.origin, ray.direction * distance, out hit))
+            {
+                if (hit.collider.CompareTag("Player"))
+                {
+                    Debug.Log("プレイヤー発見");
+                }
+
+                if (hit.collider.gameObject.CompareTag("Wall") || (hit.collider.gameObject.CompareTag("InWall")))
+                {
+                    Debug.Log("プレイヤーとの間に壁がある");
+                }
+            }
         }
     }
 }
