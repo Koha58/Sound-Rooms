@@ -11,8 +11,7 @@ public class PrototypeController : MonoBehaviour
     /*1音
      2それぞれ別々に破壊
      3物の可視化
-     4Wallの当たり判定
-   　5Wallが間にあった時
+   　4Wallが間にあった時
     */
 
     //移動
@@ -151,9 +150,8 @@ public class PrototypeController : MonoBehaviour
                         foreach (GameObject InWall in InWalls)
                         {
                             float detectionInWall = Vector3.Distance(transform.position, InWall.transform.position);//InWallと敵の位置の計算
-                            if (detectionInWall <= 15f)
+                            if (detectionInWall <= 25f )
                             {
-                                Debug.Log("1234");
                                 PS.onoff = 1;  //見えているから1
                                 foreach (var playerParts in childTransforms)
                                 {
