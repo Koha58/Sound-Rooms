@@ -13,7 +13,6 @@ public class PrototypeController : MonoBehaviour
     /*1音
      2それぞれ別々に破壊
      3物の可視化
-   　4Wallが間にあった時
     */
 
     //移動
@@ -170,29 +169,20 @@ public class PrototypeController : MonoBehaviour
                             if (hit.collider.CompareTag("Player"))
                             {
                                 Debug.Log("プレイヤー発見");
+                                PS.onoff = 1;  //見えているから1
+                                foreach (var playerParts in childTransforms)
+                                {
+                                    //タグが"PlayerParts"である子オブジェクトを見えるようにする
+                                    playerParts.gameObject.GetComponent<Renderer>().enabled = true;
+                                }
                             }
 
                             if (hit.collider.gameObject.CompareTag("Wall") || (hit.collider.gameObject.CompareTag("InWall")))
                             {
                                 Debug.Log("プレイヤーとの間に壁がある");
                             }
-                            /* float distance =Vector3.Distance(Prototype.transform.position, Player.transform.position);
-
-                             RaycastHit hit;
-
-                             bool hasWall=Physics.Raycast(Player.transform.position,Prototype.transform.position -Player.transform.position,out hit,distance);
-
-                             if (hasWall && (hit.collider.gameObject.CompareTag("Wall") || (hit.collider.gameObject.CompareTag("InWall"))))
-                             {
-                                 PS.onoff = 1;  //見えているから1
-                                 foreach (var playerParts in childTransforms)
-                                 {
-                                     //タグが"PlayerParts"である子オブジェクトを見えるようにする
-                                     playerParts.gameObject.GetComponent<Renderer>().enabled = true;
-                                 }
-                             }*/
-                            /*
-                            foreach (GameObject InWall in InWalls)
+                
+                           /* foreach (GameObject InWall in InWalls)
                             {
                                 float detectionInWall = Vector3.Distance(transform.position, InWall.transform.position);//InWallと敵の位置の計算
                                 if (detectionInWall <= 25f )
