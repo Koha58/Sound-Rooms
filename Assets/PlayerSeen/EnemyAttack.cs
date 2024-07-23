@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 //EnemyÇ…âπÇÇ‘Ç¬ÇØÇÈãììÆ
@@ -10,6 +11,10 @@ public class EnemyAttack : MonoBehaviour
     ItemSearch ISe;
 
     [SerializeField] public GameObject EnemyAttackArea;
+
+    public TextMeshProUGUI keyCountText;
+    public int count;
+    [SerializeField] AudioSource PickupSound;
 
     private float stayTimeF = 0;
     private float stayTimeFG = 0;
@@ -30,6 +35,10 @@ public class EnemyAttack : MonoBehaviour
     {
         //ç≈èâÇÕå©Ç¶Ç»Ç¢èÛë‘
         EnemyAttackArea.GetComponent<Collider>().enabled = false;
+
+        count = 0;
+        SetCountText();
+        PickupSound = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -692,6 +701,9 @@ public class EnemyAttack : MonoBehaviour
                     }
                     Destroy(eobjG);
                     Enemyincrease.enemyDeathcnt++;
+                    PickupSound.PlayOneShot(PickupSound.clip);
+                    count += 1;
+                    SetCountText();
                 }
             }
 
@@ -746,6 +758,9 @@ public class EnemyAttack : MonoBehaviour
                     }
                     Destroy(eobjG1);
                     Enemyincrease.enemyDeathcnt++;
+                    PickupSound.PlayOneShot(PickupSound.clip);
+                    count += 1;
+                    SetCountText();
                 }
             }
             //ìGGÇÃê≥ñ Ç…ìñÇΩÇ¡ÇΩéû
@@ -800,6 +815,9 @@ public class EnemyAttack : MonoBehaviour
                     }
                     Destroy(eobjG2);
                     Enemyincrease.enemyDeathcnt++;
+                    PickupSound.PlayOneShot(PickupSound.clip);
+                    count += 1;
+                    SetCountText();
                 }
             }
 
@@ -855,6 +873,9 @@ public class EnemyAttack : MonoBehaviour
                     }
                     Destroy(eobjG3);
                     Enemyincrease.enemyDeathcnt++;
+                    PickupSound.PlayOneShot(PickupSound.clip);
+                    count += 1;
+                    SetCountText();
                 }
             }
 
@@ -1410,5 +1431,10 @@ public class EnemyAttack : MonoBehaviour
                 rb.AddForce(transform.forward * 500.0f, ForceMode.Force);
             }
         }*/
+
+    void SetCountText()
+    {
+        keyCountText.text = count.ToString();
+    }
 
 }
