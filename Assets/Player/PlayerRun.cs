@@ -39,6 +39,8 @@ public class PlayerRun : MonoBehaviour
     private bool walk = false;
     private bool run = false;
 
+    private Rigidbody rb;
+
     void Start()
     {
         playerRb = GetComponent<Rigidbody>();
@@ -46,6 +48,8 @@ public class PlayerRun : MonoBehaviour
         pastPos = transform.position;
 
         Application.targetFrameRate = 60;
+
+        rb = GetComponent<Rigidbody>();
     }
 
     void Update()
