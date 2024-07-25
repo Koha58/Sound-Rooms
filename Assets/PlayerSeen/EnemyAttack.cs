@@ -679,26 +679,7 @@ public class EnemyAttack : MonoBehaviour
                 if (F == false)
                 {
                     GetComponent<ParticleSystem>().Play();
-                    if (ItemSeen.parentObject[0] != null)
-                    {
-                        ItemSeen.parentObject[0].transform.position = eobjG.transform.position;
-                        ISe.closetObject = ItemSeen.parentObject[0];
-                    }
-                    else if (ItemSeen.parentObject[1] != null)
-                    {
-                        ItemSeen.parentObject[1].transform.position = eobjG.transform.position;
-                        ISe.closetObject = ItemSeen.parentObject[1];
-                    }
-                    else if (ItemSeen.parentObject[2] != null)
-                    {
-                        ItemSeen.parentObject[2].transform.position = eobjG.transform.position;
-                        ISe.closetObject = ItemSeen.parentObject[1];
-                    }
-                    else if (ItemSeen.parentObject[3] != null)
-                    {
-                        ItemSeen.parentObject[3].transform.position = eobjG.transform.position;
-                        ISe.closetObject = ItemSeen.parentObject[3];
-                    }
+
                     Destroy(eobjG);
                     Enemyincrease.enemyDeathcnt++;
                     PickupSound.PlayOneShot(PickupSound.clip);
@@ -736,26 +717,7 @@ public class EnemyAttack : MonoBehaviour
                 if (F == false)
                 {
                     GetComponent<ParticleSystem>().Play();
-                    if (ItemSeen.parentObject[0] != null)
-                    {
-                        ItemSeen.parentObject[0].transform.position = eobjG1.transform.position;
-                        ISe.closetObject = ItemSeen.parentObject[0];
-                    }
-                    else if (ItemSeen.parentObject[1] != null)
-                    {
-                        ItemSeen.parentObject[1].transform.position = eobjG1.transform.position;
-                        ISe.closetObject = ItemSeen.parentObject[1];
-                    }
-                    else if (ItemSeen.parentObject[2] != null)
-                    {
-                        ItemSeen.parentObject[2].transform.position = eobjG1.transform.position;
-                        ISe.closetObject = ItemSeen.parentObject[1];
-                    }
-                    else if (ItemSeen.parentObject[3] != null)
-                    {
-                        ItemSeen.parentObject[3].transform.position = eobjG1.transform.position;
-                        ISe.closetObject = ItemSeen.parentObject[3];
-                    }
+
                     Destroy(eobjG1);
                     Enemyincrease.enemyDeathcnt++;
                     PickupSound.PlayOneShot(PickupSound.clip);
@@ -793,26 +755,7 @@ public class EnemyAttack : MonoBehaviour
                 {
                     GetComponent<ParticleSystem>().Play();
                     Debug.Log("?");
-                    if (ItemSeen.parentObject[0] != null)
-                    {
-                        ItemSeen.parentObject[0].transform.position = eobjG2.transform.position;
-                        ISe.closetObject = ItemSeen.parentObject[0];
-                    }
-                    else if (ItemSeen.parentObject[1] != null)
-                    {
-                        ItemSeen.parentObject[1].transform.position = eobjG2.transform.position;
-                        ISe.closetObject = ItemSeen.parentObject[1];
-                    }
-                    else if (ItemSeen.parentObject[2] != null)
-                    {
-                        ItemSeen.parentObject[2].transform.position = eobjG2.transform.position;
-                        ISe.closetObject = ItemSeen.parentObject[1];
-                    }
-                    else if (ItemSeen.parentObject[3] != null)
-                    {
-                        ItemSeen.parentObject[3].transform.position = eobjG2.transform.position;
-                        ISe.closetObject = ItemSeen.parentObject[3];
-                    }
+
                     Destroy(eobjG2);
                     Enemyincrease.enemyDeathcnt++;
                     PickupSound.PlayOneShot(PickupSound.clip);
@@ -851,26 +794,7 @@ public class EnemyAttack : MonoBehaviour
                 {
                     GetComponent<ParticleSystem>().Play();
                     Debug.Log("?");
-                    if (ItemSeen.parentObject[0] != null)
-                    {
-                        ItemSeen.parentObject[0].transform.position = eobjG3.transform.position;
-                        ISe.closetObject = ItemSeen.parentObject[0];
-                    }
-                    else if (ItemSeen.parentObject[1] != null)
-                    {
-                        ItemSeen.parentObject[1].transform.position = eobjG3.transform.position;
-                        ISe.closetObject = ItemSeen.parentObject[1];
-                    }
-                    else if (ItemSeen.parentObject[2] != null)
-                    {
-                        ItemSeen.parentObject[2].transform.position = eobjG3.transform.position;
-                        ISe.closetObject = ItemSeen.parentObject[1];
-                    }
-                    else if (ItemSeen.parentObject[3] != null)
-                    {
-                        ItemSeen.parentObject[3].transform.position = eobjG3.transform.position;
-                        ISe.closetObject = ItemSeen.parentObject[3];
-                    }
+
                     Destroy(eobjG3);
                     Enemyincrease.enemyDeathcnt++;
                     PickupSound.PlayOneShot(PickupSound.clip);
@@ -913,26 +837,7 @@ public class EnemyAttack : MonoBehaviour
                 if (Prot.DestroyONOFF == true)
                 {
                     GetComponent<ParticleSystem>().Play();
-                    if (ItemSeen.parentObject[0] != null)
-                    {
-                        ItemSeen.parentObject[0].transform.position = Prototype.transform.position;
-                        ISe.closetObject = ItemSeen.parentObject[0];
-                    }
-                    else if (ItemSeen.parentObject[1] != null)
-                    {
-                        ItemSeen.parentObject[1].transform.position = Prototype.transform.position;
-                        ISe.closetObject = ItemSeen.parentObject[1];
-                    }
-                    else if (ItemSeen.parentObject[2] != null)
-                    {
-                        ItemSeen.parentObject[2].transform.position = Prototype.transform.position;
-                        ISe.closetObject = ItemSeen.parentObject[1];
-                    }
-                    else if (ItemSeen.parentObject[3] != null)
-                    {
-                        ItemSeen.parentObject[3].transform.position = Prototype.transform.position;
-                        ISe.closetObject = ItemSeen.parentObject[3];
-                    }
+
                     Destroy(Prototype);
                 }
             }
@@ -944,26 +849,7 @@ public class EnemyAttack : MonoBehaviour
                 if (Prot.DestroyONOFF == true)
                 {
                     GetComponent<ParticleSystem>().Play();
-                    if (ItemSeen.parentObject[0] != null)
-                    {
-                        ItemSeen.parentObject[0].transform.position = Prototype.transform.position;
-                        ISe.closetObject = ItemSeen.parentObject[0];
-                    }
-                    else if (ItemSeen.parentObject[1] != null)
-                    {
-                        ItemSeen.parentObject[1].transform.position = Prototype.transform.position;
-                        ISe.closetObject = ItemSeen.parentObject[1];
-                    }
-                    else if (ItemSeen.parentObject[2] != null)
-                    {
-                        ItemSeen.parentObject[2].transform.position = Prototype.transform.position;
-                        ISe.closetObject = ItemSeen.parentObject[1];
-                    }
-                    else if (ItemSeen.parentObject[3] != null)
-                    {
-                        ItemSeen.parentObject[3].transform.position = Prototype.transform.position;
-                        ISe.closetObject = ItemSeen.parentObject[3];
-                    }
+
                     Destroy(Prototype);
                 }
             }
@@ -975,26 +861,7 @@ public class EnemyAttack : MonoBehaviour
                 if (Prot.DestroyONOFF == true)
                 {
                     GetComponent<ParticleSystem>().Play();
-                    if (ItemSeen.parentObject[0] != null)
-                    {
-                        ItemSeen.parentObject[0].transform.position = Prototype.transform.position;
-                        ISe.closetObject = ItemSeen.parentObject[0];
-                    }
-                    else if (ItemSeen.parentObject[1] != null)
-                    {
-                        ItemSeen.parentObject[1].transform.position = Prototype.transform.position;
-                        ISe.closetObject = ItemSeen.parentObject[1];
-                    }
-                    else if (ItemSeen.parentObject[2] != null)
-                    {
-                        ItemSeen.parentObject[2].transform.position = Prototype.transform.position;
-                        ISe.closetObject = ItemSeen.parentObject[1];
-                    }
-                    else if (ItemSeen.parentObject[3] != null)
-                    {
-                        ItemSeen.parentObject[3].transform.position = Prototype.transform.position;
-                        ISe.closetObject = ItemSeen.parentObject[3];
-                    }
+
                     Destroy(Prototype);
                 }
             }
