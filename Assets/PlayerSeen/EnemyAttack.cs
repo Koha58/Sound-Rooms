@@ -28,7 +28,7 @@ public class EnemyAttack : MonoBehaviour
 
     float Foff;
     [SerializeField]
-    private GameObject[] Prototype;
+    //private GameObject[] Prototype;
 
     // Start is called before the first frame update
     void Start()
@@ -830,45 +830,21 @@ public class EnemyAttack : MonoBehaviour
 
         if(other.CompareTag("Prototype"))
         {
-            if (Prototype[0] = GameObject.Find("Prototype"))
-            {
-                GameObject Prototype = GameObject.Find("Prototype");
-                PrototypeController Prot = Prototype.GetComponent<PrototypeController>();
-                if (Prot.DestroyONOFF == true)
-                {
-                    GetComponent<ParticleSystem>().Play();
 
-                    Destroy(Prototype);
-                }
+            GameObject Prototype = GameObject.Find("Prototype");
+            PrototypeController Prot = Prototype.GetComponent<PrototypeController>();
+            if (Prot.DestroyONOFF == true)
+            {
+                GetComponent<ParticleSystem>().Play();
+
+                Destroy(Prototype);
             }
 
-            if (Prototype[1] = GameObject.Find("Prototype"))
-            {
-                GameObject Prototype = GameObject.Find("Prototype (1)");
-                PrototypeController Prot = Prototype.GetComponent<PrototypeController>();
-                if (Prot.DestroyONOFF == true)
-                {
-                    GetComponent<ParticleSystem>().Play();
-
-                    Destroy(Prototype);
-                }
-            }
-
-            if (Prototype[1] = GameObject.Find("Prototype"))
-            {
-                GameObject Prototype = GameObject.Find("Prototype (100)");
-                PrototypeController Prot = Prototype.GetComponent<PrototypeController>();
-                if (Prot.DestroyONOFF == true)
-                {
-                    GetComponent<ParticleSystem>().Play();
-
-                    Destroy(Prototype);
-                }
-            }
         }
 
         if (other.CompareTag("Prototype1"))
         {
+            /*
             if (Prototype[2] = GameObject.Find("Prototype1"))
             {
                 GameObject Prototype = GameObject.Find("Prototype1");
@@ -891,7 +867,7 @@ public class EnemyAttack : MonoBehaviour
                     GetComponent<ParticleSystem>().Play();
                     EI.isHidden = false;
                 }
-            }
+            }*/
 
         }
     }

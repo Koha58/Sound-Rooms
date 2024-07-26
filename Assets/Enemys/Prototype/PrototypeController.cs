@@ -17,7 +17,7 @@ public class PrototypeController : MonoBehaviour
 
     //移動
     [SerializeField] private Transform[] PatrolPoints; // 巡回ポイントの配列
-    private float MoveSpeed = 2f; // 動く速度
+    private float MoveSpeed = 1f; // 動く速度
     private int CurrentPointIndex = 0; // 現在の巡回ポイントのインデックス
 
     //可視化
@@ -45,7 +45,7 @@ public class PrototypeController : MonoBehaviour
     public bool FrontorBack;//(前： true/後: false)
 
     //Playerを追跡
-    float ChaseSpeed =0.4f;//Playerを追いかけるスピード
+    float ChaseSpeed =0.2f;//Playerを追いかけるスピード
     bool ChaseONOFF;
 
     //Destroyの判定
