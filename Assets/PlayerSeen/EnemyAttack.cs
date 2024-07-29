@@ -97,188 +97,6 @@ public class EnemyAttack : MonoBehaviour
             stayTimeF = 0;
         }
 
-        //ìGÇÃê≥ñ Ç…ìñÇΩÇ¡ÇΩéû
-        if (other.CompareTag("EnemyForward1"))
-        {
-            stayTimeF += Time.deltaTime;
-            if (stayTimeF > 0.1f)
-            {
-                F = true;
-            }
-            if (other.CompareTag("EnemyBack1"))
-            {
-                if (stayTimeF < 10)//îwå„Ç…ìñÇΩÇ¡ÇΩéûÇ…îªíËÇµÇ»Ç¢ÇÊÇ§Ç…Ç∑ÇÈ
-                {
-                    other.GetComponent<Collider>().enabled = false;
-                }
-                other.GetComponent<Collider>().enabled = true;
-            }
-            stayTimeF = 0;
-        }
-
-        //ìGÇÃê≥ñ Ç…ìñÇΩÇ¡ÇΩéû
-        if (other.CompareTag("EnemyForward2"))
-        {
-            stayTimeF += Time.deltaTime;
-            if (stayTimeF > 0.1f)
-            {
-                F = true;
-            }
-            if (other.CompareTag("EnemyBack2"))
-            {
-                if (stayTimeF < 10)//îwå„Ç…ìñÇΩÇ¡ÇΩéûÇ…îªíËÇµÇ»Ç¢ÇÊÇ§Ç…Ç∑ÇÈ
-                {
-                    other.GetComponent<Collider>().enabled = false;
-                }
-                other.GetComponent<Collider>().enabled = true;
-            }
-            stayTimeF = 0;
-        }
-
-        if (other.CompareTag("EnemyForward3"))
-        {
-            stayTimeF += Time.deltaTime;
-            if (stayTimeF > 0.1f)
-            {
-                F = true;
-            }
-            if (other.CompareTag("EnemyBack3"))
-            {
-                if (stayTimeF < 10)//îwå„Ç…ìñÇΩÇ¡ÇΩéûÇ…îªíËÇµÇ»Ç¢ÇÊÇ§Ç…Ç∑ÇÈ
-                {
-                    other.GetComponent<Collider>().enabled = false;
-                }
-                other.GetComponent<Collider>().enabled = true;
-            }
-            stayTimeF = 0;
-        }
-
-        if (other.CompareTag("EnemyForward4"))
-        {
-            stayTimeF += Time.deltaTime;
-            if (stayTimeF > 0.1f)
-            {
-                F = true;
-            }
-            if (other.CompareTag("EnemyBack4"))
-            {
-                if (stayTimeF < 10)//îwå„Ç…ìñÇΩÇ¡ÇΩéûÇ…îªíËÇµÇ»Ç¢ÇÊÇ§Ç…Ç∑ÇÈ
-                {
-                    other.GetComponent<Collider>().enabled = false;
-                }
-                other.GetComponent<Collider>().enabled = true;
-            }
-            stayTimeF = 0;
-        }
-
-        if (other.CompareTag("EnemyForward5"))
-        {
-            stayTimeF += Time.deltaTime;
-            if (stayTimeF > 0.1f)
-            {
-                F = true;
-            }
-            if (other.CompareTag("EnemyBack5"))
-            {
-                if (stayTimeF < 10)//îwå„Ç…ìñÇΩÇ¡ÇΩéûÇ…îªíËÇµÇ»Ç¢ÇÊÇ§Ç…Ç∑ÇÈ
-                {
-                    other.GetComponent<Collider>().enabled = false;
-                }
-                other.GetComponent<Collider>().enabled = true;
-            }
-            stayTimeF = 0;
-        }
-
-        if (other.CompareTag("EnemyForward6"))
-        {
-            stayTimeF += Time.deltaTime;
-            if (stayTimeF > 0.1f)
-            {
-                F = true;
-            }
-            if (other.CompareTag("EnemyBack6"))
-            {
-                if (stayTimeF < 10)//îwå„Ç…ìñÇΩÇ¡ÇΩéûÇ…îªíËÇµÇ»Ç¢ÇÊÇ§Ç…Ç∑ÇÈ
-                {
-                    other.GetComponent<Collider>().enabled = false;
-                }
-                other.GetComponent<Collider>().enabled = true;
-            }
-            stayTimeF = 0;
-        }
-
-        if (other.CompareTag("EnemyForward7"))
-        {
-            stayTimeF += Time.deltaTime;
-            if (stayTimeF > 0.1f)
-            {
-                F = true;
-            }
-            if (other.CompareTag("EnemyBack7"))
-            {
-                if (stayTimeF < 10)//îwå„Ç…ìñÇΩÇ¡ÇΩéûÇ…îªíËÇµÇ»Ç¢ÇÊÇ§Ç…Ç∑ÇÈ
-                {
-                    other.GetComponent<Collider>().enabled = false;
-                }
-                other.GetComponent<Collider>().enabled = true;
-            }
-            stayTimeF = 0;
-        }
-
-        if (other.CompareTag("EnemyForward8"))
-        {
-            stayTimeF += Time.deltaTime;
-            if (stayTimeF > 0.1f)
-            {
-                F = true;
-            }
-            if (other.CompareTag("EnemyBack8"))
-            {
-                if (stayTimeF < 10)//îwå„Ç…ìñÇΩÇ¡ÇΩéûÇ…îªíËÇµÇ»Ç¢ÇÊÇ§Ç…Ç∑ÇÈ
-                {
-                    other.GetComponent<Collider>().enabled = false;
-                }
-                other.GetComponent<Collider>().enabled = true;
-            }
-            stayTimeF = 0;
-        }
-
-        if (other.CompareTag("EnemyForward9"))
-        {
-            stayTimeF += Time.deltaTime;
-            if (stayTimeF > 0.1f)
-            {
-                F = true;
-            }
-            if (other.CompareTag("EnemyBack9"))
-            {
-                if (stayTimeF < 10)//îwå„Ç…ìñÇΩÇ¡ÇΩéûÇ…îªíËÇµÇ»Ç¢ÇÊÇ§Ç…Ç∑ÇÈ
-                {
-                    other.GetComponent<Collider>().enabled = false;
-                }
-                other.GetComponent<Collider>().enabled = true;
-            }
-            stayTimeF = 0;
-        }
-
-        if (other.CompareTag("EnemyForward10"))
-        {
-            stayTimeF += Time.deltaTime;
-            if (stayTimeF > 0.1f)
-            {
-                F = true;
-            }
-            if (other.CompareTag("EnemyBack10"))
-            {
-                if (stayTimeF < 10)//îwå„Ç…ìñÇΩÇ¡ÇΩéûÇ…îªíËÇµÇ»Ç¢ÇÊÇ§Ç…Ç∑ÇÈ
-                {
-                    other.GetComponent<Collider>().enabled = false;
-                }
-                other.GetComponent<Collider>().enabled = true;
-            }
-            stayTimeF = 0;
-        }
-
         //ìGGÇÃê≥ñ Ç…ìñÇΩÇ¡ÇΩéû
         if (other.CompareTag("EnemyGForward"))
         {
@@ -288,63 +106,6 @@ public class EnemyAttack : MonoBehaviour
                 F = true;
             }
             if (other.CompareTag("EnemyBackG"))
-            {
-                if (stayTimeFG < 10)//îwå„Ç…ìñÇΩÇ¡ÇΩéûÇ…îªíËÇµÇ»Ç¢ÇÊÇ§Ç…Ç∑ÇÈ
-                {
-                    other.GetComponent<Collider>().enabled = false;
-                }
-                other.GetComponent<Collider>().enabled = true;
-            }
-            stayTimeFG = 0;
-        }
-
-        //ìGGÇÃê≥ñ Ç…ìñÇΩÇ¡ÇΩéû
-        if (other.CompareTag("EnemyGForward1"))
-        {
-            stayTimeFG += Time.deltaTime;
-            if (stayTimeF > 0.1f)
-            {
-                F = true;
-            }
-            if (other.CompareTag("EnemyBackG1"))
-            {
-                if (stayTimeFG < 10)//îwå„Ç…ìñÇΩÇ¡ÇΩéûÇ…îªíËÇµÇ»Ç¢ÇÊÇ§Ç…Ç∑ÇÈ
-                {
-                    other.GetComponent<Collider>().enabled = false;
-                }
-                other.GetComponent<Collider>().enabled = true;
-            }
-            stayTimeFG = 0;
-        }
-
-        //ìGGÇÃê≥ñ Ç…ìñÇΩÇ¡ÇΩéû
-        if (other.CompareTag("EnemyGForward2"))
-        {
-            stayTimeFG += Time.deltaTime;
-            if (stayTimeF > 0.1f)
-            {
-                F = true;
-            }
-            if (other.CompareTag("EnemyBackG2"))
-            {
-                if (stayTimeFG < 10)//îwå„Ç…ìñÇΩÇ¡ÇΩéûÇ…îªíËÇµÇ»Ç¢ÇÊÇ§Ç…Ç∑ÇÈ
-                {
-                    other.GetComponent<Collider>().enabled = false;
-                }
-                other.GetComponent<Collider>().enabled = true;
-            }
-            stayTimeFG = 0;
-        }
-
-        //ìGGÇÃê≥ñ Ç…ìñÇΩÇ¡ÇΩéû
-        if (other.CompareTag("EnemyGForward3"))
-        {
-            stayTimeFG += Time.deltaTime;
-            if (stayTimeF > 0.1f)
-            {
-                F = true;
-            }
-            if (other.CompareTag("EnemyBackG3"))
             {
                 if (stayTimeFG < 10)//îwå„Ç…ìñÇΩÇ¡ÇΩéûÇ…îªíËÇµÇ»Ç¢ÇÊÇ§Ç…Ç∑ÇÈ
                 {
@@ -375,283 +136,6 @@ public class EnemyAttack : MonoBehaviour
             
             //ê≥ñ Ç…ìñÇΩÇ¡ÇΩéûÇ…îªíËÇµÇ»Ç¢ÇÊÇ§Ç…Ç∑ÇÈ
             if (other.CompareTag("EnemyForward"))
-            {
-                if (stayTimeB < 10)
-                {
-                    other.GetComponent<Collider>().enabled = false;
-                }
-                other.GetComponent<Collider>().enabled = true;
-            }
-            stayTimeB = 0.0f;
-        }
-
-        //ìGÇÃîwå„Ç…ìñÇΩÇ¡ÇΩéû
-        if (other.CompareTag("EnemyBack1"))
-        {
-            stayTimeB += Time.deltaTime;
-            GameObject eobj1 = GameObject.FindWithTag("Enemy1");
-            EnemyController1 EC1 = eobj1.GetComponent<EnemyController1>();
-            Enemyincrease1 EI1 = eobj1.GetComponent<Enemyincrease1>(); //ïtÇ¢ÇƒÇ¢ÇÈÉXÉNÉäÉvÉgÇéÊìæ
-        
-            if (stayTimeB >= stayTimeF)
-            {
-                if (F == false)
-                {
-                    GetComponent<ParticleSystem>().Play();
-                    EI1.isHidden = false;
-                }
-            }
-
-            //ê≥ñ Ç…ìñÇΩÇ¡ÇΩéûÇ…îªíËÇµÇ»Ç¢ÇÊÇ§Ç…Ç∑ÇÈ
-            if (other.CompareTag("EnemyForward1"))
-            {
-                if (stayTimeB < 10)
-                {
-                    other.GetComponent<Collider>().enabled = false;
-                }
-                other.GetComponent<Collider>().enabled = true;
-            }
-            stayTimeB = 0.0f;
-        }
-
-        //ìGÇÃîwå„Ç…ìñÇΩÇ¡ÇΩéû
-        if (other.CompareTag("EnemyBack2"))
-        {
-            stayTimeB += Time.deltaTime;
-            GameObject eobj2 = GameObject.FindWithTag("Enemy2");
-            Enemyincrease2 EI2 = eobj2.GetComponent<Enemyincrease2>(); //ïtÇ¢ÇƒÇ¢ÇÈÉXÉNÉäÉvÉgÇéÊìæ
-
-            if (stayTimeB >= stayTimeF)
-            {
-                if (F == false)
-                {
-                    GetComponent<ParticleSystem>().Play();
-                    EI2.isHidden = false;
-                }
-            }
-
-            //ê≥ñ Ç…ìñÇΩÇ¡ÇΩéûÇ…îªíËÇµÇ»Ç¢ÇÊÇ§Ç…Ç∑ÇÈ
-            if (other.CompareTag("EnemyForward2"))
-            {
-                if (stayTimeB < 10)
-                {
-                    other.GetComponent<Collider>().enabled = false;
-                }
-                other.GetComponent<Collider>().enabled = true;
-            }
-            stayTimeB = 0.0f;
-        }
-
-        //ìGÇÃîwå„Ç…ìñÇΩÇ¡ÇΩéû
-        if (other.CompareTag("EnemyBack3"))
-        {
-            stayTimeB += Time.deltaTime;
-            GameObject eobj3 = GameObject.FindWithTag("Enemy3");
-            Enemyincrease3 EI3 = eobj3.GetComponent<Enemyincrease3>(); //ïtÇ¢ÇƒÇ¢ÇÈÉXÉNÉäÉvÉgÇéÊìæ
-
-            if (stayTimeB >= stayTimeF)
-            {
-                if (F == false)
-                {
-                    GetComponent<ParticleSystem>().Play();
-                    EI3.isHidden = false;
-                }
-            }
-
-            //ê≥ñ Ç…ìñÇΩÇ¡ÇΩéûÇ…îªíËÇµÇ»Ç¢ÇÊÇ§Ç…Ç∑ÇÈ
-            if (other.CompareTag("EnemyForward3"))
-            {
-                if (stayTimeB < 10)
-                {
-                    other.GetComponent<Collider>().enabled = false;
-                }
-                other.GetComponent<Collider>().enabled = true;
-            }
-            stayTimeB = 0.0f;
-        }
-
-        if (other.CompareTag("EnemyBack4"))
-        {
-            stayTimeB += Time.deltaTime;
-            GameObject eobj4 = GameObject.FindWithTag("Enemy4");
-            Enemyincrease4 EI4 = eobj4.GetComponent<Enemyincrease4>(); //ïtÇ¢ÇƒÇ¢ÇÈÉXÉNÉäÉvÉgÇéÊìæ
-
-            if (stayTimeB >= stayTimeF)
-            {
-                if (F == false)
-                {
-                    GetComponent<ParticleSystem>().Play();
-                    EI4.isHidden = false;
-                }
-            }
-
-            //ê≥ñ Ç…ìñÇΩÇ¡ÇΩéûÇ…îªíËÇµÇ»Ç¢ÇÊÇ§Ç…Ç∑ÇÈ
-            if (other.CompareTag("EnemyForward4"))
-            {
-                if (stayTimeB < 10)
-                {
-                    other.GetComponent<Collider>().enabled = false;
-                }
-                other.GetComponent<Collider>().enabled = true;
-            }
-            stayTimeB = 0.0f;
-        }
-
-        if (other.CompareTag("EnemyBack5"))
-        {
-            stayTimeB += Time.deltaTime;
-            GameObject eobj5 = GameObject.FindWithTag("Enemy5");
-            Enemyincrease5 EI5 = eobj5.GetComponent<Enemyincrease5>(); //ïtÇ¢ÇƒÇ¢ÇÈÉXÉNÉäÉvÉgÇéÊìæ
-
-            if (stayTimeB >= stayTimeF)
-            {
-                if (F == false)
-                {
-                    GetComponent<ParticleSystem>().Play();
-                    EI5.isHidden = false;
-                }
-            }
-
-            //ê≥ñ Ç…ìñÇΩÇ¡ÇΩéûÇ…îªíËÇµÇ»Ç¢ÇÊÇ§Ç…Ç∑ÇÈ
-            if (other.CompareTag("EnemyForward5"))
-            {
-                if (stayTimeB < 10)
-                {
-                    other.GetComponent<Collider>().enabled = false;
-                }
-                other.GetComponent<Collider>().enabled = true;
-            }
-            stayTimeB = 0.0f;
-        }
-
-        if (other.CompareTag("EnemyBack6"))
-        {
-            stayTimeB += Time.deltaTime;
-            GameObject eobj6 = GameObject.FindWithTag("Enemy6");
-            Enemyincrease6 EI6 = eobj6.GetComponent<Enemyincrease6>(); //ïtÇ¢ÇƒÇ¢ÇÈÉXÉNÉäÉvÉgÇéÊìæ
-
-            if (stayTimeB >= stayTimeF)
-            {
-                if (F == false)
-                {
-                    GetComponent<ParticleSystem>().Play();
-                    EI6.isHidden = false;
-                }
-            }
-
-            //ê≥ñ Ç…ìñÇΩÇ¡ÇΩéûÇ…îªíËÇµÇ»Ç¢ÇÊÇ§Ç…Ç∑ÇÈ
-            if (other.CompareTag("EnemyForward6"))
-            {
-                if (stayTimeB < 10)
-                {
-                    other.GetComponent<Collider>().enabled = false;
-                }
-                other.GetComponent<Collider>().enabled = true;
-            }
-            stayTimeB = 0.0f;
-        }
-
-
-        if (other.CompareTag("EnemyBack7"))
-        {
-            stayTimeB += Time.deltaTime;
-            GameObject eobj7 = GameObject.FindWithTag("Enemy7");
-            Enemyincrease7 EI7= eobj7.GetComponent<Enemyincrease7>(); //ïtÇ¢ÇƒÇ¢ÇÈÉXÉNÉäÉvÉgÇéÊìæ
-
-            if (stayTimeB >= stayTimeF)
-            {
-                if (F == false)
-                {
-                    GetComponent<ParticleSystem>().Play();
-                    EI7.isHidden = false;
-                }
-            }
-
-            //ê≥ñ Ç…ìñÇΩÇ¡ÇΩéûÇ…îªíËÇµÇ»Ç¢ÇÊÇ§Ç…Ç∑ÇÈ
-            if (other.CompareTag("EnemyForward7"))
-            {
-                if (stayTimeB < 10)
-                {
-                    other.GetComponent<Collider>().enabled = false;
-                }
-                other.GetComponent<Collider>().enabled = true;
-            }
-            stayTimeB = 0.0f;
-        }
-
-
-        if (other.CompareTag("EnemyBack8"))
-        {
-            stayTimeB += Time.deltaTime;
-            GameObject eobj8 = GameObject.FindWithTag("Enemy8");
-            Enemyincrease8 EI8 = eobj8.GetComponent<Enemyincrease8>(); //ïtÇ¢ÇƒÇ¢ÇÈÉXÉNÉäÉvÉgÇéÊìæ
-
-            if (stayTimeB >= stayTimeF)
-            {
-                if (F == false)
-                {
-                    GetComponent<ParticleSystem>().Play();
-                    EI8.isHidden = false;
-                }
-            }
-
-            //ê≥ñ Ç…ìñÇΩÇ¡ÇΩéûÇ…îªíËÇµÇ»Ç¢ÇÊÇ§Ç…Ç∑ÇÈ
-            if (other.CompareTag("EnemyForward8"))
-            {
-                if (stayTimeB < 10)
-                {
-                    other.GetComponent<Collider>().enabled = false;
-                }
-                other.GetComponent<Collider>().enabled = true;
-            }
-            stayTimeB = 0.0f;
-        }
-
-
-        if (other.CompareTag("EnemyBack9"))
-        {
-            stayTimeB += Time.deltaTime;
-            GameObject eobj9 = GameObject.FindWithTag("Enemy9");
-            Enemyincrease9 EI9 = eobj9.GetComponent<Enemyincrease9>(); //ïtÇ¢ÇƒÇ¢ÇÈÉXÉNÉäÉvÉgÇéÊìæ
-
-            if (stayTimeB >= stayTimeF)
-            {
-                if (F == false)
-                {
-                    GetComponent<ParticleSystem>().Play();
-                    EI9.isHidden = false;
-                }
-            }
-
-            //ê≥ñ Ç…ìñÇΩÇ¡ÇΩéûÇ…îªíËÇµÇ»Ç¢ÇÊÇ§Ç…Ç∑ÇÈ
-            if (other.CompareTag("EnemyForward9"))
-            {
-                if (stayTimeB < 10)
-                {
-                    other.GetComponent<Collider>().enabled = false;
-                }
-                other.GetComponent<Collider>().enabled = true;
-            }
-            stayTimeB = 0.0f;
-        }
-
-        if (other.CompareTag("EnemyBack10"))
-        {
-            stayTimeB += Time.deltaTime;
-            GameObject eobj10 = GameObject.FindWithTag("Enemy10");
-            Enemyincrease10 EI10 = eobj10.GetComponent<Enemyincrease10>(); //ïtÇ¢ÇƒÇ¢ÇÈÉXÉNÉäÉvÉgÇéÊìæ
-
-            if (stayTimeB >= stayTimeF)
-            {
-                if (F == false)
-                {
-                    GetComponent<ParticleSystem>().Play();
-                    EI10.isHidden = false;
-                }
-            }
-
-            //ê≥ñ Ç…ìñÇΩÇ¡ÇΩéûÇ…îªíËÇµÇ»Ç¢ÇÊÇ§Ç…Ç∑ÇÈ
-            if (other.CompareTag("EnemyForward9"))
             {
                 if (stayTimeB < 10)
                 {
@@ -700,121 +184,6 @@ public class EnemyAttack : MonoBehaviour
             stayTimeBG = 0.0f;
         }
 
-        //ìGGÇÃîwå„Ç…ìñÇΩÇ¡ÇΩéû
-        if (other.CompareTag("EnemyBackG1"))
-        {
-            stayTimeBG += Time.deltaTime;
-            GameObject eobjG1 = GameObject.FindWithTag("EnemyG1");
-            EnemyGController1 EGC1 = eobjG1.GetComponent<EnemyGController1>();
-
-            if (stayTimeBG <= stayTimeFG)
-            {
-                stayTimeBG += 20f;
-            }
-
-            if (stayTimeBG >= stayTimeFG)
-            {
-                if (F == false)
-                {
-                    GetComponent<ParticleSystem>().Play();
-
-                    Destroy(eobjG1);
-                    Enemyincrease.enemyDeathcnt++;
-                    PickupSound.PlayOneShot(PickupSound.clip);
-                    count += 1;
-                    SetCountText();
-                }
-            }
-            //ìGGÇÃê≥ñ Ç…ìñÇΩÇ¡ÇΩéû
-            if (other.CompareTag("EnemyGForward1"))
-            {
-                if (stayTimeBG < 10)//ê≥ñ Ç…ìñÇΩÇ¡ÇΩéûÇ…îªíËÇµÇ»Ç¢ÇÊÇ§Ç…Ç∑ÇÈ
-                {
-                    other.GetComponent<Collider>().enabled = false;
-                }
-                other.GetComponent<Collider>().enabled = true;
-            }
-            stayTimeBG = 0.0f;
-        }
-
-        //ìGGÇÃîwå„Ç…ìñÇΩÇ¡ÇΩéû
-        if (other.CompareTag("EnemyBackG2"))
-        {
-            stayTimeBG += Time.deltaTime;
-            GameObject eobjG2 = GameObject.FindWithTag("EnemyG2");
-            EnemyGController2 EGC2 = eobjG2.GetComponent<EnemyGController2>();
-
-            if (stayTimeBG <= stayTimeFG)
-            {
-                stayTimeBG += 20f;
-            }
-
-            if (stayTimeBG >= stayTimeFG)
-            {
-                if (F == false)
-                {
-                    GetComponent<ParticleSystem>().Play();
-                    Debug.Log("?");
-
-                    Destroy(eobjG2);
-                    Enemyincrease.enemyDeathcnt++;
-                    PickupSound.PlayOneShot(PickupSound.clip);
-                    count += 1;
-                    SetCountText();
-                }
-            }
-
-            //ìGGÇÃê≥ñ Ç…ìñÇΩÇ¡ÇΩéû
-            if (other.CompareTag("EnemyGForward2"))
-            {
-                if (stayTimeBG < 10)//ê≥ñ Ç…ìñÇΩÇ¡ÇΩéûÇ…îªíËÇµÇ»Ç¢ÇÊÇ§Ç…Ç∑ÇÈ
-                {
-                    other.GetComponent<Collider>().enabled = false;
-                }
-                other.GetComponent<Collider>().enabled = true;
-            }
-            stayTimeBG = 0.0f;
-        }
-
-        //ìGGÇÃîwå„Ç…ìñÇΩÇ¡ÇΩéû
-        if (other.CompareTag("EnemyBackG3"))
-        {
-            stayTimeBG += Time.deltaTime;
-            GameObject eobjG3 = GameObject.FindWithTag("EnemyG3");
-            EnemyGController3 EGC3 = eobjG3.GetComponent<EnemyGController3>();
-
-            if (stayTimeBG <= stayTimeFG)
-            {
-                stayTimeBG += 20f;
-            }
-
-            if (stayTimeBG >= stayTimeFG)
-            {
-                if (F == false)
-                {
-                    GetComponent<ParticleSystem>().Play();
-                    Debug.Log("?");
-
-                    Destroy(eobjG3);
-                    Enemyincrease.enemyDeathcnt++;
-                    PickupSound.PlayOneShot(PickupSound.clip);
-                    count += 1;
-                    SetCountText();
-                }
-            }
-
-            //ìGGÇÃê≥ñ Ç…ìñÇΩÇ¡ÇΩéû
-            if (other.CompareTag("EnemyGForward3"))
-            {
-                if (stayTimeBG < 10)//ê≥ñ Ç…ìñÇΩÇ¡ÇΩéûÇ…îªíËÇµÇ»Ç¢ÇÊÇ§Ç…Ç∑ÇÈ
-                {
-                    other.GetComponent<Collider>().enabled = false;
-                }
-                other.GetComponent<Collider>().enabled = true;
-            }
-            stayTimeBG = 0.0f;
-        }
-
         if (other.CompareTag("Box"))
         {
             //RigidbodyÇéÊìæ
@@ -830,46 +199,48 @@ public class EnemyAttack : MonoBehaviour
 
         if(other.CompareTag("Prototype"))
         {
-
-            GameObject Prototype = GameObject.Find("Prototype");
+            GameObject Prototype = GameObject.FindWithTag("Prototype");
             PrototypeController Prot = Prototype.GetComponent<PrototypeController>();
             if (Prot.DestroyONOFF == true)
             {
                 GetComponent<ParticleSystem>().Play();
-
                 Destroy(Prototype);
             }
-
         }
 
         if (other.CompareTag("Prototype1"))
         {
-            /*
-            if (Prototype[2] = GameObject.Find("Prototype1"))
+            GameObject Prototype = GameObject.FindWithTag("Prototype1");
+            PrototypeController Prot1 = Prototype.GetComponent<PrototypeController>();
+            if (Prot1.DestroyONOFF == true)
             {
-                GameObject Prototype = GameObject.Find("Prototype1");
-                PrototypeController1 Prot1 = Prototype.GetComponent<PrototypeController1>();
-                Enemyincrease EI = Prototype.GetComponent<Enemyincrease>();
-                if (Prot1.DestroyONOFF == true)
-                {
-                    GetComponent<ParticleSystem>().Play();
-                    EI.isHidden = false;
-                }
+                GetComponent<ParticleSystem>().Play();
+                Destroy(Prototype);
             }
-
-            if (Prototype[3] = GameObject.Find("Prototype1 (1)"))
-            {
-                GameObject Prototype1 = GameObject.Find("Prototype1 (1)");
-                PrototypeController1 Prot1 = Prototype1.GetComponent<PrototypeController1>();
-                Enemyincrease EI = Prototype1.GetComponent<Enemyincrease>();
-                if (Prot1.DestroyONOFF == true)
-                {
-                    GetComponent<ParticleSystem>().Play();
-                    EI.isHidden = false;
-                }
-            }*/
-
         }
+
+        if (other.CompareTag("Prototype2"))
+        {
+            GameObject Prototype = GameObject.FindWithTag("Prototype2");
+            PrototypeController Prot2 = Prototype.GetComponent<PrototypeController>();
+            if (Prot2.DestroyONOFF == true)
+            {
+                GetComponent<ParticleSystem>().Play();
+                Destroy(Prototype);
+            }
+        }
+
+        if (other.CompareTag("Prototype3"))
+        {
+            GameObject Prototype = GameObject.FindWithTag("Prototype3");
+            PrototypeController Prot3 = Prototype.GetComponent<PrototypeController>();
+            if (Prot3.DestroyONOFF == true)
+            {
+                GetComponent<ParticleSystem>().Play();
+                Destroy(Prototype);
+            }
+        }
+
     }
 
     /*  private void OnTriggerEnter(Collider other)
