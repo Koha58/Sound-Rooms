@@ -205,6 +205,10 @@ public class EnemyAttack : MonoBehaviour
             {
                 GetComponent<ParticleSystem>().Play();
                 Destroy(Prototype);
+                Enemyincrease.enemyDeathcnt++;
+                PickupSound.PlayOneShot(PickupSound.clip);
+                count += 1;
+                SetCountText();
             }
         }
 
@@ -216,6 +220,10 @@ public class EnemyAttack : MonoBehaviour
             {
                 GetComponent<ParticleSystem>().Play();
                 Destroy(Prototype);
+                Enemyincrease.enemyDeathcnt++;
+                PickupSound.PlayOneShot(PickupSound.clip);
+                count += 1;
+                SetCountText();
             }
         }
 
@@ -227,6 +235,10 @@ public class EnemyAttack : MonoBehaviour
             {
                 GetComponent<ParticleSystem>().Play();
                 Destroy(Prototype);
+                Enemyincrease.enemyDeathcnt++;
+                PickupSound.PlayOneShot(PickupSound.clip);
+                count += 1;
+                SetCountText();
             }
         }
 
@@ -238,6 +250,10 @@ public class EnemyAttack : MonoBehaviour
             {
                 GetComponent<ParticleSystem>().Play();
                 Destroy(Prototype);
+                Enemyincrease.enemyDeathcnt++;
+                PickupSound.PlayOneShot(PickupSound.clip);
+                count += 1;
+                SetCountText();
             }
         }
 
