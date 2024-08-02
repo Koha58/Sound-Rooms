@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class PrototypeController2 : MonoBehaviour
+public class PrototypeController4 : MonoBehaviour
 {
     //‰Û‘è
     /*1‰¹
