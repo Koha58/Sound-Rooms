@@ -8,9 +8,16 @@ public class AnimationCheck1 : MonoBehaviour
     private Rigidbody rb;
     public float upForce = 200f;
 
+    AudioSource audioSourse;
+
+    public AudioClip TrickEnemyLaugh;
+    public AudioClip TrickEnemyRun;
+    public AudioClip TrickEnemyIdle;
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        audioSourse = GetComponent<AudioSource>();
     }
     void Update()
     {
@@ -47,5 +54,20 @@ public class AnimationCheck1 : MonoBehaviour
             anim.SetBool("StandUp", false);
         }
 
+    }
+
+    void Laugh()
+    {
+        audioSourse.PlayOneShot(TrickEnemyLaugh);
+    }
+
+    void Idle()
+    {
+        audioSourse.PlayOneShot(TrickEnemyIdle);
+    }
+
+    void Run()
+    {
+        audioSourse.PlayOneShot(TrickEnemyRun);
     }
 }

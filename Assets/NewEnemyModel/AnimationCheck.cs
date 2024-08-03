@@ -8,9 +8,16 @@ public class AnimationCheck : MonoBehaviour
     private Rigidbody rb;
     public float upForce = 200f;
 
+    public AudioClip EnemySearch;
+    public AudioClip EnemyRun;
+    public AudioClip EnemyWalk;
+
+    AudioSource audioSourse;
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        audioSourse = GetComponent<AudioSource>();
     }
     void Update()
     {
@@ -53,5 +60,20 @@ public class AnimationCheck : MonoBehaviour
             anim.SetBool("Walk", false);
         }
 
+    }
+
+    void Idle()
+    {
+        audioSourse.PlayOneShot(EnemySearch);
+    }
+
+    void Run()
+    {
+        audioSourse.PlayOneShot(EnemyRun);
+    }
+
+    void Walk()
+    {
+        audioSourse.PlayOneShot(EnemyWalk);
     }
 }
