@@ -37,7 +37,7 @@ public class PrototypeController4 : MonoBehaviour
     public bool FrontorBack;//(前： true/後: false)
 
     //Playerを追跡
-    float ChaseSpeed = 0.2f;//Playerを追いかけるスピード
+    float ChaseSpeed = 0.3f;//Playerを追いかけるスピード
     bool ChaseONOFF;
 
     //Destroyの判定
