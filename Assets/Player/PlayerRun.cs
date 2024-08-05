@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static InputDeviceManager;
 
 //プレイヤーの移動
 
@@ -41,6 +42,12 @@ public class PlayerRun : MonoBehaviour
 
     private Rigidbody rb;
 
+    public float count1;
+    public float count2;
+    public float count3;
+    public float count4;
+    public int cond;
+
     void Start()
     {
         playerRb = GetComponent<Rigidbody>();
@@ -50,6 +57,12 @@ public class PlayerRun : MonoBehaviour
         Application.targetFrameRate = 60;
 
         rb = GetComponent<Rigidbody>();
+
+        count1 = 0;
+        count2 = 0;
+        count3 = 0;
+        count4 = 0;
+        cond = 0;
     }
 
     void Update()
@@ -114,6 +127,8 @@ public class PlayerRun : MonoBehaviour
             moving = 1;
             walk = true;
             run = false;
+
+            cond = 1;
         }
 
         if (Input.GetAxisRaw("Horizontal") < 0)
@@ -124,6 +139,8 @@ public class PlayerRun : MonoBehaviour
             moving = 1;
             walk = true;
             run = false;
+
+            cond = 2;
         }
 
         if (Input.GetAxisRaw("Vertical") > 0)
@@ -134,6 +151,8 @@ public class PlayerRun : MonoBehaviour
             moving = 1;
             walk = true;
             run = false;
+
+            cond = 3;
         }
 
         if (Input.GetAxisRaw("Horizontal") > 0)
@@ -144,6 +163,8 @@ public class PlayerRun : MonoBehaviour
             moving = 1;
             walk = true;
             run = false;
+
+            cond = 4;
         }
 
         //走るとき
@@ -196,6 +217,8 @@ public class PlayerRun : MonoBehaviour
             moving = 1;
             run = true;
             walk = false;
+
+            cond = 1;
         }
 
         if (Input.GetAxisRaw("Horizontal") < 0 && Input.GetKey("joystick button 5"))
@@ -206,6 +229,8 @@ public class PlayerRun : MonoBehaviour
             moving = 1;
             run = true;
             walk = false;
+
+            cond = 2;
         }
 
         if (Input.GetAxisRaw("Vertical") > 0 && Input.GetKey("joystick button 5"))
@@ -216,6 +241,8 @@ public class PlayerRun : MonoBehaviour
             moving = 1;
             run = true;
             walk = false;
+
+            cond = 3;
         }
 
         if (Input.GetAxisRaw("Horizontal") > 0 && Input.GetKey("joystick button 5"))
@@ -226,6 +253,8 @@ public class PlayerRun : MonoBehaviour
             moving = 1;
             run = true;
             walk = false;
+
+            cond = 4;
         }
 
         //Moveメソッドで、力加えてもらう
@@ -242,6 +271,15 @@ public class PlayerRun : MonoBehaviour
              moving = 0;
              walk = false;
              run = false;
+        }
+
+        if(Input.GetAxisRaw("Vertical") == 0 && Input.GetAxisRaw("Horizontal") == 0)
+        {
+            count1 = 0f;
+            count2 = 0f;
+            count3 = 0f;
+            count4 = 0f;
+            cond = 0;
         }
 
         //------プレイヤーの回転------
@@ -288,6 +326,44 @@ public class PlayerRun : MonoBehaviour
         {
             playerRb.velocity = moveSpeed*2;
         }
+
+        if (InputDeviceManager.Instance.CurrentDeviceType == InputDeviceType.Xbox)
+        {
+            if (cond == 1)
+            {
+                count1 += Time.deltaTime;
+                count2 = 0;
+                count3 = 0f;
+                count4 = 0f;
+            }
+            else if (cond == 2)
+            {
+                count2 += Time.deltaTime;
+                count1 = 0;
+                count3 = 0f;
+                count4 = 0f;
+            }
+            else if (cond == 3)
+            {
+                count3 += Time.deltaTime;
+                count1 = 0;
+                count2 = 0f;
+                count4 = 0f;
+            }
+            else if (cond == 4)
+            {
+                count4 += Time.deltaTime;
+                count1 = 0;
+                count2 = 0f;
+                count3 = 0f;
+            }
+
+            if (count1 < 0.5f && count1 != 0 || count2 < 0.5f && count2 != 0 || count3 < 0.5f && count3 != 0 || count4 < 0.5f && count4 != 0)
+            {
+                playerRb.velocity = moveSpeed * 1.5f;
+            }
+        }
+
     }
 
 }
