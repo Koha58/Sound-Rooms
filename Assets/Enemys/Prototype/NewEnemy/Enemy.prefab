@@ -223,6 +223,59 @@ Transform:
   - {fileID: 1298373700070686237}
   m_Father: {fileID: 398028264785269794}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &385236444317141669
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4890099426839567559}
+  - component: {fileID: 2528264517940930269}
+  m_Layer: 0
+  m_Name: VisualizationBox
+  m_TagString: Visualization
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4890099426839567559
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 385236444317141669}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.49, z: 2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6849091695087599333}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &2528264517940930269
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 385236444317141669}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 4, y: 1, z: 4}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &392055990768498399
 GameObject:
   m_ObjectHideFlags: 0
@@ -6492,9 +6545,9 @@ GameObject:
   - component: {fileID: 9192495829796057117}
   - component: {fileID: 4256301972602594493}
   - component: {fileID: -1297816077112774489}
+  - component: {fileID: 6581832337039083675}
   - component: {fileID: 158975485755559706}
   - component: {fileID: 2421404395712920765}
-  - component: {fileID: 6581832337039083675}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -6518,6 +6571,7 @@ Transform:
   - {fileID: 2574943846805663355}
   - {fileID: 7013021781965722420}
   - {fileID: 5241124146520820519}
+  - {fileID: 4890099426839567559}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &9192495829796057117
@@ -6530,7 +6584,7 @@ Animator:
   m_GameObject: {fileID: 6072836054328960095}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 905def42d817859498d3942c1c7e9ecb, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -6591,6 +6645,33 @@ CapsuleCollider:
   m_Height: 1.5065993
   m_Direction: 1
   m_Center: {x: 0.009542197, y: 0.7376018, z: 0}
+--- !u!114 &6581832337039083675
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6072836054328960095}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80af5ad5ded32aa4e89a7080d62b679e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PatrolPoints: []
+  ONOFF: 0
+  GameOverBoxCapsuleCollider: {fileID: -1297816077112774489}
+  VisualizationBox: {fileID: 385236444317141669}
+  PrototypeBodySkinnedMeshRenderer: {fileID: 5631710126492451932}
+  FootstepsSound: {fileID: 8300000, guid: 11892326d64bf2543b641e9fb724effd, type: 3}
+  VisualizationSound: {fileID: 8300000, guid: f567dd352db8c4e48bab999504515bf0, type: 3}
+  audioSource1: {fileID: 158975485755559706}
+  audioSource2: {fileID: 2421404395712920765}
+  TargetPlayer: {fileID: 0}
+  FrontorBack: 0
+  DestroyONOFF: 0
+  animator: {fileID: 9192495829796057117}
+  Player: {fileID: 0}
+  Prototype: {fileID: 6072836054328960095}
 --- !u!82 &158975485755559706
 AudioSource:
   m_ObjectHideFlags: 0
@@ -6783,33 +6864,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &6581832337039083675
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6072836054328960095}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 80af5ad5ded32aa4e89a7080d62b679e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  PatrolPoints: []
-  ONOFF: 0
-  GameOverBoxCapsuleCollider: {fileID: -1297816077112774489}
-  PrototypeBodySkinnedMeshRenderer: {fileID: 5631710126492451932}
-  FootstepsSound: {fileID: 8300000, guid: 5607e4b0f79a5fb4c8cbb288f41c4317, type: 3}
-  VisualizationSound: {fileID: 8300000, guid: f567dd352db8c4e48bab999504515bf0, type: 3}
-  audioSource1: {fileID: 158975485755559706}
-  audioSource2: {fileID: 2421404395712920765}
-  TargetPlayer: {fileID: 0}
-  FrontorBack: 0
-  DestroyONOFF: 0
-  Walls: []
-  InWalls: []
-  Player: {fileID: 0}
-  Prototype: {fileID: 6072836054328960095}
 --- !u!1 &6147522024229113407
 GameObject:
   m_ObjectHideFlags: 0
