@@ -56,7 +56,7 @@ public class EnemyAttack : MonoBehaviour
 
         if (onoff == 1)
         {
-            if (levelMeter.nowdB <= 0.3f)
+            if (levelMeter.nowdB <= 0.4f)
             {
                 EnemyAttackArea.GetComponent<Collider>().enabled = false;//å©Ç¶Ç»Ç¢Åiñ≥å¯Åj
                 onoff = 0;  //å©Ç¶ÇƒÇ¢Ç»Ç¢Ç©ÇÁ0

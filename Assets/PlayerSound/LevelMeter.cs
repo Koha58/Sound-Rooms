@@ -37,6 +37,15 @@ public class LevelMeter : MonoBehaviour
             //fillAmount’lXV
             this.levelMeterImage.fillAmount = fillAmountValue;
             nowdB = fillAmountValue;
+
+            if(nowdB > 0.4f)
+            {
+                levelMeterImage.color = new Color32(255, 2, 2, 154);
+            }
+            else
+            {
+                levelMeterImage.color = new Color32(255, 255, 255, 154);
+            }
         }
         else
         {
