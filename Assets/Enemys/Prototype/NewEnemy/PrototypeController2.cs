@@ -27,8 +27,12 @@ public class PrototypeController2 : MonoBehaviour
     public SkinnedMeshRenderer PrototypeBodySkinnedMeshRenderer;
 
     //サウンド
+    AudioSource audioSourse;
     public AudioClip FootstepsSound;// 足音のオーディオクリップ
     public AudioClip VisualizationSound;// 可視化時のオーディオクリップ
+    public AudioClip EnemySearch;
+    public AudioClip EnemyRun;
+    public AudioClip EnemyWalk;
     public AudioSource audioSource1;// オーディオソース
     public AudioSource audioSource2;// オーディオソース
 
@@ -48,7 +52,7 @@ public class PrototypeController2 : MonoBehaviour
     float WallONOFF = 0.0f;
 
     //アニメーション
-    Animator animator;
+    [SerializeField] Animator animator;
 
     public GameObject Player;
     public GameObject Prototype;
@@ -146,7 +150,6 @@ public class PrototypeController2 : MonoBehaviour
                     RaycastHit hit;
                     Vector3 direction;   // Rayを飛ばす方向
                     float distance = 50;    // Rayを飛ばす距離
-
                     // Rayを飛ばす方向を計算
                     Vector3 temp = Player.transform.position - transform.position;
                     direction = temp.normalized;
@@ -195,6 +198,7 @@ public class PrototypeController2 : MonoBehaviour
         ONOFF = 0;//見えない状態
         GameOverBoxCapsuleCollider.enabled = false;//当たり判定OFF
         VisualizationRandom = Random.Range(5.0f, 10.0f);
+        audioSourse = GetComponent<AudioSource>();
 
         //3DモデルのRendererを見えない状態
         PrototypeBodySkinnedMeshRenderer.enabled = false;
@@ -244,6 +248,21 @@ public class PrototypeController2 : MonoBehaviour
         {
             FrontorBack = false;
         }
+    }
+
+    void Idle()
+    {
+        audioSourse.PlayOneShot(EnemySearch);
+    }
+
+    void Run()
+    {
+        audioSourse.PlayOneShot(EnemyRun);
+    }
+
+    void Walk()
+    {
+        audioSourse.PlayOneShot(EnemyWalk);
     }
 
     private void OnTriggerStay(Collider other)

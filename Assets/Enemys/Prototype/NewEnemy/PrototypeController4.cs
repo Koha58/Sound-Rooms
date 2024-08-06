@@ -5,7 +5,8 @@ using UnityEngine;
 
 public class PrototypeController4 : MonoBehaviour
 {
-      //課題
+
+    //課題
     /*1音
      2物の可視化
     */
@@ -27,8 +28,12 @@ public class PrototypeController4 : MonoBehaviour
     public SkinnedMeshRenderer PrototypeBodySkinnedMeshRenderer;
 
     //サウンド
+    AudioSource audioSourse;
     public AudioClip FootstepsSound;// 足音のオーディオクリップ
     public AudioClip VisualizationSound;// 可視化時のオーディオクリップ
+    public AudioClip EnemySearch;
+    public AudioClip EnemyRun;
+    public AudioClip EnemyWalk;
     public AudioSource audioSource1;// オーディオソース
     public AudioSource audioSource2;// オーディオソース
 
@@ -48,7 +53,7 @@ public class PrototypeController4 : MonoBehaviour
     float WallONOFF = 0.0f;
 
     //アニメーション
-    Animator animator;
+    [SerializeField] Animator animator;
 
     public GameObject Player;
     public GameObject Prototype;
@@ -133,7 +138,7 @@ public class PrototypeController4 : MonoBehaviour
                 GameObject obj = GameObject.Find("Player"); //Playerオブジェクトを探す
                 PlayerSeen PS = obj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
                 var childTransforms = PS._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
-             
+
                 float VisualizationPlayer = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
 
                 if (VisualizationPlayer <= 30f)//プレイヤーが検知範囲に入ったら
@@ -171,7 +176,7 @@ public class PrototypeController4 : MonoBehaviour
 
                     }
                 }
-                
+
             }
 
             OFFTime += Time.deltaTime;
@@ -191,6 +196,7 @@ public class PrototypeController4 : MonoBehaviour
         ONOFF = 0;//見えない状態
         GameOverBoxCapsuleCollider.enabled = false;//当たり判定OFF
         VisualizationRandom = Random.Range(5.0f, 10.0f);
+        audioSourse = GetComponent<AudioSource>();
 
         //3DモデルのRendererを見えない状態
         PrototypeBodySkinnedMeshRenderer.enabled = false;
@@ -203,8 +209,7 @@ public class PrototypeController4 : MonoBehaviour
     {
         if (ChaseONOFF == false)
         {
-            //「走る」のアニメーションを再生する
-            animator.SetBool("Run",true);
+            animator.SetBool("Run", true);
         }
 
         Visualization();
@@ -238,6 +243,21 @@ public class PrototypeController4 : MonoBehaviour
         {
             FrontorBack = false;
         }
+    }
+
+    void Idle()
+    {
+        audioSourse.PlayOneShot(EnemySearch);
+    }
+
+    void Run()
+    {
+        audioSourse.PlayOneShot(EnemyRun);
+    }
+
+    void Walk()
+    {
+        audioSourse.PlayOneShot(EnemyWalk);
     }
 
     private void OnTriggerStay(Collider other)
