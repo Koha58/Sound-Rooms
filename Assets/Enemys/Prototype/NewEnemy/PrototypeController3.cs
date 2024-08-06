@@ -27,8 +27,12 @@ public class PrototypeController3 : MonoBehaviour
     public SkinnedMeshRenderer PrototypeBodySkinnedMeshRenderer;
 
     //サウンド
+    AudioSource audioSourse;
     public AudioClip FootstepsSound;// 足音のオーディオクリップ
     public AudioClip VisualizationSound;// 可視化時のオーディオクリップ
+    public AudioClip EnemySearch;
+    public AudioClip EnemyRun;
+    public AudioClip EnemyWalk;
     public AudioSource audioSource1;// オーディオソース
     public AudioSource audioSource2;// オーディオソース
 
@@ -48,7 +52,7 @@ public class PrototypeController3 : MonoBehaviour
     float WallONOFF = 0.0f;
 
     //アニメーション
-    Animator animator;
+    [SerializeField] Animator animator;
 
     public GameObject Player;
     public GameObject Prototype;
@@ -195,6 +199,7 @@ public class PrototypeController3 : MonoBehaviour
         ONOFF = 0;//見えない状態
         GameOverBoxCapsuleCollider.enabled = false;//当たり判定OFF
         VisualizationRandom = Random.Range(5.0f, 10.0f);
+        audioSourse = GetComponent<AudioSource>();
 
         //3DモデルのRendererを見えない状態
         PrototypeBodySkinnedMeshRenderer.enabled = false;
@@ -244,6 +249,21 @@ public class PrototypeController3 : MonoBehaviour
         {
             FrontorBack = false;
         }
+    }
+
+    void Idle()
+    {
+        audioSourse.PlayOneShot(EnemySearch);
+    }
+
+    void Run()
+    {
+        audioSourse.PlayOneShot(EnemyRun);
+    }
+
+    void Walk()
+    {
+        audioSourse.PlayOneShot(EnemyWalk);
     }
 
     private void OnTriggerStay(Collider other)

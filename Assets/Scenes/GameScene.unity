@@ -25673,6 +25673,21 @@ PrefabInstance:
       objectReference: {fileID: 1573040124}
     - target: {fileID: 6581832337039083675, guid: 7e4709d32cf84db4e9e7a5e008539fd5,
         type: 3}
+      propertyPath: EnemyRun
+      value: 
+      objectReference: {fileID: 8300000, guid: e6525d5f0bebe9949abd25ac340d7f05, type: 3}
+    - target: {fileID: 6581832337039083675, guid: 7e4709d32cf84db4e9e7a5e008539fd5,
+        type: 3}
+      propertyPath: EnemyWalk
+      value: 
+      objectReference: {fileID: 8300000, guid: 11892326d64bf2543b641e9fb724effd, type: 3}
+    - target: {fileID: 6581832337039083675, guid: 7e4709d32cf84db4e9e7a5e008539fd5,
+        type: 3}
+      propertyPath: EnemySearch
+      value: 
+      objectReference: {fileID: 8300000, guid: 9f82ad0d3a2cb104e8756814c0348e45, type: 3}
+    - target: {fileID: 6581832337039083675, guid: 7e4709d32cf84db4e9e7a5e008539fd5,
+        type: 3}
       propertyPath: TargetPlayer
       value: 
       objectReference: {fileID: 135133355}
@@ -79630,9 +79645,39 @@ PrefabInstance:
       objectReference: {fileID: 1573040124}
     - target: {fileID: -3326402257128668916, guid: e50e73daa3a0ba445b9aaefdbed913db,
         type: 3}
+      propertyPath: EnemyRun
+      value: 
+      objectReference: {fileID: 8300000, guid: e6525d5f0bebe9949abd25ac340d7f05, type: 3}
+    - target: {fileID: -3326402257128668916, guid: e50e73daa3a0ba445b9aaefdbed913db,
+        type: 3}
+      propertyPath: EnemyWalk
+      value: 
+      objectReference: {fileID: 8300000, guid: 11892326d64bf2543b641e9fb724effd, type: 3}
+    - target: {fileID: -3326402257128668916, guid: e50e73daa3a0ba445b9aaefdbed913db,
+        type: 3}
+      propertyPath: EnemySearch
+      value: 
+      objectReference: {fileID: 8300000, guid: 9f82ad0d3a2cb104e8756814c0348e45, type: 3}
+    - target: {fileID: -3326402257128668916, guid: e50e73daa3a0ba445b9aaefdbed913db,
+        type: 3}
       propertyPath: PatrolPoints.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: -3326402257128668916, guid: e50e73daa3a0ba445b9aaefdbed913db,
+        type: 3}
+      propertyPath: PatrolPoints.Array.data[0]
+      value: 
+      objectReference: {fileID: 785107265}
+    - target: {fileID: -3326402257128668916, guid: e50e73daa3a0ba445b9aaefdbed913db,
+        type: 3}
+      propertyPath: PatrolPoints.Array.data[1]
+      value: 
+      objectReference: {fileID: 2123341091}
+    - target: {fileID: -3326402257128668916, guid: e50e73daa3a0ba445b9aaefdbed913db,
+        type: 3}
+      propertyPath: PatrolPoints.Array.data[2]
+      value: 
+      objectReference: {fileID: 1225947527}
     - target: {fileID: 8084673467481758640, guid: e50e73daa3a0ba445b9aaefdbed913db,
         type: 3}
       propertyPath: m_Name
@@ -79693,6 +79738,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9106477093166935907, guid: e50e73daa3a0ba445b9aaefdbed913db,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 905def42d817859498d3942c1c7e9ecb, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
