@@ -46,6 +46,10 @@ public class PlayerRun : MonoBehaviour
     public float count2;
     public float count3;
     public float count4;
+    public float count5;
+    public float count6;
+    public float count7;
+    public float count8;
     public int cond;
 
     void Start()
@@ -62,6 +66,10 @@ public class PlayerRun : MonoBehaviour
         count2 = 0;
         count3 = 0;
         count4 = 0;
+        count5 = 0;
+        count6 = 0;
+        count7 = 0;
+        count8 = 0;
         cond = 0;
     }
 
@@ -218,7 +226,7 @@ public class PlayerRun : MonoBehaviour
             run = true;
             walk = false;
 
-            cond = 1;
+            cond = 5;
         }
 
         if (Input.GetAxisRaw("Horizontal") < 0 && Input.GetKey("joystick button 5"))
@@ -230,7 +238,7 @@ public class PlayerRun : MonoBehaviour
             run = true;
             walk = false;
 
-            cond = 2;
+            cond = 6;
         }
 
         if (Input.GetAxisRaw("Vertical") > 0 && Input.GetKey("joystick button 5"))
@@ -242,7 +250,7 @@ public class PlayerRun : MonoBehaviour
             run = true;
             walk = false;
 
-            cond = 3;
+            cond = 7;
         }
 
         if (Input.GetAxisRaw("Horizontal") > 0 && Input.GetKey("joystick button 5"))
@@ -254,7 +262,7 @@ public class PlayerRun : MonoBehaviour
             run = true;
             walk = false;
 
-            cond = 4;
+            cond = 8;
         }
 
         //Moveメソッドで、力加えてもらう
@@ -279,6 +287,10 @@ public class PlayerRun : MonoBehaviour
             count2 = 0f;
             count3 = 0f;
             count4 = 0f;
+            count5 = 0f;
+            count6 = 0f;
+            count7 = 0f;
+            count8 = 0f;
             cond = 0;
         }
 
@@ -335,6 +347,10 @@ public class PlayerRun : MonoBehaviour
                 count2 = 0;
                 count3 = 0f;
                 count4 = 0f;
+                count5 = 0;
+                count6 = 0f;
+                count7 = 0f;
+                count8 = 0f;
             }
             else if (cond == 2)
             {
@@ -342,6 +358,10 @@ public class PlayerRun : MonoBehaviour
                 count1 = 0;
                 count3 = 0f;
                 count4 = 0f;
+                count5 = 0;
+                count6 = 0f;
+                count7 = 0f;
+                count8 = 0f;
             }
             else if (cond == 3)
             {
@@ -349,6 +369,10 @@ public class PlayerRun : MonoBehaviour
                 count1 = 0;
                 count2 = 0f;
                 count4 = 0f;
+                count5 = 0;
+                count6 = 0f;
+                count7 = 0f;
+                count8 = 0f;
             }
             else if (cond == 4)
             {
@@ -356,11 +380,63 @@ public class PlayerRun : MonoBehaviour
                 count1 = 0;
                 count2 = 0f;
                 count3 = 0f;
+                count5 = 0;
+                count6 = 0f;
+                count7 = 0f;
+                count8 = 0f;
+            }
+            else if (cond == 5)
+            {
+                count5 += Time.deltaTime;
+                count1 = 0;
+                count2 = 0f;
+                count3 = 0f;
+                count4 = 0;
+                count6 = 0f;
+                count7 = 0f;
+                count8 = 0f;
+            }
+            else if (cond == 6)
+            {
+                count6 += Time.deltaTime;
+                count1 = 0;
+                count2 = 0f;
+                count3 = 0f;
+                count4 = 0;
+                count5 = 0f;
+                count7 = 0f;
+                count8 = 0f;
+            }
+            else if (cond == 7)
+            {
+                count7 += Time.deltaTime;
+                count1 = 0;
+                count2 = 0f;
+                count3 = 0f;
+                count4 = 0;
+                count5 = 0f;
+                count6 = 0f;
+                count8 = 0f;
+            }
+            else if (cond == 8)
+            {
+                count8 += Time.deltaTime;
+                count1 = 0;
+                count2 = 0f;
+                count3 = 0f;
+                count4 = 0;
+                count5 = 0f;
+                count6 = 0f;
+                count7 = 0f;
             }
 
             if (count1 < 0.5f && count1 != 0 || count2 < 0.5f && count2 != 0 || count3 < 0.5f && count3 != 0 || count4 < 0.5f && count4 != 0)
             {
                 playerRb.velocity = moveSpeed * 1.5f;
+            }
+            else if (count5 < 0.5f && count5 != 0 || count6 < 0.5f && count6 != 0 || count7 < 0.5f && count7 != 0 || count8 < 0.5f && count8 != 0)
+            {
+                playerRb.velocity = moveSpeed * 2.5f;
             }
         }
 
