@@ -5,9 +5,9 @@ using UnityEngine;
 
 public class PrototypeController2 : MonoBehaviour
 {
+
     //課題
     /*1音
-     2物の可視化
     */
 
     //移動
@@ -22,20 +22,17 @@ public class PrototypeController2 : MonoBehaviour
     public CapsuleCollider GameOverBoxCapsuleCollider;//当たり判定のONOFF
     public GameObject VisualizationBox;//物の可視化の当たり判定
     float VisualizationRandom;//可視化時間をランダム
+    public bool PlayerVisualization;
 
     //3DモデルのRendererのONOFF
     public SkinnedMeshRenderer PrototypeBodySkinnedMeshRenderer;
 
     //サウンド
     AudioSource audioSourse;
-    public AudioClip FootstepsSound;// 足音のオーディオクリップ
-    public AudioClip VisualizationSound;// 可視化時のオーディオクリップ
     public AudioClip EnemySearch;
     public AudioClip EnemyRun;
     public AudioClip EnemyWalk;
-    public AudioSource audioSource1;// オーディオソース
-    public AudioSource audioSource2;// オーディオソース
-
+  
     //前後判定
     public Transform TargetPlayer;
     public bool FrontorBack;//(前： true/後: false)
@@ -70,10 +67,6 @@ public class PrototypeController2 : MonoBehaviour
                 if (PS.onoff == 1)//プレイヤーが可視化していたら
                 {
                     ChaseONOFF = true;
-                    //「歩く」のアニメーションを再生しない
-                    animator.SetBool("Walk", false);
-                    //「走る」のアニメーションを再生する
-                    animator.SetBool("Run", true);
                     transform.LookAt(TargetPlayer.transform); //プレイヤーの方向にむく
                     transform.position += transform.forward * ChaseSpeed;//プレイヤーの方向に向かう
                 }
@@ -111,8 +104,6 @@ public class PrototypeController2 : MonoBehaviour
     {
         if (ONOFF == 0)//見えないとき
         {
-            audioSource1.clip = FootstepsSound;//足音のオーディオクリップをオーディオソースに入れる
-            audioSource1.enabled = true;
             GameOverBoxCapsuleCollider.enabled = false;//当たり判定OFF
             VisualizationBox.SetActive(false);//物の可視化判定OFF
             //3DモデルのRendererを見えない状態
@@ -121,15 +112,12 @@ public class PrototypeController2 : MonoBehaviour
             ONTime += Time.deltaTime;
             if (ONTime >= VisualizationRandom)//ランダムで出された値より大きかったら見えるようにする
             {
-                audioSource1.enabled = false;
                 ONOFF = 1;
                 ONTime = 0;
             }
         }
         else if (ONOFF == 1)//見えているとき
         {
-            audioSource2.clip = VisualizationSound;// 可視化時のオーディオクリップをオーディオソースに入れる
-            audioSource2.enabled = true;
             GameOverBoxCapsuleCollider.enabled = true;//当たり判定ON
             VisualizationBox.SetActive(true);//物の可視化判定ON
             //3DモデルのRendererを見える状態
@@ -141,7 +129,7 @@ public class PrototypeController2 : MonoBehaviour
                 GameObject obj = GameObject.Find("Player"); //Playerオブジェクトを探す
                 PlayerSeen PS = obj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
                 var childTransforms = PS._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
-             
+
                 float VisualizationPlayer = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
 
                 if (VisualizationPlayer <= 30f)//プレイヤーが検知範囲に入ったら
@@ -150,6 +138,7 @@ public class PrototypeController2 : MonoBehaviour
                     RaycastHit hit;
                     Vector3 direction;   // Rayを飛ばす方向
                     float distance = 50;    // Rayを飛ばす距離
+
                     // Rayを飛ばす方向を計算
                     Vector3 temp = Player.transform.position - transform.position;
                     direction = temp.normalized;
@@ -169,6 +158,7 @@ public class PrototypeController2 : MonoBehaviour
                                 //タグが"PlayerParts"である子オブジェクトを見えるようにする
                                 playerParts.gameObject.GetComponent<Renderer>().enabled = true;
                             }
+                            PlayerVisualization = true;
                         }
 
                         if (hit.collider.gameObject.CompareTag("Wall") || (hit.collider.gameObject.CompareTag("InWall")))
@@ -178,15 +168,15 @@ public class PrototypeController2 : MonoBehaviour
 
                     }
                 }
-                
+
             }
 
             OFFTime += Time.deltaTime;
             if (OFFTime >= 10.0f)//10秒以上経ったら見えなくする
             {
-                audioSource2.enabled = false;
                 ONOFF = 0;
                 OFFTime = 0;
+                PlayerVisualization = false;
             }
         }
 
@@ -211,10 +201,7 @@ public class PrototypeController2 : MonoBehaviour
     {
         if (ChaseONOFF == false)
         {
-            //「歩く」のアニメーションを再生する
-            animator.SetBool("Walk", true);
-            //「走る」のアニメーションを再生しない
-            animator.SetBool("Run",false);
+            animator.SetBool("Run", true);
         }
 
         Visualization();
@@ -271,9 +258,6 @@ public class PrototypeController2 : MonoBehaviour
         {
             ONOFF = 1;
             ONTime = 0;
-            audioSource1.enabled = false;
-            audioSource2.clip = VisualizationSound;// 可視化時のオーディオクリップをオーディオソースに入れる
-            audioSource2.enabled = true;
             GameOverBoxCapsuleCollider.enabled = true;//当たり判定ON
            　//3DモデルのRendererを見える状態
             PrototypeBodySkinnedMeshRenderer.enabled = true;

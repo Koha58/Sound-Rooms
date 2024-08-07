@@ -8,7 +8,6 @@ public class PrototypeController4 : MonoBehaviour
 
     //課題
     /*1音
-     2物の可視化
     */
 
     //移動
@@ -29,8 +28,6 @@ public class PrototypeController4 : MonoBehaviour
 
     //サウンド
     AudioSource audioSourse;
-    public AudioClip FootstepsSound;// 足音のオーディオクリップ
-    public AudioClip VisualizationSound;// 可視化時のオーディオクリップ
     public AudioClip EnemySearch;
     public AudioClip EnemyRun;
     public AudioClip EnemyWalk;
@@ -108,7 +105,6 @@ public class PrototypeController4 : MonoBehaviour
     {
         if (ONOFF == 0)//見えないとき
         {
-            audioSource1.clip = FootstepsSound;//足音のオーディオクリップをオーディオソースに入れる
             audioSource1.enabled = true;
             GameOverBoxCapsuleCollider.enabled = false;//当たり判定OFF
             VisualizationBox.SetActive(false);//物の可視化判定OFF
@@ -125,7 +121,6 @@ public class PrototypeController4 : MonoBehaviour
         }
         else if (ONOFF == 1)//見えているとき
         {
-            audioSource2.clip = VisualizationSound;// 可視化時のオーディオクリップをオーディオソースに入れる
             audioSource2.enabled = true;
             GameOverBoxCapsuleCollider.enabled = true;//当たり判定ON
             VisualizationBox.SetActive(true);//物の可視化判定ON
@@ -267,7 +262,6 @@ public class PrototypeController4 : MonoBehaviour
             ONOFF = 1;
             ONTime = 0;
             audioSource1.enabled = false;
-            audioSource2.clip = VisualizationSound;// 可視化時のオーディオクリップをオーディオソースに入れる
             audioSource2.enabled = true;
             GameOverBoxCapsuleCollider.enabled = true;//当たり判定ON
            　//3DモデルのRendererを見える状態
