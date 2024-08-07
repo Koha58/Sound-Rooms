@@ -6,29 +6,24 @@ using static InputDeviceManager;
 
 public class StartDeviceCheck : MonoBehaviour
 {
-    GameObject JapaneseStartkey;
-    GameObject JapaneseStartButton;
+    GameObject Cursor;
     // Start is called before the first frame update
     void Start()
     {
-        JapaneseStartkey = GameObject.Find("StartButton_JapaneseKey");
-        JapaneseStartButton = GameObject.Find("StartButton_Japanese");
-        JapaneseStartkey.GetComponent<Image>().enabled = false;
-        JapaneseStartButton.GetComponent<Image>().enabled = false;
+        Cursor = GameObject.Find("Cursor");
+        Cursor.GetComponent<Image>().enabled = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(InputDeviceManager.Instance.CurrentDeviceType == InputDeviceType.Xbox && JapaneseStartButton != null)
+        if(InputDeviceManager.Instance.CurrentDeviceType == InputDeviceType.Xbox && Cursor != null)
         {
-            JapaneseStartButton.GetComponent<Image>().enabled = true;
-            JapaneseStartkey.GetComponent<Image>().enabled = false;
+            Cursor.GetComponent<Image>().enabled = true;
         }
-        else if(InputDeviceManager.Instance.CurrentDeviceType == InputDeviceType.Keyboard && JapaneseStartkey != null)
+        else if(InputDeviceManager.Instance.CurrentDeviceType == InputDeviceType.Keyboard && Cursor != null)
         {
-            JapaneseStartkey.GetComponent<Image>().enabled = true;
-            JapaneseStartButton.GetComponent<Image>().enabled = false;
+            Cursor.GetComponent<Image>().enabled = false;
         }
     }
 }
