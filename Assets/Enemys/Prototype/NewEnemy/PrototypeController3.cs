@@ -22,6 +22,7 @@ public class PrototypeController3 : MonoBehaviour
     public CapsuleCollider GameOverBoxCapsuleCollider;//当たり判定のONOFF
     public GameObject VisualizationBox;//物の可視化の当たり判定
     float VisualizationRandom;//可視化時間をランダム
+    public bool PlayerVisualization;
 
     //3DモデルのRendererのONOFF
     public SkinnedMeshRenderer PrototypeBodySkinnedMeshRenderer;
@@ -31,15 +32,13 @@ public class PrototypeController3 : MonoBehaviour
     public AudioClip EnemySearch;
     public AudioClip EnemyRun;
     public AudioClip EnemyWalk;
-    public AudioSource audioSource1;// オーディオソース
-    public AudioSource audioSource2;// オーディオソース
 
     //前後判定
     public Transform TargetPlayer;
     public bool FrontorBack;//(前： true/後: false)
 
     //Playerを追跡
-    float ChaseSpeed = 0.05f;//Playerを追いかけるスピード
+    float ChaseSpeed = 0.1f;//Playerを追いかけるスピード
     bool ChaseONOFF;
 
     //Destroyの判定
@@ -67,6 +66,8 @@ public class PrototypeController3 : MonoBehaviour
             {
                 if (PS.onoff == 1)//プレイヤーが可視化していたら
                 {
+                    animator.SetBool("StandUp", false);
+                    animator.SetBool("Run", true);
                     ChaseONOFF = true;
                     transform.LookAt(TargetPlayer.transform); //プレイヤーの方向にむく
                     transform.position += transform.forward * ChaseSpeed;//プレイヤーの方向に向かう
@@ -105,7 +106,6 @@ public class PrototypeController3 : MonoBehaviour
     {
         if (ONOFF == 0)//見えないとき
         {
-            audioSource1.enabled = true;
             GameOverBoxCapsuleCollider.enabled = false;//当たり判定OFF
             VisualizationBox.SetActive(false);//物の可視化判定OFF
             //3DモデルのRendererを見えない状態
@@ -114,14 +114,12 @@ public class PrototypeController3 : MonoBehaviour
             ONTime += Time.deltaTime;
             if (ONTime >= VisualizationRandom)//ランダムで出された値より大きかったら見えるようにする
             {
-                audioSource1.enabled = false;
                 ONOFF = 1;
                 ONTime = 0;
             }
         }
         else if (ONOFF == 1)//見えているとき
         {
-            audioSource2.enabled = true;
             GameOverBoxCapsuleCollider.enabled = true;//当たり判定ON
             VisualizationBox.SetActive(true);//物の可視化判定ON
             //3DモデルのRendererを見える状態
@@ -162,6 +160,7 @@ public class PrototypeController3 : MonoBehaviour
                                 //タグが"PlayerParts"である子オブジェクトを見えるようにする
                                 playerParts.gameObject.GetComponent<Renderer>().enabled = true;
                             }
+                            PlayerVisualization = true;
                         }
 
                         if (hit.collider.gameObject.CompareTag("Wall") || (hit.collider.gameObject.CompareTag("InWall")))
@@ -171,18 +170,19 @@ public class PrototypeController3 : MonoBehaviour
 
                     }
                 }
+                else
+                {
+                    PlayerVisualization = false;
+                    OFFTime += Time.deltaTime;
+                    if (OFFTime >= 10.0f)//10秒以上経ったら見えなくする
+                    {
+                        ONOFF = 0;
+                        OFFTime = 0;
+                    }
+                }
 
-            }
-
-            OFFTime += Time.deltaTime;
-            if (OFFTime >= 10.0f)//10秒以上経ったら見えなくする
-            {
-                audioSource2.enabled = false;
-                ONOFF = 0;
-                OFFTime = 0;
             }
         }
-
     }
 
     // Start is called before the first frame update
@@ -204,9 +204,9 @@ public class PrototypeController3 : MonoBehaviour
     {
         if (ChaseONOFF == false)
         {
-            animator.SetBool("Run", true);
+            animator.SetBool("StandUp", true);
+            animator.SetBool("Run", false);
         }
-
         Visualization();
         TouchWalls();
 
@@ -261,8 +261,6 @@ public class PrototypeController3 : MonoBehaviour
         {
             ONOFF = 1;
             ONTime = 0;
-            audioSource1.enabled = false;
-            audioSource2.enabled = true;
             GameOverBoxCapsuleCollider.enabled = true;//当たり判定ON
            　//3DモデルのRendererを見える状態
             PrototypeBodySkinnedMeshRenderer.enabled = true;

@@ -8617,11 +8617,10 @@ GameObject:
   - component: {fileID: 5985426517662275785}
   - component: {fileID: 819403932933436698}
   - component: {fileID: -6407469827344374796}
-  - component: {fileID: 4962871141833699416}
   - component: {fileID: -3326402257128668916}
   m_Layer: 0
   m_Name: Enemy2_anim2
-  m_TagString: Untagged
+  m_TagString: Prototype2
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8812,102 +8811,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!82 &4962871141833699416
-AudioSource:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8084673467481758640}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
-  m_Volume: 1
-  m_Pitch: 1
-  Loop: 0
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
 --- !u!114 &-3326402257128668916
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8924,14 +8827,15 @@ MonoBehaviour:
   ONOFF: 0
   GameOverBoxCapsuleCollider: {fileID: 819403932933436698}
   VisualizationBox: {fileID: 4386329031706562066}
+  PlayerVisualization: 0
   PrototypeBodySkinnedMeshRenderer: {fileID: 7661275104877050803}
-  FootstepsSound: {fileID: 8300000, guid: 5607e4b0f79a5fb4c8cbb288f41c4317, type: 3}
-  VisualizationSound: {fileID: 8300000, guid: f567dd352db8c4e48bab999504515bf0, type: 3}
-  audioSource1: {fileID: -6407469827344374796}
-  audioSource2: {fileID: 4962871141833699416}
+  EnemySearch: {fileID: 0}
+  EnemyRun: {fileID: 0}
+  EnemyWalk: {fileID: 0}
   TargetPlayer: {fileID: 0}
   FrontorBack: 0
   DestroyONOFF: 0
+  animator: {fileID: 0}
   Player: {fileID: 0}
   Prototype: {fileID: 8084673467481758640}
 --- !u!1 &8091521702382498958

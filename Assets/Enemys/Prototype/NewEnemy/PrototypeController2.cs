@@ -38,7 +38,7 @@ public class PrototypeController2 : MonoBehaviour
     public bool FrontorBack;//(前： true/後: false)
 
     //Playerを追跡
-    float ChaseSpeed = 0.05f;//Playerを追いかけるスピード
+    float ChaseSpeed = 0.1f;//Playerを追いかけるスピード
     bool ChaseONOFF;
 
     //Destroyの判定
@@ -66,6 +66,8 @@ public class PrototypeController2 : MonoBehaviour
             {
                 if (PS.onoff == 1)//プレイヤーが可視化していたら
                 {
+                    animator.SetBool("Walk", false);
+                    animator.SetBool("Run", true);
                     ChaseONOFF = true;
                     transform.LookAt(TargetPlayer.transform); //プレイヤーの方向にむく
                     transform.position += transform.forward * ChaseSpeed;//プレイヤーの方向に向かう
@@ -168,18 +170,19 @@ public class PrototypeController2 : MonoBehaviour
 
                     }
                 }
+                else
+                {
+                    PlayerVisualization = false;
+                    OFFTime += Time.deltaTime;
+                    if (OFFTime >= 10.0f)//10秒以上経ったら見えなくする
+                    {
+                        ONOFF = 0;
+                        OFFTime = 0;
+                    }
+                }
 
-            }
-
-            OFFTime += Time.deltaTime;
-            if (OFFTime >= 10.0f)//10秒以上経ったら見えなくする
-            {
-                ONOFF = 0;
-                OFFTime = 0;
-                PlayerVisualization = false;
             }
         }
-
     }
 
     // Start is called before the first frame update
@@ -201,9 +204,9 @@ public class PrototypeController2 : MonoBehaviour
     {
         if (ChaseONOFF == false)
         {
-            animator.SetBool("Run", true);
+            animator.SetBool("Run", false);
+            animator.SetBool("Walk", true);
         }
-
         Visualization();
         TouchWalls();
 

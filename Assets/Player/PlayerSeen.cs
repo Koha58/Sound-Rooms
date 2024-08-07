@@ -15,7 +15,7 @@ public class PlayerSeen : MonoBehaviour
 
 
     void Start()
-    {   
+    {
         //tagが"PlayerParts"である子オブジェクトのTransformのコレクションを取得
         var childTransforms = _parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
 
@@ -33,9 +33,6 @@ public class PlayerSeen : MonoBehaviour
         //tagが"PlayerParts"である子オブジェクトのTransformのコレクションを取得
         var childTransforms = _parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
 
-        GameObject gobj = GameObject.Find("Enemy"); //Playerオブジェクトを探す
-        PrototypeController2 PC2 = gobj.GetComponent<PrototypeController2>(); //付いているスクリプトを取得
-
         //音を出すことで見えるようになる
         if (levelMeter.nowdB > 0.0f)
         {
@@ -47,8 +44,11 @@ public class PlayerSeen : MonoBehaviour
             onoff = 1;  //見えているから1
         }
 
-        if (PC2.PlayerVisualization == false)
-        {
+
+       // GameObject gobj = GameObject.Find("Enemy"); //Enemyオブジェクトを探す
+       // PrototypeController2 PC2 = gobj.GetComponent<PrototypeController2>(); //付いているスクリプトを取得
+       // if (PC2.PlayerVisualization == false)
+        //{
             //音を出していないとき、プレイヤーを見えなくする
             if (onoff == 1)
             {
@@ -62,6 +62,6 @@ public class PlayerSeen : MonoBehaviour
                     onoff = 0;  //見えていないから0
                 }
             }
-        }
+        //}
     }
 }

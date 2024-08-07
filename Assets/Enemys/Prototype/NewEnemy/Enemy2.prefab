@@ -6008,12 +6008,11 @@ GameObject:
   - component: {fileID: 1066076836608297718}
   - component: {fileID: -405541275551225097}
   - component: {fileID: 8282280969327708584}
-  - component: {fileID: 1381568605464865382}
   - component: {fileID: 8809966790632153762}
   - component: {fileID: 5727527470565825231}
   m_Layer: 0
   m_Name: Enemy2
-  m_TagString: Untagged
+  m_TagString: Prototype1
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6083,7 +6082,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 84
   m_CollisionDetection: 0
 --- !u!136 &8282280969327708584
 CapsuleCollider:
@@ -6108,102 +6107,6 @@ CapsuleCollider:
   m_Height: 1.2961807
   m_Direction: 1
   m_Center: {x: 0, y: 0.8783059, z: 0}
---- !u!82 &1381568605464865382
-AudioSource:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5672348472558151022}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
-  m_Volume: 1
-  m_Pitch: 1
-  Loop: 0
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
 --- !u!82 &8809966790632153762
 AudioSource:
   m_ObjectHideFlags: 0
@@ -6316,14 +6219,15 @@ MonoBehaviour:
   ONOFF: 0
   GameOverBoxCapsuleCollider: {fileID: 8282280969327708584}
   VisualizationBox: {fileID: 7985769224274198711}
+  PlayerVisualization: 0
   PrototypeBodySkinnedMeshRenderer: {fileID: 6113896336186475885}
-  FootstepsSound: {fileID: 8300000, guid: 5607e4b0f79a5fb4c8cbb288f41c4317, type: 3}
-  VisualizationSound: {fileID: 8300000, guid: f567dd352db8c4e48bab999504515bf0, type: 3}
-  audioSource1: {fileID: 1381568605464865382}
-  audioSource2: {fileID: 8809966790632153762}
+  EnemySearch: {fileID: 8300000, guid: 9f82ad0d3a2cb104e8756814c0348e45, type: 3}
+  EnemyRun: {fileID: 8300000, guid: e6525d5f0bebe9949abd25ac340d7f05, type: 3}
+  EnemyWalk: {fileID: 8300000, guid: 11892326d64bf2543b641e9fb724effd, type: 3}
   TargetPlayer: {fileID: 0}
   FrontorBack: 0
   DestroyONOFF: 0
+  animator: {fileID: 1066076836608297718}
   Player: {fileID: 0}
   Prototype: {fileID: 5672348472558151022}
 --- !u!1 &5674642530295548496
