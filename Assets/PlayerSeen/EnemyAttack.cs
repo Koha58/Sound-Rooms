@@ -243,21 +243,29 @@ public class EnemyAttack : MonoBehaviour
             }
         }
 
-        if (other.CompareTag("Prototype3"))
+        if(other.CompareTag("Enemy1"))
         {
-            GameObject Prototype = GameObject.FindWithTag("Prototype3");
-            PrototypeController Prot3 = Prototype.GetComponent<PrototypeController>();
-            if (Prot3.DestroyONOFF == true)
+            GameObject Prototype2 = GameObject.FindWithTag("Enemy1");
+            PrototypeController2 Prot2 = Prototype2.GetComponent<PrototypeController2>();
+            Prototypeincrease PI = Prototype2.GetComponent<Prototypeincrease>();
+            if (Prot2.DestroyONOFF == true)
             {
                 GetComponent<ParticleSystem>().Play();
-                Destroy(Prototype);
-                Enemyincrease.enemyDeathcnt++;
-                PickupSound.PlayOneShot(PickupSound.clip);
-                count += 1;
-                SetCountText();
+                PI.isHidden =false;
             }
         }
 
+        if (other.CompareTag("Enemy2"))
+        {
+            GameObject Prototype4 = GameObject.FindWithTag("Enemy2");
+            PrototypeController4 Prot4 = Prototype4.GetComponent<PrototypeController4>();
+            Prototypeincrease PI = Prototype4.GetComponent<Prototypeincrease>();
+            if (Prot4.DestroyONOFF == true)
+            {
+                GetComponent<ParticleSystem>().Play();
+                PI.isHidden = false;
+            }
+        }
     }
 
     void SetCountText()

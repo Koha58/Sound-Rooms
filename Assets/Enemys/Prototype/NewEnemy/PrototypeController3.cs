@@ -66,7 +66,7 @@ public class PrototypeController3 : MonoBehaviour
             {
                 if (PS.onoff == 1)//プレイヤーが可視化していたら
                 {
-                    animator.SetBool("StandUp", false);
+                    animator.SetBool("StandUp", true);
                     animator.SetBool("Run", true);
                     ChaseONOFF = true;
                     transform.LookAt(TargetPlayer.transform); //プレイヤーの方向にむく
@@ -202,10 +202,10 @@ public class PrototypeController3 : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
+        animator.SetBool("Idle", true);
         if (ChaseONOFF == false)
         {
-            animator.SetBool("StandUp", true);
-            animator.SetBool("Run", false);
+
         }
         Visualization();
         TouchWalls();

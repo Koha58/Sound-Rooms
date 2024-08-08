@@ -44,11 +44,18 @@ public class PlayerSeen : MonoBehaviour
             onoff = 1;  //見えているから1
         }
 
+        /*
+        GameObject gobj = GameObject.FindWithTag("Prototype"); //Enemyオブジェクトを探す
+        PrototypeController2 PC2 = gobj.GetComponent<PrototypeController2>(); //付いているスクリプトを取得
+        GameObject gobj1 = GameObject.FindWithTag("Enemy1"); //Enemyオブジェクトを探す
+        PrototypeController2 PCI2 = gobj1.GetComponent<PrototypeController2>(); //付いているスクリプトを取得
+        GameObject gobj2 = GameObject.FindWithTag("Prototype1"); //Enemyオブジェクトを探す
+        PrototypeController4 PC4= gobj.GetComponent<PrototypeController4>(); //付いているスクリプトを取得
+        GameObject gobj3 = GameObject.FindWithTag("Enemy2"); //Enemyオブジェクトを探す
+        PrototypeController4 PCI4 = gobj3.GetComponent<PrototypeController4>(); //付いているスクリプトを取得
 
-       // GameObject gobj = GameObject.Find("Enemy"); //Enemyオブジェクトを探す
-       // PrototypeController2 PC2 = gobj.GetComponent<PrototypeController2>(); //付いているスクリプトを取得
-       // if (PC2.PlayerVisualization == false)
-        //{
+        if (PC2.PlayerVisualization == false|| PCI2.PlayerVisualization == false|| PC4.PlayerVisualization == false|| PCI4.PlayerVisualization == false)
+        {*/
             //音を出していないとき、プレイヤーを見えなくする
             if (onoff == 1)
             {
