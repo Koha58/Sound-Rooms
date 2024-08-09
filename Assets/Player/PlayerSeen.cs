@@ -44,20 +44,12 @@ public class PlayerSeen : MonoBehaviour
             onoff = 1;  //見えているから1
         }
 
-        /*
-        GameObject gobj = GameObject.FindWithTag("Prototype"); //Enemyオブジェクトを探す
-        PrototypeController2 PC2 = gobj.GetComponent<PrototypeController2>(); //付いているスクリプトを取得
-        GameObject gobj1 = GameObject.FindWithTag("Enemy1"); //Enemyオブジェクトを探す
-        PrototypeController2 PCI2 = gobj1.GetComponent<PrototypeController2>(); //付いているスクリプトを取得
-        GameObject gobj2 = GameObject.FindWithTag("Prototype1"); //Enemyオブジェクトを探す
-        PrototypeController4 PC4= gobj.GetComponent<PrototypeController4>(); //付いているスクリプトを取得
-        GameObject gobj3 = GameObject.FindWithTag("Enemy2"); //Enemyオブジェクトを探す
-        PrototypeController4 PCI4 = gobj3.GetComponent<PrototypeController4>(); //付いているスクリプトを取得
-
-        if (PC2.PlayerVisualization == false|| PCI2.PlayerVisualization == false|| PC4.PlayerVisualization == false|| PCI4.PlayerVisualization == false)
-        {*/
-            //音を出していないとき、プレイヤーを見えなくする
-            if (onoff == 1)
+        //音を出していないとき、プレイヤーを見えなくする
+        if (onoff == 1)
+        {
+            GameObject gobj1 = GameObject.FindWithTag("Enemy1"); //Enemyオブジェクトを探す
+            PrototypeController2 PCI2 = gobj1.GetComponent<PrototypeController2>(); //付いているスクリプトを取得
+            if (PCI2.PlayerVisualization == false)//|| PCI2.PlayerVisualization == false|| PC4.PlayerVisualization == false|| PCI4.PlayerVisualization == false)
             {
                 if (levelMeter.nowdB <= 0.0f)
                 {
@@ -69,6 +61,22 @@ public class PlayerSeen : MonoBehaviour
                     onoff = 0;  //見えていないから0
                 }
             }
-        //}
+
+            GameObject gobj2 = GameObject.FindWithTag("Enemy2"); //Enemyオブジェクトを探す
+            PrototypeController4 PCI4 = gobj2.GetComponent<PrototypeController4>(); //付いているスクリプトを取得
+
+            if ( PCI4.PlayerVisualization == false)//|| PCI2.PlayerVisualization == false|| PC4.PlayerVisualization == false|| PCI4.PlayerVisualization == false)
+            {
+                if (levelMeter.nowdB <= 0.0f)
+                {
+                    foreach (var playerParts in childTransforms)
+                    {
+                        //タグが"PlayerParts"である子オブジェクトを見えなくする
+                        playerParts.gameObject.GetComponent<Renderer>().enabled = false;
+                    }
+                    onoff = 0;  //見えていないから0
+                }
+            }
+        }
     }
 }

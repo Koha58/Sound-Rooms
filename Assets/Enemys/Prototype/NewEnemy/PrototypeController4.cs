@@ -67,6 +67,7 @@ public class PrototypeController4 : MonoBehaviour
                 if (PS.onoff == 1)//プレイヤーが可視化していたら
                 {
                     ChaseONOFF = true;
+                    animator.SetBool("Run", true);
                     transform.LookAt(TargetPlayer.transform); //プレイヤーの方向にむく
                     transform.position += transform.forward * ChaseSpeed;//プレイヤーの方向に向かう
                 }
@@ -137,7 +138,7 @@ public class PrototypeController4 : MonoBehaviour
                     Ray ray;
                     RaycastHit hit;
                     Vector3 direction;   // Rayを飛ばす方向
-                    float distance = 50;    // Rayを飛ばす距離
+                    float distance = 30;    // Rayを飛ばす距離
 
                     // Rayを飛ばす方向を計算
                     Vector3 temp = Player.transform.position - transform.position;
@@ -151,7 +152,6 @@ public class PrototypeController4 : MonoBehaviour
                     {
                         if (hit.collider.CompareTag("Player"))
                         {
-                            Debug.Log("プレイヤー発見");
                             PS.onoff = 1;  //見えているから1
                             foreach (var playerParts in childTransforms)
                             {
@@ -164,6 +164,13 @@ public class PrototypeController4 : MonoBehaviour
                         if (hit.collider.gameObject.CompareTag("Wall") || (hit.collider.gameObject.CompareTag("InWall")))
                         {
                             Debug.Log("プレイヤーとの間に壁がある");
+                            PS.onoff = 0;  //見えているから1
+                            foreach (var playerParts in childTransforms)
+                            {
+                                //タグが"PlayerParts"である子オブジェクトを見えるようにする
+                                playerParts.gameObject.GetComponent<Renderer>().enabled = false;
+                            }
+                            PlayerVisualization = false;
                         }
                     }
                 }
