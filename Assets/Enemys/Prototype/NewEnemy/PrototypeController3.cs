@@ -58,7 +58,7 @@ public class PrototypeController3 : MonoBehaviour
             {
                 if (PS.onoff == 1)//プレイヤーが可視化していたら
                 {
-                    animator.SetBool("Walk", false);
+                    animator.SetBool("StandUp", true);
                     animator.SetBool("Run", true);
                     ChaseONOFF = true;
                     transform.LookAt(TargetPlayer.transform); //プレイヤーの方向にむく
@@ -136,8 +136,8 @@ public class PrototypeController3 : MonoBehaviour
     {
         if (ChaseONOFF == false)
         {
+            animator.SetBool("Idle", true);
             animator.SetBool("Run", false);
-            animator.SetBool("Walk", true);
         }
         Visualization();
         TouchWalls();

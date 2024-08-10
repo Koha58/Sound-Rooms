@@ -266,6 +266,18 @@ public class EnemyAttack : MonoBehaviour
                 PI.isHidden = false;
             }
         }
+
+        if (other.CompareTag("Enemy3"))
+        {
+            GameObject Prototype3= GameObject.FindWithTag("Enemy3");
+            PrototypeController3 Prot3 = Prototype3.GetComponent<PrototypeController3>();
+            Prototypeincrease PI = Prototype3.GetComponent<Prototypeincrease>();
+            if (Prot3.DestroyONOFF == true)
+            {
+                GetComponent<ParticleSystem>().Play();
+                PI.isHidden = false;
+            }
+        }
     }
 
     void SetCountText()
