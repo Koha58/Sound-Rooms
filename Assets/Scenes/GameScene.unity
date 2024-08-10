@@ -81414,12 +81414,12 @@ PrefabInstance:
     - target: {fileID: -6407469827344374796, guid: e50e73daa3a0ba445b9aaefdbed913db,
         type: 3}
       propertyPath: MaxDistance
-      value: 30
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: -6407469827344374796, guid: e50e73daa3a0ba445b9aaefdbed913db,
         type: 3}
       propertyPath: MinDistance
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -6407469827344374796, guid: e50e73daa3a0ba445b9aaefdbed913db,
         type: 3}
@@ -100439,6 +100439,16 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 452111864560796345, guid: 6ea448a9340311342886c84387b60312,
+        type: 3}
+      propertyPath: MaxDistance
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 452111864560796345, guid: 6ea448a9340311342886c84387b60312,
+        type: 3}
+      propertyPath: MinDistance
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1455928508326595725, guid: 6ea448a9340311342886c84387b60312,
         type: 3}
       propertyPath: Player
@@ -100528,6 +100538,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9067899325528698255, guid: 6ea448a9340311342886c84387b60312,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -101878,6 +101893,16 @@ PrefabInstance:
     - target: {fileID: 5484757782978613161, guid: 7b8d3e36cb24dcc41ae02fb9e3cb8a8a,
         type: 3}
       propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7579538543048308154, guid: 7b8d3e36cb24dcc41ae02fb9e3cb8a8a,
+        type: 3}
+      propertyPath: MaxDistance
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7579538543048308154, guid: 7b8d3e36cb24dcc41ae02fb9e3cb8a8a,
+        type: 3}
+      propertyPath: MinDistance
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
