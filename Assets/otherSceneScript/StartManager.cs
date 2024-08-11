@@ -12,6 +12,11 @@ public class StartManager : MonoBehaviour
     public GameObject StartButton;
     public GameObject TutorialButton;
 
+    public GameObject Cursor;
+    public GameObject Cursor1;
+
+    bool UPDOWN;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -26,11 +31,39 @@ public class StartManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown("joystick button 0"))
+
+        if (Input.GetAxisRaw("Vertical") < 0)
         {
-            SceneManager.LoadScene("GameScene");
+            StartButtonImage.color = new Color32(255, 255, 255, 255);
+            TutorialButtonImage.color = new Color32(255, 255, 255, 45);
+            Cursor.SetActive(true);
+            Cursor1.SetActive(false);
+            UPDOWN = true;
         }
-        
+
+        if (Input.GetAxisRaw("Vertical") > 0)
+        {
+            StartButtonImage.color = new Color32(255, 255, 255, 45);
+            TutorialButtonImage.color = new Color32(255, 255, 255, 255);
+            Cursor1.SetActive(true);
+            Cursor.SetActive(false);
+            UPDOWN = false;
+        }
+        if (UPDOWN == true)
+        {
+            if (Input.GetKeyDown("joystick button 0"))
+            {
+                SceneManager.LoadScene("GameScene");
+            }
+        }
+        else
+        {
+            if (Input.GetKeyDown("joystick button 0"))
+            {
+                SceneManager.LoadScene("GameScene");
+            }
+        }
+
     }
 
     public void OnStart()
