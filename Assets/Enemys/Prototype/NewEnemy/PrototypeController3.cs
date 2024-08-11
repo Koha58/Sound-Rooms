@@ -136,7 +136,6 @@ public class PrototypeController3 : MonoBehaviour
     {
         if (ChaseONOFF == false)
         {
-            animator.SetBool("Idle", true);
             animator.SetBool("Run", false);
         }
         Visualization();

@@ -3,19 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class PrototypeController2 : MonoBehaviour
+public class BoosEnemy : MonoBehaviour
 {
-    /*
-・普段は不可視化状態
-・定期的に音を出す(可視化する)
-┗この時、Playerと同じで音の範囲内の物を不可視化させてほしい。
-・Playerが音の範囲に入る、又はPlayerの音の範囲に入る(背後、左右以外)とPlayerを可視化させ、Playerを追いかける
-・Playerと接触したらPlayerのライフが1減る(ライフが0になるとゲームオーバー)
-・Playerが音を出すと音源周辺の敵は音源に向かう
-┗自動ドアが開く音とかにも反応して欲しいけど、そもそもPlayerが自動ドア前で可視化しないと自動ドアがPlayerを認識せずに開かない仕組みにするから、Playerが音を出したとき、一定の範囲内にいる(Playerの音の範囲とは別)敵だけ音源に向かう感じでいいかな(別に追われる訳では無い)。
-
-後、Enemyが音を出す頻度もっと少なくてもいいかな(Playerが音を出す意味があんまり無くなってしまうので)。*/
-
     //移動
     [SerializeField] private Transform[] PatrolPoints; // 巡回ポイントの配列
     private float MoveSpeed = 0.2f; // 動く速度
@@ -36,7 +25,7 @@ public class PrototypeController2 : MonoBehaviour
     public AudioClip EnemySearch;
     public AudioClip EnemyRun;
     public AudioClip EnemyWalk;
-  
+
     //前後判定
     public Transform TargetPlayer;
 
@@ -55,7 +44,6 @@ public class PrototypeController2 : MonoBehaviour
     [SerializeField] Animator animator;
 
     public GameObject Player;
-    public GameObject[] Items;
     public GameObject Prototype;
 
     private void Chase()
@@ -129,34 +117,6 @@ public class PrototypeController2 : MonoBehaviour
         }
     }
 
-    private void ItemVisualization()//自身の可視化のON OFF
-    {
-        Ray ray;
-        RaycastHit hit;
-        Vector3 direction;   // Rayを飛ばす方向
-        float distance = 30;    // Rayを飛ばす距離
-        foreach (var items in Items)
-        {
-            // Rayを飛ばす方向を計算
-            Vector3 temp = items.transform.position - transform.position;
-            direction = temp.normalized;
-
-            ray = new Ray(transform.position, direction);  // Rayを飛ばす
-            Debug.DrawRay(ray.origin, ray.direction * distance, Color.red);  // Rayをシーン上に描画
-
-            // Rayが最初に当たった物体を調べる
-            if (Physics.Raycast(ray.origin, ray.direction * distance, out hit))
-            {
-                if (hit.collider.CompareTag("Object"))
-                {
-                    //タグが"PlayerParts"である子オブジェクトを見えるようにする
-                    items.gameObject.GetComponent<Renderer>().enabled = true;
-                }
-            }
-        }
-    }
-   
-
     // Start is called before the first frame update
     private void Start()
     {
@@ -169,8 +129,6 @@ public class PrototypeController2 : MonoBehaviour
         PrototypeBodySkinnedMeshRenderer.enabled = false;
 
         animator = GetComponent<Animator>();   //アニメーターコントローラーからアニメーションを取得する
-
-        Items = GameObject.FindGameObjectsWithTag("Object");
     }
 
     // Update is called once per frame
@@ -182,7 +140,6 @@ public class PrototypeController2 : MonoBehaviour
             animator.SetBool("Walk", true);
         }
         Visualization();
-      //  ItemVisualization();
         TouchWalls();
 
         if (ChaseONOFF == false || TouchWall == true)
@@ -199,7 +156,7 @@ public class PrototypeController2 : MonoBehaviour
         bool isBack = Vector3.Dot(Position, transform.forward) < 0;  // ターゲットが自身の後方にあるかどうか判定
 
         if (isFront) //ターゲットが自身の前方にあるなら
-        { 
+        {
             DestroyONOFF = false;
             GameObject obj = GameObject.Find("Player"); //Playerオブジェクトを探す
             PlayerSeen PS = obj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
