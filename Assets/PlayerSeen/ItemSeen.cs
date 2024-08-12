@@ -45,7 +45,7 @@ public class ItemSeen : MonoBehaviour
         Walls = GameObject.FindGameObjectsWithTag("Wall");
         foreach (GameObject Wall in Walls)
         {
-            Wall.GetComponent<Renderer>().enabled = false;
+            Wall.GetComponent<Renderer>().enabled = true;
         }
 
         //GameObject BoxSeen = GameObject.FindWithTag("BoxJudge");
@@ -59,22 +59,22 @@ public class ItemSeen : MonoBehaviour
             var rb = Box.GetComponent<Rigidbody>();
             //移動も回転もしないようにする
             rb.constraints = RigidbodyConstraints.FreezeAll;
-            Box.GetComponent<Renderer>().enabled = false;
+            Box.GetComponent<Renderer>().enabled = true;
         }
 
         Objects = GameObject.FindGameObjectsWithTag("Object");
 
         foreach (GameObject Object in Objects)
         {
-            Object.GetComponent<Renderer>().enabled = false;
-            Object.GetComponent<Collider>().enabled = false;
+            Object.GetComponent<Renderer>().enabled = true;
+            Object.GetComponent<Collider>().enabled = true;
         }
 
         Doors = GameObject.FindGameObjectsWithTag("Door");
 
         foreach (GameObject Door in Doors)
         {
-            Door.GetComponent<Collider>().enabled = false;
+            Door.GetComponent<Collider>().enabled = true;
         }
     }
 
@@ -91,20 +91,15 @@ public class ItemSeen : MonoBehaviour
         GameObject soundobj = GameObject.Find("SoundVolume");
         levelMeter = soundobj.GetComponent<LevelMeter>(); //付いているスクリプトを取得
 
-        //音を出すと範囲内を可視化
+        //音を出すと範囲内を不可視化
         if (levelMeter.nowdB > 0.0f)
         {
             SeenArea.GetComponent<Collider>().enabled = true;//見える（有効）
 
-            foreach (GameObject Object in Objects)
-            {
-                Object.GetComponent<Collider>().enabled = true;
-            }
-
             onoff = 1;  //見えているから1
         }
 
-        //音が出ていなければ、範囲内の可視化をできなくする
+        //音が出ていなければ、範囲内の物を可視化
         if (onoff == 1)
         {
             if (levelMeter.nowdB <= 0.0f)
@@ -113,7 +108,7 @@ public class ItemSeen : MonoBehaviour
 
                 foreach (GameObject Wall in Walls)
                 {
-                    Wall.GetComponent<Renderer>().enabled = false;
+                    Wall.GetComponent<Renderer>().enabled = true;
                 }
 
                 // 子オブジェクトの数を取得
@@ -122,7 +117,7 @@ public class ItemSeen : MonoBehaviour
                 {
                     Transform childTransform = doorObject.transform.GetChild(j);
                     GameObject door = childTransform.gameObject;
-                    door.GetComponent<Renderer>().enabled = false;
+                    door.GetComponent<Renderer>().enabled = true;
                 }
 
                 foreach (GameObject Box in Boxes)
@@ -131,18 +126,18 @@ public class ItemSeen : MonoBehaviour
                     var rb = Box.GetComponent<Rigidbody>();
                     //移動も回転もしないようにする
                     rb.constraints = RigidbodyConstraints.FreezeAll;
-                    Box.GetComponent<Renderer>().enabled = false;
+                    Box.GetComponent<Renderer>().enabled = true;
                 }
 
                 foreach (GameObject Object in Objects)
                 {
-                    Object.GetComponent<Renderer>().enabled = false;
-                    Object.GetComponent<Collider>().enabled = false;
+                    Object.GetComponent<Renderer>().enabled = true;
+                    Object.GetComponent<Collider>().enabled = true;
                 }
 
                 foreach (GameObject Door in Doors)
                 {
-                    Door.GetComponent<Collider>().enabled = false;
+                    Door.GetComponent<Collider>().enabled = true;
                 }
                 onoff = 0;  //見えていないから0
             }
@@ -157,19 +152,20 @@ public class ItemSeen : MonoBehaviour
 
         if (other.CompareTag("Wall"))//接触したオブジェクトのタグが"Wall"のとき
         {
-            other.gameObject.GetComponent<Renderer>().enabled = true;
+            other.gameObject.GetComponent<Renderer>().enabled = false;
         }
         else if (other.CompareTag("Box"))//接触したオブジェクトのタグが"Box"のとき
         {
-            other.GetComponent<Renderer>().enabled = true;
+            other.GetComponent<Renderer>().enabled = false;
         }
         else if(other.CompareTag("Object"))//接触したオブジェクトのタグが"Object"のとき
         {
-            other.GetComponent<Renderer>().enabled = true;
+            other.GetComponent<Renderer>().enabled = false;
+            other.GetComponent<Collider>().enabled = false;
         }
         else if (other.CompareTag("Door"))
         {
-            other.GetComponent<Collider>().enabled = true;
+            other.GetComponent<Collider>().enabled = false;
         }
 
         else if (objName == "Door1")
