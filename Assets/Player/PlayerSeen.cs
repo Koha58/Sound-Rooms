@@ -13,7 +13,7 @@ public class PlayerSeen : MonoBehaviour
     [SerializeField] public Transform _parentTransform;
     LevelMeter levelMeter;
 
-
+    public bool Visualization;
     void Start()
     {
         //tagが"PlayerParts"である子オブジェクトのTransformのコレクションを取得
@@ -24,6 +24,8 @@ public class PlayerSeen : MonoBehaviour
             //タグが"PlayerParts"である子オブジェクトを見えなくする
             playerParts.gameObject.GetComponent<Renderer>().enabled = false;
         }
+
+        Visualization = false;
     }
 
     public void Update()
@@ -44,35 +46,21 @@ public class PlayerSeen : MonoBehaviour
             onoff = 1;  //見えているから1
         }
 
-        //音を出していないとき、プレイヤーを見えなくする
-        if (onoff == 1)
+        if (Visualization == false)
         {
-            if (levelMeter.nowdB <= 0.0f)
+            //音を出していないとき、プレイヤーを見えなくする
+            if (onoff == 1)
             {
-                foreach (var playerParts in childTransforms)
+                if (levelMeter.nowdB <= 0.0f)
                 {
-                    //タグが"PlayerParts"である子オブジェクトを見えなくする
-                    playerParts.gameObject.GetComponent<Renderer>().enabled = false;
+                    foreach (var playerParts in childTransforms)
+                    {
+                        //タグが"PlayerParts"である子オブジェクトを見えなくする
+                        playerParts.gameObject.GetComponent<Renderer>().enabled = false;
+                    }
+                    onoff = 0;  //見えていないから0
                 }
-                onoff = 0;  //見えていないから0
             }
         }
-
-            /*  GameObject gobj2 = GameObject.FindWithTag("Enemy2"); //Enemyオブジェクトを探す
-                PrototypeController4 PCI4 = gobj2.GetComponent<PrototypeController4>(); //付いているスクリプトを取得
-
-                if ( PCI4.PlayerVisualization == false)//|| PCI2.PlayerVisualization == false|| PC4.PlayerVisualization == false|| PCI4.PlayerVisualization == false)
-                {
-                    if (levelMeter.nowdB <= 0.0f)
-                    {
-                        foreach (var playerParts in childTransforms)
-                        {
-                            //タグが"PlayerParts"である子オブジェクトを見えなくする
-                            playerParts.gameObject.GetComponent<Renderer>().enabled = false;
-                        }
-                        onoff = 0;  //見えていないから0
-                    }
-                }*/
-        
     }
 }

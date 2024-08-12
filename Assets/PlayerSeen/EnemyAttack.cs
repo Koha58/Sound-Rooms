@@ -243,7 +243,34 @@ public class EnemyAttack : MonoBehaviour
             }
         }
 
-        if(other.CompareTag("Enemy1"))
+        if (other.CompareTag("EnemyG"))
+        {
+            GameObject EnemyG = GameObject.FindWithTag("EnemyG");
+            Enemycontroller Ec = EnemyG.GetComponent<Enemycontroller>();
+            if (Ec.DestroyONOFF == true)
+            {
+                GetComponent<ParticleSystem>().Play();
+                Destroy(EnemyG);
+                Enemyincrease.enemyDeathcnt++;
+                PickupSound.PlayOneShot(PickupSound.clip);
+                count += 1;
+                SetCountText();
+            }
+        }
+
+        if (other.CompareTag("Enemy"))
+        {
+            GameObject Enemy = GameObject.FindWithTag("Enemy");
+            Enemycontroller Ec =Enemy.GetComponent<Enemycontroller>();
+            EnemyIncrease EI = Enemy.GetComponent<EnemyIncrease>();
+            if (Ec.DestroyONOFF == true)
+            {
+                GetComponent<ParticleSystem>().Play();
+                EI.isHidden = false;
+            }
+        }
+
+        if (other.CompareTag("Enemy1"))
         {
             GameObject Prototype2 = GameObject.FindWithTag("Enemy1");
             PrototypeController2 Prot2 = Prototype2.GetComponent<PrototypeController2>();

@@ -3,22 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class BoosEnemy : MonoBehaviour
+public class Enemycontroller : MonoBehaviour
 {
+    /*//・普段は不可視化状態
+      //・定期的に音を出す(可視化する)
+      ┗この時、Playerと同じで音の範囲内の物を不可視化させてほしい。
+      //・Playerが音の範囲に入る、又はPlayerの音の範囲に入る(背後、左右以外)とPlayerを可視化させ、Playerを追いかける
+      ・Playerと接触したらPlayerのライフが1減る(ライフが0になるとゲームオーバー)
+      ・Playerが音を出すと音源周辺の敵は音源に向かう
+      ┗自動ドアが開く音とかにも反応して欲しいけど、そもそもPlayerが自動ドア前で可視化しないと自動ドアがPlayerを認識せずに開かない仕組みにするから、Playerが音を出したとき、一定の範囲内にいる(Playerの音の範囲とは別)敵だけ音源に向かう感じでいいかな(別に追われる訳では無い)。
+      後、Enemyが音を出す頻度もっと少なくてもいいかな(Playerが音を出す意味があんまり無くなってしまうので)。
+    */
 
-    /*ボス敵について
-ボス敵はこちらで新しいモデル、アニメーションを付けます。
-ボス敵の設定↓
-・エリア内に常駐している
-・通常敵と同じく、可視化⇔不可視化の2つの状態がある
-・音を出して可視化する範囲が通常より広く(エリア全域の1/4くらい)、この敵の音に当たるとライフが1減る。
-・ボス敵の出す音は敵、Player両方を一定時間可視化する。
-→なので、一定時間内は一定範囲内の敵が全て見えている状態になるので、倒しやすくなる。範囲外の敵は見えないままなので、油断してると、そちらに襲われる可能性もあるまま。
-・ボス敵は通常敵が倒される度に音を出す(可視化する)。
-・壁に張り付いて素早く移動しているため、倒すのは困難。
-・通常敵を倒す度にボス敵の可視化範囲及び速度が遅くなり倒しやすくなる。
-・ボス敵の音に当たらないようにするためには障害物を利用して隠れる事が必要(敵を倒したあと10秒ほどボス敵が音を出すまでに時間がある)。
-・ボス敵は通常敵より大きい。*/
     //移動
     [SerializeField] private Transform[] PatrolPoints; // 巡回ポイントの配列
     private float MoveSpeed = 0.2f; // 動く速度
@@ -44,7 +40,7 @@ public class BoosEnemy : MonoBehaviour
     public Transform TargetPlayer;
 
     //Playerを追跡
-    float ChaseSpeed = 1f;//Playerを追いかけるスピード
+    float ChaseSpeed = 0.5f;//Playerを追いかけるスピード
     bool ChaseONOFF;
 
     //Destroyの判定
@@ -58,7 +54,7 @@ public class BoosEnemy : MonoBehaviour
     [SerializeField] Animator animator;
 
     public GameObject Player;
-    public GameObject Prototype;
+    public GameObject[] Items;
 
     private void Chase()
     {
@@ -131,6 +127,23 @@ public class BoosEnemy : MonoBehaviour
         }
     }
 
+    private void ItemVisualization()//自身の可視化のON OFF
+    {
+        GameObject gameObject = GameObject.FindWithTag("Object");
+        ItemObject itemObject = gameObject.AddComponent<ItemObject>();
+        foreach (var itms in Items)
+        {
+            float VisualizationItems = Vector3.Distance(transform.position, itms.transform.position);//プレイヤーと敵の位置の計算
+            if (VisualizationItems >= 3)
+            {
+                Debug.Log("asfg");
+               // itemObject.VisualizationON = true;
+            }
+            //else 
+            //itemObject.VisualizationON = false;
+        }
+    }
+
     // Start is called before the first frame update
     private void Start()
     {
@@ -143,6 +156,8 @@ public class BoosEnemy : MonoBehaviour
         PrototypeBodySkinnedMeshRenderer.enabled = false;
 
         animator = GetComponent<Animator>();   //アニメーターコントローラーからアニメーションを取得する
+
+        Items = GameObject.FindGameObjectsWithTag("Object");
     }
 
     // Update is called once per frame
@@ -153,6 +168,7 @@ public class BoosEnemy : MonoBehaviour
             animator.SetBool("Run", false);
             animator.SetBool("Walk", true);
         }
+
         Visualization();
         TouchWalls();
 
@@ -171,6 +187,7 @@ public class BoosEnemy : MonoBehaviour
 
         if (isFront) //ターゲットが自身の前方にあるなら
         {
+            ItemVisualization();
             DestroyONOFF = false;
             GameObject obj = GameObject.Find("Player"); //Playerオブジェクトを探す
             PlayerSeen PS = obj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
@@ -180,6 +197,7 @@ public class BoosEnemy : MonoBehaviour
 
             if (VisualizationPlayer <= 30f)//プレイヤーが検知範囲に入ったら
             {
+
                 Ray ray;
                 RaycastHit hit;
                 Vector3 direction;   // Rayを飛ばす方向
@@ -197,7 +215,7 @@ public class BoosEnemy : MonoBehaviour
                 {
                     if (hit.collider.CompareTag("Player"))
                     {
-                        Debug.Log("プレイヤー発見");
+                        PS.Visualization = true;
                         PS.onoff = 1;  //見えているから1
                         foreach (var playerParts in childTransforms)
                         {
@@ -209,7 +227,7 @@ public class BoosEnemy : MonoBehaviour
 
                     if (hit.collider.gameObject.CompareTag("Wall") || (hit.collider.gameObject.CompareTag("InWall")))
                     {
-                        Debug.Log("プレイヤーとの間に壁がある");
+                        PS.Visualization = false;
                         PS.onoff = 0;  //見えているから1
                         foreach (var playerParts in childTransforms)
                         {
@@ -217,7 +235,6 @@ public class BoosEnemy : MonoBehaviour
                             playerParts.gameObject.GetComponent<Renderer>().enabled = false;
                         }
                     }
-
                 }
             }
             else
@@ -227,6 +244,7 @@ public class BoosEnemy : MonoBehaviour
                 {
                     ONOFF = 0;
                     OFFTime = 0;
+                    PS.Visualization = false;
                 }
             }
         }
