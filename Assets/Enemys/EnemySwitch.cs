@@ -142,9 +142,6 @@ public class EnemySwitch : MonoBehaviour
         GameObject isobj = GameObject.Find("Player");
         ISe = isobj.GetComponent<ItemSearch>(); //付いているスクリプトを取得
 
-        GameObject eobj1 = GameObject.FindWithTag("Enemy1");
-        EnemyController1 EC1 = eobj1.GetComponent<EnemyController1>(); //Enemyに付いているスクリプトを取得
-
         if (PlayerOnoff == true)
         {
             PS.onoff = 1;  //見えているから1

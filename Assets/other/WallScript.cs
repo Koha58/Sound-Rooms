@@ -88,15 +88,6 @@ public class WallScript : MonoBehaviour
                     Wall.enabled = true;
                     bc.enabled = true;
                 }
-
-                GameObject eobj1 = GameObject.FindWithTag("Enemy1");
-                EnemyController1 EC1 = eobj1.GetComponent<EnemyController1>(); //Enemyに付いているスクリプトを取得
-                if (EC1.ONoff == 1)//|| EFW.ONoff == 1)
-                {
-                    Wall.enabled = true;
-                    bc.enabled = true;
-                }
-
             }
 
             if (other.gameObject.CompareTag("EnemyGwall"))
