@@ -195,54 +195,6 @@ public class EnemyAttack : MonoBehaviour
             rb.AddForce(transform.forward * 500.0f, ForceMode.Force);
         }
 
-
-
-        if(other.CompareTag("Prototype"))
-        {
-            GameObject Prototype = GameObject.FindWithTag("Prototype");
-            PrototypeController2 Prot2 = Prototype.GetComponent<PrototypeController2>();
-            if (Prot2.DestroyONOFF == true)
-            {
-                GetComponent<ParticleSystem>().Play();
-                Destroy(Prototype);
-                Enemyincrease.enemyDeathcnt++;
-                PickupSound.PlayOneShot(PickupSound.clip);
-                count += 1;
-                SetCountText();
-            }
-        }
-
-        if (other.CompareTag("Prototype1"))
-        {
-            GameObject Prototype = GameObject.FindWithTag("Prototype1");
-            PrototypeController3 Prot3 = Prototype.GetComponent<PrototypeController3>();
-            if (Prot3.DestroyONOFF == true)
-            {
-                GetComponent<ParticleSystem>().Play();
-                Destroy(Prototype);
-                Enemyincrease.enemyDeathcnt++;
-                PickupSound.PlayOneShot(PickupSound.clip);
-                count += 1;
-                SetCountText();
-            }
-
-        }
-
-        if (other.CompareTag("Prototype2"))
-        {
-            GameObject Prototype = GameObject.FindWithTag("Prototype2");
-            PrototypeController4 Prot4 = Prototype.GetComponent<PrototypeController4>();
-            if (Prot4.DestroyONOFF == true)
-            {
-                GetComponent<ParticleSystem>().Play();
-                Destroy(Prototype);
-                Enemyincrease.enemyDeathcnt++;
-                PickupSound.PlayOneShot(PickupSound.clip);
-                count += 1;
-                SetCountText();
-            }
-        }
-
         if (other.CompareTag("EnemyG"))
         {
             GameObject EnemyG = GameObject.FindWithTag("EnemyG");
@@ -251,6 +203,21 @@ public class EnemyAttack : MonoBehaviour
             {
                 GetComponent<ParticleSystem>().Play();
                 Destroy(EnemyG);
+                Enemyincrease.enemyDeathcnt++;
+                PickupSound.PlayOneShot(PickupSound.clip);
+                count += 1;
+                SetCountText();
+            }
+        }
+
+        if (other.CompareTag("EnemyGAnim"))
+        {
+            GameObject EnemyGAnim = GameObject.FindWithTag("EnemyGAnim");
+            EnemyAnimcontroller EAc = EnemyGAnim.GetComponent<EnemyAnimcontroller>();
+            if (EAc.DestroyONOFF == true)
+            {
+                GetComponent<ParticleSystem>().Play();
+                Destroy(EnemyGAnim);
                 Enemyincrease.enemyDeathcnt++;
                 PickupSound.PlayOneShot(PickupSound.clip);
                 count += 1;
@@ -270,15 +237,15 @@ public class EnemyAttack : MonoBehaviour
             }
         }
 
-        if (other.CompareTag("Enemy1"))
+        if (other.CompareTag("EnemyAnim"))
         {
-            GameObject Prototype2 = GameObject.FindWithTag("Enemy1");
-            PrototypeController2 Prot2 = Prototype2.GetComponent<PrototypeController2>();
-            Prototypeincrease PI = Prototype2.GetComponent<Prototypeincrease>();
-            if (Prot2.DestroyONOFF == true)
+            GameObject EnemyAnim = GameObject.FindWithTag("EnemyAnim");
+            EnemyAnimcontroller EA = EnemyAnim.GetComponent<EnemyAnimcontroller>();
+            EnemyAnimIncrease EAI = EnemyAnim.GetComponent<EnemyAnimIncrease>();
+            if (EA.DestroyONOFF == true)
             {
                 GetComponent<ParticleSystem>().Play();
-                PI.isHidden =false;
+                EAI.isHidden = false;
             }
         }
 
