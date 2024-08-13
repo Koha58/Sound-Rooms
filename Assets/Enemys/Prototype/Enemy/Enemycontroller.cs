@@ -55,6 +55,7 @@ public class Enemycontroller : MonoBehaviour
 
     public GameObject Player;
     public GameObject[] Items;
+    public GameObject ItemGameObject;
 
     private void Chase()
     {
@@ -117,6 +118,7 @@ public class Enemycontroller : MonoBehaviour
             {
                 ONOFF = 1;
                 ONTime = 0;
+                ItemGameObject.SetActive(true);
             }
         }
         else if (ONOFF == 1)//見えているとき
@@ -124,6 +126,14 @@ public class Enemycontroller : MonoBehaviour
             GameOverBoxCapsuleCollider.enabled = true;//当たり判定ON
             //3DモデルのRendererを見える状態
             PrototypeBodySkinnedMeshRenderer.enabled = true;
+
+            OFFTime += Time.deltaTime;
+            if (OFFTime >= 10.0f)//10秒以上経ったら見えなくする
+            {
+                ONOFF = 0;
+                OFFTime = 0;
+                ItemGameObject.SetActive(false);
+            }
         }
     }
 
@@ -136,7 +146,6 @@ public class Enemycontroller : MonoBehaviour
             float VisualizationItems = Vector3.Distance(transform.position, itms.transform.position);//プレイヤーと敵の位置の計算
             if (VisualizationItems >= 3)
             {
-                Debug.Log("asfg");
                // itemObject.VisualizationON = true;
             }
             //else 
