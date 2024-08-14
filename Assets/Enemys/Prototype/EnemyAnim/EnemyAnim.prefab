@@ -2718,61 +2718,6 @@ Transform:
   - {fileID: 1509519738890603050}
   m_Father: {fileID: 1067483718876356185}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &2798203865142762924
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 6820247185639079417}
-  - component: {fileID: 1421185178053896005}
-  m_Layer: 0
-  m_Name: GameOverBox
-  m_TagString: GameOverBox
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &6820247185639079417
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2798203865142762924}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0.32, z: 0.37}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 155128909083467622}
-  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
---- !u!136 &1421185178053896005
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2798203865142762924}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.3
-  m_Height: 1.5
-  m_Direction: 1
-  m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!1 &2805038561313227445
 GameObject:
   m_ObjectHideFlags: 0
@@ -5804,7 +5749,6 @@ Transform:
   m_Children:
   - {fileID: 8644451136765331573}
   - {fileID: 954083432396059624}
-  - {fileID: 6820247185639079417}
   - {fileID: 1450147029585555715}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5990,7 +5934,6 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   ONOFF: 0
-  GameOverBoxCapsuleCollider: {fileID: 1421185178053896005}
   PrototypeBodySkinnedMeshRenderer: {fileID: 4287262543754044710}
   TrickEnemyLaugh: {fileID: 8300000, guid: 037ba20a66493c348ac907143d2d4e8e, type: 3}
   TrickEnemyRun: {fileID: 8300000, guid: 83cd05c5b7e8a2841800de6fb4585e75, type: 3}

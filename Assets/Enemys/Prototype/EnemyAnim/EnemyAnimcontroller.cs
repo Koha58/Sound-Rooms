@@ -24,7 +24,6 @@ public class EnemyAnimcontroller : MonoBehaviour
     public float ONOFF = 0;//(0が見えない；１が見える状態）
     private float ONTime;
     private float OFFTime;
-    public CapsuleCollider GameOverBoxCapsuleCollider;//当たり判定のONOFF
     float VisualizationRandom;//可視化時間をランダム
 
     //3DモデルのRendererのONOFF
@@ -108,8 +107,6 @@ public class EnemyAnimcontroller : MonoBehaviour
     {
         if (ONOFF == 0)//見えないとき
         {
-            GameOverBoxCapsuleCollider.enabled = false;//当たり判定OFF
-            //3DモデルのRendererを見えない状態
             PrototypeBodySkinnedMeshRenderer.enabled = false;
 
             ONTime += Time.deltaTime;
@@ -122,8 +119,6 @@ public class EnemyAnimcontroller : MonoBehaviour
         }
         else if (ONOFF == 1)//見えているとき
         {
-            GameOverBoxCapsuleCollider.enabled = true;//当たり判定ON
-            //3DモデルのRendererを見える状態
             PrototypeBodySkinnedMeshRenderer.enabled = true;
 
             OFFTime += Time.deltaTime;
@@ -156,7 +151,6 @@ public class EnemyAnimcontroller : MonoBehaviour
     private void Start()
     {
         ONOFF = 0;//見えない状態
-        GameOverBoxCapsuleCollider.enabled = false;//当たり判定OFF
         VisualizationRandom = Random.Range(5.0f, 10.0f);
         audioSourse = GetComponent<AudioSource>();
 
@@ -282,8 +276,7 @@ public class EnemyAnimcontroller : MonoBehaviour
         if (other.CompareTag("SeenArea"))
         {
             ONOFF = 1;
-            ONTime = 0;
-            GameOverBoxCapsuleCollider.enabled = true;//当たり判定ON
+            ONTime = 0;//当たり判定ON
            　//3DモデルのRendererを見える状態
             PrototypeBodySkinnedMeshRenderer.enabled = true;
         }
