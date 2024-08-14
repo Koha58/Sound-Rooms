@@ -11,7 +11,7 @@ public class StartDeviceCheck : MonoBehaviour
     void Start()
     {
         Cursor = GameObject.Find("Cursor");
-        Cursor.GetComponent<Image>().enabled = false;
+       // Cursor.GetComponent<Image>().enabled = false;
     }
 
     // Update is called once per frame

@@ -26,6 +26,8 @@ public class StartManager : MonoBehaviour
         StartButtonImage.color = new Color32(255, 255, 255, 45);
         TutorialButtonImage.color = new Color32(255, 255, 255, 45);
 
+        Cursor.SetActive(false);
+        Cursor1.SetActive(false);
     }
 
     // Update is called once per frame

@@ -1208,6 +1208,7 @@ GameObject:
   - component: {fileID: 42546062507820914}
   - component: {fileID: 7429983430552339231}
   - component: {fileID: 1026758117251818873}
+  - component: {fileID: 6312869256328894186}
   m_Layer: 0
   m_Name: Enemy2
   m_TagString: Enemy2
@@ -1426,6 +1427,22 @@ MonoBehaviour:
   Player: {fileID: 0}
   Items: []
   ItemGameObject: {fileID: 844191064954057766}
+--- !u!114 &6312869256328894186
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 798233816613832786}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: addde896f6c25c6448de5cd9be9e44ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ebiPrefab1: {fileID: 798233816613832786}
+  ebiPrefab2: {fileID: 798233816613832786}
+  DestroyPrefab: {fileID: 798233816613832786}
+  isHidden: 1
 --- !u!1 &822310583864198259
 GameObject:
   m_ObjectHideFlags: 0
