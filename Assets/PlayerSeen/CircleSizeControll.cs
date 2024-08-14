@@ -31,6 +31,12 @@ public class CircleSizeControll : MonoBehaviour
 
         preHeight = 0;
         plusSize = 0f;
+
+        originSizeX = 2.3f;
+        originSizeZ = 2.3f;
+
+        originSizemX = 10.3f;
+        originSizemZ = 10.3f;
     }
 
     // Update is called once per frame

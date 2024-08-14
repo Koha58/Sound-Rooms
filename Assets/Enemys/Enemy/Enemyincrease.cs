@@ -14,7 +14,7 @@ public class Enemyincrease : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        enemyDeathcnt = 0;
     }
 
     // Update is called once per frame
