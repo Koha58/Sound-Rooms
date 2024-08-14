@@ -68,6 +68,7 @@ public class Enemycontroller : MonoBehaviour
             {
                 if (PS.onoff == 1)//ƒvƒŒƒCƒ„[‚ª‰Â‹‰»‚µ‚Ä‚¢‚½‚ç
                 {
+                    ONOFF = 1;
                     animator.SetBool("Walk", false);
                     animator.SetBool("Run", true);
                     ChaseONOFF = true;

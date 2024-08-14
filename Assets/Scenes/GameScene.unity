@@ -38239,7 +38239,7 @@ PrefabInstance:
     - target: {fileID: 3242426042137082810, guid: d505dd7ee1a98de4a911abd0a9811a20,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3870195675039764077, guid: d505dd7ee1a98de4a911abd0a9811a20,
         type: 3}
@@ -90173,6 +90173,12 @@ Transform:
   - {fileID: 1764173538}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &2026111066 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8731381559374942787, guid: 63da0b9de1d7a9042ad92024803fce18,
+    type: 3}
+  m_PrefabInstance: {fileID: 8518606465856896487}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2027575832
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -97449,8 +97455,13 @@ PrefabInstance:
     - target: {fileID: 2634667428985235658, guid: a08bd4818dbdba34a94fa4a011d6012d,
         type: 3}
       propertyPath: PatrolPoints.Array.size
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2634667428985235658, guid: a08bd4818dbdba34a94fa4a011d6012d,
+        type: 3}
+      propertyPath: PatrolPoints.Array.data[0]
+      value: 
+      objectReference: {fileID: 777753045}
     - target: {fileID: 3151685045103944639, guid: a08bd4818dbdba34a94fa4a011d6012d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -97509,7 +97520,7 @@ PrefabInstance:
     - target: {fileID: 3990646278940508614, guid: a08bd4818dbdba34a94fa4a011d6012d,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -98299,6 +98310,16 @@ PrefabInstance:
       propertyPath: TargetPlayer
       value: 
       objectReference: {fileID: 135133355}
+    - target: {fileID: 1026758117251818873, guid: 63da0b9de1d7a9042ad92024803fce18,
+        type: 3}
+      propertyPath: PatrolPoints.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1026758117251818873, guid: 63da0b9de1d7a9042ad92024803fce18,
+        type: 3}
+      propertyPath: PatrolPoints.Array.data[0]
+      value: 
+      objectReference: {fileID: 2026111066}
     - target: {fileID: 8731381559374942787, guid: 63da0b9de1d7a9042ad92024803fce18,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -98350,7 +98371,8 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 844191064954057766, guid: 63da0b9de1d7a9042ad92024803fce18, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 63da0b9de1d7a9042ad92024803fce18, type: 3}

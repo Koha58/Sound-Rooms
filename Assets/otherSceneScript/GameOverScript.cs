@@ -33,7 +33,43 @@ public class GameOverScript : MonoBehaviour
             }
         }
 
+        if (other.CompareTag("EnemyG"))
+        {
+            if (PS.onoff == 1)
+            {
+                //Debug.Log("1");
+                SceneManager.LoadScene("GameOver");
+            }
+        }
+
         if (other.CompareTag("EnemyAnim"))
+        {
+            if (PS.onoff == 1)
+            {
+                //Debug.Log("1");
+                SceneManager.LoadScene("GameOver");
+            }
+        }
+
+        if (other.CompareTag("EnemyGAnim"))
+        {
+            if (PS.onoff == 1)
+            {
+                //Debug.Log("1");
+                SceneManager.LoadScene("GameOver");
+            }
+        }
+
+        if (other.CompareTag("Enemy2"))
+        {
+            if (PS.onoff == 1)
+            {
+                //Debug.Log("1");
+                SceneManager.LoadScene("GameOver");
+            }
+        }
+
+        if (other.CompareTag("Enemy2G"))
         {
             if (PS.onoff == 1)
             {

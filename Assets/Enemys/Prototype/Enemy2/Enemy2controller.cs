@@ -54,8 +54,6 @@ public class Enemy2controller : MonoBehaviour
 
     public GameObject Player;
     public GameObject[] Items;
-    public GameObject ItemGameObject;
-
     private void Chase()
     {
         GameObject gobj = GameObject.Find("Player"); //Playerオブジェクトを探す
@@ -68,6 +66,7 @@ public class Enemy2controller : MonoBehaviour
             {
                 if (PS.onoff == 1)//プレイヤーが可視化していたら
                 {
+                    animator.SetBool("StandUp", true);
                     animator.SetBool("Run", true);
                     ChaseONOFF = true;
                     transform.LookAt(TargetPlayer.transform); //プレイヤーの方向にむく
@@ -115,7 +114,6 @@ public class Enemy2controller : MonoBehaviour
             {
                 ONOFF = 1;
                 ONTime = 0;
-                ItemGameObject.SetActive(true);
             }
         }
         else if (ONOFF == 1)//見えているとき
@@ -127,7 +125,6 @@ public class Enemy2controller : MonoBehaviour
             {
                 ONOFF = 0;
                 OFFTime = 0;
-                ItemGameObject.SetActive(false);
             }
         }
     }
@@ -166,7 +163,10 @@ public class Enemy2controller : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        animator.SetBool("Run", true);
+        if (ChaseONOFF == false)
+        {
+            animator.SetBool("Run", false);
+        }
         Visualization();
         TouchWalls();
 
