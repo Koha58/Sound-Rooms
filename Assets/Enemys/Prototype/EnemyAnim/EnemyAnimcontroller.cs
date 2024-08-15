@@ -195,6 +195,8 @@ public class EnemyAnimcontroller : MonoBehaviour
 
             if (VisualizationPlayer <= 30f)//プレイヤーが検知範囲に入ったら
             {
+
+                Chase();
                 Ray ray;
                 RaycastHit hit;
                 Vector3 direction;   // Rayを飛ばす方向
@@ -212,7 +214,7 @@ public class EnemyAnimcontroller : MonoBehaviour
                 {
                     if (hit.collider.CompareTag("Player"))
                     {
-                        Debug.Log("asdfghj");
+                        Debug.Log("1");
                         PS.Visualization = true;
                         PS.onoff = 1;  //見えているから1
                         foreach (var playerParts in childTransforms)
@@ -220,11 +222,10 @@ public class EnemyAnimcontroller : MonoBehaviour
                             //タグが"PlayerParts"である子オブジェクトを見えるようにする
                             playerParts.gameObject.GetComponent<Renderer>().enabled = true;
                         }
-                        Chase();
                     }
-
-                    if (hit.collider.gameObject.CompareTag("Wall") || (hit.collider.gameObject.CompareTag("InWall")))
+                    else if (hit.collider.gameObject.CompareTag("Wall") || (hit.collider.gameObject.CompareTag("InWall")))
                     {
+                        Debug.Log("2");
                         PS.Visualization = false;
                         PS.onoff = 0;  //見えているから1
                         foreach (var playerParts in childTransforms)

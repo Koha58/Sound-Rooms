@@ -5652,10 +5652,10 @@ GameObject:
   - component: {fileID: 155128909083467622}
   - component: {fileID: 1668164780414451620}
   - component: {fileID: -6866602651706779521}
-  - component: {fileID: 8765506927663286720}
   - component: {fileID: 652194376637427258}
   - component: {fileID: 4482280510640593924}
   - component: {fileID: 1260582278263916308}
+  - component: {fileID: -5278106601281776122}
   m_Layer: 0
   m_Name: EnemyAnim
   m_TagString: EnemyAnim
@@ -5728,27 +5728,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 84
   m_CollisionDetection: 0
---- !u!65 &8765506927663286720
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5734706696918445562}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.5792216, y: 0.6418907, z: 1.4924}
-  m_Center: {x: 0.0044763535, y: 0.31334558, z: 0.8818441}
 --- !u!82 &652194376637427258
 AudioSource:
   m_ObjectHideFlags: 0
@@ -5871,7 +5850,6 @@ MonoBehaviour:
   animator: {fileID: 1668164780414451620}
   Player: {fileID: 0}
   Items: []
-  ItemGameObject: {fileID: 0}
 --- !u!114 &1260582278263916308
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5888,6 +5866,27 @@ MonoBehaviour:
   ebiPrefab2: {fileID: 5734706696918445562}
   DestroyPrefab: {fileID: 5734706696918445562}
   isHidden: 1
+--- !u!65 &-5278106601281776122
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5734706696918445562}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &5735657792604044225
 GameObject:
   m_ObjectHideFlags: 0

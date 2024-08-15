@@ -213,7 +213,7 @@ public class Enemy2controller : MonoBehaviour
                 {
                     if (hit.collider.CompareTag("Player"))
                     {
-                        //Debug.Log("asdfghj");
+                        Debug.Log("1");
                         PS.Visualization = true;
                         PS.onoff = 1;  //Œ©‚¦‚Ä‚¢‚é‚©‚ç1
                         foreach (var playerParts in childTransforms)
@@ -226,6 +226,7 @@ public class Enemy2controller : MonoBehaviour
 
                     if (hit.collider.gameObject.CompareTag("Wall") || (hit.collider.gameObject.CompareTag("InWall")))
                     {
+                        Debug.Log("2");
                         PS.Visualization = false;
                         PS.onoff = 0;  //Œ©‚¦‚Ä‚¢‚é‚©‚ç1
                         foreach (var playerParts in childTransforms)
