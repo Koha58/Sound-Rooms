@@ -54,7 +54,7 @@ public class EnemyAnimcontroller : MonoBehaviour
 
     public GameObject Player;
     public GameObject[] Items;
-    public GameObject ItemGameObject;
+   // public GameObject ItemGameObject;
 
     private void Chase()
     {
@@ -114,7 +114,7 @@ public class EnemyAnimcontroller : MonoBehaviour
             {
                 ONOFF = 1;
                 ONTime = 0;
-                ItemGameObject.SetActive(true);
+               // ItemGameObject.SetActive(true);
             }
         }
         else if (ONOFF == 1)//見えているとき
@@ -126,7 +126,7 @@ public class EnemyAnimcontroller : MonoBehaviour
             {
                 ONOFF = 0;
                 OFFTime = 0;
-                ItemGameObject.SetActive(false);
+             //   ItemGameObject.SetActive(false);
             }
         }
     }
@@ -160,12 +160,13 @@ public class EnemyAnimcontroller : MonoBehaviour
         animator = GetComponent<Animator>();   //アニメーターコントローラーからアニメーションを取得する
 
         Items = GameObject.FindGameObjectsWithTag("Object");
+
+      animator.SetBool("Run", true);
     }
 
     // Update is called once per frame
     private void Update()
     {
-        animator.SetBool("Run", true);
         Visualization();
         TouchWalls();
 
@@ -194,7 +195,6 @@ public class EnemyAnimcontroller : MonoBehaviour
 
             if (VisualizationPlayer <= 30f)//プレイヤーが検知範囲に入ったら
             {
-
                 Ray ray;
                 RaycastHit hit;
                 Vector3 direction;   // Rayを飛ばす方向
@@ -212,6 +212,7 @@ public class EnemyAnimcontroller : MonoBehaviour
                 {
                     if (hit.collider.CompareTag("Player"))
                     {
+                        Debug.Log("asdfghj");
                         PS.Visualization = true;
                         PS.onoff = 1;  //見えているから1
                         foreach (var playerParts in childTransforms)

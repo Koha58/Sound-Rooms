@@ -213,6 +213,7 @@ public class Enemy2controller : MonoBehaviour
                 {
                     if (hit.collider.CompareTag("Player"))
                     {
+                        //Debug.Log("asdfghj");
                         PS.Visualization = true;
                         PS.onoff = 1;  //Œ©‚¦‚Ä‚¢‚é‚©‚ç1
                         foreach (var playerParts in childTransforms)
