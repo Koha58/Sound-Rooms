@@ -126,7 +126,7 @@ public class EnemyAttack : MonoBehaviour
                 SetCountText();
             }
         }
-        /*
+        
         if (other.CompareTag("Enemy"))
         {
             GameObject Enemy = GameObject.FindWithTag("Enemy");
@@ -138,7 +138,19 @@ public class EnemyAttack : MonoBehaviour
                 EI.isHidden = false;
             }
         }
-        */
+
+        if (other.CompareTag("Enemy1"))
+        {
+            GameObject Enemy1 = GameObject.FindWithTag("Enemy1");
+            Enemycontroller Ec = Enemy1.GetComponent<Enemycontroller>();
+            EnemyIncrease EI = Enemy1.GetComponent<EnemyIncrease>();
+            if (Ec.DestroyONOFF == true)
+            {
+                GetComponent<ParticleSystem>().Play();
+                EI.isHidden = false;
+            }
+        }
+
         if (other.CompareTag("EnemyAnim"))
         {
             GameObject EnemyAnim = GameObject.FindWithTag("EnemyAnim");

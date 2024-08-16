@@ -43,7 +43,7 @@ public class Enemycontroller : MonoBehaviour
     bool ChaseONOFF;
 
     //Destroyの判定
-    private bool DestroyONOFF;//(DestroyON： true/DestroyOFF: false)
+    public bool DestroyONOFF;//(DestroyON： true/DestroyOFF: false)
 
     //Wallに当たった時
     private bool TouchWall;
@@ -278,7 +278,7 @@ public class Enemycontroller : MonoBehaviour
            　//3DモデルのRendererを見える状態
             PrototypeBodySkinnedMeshRenderer.enabled = true;
         }
-
+        /*
         if (other.CompareTag("EnemyAttackArea"))
         {
             GameObject Enemy = GameObject.FindWithTag("Enemy");
@@ -288,7 +288,7 @@ public class Enemycontroller : MonoBehaviour
                // GetComponent<ParticleSystem>().Play();
                 EI.isHidden = false;
             }
-        }
+        }*/
 
         if (other.CompareTag("InWall") || other.CompareTag("Wall"))
         {
