@@ -17,7 +17,7 @@ public class Enemycontroller : MonoBehaviour
 
     //移動
     [SerializeField] private Transform[] PatrolPoints; // 巡回ポイントの配列
-    private float MoveSpeed = 0.2f; // 動く速度
+    private float MoveSpeed = 1.0f; // 動く速度
     private int CurrentPointIndex = 0; // 現在の巡回ポイントのインデックス
 
     //可視化
@@ -39,11 +39,11 @@ public class Enemycontroller : MonoBehaviour
     public Transform TargetPlayer;
 
     //Playerを追跡
-    float ChaseSpeed = 0.5f;//Playerを追いかけるスピード
+    float ChaseSpeed = 0.25f;//Playerを追いかけるスピード
     bool ChaseONOFF;
 
     //Destroyの判定
-    public bool DestroyONOFF;//(DestroyON： true/DestroyOFF: false)
+    private bool DestroyONOFF;//(DestroyON： true/DestroyOFF: false)
 
     //Wallに当たった時
     private bool TouchWall;
@@ -134,23 +134,6 @@ public class Enemycontroller : MonoBehaviour
             }
         }
     }
-
-    private void ItemVisualization()//自身の可視化のON OFF
-    {
-        GameObject gameObject = GameObject.FindWithTag("Object");
-        ItemObject itemObject = gameObject.AddComponent<ItemObject>();
-        foreach (var itms in Items)
-        {
-            float VisualizationItems = Vector3.Distance(transform.position, itms.transform.position);//プレイヤーと敵の位置の計算
-            if (VisualizationItems >= 3)
-            {
-               // itemObject.VisualizationON = true;
-            }
-            //else 
-            //itemObject.VisualizationON = false;
-        }
-    }
-
     // Start is called before the first frame update
     private void Start()
     {
@@ -184,7 +167,9 @@ public class Enemycontroller : MonoBehaviour
             transform.LookAt(PatrolPoints[CurrentPointIndex].transform);//次のポイントの方向を向く
 
             if (transform.position == PatrolPoints[CurrentPointIndex].position)// 次の巡回ポイントへのインデックスを更新
+            {
                 NextPatrolPoint();
+            }
         }
 
         Vector3 Position = TargetPlayer.position - transform.position; // ターゲットの位置と自身の位置の差を計算
@@ -193,7 +178,6 @@ public class Enemycontroller : MonoBehaviour
 
         if (isFront) //ターゲットが自身の前方にあるなら
         {
-            ItemVisualization();
             DestroyONOFF = false;
             GameObject obj = GameObject.Find("Player"); //Playerオブジェクトを探す
             PlayerSeen PS = obj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
@@ -201,13 +185,19 @@ public class Enemycontroller : MonoBehaviour
 
             float VisualizationPlayer = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
 
-            if (VisualizationPlayer <= 30f)//プレイヤーが検知範囲に入ったら
+            if (VisualizationPlayer <= 25f)//プレイヤーが検知範囲に入ったら
             {
+                Chase();
+
+                if (ONOFF == 0)
+                {
+                    ChaseONOFF = false;
+                }
 
                 Ray ray;
                 RaycastHit hit;
                 Vector3 direction;   // Rayを飛ばす方向
-                float distance = 30;    // Rayを飛ばす距離
+                float distance =25;    // Rayを飛ばす距離
 
                 // Rayを飛ばす方向を計算
                 Vector3 temp = Player.transform.position - transform.position;
@@ -228,9 +218,8 @@ public class Enemycontroller : MonoBehaviour
                             //タグが"PlayerParts"である子オブジェクトを見えるようにする
                             playerParts.gameObject.GetComponent<Renderer>().enabled = true;
                         }
-                        Chase();
                     }
-
+                    
                     if (hit.collider.gameObject.CompareTag("Wall") || (hit.collider.gameObject.CompareTag("InWall")))
                     {
                         PS.Visualization = false;
@@ -288,6 +277,17 @@ public class Enemycontroller : MonoBehaviour
             ONTime = 0;
            　//3DモデルのRendererを見える状態
             PrototypeBodySkinnedMeshRenderer.enabled = true;
+        }
+
+        if (other.CompareTag("EnemyAttackArea"))
+        {
+            GameObject Enemy = GameObject.FindWithTag("Enemy");
+            EnemyIncrease EI = Enemy.GetComponent<EnemyIncrease>();
+            if (DestroyONOFF == true)
+            {
+               // GetComponent<ParticleSystem>().Play();
+                EI.isHidden = false;
+            }
         }
 
         if (other.CompareTag("InWall") || other.CompareTag("Wall"))

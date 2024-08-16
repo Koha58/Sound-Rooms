@@ -17,7 +17,7 @@ public class EnemyAnimcontroller : MonoBehaviour
 
     //移動
     [SerializeField] private Transform[] PatrolPoints; // 巡回ポイントの配列
-    private float MoveSpeed = 0.2f; // 動く速度
+    private float MoveSpeed = 1.0f; // 動く速度
     private int CurrentPointIndex = 0; // 現在の巡回ポイントのインデックス
 
     //可視化
@@ -39,7 +39,7 @@ public class EnemyAnimcontroller : MonoBehaviour
     public Transform TargetPlayer;
 
     //Playerを追跡
-    float ChaseSpeed = 0.5f;//Playerを追いかけるスピード
+    float ChaseSpeed = 0.35f;//Playerを追いかけるスピード
     bool ChaseONOFF;
 
     //Destroyの判定
@@ -131,22 +131,6 @@ public class EnemyAnimcontroller : MonoBehaviour
         }
     }
 
-    private void ItemVisualization()//自身の可視化のON OFF
-    {
-        GameObject gameObject = GameObject.FindWithTag("Object");
-        ItemObject itemObject = gameObject.AddComponent<ItemObject>();
-        foreach (var itms in Items)
-        {
-            float VisualizationItems = Vector3.Distance(transform.position, itms.transform.position);//プレイヤーと敵の位置の計算
-            if (VisualizationItems >= 3)
-            {
-                // itemObject.VisualizationON = true;
-            }
-            //else 
-            //itemObject.VisualizationON = false;
-        }
-    }
-
     // Start is called before the first frame update
     private void Start()
     {
@@ -185,7 +169,6 @@ public class EnemyAnimcontroller : MonoBehaviour
 
         if (isFront) //ターゲットが自身の前方にあるなら
         {
-            ItemVisualization();
             DestroyONOFF = false;
             GameObject obj = GameObject.Find("Player"); //Playerオブジェクトを探す
             PlayerSeen PS = obj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
@@ -195,8 +178,13 @@ public class EnemyAnimcontroller : MonoBehaviour
 
             if (VisualizationPlayer <= 30f)//プレイヤーが検知範囲に入ったら
             {
-
                 Chase();
+
+                if(ONOFF==0)
+                {
+                    ChaseONOFF = false;
+                }
+
                 Ray ray;
                 RaycastHit hit;
                 Vector3 direction;   // Rayを飛ばす方向
@@ -214,7 +202,6 @@ public class EnemyAnimcontroller : MonoBehaviour
                 {
                     if (hit.collider.CompareTag("Player"))
                     {
-                        Debug.Log("1");
                         PS.Visualization = true;
                         PS.onoff = 1;  //見えているから1
                         foreach (var playerParts in childTransforms)
@@ -225,7 +212,6 @@ public class EnemyAnimcontroller : MonoBehaviour
                     }
                     else if (hit.collider.gameObject.CompareTag("Wall") || (hit.collider.gameObject.CompareTag("InWall")))
                     {
-                        Debug.Log("2");
                         PS.Visualization = false;
                         PS.onoff = 0;  //見えているから1
                         foreach (var playerParts in childTransforms)

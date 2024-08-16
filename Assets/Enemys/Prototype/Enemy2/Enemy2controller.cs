@@ -39,7 +39,7 @@ public class Enemy2controller : MonoBehaviour
     public Transform TargetPlayer;
 
     //Playerを追跡
-    float ChaseSpeed = 0.5f;//Playerを追いかけるスピード
+    float ChaseSpeed = 0.2f;//Playerを追いかけるスピード
     bool ChaseONOFF;
 
     //Destroyの判定
@@ -193,13 +193,13 @@ public class Enemy2controller : MonoBehaviour
 
             float VisualizationPlayer = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
 
-            if (VisualizationPlayer <= 30f)//プレイヤーが検知範囲に入ったら
+            if (VisualizationPlayer <= 10f)//プレイヤーが検知範囲に入ったら
             {
-
+                Chase();
                 Ray ray;
                 RaycastHit hit;
                 Vector3 direction;   // Rayを飛ばす方向
-                float distance = 30;    // Rayを飛ばす距離
+                float distance = 10;    // Rayを飛ばす距離
 
                 // Rayを飛ばす方向を計算
                 Vector3 temp = Player.transform.position - transform.position;
@@ -213,7 +213,6 @@ public class Enemy2controller : MonoBehaviour
                 {
                     if (hit.collider.CompareTag("Player"))
                     {
-                        Debug.Log("1");
                         PS.Visualization = true;
                         PS.onoff = 1;  //見えているから1
                         foreach (var playerParts in childTransforms)
@@ -221,12 +220,10 @@ public class Enemy2controller : MonoBehaviour
                             //タグが"PlayerParts"である子オブジェクトを見えるようにする
                             playerParts.gameObject.GetComponent<Renderer>().enabled = true;
                         }
-                        Chase();
                     }
 
                     if (hit.collider.gameObject.CompareTag("Wall") || (hit.collider.gameObject.CompareTag("InWall")))
                     {
-                        Debug.Log("2");
                         PS.Visualization = false;
                         PS.onoff = 0;  //見えているから1
                         foreach (var playerParts in childTransforms)
