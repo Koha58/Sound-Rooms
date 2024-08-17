@@ -96,6 +96,13 @@ public class EnemyAttack : MonoBehaviour
             count += 1;
             SetCountText();
 
+            GameObject Boss = GameObject.FindWithTag("Boss");
+            BoosEnemy BS = Boss.GetComponent<BoosEnemy>();
+
+            BS.MoveSpeed = -0.1f;
+            BS.ChaseSpeed = -0.1f;
+            BS.VisualizationPlayer = -1f;
+            BS.ONOFF = 1;
         }
 
         if (other.CompareTag("EnemyGAnim"))
@@ -110,6 +117,14 @@ public class EnemyAttack : MonoBehaviour
                 PickupSound.PlayOneShot(PickupSound.clip);
                 count += 1;
                 SetCountText();
+
+                GameObject Boss = GameObject.FindWithTag("Boss");
+                BoosEnemy BS = Boss.GetComponent<BoosEnemy>();
+
+                BS.MoveSpeed = -0.1f;
+                BS.ChaseSpeed = -0.1f;
+                BS.VisualizationPlayer = -1f;
+                BS.ONOFF = 1;
             }
         }
         if (other.CompareTag("Enemy2G"))
@@ -124,6 +139,14 @@ public class EnemyAttack : MonoBehaviour
                 PickupSound.PlayOneShot(PickupSound.clip);
                 count += 1;
                 SetCountText();
+
+                GameObject Boss = GameObject.FindWithTag("Boss");
+                BoosEnemy BS = Boss.GetComponent<BoosEnemy>();
+
+                BS.MoveSpeed = -0.1f;
+                BS.ChaseSpeed = -0.1f;
+                BS.VisualizationPlayer = -1f;
+                BS.ONOFF = 1;
             }
         }
         
@@ -136,6 +159,14 @@ public class EnemyAttack : MonoBehaviour
             {
                 GetComponent<ParticleSystem>().Play();
                 EI.isHidden = false;
+
+                GameObject Boss = GameObject.FindWithTag("Boss");
+                BoosEnemy BS = Boss.GetComponent<BoosEnemy>();
+
+                BS.MoveSpeed = -0.1f;
+                BS.ChaseSpeed = -0.1f;
+                BS.VisualizationPlayer = -1f;
+                BS.ONOFF = 1;
             }
         }
 
@@ -148,6 +179,14 @@ public class EnemyAttack : MonoBehaviour
             {
                 GetComponent<ParticleSystem>().Play();
                 EI.isHidden = false;
+
+                GameObject Boss = GameObject.FindWithTag("Boss");
+                BoosEnemy BS = Boss.GetComponent<BoosEnemy>();
+
+                BS.MoveSpeed = -0.1f;
+                BS.ChaseSpeed = -0.1f;
+                BS.VisualizationPlayer = -1f;
+                BS.ONOFF = 1;
             }
         }
 
@@ -160,6 +199,14 @@ public class EnemyAttack : MonoBehaviour
             {
                 GetComponent<ParticleSystem>().Play();
                 EAI.isHidden = false;
+
+                GameObject Boss = GameObject.FindWithTag("Boss");
+                BoosEnemy BS = Boss.GetComponent<BoosEnemy>();
+
+                BS.MoveSpeed = -0.1f;
+                BS.ChaseSpeed = -0.1f;
+                BS.VisualizationPlayer = -1f;
+                BS.ONOFF = 1;
             }
         }
 
@@ -172,6 +219,14 @@ public class EnemyAttack : MonoBehaviour
             {
                 GetComponent<ParticleSystem>().Play();
                 E2I.isHidden = false;
+
+                GameObject Boss = GameObject.FindWithTag("Boss");
+                BoosEnemy BS = Boss.GetComponent<BoosEnemy>();
+
+                BS.MoveSpeed = -0.1f;
+                BS.ChaseSpeed = -0.1f;
+                BS.VisualizationPlayer = -1f;
+                BS.ONOFF = 1;
             }
         }
     }
