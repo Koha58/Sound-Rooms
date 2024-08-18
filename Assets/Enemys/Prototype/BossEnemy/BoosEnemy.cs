@@ -295,4 +295,40 @@ public class BoosEnemy : MonoBehaviour
                 CurrentPointIndex = 0;
         }
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        Transform myTransform = this.transform;
+        Vector3 localAngle = myTransform.localEulerAngles;
+
+        if (collision.gameObject.tag == "LeftWall")
+        {
+            localAngle.z = 90f;
+            localAngle.y = 0f;
+            myTransform.localEulerAngles = localAngle;
+            Physics.gravity = new Vector3(10f, 0, 0);
+        }
+        else if (collision.gameObject.tag == "RightWall")
+        {
+            localAngle.z = -90f;
+            localAngle.y = 0f;
+            myTransform.localEulerAngles = localAngle;
+            Physics.gravity = new Vector3(-10f, 0, 0);
+        }
+        else if (collision.gameObject.tag == "Ceiling")
+        {
+            localAngle.z = 180f;
+            localAngle.y = 0f;
+            myTransform.localEulerAngles = localAngle;
+            Physics.gravity = new Vector3(0, 10f, 0);
+        }
+        else if (collision.gameObject.tag == "Floor")
+        {
+            localAngle.z = 0f;
+            localAngle.y = 0f;
+            myTransform.localEulerAngles = localAngle;
+            Physics.gravity = new Vector3(0, -10f, 0);
+        }
+    }
+
 }

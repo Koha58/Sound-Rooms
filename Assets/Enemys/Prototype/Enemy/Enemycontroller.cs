@@ -5,26 +5,16 @@ using UnityEngine;
 
 public class Enemycontroller : MonoBehaviour
 {
-    /*//・普段は不可視化状態
-      //・定期的に音を出す(可視化する)
-      ┗この時、Playerと同じで音の範囲内の物を不可視化させてほしい。
-      //・Playerが音の範囲に入る、又はPlayerの音の範囲に入る(背後、左右以外)とPlayerを可視化させ、Playerを追いかける
-      ・Playerと接触したらPlayerのライフが1減る(ライフが0になるとゲームオーバー)
-      ・Playerが音を出すと音源周辺の敵は音源に向かう
-      ┗自動ドアが開く音とかにも反応して欲しいけど、そもそもPlayerが自動ドア前で可視化しないと自動ドアがPlayerを認識せずに開かない仕組みにするから、Playerが音を出したとき、一定の範囲内にいる(Playerの音の範囲とは別)敵だけ音源に向かう感じでいいかな(別に追われる訳では無い)。
-      後、Enemyが音を出す頻度もっと少なくてもいいかな(Playerが音を出す意味があんまり無くなってしまうので)。
-    */
-
     //移動
     [SerializeField] private Transform[] PatrolPoints; // 巡回ポイントの配列
-    private float MoveSpeed = 1.0f; // 動く速度
-    private int CurrentPointIndex = 0; // 現在の巡回ポイントのインデックス
+    private float MoveSpeed = 1.0f;                    // 動く速度
+    private int CurrentPointIndex = 0;                 // 現在の巡回ポイントのインデックス
 
     //可視化
-    public float ONOFF = 0;//(0が見えない；１が見える状態）
+    public float ONOFF = 0;                            //(0が見えない；１が見える状態）
     private float ONTime;
     private float OFFTime;
-    float VisualizationRandom;//可視化時間をランダム
+    float VisualizationRandom;                         //可視化時間をランダム
 
     //3DモデルのRendererのONOFF
     public SkinnedMeshRenderer PrototypeBodySkinnedMeshRenderer;
@@ -39,26 +29,25 @@ public class Enemycontroller : MonoBehaviour
     public Transform TargetPlayer;
 
     //Playerを追跡
-    float ChaseSpeed = 0.25f;//Playerを追いかけるスピード
+    float ChaseSpeed = 0.25f;                           //Playerを追いかけるスピード
     bool ChaseONOFF;
 
     //Destroyの判定
-    public bool DestroyONOFF;//(DestroyON： true/DestroyOFF: false)
+    public bool DestroyONOFF;                           //(DestroyON： true/DestroyOFF: false)
 
     //Wallに当たった時
     private bool TouchWall;
-    float WallONOFF = 0.0f;
 
     //アニメーション
     [SerializeField] Animator animator;
 
     public GameObject Player;
     public GameObject[] Items;
-    public GameObject ItemGameObject;
+    public GameObject VisualizationGameObject;
 
-    private void Chase()
+    private void Chase()//プレイヤーを追いかける
     {
-        GameObject gobj = GameObject.Find("Player"); //Playerオブジェクトを探す
+        GameObject gobj = GameObject.Find("Player");//Playerオブジェクトを探す
         PlayerSeen PS = gobj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
 
         float ChasePlayer = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
@@ -68,22 +57,18 @@ public class Enemycontroller : MonoBehaviour
             {
                 if (PS.onoff == 1)//プレイヤーが可視化していたら
                 {
-                    ONOFF = 1;
+                    ONOFF = 1;//自分自身を可視化
                     animator.SetBool("Walk", false);
                     animator.SetBool("Run", true);
-                    ChaseONOFF = true;
-                    transform.LookAt(TargetPlayer.transform); //プレイヤーの方向にむく
-                    transform.position += transform.forward * ChaseSpeed;//プレイヤーの方向に向かう
+                    ChaseONOFF = true;//追跡中
+                    transform.LookAt(TargetPlayer.transform);//プレイヤーの方向にむく
+                    transform.position += transform.forward * ChaseSpeed;　//プレイヤーの方向に向かう
                 }
                 else if (ONOFF == 0)
-                {
-                    ChaseONOFF = false;
-                }
+                    ChaseONOFF = false;//追跡中じゃない
             }
             else
-            {
-                ChaseONOFF = false;
-            }
+                ChaseONOFF = false;//追跡中じゃない
         }
     }
 
@@ -92,17 +77,6 @@ public class Enemycontroller : MonoBehaviour
         CurrentPointIndex++;
         if (CurrentPointIndex >= PatrolPoints.Length)//巡回ポイントが最後まで行ったら最初に戻る
             CurrentPointIndex = 0;
-    }
-
-    private void TouchWalls()
-    {
-        if (TouchWall == true)
-        {
-            WallONOFF += Time.deltaTime;
-            if (WallONOFF > 3f)
-                TouchWall = false;//Wall判定
-        }
-
     }
 
     private void Visualization()//自身の可視化のON OFF
@@ -115,9 +89,9 @@ public class Enemycontroller : MonoBehaviour
             ONTime += Time.deltaTime;
             if (ONTime >= VisualizationRandom)//ランダムで出された値より大きかったら見えるようにする
             {
-                ONOFF = 1;
+                ONOFF = 1;//見える
                 ONTime = 0;
-                ItemGameObject.SetActive(true);
+                VisualizationGameObject.SetActive(true);//物を不可視化する判定をON
             }
         }
         else if (ONOFF == 1)//見えているとき
@@ -128,9 +102,9 @@ public class Enemycontroller : MonoBehaviour
             OFFTime += Time.deltaTime;
             if (OFFTime >= 10.0f)//10秒以上経ったら見えなくする
             {
-                ONOFF = 0;
+                ONOFF = 0;//見えない
                 OFFTime = 0;
-                ItemGameObject.SetActive(false);
+                VisualizationGameObject.SetActive(false);//物を不可視化する判定をOFF
             }
         }
     }
@@ -145,8 +119,6 @@ public class Enemycontroller : MonoBehaviour
         PrototypeBodySkinnedMeshRenderer.enabled = false;
 
         animator = GetComponent<Animator>();   //アニメーターコントローラーからアニメーションを取得する
-
-        Items = GameObject.FindGameObjectsWithTag("Object");
     }
 
     // Update is called once per frame
@@ -159,7 +131,6 @@ public class Enemycontroller : MonoBehaviour
         }
 
         Visualization();
-        TouchWalls();
 
         if (ChaseONOFF == false || TouchWall == true)
         {
@@ -190,9 +161,7 @@ public class Enemycontroller : MonoBehaviour
                 Chase();
 
                 if (ONOFF == 0)
-                {
-                    ChaseONOFF = false;
-                }
+                ChaseONOFF = false;
 
                 Ray ray;
                 RaycastHit hit;
@@ -275,20 +244,9 @@ public class Enemycontroller : MonoBehaviour
         {
             ONOFF = 1;
             ONTime = 0;
-           　//3DモデルのRendererを見える状態
+            //3DモデルのRendererを見える状態
             PrototypeBodySkinnedMeshRenderer.enabled = true;
         }
-        /*
-        if (other.CompareTag("EnemyAttackArea"))
-        {
-            GameObject Enemy = GameObject.FindWithTag("Enemy");
-            EnemyIncrease EI = Enemy.GetComponent<EnemyIncrease>();
-            if (DestroyONOFF == true)
-            {
-               // GetComponent<ParticleSystem>().Play();
-                EI.isHidden = false;
-            }
-        }*/
 
         if (other.CompareTag("InWall") || other.CompareTag("Wall"))
         {

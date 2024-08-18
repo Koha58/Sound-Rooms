@@ -5,16 +5,6 @@ using UnityEngine;
 
 public class EnemyAnimcontroller : MonoBehaviour
 {
-    /*//・普段は不可視化状態
-       //・定期的に音を出す(可視化する)
-       ┗この時、Playerと同じで音の範囲内の物を不可視化させてほしい。
-       //・Playerが音の範囲に入る、又はPlayerの音の範囲に入る(背後、左右以外)とPlayerを可視化させ、Playerを追いかける
-       ・Playerと接触したらPlayerのライフが1減る(ライフが0になるとゲームオーバー)
-       ・Playerが音を出すと音源周辺の敵は音源に向かう
-       ┗自動ドアが開く音とかにも反応して欲しいけど、そもそもPlayerが自動ドア前で可視化しないと自動ドアがPlayerを認識せずに開かない仕組みにするから、Playerが音を出したとき、一定の範囲内にいる(Playerの音の範囲とは別)敵だけ音源に向かう感じでいいかな(別に追われる訳では無い)。
-       後、Enemyが音を出す頻度もっと少なくてもいいかな(Playerが音を出す意味があんまり無くなってしまうので)。
-     */
-
     //移動
     [SerializeField] private Transform[] PatrolPoints; // 巡回ポイントの配列
     private float MoveSpeed = 1.0f; // 動く速度

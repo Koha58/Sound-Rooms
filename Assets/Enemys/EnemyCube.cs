@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class EnemyCube : MonoBehaviour
 {
-    private  bool Enemytouch ;//壁にタッチのonoff
-    private float time =0.0f;
+   // private  bool Enemytouch ;//壁にタッチのonoff
+   // private float time =0.0f;
 
     // Start is called before the first frame update
     private  void Start()
     {
-        Enemytouch = false;
+       // Enemytouch = false;
     }
 
     // Update is called once per frame
@@ -26,6 +26,7 @@ public class EnemyCube : MonoBehaviour
 
         if (other.gameObject.CompareTag("Wall"))
         {
+            /*
             if (E.ONoff == 1)
             {
                 Enemytouch=true ;
@@ -38,7 +39,7 @@ public class EnemyCube : MonoBehaviour
                         Enemytouch = false;
                     }
                 }
-            }
+            }*/
         }
     }
 }
