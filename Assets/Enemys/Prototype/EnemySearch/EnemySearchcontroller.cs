@@ -3,50 +3,59 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class Enemycontroller : MonoBehaviour
+public class EnemySearchcontroller : MonoBehaviour
 {
+    /*//・普段は不可視化状態
+        //・定期的に音を出す(可視化する)
+        ┗この時、Playerと同じで音の範囲内の物を不可視化させてほしい。
+        //・Playerが音の範囲に入る、又はPlayerの音の範囲に入る(背後、左右以外)とPlayerを可視化させ、Playerを追いかける
+        ・Playerと接触したらPlayerのライフが1減る(ライフが0になるとゲームオーバー)
+        ・Playerが音を出すと音源周辺の敵は音源に向かう
+        ┗自動ドアが開く音とかにも反応して欲しいけど、そもそもPlayerが自動ドア前で可視化しないと自動ドアがPlayerを認識せずに開かない仕組みにするから、Playerが音を出したとき、一定の範囲内にいる(Playerの音の範囲とは別)敵だけ音源に向かう感じでいいかな(別に追われる訳では無い)。
+        後、Enemyが音を出す頻度もっと少なくてもいいかな(Playerが音を出す意味があんまり無くなってしまうので)。
+      */
+
     //移動
     [SerializeField] private Transform[] PatrolPoints; // 巡回ポイントの配列
-    private float MoveSpeed = 1.0f;                    // 動く速度
-    private int CurrentPointIndex = 0;                 // 現在の巡回ポイントのインデックス
+    private float MoveSpeed = 0.2f; // 動く速度
+    private int CurrentPointIndex = 0; // 現在の巡回ポイントのインデックス
 
     //可視化
-    public float ONOFF = 0;                            //(0が見えない；１が見える状態）
+    public float ONOFF = 0;//(0が見えない；１が見える状態）
     private float ONTime;
     private float OFFTime;
-    float VisualizationRandom;                         //可視化時間をランダム
+    float VisualizationRandom;//可視化時間をランダム
 
     //3DモデルのRendererのONOFF
     public SkinnedMeshRenderer PrototypeBodySkinnedMeshRenderer;
 
     //サウンド
     AudioSource audioSourse;
-    public AudioClip EnemySearch;
-    public AudioClip EnemyRun;
-    public AudioClip EnemyWalk;
+    public AudioClip TrickEnemyLaugh;
+    public AudioClip TrickEnemyRun;
+    public AudioClip TrickEnemyIdle;
 
     //前後判定
     public Transform TargetPlayer;
 
     //Playerを追跡
-    float ChaseSpeed = 0.25f;                           //Playerを追いかけるスピード
+    float ChaseSpeed = 0.2f;//Playerを追いかけるスピード
     bool ChaseONOFF;
 
     //Destroyの判定
-    public bool DestroyONOFF;                           //(DestroyON： true/DestroyOFF: false)
+    public bool DestroyONOFF;//(DestroyON： true/DestroyOFF: false)
 
     //Wallに当たった時
     private bool TouchWall;
+    float WallONOFF = 0.0f;
 
     //アニメーション
     [SerializeField] Animator animator;
 
     public GameObject Player;
-    public GameObject VisualizationGameObject;
-
-    private void Chase()//プレイヤーを追いかける
+    private void Chase()
     {
-        GameObject gobj = GameObject.Find("Player");//Playerオブジェクトを探す
+        GameObject gobj = GameObject.Find("Player"); //Playerオブジェクトを探す
         PlayerSeen PS = gobj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
 
         float ChasePlayer = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
@@ -56,18 +65,21 @@ public class Enemycontroller : MonoBehaviour
             {
                 if (PS.onoff == 1)//プレイヤーが可視化していたら
                 {
-                    ONOFF = 1;//自分自身を可視化
-                    animator.SetBool("Walk", false);
+                    animator.SetBool("StandUp", true);
                     animator.SetBool("Run", true);
-                    ChaseONOFF = true;//追跡中
-                    transform.LookAt(TargetPlayer.transform);//プレイヤーの方向にむく
-                    transform.position += transform.forward * ChaseSpeed;　//プレイヤーの方向に向かう
+                    ChaseONOFF = true;
+                    transform.LookAt(TargetPlayer.transform); //プレイヤーの方向にむく
+                    transform.position += transform.forward * ChaseSpeed;//プレイヤーの方向に向かう
                 }
                 else if (ONOFF == 0)
-                    ChaseONOFF = false;//追跡中じゃない
+                {
+                    ChaseONOFF = false;
+                }
             }
             else
-                ChaseONOFF = false;//追跡中じゃない
+            {
+                ChaseONOFF = false;
+            }
         }
     }
 
@@ -88,22 +100,19 @@ public class Enemycontroller : MonoBehaviour
             ONTime += Time.deltaTime;
             if (ONTime >= VisualizationRandom)//ランダムで出された値より大きかったら見えるようにする
             {
-                ONOFF = 1;//見える
+                ONOFF = 1;
                 ONTime = 0;
-                VisualizationGameObject.SetActive(true);//物を不可視化する判定をON
             }
         }
         else if (ONOFF == 1)//見えているとき
         {
-            //3DモデルのRendererを見える状態
             PrototypeBodySkinnedMeshRenderer.enabled = true;
 
             OFFTime += Time.deltaTime;
             if (OFFTime >= 10.0f)//10秒以上経ったら見えなくする
             {
-                ONOFF = 0;//見えない
+                ONOFF = 0;
                 OFFTime = 0;
-                VisualizationGameObject.SetActive(false);//物を不可視化する判定をOFF
             }
         }
     }
@@ -115,15 +124,14 @@ public class Enemycontroller : MonoBehaviour
         var childTransforms = PS._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
 
         float VisualizationPlayer = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
-        if (VisualizationPlayer <= 25f)//プレイヤーが検知範囲に入ったら
+
+        if (VisualizationPlayer <= 10f)//プレイヤーが検知範囲に入ったら
         {
             Chase();
-            if (ONOFF == 0) ChaseONOFF = false;
- 
             Ray ray;
             RaycastHit hit;
             Vector3 direction;   // Rayを飛ばす方向
-            float distance = 25;    // Rayを飛ばす距離
+            float distance = 10;    // Rayを飛ばす距離
 
             // Rayを飛ばす方向を計算
             Vector3 temp = Player.transform.position - transform.position;
@@ -157,15 +165,15 @@ public class Enemycontroller : MonoBehaviour
                     }
                 }
             }
-            else
+        }
+        else
+        {
+            OFFTime += Time.deltaTime;
+            if (OFFTime >= 10.0f)//10秒以上経ったら見えなくする
             {
-                OFFTime += Time.deltaTime;
-                if (OFFTime >= 10.0f)//10秒以上経ったら見えなくする
-                {
-                    ONOFF = 0;
-                    OFFTime = 0;
-                    PS.Visualization = false;
-                }
+                ONOFF = 0;
+                OFFTime = 0;
+                PS.Visualization = false;
             }
         }
     }
@@ -189,9 +197,7 @@ public class Enemycontroller : MonoBehaviour
         if (ChaseONOFF == false)
         {
             animator.SetBool("Run", false);
-            animator.SetBool("Walk", true);
         }
-
         Visualization();
 
         if (ChaseONOFF == false || TouchWall == true)
@@ -200,9 +206,7 @@ public class Enemycontroller : MonoBehaviour
             transform.LookAt(PatrolPoints[CurrentPointIndex].transform);//次のポイントの方向を向く
 
             if (transform.position == PatrolPoints[CurrentPointIndex].position)// 次の巡回ポイントへのインデックスを更新
-            {
                 NextPatrolPoint();
-            }
         }
 
         Vector3 Position = TargetPlayer.position - transform.position; // ターゲットの位置と自身の位置の差を計算
@@ -213,6 +217,7 @@ public class Enemycontroller : MonoBehaviour
         {
             DestroyONOFF = false;
             Ray();
+          
         }
         else if (isBack)// ターゲットが自身の後方にあるなら
         {
@@ -225,19 +230,19 @@ public class Enemycontroller : MonoBehaviour
         }
     }
 
+    void Laugh()
+    {
+        audioSourse.PlayOneShot(TrickEnemyLaugh);
+    }
+
     void Idle()
     {
-        audioSourse.PlayOneShot(EnemySearch);
+        audioSourse.PlayOneShot(TrickEnemyIdle);
     }
 
     void Run()
     {
-        audioSourse.PlayOneShot(EnemyRun);
-    }
-
-    void Walk()
-    {
-        audioSourse.PlayOneShot(EnemyWalk);
+        audioSourse.PlayOneShot(TrickEnemyRun);
     }
 
     private void OnTriggerStay(Collider other)
@@ -245,8 +250,8 @@ public class Enemycontroller : MonoBehaviour
         if (other.CompareTag("SeenArea"))
         {
             ONOFF = 1;
-            ONTime = 0;
-            //3DモデルのRendererを見える状態
+            ONTime = 0;//当たり判定ON
+           　//3DモデルのRendererを見える状態
             PrototypeBodySkinnedMeshRenderer.enabled = true;
         }
 

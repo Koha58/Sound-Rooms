@@ -1207,10 +1207,10 @@ GameObject:
   - component: {fileID: 8147299024891016103}
   - component: {fileID: 42546062507820914}
   - component: {fileID: 7429983430552339231}
-  - component: {fileID: 1026758117251818873}
+  - component: {fileID: 4568181082961009298}
   - component: {fileID: 6312869256328894186}
   m_Layer: 0
-  m_Name: Enemy2
+  m_Name: EnemySearch
   m_TagString: Enemy2
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1324,10 +1324,10 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
+  MinDistance: 0
+  MaxDistance: 5
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 1
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -1360,7 +1360,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -1400,7 +1400,7 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &1026758117251818873
+--- !u!114 &4568181082961009298
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1409,7 +1409,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 798233816613832786}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d9112190ad547424b974c0c581ab3a8e, type: 3}
+  m_Script: {fileID: 11500000, guid: 948f7821bf742c848977383a3b8dab8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   PatrolPoints: []
@@ -1417,12 +1417,11 @@ MonoBehaviour:
   PrototypeBodySkinnedMeshRenderer: {fileID: 5110985693742059220}
   TrickEnemyLaugh: {fileID: 8300000, guid: e85e72fff806a9d42981170fa6889078, type: 3}
   TrickEnemyRun: {fileID: 8300000, guid: 83cd05c5b7e8a2841800de6fb4585e75, type: 3}
-  TrickEnemyIdle: {fileID: 8300000, guid: 11892326d64bf2543b641e9fb724effd, type: 3}
+  TrickEnemyIdle: {fileID: 8300000, guid: 037ba20a66493c348ac907143d2d4e8e, type: 3}
   TargetPlayer: {fileID: 0}
   DestroyONOFF: 0
   animator: {fileID: 6943470069220300604}
   Player: {fileID: 0}
-  Items: []
 --- !u!114 &6312869256328894186
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1435,8 +1434,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: addde896f6c25c6448de5cd9be9e44ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ebiPrefab1: {fileID: 798233816613832786}
-  ebiPrefab2: {fileID: 798233816613832786}
   DestroyPrefab: {fileID: 798233816613832786}
   isHidden: 1
 --- !u!1 &822310583864198259

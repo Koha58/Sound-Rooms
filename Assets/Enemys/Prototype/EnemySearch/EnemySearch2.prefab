@@ -4543,9 +4543,9 @@ GameObject:
   - component: {fileID: 4312319699281197620}
   - component: {fileID: 4143534745361664256}
   - component: {fileID: 4294958107378327161}
-  - component: {fileID: 2634667428985235658}
+  - component: {fileID: -7617174872607221617}
   m_Layer: 0
-  m_Name: Enemy2G
+  m_Name: EnemySearch2
   m_TagString: Enemy2G
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4566,7 +4566,6 @@ Transform:
   m_Children:
   - {fileID: 6785553844680208626}
   - {fileID: 3777446513549952032}
-  - {fileID: 6919588965945554279}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &2230368167276858350
@@ -4736,7 +4735,7 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &2634667428985235658
+--- !u!114 &-7617174872607221617
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4745,7 +4744,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3990646278940508614}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d9112190ad547424b974c0c581ab3a8e, type: 3}
+  m_Script: {fileID: 11500000, guid: 948f7821bf742c848977383a3b8dab8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   PatrolPoints: []
@@ -4753,13 +4752,11 @@ MonoBehaviour:
   PrototypeBodySkinnedMeshRenderer: {fileID: 1645883793050596477}
   TrickEnemyLaugh: {fileID: 8300000, guid: e85e72fff806a9d42981170fa6889078, type: 3}
   TrickEnemyRun: {fileID: 8300000, guid: 83cd05c5b7e8a2841800de6fb4585e75, type: 3}
-  TrickEnemyIdle: {fileID: 8300000, guid: 11892326d64bf2543b641e9fb724effd, type: 3}
+  TrickEnemyIdle: {fileID: 8300000, guid: 037ba20a66493c348ac907143d2d4e8e, type: 3}
   TargetPlayer: {fileID: 0}
   DestroyONOFF: 0
-  animator: {fileID: 2230368167276858350}
+  animator: {fileID: 0}
   Player: {fileID: 0}
-  Items: []
-  ItemGameObject: {fileID: 5897966412972490325}
 --- !u!1 &4019638561583316359
 GameObject:
   m_ObjectHideFlags: 0
@@ -6739,77 +6736,6 @@ Transform:
   - {fileID: 5360276723215442628}
   m_Father: {fileID: 2699739731020755288}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &5897966412972490325
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 6919588965945554279}
-  - component: {fileID: 6731285393151984584}
-  - component: {fileID: 7982717795809460665}
-  m_Layer: 0
-  m_Name: VisualizationBox
-  m_TagString: Visualization
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &6919588965945554279
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5897966412972490325}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.7, z: 1.997}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 3151685045103944639}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &6731285393151984584
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5897966412972490325}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 4, y: 1.5, z: 4}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &7982717795809460665
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5897966412972490325}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b65e1c8b98ca5c148880d15d64658329, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  onoff: 0
-  Walls: []
-  Boxes: []
-  Objects: []
-  Doors: []
 --- !u!1 &5901303566189384752
 GameObject:
   m_ObjectHideFlags: 0

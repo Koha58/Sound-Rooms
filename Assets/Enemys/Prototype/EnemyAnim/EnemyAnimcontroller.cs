@@ -43,8 +43,7 @@ public class EnemyAnimcontroller : MonoBehaviour
     [SerializeField] Animator animator;
 
     public GameObject Player;
-    public GameObject[] Items;
-   // public GameObject ItemGameObject;
+    public GameObject VisualizationGameObject;
 
     private void Chase()
     {
@@ -81,18 +80,6 @@ public class EnemyAnimcontroller : MonoBehaviour
         if (CurrentPointIndex >= PatrolPoints.Length)//巡回ポイントが最後まで行ったら最初に戻る
             CurrentPointIndex = 0;
     }
-
-    private void TouchWalls()
-    {
-        if (TouchWall == true)
-        {
-            WallONOFF += Time.deltaTime;
-            if (WallONOFF > 3f)
-                TouchWall = false;//Wall判定
-        }
-
-    }
-
     private void Visualization()//自身の可視化のON OFF
     {
         if (ONOFF == 0)//見えないとき
@@ -121,6 +108,59 @@ public class EnemyAnimcontroller : MonoBehaviour
         }
     }
 
+    private void Ray()
+    {
+        GameObject obj = GameObject.Find("Player"); //Playerオブジェクトを探す
+        PlayerSeen PS = obj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
+        var childTransforms = PS._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
+
+        float VisualizationPlayer = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
+
+        if (VisualizationPlayer <= 30f)//プレイヤーが検知範囲に入ったら
+        {
+            Chase();
+
+            if (ONOFF == 0)ChaseONOFF = false;
+        
+            Ray ray;
+            RaycastHit hit;
+            Vector3 direction;   // Rayを飛ばす方向
+            float distance = 30;    // Rayを飛ばす距離
+
+            // Rayを飛ばす方向を計算
+            Vector3 temp = Player.transform.position - transform.position;
+            direction = temp.normalized;
+
+            ray = new Ray(transform.position, direction);  // Rayを飛ばす
+            Debug.DrawRay(ray.origin, ray.direction * distance, Color.red);  // Rayをシーン上に描画
+
+            // Rayが最初に当たった物体を調べる
+            if (Physics.Raycast(ray.origin, ray.direction * distance, out hit))
+            {
+                if (hit.collider.CompareTag("Player"))
+                {
+                    PS.Visualization = true;
+                    PS.onoff = 1;  //見えているから1
+                    foreach (var playerParts in childTransforms)
+                    {
+                        //タグが"PlayerParts"である子オブジェクトを見えるようにする
+                        playerParts.gameObject.GetComponent<Renderer>().enabled = true;
+                    }
+                }
+                else if (hit.collider.gameObject.CompareTag("Wall") || (hit.collider.gameObject.CompareTag("InWall")))
+                {
+                    PS.Visualization = false;
+                    PS.onoff = 0;  //見えているから1
+                    foreach (var playerParts in childTransforms)
+                    {
+                        //タグが"PlayerParts"である子オブジェクトを見えるようにする
+                        playerParts.gameObject.GetComponent<Renderer>().enabled = false;
+                    }
+                }
+            }
+        }
+
+    }
     // Start is called before the first frame update
     private void Start()
     {
@@ -133,8 +173,6 @@ public class EnemyAnimcontroller : MonoBehaviour
 
         animator = GetComponent<Animator>();   //アニメーターコントローラーからアニメーションを取得する
 
-        Items = GameObject.FindGameObjectsWithTag("Object");
-
       animator.SetBool("Run", true);
     }
 
@@ -142,7 +180,6 @@ public class EnemyAnimcontroller : MonoBehaviour
     private void Update()
     {
         Visualization();
-        TouchWalls();
 
         if (ChaseONOFF == false || TouchWall == true)
         {
@@ -160,68 +197,7 @@ public class EnemyAnimcontroller : MonoBehaviour
         if (isFront) //ターゲットが自身の前方にあるなら
         {
             DestroyONOFF = false;
-            GameObject obj = GameObject.Find("Player"); //Playerオブジェクトを探す
-            PlayerSeen PS = obj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
-            var childTransforms = PS._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
-
-            float VisualizationPlayer = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
-
-            if (VisualizationPlayer <= 30f)//プレイヤーが検知範囲に入ったら
-            {
-                Chase();
-
-                if(ONOFF==0)
-                {
-                    ChaseONOFF = false;
-                }
-
-                Ray ray;
-                RaycastHit hit;
-                Vector3 direction;   // Rayを飛ばす方向
-                float distance = 30;    // Rayを飛ばす距離
-
-                // Rayを飛ばす方向を計算
-                Vector3 temp = Player.transform.position - transform.position;
-                direction = temp.normalized;
-
-                ray = new Ray(transform.position, direction);  // Rayを飛ばす
-                Debug.DrawRay(ray.origin, ray.direction * distance, Color.red);  // Rayをシーン上に描画
-
-                // Rayが最初に当たった物体を調べる
-                if (Physics.Raycast(ray.origin, ray.direction * distance, out hit))
-                {
-                    if (hit.collider.CompareTag("Player"))
-                    {
-                        PS.Visualization = true;
-                        PS.onoff = 1;  //見えているから1
-                        foreach (var playerParts in childTransforms)
-                        {
-                            //タグが"PlayerParts"である子オブジェクトを見えるようにする
-                            playerParts.gameObject.GetComponent<Renderer>().enabled = true;
-                        }
-                    }
-                    else if (hit.collider.gameObject.CompareTag("Wall") || (hit.collider.gameObject.CompareTag("InWall")))
-                    {
-                        PS.Visualization = false;
-                        PS.onoff = 0;  //見えているから1
-                        foreach (var playerParts in childTransforms)
-                        {
-                            //タグが"PlayerParts"である子オブジェクトを見えるようにする
-                            playerParts.gameObject.GetComponent<Renderer>().enabled = false;
-                        }
-                    }
-                }
-            }
-            else
-            {
-                OFFTime += Time.deltaTime;
-                if (OFFTime >= 10.0f)//10秒以上経ったら見えなくする
-                {
-                    ONOFF = 0;
-                    OFFTime = 0;
-                    PS.Visualization = false;
-                }
-            }
+            Ray();
         }
         else if (isBack)// ターゲットが自身の後方にあるなら
         {
