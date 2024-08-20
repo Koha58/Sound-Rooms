@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class VisualizationBox : MonoBehaviour
 {
+    /*
     public int onoff = 0;  //判定用（見えていない時：0/見えている時：1）
 
     public GameObject[] Walls;
@@ -147,5 +148,5 @@ public class VisualizationBox : MonoBehaviour
             }
         }
 
-    }
+    }*/
 }
