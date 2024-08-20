@@ -12,7 +12,6 @@ public class EnemySwitch : MonoBehaviour
     public static GameObject[] parentObject;
     private string objName;
 
-    ItemSearch ISe;
     //LevelMeter levelMeter;
     [SerializeField] public Transform _parentTransform;
 
@@ -139,8 +138,6 @@ public class EnemySwitch : MonoBehaviour
 
         GameObject doorObject = GameObject.Find("Door1");
 
-        GameObject isobj = GameObject.Find("Player");
-        ISe = isobj.GetComponent<ItemSearch>(); //付いているスクリプトを取得
 
         if (PlayerOnoff == true)
         {

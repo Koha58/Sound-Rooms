@@ -8,8 +8,6 @@ public class EnemyAttack : MonoBehaviour
 {
     int onoff = 0;  //判定用（見えていない時：0/見えている時：1）
 
-    ItemSearch ISe;
-
     [SerializeField] public GameObject EnemyAttackArea;
 
     public TextMeshProUGUI keyCountText;
@@ -22,7 +20,7 @@ public class EnemyAttack : MonoBehaviour
     float Fon;
 
     float Foff;
-    [SerializeField]
+    //[SerializeField]
     //private GameObject[] Prototype;
 
     // Start is called before the first frame update
@@ -70,9 +68,6 @@ public class EnemyAttack : MonoBehaviour
     }
     private void OnTriggerStay(Collider other)
     {
-        GameObject sobj = GameObject.Find("Player");
-        ISe = sobj.GetComponent<ItemSearch>(); //付いているスクリプトを取得
-
         if (other.CompareTag("Box"))
         {
             //Rigidbodyを取得

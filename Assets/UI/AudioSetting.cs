@@ -53,7 +53,7 @@ public class AudioSetting : MonoBehaviour
 
     public void SetMouse(float level)
     {
-        VCamera.m_YAxis.m_MaxSpeed = MouseSlider.value;
+        VCamera.m_YAxis.m_MaxSpeed = MouseSlider.value /5;
         VCamera.m_XAxis.m_MaxSpeed = MouseSlider.value *100;
     }
 }

@@ -19,7 +19,6 @@ public class EnemyGVisualization : MonoBehaviour
     public static GameObject[] parentObject;
     private string objName;
 
-    ItemSearch ISe;
     //LevelMeter levelMeter;
     [SerializeField] public Transform _parentTransform;
 
@@ -76,9 +75,6 @@ public class EnemyGVisualization : MonoBehaviour
         parentObject = GameObject.FindGameObjectsWithTag("Item");
 
         GameObject doorObject = GameObject.Find("Door1");
-
-        GameObject isobj = GameObject.Find("Player");
-        ISe = isobj.GetComponent<ItemSearch>(); //付いているスクリプトを取得
 
         GameObject eobjG = GameObject.FindWithTag("EnemyG");
         EnemyGController EGC = eobjG.GetComponent<EnemyGController>(); //Enemyに付いているスクリプトを取得

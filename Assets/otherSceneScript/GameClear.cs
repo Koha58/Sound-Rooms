@@ -5,8 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class GameClear : MonoBehaviour
 {
-    ItemSearch ISe;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -22,11 +20,11 @@ public class GameClear : MonoBehaviour
     void OnCollisionEnter(Collision other)
     {
         GameObject cobj = GameObject.Find("Player");
-        ISe = cobj.GetComponent<ItemSearch>(); //付いているスクリプトを取得
+        EnemyAttack EAtack = cobj.GetComponent<EnemyAttack>(); //付いているスクリプトを取得
 
         if (other.gameObject.name == "Door1")
         {
-            if(ISe.count == 4)
+            if(EAtack.count == 4)
             {
                 SceneManager.LoadScene("GameClear");
             }
