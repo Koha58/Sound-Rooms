@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class EnemyIncrease : MonoBehaviour
 {
-    public GameObject ebiPrefab1;      //コピーするプレハブ
-    public GameObject ebiPrefab2;      //コピーするプレハブ
+  //  public GameObject ebiPrefab1;      //コピーするプレハブ
+  //  public GameObject ebiPrefab2;      //コピーするプレハブ
     public GameObject DestroyPrefab;  //破壊されるプレハブ
     public bool isHidden = true;      //
     private bool Clone = false;         //Cloneを生み出すかのONOFF

@@ -29,8 +29,8 @@ public class Enemycontroller : MonoBehaviour
     public Transform TargetPlayer;
 
     //Playerを追跡
-    float ChaseSpeed = 0.25f;                           //Playerを追いかけるスピード
-    bool ChaseONOFF;
+    float ChaseSpeed = 0.1f;                           //Playerを追いかけるスピード
+    [SerializeField] bool ChaseONOFF;
 
     //Destroyの判定
     public bool DestroyONOFF;                           //(DestroyON： true/DestroyOFF: false)
@@ -52,7 +52,7 @@ public class Enemycontroller : MonoBehaviour
         float ChasePlayer = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
         if (TouchWall == false)
         {
-            if (ChasePlayer <= 30f)//プレイヤーが検知範囲に入ったら
+            if (ChasePlayer <= 10f)//プレイヤーが検知範囲に入ったら
             {
                 if (PS.onoff == 1)//プレイヤーが可視化していたら
                 {
@@ -64,7 +64,9 @@ public class Enemycontroller : MonoBehaviour
                     transform.position += transform.forward * ChaseSpeed;　//プレイヤーの方向に向かう
                 }
                 else if (ONOFF == 0)
+                {
                     ChaseONOFF = false;//追跡中じゃない
+                }
             }
             else
                 ChaseONOFF = false;//追跡中じゃない
@@ -115,15 +117,14 @@ public class Enemycontroller : MonoBehaviour
         var childTransforms = PS._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
 
         float VisualizationPlayer = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
-        if (VisualizationPlayer <= 25f)//プレイヤーが検知範囲に入ったら
+        if (VisualizationPlayer <= 10f)//プレイヤーが検知範囲に入ったら
         {
             Chase();
-            if (ONOFF == 0) ChaseONOFF = false;
  
             Ray ray;
             RaycastHit hit;
             Vector3 direction;   // Rayを飛ばす方向
-            float distance = 25;    // Rayを飛ばす距離
+            float distance =10;    // Rayを飛ばす距離
 
             // Rayを飛ばす方向を計算
             Vector3 temp = Player.transform.position - transform.position;
@@ -211,6 +212,7 @@ public class Enemycontroller : MonoBehaviour
 
         if (isFront) //ターゲットが自身の前方にあるなら
         {
+            if (ONOFF == 0) { ChaseONOFF = false; }
             DestroyONOFF = false;
             Ray();
         }

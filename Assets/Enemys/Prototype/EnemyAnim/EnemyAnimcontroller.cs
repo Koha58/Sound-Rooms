@@ -120,7 +120,7 @@ public class EnemyAnimcontroller : MonoBehaviour
         {
             Chase();
 
-            if (ONOFF == 0)ChaseONOFF = false;
+            if (ONOFF == 0) { ChaseONOFF = false; }
         
             Ray ray;
             RaycastHit hit;
@@ -196,6 +196,7 @@ public class EnemyAnimcontroller : MonoBehaviour
 
         if (isFront) //ターゲットが自身の前方にあるなら
         {
+            if (ONOFF == 0) { ChaseONOFF = false; }
             DestroyONOFF = false;
             Ray();
         }
