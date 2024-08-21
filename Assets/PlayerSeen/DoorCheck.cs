@@ -10,11 +10,19 @@ public class DoorCheck : MonoBehaviour
 
     bool OnOff;
 
+    GameObject Rote;
+
+    public float rotateAngle;
+    public float rotateSpeed;
+
+    public bool Right;
+
     void Start()
     {
         //ç≈èâÇÕå©Ç¶Ç»Ç¢èÛë‘
         GetComponent<Collider>().enabled = false;
         OnOff = false;
+        Right = false;
     }
 
     // Update is called once per frame
@@ -46,6 +54,32 @@ public class DoorCheck : MonoBehaviour
         {
             anim = other.GetComponent<Animator>();
             anim.SetBool("Open", true);
+        }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.CompareTag("Right"))
+        {
+            Rote = other.transform.parent.gameObject;
+            Rote.transform.Rotate(0, -rotateAngle * Time.deltaTime * rotateSpeed, 0 );
+            Right = true;
+        }
+        if (other.CompareTag("Left") && !Right)
+        {
+            Rote = other.transform.parent.gameObject;
+            Rote.transform.Rotate(0, rotateAngle * Time.deltaTime * rotateSpeed, 0);
+            Right = false;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Right"))
+        {
+            Rote = other.transform.parent.gameObject;
+            Rote.transform.Rotate(0, -rotateAngle * Time.deltaTime * rotateSpeed, 0);
+            Right = false;
         }
     }
 }
