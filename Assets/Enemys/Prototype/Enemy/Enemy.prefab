@@ -3390,10 +3390,10 @@ MonoBehaviour:
   EnemyRun: {fileID: 8300000, guid: e6525d5f0bebe9949abd25ac340d7f05, type: 3}
   EnemyWalk: {fileID: 8300000, guid: 11892326d64bf2543b641e9fb724effd, type: 3}
   TargetPlayer: {fileID: 0}
+  ChaseONOFF: 0
   DestroyONOFF: 0
   animator: {fileID: 6696084455752804057}
   Player: {fileID: 0}
-  Items: []
   VisualizationGameObject: {fileID: 3339427951148895024}
 --- !u!114 &-653614034576144555
 MonoBehaviour:
@@ -3407,10 +3407,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b52318a08964ce43be0cae020724e8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ebiPrefab1: {fileID: 3242426042137082810}
-  ebiPrefab2: {fileID: 3242426042137082810}
   DestroyPrefab: {fileID: 3242426042137082810}
   isHidden: 1
+  enemyPrefab: {fileID: 3242426042137082810}
+  respawnPoint: {fileID: 0}
+  respawnDistance: 20
 --- !u!1 &3287467915339804367
 GameObject:
   m_ObjectHideFlags: 0
@@ -3572,11 +3573,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b65e1c8b98ca5c148880d15d64658329, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onoff: 0
-  Walls: []
-  Boxes: []
-  Objects: []
-  Doors: []
 --- !u!1 &3347708119900137530
 GameObject:
   m_ObjectHideFlags: 0

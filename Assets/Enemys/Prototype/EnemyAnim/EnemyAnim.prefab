@@ -2559,11 +2559,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b65e1c8b98ca5c148880d15d64658329, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onoff: 0
-  Walls: []
-  Boxes: []
-  Objects: []
-  Doors: []
 --- !u!1 &2665386792595767553
 GameObject:
   m_ObjectHideFlags: 0
@@ -5911,7 +5906,6 @@ MonoBehaviour:
   PatrolPoints:
   - {fileID: 0}
   - {fileID: 0}
-  - {fileID: 0}
   ONOFF: 0
   PrototypeBodySkinnedMeshRenderer: {fileID: 4287262543754044710}
   TrickEnemyLaugh: {fileID: 8300000, guid: 037ba20a66493c348ac907143d2d4e8e, type: 3}
@@ -5934,10 +5928,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a5cc34d4aa044a4c954180531aeed4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ebiPrefab1: {fileID: 5734706696918445562}
-  ebiPrefab2: {fileID: 5734706696918445562}
   DestroyPrefab: {fileID: 5734706696918445562}
   isHidden: 1
+  enemyPrefab: {fileID: 5734706696918445562}
+  respawnPoint: {fileID: 0}
+  respawnDistance: 20
 --- !u!65 &-5278106601281776122
 BoxCollider:
   m_ObjectHideFlags: 0
