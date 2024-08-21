@@ -17,12 +17,16 @@ public class DoorCheck : MonoBehaviour
 
     public bool Right;
 
+    [SerializeField] AudioSource AutoDoorSound;
+
     void Start()
     {
         //ç≈èâÇÕå©Ç¶Ç»Ç¢èÛë‘
         GetComponent<Collider>().enabled = false;
         OnOff = false;
         Right = false;
+
+        AutoDoorSound = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -54,6 +58,7 @@ public class DoorCheck : MonoBehaviour
         {
             anim = other.GetComponent<Animator>();
             anim.SetBool("Open", true);
+            AutoDoorSound.PlayOneShot(AutoDoorSound.clip);
         }
     }
 
