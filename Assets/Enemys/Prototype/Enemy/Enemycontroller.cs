@@ -52,7 +52,7 @@ public class Enemycontroller : MonoBehaviour
         float ChasePlayer = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
         if (TouchWall == false)
         {
-            if (ChasePlayer <= 10f)//プレイヤーが検知範囲に入ったら
+            if (ChasePlayer <= 7f)//プレイヤーが検知範囲に入ったら
             {
                 if (PS.onoff == 1)//プレイヤーが可視化していたら
                 {
@@ -117,14 +117,14 @@ public class Enemycontroller : MonoBehaviour
         var childTransforms = PS._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
 
         float VisualizationPlayer = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
-        if (VisualizationPlayer <= 10f)//プレイヤーが検知範囲に入ったら
+        if (VisualizationPlayer <= 7f)//プレイヤーが検知範囲に入ったら
         {
             Chase();
  
             Ray ray;
             RaycastHit hit;
             Vector3 direction;   // Rayを飛ばす方向
-            float distance =10;    // Rayを飛ばす距離
+            float distance =7;    // Rayを飛ばす距離
 
             // Rayを飛ばす方向を計算
             Vector3 temp = Player.transform.position - transform.position;
@@ -158,14 +158,20 @@ public class Enemycontroller : MonoBehaviour
                     }
                 }
             }
-            else
+        }
+        else
+        {
+            OFFTime += Time.deltaTime;
+            if (OFFTime >= 5.0f)//10秒以上経ったら見えなくする
             {
-                OFFTime += Time.deltaTime;
-                if (OFFTime >= 10.0f)//10秒以上経ったら見えなくする
+                ONOFF = 0;
+                OFFTime = 0;
+                PS.Visualization = false;
+                PS.onoff = 0;  //見えているから1
+                foreach (var playerParts in childTransforms)
                 {
-                    ONOFF = 0;
-                    OFFTime = 0;
-                    PS.Visualization = false;
+                    //タグが"PlayerParts"である子オブジェクトを見えなくする
+                    playerParts.gameObject.GetComponent<Renderer>().enabled = false;
                 }
             }
         }
@@ -180,6 +186,8 @@ public class Enemycontroller : MonoBehaviour
 
         //3DモデルのRendererを見えない状態
         PrototypeBodySkinnedMeshRenderer.enabled = false;
+
+        ChaseONOFF = false;//追跡中じゃない
 
         animator = GetComponent<Animator>();   //アニメーターコントローラーからアニメーションを取得する
     }

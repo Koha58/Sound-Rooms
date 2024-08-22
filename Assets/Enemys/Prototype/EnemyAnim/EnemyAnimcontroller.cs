@@ -29,7 +29,7 @@ public class EnemyAnimcontroller : MonoBehaviour
     public Transform TargetPlayer;
 
     //Playerを追跡
-    float ChaseSpeed = 0.35f;//Playerを追いかけるスピード
+    float ChaseSpeed = 0.12f;//Playerを追いかけるスピード
     bool ChaseONOFF;
 
     //Destroyの判定
@@ -53,7 +53,7 @@ public class EnemyAnimcontroller : MonoBehaviour
         float ChasePlayer = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
         if (TouchWall == false)
         {
-            if (ChasePlayer <= 30f)//プレイヤーが検知範囲に入ったら
+            if (ChasePlayer <= 7f)//プレイヤーが検知範囲に入ったら
             {
                 if (PS.onoff == 1)//プレイヤーが可視化していたら
                 {
@@ -116,7 +116,7 @@ public class EnemyAnimcontroller : MonoBehaviour
 
         float VisualizationPlayer = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
 
-        if (VisualizationPlayer <= 30f)//プレイヤーが検知範囲に入ったら
+        if (VisualizationPlayer <= 7f)//プレイヤーが検知範囲に入ったら
         {
             Chase();
 
@@ -125,7 +125,7 @@ public class EnemyAnimcontroller : MonoBehaviour
             Ray ray;
             RaycastHit hit;
             Vector3 direction;   // Rayを飛ばす方向
-            float distance = 30;    // Rayを飛ばす距離
+            float distance = 7;    // Rayを飛ばす距離
 
             // Rayを飛ばす方向を計算
             Vector3 temp = Player.transform.position - transform.position;
@@ -159,12 +159,24 @@ public class EnemyAnimcontroller : MonoBehaviour
                 }
             }
         }
+        else
+        {
+            OFFTime += Time.deltaTime;
+            if (OFFTime >= 5.0f)//10秒以上経ったら見えなくする
+            {
+                ONOFF = 0;
+                OFFTime = 0;
+                PS.Visualization = false;
+                PS.onoff = 0;  //見えているから1
+            }
+        }
 
     }
     // Start is called before the first frame update
     private void Start()
     {
         ONOFF = 0;//見えない状態
+        ChaseONOFF = false;
         VisualizationRandom = Random.Range(5.0f, 10.0f);
         audioSourse = GetComponent<AudioSource>();
 
