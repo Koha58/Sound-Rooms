@@ -20,6 +20,7 @@ public class ItemSeen : MonoBehaviour
     public GameObject[] Boxes;
     public GameObject[] Objects;
     public GameObject[] Doors;
+    public GameObject[] Shelfs;
     public static GameObject[] parentObject;
     private string objName;
 
@@ -70,6 +71,14 @@ public class ItemSeen : MonoBehaviour
             Object.GetComponent<Collider>().enabled = true;
         }
 
+        Shelfs = GameObject.FindGameObjectsWithTag("Shelf");
+
+        foreach (GameObject Shelf in Shelfs)
+        {
+            Shelf.GetComponent<Renderer>().enabled = true;
+            Shelf.GetComponent<Collider>().enabled = true;
+        }
+
         Doors = GameObject.FindGameObjectsWithTag("Door");
 
         foreach (GameObject Door in Doors)
@@ -84,7 +93,11 @@ public class ItemSeen : MonoBehaviour
 
         Boxes = GameObject.FindGameObjectsWithTag("Box");
 
+        Shelfs = GameObject.FindGameObjectsWithTag("Shelf");
+
         GameObject doorObject = GameObject.Find("Door1");
+
+        GameObject shelfObject = GameObject.FindWithTag("Shelf");
 
         GameObject isobj = GameObject.Find("Player");
 
@@ -120,6 +133,21 @@ public class ItemSeen : MonoBehaviour
                     door.GetComponent<Renderer>().enabled = true;
                 }
 
+                foreach (GameObject Shelf in Shelfs)
+                {
+                    Shelf.GetComponent<Renderer>().enabled = true;
+                    Shelf.GetComponent<Collider>().enabled = true;
+                }
+
+                // 子オブジェクトの数を取得
+                int shelfparts = shelfObject.transform.childCount;
+                for (int i = 0; i < shelfparts; i++)
+                {
+                    Transform childTransform = shelfObject.transform.GetChild(i);
+                    GameObject Inshelf = childTransform.gameObject;
+                    Inshelf.GetComponent<Renderer>().enabled = true;
+                }
+
                 foreach (GameObject Box in Boxes)
                 {
                     //Rigidbodyを取得
@@ -139,13 +167,14 @@ public class ItemSeen : MonoBehaviour
                 {
                     Door.GetComponent<Collider>().enabled = true;
                 }
+
                 onoff = 0;  //見えていないから0
             }
         }
 
     }
 
-    void OnTriggerEnter(Collider other)
+    void OnTriggerStay(Collider other)
     {
         GameObject doorObject = GameObject.Find("Door1");
         objName = other.gameObject.name;
@@ -166,6 +195,20 @@ public class ItemSeen : MonoBehaviour
         else if (other.CompareTag("Door"))
         {
             other.GetComponent<Collider>().enabled = false;
+        }
+
+        else if (other.CompareTag("Shelf"))
+        {
+            other.GetComponent<Renderer>().enabled = false;
+            other.GetComponent<Collider>().enabled = false;
+            // 子オブジェクトの数を取得
+            int Shelfparts = other.transform.childCount;
+            for (int i = 0; i < Shelfparts; i++)
+            {
+                Transform childTransform = other.transform.GetChild(i);
+                GameObject Inshelf = childTransform.gameObject;
+                Inshelf.GetComponent<Renderer>().enabled = false;
+            }
         }
 
         else if (objName == "Door1")
