@@ -21,6 +21,7 @@ public class ItemSeen : MonoBehaviour
     public GameObject[] Objects;
     public GameObject[] Doors;
     public GameObject[] Shelfs;
+    public GameObject[] InShelfs;
     public static GameObject[] parentObject;
     private string objName;
 
@@ -79,6 +80,13 @@ public class ItemSeen : MonoBehaviour
             Shelf.GetComponent<Collider>().enabled = true;
         }
 
+        InShelfs = GameObject.FindGameObjectsWithTag("InShelf");
+
+        foreach (GameObject InShelf in InShelfs)
+        {
+            InShelf.GetComponent<Renderer>().enabled = true;
+        }
+
         Doors = GameObject.FindGameObjectsWithTag("Door");
 
         foreach (GameObject Door in Doors)
@@ -94,6 +102,8 @@ public class ItemSeen : MonoBehaviour
         Boxes = GameObject.FindGameObjectsWithTag("Box");
 
         Shelfs = GameObject.FindGameObjectsWithTag("Shelf");
+
+        InShelfs = GameObject.FindGameObjectsWithTag("InShelf");
 
         GameObject doorObject = GameObject.Find("Door1");
 
@@ -139,13 +149,9 @@ public class ItemSeen : MonoBehaviour
                     Shelf.GetComponent<Collider>().enabled = true;
                 }
 
-                // 子オブジェクトの数を取得
-                int shelfparts = shelfObject.transform.childCount;
-                for (int i = 0; i < shelfparts; i++)
+                foreach (GameObject InShelf in InShelfs)
                 {
-                    Transform childTransform = shelfObject.transform.GetChild(i);
-                    GameObject Inshelf = childTransform.gameObject;
-                    Inshelf.GetComponent<Renderer>().enabled = true;
+                    InShelf.GetComponent<Renderer>().enabled = true;
                 }
 
                 foreach (GameObject Box in Boxes)
