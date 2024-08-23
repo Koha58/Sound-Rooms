@@ -176,6 +176,22 @@ public class Enemycontroller : MonoBehaviour
             }
         }
     }
+    
+    private void Chase2()
+    {
+        GameObject gobj = GameObject.Find("Player");//Playerオブジェクトを探す
+        PlayerSeen PS = gobj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
+
+        float ChasePlayer = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
+        if(ChasePlayer<=15)
+        {
+            if (PS.onoff == 1)
+            {
+                transform.LookAt(TargetPlayer.transform);//プレイヤーの方向にむく
+                transform.position += transform.forward * (MoveSpeed*0.09f); //プレイヤーの方向に向かう
+            }
+        }
+    }
 
     // Start is called before the first frame update
     private void Start()
@@ -195,6 +211,8 @@ public class Enemycontroller : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
+        Chase2();
+
         if (ChaseONOFF == false)
         {
             animator.SetBool("Run", false);

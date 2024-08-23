@@ -4948,7 +4948,7 @@ Transform:
   m_GameObject: {fileID: 4557574063073866915}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.7, z: 0}
+  m_LocalPosition: {x: 0, y: 0.7, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4973,7 +4973,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 4, y: 1.5, z: 4}
+  m_Size: {x: 3, y: 1.5, z: 2}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &8882610788110008251
 MonoBehaviour:
@@ -4987,11 +4987,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b65e1c8b98ca5c148880d15d64658329, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onoff: 0
-  Walls: []
-  Boxes: []
-  Objects: []
-  Doors: []
 --- !u!1 &4591622788415334253
 GameObject:
   m_ObjectHideFlags: 0
@@ -5445,11 +5440,11 @@ MonoBehaviour:
   EnemyRun: {fileID: 8300000, guid: e6525d5f0bebe9949abd25ac340d7f05, type: 3}
   EnemyWalk: {fileID: 8300000, guid: 11892326d64bf2543b641e9fb724effd, type: 3}
   TargetPlayer: {fileID: 0}
+  ChaseONOFF: 0
   DestroyONOFF: 0
   animator: {fileID: 5865057426520225815}
   Player: {fileID: 0}
-  Items: []
-  ItemGameObject: {fileID: 4557574063073866915}
+  VisualizationGameObject: {fileID: 0}
 --- !u!1 &4861818006735518108
 GameObject:
   m_ObjectHideFlags: 0

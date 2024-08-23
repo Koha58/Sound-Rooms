@@ -91,13 +91,6 @@ public class EnemyAttack : MonoBehaviour
             count += 1;
             SetCountText();
 
-            GameObject Boss = GameObject.FindWithTag("Boss");
-            BoosEnemy BS = Boss.GetComponent<BoosEnemy>();
-
-            BS.MoveSpeed = -0.1f;
-            BS.ChaseSpeed = -0.1f;
-            BS.VisualizationPlayer = -1f;
-            BS.ONOFF = 1;
         }
 
         if (other.CompareTag("EnemyGAnim"))

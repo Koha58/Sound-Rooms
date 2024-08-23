@@ -39,8 +39,9 @@ public class EnemySearchcontroller : MonoBehaviour
     public Transform TargetPlayer;
 
     //Playerを追跡
-    float ChaseSpeed = 0.2f;//Playerを追いかけるスピード
+    float ChaseSpeed = 0.1f;//Playerを追いかけるスピード
     bool ChaseONOFF;
+
 
     //Destroyの判定
     public bool DestroyONOFF;//(DestroyON： true/DestroyOFF: false)
@@ -48,6 +49,12 @@ public class EnemySearchcontroller : MonoBehaviour
     //Wallに当たった時
     private bool TouchWall;
     float WallONOFF = 0.0f;
+
+    float SC = 0.0f;
+    [SerializeField]
+    private Transform Pos;
+
+   [SerializeField] Quaternion rotation;
 
     //アニメーション
     [SerializeField] Animator animator;
@@ -61,7 +68,7 @@ public class EnemySearchcontroller : MonoBehaviour
         float ChasePlayer = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
         if (TouchWall == false)
         {
-            if (ChasePlayer <= 30f)//プレイヤーが検知範囲に入ったら
+            if (ChasePlayer <= 7f)//プレイヤーが検知範囲に入ったら
             {
                 if (PS.onoff == 1)//プレイヤーが可視化していたら
                 {
@@ -74,11 +81,13 @@ public class EnemySearchcontroller : MonoBehaviour
                 else if (ONOFF == 0)
                 {
                     ChaseONOFF = false;
+                    SC = 0.0f;
                 }
             }
             else
             {
                 ChaseONOFF = false;
+                SC = 0.0f;
             }
         }
     }
@@ -87,7 +96,9 @@ public class EnemySearchcontroller : MonoBehaviour
     {
         CurrentPointIndex++;
         if (CurrentPointIndex >= PatrolPoints.Length)//巡回ポイントが最後まで行ったら最初に戻る
+        {
             CurrentPointIndex = 0;
+        }
     }
 
     private void Visualization()//自身の可視化のON OFF
@@ -125,13 +136,13 @@ public class EnemySearchcontroller : MonoBehaviour
 
         float VisualizationPlayer = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
 
-        if (VisualizationPlayer <= 10f)//プレイヤーが検知範囲に入ったら
+        if (VisualizationPlayer <= 7f)//プレイヤーが検知範囲に入ったら
         {
             Chase();
             Ray ray;
             RaycastHit hit;
             Vector3 direction;   // Rayを飛ばす方向
-            float distance = 10;    // Rayを飛ばす距離
+            float distance = 7;    // Rayを飛ばす距離
 
             // Rayを飛ばす方向を計算
             Vector3 temp = Player.transform.position - transform.position;
@@ -188,16 +199,21 @@ public class EnemySearchcontroller : MonoBehaviour
         //3DモデルのRendererを見えない状態
         PrototypeBodySkinnedMeshRenderer.enabled = false;
 
+        ChaseONOFF = false;
+
         animator = GetComponent<Animator>();   //アニメーターコントローラーからアニメーションを取得する
     }
 
     // Update is called once per frame
     private void Update()
     {
-        if (ChaseONOFF == false)
+        if(this.transform.position==Pos.transform.position) 
         {
+            animator.SetBool("StandUp",false);
             animator.SetBool("Run", false);
+            this.transform.localRotation = rotation;
         }
+
         Visualization();
 
         if (ChaseONOFF == false || TouchWall == true)
@@ -206,7 +222,9 @@ public class EnemySearchcontroller : MonoBehaviour
             transform.LookAt(PatrolPoints[CurrentPointIndex].transform);//次のポイントの方向を向く
 
             if (transform.position == PatrolPoints[CurrentPointIndex].position)// 次の巡回ポイントへのインデックスを更新
+            {
                 NextPatrolPoint();
+            }
         }
 
         Vector3 Position = TargetPlayer.position - transform.position; // ターゲットの位置と自身の位置の差を計算
