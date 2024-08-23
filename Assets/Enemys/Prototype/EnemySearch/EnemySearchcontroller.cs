@@ -55,6 +55,7 @@ public class EnemySearchcontroller : MonoBehaviour
     private Transform Pos;
 
    [SerializeField] Quaternion rotation;
+    private bool UpON = false;
 
     //アニメーション
     [SerializeField] Animator animator;
@@ -136,13 +137,13 @@ public class EnemySearchcontroller : MonoBehaviour
 
         float VisualizationPlayer = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
 
-        if (VisualizationPlayer <= 7f)//プレイヤーが検知範囲に入ったら
+        if (VisualizationPlayer <= 5f)//プレイヤーが検知範囲に入ったら
         {
             Chase();
             Ray ray;
             RaycastHit hit;
             Vector3 direction;   // Rayを飛ばす方向
-            float distance = 7;    // Rayを飛ばす距離
+            float distance = 5;    // Rayを飛ばす距離
 
             // Rayを飛ばす方向を計算
             Vector3 temp = Player.transform.position - transform.position;
@@ -207,43 +208,67 @@ public class EnemySearchcontroller : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if(this.transform.position==Pos.transform.position) 
+        float Player = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
+        if (Player <= 2.0f)
         {
-            animator.SetBool("StandUp",false);
-            animator.SetBool("Run", false);
-            this.transform.localRotation = rotation;
-        }
+            GameObject obj = GameObject.Find("Player"); //Playerオブジェクトを探す
+            PlayerSeen PS = obj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
+            var childTransforms = PS._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
 
-        Visualization();
-
-        if (ChaseONOFF == false || TouchWall == true)
-        {
-            transform.position = Vector3.MoveTowards(transform.position, PatrolPoints[CurrentPointIndex].position, MoveSpeed * Time.deltaTime);
-            transform.LookAt(PatrolPoints[CurrentPointIndex].transform);//次のポイントの方向を向く
-
-            if (transform.position == PatrolPoints[CurrentPointIndex].position)// 次の巡回ポイントへのインデックスを更新
+            transform.LookAt(TargetPlayer.transform);//プレイヤーの方向にむく
+            animator.SetBool("Run", true);
+            PS.Visualization = true;
+            PS.onoff = 1;  //見えているから1
+            foreach (var playerParts in childTransforms)
             {
-                NextPatrolPoint();
+                //タグが"PlayerParts"である子オブジェクトを見えるようにする
+                playerParts.gameObject.GetComponent<Renderer>().enabled = true;
             }
+            UpON = true;
         }
+        else if (Player >= 2.5f) { UpON = false; }
 
-        Vector3 Position = TargetPlayer.position - transform.position; // ターゲットの位置と自身の位置の差を計算
-        bool isFront = Vector3.Dot(Position, transform.forward) > 0;  // ターゲットが自身の前方にあるかどうか判定
-        bool isBack = Vector3.Dot(Position, transform.forward) < 0;  // ターゲットが自身の後方にあるかどうか判定
-
-        if (isFront) //ターゲットが自身の前方にあるなら
+        if (UpON == false)
         {
-            DestroyONOFF = false;
-            Ray();
-          
-        }
-        else if (isBack)// ターゲットが自身の後方にあるなら
-        {
-            float detectionPlayer = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
 
-            if (detectionPlayer <= 7f)//プレイヤーが検知範囲に入ったら
+            if (this.transform.position == Pos.transform.position)
             {
-                DestroyONOFF = true;
+                animator.SetBool("StandUp", false);
+                animator.SetBool("Run", false);
+                this.transform.localRotation = rotation;
+            }
+
+            Visualization();
+
+            if (ChaseONOFF == false || TouchWall == true)
+            {
+                transform.position = Vector3.MoveTowards(transform.position, PatrolPoints[CurrentPointIndex].position, MoveSpeed * Time.deltaTime);
+                transform.LookAt(PatrolPoints[CurrentPointIndex].transform);//次のポイントの方向を向く
+
+                if (transform.position == PatrolPoints[CurrentPointIndex].position)// 次の巡回ポイントへのインデックスを更新
+                {
+                    NextPatrolPoint();
+                }
+            }
+
+            Vector3 Position = TargetPlayer.position - transform.position; // ターゲットの位置と自身の位置の差を計算
+            bool isFront = Vector3.Dot(Position, transform.forward) > 0;  // ターゲットが自身の前方にあるかどうか判定
+            bool isBack = Vector3.Dot(Position, transform.forward) < 0;  // ターゲットが自身の後方にあるかどうか判定
+
+            if (isFront) //ターゲットが自身の前方にあるなら
+            {
+                DestroyONOFF = false;
+                Ray();
+
+            }
+            else if (isBack)// ターゲットが自身の後方にあるなら
+            {
+                float detectionPlayer = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
+
+                if (detectionPlayer <= 7f)//プレイヤーが検知範囲に入ったら
+                {
+                    DestroyONOFF = true;
+                }
             }
         }
     }

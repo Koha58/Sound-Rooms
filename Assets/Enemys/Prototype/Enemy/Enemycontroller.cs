@@ -43,6 +43,8 @@ public class Enemycontroller : MonoBehaviour
 
     public GameObject Player;
     public GameObject VisualizationGameObject;
+    private bool UpON=false;
+
 
     private void Chase()//プレイヤーを追いかける
     {
@@ -56,6 +58,7 @@ public class Enemycontroller : MonoBehaviour
             {
                 if (PS.onoff == 1)//プレイヤーが可視化していたら
                 {
+                   // Run();
                     ONOFF = 1;//自分自身を可視化
                     animator.SetBool("Walk", false);
                     animator.SetBool("Run", true);
@@ -68,8 +71,7 @@ public class Enemycontroller : MonoBehaviour
                     ChaseONOFF = false;//追跡中じゃない
                 }
             }
-            else
-                ChaseONOFF = false;//追跡中じゃない
+            else { ChaseONOFF = false; }//追跡中じゃない
         }
     }
 
@@ -117,7 +119,7 @@ public class Enemycontroller : MonoBehaviour
         var childTransforms = PS._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
 
         float VisualizationPlayer = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
-        if (VisualizationPlayer <= 7f)//プレイヤーが検知範囲に入ったら
+        if (VisualizationPlayer <= 10f)//プレイヤーが検知範囲に入ったら
         {
             Chase();
  
@@ -159,7 +161,7 @@ public class Enemycontroller : MonoBehaviour
                 }
             }
         }
-        else
+        else if (VisualizationPlayer >= 11f)
         {
             OFFTime += Time.deltaTime;
             if (OFFTime >= 5.0f)//10秒以上経ったら見えなくする
@@ -183,7 +185,7 @@ public class Enemycontroller : MonoBehaviour
         PlayerSeen PS = gobj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
 
         float ChasePlayer = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
-        if(ChasePlayer<=15)
+        if(ChasePlayer<=10)
         {
             if (PS.onoff == 1)
             {
@@ -211,44 +213,71 @@ public class Enemycontroller : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        Chase2();
-
-        if (ChaseONOFF == false)
+        float Player = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
+        if (Player<= 0.65f)
         {
+            //Idle();
+            GameObject obj = GameObject.Find("Player"); //Playerオブジェクトを探す
+            PlayerSeen PS = obj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
+            var childTransforms = PS._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
+
+            transform.LookAt(TargetPlayer.transform);//プレイヤーの方向にむく
+            animator.SetBool("Walk", false);
             animator.SetBool("Run", false);
-            animator.SetBool("Walk", true);
-        }
-
-        Visualization();
-
-        if (ChaseONOFF == false || TouchWall == true)
-        {
-            transform.position = Vector3.MoveTowards(transform.position, PatrolPoints[CurrentPointIndex].position, MoveSpeed * Time.deltaTime);
-            transform.LookAt(PatrolPoints[CurrentPointIndex].transform);//次のポイントの方向を向く
-
-            if (transform.position == PatrolPoints[CurrentPointIndex].position)// 次の巡回ポイントへのインデックスを更新
+            PS.Visualization = true;
+            PS.onoff = 1;  //見えているから1
+            foreach (var playerParts in childTransforms)
             {
-                NextPatrolPoint();
+                //タグが"PlayerParts"である子オブジェクトを見えるようにする
+                playerParts.gameObject.GetComponent<Renderer>().enabled = true;
             }
+            UpON = true;
         }
+        else if(Player >= 1.5f) { UpON = false; }
 
-        Vector3 Position = TargetPlayer.position - transform.position; // ターゲットの位置と自身の位置の差を計算
-        bool isFront = Vector3.Dot(Position, transform.forward) > 0;  // ターゲットが自身の前方にあるかどうか判定
-        bool isBack = Vector3.Dot(Position, transform.forward) < 0;  // ターゲットが自身の後方にあるかどうか判定
-
-        if (isFront) //ターゲットが自身の前方にあるなら
+        if (UpON == false)
         {
-            if (ONOFF == 0) { ChaseONOFF = false; }
-            DestroyONOFF = false;
-            Ray();
-        }
-        else if (isBack)// ターゲットが自身の後方にあるなら
-        {
-            float detectionPlayer = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
+            Chase2();
 
-            if (detectionPlayer <= 7f)//プレイヤーが検知範囲に入ったら
+            if (ChaseONOFF == false)
             {
-                DestroyONOFF = true;
+                animator.SetBool("Run", false);
+                animator.SetBool("Walk", true);
+               // Walk();
+            }
+
+            Visualization();
+
+            if (ChaseONOFF == false || TouchWall == true)
+            {
+                transform.position = Vector3.MoveTowards(transform.position, PatrolPoints[CurrentPointIndex].position, MoveSpeed * Time.deltaTime);
+                transform.LookAt(PatrolPoints[CurrentPointIndex].transform);//次のポイントの方向を向く
+
+                if (transform.position == PatrolPoints[CurrentPointIndex].position)// 次の巡回ポイントへのインデックスを更新
+                {
+                    NextPatrolPoint();
+                }
+            }
+
+
+            Vector3 Position = TargetPlayer.position - transform.position; // ターゲットの位置と自身の位置の差を計算
+            bool isFront = Vector3.Dot(Position, transform.forward) > 0;  // ターゲットが自身の前方にあるかどうか判定
+            bool isBack = Vector3.Dot(Position, transform.forward) < 0;  // ターゲットが自身の後方にあるかどうか判定
+
+            if (isFront) //ターゲットが自身の前方にあるなら
+            {
+                if (ONOFF == 0) { ChaseONOFF = false; }
+                DestroyONOFF = false;
+                Ray();
+            }
+            else if (isBack)// ターゲットが自身の後方にあるなら
+            {
+                float detectionPlayer = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
+
+                if (detectionPlayer <= 7f)//プレイヤーが検知範囲に入ったら
+                {
+                    DestroyONOFF = true;
+                }
             }
         }
     }

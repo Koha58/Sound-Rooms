@@ -433,7 +433,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 257
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 279591398483108502, guid: 0c88762d7902d4f42845eb4535f6300e, type: 3}
+  - {fileID: 2100000, guid: 0a6ef122e6346194b906254cd435f38f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4659,10 +4659,10 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
+  MinDistance: 0
+  MaxDistance: 10
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 1
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -4755,6 +4755,8 @@ MonoBehaviour:
   TrickEnemyIdle: {fileID: 8300000, guid: 037ba20a66493c348ac907143d2d4e8e, type: 3}
   TargetPlayer: {fileID: 0}
   DestroyONOFF: 0
+  Pos: {fileID: 0}
+  rotation: {x: 0, y: 0, z: 0, w: 0}
   animator: {fileID: 0}
   Player: {fileID: 0}
 --- !u!1 &4019638561583316359
