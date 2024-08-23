@@ -16,16 +16,19 @@ public class ItemSeen : MonoBehaviour
     public int onoff = 0;  //判定用（見えていない時：0/見えている時：1）
 
     [SerializeField] public GameObject SeenArea;
-    public GameObject[] Walls;
     public GameObject[] Boxes;
     public GameObject[] Objects;
     public GameObject[] Doors;
     public GameObject[] Shelfs;
     public GameObject[] InShelfs;
+    public GameObject[] Capsules;
+    public GameObject[] CapsuleParts;
     public static GameObject[] parentObject;
     private string objName;
 
     LevelMeter levelMeter;
+
+    GameObject haveChildren;
 
     void Start()
     {
@@ -42,16 +45,6 @@ public class ItemSeen : MonoBehaviour
 
         //最初は見えない状態
         SeenArea.GetComponent<Collider>().enabled = false;
-        //ItemCanvas.GetComponent<Canvas>().enabled = false;
-
-        Walls = GameObject.FindGameObjectsWithTag("Wall");
-        foreach (GameObject Wall in Walls)
-        {
-            Wall.GetComponent<Renderer>().enabled = true;
-        }
-
-        //GameObject BoxSeen = GameObject.FindWithTag("BoxJudge");
-        //BoxSeen.SetActive(true);
 
         Boxes = GameObject.FindGameObjectsWithTag("Box");
 
@@ -87,6 +80,20 @@ public class ItemSeen : MonoBehaviour
             InShelf.GetComponent<Renderer>().enabled = true;
         }
 
+        Capsules = GameObject.FindGameObjectsWithTag("Capsule");
+
+        foreach (GameObject Capsule in Capsules)
+        {
+            Capsule.GetComponent<Collider>().enabled = true;
+        }
+
+        CapsuleParts = GameObject.FindGameObjectsWithTag("CapsuleParts");
+
+        foreach (GameObject CapsulePartss in CapsuleParts)
+        {
+            CapsulePartss.GetComponent<Renderer>().enabled = true;
+        }
+
         Doors = GameObject.FindGameObjectsWithTag("Door");
 
         foreach (GameObject Door in Doors)
@@ -97,8 +104,6 @@ public class ItemSeen : MonoBehaviour
 
     private void Update()
     {
-        Walls = GameObject.FindGameObjectsWithTag("Wall");
-
         Boxes = GameObject.FindGameObjectsWithTag("Box");
 
         Shelfs = GameObject.FindGameObjectsWithTag("Shelf");
@@ -107,7 +112,9 @@ public class ItemSeen : MonoBehaviour
 
         GameObject doorObject = GameObject.Find("Door1");
 
-        GameObject shelfObject = GameObject.FindWithTag("Shelf");
+        Capsules = GameObject.FindGameObjectsWithTag("Capsule");
+
+        CapsuleParts = GameObject.FindGameObjectsWithTag("CapsuleParts");
 
         GameObject isobj = GameObject.Find("Player");
 
@@ -129,11 +136,6 @@ public class ItemSeen : MonoBehaviour
             {
                 SeenArea.GetComponent<Collider>().enabled = false;//見えない（無効）
 
-                foreach (GameObject Wall in Walls)
-                {
-                    Wall.GetComponent<Renderer>().enabled = true;
-                }
-
                 // 子オブジェクトの数を取得
                 int doorparts = doorObject.transform.childCount;
                 for (int j = 0; j < doorparts; j++)
@@ -152,6 +154,16 @@ public class ItemSeen : MonoBehaviour
                 foreach (GameObject InShelf in InShelfs)
                 {
                     InShelf.GetComponent<Renderer>().enabled = true;
+                }
+
+                foreach (GameObject Capsule in Capsules)
+                {
+                    Capsule.GetComponent<Collider>().enabled = true;
+                }
+
+                foreach (GameObject CapsulePartss in CapsuleParts)
+                {
+                    CapsulePartss.GetComponent<Renderer>().enabled = true;
                 }
 
                 foreach (GameObject Box in Boxes)
@@ -185,11 +197,7 @@ public class ItemSeen : MonoBehaviour
         GameObject doorObject = GameObject.Find("Door1");
         objName = other.gameObject.name;
 
-        if (other.CompareTag("Wall"))//接触したオブジェクトのタグが"Wall"のとき
-        {
-            other.gameObject.GetComponent<Renderer>().enabled = false;
-        }
-        else if (other.CompareTag("Box"))//接触したオブジェクトのタグが"Box"のとき
+        if (other.CompareTag("Box"))//接触したオブジェクトのタグが"Box"のとき
         {
             other.GetComponent<Renderer>().enabled = false;
         }
@@ -214,6 +222,17 @@ public class ItemSeen : MonoBehaviour
                 Transform childTransform = other.transform.GetChild(i);
                 GameObject Inshelf = childTransform.gameObject;
                 Inshelf.GetComponent<Renderer>().enabled = false;
+            }
+        }
+        else if(other.CompareTag("Capsule"))
+        {
+            other.GetComponent<Collider>().enabled = false;
+
+            var childTransforms = other.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("CapsuleParts"));
+            foreach (var capsuleParts in childTransforms)
+            {
+                //タグが"PlayerParts"である子オブジェクトを見えなくする
+                capsuleParts.gameObject.GetComponent<Renderer>().enabled = false;
             }
         }
 
