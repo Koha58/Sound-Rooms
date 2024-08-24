@@ -25,6 +25,7 @@ public class AudioSetting : MonoBehaviour
         MicSlider.value = Mic.volume;
 
         MouseSlider.value = VCamera.m_YAxis.m_MaxSpeed;
+        VCamera.m_XAxis.m_MaxSpeed = 100;
 
         //ミキサーのvolumeにスライダーのvolumeを入れている
         //BGM
