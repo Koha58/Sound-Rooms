@@ -88,28 +88,34 @@ public class Enemycontroller : MonoBehaviour
     {
         if (ONOFF == 0)//見えないとき
         {
-            //3DモデルのRendererを見えない状態
-            PrototypeBodySkinnedMeshRenderer.enabled = false;
-
-            ONTime += Time.deltaTime;
-            if (ONTime >= VisualizationRandom)//ランダムで出された値より大きかったら見えるようにする
+            if (Front == false)
             {
-                ONOFF = 1;//見える
-                ONTime = 0;
-                VisualizationGameObject.SetActive(true);//物を不可視化する判定をON
+                //3DモデルのRendererを見えない状態
+                PrototypeBodySkinnedMeshRenderer.enabled = false;
+
+               // ONTime += Time.deltaTime;
+                //if (ONTime >= VisualizationRandom)//ランダムで出された値より大きかったら見えるようにする
+                //{
+                    ONOFF = 1;//見える
+                    //ONTime = 0;
+                    VisualizationGameObject.SetActive(true);//物を不可視化する判定をON
+                //}
             }
         }
         else if (ONOFF == 1)//見えているとき
         {
-            //3DモデルのRendererを見える状態
-            PrototypeBodySkinnedMeshRenderer.enabled = true;
-
-            OFFTime += Time.deltaTime;
-            if (OFFTime >= 10.0f)//10秒以上経ったら見えなくする
+            if (Front == true)
             {
-                ONOFF = 0;//見えない
-                OFFTime = 0;
-                VisualizationGameObject.SetActive(false);//物を不可視化する判定をOFF
+                //3DモデルのRendererを見える状態
+                PrototypeBodySkinnedMeshRenderer.enabled = true;
+
+               // OFFTime += Time.deltaTime;
+               // if (OFFTime >= 10.0f)//10秒以上経ったら見えなくする
+               // {
+                    ONOFF = 0;//見えない
+                    //OFFTime = 0;
+                    VisualizationGameObject.SetActive(false);//物を不可視化する判定をOFF
+              // }
             }
         }
     }
@@ -273,6 +279,8 @@ public class Enemycontroller : MonoBehaviour
                 }
                 else
                 {
+                    animator.SetBool("Walk", false);
+                    animator.SetBool("Run", false);
                     NextTime += Time.deltaTime;
                     if (NextTime >= 5.0f)
                     {
