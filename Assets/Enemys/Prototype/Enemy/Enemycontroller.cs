@@ -7,7 +7,7 @@ public class Enemycontroller : MonoBehaviour
 {
     //移動
     [SerializeField] private Transform[] PatrolPoints; // 巡回ポイントの配列
-    private float MoveSpeed = 1.0f;                    // 動く速度
+    private float MoveSpeed = 0.5f;                    // 動く速度
     private int CurrentPointIndex = 0;                 // 現在の巡回ポイントのインデックス
 
     //可視化
@@ -44,7 +44,8 @@ public class Enemycontroller : MonoBehaviour
     public GameObject Player;
     public GameObject VisualizationGameObject;
     private bool UpON=false;
-
+    private float NextTime;
+    private bool Front;
 
     private void Chase()//プレイヤーを追いかける
     {
@@ -54,17 +55,18 @@ public class Enemycontroller : MonoBehaviour
         float ChasePlayer = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
         if (TouchWall == false)
         {
-            if (ChasePlayer <= 7f)//プレイヤーが検知範囲に入ったら
+            if (ChasePlayer <= 10f)//プレイヤーが検知範囲に入ったら
             {
                 if (PS.onoff == 1)//プレイヤーが可視化していたら
                 {
-                   // Run();
+                    // Run();
                     ONOFF = 1;//自分自身を可視化
                     animator.SetBool("Walk", false);
                     animator.SetBool("Run", true);
                     ChaseONOFF = true;//追跡中
                     transform.LookAt(TargetPlayer.transform);//プレイヤーの方向にむく
-                    transform.position += transform.forward * ChaseSpeed;　//プレイヤーの方向に向かう
+                    transform.position += transform.forward * ChaseSpeed; //プレイヤーの方向に向かう
+
                 }
                 else if (ONOFF == 0)
                 {
@@ -119,14 +121,13 @@ public class Enemycontroller : MonoBehaviour
         var childTransforms = PS._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
 
         float VisualizationPlayer = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
-        if (VisualizationPlayer <= 10f)//プレイヤーが検知範囲に入ったら
+        if (VisualizationPlayer <=5f)//プレイヤーが検知範囲に入ったら
         {
             Chase();
- 
             Ray ray;
             RaycastHit hit;
             Vector3 direction;   // Rayを飛ばす方向
-            float distance =7;    // Rayを飛ばす距離
+            float distance =5.0f;    // Rayを飛ばす距離
 
             // Rayを飛ばす方向を計算
             Vector3 temp = Player.transform.position - transform.position;
@@ -140,8 +141,9 @@ public class Enemycontroller : MonoBehaviour
             {
                 if (hit.collider.CompareTag("Player"))
                 {
-                    PS.Visualization = true;
                     PS.onoff = 1;  //見えているから1
+                    PS.Visualization = true;
+                    ONOFF = 1;
                     foreach (var playerParts in childTransforms)
                     {
                         //タグが"PlayerParts"である子オブジェクトを見えるようにする
@@ -158,13 +160,14 @@ public class Enemycontroller : MonoBehaviour
                         //タグが"PlayerParts"である子オブジェクトを見えるようにする
                         playerParts.gameObject.GetComponent<Renderer>().enabled = false;
                     }
+                
                 }
             }
         }
-        else if (VisualizationPlayer >= 11f)
+        else 
         {
             OFFTime += Time.deltaTime;
-            if (OFFTime >= 5.0f)//10秒以上経ったら見えなくする
+            if (OFFTime >= 5.0f)
             {
                 ONOFF = 0;
                 OFFTime = 0;
@@ -187,10 +190,13 @@ public class Enemycontroller : MonoBehaviour
         float ChasePlayer = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
         if(ChasePlayer<=10)
         {
-            if (PS.onoff == 1)
+            transform.LookAt(TargetPlayer.transform);//プレイヤーの方向にむく
+            GameObject soundobj = GameObject.Find("SoundVolume");
+            LevelMeter levelMeter = soundobj.GetComponent<LevelMeter>(); //付いているスクリプトを取得
+            if (levelMeter.nowdB > 0.0f)
             {
                 transform.LookAt(TargetPlayer.transform);//プレイヤーの方向にむく
-                transform.position += transform.forward * (MoveSpeed*0.09f); //プレイヤーの方向に向かう
+                transform.position += transform.forward * (MoveSpeed * 0.09f); //プレイヤーの方向に向かう
             }
         }
     }
@@ -233,7 +239,10 @@ public class Enemycontroller : MonoBehaviour
             }
             UpON = true;
         }
-        else if(Player >= 1.5f) { UpON = false; }
+        else if(Player >= 1.5f) 
+        {
+            UpON = false;
+        }
 
         if (UpON == false)
         {
@@ -250,12 +259,27 @@ public class Enemycontroller : MonoBehaviour
 
             if (ChaseONOFF == false || TouchWall == true)
             {
-                transform.position = Vector3.MoveTowards(transform.position, PatrolPoints[CurrentPointIndex].position, MoveSpeed * Time.deltaTime);
-                transform.LookAt(PatrolPoints[CurrentPointIndex].transform);//次のポイントの方向を向く
-
-                if (transform.position == PatrolPoints[CurrentPointIndex].position)// 次の巡回ポイントへのインデックスを更新
+                if (Front == false)
                 {
-                    NextPatrolPoint();
+                    transform.position = Vector3.MoveTowards(transform.position, PatrolPoints[CurrentPointIndex].position, MoveSpeed * Time.deltaTime);
+                    transform.LookAt(PatrolPoints[CurrentPointIndex].transform);//次のポイントの方向を向く
+
+                    if (transform.position == PatrolPoints[CurrentPointIndex].position)// 次の巡回ポイントへのインデックスを更新
+                    {
+                        animator.SetBool("Walk", false);
+                        animator.SetBool("Run", false);
+                        Front = true;
+                    }
+                }
+                else
+                {
+                    NextTime += Time.deltaTime;
+                    if (NextTime >= 5.0f)
+                    {
+                        NextPatrolPoint();
+                        NextTime = 0;
+                        Front = false;
+                    }
                 }
             }
 
@@ -268,7 +292,9 @@ public class Enemycontroller : MonoBehaviour
             {
                 if (ONOFF == 0) { ChaseONOFF = false; }
                 DestroyONOFF = false;
-                Ray();
+                if (Front==true) {
+                    Ray();
+                }
             }
             else if (isBack)// ターゲットが自身の後方にあるなら
             {
