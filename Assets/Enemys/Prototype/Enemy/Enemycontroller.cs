@@ -29,11 +29,11 @@ public class Enemycontroller : MonoBehaviour
     public Transform TargetPlayer;
 
     //Playerを追跡
-    float ChaseSpeed = 0.1f;                           //Playerを追いかけるスピード
+    float ChaseSpeed = 0.2f;                           //Playerを追いかけるスピード
     [SerializeField] bool ChaseONOFF;
 
     //Destroyの判定
-    public bool DestroyONOFF;                           //(DestroyON： true/DestroyOFF: false)
+     public bool DestroyONOFF;                           //(DestroyON： true/DestroyOFF: false)
 
     //Wallに当たった時
     private bool TouchWall;
@@ -127,13 +127,13 @@ public class Enemycontroller : MonoBehaviour
         var childTransforms = PS._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
 
         float VisualizationPlayer = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
-        if (VisualizationPlayer <=5f)//プレイヤーが検知範囲に入ったら
+        if (VisualizationPlayer <=10f)//プレイヤーが検知範囲に入ったら
         {
             Chase();
             Ray ray;
             RaycastHit hit;
             Vector3 direction;   // Rayを飛ばす方向
-            float distance =5.0f;    // Rayを飛ばす距離
+            float distance =10.0f;    // Rayを飛ばす距離
 
             // Rayを飛ばす方向を計算
             Vector3 temp = Player.transform.position - transform.position;
@@ -300,9 +300,7 @@ public class Enemycontroller : MonoBehaviour
             {
                 if (ONOFF == 0) { ChaseONOFF = false; }
                 DestroyONOFF = false;
-                if (Front==true) {
-                    Ray();
-                }
+                if (Front==true) {Ray();}
             }
             else if (isBack)// ターゲットが自身の後方にあるなら
             {

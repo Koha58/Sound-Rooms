@@ -18,7 +18,7 @@ public class NormalEnemyAttck : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-
+        /*
         if (other.CompareTag("Enemy"))
         {
             GameObject Enemy = GameObject.FindWithTag("Enemy");
@@ -36,7 +36,7 @@ public class NormalEnemyAttck : MonoBehaviour
                 BS.MoveSpeed = -0.1f;
                 BS.ChaseSpeed = -0.1f;
                 BS.VisualizationPlayer = -1f;
-                BS.ONOFF = 1;*/
+                BS.ONOFF = 1;
             }
         }
 
@@ -419,5 +419,6 @@ public class NormalEnemyAttck : MonoBehaviour
                 EI.isHidden = false;
             }
         }
+        */
     }
 }

@@ -30,7 +30,7 @@ public class SeenRange : MonoBehaviour
         GameObject soundobj = GameObject.Find("SoundVolume");
         levelMeter = soundobj.GetComponent<LevelMeter>(); //付いているスクリプトを取得
 
-        if (preHeight != Enemyincrease.enemyDeathcnt)
+        if (preHeight != EnemyAttack.enemyDeathcnt)
         {
             plusSize += 1.0f;
 

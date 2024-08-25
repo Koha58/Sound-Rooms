@@ -3178,7 +3178,6 @@ GameObject:
   - component: {fileID: 3995285442800940075}
   - component: {fileID: 781167897900301411}
   - component: {fileID: 3870195675039764077}
-  - component: {fileID: -653614034576144555}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -3395,23 +3394,6 @@ MonoBehaviour:
   animator: {fileID: 6696084455752804057}
   Player: {fileID: 0}
   VisualizationGameObject: {fileID: 3339427951148895024}
---- !u!114 &-653614034576144555
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3242426042137082810}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3b52318a08964ce43be0cae020724e8e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  DestroyPrefab: {fileID: 3242426042137082810}
-  isHidden: 1
-  enemyPrefab: {fileID: 3242426042137082810}
-  respawnPoint: {fileID: 0}
-  respawnDistance: 20
 --- !u!1 &3287467915339804367
 GameObject:
   m_ObjectHideFlags: 0

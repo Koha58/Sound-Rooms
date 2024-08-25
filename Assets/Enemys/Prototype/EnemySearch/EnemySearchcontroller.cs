@@ -5,15 +5,6 @@ using UnityEngine;
 
 public class EnemySearchcontroller : MonoBehaviour
 {
-    /*//・普段は不可視化状態
-        //・定期的に音を出す(可視化する)
-        ┗この時、Playerと同じで音の範囲内の物を不可視化させてほしい。
-        //・Playerが音の範囲に入る、又はPlayerの音の範囲に入る(背後、左右以外)とPlayerを可視化させ、Playerを追いかける
-        ・Playerと接触したらPlayerのライフが1減る(ライフが0になるとゲームオーバー)
-        ・Playerが音を出すと音源周辺の敵は音源に向かう
-        ┗自動ドアが開く音とかにも反応して欲しいけど、そもそもPlayerが自動ドア前で可視化しないと自動ドアがPlayerを認識せずに開かない仕組みにするから、Playerが音を出したとき、一定の範囲内にいる(Playerの音の範囲とは別)敵だけ音源に向かう感じでいいかな(別に追われる訳では無い)。
-        後、Enemyが音を出す頻度もっと少なくてもいいかな(Playerが音を出す意味があんまり無くなってしまうので)。
-      */
 
     //移動
     [SerializeField] private Transform[] PatrolPoints; // 巡回ポイントの配列
@@ -30,7 +21,7 @@ public class EnemySearchcontroller : MonoBehaviour
     public SkinnedMeshRenderer PrototypeBodySkinnedMeshRenderer;
 
     //サウンド
-    AudioSource audioSourse;
+    [SerializeField] AudioSource audioSourse;
     public AudioClip TrickEnemyLaugh;
     public AudioClip TrickEnemyRun;
     public AudioClip TrickEnemyIdle;
@@ -39,7 +30,7 @@ public class EnemySearchcontroller : MonoBehaviour
     public Transform TargetPlayer;
 
     //Playerを追跡
-    float ChaseSpeed = 0.1f;//Playerを追いかけるスピード
+    float ChaseSpeed = 0.4f;//Playerを追いかけるスピード
     bool ChaseONOFF;
 
 
@@ -48,9 +39,7 @@ public class EnemySearchcontroller : MonoBehaviour
 
     //Wallに当たった時
     private bool TouchWall;
-    float WallONOFF = 0.0f;
 
-    float SC = 0.0f;
     [SerializeField]
     private Transform Pos;
 
@@ -73,23 +62,16 @@ public class EnemySearchcontroller : MonoBehaviour
             {
                 if (PS.onoff == 1)//プレイヤーが可視化していたら
                 {
+                    ONOFF = 1;
                     animator.SetBool("StandUp", true);
                     animator.SetBool("Run", true);
                     ChaseONOFF = true;
                     transform.LookAt(TargetPlayer.transform); //プレイヤーの方向にむく
                     transform.position += transform.forward * ChaseSpeed;//プレイヤーの方向に向かう
                 }
-                else if (ONOFF == 0)
-                {
-                    ChaseONOFF = false;
-                    SC = 0.0f;
-                }
+                else if (ONOFF == 0){ChaseONOFF = false;}
             }
-            else
-            {
-                ChaseONOFF = false;
-                SC = 0.0f;
-            }
+            else{ChaseONOFF = false;}
         }
     }
 
@@ -112,6 +94,7 @@ public class EnemySearchcontroller : MonoBehaviour
             ONTime += Time.deltaTime;
             if (ONTime >= VisualizationRandom)//ランダムで出された値より大きかったら見えるようにする
             {
+                audioSourse.enabled = true;
                 ONOFF = 1;
                 ONTime = 0;
             }
@@ -123,6 +106,7 @@ public class EnemySearchcontroller : MonoBehaviour
             OFFTime += Time.deltaTime;
             if (OFFTime >= 10.0f)//10秒以上経ったら見えなくする
             {
+                audioSourse.enabled = false;
                 ONOFF = 0;
                 OFFTime = 0;
             }
@@ -137,13 +121,13 @@ public class EnemySearchcontroller : MonoBehaviour
 
         float VisualizationPlayer = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
 
-        if (VisualizationPlayer <= 5f)//プレイヤーが検知範囲に入ったら
+        if (VisualizationPlayer <= 7f)//プレイヤーが検知範囲に入ったら
         {
             Chase();
             Ray ray;
             RaycastHit hit;
             Vector3 direction;   // Rayを飛ばす方向
-            float distance = 5;    // Rayを飛ばす距離
+            float distance = 7;    // Rayを飛ばす距離
 
             // Rayを飛ばす方向を計算
             Vector3 temp = Player.transform.position - transform.position;
@@ -194,7 +178,7 @@ public class EnemySearchcontroller : MonoBehaviour
     private void Start()
     {
         ONOFF = 0;//見えない状態
-        VisualizationRandom = Random.Range(5.0f, 10.0f);
+        VisualizationRandom = Random.Range(4.0f, 6.0f);
         audioSourse = GetComponent<AudioSource>();
 
         //3DモデルのRendererを見えない状態
@@ -303,7 +287,7 @@ public class EnemySearchcontroller : MonoBehaviour
             TouchWall = true;
             CurrentPointIndex--;
             if (CurrentPointIndex <= PatrolPoints.Length)//巡回ポイントが最後まで行ったら最初に戻る
-                CurrentPointIndex = 0;
+            { CurrentPointIndex = 0; }
         }
     }
 }

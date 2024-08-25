@@ -17,6 +17,7 @@ public class EnemySearchAttck : MonoBehaviour
     }
     private void OnTriggerStay(Collider other)
     {
+        /*
         if (other.CompareTag("EnemySearch"))
         {
             GameObject EnemySearch = GameObject.FindWithTag("EnemySearch");
@@ -35,7 +36,7 @@ public class EnemySearchAttck : MonoBehaviour
                 BS.ChaseSpeed = -0.1f;
                 BS.VisualizationPlayer = -1f;
                 BS.ONOFF = 1;
-                */
+                
             }
         }
 
@@ -164,6 +165,6 @@ public class EnemySearchAttck : MonoBehaviour
                 E2I.isHidden = false;
 
             }
-        }
+        }*/
     }
 }

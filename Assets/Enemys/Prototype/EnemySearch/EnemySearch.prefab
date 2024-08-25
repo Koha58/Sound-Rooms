@@ -1208,7 +1208,6 @@ GameObject:
   - component: {fileID: 42546062507820914}
   - component: {fileID: 7429983430552339231}
   - component: {fileID: 4568181082961009298}
-  - component: {fileID: 6312869256328894186}
   m_Layer: 0
   m_Name: EnemySearch
   m_TagString: Enemy2
@@ -1415,6 +1414,7 @@ MonoBehaviour:
   PatrolPoints: []
   ONOFF: 0
   PrototypeBodySkinnedMeshRenderer: {fileID: 5110985693742059220}
+  audioSourse: {fileID: 7429983430552339231}
   TrickEnemyLaugh: {fileID: 8300000, guid: e85e72fff806a9d42981170fa6889078, type: 3}
   TrickEnemyRun: {fileID: 8300000, guid: 83cd05c5b7e8a2841800de6fb4585e75, type: 3}
   TrickEnemyIdle: {fileID: 8300000, guid: 037ba20a66493c348ac907143d2d4e8e, type: 3}
@@ -1424,20 +1424,6 @@ MonoBehaviour:
   rotation: {x: 0, y: 0, z: 0, w: 0}
   animator: {fileID: 6943470069220300604}
   Player: {fileID: 0}
---- !u!114 &6312869256328894186
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 798233816613832786}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: addde896f6c25c6448de5cd9be9e44ef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  DestroyPrefab: {fileID: 798233816613832786}
-  isHidden: 1
 --- !u!1 &822310583864198259
 GameObject:
   m_ObjectHideFlags: 0

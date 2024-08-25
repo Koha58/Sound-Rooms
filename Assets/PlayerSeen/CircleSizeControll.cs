@@ -47,12 +47,14 @@ public class CircleSizeControll : MonoBehaviour
 
         if (levelMeter.nowdB > 0.0f)
         {
-            if (preHeight != Enemyincrease.enemyDeathcnt)
+            if (preHeight != EnemyAttack.enemyDeathcnt)
             {
                 plusSize += 1.0f;
 
                 preHeight++;
             }
+
+            Debug.Log(plusSize);
 
             originSizeX = (levelMeter.nowdB * 10) + plusSize;
             originSizeZ = (levelMeter.nowdB * 10) + plusSize;
