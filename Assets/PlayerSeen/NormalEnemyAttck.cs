@@ -263,5 +263,161 @@ public class NormalEnemyAttck : MonoBehaviour
                 EI.isHidden = false;
             }
         }
+
+        if (other.CompareTag("Enemy19"))
+        {
+            GameObject Enemy19 = GameObject.FindWithTag("Enemy19");
+            Enemycontroller Ec = Enemy19.GetComponent<Enemycontroller>();
+            EnemyIncrease EI = Enemy19.GetComponent<EnemyIncrease>();
+            if (Ec.DestroyONOFF == true)
+            {
+                GetComponent<ParticleSystem>().Play();
+                EI.isHidden = false;
+            }
+        }
+
+        if (other.CompareTag("Enemy20"))
+        {
+            GameObject Enemy20 = GameObject.FindWithTag("Enemy20");
+            Enemycontroller Ec = Enemy20.GetComponent<Enemycontroller>();
+            EnemyIncrease EI = Enemy20.GetComponent<EnemyIncrease>();
+            if (Ec.DestroyONOFF == true)
+            {
+                GetComponent<ParticleSystem>().Play();
+                EI.isHidden = false;
+            }
+        }
+
+        if (other.CompareTag("Enemy21"))
+        {
+            GameObject Enemy21 = GameObject.FindWithTag("Enemy21");
+            Enemycontroller Ec = Enemy21.GetComponent<Enemycontroller>();
+            EnemyIncrease EI = Enemy21.GetComponent<EnemyIncrease>();
+            if (Ec.DestroyONOFF == true)
+            {
+                GetComponent<ParticleSystem>().Play();
+                EI.isHidden = false;
+            }
+        }
+
+        if (other.CompareTag("Enemy22"))
+        {
+            GameObject Enemy22 = GameObject.FindWithTag("Enemy22");
+            Enemycontroller Ec = Enemy22.GetComponent<Enemycontroller>();
+            EnemyIncrease EI = Enemy22.GetComponent<EnemyIncrease>();
+            if (Ec.DestroyONOFF == true)
+            {
+                GetComponent<ParticleSystem>().Play();
+                EI.isHidden = false;
+            }
+        }
+
+        if (other.CompareTag("Enemy23"))
+        {
+            GameObject Enemy23 = GameObject.FindWithTag("Enemy23");
+            Enemycontroller Ec = Enemy23.GetComponent<Enemycontroller>();
+            EnemyIncrease EI = Enemy23.GetComponent<EnemyIncrease>();
+            if (Ec.DestroyONOFF == true)
+            {
+                GetComponent<ParticleSystem>().Play();
+                EI.isHidden = false;
+            }
+        }
+
+        if (other.CompareTag("Enemy24"))
+        {
+            GameObject Enemy24 = GameObject.FindWithTag("Enemy24");
+            Enemycontroller Ec = Enemy24.GetComponent<Enemycontroller>();
+            EnemyIncrease EI = Enemy24.GetComponent<EnemyIncrease>();
+            if (Ec.DestroyONOFF == true)
+            {
+                GetComponent<ParticleSystem>().Play();
+                EI.isHidden = false;
+            }
+        }
+
+        if (other.CompareTag("Enemy25"))
+        {
+            GameObject Enemy25 = GameObject.FindWithTag("Enemy25");
+            Enemycontroller Ec = Enemy25.GetComponent<Enemycontroller>();
+            EnemyIncrease EI = Enemy25.GetComponent<EnemyIncrease>();
+            if (Ec.DestroyONOFF == true)
+            {
+                GetComponent<ParticleSystem>().Play();
+                EI.isHidden = false;
+            }
+        }
+
+        if (other.CompareTag("Enemy26"))
+        {
+            GameObject Enemy26 = GameObject.FindWithTag("Enemy26");
+            Enemycontroller Ec = Enemy26.GetComponent<Enemycontroller>();
+            EnemyIncrease EI = Enemy26.GetComponent<EnemyIncrease>();
+            if (Ec.DestroyONOFF == true)
+            {
+                GetComponent<ParticleSystem>().Play();
+                EI.isHidden = false;
+            }
+        }
+
+        if (other.CompareTag("Enemy27"))
+        {
+            GameObject Enemy27 = GameObject.FindWithTag("Enemy27");
+            Enemycontroller Ec = Enemy27.GetComponent<Enemycontroller>();
+            EnemyIncrease EI = Enemy27.GetComponent<EnemyIncrease>();
+            if (Ec.DestroyONOFF == true)
+            {
+                GetComponent<ParticleSystem>().Play();
+                EI.isHidden = false;
+            }
+        }
+
+        if (other.CompareTag("Enemy28"))
+        {
+            GameObject Enemy28 = GameObject.FindWithTag("Enemy28");
+            Enemycontroller Ec = Enemy28.GetComponent<Enemycontroller>();
+            EnemyIncrease EI = Enemy28.GetComponent<EnemyIncrease>();
+            if (Ec.DestroyONOFF == true)
+            {
+                GetComponent<ParticleSystem>().Play();
+                EI.isHidden = false;
+            }
+        }
+
+        if (other.CompareTag("Enemy29"))
+        {
+            GameObject Enemy29 = GameObject.FindWithTag("Enemy29");
+            Enemycontroller Ec = Enemy29.GetComponent<Enemycontroller>();
+            EnemyIncrease EI = Enemy29.GetComponent<EnemyIncrease>();
+            if (Ec.DestroyONOFF == true)
+            {
+                GetComponent<ParticleSystem>().Play();
+                EI.isHidden = false;
+            }
+        }
+
+        if (other.CompareTag("Enemy30"))
+        {
+            GameObject Enemy30 = GameObject.FindWithTag("Enemy30");
+            Enemycontroller Ec = Enemy30.GetComponent<Enemycontroller>();
+            EnemyIncrease EI = Enemy30.GetComponent<EnemyIncrease>();
+            if (Ec.DestroyONOFF == true)
+            {
+                GetComponent<ParticleSystem>().Play();
+                EI.isHidden = false;
+            }
+        }
+
+        if (other.CompareTag("Enemy31"))
+        {
+            GameObject Enemy31 = GameObject.FindWithTag("Enemy31");
+            Enemycontroller Ec = Enemy31.GetComponent<Enemycontroller>();
+            EnemyIncrease EI = Enemy31.GetComponent<EnemyIncrease>();
+            if (Ec.DestroyONOFF == true)
+            {
+                GetComponent<ParticleSystem>().Play();
+                EI.isHidden = false;
+            }
+        }
     }
 }

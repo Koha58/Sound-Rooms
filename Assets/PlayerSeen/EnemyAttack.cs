@@ -93,28 +93,49 @@ public class EnemyAttack : MonoBehaviour
 
         }
 
-        if (other.CompareTag("EnemyGAnim"))
-        {
-            GameObject EnemyGAnim = GameObject.FindWithTag("EnemyGAnim");
-            EnemyAnimcontroller EAc = EnemyGAnim.GetComponent<EnemyAnimcontroller>();
-            if (EAc.DestroyONOFF == true)
+            if (other.CompareTag("EnemyG1"))
             {
+                GameObject EnemyG1 = GameObject.FindWithTag("EnemyG1");
+                Enemycontroller Ec = EnemyG1.GetComponent<Enemycontroller>();
+
                 GetComponent<ParticleSystem>().Play();
-                Destroy(EnemyGAnim);
+                Destroy(EnemyG1);
                 Enemyincrease.enemyDeathcnt++;
                 PickupSound.PlayOneShot(PickupSound.clip);
                 count += 1;
                 SetCountText();
 
-                GameObject Boss = GameObject.FindWithTag("Boss");
-                BoosEnemy BS = Boss.GetComponent<BoosEnemy>();
-
-                BS.MoveSpeed = -0.1f;
-                BS.ChaseSpeed = -0.1f;
-                BS.VisualizationPlayer = -1f;
-                BS.ONOFF = 1;
             }
+
+        if (other.CompareTag("EnemyG2"))
+        {
+            GameObject EnemyG2 = GameObject.FindWithTag("EnemyG2");
+            Enemycontroller Ec = EnemyG2.GetComponent<Enemycontroller>();
+
+            GetComponent<ParticleSystem>().Play();
+            Destroy(EnemyG2);
+            Enemyincrease.enemyDeathcnt++;
+            PickupSound.PlayOneShot(PickupSound.clip);
+            count += 1;
+            SetCountText();
+
         }
+
+        if (other.CompareTag("EnemyG3"))
+        {
+            GameObject EnemyG = GameObject.FindWithTag("EnemyG");
+            Enemycontroller Ec = EnemyG.GetComponent<Enemycontroller>();
+
+            GetComponent<ParticleSystem>().Play();
+            Destroy(EnemyG);
+            Enemyincrease.enemyDeathcnt++;
+            PickupSound.PlayOneShot(PickupSound.clip);
+            count += 1;
+            SetCountText();
+
+        }
+
+
         if (other.CompareTag("Enemy2G"))
         {
             GameObject Enemy2 = GameObject.FindWithTag("Enemy2G");
