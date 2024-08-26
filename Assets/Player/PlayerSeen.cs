@@ -12,6 +12,10 @@ public class PlayerSeen : MonoBehaviour
 
     [SerializeField] public Transform _parentTransform;
     LevelMeter levelMeter;
+    public bool piano;
+    int pianocnt;
+    public bool zero;
+    AudioSetting AS;
 
     public bool Visualization;
     void Start()
@@ -26,6 +30,10 @@ public class PlayerSeen : MonoBehaviour
         }
 
         Visualization = false;
+
+        piano = false;
+        pianocnt = 0;
+        zero = false;
     }
 
     public void Update()
@@ -36,11 +44,11 @@ public class PlayerSeen : MonoBehaviour
         var childTransforms = _parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
 
         //音を出すことで見えるようになる
-        if (levelMeter.nowdB > 0.0f)
+        if (levelMeter.nowdB > 0.0f && !piano)
         {
             foreach (var playerParts in childTransforms)
             {
-                //タグが"PlayerParts"である子オブジェクトを見えなくする
+                //タグが"PlayerParts"である子オブジェクトを見えるようにする
                 playerParts.gameObject.GetComponent<Renderer>().enabled = true;
             }
             onoff = 1;  //見えているから1
@@ -51,7 +59,7 @@ public class PlayerSeen : MonoBehaviour
             //音を出していないとき、プレイヤーを見えなくする
             if (onoff == 1)
             {
-                if (levelMeter.nowdB <= 0.0f)
+                if (levelMeter.nowdB <= 0.0f && !piano)
                 {
                     foreach (var playerParts in childTransforms)
                     {
@@ -59,6 +67,56 @@ public class PlayerSeen : MonoBehaviour
                         playerParts.gameObject.GetComponent<Renderer>().enabled = false;
                     }
                     onoff = 0;  //見えていないから0
+                }
+            }
+        }
+
+        //ピアノ部屋挙動
+        if (piano)
+        {
+            foreach (var playerParts in childTransforms)
+            {
+                //タグが"PlayerParts"である子オブジェクトを見えるようにする
+                playerParts.gameObject.GetComponent<Renderer>().enabled = true;
+            }
+
+            GameObject Setting = GameObject.Find("EventSystem");
+            AS = Setting.GetComponent<AudioSetting>();
+            if (AS.BGMSlider.value == -80)
+            {
+                zero = true;
+                piano = false;
+                onoff = 0;
+            }
+            else
+            {
+                piano = true;
+                zero = false;
+                onoff = 1;  //見えているから1
+            }
+        }
+        else
+        {
+            zero = false;
+            if(pianocnt % 2 != 0 && AS.BGMSlider.value != -80)
+            {
+                piano = true;
+            }
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("PianoCheck"))
+        {
+            pianocnt++;
+            if (!zero)
+            {
+                piano = true;
+
+                if (pianocnt % 2 == 0)
+                {
+                    piano = false;
                 }
             }
         }

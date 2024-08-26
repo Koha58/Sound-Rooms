@@ -56,48 +56,22 @@ public class GameOverScript : MonoBehaviour
             if (PS.onoff == 1)
             {
                 //Debug.Log("1");
-                SceneManager.LoadScene("GameOver");
+                LifeCount--;
             }
         }
-        /*
-        if (other.CompareTag("EnemyAnim"))
+
+        if (other.CompareTag("EnemySearch"))
         {
             if (PS.onoff == 1)
             {
                 //Debug.Log("1");
-                SceneManager.LoadScene("GameOver");
+                LifeCount--;
             }
         }
 
-        if (other.CompareTag("EnemyGAnim"))
-        {
-            if (PS.onoff == 1)
-            {
-                //Debug.Log("1");
-                SceneManager.LoadScene("GameOver");
-            }
-        }
-
-        if (other.CompareTag("Enemy2"))
-        {
-            if (PS.onoff == 1)
-            {
-                //Debug.Log("1");
-                SceneManager.LoadScene("GameOver");
-            }
-        }
-
-        if (other.CompareTag("Enemy2G"))
-        {
-            if (PS.onoff == 1)
-            {
-                //Debug.Log("1");
-                SceneManager.LoadScene("GameOver");
-            }
-        }*/
 
 
-        if(LifeCount == 2)
+        if (LifeCount == 2)
         {
             Life3.GetComponent<Image>().enabled = false;
             LostLife3.GetComponent<Image>().enabled = true;

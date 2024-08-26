@@ -15,7 +15,7 @@ public class AudioSetting : MonoBehaviour
     public CinemachineFreeLook VCamera;
 
     [SerializeField] Slider MicSlider;
-    [SerializeField] Slider BGMSlider;
+    [SerializeField] public Slider BGMSlider;
     [SerializeField] Slider SESlider;
     [SerializeField] Slider MouseSlider;
 
