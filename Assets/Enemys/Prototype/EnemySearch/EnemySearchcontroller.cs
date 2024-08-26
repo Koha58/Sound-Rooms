@@ -43,13 +43,21 @@ public class EnemySearchcontroller : MonoBehaviour
     [SerializeField]
     private Transform Pos;
 
-   [SerializeField] Quaternion rotation;
+    [SerializeField] Quaternion rotation;
+
+   // [SerializeField] float X;
+   // [SerializeField] float Y;
+   // [SerializeField] float Z;
+   // [SerializeField] Transform transform;
     private bool UpON = false;
 
     //アニメーション
     [SerializeField] Animator animator;
 
     public GameObject Player;
+
+    int Count = 0;
+    float CountTime;
     private void Chase()
     {
         GameObject gobj = GameObject.Find("Player"); //Playerオブジェクトを探す
@@ -92,11 +100,20 @@ public class EnemySearchcontroller : MonoBehaviour
             PrototypeBodySkinnedMeshRenderer.enabled = false;
 
             ONTime += Time.deltaTime;
-            if (ONTime >= VisualizationRandom)//ランダムで出された値より大きかったら見えるようにする
+            if (Count == 0)
             {
-                audioSourse.enabled = true;
-                ONOFF = 1;
-                ONTime = 0;
+                if (ONTime >= VisualizationRandom)//ランダムで出された値より大きかったら見えるようにする
+                {
+                    if (VisualizationRandom <= 5.0f) { Count = 0; }
+                    else
+                    {
+                        Count = 1;
+                        //Debug.Log("2");
+                    }
+                    audioSourse.enabled = true;
+                    ONOFF = 1;
+                    ONTime = 0;
+                }
             }
         }
         else if (ONOFF == 1)//見えているとき
@@ -109,6 +126,16 @@ public class EnemySearchcontroller : MonoBehaviour
                 audioSourse.enabled = false;
                 ONOFF = 0;
                 OFFTime = 0;
+            }
+        }
+
+
+        if (Count == 1)
+        {
+            CountTime += Time.deltaTime;
+            if(CountTime>=20.0f){ CountTime= 0;
+                Count = 0;
+                //Debug.Log("3");
             }
         }
     }
