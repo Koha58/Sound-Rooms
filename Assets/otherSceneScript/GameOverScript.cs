@@ -59,7 +59,7 @@ public class GameOverScript : MonoBehaviour
                 SceneManager.LoadScene("GameOver");
             }
         }
-
+        /*
         if (other.CompareTag("EnemyAnim"))
         {
             if (PS.onoff == 1)
@@ -94,7 +94,7 @@ public class GameOverScript : MonoBehaviour
                 //Debug.Log("1");
                 SceneManager.LoadScene("GameOver");
             }
-        }
+        }*/
 
 
         if(LifeCount == 2)
