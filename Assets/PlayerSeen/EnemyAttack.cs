@@ -78,6 +78,14 @@ public class EnemyAttack : MonoBehaviour
                 DeathRange += 1.0f;
                 Debug.Log(enemyDeathcnt);
                 Destroy(other.gameObject);
+
+                GameObject Boss = GameObject.FindWithTag("Boss");
+                BoosEnemy BS = Boss.GetComponent<BoosEnemy>();
+
+                BS.MoveSpeed = -0.1f;
+                BS.ChaseSpeed = -0.01f;
+                BS.SphereCollider.radius = -0.1f;
+                BS.ONOFF = 1;
             }
         }
 
@@ -90,6 +98,14 @@ public class EnemyAttack : MonoBehaviour
                 DeathRange += 1.0f;
                 Debug.Log(enemyDeathcnt);
                 Destroy(other.gameObject);
+
+                GameObject Boss = GameObject.FindWithTag("Boss");
+                BoosEnemy BS = Boss.GetComponent<BoosEnemy>();
+
+                BS.MoveSpeed = -0.1f;
+                BS.ChaseSpeed = -0.01f;
+                BS.SphereCollider.radius = -0.1f;
+                BS.ONOFF = 1;
             }
         }
 
@@ -105,6 +121,14 @@ public class EnemyAttack : MonoBehaviour
             PickupSound.PlayOneShot(PickupSound.clip);
             count += 1;
             SetCountText();
+
+            GameObject Boss = GameObject.FindWithTag("Boss");
+            BoosEnemy BS = Boss.GetComponent<BoosEnemy>();
+
+            BS.MoveSpeed = -0.1f;
+            BS.ChaseSpeed = -0.01f;
+            BS.SphereCollider.radius = -0.1f;
+            BS.ONOFF = 1;
 
         }
         /*
