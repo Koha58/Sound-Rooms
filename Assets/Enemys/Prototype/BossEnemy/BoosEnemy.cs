@@ -57,9 +57,11 @@ public class BoosEnemy : MonoBehaviour
 
     [SerializeField] Quaternion rotation;
 
-    public GameObject VisualizationBoss;
+   // public GameObject VisualizationBoss;
 
     public SphereCollider SphereCollider;
+
+    public static bool LifeD=false;
 
 
     private void Chase()//プレイヤーを追いかける
@@ -114,7 +116,7 @@ public class BoosEnemy : MonoBehaviour
                 ONOFF = 1;//見える
                           //ONTime = 0;
                           //}
-                    VisualizationBoss.SetActive(false);
+                   // VisualizationBoss.SetActive(false);
 
             }
         }
@@ -132,7 +134,7 @@ public class BoosEnemy : MonoBehaviour
                           //OFFTime = 0;
                           // }
               
-                    VisualizationBoss.SetActive(true);
+                   // VisualizationBoss.SetActive(true);
           
             }
         }
@@ -144,51 +146,47 @@ public class BoosEnemy : MonoBehaviour
         PlayerSeen PS = obj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
         var childTransforms = PS._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
 
-        float VisualizationPlayer = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
-        if (VisualizationPlayer <= 30f)//プレイヤーが検知範囲に入ったら
+        Chase();
+        Ray ray;
+        RaycastHit hit;
+        Vector3 direction;   // Rayを飛ばす方向
+        float distance = 30.0f;    // Rayを飛ばす距離
+
+        // Rayを飛ばす方向を計算
+        Vector3 temp = Player.transform.position - transform.position;
+        direction = temp.normalized;
+
+        ray = new Ray(transform.position, direction);  // Rayを飛ばす
+        Debug.DrawRay(ray.origin, ray.direction * distance, Color.red);  // Rayをシーン上に描画
+
+        // Rayが最初に当たった物体を調べる
+        if (Physics.Raycast(ray.origin, ray.direction * distance, out hit))
         {
-            Chase();
-            Ray ray;
-            RaycastHit hit;
-            Vector3 direction;   // Rayを飛ばす方向
-            float distance = 30.0f;    // Rayを飛ばす距離
 
-            // Rayを飛ばす方向を計算
-            Vector3 temp = Player.transform.position - transform.position;
-            direction = temp.normalized;
-
-            ray = new Ray(transform.position, direction);  // Rayを飛ばす
-            Debug.DrawRay(ray.origin, ray.direction * distance, Color.red);  // Rayをシーン上に描画
-
-            // Rayが最初に当たった物体を調べる
-            if (Physics.Raycast(ray.origin, ray.direction * distance, out hit))
+            if (hit.collider.CompareTag("Player"))
             {
-
-                if (hit.collider.CompareTag("Player"))
+                PS.onoff = 1;  //見えているから1
+                PS.Visualization = true;
+                ONOFF = 1;
+                foreach (var playerParts in childTransforms)
                 {
-                    PS.onoff = 1;  //見えているから1
-                    PS.Visualization = true;
-                    ONOFF = 1;
-                    foreach (var playerParts in childTransforms)
-                    {
-                        //タグが"PlayerParts"である子オブジェクトを見えるようにする
-                        playerParts.gameObject.GetComponent<Renderer>().enabled = true;
-                    }
+                    //タグが"PlayerParts"である子オブジェクトを見えるようにする
+                    playerParts.gameObject.GetComponent<Renderer>().enabled = true;
                 }
+            }
 
-                if (hit.collider.gameObject.CompareTag("Wall") || (hit.collider.gameObject.CompareTag("InWall")))
+            if (hit.collider.gameObject.CompareTag("Wall") || (hit.collider.gameObject.CompareTag("InWall")))
+            {
+                PS.Visualization = false;
+                PS.onoff = 0;  //見えているから1
+                foreach (var playerParts in childTransforms)
                 {
-                    PS.Visualization = false;
-                    PS.onoff = 0;  //見えているから1
-                    foreach (var playerParts in childTransforms)
-                    {
-                        //タグが"PlayerParts"である子オブジェクトを見えるようにする
-                        playerParts.gameObject.GetComponent<Renderer>().enabled = false;
-                    }
-
+                    //タグが"PlayerParts"である子オブジェクトを見えるようにする
+                    playerParts.gameObject.GetComponent<Renderer>().enabled = false;
                 }
 
             }
+
         }
         else
         {
@@ -244,17 +242,9 @@ public class BoosEnemy : MonoBehaviour
 
     // Update is called once per frame
     private void Update()
-    {    
-        if (PlayerRun.CrouchOn == true)
-        {
-            VisualizationBoss.SetActive(false);
-        }
-        else
-        {
-            VisualizationBoss.SetActive(true);
-        }
+    {
 
-        float Player = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
+            float Player = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
         if (Player <= 0.65f)
         {
             //Idle();
@@ -329,7 +319,20 @@ public class BoosEnemy : MonoBehaviour
             {
                 if (ONOFF == 0) { ChaseONOFF = false; }
                 DestroyONOFF = false;
-                if (Front == true) { Ray(); }
+                if (Front == true) 
+                {
+                    if (PlayerRun.CrouchOn == false)
+                    {
+                        Ray();
+                    }
+                }
+
+                float VisualizationPlayer = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
+                if (VisualizationPlayer <= 20f)//プレイヤーが検知範囲に入ったら
+                {
+                    LifeD = true;
+                }
+                else { LifeD = false; }
             }
             else if (isBack)// ターゲットが自身の後方にあるなら
             {
@@ -367,31 +370,57 @@ public class BoosEnemy : MonoBehaviour
 
         if (other.gameObject.tag == "LeftWall")
         {
-            localAngle.z = 90f;
+            //Debug.Log("1");
+            localAngle.x = 0f;
+            localAngle.z = -90f;
             localAngle.y = 0f;
             myTransform.localEulerAngles = localAngle;
            // Physics.gravity = new Vector3(10f, 0, 0);
         }
         else if (other.gameObject.tag == "RightWall")
         {
-            localAngle.z = 270f;
+            //Debug.Log("2");
+            localAngle.x = 0f;
+            localAngle.z = 90f;
             localAngle.y = 0f;
             myTransform.localEulerAngles = localAngle;
             //Physics.gravity = new Vector3(-10f, 0, 0);
         }
         else if (other.gameObject.tag == "Ceiling")
         {
-            localAngle.z = 180f;
+            //Debug.Log("3");
+            localAngle.x = 0f;
             localAngle.y = 0f;
+            localAngle.z = 180f;
             myTransform.localEulerAngles = localAngle;
            // Physics.gravity = new Vector3(0, 10f, 0);
         }
         else if (other.gameObject.tag == "Floor")
         {
+            //Debug.Log("4");
+            localAngle.x = 0f;
             localAngle.z = 0f;
             localAngle.y = 0f;
             myTransform.localEulerAngles = localAngle;
            // Physics.gravity = new Vector3(0, -10f, 0);
+        }
+        else if (other.gameObject.tag == "RW2")
+        {
+            //Debug.Log("5");
+            localAngle.x = 0f;
+            localAngle.z = -90f;
+            localAngle.y = -90f;
+            myTransform.localEulerAngles = localAngle;
+            // Physics.gravity = new Vector3(0, -10f, 0);
+        }
+        else if (other.gameObject.tag == "LW2")
+        {
+            //Debug.Log("6");
+            localAngle.x = 0f;
+            localAngle.z =-90f;
+            localAngle.y =-90f;
+            myTransform.localEulerAngles = localAngle;
+            // Physics.gravity = new Vector3(0, -10f, 0);
         }
     }
 }

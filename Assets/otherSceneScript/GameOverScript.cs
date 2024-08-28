@@ -69,14 +69,14 @@ public class GameOverScript : MonoBehaviour
             }
         }
 
-        if (other.CompareTag("BossV"))
+        if(BoosEnemy.LifeD==true)
         {
             if (PS.onoff == 1)
             {
+                //Debug.Log("1");
                 LifeCount--;
             }
         }
-
 
 
         if (LifeCount == 2)
