@@ -838,8 +838,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 0.75688714, z: 1.3136977}
-  m_Center: {x: 0, y: 0.33604726, z: 0.4580556}
+  m_Size: {x: 0.3383795, y: 0.3753093, z: 1.449647}
+  m_Center: {x: -0.000000059604645, y: 0.14525834, z: 0.439929}
 --- !u!82 &2961262510330166276
 AudioSource:
   m_ObjectHideFlags: 0
@@ -962,6 +962,7 @@ MonoBehaviour:
   Player: {fileID: 0}
   rotation: {x: 0, y: 0, z: 0, w: 0}
   VisualizationBoss: {fileID: 0}
+  SphereCollider: {fileID: 0}
 --- !u!1 &570991104216011154
 GameObject:
   m_ObjectHideFlags: 0
@@ -3762,7 +3763,7 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3

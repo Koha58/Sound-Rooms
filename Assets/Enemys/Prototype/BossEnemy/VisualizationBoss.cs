@@ -25,14 +25,6 @@ public class VisualizationBoss : MonoBehaviour
             Enemycontroller EC =other.GetComponent<Enemycontroller>();
             EC.PrototypeBodySkinnedMeshRenderer.enabled=true;
             EC.ONOFF = 1;
-
-        }
-
-        if (other.CompareTag("EnemySearch"))
-        {
-            EnemySearchcontroller ESC = other.GetComponent<EnemySearchcontroller>();
-            ESC.PrototypeBodySkinnedMeshRenderer.enabled = true;
-            ESC.ONOFF = 1;
         }
 
         if (other.CompareTag("Player"))

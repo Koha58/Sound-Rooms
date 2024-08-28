@@ -9,8 +9,6 @@ public class BoosEnemy : MonoBehaviour
     /*ボス敵について
     ボス敵の設定↓
     ・音を出して可視化する範囲が通常より広く(エリア全域の1/4くらい)、この敵の音に当たるとライフが1減る。
-    //・ボス敵は通常敵が倒される度に音を出す(可視化する)。
-    //・通常敵を倒す度にボス敵の可視化範囲及び速度が遅くなり倒しやすくなる。
     //・ボス敵の音に当たらないようにするためには障害物を利用して隠れる事が必要(敵を倒したあと10秒ほどボス敵が音を出すまでに時間がある)。*/
 
     //移動
@@ -116,7 +114,8 @@ public class BoosEnemy : MonoBehaviour
                 ONOFF = 1;//見える
                           //ONTime = 0;
                           //}
-                VisualizationBoss.SetActive(false);
+                    VisualizationBoss.SetActive(false);
+
             }
         }
         else if (ONOFF == 1)//見えているとき
@@ -132,7 +131,9 @@ public class BoosEnemy : MonoBehaviour
                 ONOFF = 0;//見えない
                           //OFFTime = 0;
                           // }
-                VisualizationBoss.SetActive(true);
+              
+                    VisualizationBoss.SetActive(true);
+          
             }
         }
     }
@@ -175,7 +176,6 @@ public class BoosEnemy : MonoBehaviour
                     }
                 }
 
-                /*
                 if (hit.collider.gameObject.CompareTag("Wall") || (hit.collider.gameObject.CompareTag("InWall")))
                 {
                     PS.Visualization = false;
@@ -186,7 +186,7 @@ public class BoosEnemy : MonoBehaviour
                         playerParts.gameObject.GetComponent<Renderer>().enabled = false;
                     }
 
-                }*/
+                }
 
             }
         }
@@ -244,7 +244,16 @@ public class BoosEnemy : MonoBehaviour
 
     // Update is called once per frame
     private void Update()
-    {
+    {    
+        if (PlayerRun.CrouchOn == true)
+        {
+            VisualizationBoss.SetActive(false);
+        }
+        else
+        {
+            VisualizationBoss.SetActive(true);
+        }
+
         float Player = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
         if (Player <= 0.65f)
         {
@@ -304,7 +313,6 @@ public class BoosEnemy : MonoBehaviour
                     NextTime += Time.deltaTime;
                     if (NextTime >= 5.0f)
                     {
-                        transform.LookAt(TargetPlayer.transform);
                         NextPatrolPoint();
                         NextTime = 0;
                         Front = false;
@@ -354,46 +362,36 @@ public class BoosEnemy : MonoBehaviour
             PrototypeBodySkinnedMeshRenderer.enabled = true;
         }
 
+        Transform myTransform = this.transform;
+        Vector3 localAngle = myTransform.localEulerAngles;
+
         if (other.gameObject.tag == "LeftWall")
         {
-            x = 0;
-            y = 0;
-            z = 270;
-            this.transform.localRotation = Quaternion.Euler(x,y,z);
-         
+            localAngle.z = 90f;
+            localAngle.y = 0f;
+            myTransform.localEulerAngles = localAngle;
+           // Physics.gravity = new Vector3(10f, 0, 0);
         }
         else if (other.gameObject.tag == "RightWall")
         {
-            x = 0;
-            y = 0;
-            z = 90;
-            this.transform.localRotation = Quaternion.Euler(x, y, z);
-           
+            localAngle.z = 270f;
+            localAngle.y = 0f;
+            myTransform.localEulerAngles = localAngle;
+            //Physics.gravity = new Vector3(-10f, 0, 0);
         }
         else if (other.gameObject.tag == "Ceiling")
         {
-            x = 0;
-            y = 0;
-            z = 180;
-            this.transform.localRotation = Quaternion.Euler(x, y, z);
-         
+            localAngle.z = 180f;
+            localAngle.y = 0f;
+            myTransform.localEulerAngles = localAngle;
+           // Physics.gravity = new Vector3(0, 10f, 0);
         }
         else if (other.gameObject.tag == "Floor")
         {
-            x = 0;
-            y = 0;
-            z = 0;
-            this.transform.localRotation = Quaternion.Euler(x, y, z);
+            localAngle.z = 0f;
+            localAngle.y = 0f;
+            myTransform.localEulerAngles = localAngle;
+           // Physics.gravity = new Vector3(0, -10f, 0);
         }
-
-        /*
-        if (other.CompareTag("InWall") || other.CompareTag("Wall"))
-        {
-            TouchWall = true;
-            CurrentPointIndex--;
-            if (CurrentPointIndex <= PatrolPoints.Length)//巡回ポイントが最後まで行ったら最初に戻る
-                CurrentPointIndex = 0;
-        }*/
     }
-  
 }

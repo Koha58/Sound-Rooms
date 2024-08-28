@@ -82,9 +82,9 @@ public class EnemyAttack : MonoBehaviour
                 GameObject Boss = GameObject.FindWithTag("Boss");
                 BoosEnemy BS = Boss.GetComponent<BoosEnemy>();
 
-                BS.MoveSpeed = -0.1f;
-                BS.ChaseSpeed = -0.01f;
-                BS.SphereCollider.radius = -0.1f;
+                BS.MoveSpeed -= 0.1f;
+                BS.ChaseSpeed -= 0.01f;
+                BS.SphereCollider.radius -= 0.1f;
                 BS.ONOFF = 1;
             }
         }
@@ -102,9 +102,9 @@ public class EnemyAttack : MonoBehaviour
                 GameObject Boss = GameObject.FindWithTag("Boss");
                 BoosEnemy BS = Boss.GetComponent<BoosEnemy>();
 
-                BS.MoveSpeed = -0.1f;
-                BS.ChaseSpeed = -0.01f;
-                BS.SphereCollider.radius = -0.1f;
+                BS.MoveSpeed -= 0.1f;
+                BS.ChaseSpeed -= 0.01f;
+                BS.SphereCollider.radius -= 0.1f;
                 BS.ONOFF = 1;
             }
         }
@@ -125,61 +125,12 @@ public class EnemyAttack : MonoBehaviour
             GameObject Boss = GameObject.FindWithTag("Boss");
             BoosEnemy BS = Boss.GetComponent<BoosEnemy>();
 
-            BS.MoveSpeed = -0.1f;
-            BS.ChaseSpeed = -0.01f;
-            BS.SphereCollider.radius = -0.1f;
+            BS.MoveSpeed -= 0.1f;
+            BS.ChaseSpeed -= 0.01f;
+            BS.SphereCollider.radius -= 0.1f;
             BS.ONOFF = 1;
 
         }
-        /*
-        if (other.CompareTag("EnemyG1"))
-        {
-            GameObject EnemyG1 = GameObject.FindWithTag("EnemyG1");
-            Enemycontroller Ec = EnemyG1.GetComponent<Enemycontroller>();
-
-            enemyDeathcnt++;
-            DeathRange += 1.0f;
-            GetComponent<ParticleSystem>().Play();
-            Destroy(EnemyG1);
-            //Enemyincrease.enemyDeathcnt++;
-            PickupSound.PlayOneShot(PickupSound.clip);
-            count += 1;
-            SetCountText();
-
-        }
-
-        if (other.CompareTag("EnemyG2"))
-        {
-            GameObject EnemyG2 = GameObject.FindWithTag("EnemyG2");
-            Enemycontroller Ec = EnemyG2.GetComponent<Enemycontroller>();
-
-            enemyDeathcnt++;
-            DeathRange += 1.0f;
-            GetComponent<ParticleSystem>().Play();
-            Destroy(EnemyG2);
-            //Enemyincrease.enemyDeathcnt++;
-            PickupSound.PlayOneShot(PickupSound.clip);
-            count += 1;
-            SetCountText();
-
-        }
-
-        if (other.CompareTag("EnemyG3"))
-        {
-            GameObject EnemyG = GameObject.FindWithTag("EnemyG");
-            Enemycontroller Ec = EnemyG.GetComponent<Enemycontroller>();
-
-            enemyDeathcnt++;
-            DeathRange += 1.0f;
-            GetComponent<ParticleSystem>().Play();
-            Destroy(EnemyG);
-            //Enemyincrease.enemyDeathcnt++;
-            PickupSound.PlayOneShot(PickupSound.clip);
-            count += 1;
-            SetCountText();
-
-        }
-        */
     }
 
     void SetCountText()

@@ -58,6 +58,9 @@ public class PlayerRun : MonoBehaviour
     public float count12;
     public int cond;
 
+    //‚µ‚á‚ª‚Þ‚Æ‚«
+   public static bool CrouchOn=false;
+
     void Start()
     {
         playerRb = GetComponent<Rigidbody>();
@@ -108,6 +111,8 @@ public class PlayerRun : MonoBehaviour
             run = false;
             crouch = false;
             crouchWalk = false;
+
+            CrouchOn = false;
         }
 
         if (!crouch && Input.GetKey(KeyCode.A))
@@ -122,6 +127,8 @@ public class PlayerRun : MonoBehaviour
             run = false;
             crouch = false;
             crouchWalk = false;
+
+            CrouchOn = false;
         }
 
         if (!crouch && Input.GetKey(KeyCode.S))
@@ -136,6 +143,8 @@ public class PlayerRun : MonoBehaviour
             run = false;
             crouch = false;
             crouchWalk = false;
+
+            CrouchOn = false;
         }
 
         if (!crouch && Input.GetKey(KeyCode.D))
@@ -150,6 +159,8 @@ public class PlayerRun : MonoBehaviour
             run = false;
             crouch = false;
             crouchWalk = false;
+
+            CrouchOn = false;
         }
 
         //•à‚­‚Æ‚«(Xbox)
@@ -165,6 +176,8 @@ public class PlayerRun : MonoBehaviour
             run = false;
             crouch = false;
             crouchWalk = false;
+
+            CrouchOn = false;
 
             cond = 1;
         }
@@ -182,6 +195,8 @@ public class PlayerRun : MonoBehaviour
             crouch = false;
             crouchWalk = false;
 
+            CrouchOn = false;
+
             cond = 2;
         }
 
@@ -198,6 +213,8 @@ public class PlayerRun : MonoBehaviour
             crouch = false;
             crouchWalk = false;
 
+            CrouchOn = false;
+
             cond = 3;
         }
 
@@ -213,6 +230,8 @@ public class PlayerRun : MonoBehaviour
             run = false;
             crouch = false;
             crouchWalk = false;
+
+            CrouchOn = false;
 
             cond = 4;
         }
@@ -490,6 +509,8 @@ public class PlayerRun : MonoBehaviour
             walk = false;
             run = false;
             crouch = true;
+
+            CrouchOn = true;
             //crouchWalk = false;
         }
 
@@ -506,6 +527,8 @@ public class PlayerRun : MonoBehaviour
             run = false;
             crouch = true;
             crouchWalk = false;
+
+            CrouchOn = true;
         }
 
         if (Input.GetAxisRaw("Vertical") == 0 && Input.GetAxisRaw("Horizontal") == 0)
