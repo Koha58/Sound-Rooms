@@ -123,6 +123,7 @@ public class BoosEnemy : MonoBehaviour
                 ONOFF = 1;//Œ©‚¦‚é
 
                  VisualizationBoss.SetActive(false);
+                audioSourse.enabled = false;
 
             }
         }
@@ -134,7 +135,8 @@ public class BoosEnemy : MonoBehaviour
                 PrototypeBodySkinnedMeshRenderer.enabled = true;
 
                 ONOFF = 0;//Œ©‚¦‚È‚¢
-              
+                audioSourse.enabled = true;
+
                 VisualizationBoss.SetActive(true);
           
             }

@@ -346,5 +346,13 @@ public class Enemycontroller : MonoBehaviour
             if (CurrentPointIndex <= PatrolPoints.Length)//巡回ポイントが最後まで行ったら最初に戻る
                 CurrentPointIndex = 0;
         }
+
+        if (other.CompareTag("PianoRoom"))
+        {
+            ONOFF = 1;
+            ONTime = 0;
+            //3DモデルのRendererを見える状態
+            PrototypeBodySkinnedMeshRenderer.enabled = true;
+        }
     }
 }
