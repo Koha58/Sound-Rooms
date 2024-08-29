@@ -45,9 +45,12 @@ public class GameOverScript : MonoBehaviour
         {
             if (PS.onoff == 1)
             {
+                Enemycontroller EC = other.GetComponent<Enemycontroller>();
                 //Debug.Log("1");
-                //SceneManager.LoadScene("GameOver");
-                LifeCount--;
+                if (EC.ONOFF == 1)
+                {
+                    LifeCount--;
+                }
             }
         }
 
@@ -55,8 +58,12 @@ public class GameOverScript : MonoBehaviour
         {
             if (PS.onoff == 1)
             {
+                Enemycontroller EC = other.GetComponent<Enemycontroller>();
                 //Debug.Log("1");
-                LifeCount--;
+                if (EC.ONOFF == 1)
+                {
+                    LifeCount--;
+                }
             }
         }
 
@@ -64,8 +71,12 @@ public class GameOverScript : MonoBehaviour
         {
             if (PS.onoff == 1)
             {
-                //Debug.Log("1");
-                LifeCount--;
+                EnemySearchcontroller ESC = other.GetComponent<EnemySearchcontroller>();
+                if (ESC.ONOFF==1)
+                {
+                    //Debug.Log("1");
+                    LifeCount--;
+                }
             }
         }
 

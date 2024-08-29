@@ -135,9 +135,13 @@ public class BoosEnemy : MonoBehaviour
                 PrototypeBodySkinnedMeshRenderer.enabled = true;
 
                 ONOFF = 0;//見えない
-                audioSourse.enabled = true;
-
                 VisualizationBoss.SetActive(true);
+
+                float PlayerPoint = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
+                if (PlayerPoint <= 20)
+                {
+                    audioSourse.enabled = true;
+                }
           
             }
         }
