@@ -54,8 +54,6 @@ public class CircleSizeControll : MonoBehaviour
                 preHeight++;
             }
 
-            Debug.Log(plusSize);
-
             originSizeX = (levelMeter.nowdB * 10) + plusSize;
             originSizeZ = (levelMeter.nowdB * 10) + plusSize;
 

@@ -61,9 +61,6 @@ public class BoosEnemy : MonoBehaviour
 
     public SphereCollider SphereCollider;
 
-    public static bool LifeD=false;
-
-
     private void Chase()//プレイヤーを追いかける
     {
         GameObject gobj = GameObject.Find("Player");//Playerオブジェクトを探す
@@ -84,13 +81,26 @@ public class BoosEnemy : MonoBehaviour
                     transform.LookAt(TargetPlayer.transform);//プレイヤーの方向にむく
                     transform.position += transform.forward * ChaseSpeed; //プレイヤーの方向に向かう
 
+                    Transform myTransform = this.transform;
+                    Vector3 localAngle = myTransform.localEulerAngles;
+
+                    localAngle.x = 0f;
+                    localAngle.z = 0f;
+                    localAngle.y =0f;
+                    myTransform.localEulerAngles = localAngle;
                 }
                 else if (ONOFF == 0)
                 {
                     ChaseONOFF = false;//追跡中じゃない
+                  
                 }
             }
-            else { ChaseONOFF = false; }//追跡中じゃない
+            else 
+            { 
+                ChaseONOFF = false;
+              
+            }//追跡中じゃない
+
         }
     }
 
@@ -110,13 +120,9 @@ public class BoosEnemy : MonoBehaviour
                 //3DモデルのRendererを見えない状態
                 PrototypeBodySkinnedMeshRenderer.enabled = false;
 
-                // ONTime += Time.deltaTime;
-                //if (ONTime >= VisualizationRandom)//ランダムで出された値より大きかったら見えるようにする
-                //{
                 ONOFF = 1;//見える
-                          //ONTime = 0;
-                          //}
-                    VisualizationBoss.SetActive(false);
+
+                 VisualizationBoss.SetActive(false);
 
             }
         }
@@ -127,14 +133,9 @@ public class BoosEnemy : MonoBehaviour
                 //3DモデルのRendererを見える状態
                 PrototypeBodySkinnedMeshRenderer.enabled = true;
 
-                // OFFTime += Time.deltaTime;
-                // if (OFFTime >= 10.0f)//10秒以上経ったら見えなくする
-                // {
                 ONOFF = 0;//見えない
-                          //OFFTime = 0;
-                          // }
               
-                    VisualizationBoss.SetActive(true);
+                VisualizationBoss.SetActive(true);
           
             }
         }
@@ -230,9 +231,17 @@ public class BoosEnemy : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
+        if(PlayerRun.CrouchOn==false) 
+        {
+            VisualizationBoss.SetActive(true);
+        }
+        else
+        {
+           VisualizationBoss.SetActive(false);
+        }
 
-            float Player = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
-        if (Player <= 0.65f)
+        float Player = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
+        if (Player <= 2f)
         {
             //Idle();
             GameObject obj = GameObject.Find("Player"); //Playerオブジェクトを探す
@@ -251,7 +260,7 @@ public class BoosEnemy : MonoBehaviour
             }
             UpON = true;
         }
-        else if (Player >= 1.5f)
+        else if (Player >= 2.5f)
         {
             UpON = false;
         }
@@ -350,57 +359,75 @@ public class BoosEnemy : MonoBehaviour
 
         if (other.gameObject.tag == "LeftWall")
         {
-            //Debug.Log("1");
-            localAngle.x = 0f;
-            localAngle.z = -90f;
-            localAngle.y = 0f;
-            myTransform.localEulerAngles = localAngle;
-           // Physics.gravity = new Vector3(10f, 0, 0);
+            if (ChaseONOFF == false)
+            {
+                //Debug.Log("1");
+                localAngle.x = 0f;
+                localAngle.z = -90f;
+                localAngle.y = 0f;
+                myTransform.localEulerAngles = localAngle;
+                // Physics.gravity = new Vector3(10f, 0, 0);
+            }
         }
         else if (other.gameObject.tag == "RightWall")
         {
-            //Debug.Log("2");
-            localAngle.x = 0f;
-            localAngle.z = 90f;
-            localAngle.y = 0f;
-            myTransform.localEulerAngles = localAngle;
-            //Physics.gravity = new Vector3(-10f, 0, 0);
+            if (ChaseONOFF == false)
+            {
+                //Debug.Log("2");
+                localAngle.x = 0f;
+                localAngle.z = 90f;
+                localAngle.y = 0f;
+                myTransform.localEulerAngles = localAngle;
+                //Physics.gravity = new Vector3(-10f, 0, 0);
+            }
         }
         else if (other.gameObject.tag == "Ceiling")
         {
-            //Debug.Log("3");
-            localAngle.x = 0f;
-            localAngle.y = 0f;
-            localAngle.z = 180f;
-            myTransform.localEulerAngles = localAngle;
-           // Physics.gravity = new Vector3(0, 10f, 0);
+            if (ChaseONOFF == false)
+            {
+                //Debug.Log("3");
+                localAngle.x = 0f;
+                localAngle.y = 0f;
+                localAngle.z = 180f;
+                myTransform.localEulerAngles = localAngle;
+                // Physics.gravity = new Vector3(0, 10f, 0);
+            }
         }
         else if (other.gameObject.tag == "Floor")
         {
-            //Debug.Log("4");
-            localAngle.x = 0f;
-            localAngle.z = 0f;
-            localAngle.y = 0f;
-            myTransform.localEulerAngles = localAngle;
-           // Physics.gravity = new Vector3(0, -10f, 0);
+            if (ChaseONOFF == false)
+            {
+                //Debug.Log("4");
+                localAngle.x = 0f;
+                localAngle.z = 0f;
+                localAngle.y = 0f;
+                myTransform.localEulerAngles = localAngle;
+                // Physics.gravity = new Vector3(0, -10f, 0);
+            }
         }
         else if (other.gameObject.tag == "RW2")
         {
-            //Debug.Log("5");
-            localAngle.x = 0f;
-            localAngle.z = -90f;
-            localAngle.y = -90f;
-            myTransform.localEulerAngles = localAngle;
-            // Physics.gravity = new Vector3(0, -10f, 0);
+            if (ChaseONOFF == false)
+            {
+                //Debug.Log("5");
+                localAngle.x = 0f;
+                localAngle.z = -90f;
+                localAngle.y = -90f;
+                myTransform.localEulerAngles = localAngle;
+                // Physics.gravity = new Vector3(0, -10f, 0);
+            }
         }
         else if (other.gameObject.tag == "LW2")
         {
-            //Debug.Log("6");
-            localAngle.x = 0f;
-            localAngle.z =-90f;
-            localAngle.y =-90f;
-            myTransform.localEulerAngles = localAngle;
-            // Physics.gravity = new Vector3(0, -10f, 0);
+            if (ChaseONOFF == false)
+            {
+                //Debug.Log("6");
+                localAngle.x = 0f;
+                localAngle.z = -90f;
+                localAngle.y = -90f;
+                myTransform.localEulerAngles = localAngle;
+                // Physics.gravity = new Vector3(0, -10f, 0);
+            }
         }
     }
 }
