@@ -13,12 +13,6 @@ public class GameSceneButton : MonoBehaviour
     [SerializeField] GameObject closeButton;
     //「close」
     [SerializeField] GameObject closeKey;
-    //ルール表示画面
-    [SerializeField] GameObject AttentionUI;
-    //Attentionボタン上のアイコン
-    [SerializeField] GameObject AttentionTextUI;
-    //Y:Attentionボタン
-    [SerializeField] GameObject AttentionButton;
     //説明画面表示後の下の「設定」文字
     [SerializeField] GameObject SettingFont;
     //説明画面表示後の下の「操作説明」文字
@@ -41,8 +35,6 @@ public class GameSceneButton : MonoBehaviour
 
     Image ExplainFontImage;
     Image SettingFontImage;
-
-    public static bool needAttention = false;
     bool deviceCheck;
 
     // Start is called before the first frame update
@@ -53,12 +45,6 @@ public class GameSceneButton : MonoBehaviour
         closeButton.GetComponent<Image>().enabled = false;
 
         closeKey.GetComponent<Image>().enabled = false;
-
-        AttentionUI.GetComponent<Image>().enabled = false;
-
-        AttentionTextUI.GetComponent<Image>().enabled = false;
-
-        AttentionButton.GetComponent<Image>().enabled = false;
 
         SettingFont.GetComponent<Image>().enabled = false;
 
@@ -80,7 +66,6 @@ public class GameSceneButton : MonoBehaviour
 
         Cursor.GetComponent<Image>().enabled = false;
 
-        needAttention = false;
         deviceCheck = false;
     }
 
@@ -136,29 +121,8 @@ public class GameSceneButton : MonoBehaviour
             SettingFont.GetComponent<Image>().enabled = false;
             ExplainFont.GetComponent<Image>().enabled = false;
             Slash.GetComponent<Image>().enabled = false;
-            AttentionUI.GetComponent<Image>().enabled = false;
             Cursor.GetComponent<Image>().enabled = false;
             Time.timeScale = 1;
-        }
-
-        if (needAttention)
-        {
-            if (Input.GetKeyDown(KeyCode.Y) || Input.GetKeyDown("joystick button 3"))//Y
-            {
-                AttentionUI.GetComponent<Image>().enabled = true;
-                if (deviceCheck)
-                {
-                    closeButton.GetComponent<Image>().enabled = true;
-                }
-                else
-                {
-                    closeKey.GetComponent<Image>().enabled = true;
-                }
-                Time.timeScale = 0;
-            }
-
-            AttentionTextUI.GetComponent<Image>().enabled = true;
-            AttentionButton.GetComponent<Image>().enabled = true;
         }
 
     }
@@ -202,22 +166,7 @@ public class GameSceneButton : MonoBehaviour
         SettingFont.GetComponent<Image>().enabled = false;
         ExplainFont.GetComponent<Image>().enabled = false;
         Slash.GetComponent<Image>().enabled = false;
-        AttentionUI.GetComponent<Image>().enabled = false;
         Time.timeScale = 1;
-    }
-
-    public void AttentionUIButton()
-    {
-        AttentionUI.GetComponent<Image>().enabled = true;
-        if (deviceCheck)
-        {
-            closeButton.GetComponent<Image>().enabled = true;
-        }
-        else
-        {
-            closeKey.GetComponent<Image>().enabled = true;
-        }
-        Time.timeScale = 0;
     }
 
     public void SettingFontButton()
