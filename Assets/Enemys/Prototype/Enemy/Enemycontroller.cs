@@ -47,6 +47,11 @@ public class Enemycontroller : MonoBehaviour
     private float NextTime;
     private bool Front;
 
+    public bool piano;
+    int pianocnt;
+    public bool zero;
+    AudioSetting AS;
+
     private void Chase()//プレイヤーを追いかける
     {
         GameObject gobj = GameObject.Find("Player");//Playerオブジェクトを探す
@@ -312,6 +317,34 @@ public class Enemycontroller : MonoBehaviour
                 }
             }
         }
+
+        //ピアノ部屋挙動
+        if (piano)
+        {
+            GameObject Setting = GameObject.Find("EventSystem");
+            AS = Setting.GetComponent<AudioSetting>();
+            if (AS.BGMSlider.value == -80)
+            {
+                zero = true;
+                piano = false;
+            }
+            else
+            {
+                piano = true;
+                zero = false;
+                ONOFF = 1;
+                //3DモデルのRendererを見える状態
+                PrototypeBodySkinnedMeshRenderer.enabled = true;
+            }
+        }
+        else
+        {
+            zero = false;
+            if (pianocnt % 2 != 0 && AS.BGMSlider.value != -80)
+            {
+                piano = true;
+            }
+        }
     }
 
     void Idle()
@@ -349,10 +382,16 @@ public class Enemycontroller : MonoBehaviour
 
         if (other.CompareTag("PianoRoom"))
         {
-            ONOFF = 1;
-            ONTime = 0;
-            //3DモデルのRendererを見える状態
-            PrototypeBodySkinnedMeshRenderer.enabled = true;
+            pianocnt++;
+            if (!zero)
+            {
+                piano = true;
+
+                if (pianocnt % 2 == 0)
+                {
+                    piano = false;
+                }
+            }
         }
     }
 }
