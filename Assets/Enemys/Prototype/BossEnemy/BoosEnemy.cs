@@ -57,7 +57,7 @@ public class BoosEnemy : MonoBehaviour
 
     [SerializeField] Quaternion rotation;
 
-   // public GameObject VisualizationBoss;
+    public GameObject VisualizationBoss;
 
     public SphereCollider SphereCollider;
 
@@ -116,7 +116,7 @@ public class BoosEnemy : MonoBehaviour
                 ONOFF = 1;//見える
                           //ONTime = 0;
                           //}
-                   // VisualizationBoss.SetActive(false);
+                    VisualizationBoss.SetActive(false);
 
             }
         }
@@ -134,7 +134,7 @@ public class BoosEnemy : MonoBehaviour
                           //OFFTime = 0;
                           // }
               
-                   // VisualizationBoss.SetActive(true);
+                    VisualizationBoss.SetActive(true);
           
             }
         }
@@ -146,7 +146,6 @@ public class BoosEnemy : MonoBehaviour
         PlayerSeen PS = obj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
         var childTransforms = PS._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
 
-        Chase();
         Ray ray;
         RaycastHit hit;
         Vector3 direction;   // Rayを飛ばす方向
@@ -162,7 +161,6 @@ public class BoosEnemy : MonoBehaviour
         // Rayが最初に当たった物体を調べる
         if (Physics.Raycast(ray.origin, ray.direction * distance, out hit))
         {
-
             if (hit.collider.CompareTag("Player"))
             {
                 PS.onoff = 1;  //見えているから1
@@ -173,18 +171,7 @@ public class BoosEnemy : MonoBehaviour
                     //タグが"PlayerParts"である子オブジェクトを見えるようにする
                     playerParts.gameObject.GetComponent<Renderer>().enabled = true;
                 }
-            }
-
-            if (hit.collider.gameObject.CompareTag("Wall") || (hit.collider.gameObject.CompareTag("InWall")))
-            {
-                PS.Visualization = false;
-                PS.onoff = 0;  //見えているから1
-                foreach (var playerParts in childTransforms)
-                {
-                    //タグが"PlayerParts"である子オブジェクトを見えるようにする
-                    playerParts.gameObject.GetComponent<Renderer>().enabled = false;
-                }
-
+                Chase();
             }
 
         }
@@ -326,13 +313,6 @@ public class BoosEnemy : MonoBehaviour
                         Ray();
                     }
                 }
-
-                float VisualizationPlayer = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
-                if (VisualizationPlayer <= 20f)//プレイヤーが検知範囲に入ったら
-                {
-                    LifeD = true;
-                }
-                else { LifeD = false; }
             }
             else if (isBack)// ターゲットが自身の後方にあるなら
             {

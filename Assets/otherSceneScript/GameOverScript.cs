@@ -69,7 +69,7 @@ public class GameOverScript : MonoBehaviour
             }
         }
 
-        if(BoosEnemy.LifeD==true)
+        if(other.CompareTag("BossV"))
         {
             if (PS.onoff == 1)
             {

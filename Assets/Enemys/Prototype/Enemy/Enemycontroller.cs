@@ -47,8 +47,6 @@ public class Enemycontroller : MonoBehaviour
     private float NextTime;
     private bool Front;
 
-    public Transform TargetBoss;
-
     private void Chase()//プレイヤーを追いかける
     {
         GameObject gobj = GameObject.Find("Player");//Playerオブジェクトを探す
@@ -169,16 +167,6 @@ public class Enemycontroller : MonoBehaviour
                         playerParts.gameObject.GetComponent<Renderer>().enabled = false;
                     }
                 
-                }
-
-                float VisualizationBoss = Vector3.Distance(transform.position, TargetBoss.position);//プレイヤーと敵の位置の計算
-                if (VisualizationBoss >= 20)
-                {
-                    if (hit.collider.gameObject.CompareTag("Boss"))
-                    {
-                        ONOFF = 1;
-                        PrototypeBodySkinnedMeshRenderer.enabled = true;
-                    }
                 }
             }
         }

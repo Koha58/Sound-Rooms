@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class VisualizationBoss : MonoBehaviour
 {
+   [SerializeField] Transform Boss;
     // Start is called before the first frame update
     void Start()
     {
@@ -14,7 +15,7 @@ public class VisualizationBoss : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        this.transform.position = Boss.position;
     }
 
     private void OnTriggerStay(Collider other)
