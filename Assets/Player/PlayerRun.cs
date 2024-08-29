@@ -358,8 +358,8 @@ public class PlayerRun : MonoBehaviour
             cond = 8;
         }
 
-        //‚µ‚á‚ª‚Þ‚Æ‚«
-        if (crouch && Input.GetKeyDown(KeyCode.W))
+        //‚µ‚á‚ª‚Ý•à‚«
+        if (crouch && Input.GetKey(KeyCode.W))
         {
             moveSpeed = moveSpeedIn * cameraForward;
             animator.SetBool("Walking", false);
@@ -411,7 +411,7 @@ public class PlayerRun : MonoBehaviour
             crouchWalk = true;
         }
 
-        //‚µ‚á‚ª‚Þ‚Æ‚«(Xbox)
+        //‚µ‚á‚ª‚Ý•à‚«(Xbox)
         if (crouch && Input.GetAxisRaw("Vertical") < 0)
         {
             moveSpeed = moveSpeedIn * cameraForward;
@@ -499,34 +499,26 @@ public class PlayerRun : MonoBehaviour
         //‚µ‚á‚ª‚Þ‚Æ‚«
         if (Input.GetKey("left shift"))
         {
-            playerRb.velocity = Vector3.zero;
-            playerRb.angularVelocity = Vector3.zero;
             animator.SetBool("Walking", false);
             animator.SetBool("Running", false);
             animator.SetBool("Squatting", true);
-            animator.SetBool("CrouchWalking", false);
             moving = 0;
             walk = false;
             run = false;
             crouch = true;
 
             CrouchOn = true;
-            //crouchWalk = false;
         }
-
-        if (Input.GetKeyDown("joystick button 4"))//LB
+        //‚µ‚á‚ª‚Þ‚Æ‚«(Xbox)
+        if (Input.GetKey("joystick button 4"))//LB
         {
-            playerRb.velocity = Vector3.zero;
-            playerRb.angularVelocity = Vector3.zero;
             animator.SetBool("Walking", false);
             animator.SetBool("Running", false);
             animator.SetBool("Squatting", true);
-            animator.SetBool("CrouchWalking", false);
             moving = 0;
             walk = false;
             run = false;
             crouch = true;
-            crouchWalk = false;
 
             CrouchOn = true;
         }
@@ -595,7 +587,7 @@ public class PlayerRun : MonoBehaviour
 
         if(crouchWalk == true)
         {
-            playerRb.velocity = moveSpeed/2;
+            playerRb.velocity = moveSpeed/5;
         }
 
         if (InputDeviceManager.Instance.CurrentDeviceType == InputDeviceType.Xbox)
