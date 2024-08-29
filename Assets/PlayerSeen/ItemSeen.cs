@@ -142,7 +142,7 @@ public class ItemSeen : MonoBehaviour
                 {
                     Transform childTransform = doorObject.transform.GetChild(j);
                     GameObject door = childTransform.gameObject;
-                    door.GetComponent<Renderer>().enabled = true;
+                    door.GetComponent<Renderer>().enabled = false;
                 }
 
                 foreach (GameObject Shelf in Shelfs)
