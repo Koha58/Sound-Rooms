@@ -64,19 +64,15 @@ public class Enemycontroller : MonoBehaviour
             {
                 if (PS.onoff == 1)//プレイヤーが可視化していたら
                 {
-                    // Run();
                     ONOFF = 1;//自分自身を可視化
+                    audioSourse.enabled = true;
                     animator.SetBool("Walk", false);
                     animator.SetBool("Run", true);
                     ChaseONOFF = true;//追跡中
                     transform.LookAt(TargetPlayer.transform);//プレイヤーの方向にむく
                     transform.position += transform.forward * ChaseSpeed; //プレイヤーの方向に向かう
-
                 }
-                else if (ONOFF == 0)
-                {
-                    ChaseONOFF = false;//追跡中じゃない
-                }
+                else if (ONOFF == 0){ChaseONOFF = false;}//追跡中じゃない
             }
             else { ChaseONOFF = false; }//追跡中じゃない
         }
@@ -97,14 +93,8 @@ public class Enemycontroller : MonoBehaviour
             {
                 //3DモデルのRendererを見えない状態
                 PrototypeBodySkinnedMeshRenderer.enabled = false;
-
-               // ONTime += Time.deltaTime;
-                //if (ONTime >= VisualizationRandom)//ランダムで出された値より大きかったら見えるようにする
-                //{
-                    ONOFF = 1;//見える
-                    //ONTime = 0;
-                    VisualizationGameObject.SetActive(true);//物を不可視化する判定をON
-                //}
+                ONOFF = 1;//見える
+                VisualizationGameObject.SetActive(true);//物を不可視化する判定をON  
             }
         }
         else if (ONOFF == 1)//見えているとき
@@ -113,14 +103,8 @@ public class Enemycontroller : MonoBehaviour
             {
                 //3DモデルのRendererを見える状態
                 PrototypeBodySkinnedMeshRenderer.enabled = true;
-
-               // OFFTime += Time.deltaTime;
-               // if (OFFTime >= 10.0f)//10秒以上経ったら見えなくする
-               // {
-                    ONOFF = 0;//見えない
-                    //OFFTime = 0;
-                    VisualizationGameObject.SetActive(false);//物を不可視化する判定をOFF
-              // }
+                ONOFF = 0;//見えない
+                VisualizationGameObject.SetActive(false);//物を不可視化する判定をOFF
             }
         }
     }
@@ -162,7 +146,7 @@ public class Enemycontroller : MonoBehaviour
                     }
                 }
 
-                if (hit.collider.gameObject.CompareTag("Wall") || (hit.collider.gameObject.CompareTag("InWall")))
+                if (hit.collider.gameObject.CompareTag("Wall") )
                 {
                     PS.Visualization = false;
                     PS.onoff = 0;  //見えているから1
@@ -171,7 +155,7 @@ public class Enemycontroller : MonoBehaviour
                         //タグが"PlayerParts"である子オブジェクトを見えるようにする
                         playerParts.gameObject.GetComponent<Renderer>().enabled = false;
                     }
-                
+                    audioSourse.enabled = false;
                 }
             }
         }
@@ -197,7 +181,6 @@ public class Enemycontroller : MonoBehaviour
     {
         GameObject gobj = GameObject.Find("Player");//Playerオブジェクトを探す
         PlayerSeen PS = gobj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
-
         float ChasePlayer = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
         if(ChasePlayer<=10)
         {
@@ -218,12 +201,9 @@ public class Enemycontroller : MonoBehaviour
         ONOFF = 0;//見えない状態
         VisualizationRandom = Random.Range(5.0f, 10.0f);
         audioSourse = GetComponent<AudioSource>();
-
         //3DモデルのRendererを見えない状態
         PrototypeBodySkinnedMeshRenderer.enabled = false;
-
         ChaseONOFF = false;//追跡中じゃない
-
         animator = GetComponent<Animator>();   //アニメーターコントローラーからアニメーションを取得する
     }
 
@@ -233,7 +213,6 @@ public class Enemycontroller : MonoBehaviour
         float Player = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
         if (Player<= 0.65f)
         {
-            //Idle();
             GameObject obj = GameObject.Find("Player"); //Playerオブジェクトを探す
             PlayerSeen PS = obj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
             var childTransforms = PS._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
@@ -250,10 +229,7 @@ public class Enemycontroller : MonoBehaviour
             }
             UpON = true;
         }
-        else if(Player >= 1.5f) 
-        {
-            UpON = false;
-        }
+        else if(Player >= 1.5f) {UpON = false;}
 
         if (UpON == false)
         {
@@ -263,7 +239,6 @@ public class Enemycontroller : MonoBehaviour
             {
                 animator.SetBool("Run", false);
                 animator.SetBool("Walk", true);
-               // Walk();
             }
 
             Visualization();
@@ -312,7 +287,7 @@ public class Enemycontroller : MonoBehaviour
                 float detectionPlayer = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
 
                 if (detectionPlayer <= 7f)//プレイヤーが検知範囲に入ったら
-                {
+                {   
                     DestroyONOFF = true;
                 }
             }
@@ -340,27 +315,15 @@ public class Enemycontroller : MonoBehaviour
         else
         {
             zero = false;
-            if (pianocnt % 2 != 0 && AS.BGMSlider.value != -80)
-            {
-                piano = true;
-            }
+            if (pianocnt % 2 != 0 && AS.BGMSlider.value != -80){piano = true;}
         }
     }
 
-    void Idle()
-    {
-        audioSourse.PlayOneShot(EnemySearch);
-    }
+    void Idle(){audioSourse.PlayOneShot(EnemySearch);}
 
-    void Run()
-    {
-        audioSourse.PlayOneShot(EnemyRun);
-    }
+    void Run(){ audioSourse.PlayOneShot(EnemyRun);}
 
-    void Walk()
-    {
-        audioSourse.PlayOneShot(EnemyWalk);
-    }
+    void Walk(){audioSourse.PlayOneShot(EnemyWalk);}
 
     private void OnTriggerStay(Collider other)
     {
@@ -372,12 +335,12 @@ public class Enemycontroller : MonoBehaviour
             PrototypeBodySkinnedMeshRenderer.enabled = true;
         }
 
-        if (other.CompareTag("InWall") || other.CompareTag("Wall"))
+        if (other.CompareTag("Wall"))
         {
             TouchWall = true;
             CurrentPointIndex--;
             if (CurrentPointIndex <= PatrolPoints.Length)//巡回ポイントが最後まで行ったら最初に戻る
-                CurrentPointIndex = 0;
+            { CurrentPointIndex = 0; }
         }
 
         if (other.CompareTag("PianoRoom"))
@@ -386,11 +349,7 @@ public class Enemycontroller : MonoBehaviour
             if (!zero)
             {
                 piano = true;
-
-                if (pianocnt % 2 == 0)
-                {
-                    piano = false;
-                }
+                if (pianocnt % 2 == 0){piano = false;}
             }
         }
     }

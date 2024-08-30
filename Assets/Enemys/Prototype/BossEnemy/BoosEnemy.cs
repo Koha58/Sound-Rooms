@@ -6,21 +6,16 @@ using UnityEngine;
 
 public class BoosEnemy : MonoBehaviour
 {
-    /*ボス敵について
-    ボス敵の設定↓
-    ・音を出して可視化する範囲が通常より広く(エリア全域の1/4くらい)、この敵の音に当たるとライフが1減る。
-    //・ボス敵の音に当たらないようにするためには障害物を利用して隠れる事が必要(敵を倒したあと10秒ほどボス敵が音を出すまでに時間がある)。*/
-
     //移動
     [SerializeField] private Transform[] PatrolPoints; // 巡回ポイントの配列
-    public float MoveSpeed = 15.0f;                    // 動く速度
-    private int CurrentPointIndex = 0;                 // 現在の巡回ポイントのインデックス
+    public float MoveSpeed = 15.0f; // 動く速度
+    private int CurrentPointIndex = 0;// 現在の巡回ポイントのインデックス
 
     //可視化
-    public float ONOFF = 0;                            //(0が見えない；１が見える状態）
+    public float ONOFF = 0;//(0が見えない；１が見える状態）
     private float ONTime;
     private float OFFTime;
-    float VisualizationRandom;                         //可視化時間をランダム
+    float VisualizationRandom;//可視化時間をランダム
 
     //3DモデルのRendererのONOFF
     public SkinnedMeshRenderer PrototypeBodySkinnedMeshRenderer;
@@ -34,11 +29,11 @@ public class BoosEnemy : MonoBehaviour
     public Transform TargetPlayer;
 
     //Playerを追跡
-    public float ChaseSpeed = 2.0f;                           //Playerを追いかけるスピード
+    public float ChaseSpeed = 2.0f;//Playerを追いかけるスピード
     [SerializeField] bool ChaseONOFF;
 
     //Destroyの判定
-    public bool DestroyONOFF;                           //(DestroyON： true/DestroyOFF: false)
+    public bool DestroyONOFF;//(DestroyON： true/DestroyOFF: false)
 
     //Wallに当たった時
     private bool TouchWall;
@@ -51,10 +46,6 @@ public class BoosEnemy : MonoBehaviour
     private float NextTime;
     private bool Front;
 
-    private int x=0;
-    private int y;
-    private int z;
-
     [SerializeField] Quaternion rotation;
 
     public GameObject VisualizationBoss;
@@ -65,7 +56,6 @@ public class BoosEnemy : MonoBehaviour
     {
         GameObject gobj = GameObject.Find("Player");//Playerオブジェクトを探す
         PlayerSeen PS = gobj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
-
         float ChasePlayer = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
         if (TouchWall == false)
         {
@@ -75,7 +65,7 @@ public class BoosEnemy : MonoBehaviour
                 {
                     // Run();
                     ONOFF = 1;//自分自身を可視化
-                    animator.SetBool("Idle",false);
+                    animator.SetBool("Idle", false);
                     animator.SetBool("Move", true);
                     ChaseONOFF = true;//追跡中
                     transform.LookAt(TargetPlayer.transform);//プレイヤーの方向にむく
@@ -86,63 +76,50 @@ public class BoosEnemy : MonoBehaviour
 
                     localAngle.x = 0f;
                     localAngle.z = 0f;
-                    localAngle.y =0f;
+                    localAngle.y = 0f;
                     myTransform.localEulerAngles = localAngle;
                 }
-                else if (ONOFF == 0)
-                {
-                    ChaseONOFF = false;//追跡中じゃない
-                  
-                }
+                else if (ONOFF == 0){ ChaseONOFF = false; }//追跡中じゃない
             }
-            else 
-            { 
-                ChaseONOFF = false;
-              
-            }//追跡中じゃない
-
+            else { ChaseONOFF = false;}//追跡中じゃない
         }
     }
 
     private void NextPatrolPoint() //次のポイント
     {
         CurrentPointIndex++;
-        if (CurrentPointIndex >= PatrolPoints.Length)//巡回ポイントが最後まで行ったら最初に戻る
-            CurrentPointIndex = 0;
+        //巡回ポイントが最後まで行ったら最初に戻る
+        if (CurrentPointIndex >= PatrolPoints.Length) { CurrentPointIndex = 0;}
     }
 
     private void Visualization()//自身の可視化のON OFF
     {
+
         if (ONOFF == 0)//見えないとき
         {
-            if (Front == false)
-            {
-                //3DモデルのRendererを見えない状態
-                PrototypeBodySkinnedMeshRenderer.enabled = false;
-
-                ONOFF = 1;//見える
-
-                 VisualizationBoss.SetActive(false);
-                audioSourse.enabled = false;
-
-            }
+            //3DモデルのRendererを見えない状態
+            PrototypeBodySkinnedMeshRenderer.enabled = false;
+            //ONOFF = 1;//見える
+            audioSourse.enabled = false;
+            VisualizationBoss.SetActive(false);
         }
         else if (ONOFF == 1)//見えているとき
         {
-            if (Front == true)
+            ONOFF = 1;
+            // 3DモデルのRendererを見える状態
+            PrototypeBodySkinnedMeshRenderer.enabled = true;
+            ONTime += Time.deltaTime;
+            if (ONTime>=5.0f)
             {
                 //3DモデルのRendererを見える状態
                 PrototypeBodySkinnedMeshRenderer.enabled = true;
-
                 ONOFF = 0;//見えない
-                VisualizationBoss.SetActive(true);
-
                 float PlayerPoint = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
                 if (PlayerPoint <= 20)
                 {
                     audioSourse.enabled = true;
+                    VisualizationBoss.SetActive(true);
                 }
-          
             }
         }
     }
@@ -237,19 +214,12 @@ public class BoosEnemy : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if(PlayerRun.CrouchOn==false) 
-        {
-            VisualizationBoss.SetActive(true);
-        }
-        else
-        {
-           VisualizationBoss.SetActive(false);
-        }
+        if(PlayerRun.CrouchOn==false) {  VisualizationBoss.SetActive(true);}
+        else{VisualizationBoss.SetActive(false);}
 
         float Player = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
         if (Player <= 2f)
         {
-            //Idle();
             GameObject obj = GameObject.Find("Player"); //Playerオブジェクトを探す
             PlayerSeen PS = obj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
             var childTransforms = PS._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
@@ -266,10 +236,7 @@ public class BoosEnemy : MonoBehaviour
             }
             UpON = true;
         }
-        else if (Player >= 2.5f)
-        {
-            UpON = false;
-        }
+        else if (Player >= 2.5f){UpON = false;}
 
         if (UpON == false)
         {
@@ -279,7 +246,6 @@ public class BoosEnemy : MonoBehaviour
             {
                 animator.SetBool("Idle", false);
                 animator.SetBool("Move", true);
-                // Walk();
             }
 
             Visualization();
@@ -312,43 +278,28 @@ public class BoosEnemy : MonoBehaviour
                 }
             }
 
-
             Vector3 Position = TargetPlayer.position - transform.position; // ターゲットの位置と自身の位置の差を計算
             bool isFront = Vector3.Dot(Position, transform.forward) > 0;  // ターゲットが自身の前方にあるかどうか判定
             bool isBack = Vector3.Dot(Position, transform.forward) < 0;  // ターゲットが自身の後方にあるかどうか判定
 
             if (isFront) //ターゲットが自身の前方にあるなら
             {
-                if (ONOFF == 0) { ChaseONOFF = false; }
+                if (ONOFF == 0) {ChaseONOFF = false;}
                 DestroyONOFF = false;
-                if (Front == true) 
-                {
-                    if (PlayerRun.CrouchOn == false)
-                    {
-                        Ray();
-                    }
-                }
+                if (Front == true) { if (PlayerRun.CrouchOn == false){Ray();}}
             }
             else if (isBack)// ターゲットが自身の後方にあるなら
             {
                 float detectionPlayer = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
 
-                if (detectionPlayer <= 7f)//プレイヤーが検知範囲に入ったら
-                {
-                    DestroyONOFF = true;
-                }
+                //プレイヤーが検知範囲に入ったら
+                if (detectionPlayer <= 7f){DestroyONOFF = true;}
             }
         }
     }
-    void Idle()
-    {
-        audioSourse.PlayOneShot(BossIdle);
-    }
+    void Idle(){audioSourse.PlayOneShot(BossIdle);}
 
-    void Move()
-    {
-        audioSourse.PlayOneShot(BossMove);
-    }
+    void Move(){audioSourse.PlayOneShot(BossMove);}
 
     private void OnTriggerStay(Collider other)
     {
@@ -356,7 +307,7 @@ public class BoosEnemy : MonoBehaviour
         {
             ONOFF = 1;
             ONTime = 0;
-           　//3DモデルのRendererを見える状態
+           //3DモデルのRendererを見える状態
             PrototypeBodySkinnedMeshRenderer.enabled = true;
         }
 

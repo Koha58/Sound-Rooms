@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class EnemySearchcontroller : MonoBehaviour
 {
-
     //移動
     [SerializeField] private Transform[] PatrolPoints; // 巡回ポイントの配列
     private float MoveSpeed = 0.2f; // 動く速度
@@ -33,7 +32,6 @@ public class EnemySearchcontroller : MonoBehaviour
     float ChaseSpeed = 0.4f;//Playerを追いかけるスピード
     bool ChaseONOFF;
 
-
     //Destroyの判定
     public bool DestroyONOFF;//(DestroyON： true/DestroyOFF: false)
 
@@ -44,11 +42,6 @@ public class EnemySearchcontroller : MonoBehaviour
     private Transform Pos;
 
     [SerializeField] Quaternion rotation;
-
-   // [SerializeField] float X;
-   // [SerializeField] float Y;
-   // [SerializeField] float Z;
-   // [SerializeField] Transform transform;
     private bool UpON = false;
 
     //アニメーション
@@ -71,6 +64,7 @@ public class EnemySearchcontroller : MonoBehaviour
                 if (PS.onoff == 1)//プレイヤーが可視化していたら
                 {
                     ONOFF = 1;
+                    audioSourse.enabled = true;
                     animator.SetBool("StandUp", true);
                     animator.SetBool("Run", true);
                     ChaseONOFF = true;
@@ -79,17 +73,21 @@ public class EnemySearchcontroller : MonoBehaviour
                 }
                 else if (ONOFF == 0){ChaseONOFF = false;}
             }
-            else{ChaseONOFF = false;}
+            else{
+                ChaseONOFF = false;
+                CurrentPointIndex--;
+                //巡回ポイントが最後まで行ったら最初に戻る
+                if (CurrentPointIndex <= PatrolPoints.Length){ CurrentPointIndex = 0; }
+                animator.SetBool("Run", true);
+            }
         }
     }
 
     private void NextPatrolPoint() //次のポイント
     {
         CurrentPointIndex++;
-        if (CurrentPointIndex >= PatrolPoints.Length)//巡回ポイントが最後まで行ったら最初に戻る
-        {
-            CurrentPointIndex = 0;
-        }
+        //巡回ポイントが最後まで行ったら最初に戻る
+        if (CurrentPointIndex >= PatrolPoints.Length){CurrentPointIndex = 0;}
     }
 
     private void Visualization()//自身の可視化のON OFF
@@ -98,18 +96,13 @@ public class EnemySearchcontroller : MonoBehaviour
         {
             //3DモデルのRendererを見えない状態
             PrototypeBodySkinnedMeshRenderer.enabled = false;
-
             ONTime += Time.deltaTime;
             if (Count == 0)
             {
                 if (ONTime >= VisualizationRandom)//ランダムで出された値より大きかったら見えるようにする
                 {
                     if (VisualizationRandom <= 5.0f) { Count = 0; }
-                    else
-                    {
-                        Count = 1;
-                        //Debug.Log("2");
-                    }
+                    else{Count = 1;}
                     audioSourse.enabled = true;
                     ONOFF = 1;
                     ONTime = 0;
@@ -133,9 +126,9 @@ public class EnemySearchcontroller : MonoBehaviour
         if (Count == 1)
         {
             CountTime += Time.deltaTime;
-            if(CountTime>=20.0f){ CountTime= 0;
+            if(CountTime>=20.0f){ 
+                CountTime= 0;
                 Count = 0;
-                //Debug.Log("3");
             }
         }
     }
@@ -177,10 +170,11 @@ public class EnemySearchcontroller : MonoBehaviour
                     }
                 }
 
-                if (hit.collider.gameObject.CompareTag("Wall") || (hit.collider.gameObject.CompareTag("InWall")))
+                if (hit.collider.gameObject.CompareTag("Wall"))
                 {
                     PS.Visualization = false;
-                    PS.onoff = 0;  //見えているから1
+                    PS.onoff = 0;//見えているから1
+                    audioSourse.enabled = false;
                     foreach (var playerParts in childTransforms)
                     {
                         //タグが"PlayerParts"である子オブジェクトを見えるようにする
@@ -241,7 +235,6 @@ public class EnemySearchcontroller : MonoBehaviour
 
         if (UpON == false)
         {
-
             if (this.transform.position == Pos.transform.position)
             {
                 animator.SetBool("StandUp", false);
@@ -255,11 +248,8 @@ public class EnemySearchcontroller : MonoBehaviour
             {
                 transform.position = Vector3.MoveTowards(transform.position, PatrolPoints[CurrentPointIndex].position, MoveSpeed * Time.deltaTime);
                 transform.LookAt(PatrolPoints[CurrentPointIndex].transform);//次のポイントの方向を向く
-
-                if (transform.position == PatrolPoints[CurrentPointIndex].position)// 次の巡回ポイントへのインデックスを更新
-                {
-                    NextPatrolPoint();
-                }
+                // 次の巡回ポイントへのインデックスを更新
+                if (transform.position == PatrolPoints[CurrentPointIndex].position){NextPatrolPoint();}
             }
 
             Vector3 Position = TargetPlayer.position - transform.position; // ターゲットの位置と自身の位置の差を計算
@@ -268,36 +258,25 @@ public class EnemySearchcontroller : MonoBehaviour
 
             if (isFront) //ターゲットが自身の前方にあるなら
             {
+                audioSourse.enabled = true;
                 DestroyONOFF = false;
                 Ray();
-
             }
             else if (isBack)// ターゲットが自身の後方にあるなら
             {
+                audioSourse.enabled = false;
                 float detectionPlayer = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
-
-                if (detectionPlayer <= 7f)//プレイヤーが検知範囲に入ったら
-                {
-                    DestroyONOFF = true;
-                }
+                //プレイヤーが検知範囲に入ったら
+                if (detectionPlayer <= 7f){DestroyONOFF = true;}
             }
         }
     }
 
-    void Laugh()
-    {
-        audioSourse.PlayOneShot(TrickEnemyLaugh);
-    }
+    void Laugh(){audioSourse.PlayOneShot(TrickEnemyLaugh);}
 
-    void Idle()
-    {
-        audioSourse.PlayOneShot(TrickEnemyIdle);
-    }
+    void Idle(){audioSourse.PlayOneShot(TrickEnemyIdle);}
 
-    void Run()
-    {
-        audioSourse.PlayOneShot(TrickEnemyRun);
-    }
+    void Run(){audioSourse.PlayOneShot(TrickEnemyRun);}
 
     private void OnTriggerStay(Collider other)
     {
@@ -313,8 +292,8 @@ public class EnemySearchcontroller : MonoBehaviour
         {
             TouchWall = true;
             CurrentPointIndex--;
-            if (CurrentPointIndex <= PatrolPoints.Length)//巡回ポイントが最後まで行ったら最初に戻る
-            { CurrentPointIndex = 0; }
+            //巡回ポイントが最後まで行ったら最初に戻る
+            if (CurrentPointIndex <= PatrolPoints.Length){ CurrentPointIndex = 0; }
         }
     }
 }
