@@ -18,7 +18,6 @@ public class ItemSeen : MonoBehaviour
     [SerializeField] public GameObject SeenArea;
     public GameObject[] Boxes;
     public GameObject[] Objects;
-    public GameObject[] Doors;
     public GameObject[] Shelfs;
     public GameObject[] InShelfs;
     public GameObject[] Capsules;
@@ -29,6 +28,8 @@ public class ItemSeen : MonoBehaviour
     LevelMeter levelMeter;
 
     GameObject haveChildren;
+
+    public static bool FindDoor;
 
     void Start()
     {
@@ -94,12 +95,7 @@ public class ItemSeen : MonoBehaviour
             CapsulePartss.GetComponent<Renderer>().enabled = true;
         }
 
-        Doors = GameObject.FindGameObjectsWithTag("Door");
-
-        foreach (GameObject Door in Doors)
-        {
-            Door.GetComponent<Collider>().enabled = true;
-        }
+        FindDoor = false;
     }
 
     private void Update()
@@ -181,11 +177,6 @@ public class ItemSeen : MonoBehaviour
                     Object.GetComponent<Collider>().enabled = true;
                 }
 
-                foreach (GameObject Door in Doors)
-                {
-                    Door.GetComponent<Collider>().enabled = true;
-                }
-
                 onoff = 0;  //Œ©‚¦‚Ä‚¢‚È‚¢‚©‚ç0
             }
         }
@@ -246,6 +237,8 @@ public class ItemSeen : MonoBehaviour
                 GameObject door = childTransform.gameObject;
                 door.GetComponent<Renderer>().enabled = true;
             }
+
+            FindDoor = true;
         }
 
     }

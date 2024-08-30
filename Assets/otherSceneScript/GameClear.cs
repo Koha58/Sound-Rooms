@@ -19,7 +19,7 @@ public class GameClear : MonoBehaviour
 
     void OnCollisionEnter(Collision other)
     {
-        GameObject cobj = GameObject.Find("Player");
+        GameObject cobj = GameObject.Find("EnemyAttackArea");
         EnemyAttack EAtack = cobj.GetComponent<EnemyAttack>(); //付いているスクリプトを取得
 
         if (other.gameObject.name == "Door1")
