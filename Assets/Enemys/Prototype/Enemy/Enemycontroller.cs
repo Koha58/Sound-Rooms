@@ -29,7 +29,7 @@ public class Enemycontroller : MonoBehaviour
     public Transform TargetPlayer;
 
     //Playerを追跡
-    float ChaseSpeed = 0.2f;                           //Playerを追いかけるスピード
+    float ChaseSpeed = 0.4f;                           //Playerを追いかけるスピード
     [SerializeField] bool ChaseONOFF;
 
     //Destroyの判定
@@ -176,7 +176,32 @@ public class Enemycontroller : MonoBehaviour
             }
         }
     }
-    
+
+    private void Ray2()
+    {
+        Ray ray;
+        RaycastHit hit;
+        Vector3 direction;   // Rayを飛ばす方向
+        float distance = 5.0f;    // Rayを飛ばす距離
+
+        // Rayを飛ばす方向を計算
+        Vector3 temp = Player.transform.position - transform.position;
+        direction = temp.normalized;
+
+        ray = new Ray(transform.position, direction);  // Rayを飛ばす
+        Debug.DrawRay(ray.origin, ray.direction * distance, Color.red);  // Rayをシーン上に描画
+
+        // Rayが最初に当たった物体を調べる
+        if (Physics.Raycast(ray.origin, ray.direction * distance, out hit))
+        {
+            if (hit.collider.gameObject.CompareTag("Wall"))
+            {
+                audioSourse.enabled = false;
+            }
+        }
+    }
+
+
     private void Chase2()
     {
         GameObject gobj = GameObject.Find("Player");//Playerオブジェクトを探す
@@ -210,6 +235,7 @@ public class Enemycontroller : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
+        Ray2();
         float Player = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
         if (Player<= 0.65f)
         {

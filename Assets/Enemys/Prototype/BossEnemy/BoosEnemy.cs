@@ -100,26 +100,30 @@ public class BoosEnemy : MonoBehaviour
             //3DモデルのRendererを見えない状態
             PrototypeBodySkinnedMeshRenderer.enabled = false;
             //ONOFF = 1;//見える
-            audioSourse.enabled = false;
             VisualizationBoss.SetActive(false);
         }
         else if (ONOFF == 1)//見えているとき
         {
+            //3DモデルのRendererを見える状態
+            PrototypeBodySkinnedMeshRenderer.enabled = true;
+
+            float PlayerPoint = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
+            if (PlayerPoint <= 20)
+            {
+                VisualizationBoss.SetActive(true);
+            }
+            /*
             ONOFF = 1;
             // 3DモデルのRendererを見える状態
             PrototypeBodySkinnedMeshRenderer.enabled = true;
+            */
             ONTime += Time.deltaTime;
             if (ONTime>=5.0f)
             {
                 //3DモデルのRendererを見える状態
-                PrototypeBodySkinnedMeshRenderer.enabled = true;
+                PrototypeBodySkinnedMeshRenderer.enabled =false;
                 ONOFF = 0;//見えない
-                float PlayerPoint = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
-                if (PlayerPoint <= 20)
-                {
-                    audioSourse.enabled = true;
-                    VisualizationBoss.SetActive(true);
-                }
+                VisualizationBoss.SetActive(false);
             }
         }
     }
