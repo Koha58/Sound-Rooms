@@ -29,7 +29,6 @@ public class TitleEnemyMove : MonoBehaviour
     [SerializeField] Animator animator;
 
     public GameObject VisualizationGameObject;
-    private bool UpON = false;
     private float NextTime;
     private bool Front;
 
