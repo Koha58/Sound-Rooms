@@ -29,7 +29,7 @@ public class EnemySearchcontroller : MonoBehaviour
     public Transform TargetPlayer;
 
     //Playerを追跡
-    float ChaseSpeed = 0.4f;//Playerを追いかけるスピード
+    float ChaseSpeed = 0.65f;//Playerを追いかけるスピード
     bool ChaseONOFF;
 
     //Destroyの判定
@@ -71,13 +71,13 @@ public class EnemySearchcontroller : MonoBehaviour
                     transform.LookAt(TargetPlayer.transform); //プレイヤーの方向にむく
                     transform.position += transform.forward * ChaseSpeed;//プレイヤーの方向に向かう
                 }
-                else if (ONOFF == 0){ChaseONOFF = false;}
+                else if (ONOFF == 0){
+                    ChaseONOFF = false;
+                    animator.SetBool("Run", true);
+                }
             }
             else{
                 ChaseONOFF = false;
-                CurrentPointIndex--;
-                //巡回ポイントが最後まで行ったら最初に戻る
-                if (CurrentPointIndex <= PatrolPoints.Length){ CurrentPointIndex = 0; }
                 animator.SetBool("Run", true);
             }
         }
@@ -103,7 +103,6 @@ public class EnemySearchcontroller : MonoBehaviour
                 {
                     if (VisualizationRandom <= 5.0f) { Count = 0; }
                     else{Count = 1;}
-                    audioSourse.enabled = true;
                     ONOFF = 1;
                     ONTime = 0;
                 }
@@ -116,7 +115,6 @@ public class EnemySearchcontroller : MonoBehaviour
             OFFTime += Time.deltaTime;
             if (OFFTime >= 10.0f)//10秒以上経ったら見えなくする
             {
-                audioSourse.enabled = false;
                 ONOFF = 0;
                 OFFTime = 0;
             }
@@ -195,6 +193,30 @@ public class EnemySearchcontroller : MonoBehaviour
         }
     }
 
+    private void Ray2()
+    {
+        Ray ray;
+        RaycastHit hit;
+        Vector3 direction;   // Rayを飛ばす方向
+        float distance = 5.0f;    // Rayを飛ばす距離
+
+        // Rayを飛ばす方向を計算
+        Vector3 temp = Player.transform.position - transform.position;
+        direction = temp.normalized;
+
+        ray = new Ray(transform.position, direction);  // Rayを飛ばす
+        Debug.DrawRay(ray.origin, ray.direction * distance, Color.red);  // Rayをシーン上に描画
+
+        // Rayが最初に当たった物体を調べる
+        if (Physics.Raycast(ray.origin, ray.direction * distance, out hit))
+        {
+            if (hit.collider.gameObject.CompareTag("Wall"))
+            {
+                audioSourse.enabled = false;
+            }
+        }
+    }
+
     // Start is called before the first frame update
     private void Start()
     {
@@ -213,6 +235,7 @@ public class EnemySearchcontroller : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
+        Ray2();
         float Player = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
         if (Player <= 2.0f)
         {
@@ -258,13 +281,11 @@ public class EnemySearchcontroller : MonoBehaviour
 
             if (isFront) //ターゲットが自身の前方にあるなら
             {
-                audioSourse.enabled = true;
                 DestroyONOFF = false;
                 Ray();
             }
             else if (isBack)// ターゲットが自身の後方にあるなら
             {
-                audioSourse.enabled = false;
                 float detectionPlayer = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
                 //プレイヤーが検知範囲に入ったら
                 if (detectionPlayer <= 7f){DestroyONOFF = true;}
@@ -294,6 +315,15 @@ public class EnemySearchcontroller : MonoBehaviour
             CurrentPointIndex--;
             //巡回ポイントが最後まで行ったら最初に戻る
             if (CurrentPointIndex <= PatrolPoints.Length){ CurrentPointIndex = 0; }
+        }
+
+        if (other.CompareTag("RoomOut"))
+        {
+            TouchWall = true;
+            animator.SetBool("Run", true);
+            CurrentPointIndex--;
+            //巡回ポイントが最後まで行ったら最初に戻る
+            if (CurrentPointIndex <= PatrolPoints.Length) { CurrentPointIndex = 0; }
         }
     }
 }

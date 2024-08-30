@@ -80,16 +80,6 @@ public class GameOverScript : MonoBehaviour
             }
         }
 
-        if(other.CompareTag("BossV"))
-        {
-            if (PS.onoff == 1)
-            {
-                //Debug.Log("1");
-                LifeCount--;
-            }
-        }
-
-
         if (LifeCount == 2)
         {
             Life3.GetComponent<Image>().enabled = false;
@@ -108,20 +98,18 @@ public class GameOverScript : MonoBehaviour
         }
 
     }
- /*   private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         PlayerSeen PS;
         GameObject gobj = GameObject.Find("Player");
         PS = gobj.GetComponent<PlayerSeen>();
-
-        if (other.CompareTag("EnemyParts"))
+        if (other.CompareTag("BossV"))
         {
             if (PS.onoff == 1)
             {
                 //Debug.Log("1");
-                SceneManager.LoadScene("GameOver");
+                LifeCount--;
             }
         }
-
-    }*/
+    }
 }

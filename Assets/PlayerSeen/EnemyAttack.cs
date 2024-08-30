@@ -76,6 +76,7 @@ public class EnemyAttack : MonoBehaviour
             {
                 enemyDeathcnt++;
                 DeathRange += 1.0f;
+                GetComponent<ParticleSystem>().Play();
                 Debug.Log(enemyDeathcnt);
                 Destroy(other.gameObject);
 
@@ -96,6 +97,7 @@ public class EnemyAttack : MonoBehaviour
             {
                 enemyDeathcnt++;
                 DeathRange += 1.0f;
+                GetComponent<ParticleSystem>().Play();
                 Debug.Log(enemyDeathcnt);
                 Destroy(other.gameObject);
 
