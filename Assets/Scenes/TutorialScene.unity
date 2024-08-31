@@ -4412,7 +4412,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 124924245}
-  - component: {fileID: 124924247}
   - component: {fileID: 124924246}
   m_Layer: 0
   m_Name: SoundcheckArea
@@ -4430,8 +4429,8 @@ Transform:
   m_GameObject: {fileID: 124924244}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.05, y: -3.12, z: 0.1}
-  m_LocalScale: {x: 20, y: 20, z: 20}
+  m_LocalPosition: {x: -0.05, y: 1, z: 0.1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2764094500274459442}
@@ -4457,14 +4456,6 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!33 &124924247
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 124924244}
-  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1001 &127488835
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5296,7 +5287,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 3, y: 1.5, z: 2}
   m_Center: {x: 0, y: 0, z: 0}
@@ -74927,7 +74918,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1896459090}
-  - component: {fileID: 1896459092}
   - component: {fileID: 1896459091}
   m_Layer: 0
   m_Name: SoundcheckArea
@@ -74945,8 +74935,8 @@ Transform:
   m_GameObject: {fileID: 1896459089}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.05, y: -3.12, z: 0.1}
-  m_LocalScale: {x: 20, y: 20, z: 20}
+  m_LocalPosition: {x: -0.05, y: 1, z: 0.1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1694921163}
@@ -74972,14 +74962,6 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!33 &1896459092
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1896459089}
-  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &1896616117
 GameObject:
   m_ObjectHideFlags: 0

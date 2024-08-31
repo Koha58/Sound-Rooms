@@ -51,10 +51,14 @@ public class BossTutoriaru : MonoBehaviour
 
     public SphereCollider SphereCollider;
 
+    float Count;
+
     private void Chase()//プレイヤーを追いかける
     {
         GameObject gobj = GameObject.Find("Player");//Playerオブジェクトを探す
         PlayerSeen PS = gobj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
+        var childTransforms = PS._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
+
         float ChasePlayer = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
         if (TouchWall == false)
         {
@@ -63,12 +67,19 @@ public class BossTutoriaru : MonoBehaviour
                 if (PS.onoff == 1)//プレイヤーが可視化していたら
                 {
                     // Run();
-                    ONOFF = 1;//自分自身を可視化
+                    //ONOFF = 1;//自分自身を可視化
                     animator.SetBool("Idle", false);
                     animator.SetBool("Move", true);
                     ChaseONOFF = true;//追跡中
                     transform.LookAt(TargetPlayer.transform);//プレイヤーの方向にむく
                     transform.position += transform.forward * ChaseSpeed; //プレイヤーの方向に向かう
+                    PS.Visualization = true;
+                    PS.onoff = 1;  //見えているから1
+                    foreach (var playerParts in childTransforms)
+                    {
+                        //タグが"PlayerParts"である子オブジェクトを見えるようにする
+                        playerParts.gameObject.GetComponent<Renderer>().enabled = true;
+                    }
 
                 }
                 else if (ONOFF == 0) { ChaseONOFF = false; }//追跡中じゃない
@@ -135,6 +146,7 @@ public class BossTutoriaru : MonoBehaviour
         // Rayが最初に当たった物体を調べる
         if (Physics.Raycast(ray.origin, ray.direction * distance, out hit))
         {
+            /*
             if (hit.collider.CompareTag("Player"))
             {
                 PS.onoff = 1;  //見えているから1
@@ -145,7 +157,7 @@ public class BossTutoriaru : MonoBehaviour
                     //タグが"PlayerParts"である子オブジェクトを見えるようにする
                     playerParts.gameObject.GetComponent<Renderer>().enabled = true;
                 }
-            }
+            }*/
         }
         else
         {
@@ -210,21 +222,39 @@ public class BossTutoriaru : MonoBehaviour
         float Player = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
         if (Player <= 3.5f)
         {
-            GameObject obj = GameObject.Find("Player"); //Playerオブジェクトを探す
-            PlayerSeen PS = obj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
-            var childTransforms = PS._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
-
-            transform.LookAt(TargetPlayer.transform);//プレイヤーの方向にむく
-            animator.SetBool("Idle", true);
-            animator.SetBool("Move", false);
-            PS.Visualization = true;
-            PS.onoff = 1;  //見えているから1
-            foreach (var playerParts in childTransforms)
+            if (ONOFF == 1)
             {
-                //タグが"PlayerParts"である子オブジェクトを見えるようにする
-                playerParts.gameObject.GetComponent<Renderer>().enabled = true;
+                GameObject obj = GameObject.Find("Player"); //Playerオブジェクトを探す
+                PlayerSeen PS = obj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
+                var childTransforms = PS._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
+
+                transform.LookAt(TargetPlayer.transform);//プレイヤーの方向にむく
+                animator.SetBool("Idle", true);
+                animator.SetBool("Move", false);
+                /*
+                PS.Visualization = true;
+                PS.onoff = 1;  //見えているから1
+                foreach (var playerParts in childTransforms)
+                {
+                    //タグが"PlayerParts"である子オブジェクトを見えるようにする
+                    playerParts.gameObject.GetComponent<Renderer>().enabled = true;
+                }*/
+                UpON = true;
+
+                Count += Time.deltaTime;
+                if (Count <= 10.0f)
+                {
+                    TouchWall = true;
+                    animator.SetBool("Run", true);
+                    CurrentPointIndex--;
+                    //巡回ポイントが最後まで行ったら最初に戻る
+                    if (CurrentPointIndex <= PatrolPoints.Length) { CurrentPointIndex = 0; }
+                }
+                else
+                {
+                    Count = 0;
+                }
             }
-            UpON = true;
         }
         else if (Player >= 4f) { UpON = false; }
 

@@ -7,7 +7,7 @@ public class Enemycontroller : MonoBehaviour
 {
     //移動
     [SerializeField] private Transform[] PatrolPoints; // 巡回ポイントの配列
-    private float MoveSpeed = 0.5f;                    // 動く速度
+    private float MoveSpeed = 0.6f;                    // 動く速度
     private int CurrentPointIndex = 0;                 // 現在の巡回ポイントのインデックス
 
     //可視化
@@ -29,7 +29,7 @@ public class Enemycontroller : MonoBehaviour
     public Transform TargetPlayer;
 
     //Playerを追跡
-    float ChaseSpeed = 0.25f;                           //Playerを追いかけるスピード
+    float ChaseSpeed = 0.3f;                           //Playerを追いかけるスピード
     [SerializeField] bool ChaseONOFF;
 
     //Destroyの判定
@@ -262,21 +262,24 @@ public class Enemycontroller : MonoBehaviour
         float Player = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
         if (Player<= 0.65f)
         {
-            GameObject obj = GameObject.Find("Player"); //Playerオブジェクトを探す
-            PlayerSeen PS = obj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
-            var childTransforms = PS._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
-
-            transform.LookAt(TargetPlayer.transform);//プレイヤーの方向にむく
-            animator.SetBool("Walk", false);
-            animator.SetBool("Run", false);
-            PS.Visualization = true;
-            PS.onoff = 1;  //見えているから1
-            foreach (var playerParts in childTransforms)
+            if (ONOFF == 1)
             {
-                //タグが"PlayerParts"である子オブジェクトを見えるようにする
-                playerParts.gameObject.GetComponent<Renderer>().enabled = true;
+                GameObject obj = GameObject.Find("Player"); //Playerオブジェクトを探す
+                PlayerSeen PS = obj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
+                var childTransforms = PS._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
+
+                transform.LookAt(TargetPlayer.transform);//プレイヤーの方向にむく
+                animator.SetBool("Walk", false);
+                animator.SetBool("Run", false);
+                PS.Visualization = true;
+                PS.onoff = 1;  //見えているから1
+                foreach (var playerParts in childTransforms)
+                {
+                    //タグが"PlayerParts"である子オブジェクトを見えるようにする
+                    playerParts.gameObject.GetComponent<Renderer>().enabled = true;
+                }
+                UpON = true;
             }
-            UpON = true;
         }
         else if(Player >= 1.5f) {UpON = false;}
 
