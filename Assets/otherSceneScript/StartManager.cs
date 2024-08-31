@@ -73,6 +73,11 @@ public class StartManager : MonoBehaviour
         SceneManager.LoadScene("GameScene");
     }
 
+    public void OnTutorial()
+    {
+        SceneManager.LoadScene("TutorialScene");
+    }
+
     public void EnterStartButton()
     {
         StartButtonImage.color = new Color32(255, 255, 255, 255);
