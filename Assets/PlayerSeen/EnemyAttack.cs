@@ -22,6 +22,11 @@ public class EnemyAttack : MonoBehaviour
 
     public static bool BossTiming;
 
+    float DC;
+
+    bool DB=false;
+
+    bool DB2=false;
     //[SerializeField]
     //private GameObject[] Prototype;
 
@@ -59,6 +64,41 @@ public class EnemyAttack : MonoBehaviour
                 onoff = 0;  //Œ©‚¦‚Ä‚¢‚È‚¢‚©‚ç0
             }
         }
+
+        if(DB==true)
+        {
+            DC += Time.deltaTime;
+            if (DC >= 10.0f)
+            {
+                GameObject Boss = GameObject.FindWithTag("Boss");
+                BoosEnemy BS = Boss.GetComponent<BoosEnemy>();
+
+                BS.MoveSpeed -= 0.1f;
+                BS.ChaseSpeed -= 0.01f;
+                BS.SphereCollider.radius -= 0.1f;
+                BS.ONOFF = 1;
+
+                DC = 0;
+                DB = false;
+            }
+        }
+
+        if(DB2 ==true)
+        {
+            if (DC >= 10.0f)
+            {
+                GameObject Boss = GameObject.FindWithTag("Boss");
+                BossTutoriaru BS = Boss.GetComponent<BossTutoriaru>();
+
+                BS.MoveSpeed -= 0.1f;
+                BS.ChaseSpeed -= 0.01f;
+                BS.SphereCollider.radius -= 0.1f;
+                BS.ONOFF = 1;
+
+                DC = 0;
+                DB2 = false;
+            }
+        }
     }
     private void OnTriggerStay(Collider other)
     {
@@ -83,16 +123,8 @@ public class EnemyAttack : MonoBehaviour
                 GetComponent<ParticleSystem>().Play();
                 Debug.Log(enemyDeathcnt);
                 Destroy(other.gameObject);
-
                 BossTiming = true;
-
-                GameObject Boss = GameObject.FindWithTag("Boss");
-                BoosEnemy BS = Boss.GetComponent<BoosEnemy>();
-
-                BS.MoveSpeed -= 0.1f;
-                BS.ChaseSpeed -= 0.01f;
-                BS.SphereCollider.radius -= 0.1f;
-                BS.ONOFF = 1;
+                DB =true;
             }
         }
 
@@ -108,14 +140,7 @@ public class EnemyAttack : MonoBehaviour
                 Destroy(other.gameObject);
 
                 BossTiming = true;
-
-                GameObject Boss = GameObject.FindWithTag("Boss");
-                BoosEnemy BS = Boss.GetComponent<BoosEnemy>();
-
-                BS.MoveSpeed -= 0.1f;
-                BS.ChaseSpeed -= 0.01f;
-                BS.SphereCollider.radius -= 0.1f;
-                BS.ONOFF = 1;
+                DB = true;
             }
         }
 
@@ -133,14 +158,8 @@ public class EnemyAttack : MonoBehaviour
             SetCountText();
 
             BossTiming = true;
+            DB = true;
 
-            GameObject Boss = GameObject.FindWithTag("Boss");
-            BoosEnemy BS = Boss.GetComponent<BoosEnemy>();
-
-            BS.MoveSpeed -= 0.1f;
-            BS.ChaseSpeed -= 0.01f;
-            BS.SphereCollider.radius -= 0.1f;
-            BS.ONOFF = 1;
 
         }
 
@@ -154,14 +173,9 @@ public class EnemyAttack : MonoBehaviour
                 GetComponent<ParticleSystem>().Play();
                 Debug.Log(enemyDeathcnt);
                 Destroy(other.gameObject);
+                BossTiming = true;
+                DB2 = true;
 
-                GameObject Boss = GameObject.FindWithTag("Boss");
-                BoosEnemy BS = Boss.GetComponent<BoosEnemy>();
-
-                BS.MoveSpeed -= 0.1f;
-                BS.ChaseSpeed -= 0.01f;
-                BS.SphereCollider.radius -= 0.1f;
-                BS.ONOFF = 1;
             }
         }
 
@@ -178,14 +192,9 @@ public class EnemyAttack : MonoBehaviour
                 PickupSound.PlayOneShot(PickupSound.clip);
                 count += 1;
                 SetCountText();
+                BossTiming = true;
+                DB2 = true;
 
-                GameObject Boss = GameObject.FindWithTag("Boss");
-                BoosEnemy BS = Boss.GetComponent<BoosEnemy>();
-
-                BS.MoveSpeed -= 0.1f;
-                BS.ChaseSpeed -= 0.01f;
-                BS.SphereCollider.radius -= 0.1f;
-                BS.ONOFF = 1;
             }
         }
     }

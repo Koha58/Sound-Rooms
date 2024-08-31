@@ -96,6 +96,25 @@ public class GameOverScript : MonoBehaviour
             }
         }
 
+        if (other.CompareTag("Boss"))
+        {
+            BoosEnemy BE = other.GetComponent<BoosEnemy>();
+            if (BE.ONOFF == 1)
+            {
+                LifeCount--;
+            }
+
+        }
+        /*
+        if (other.CompareTag("Boss"))
+        {
+            BossTutoriaru BT = other.GetComponent<BossTutoriaru>();
+            if (BT.ONOFF == 1)
+            {
+                LifeCount--;
+            }
+        }*/
+
 
         if (LifeCount == 4)
         {

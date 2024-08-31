@@ -11,7 +11,7 @@ public class EnemyController : MonoBehaviour
 {
     //移動
     [SerializeField] private Transform[] PatrolPoints; // 巡回ポイントの配列
-    private float MoveSpeed = 0.5f;                    // 動く速度
+    private float MoveSpeed = 0.6f;                    // 動く速度
     private int CurrentPointIndex = 0;                 // 現在の巡回ポイントのインデックス
 
     //可視化
@@ -33,7 +33,7 @@ public class EnemyController : MonoBehaviour
     public Transform TargetPlayer;
 
     //Playerを追跡
-    float ChaseSpeed = 0.05f;                           //Playerを追いかけるスピード
+    float ChaseSpeed = 0.3f;                           //Playerを追いかけるスピード
     [SerializeField] bool ChaseONOFF;
 
     //Destroyの判定
@@ -307,7 +307,7 @@ public class EnemyController : MonoBehaviour
                     animator.SetBool("Walk", false);
                     animator.SetBool("Run", false);
                     NextTime += Time.deltaTime;
-                    if (NextTime >= 5.0f)
+                    if (NextTime >= 10.0f)
                     {
                         NextPatrolPoint();
                         NextTime = 0;
