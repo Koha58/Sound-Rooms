@@ -20,6 +20,8 @@ public class EnemyAttack : MonoBehaviour
 
     public static float DeathRange = 0f;//EnemyÇ™éÄÇ Ç∆çLÇ™ÇÈîÕàÕ
 
+    public static bool BossTiming;
+
     //[SerializeField]
     //private GameObject[] Prototype;
 
@@ -32,6 +34,8 @@ public class EnemyAttack : MonoBehaviour
         count = 0;
         SetCountText();
         PickupSound = GetComponent<AudioSource>();
+
+        BossTiming = false;
     }
 
     // Update is called once per frame
@@ -80,6 +84,8 @@ public class EnemyAttack : MonoBehaviour
                 Debug.Log(enemyDeathcnt);
                 Destroy(other.gameObject);
 
+                BossTiming = true;
+
                 GameObject Boss = GameObject.FindWithTag("Boss");
                 BoosEnemy BS = Boss.GetComponent<BoosEnemy>();
 
@@ -100,6 +106,8 @@ public class EnemyAttack : MonoBehaviour
                 GetComponent<ParticleSystem>().Play();
                 Debug.Log(enemyDeathcnt);
                 Destroy(other.gameObject);
+
+                BossTiming = true;
 
                 GameObject Boss = GameObject.FindWithTag("Boss");
                 BoosEnemy BS = Boss.GetComponent<BoosEnemy>();
@@ -123,6 +131,8 @@ public class EnemyAttack : MonoBehaviour
             PickupSound.PlayOneShot(PickupSound.clip);
             count += 1;
             SetCountText();
+
+            BossTiming = true;
 
             GameObject Boss = GameObject.FindWithTag("Boss");
             BoosEnemy BS = Boss.GetComponent<BoosEnemy>();
