@@ -7,7 +7,7 @@ public class EnemySearchcontroller : MonoBehaviour
 {
     //移動
     [SerializeField] private Transform[] PatrolPoints; // 巡回ポイントの配列
-    private float MoveSpeed = 0.2f; // 動く速度
+    private float MoveSpeed = 0.5f; // 動く速度
     private int CurrentPointIndex = 0; // 現在の巡回ポイントのインデックス
 
     //可視化
@@ -29,7 +29,7 @@ public class EnemySearchcontroller : MonoBehaviour
     public Transform TargetPlayer;
 
     //Playerを追跡
-    float ChaseSpeed = 0.65f;//Playerを追いかけるスピード
+    float ChaseSpeed = 0.55f;//Playerを追いかけるスピード
     bool ChaseONOFF;
 
     //Destroyの判定
@@ -282,14 +282,14 @@ public class EnemySearchcontroller : MonoBehaviour
 
             if (isFront) //ターゲットが自身の前方にあるなら
             {
-                DestroyONOFF = true;
-                Ray();
+                DestroyONOFF = false;
+                if (ONOFF == 1) { Ray(); }
             }
             else if (isBack)// ターゲットが自身の後方にあるなら
             {
                 float detectionPlayer = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
                 //プレイヤーが検知範囲に入ったら
-                if (detectionPlayer <= 7f){DestroyONOFF = false;}
+                if (detectionPlayer <= 7f){DestroyONOFF = true;}
             }
         }
     }

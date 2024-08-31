@@ -29,7 +29,7 @@ public class Enemycontroller : MonoBehaviour
     public Transform TargetPlayer;
 
     //Playerを追跡
-    float ChaseSpeed = 0.6f;                           //Playerを追いかけるスピード
+    float ChaseSpeed = 0.25f;                           //Playerを追いかけるスピード
     [SerializeField] bool ChaseONOFF;
 
     //Destroyの判定
@@ -50,6 +50,8 @@ public class Enemycontroller : MonoBehaviour
     int pianocnt;
     public bool zero;
     AudioSetting AS;
+
+    bool PianoRoom;
 
     private void Chase()//プレイヤーを追いかける
     {
@@ -105,18 +107,27 @@ public class Enemycontroller : MonoBehaviour
                 ONOFF = 0;//見えない
             }
         }*/
-
-        if (Front == false)
+        if (PianoRoom == false)
         {
-            //3DモデルのRendererを見えない状態
-            PrototypeBodySkinnedMeshRenderer.enabled = false;
-            ONOFF = 0;//見える
+            if (Front == false)
+            {
+                //3DモデルのRendererを見えない状態
+                PrototypeBodySkinnedMeshRenderer.enabled = false;
+                ONOFF = 0;//見える
+            }
         }
         if (Front == true)
         {
             //3DモデルのRendererを見える状態
             PrototypeBodySkinnedMeshRenderer.enabled = true;
             ONOFF =1;//見えない
+        }
+
+        if(PianoRoom == true)
+        {
+            //3DモデルのRendererを見える状態
+            PrototypeBodySkinnedMeshRenderer.enabled = true;
+            ONOFF = 1;//見えない
         }
     }
 
@@ -317,8 +328,8 @@ public class Enemycontroller : MonoBehaviour
             if (isFront) //ターゲットが自身の前方にあるなら
             {
                 if (ONOFF == 0) { ChaseONOFF = false; }
-                DestroyONOFF = true;
-                if (Front==true) {Ray();}
+                DestroyONOFF = false;
+                if (ONOFF == 1) {Ray();}
             }
             else if (isBack)// ターゲットが自身の後方にあるなら
             {
@@ -326,7 +337,7 @@ public class Enemycontroller : MonoBehaviour
 
                 if (detectionPlayer <= 7f)//プレイヤーが検知範囲に入ったら
                 {   
-                    DestroyONOFF = false;
+                    DestroyONOFF = true;
                 }
             }
         }
@@ -383,12 +394,18 @@ public class Enemycontroller : MonoBehaviour
 
         if (other.CompareTag("PianoRoom"))
         {
+            PianoRoom = true;
+            ONOFF = 1;
             pianocnt++;
             if (!zero)
             {
                 piano = true;
                 if (pianocnt % 2 == 0){piano = false;}
             }
+        }
+        else
+        {
+            PianoRoom = false;
         }
     }
 }

@@ -42806,11 +42806,11 @@ Transform:
   m_GameObject: {fileID: 952626119}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.19, z: -53.03}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalPosition: {x: 0, y: 0, z: -3.8249989}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 401676260}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &953975511 stripped
 Transform:
@@ -64146,7 +64146,11 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 6990219589820309155, guid: 9236a33d9e51afc49819a8cdadeb7489, type: 3}
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 7725082103766508868, guid: 9236a33d9e51afc49819a8cdadeb7489,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 952626122}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 483592056278693470, guid: 9236a33d9e51afc49819a8cdadeb7489,
         type: 3}
@@ -67444,7 +67448,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1694921163
 Transform:
   m_ObjectHideFlags: 0
@@ -89222,7 +89226,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3256068436422389585
 Transform:
   m_ObjectHideFlags: 0
@@ -98625,6 +98629,5 @@ SceneRoots:
   - {fileID: 380942140}
   - {fileID: 1126188355}
   - {fileID: 1069365787}
-  - {fileID: 952626122}
   - {fileID: 25058032}
   - {fileID: 644610134}

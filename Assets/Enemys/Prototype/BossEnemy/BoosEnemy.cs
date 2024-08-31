@@ -282,7 +282,7 @@ public class BoosEnemy : MonoBehaviour
             if (isFront) //ターゲットが自身の前方にあるなら
             {
                 if (ONOFF == 0) {ChaseONOFF = false;}
-                DestroyONOFF = true;
+                DestroyONOFF =false;
                 if (Front == true) { if (PlayerRun.CrouchOn == false){Ray();}}
             }
             else if (isBack)// ターゲットが自身の後方にあるなら
@@ -290,7 +290,7 @@ public class BoosEnemy : MonoBehaviour
                 float detectionPlayer = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
 
                 //プレイヤーが検知範囲に入ったら
-                if (detectionPlayer <= 7f){DestroyONOFF = false;}
+                if (detectionPlayer <= 7f){DestroyONOFF = true;}
             }
         }
     }
@@ -384,7 +384,7 @@ public class BoosEnemy : MonoBehaviour
             }
         }
 
-        if (other.CompareTag("RoomOut"))
+        if (other.CompareTag("RoomIN"))
         {
             TouchWall = true;
             animator.SetBool("Run", true);

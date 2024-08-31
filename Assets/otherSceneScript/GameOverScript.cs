@@ -95,6 +95,8 @@ public class GameOverScript : MonoBehaviour
                 LifeCount--;
             }
         }
+
+
         if (LifeCount == 4)
         {
             Life5.GetComponent<Image>().enabled = false;

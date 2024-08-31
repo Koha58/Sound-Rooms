@@ -219,7 +219,7 @@ public class EnemyController : MonoBehaviour
         }
     }*/
 
-
+    /*
     private void Chase2()
     {
         GameObject gobj = GameObject.Find("Player");//Playerオブジェクトを探す
@@ -235,7 +235,7 @@ public class EnemyController : MonoBehaviour
                 transform.position += transform.forward * (MoveSpeed * 0.09f); //プレイヤーの方向に向かう
             }
         }
-    }
+    }*/
 
     // Start is called before the first frame update
     private void Start()
@@ -278,7 +278,7 @@ public class EnemyController : MonoBehaviour
 
         if (UpON == false)
         {
-            Chase2();
+            //Chase2();
 
             if (ChaseONOFF == false)
             {
@@ -324,7 +324,7 @@ public class EnemyController : MonoBehaviour
             {
                 if (ONOFF == 0) { ChaseONOFF = false; }
                 else if (ONOFF == 1) { Ray(); }
-                DestroyONOFF = true;
+                DestroyONOFF = false;
             }
             else if (isBack)// ターゲットが自身の後方にあるなら
             {
@@ -332,7 +332,7 @@ public class EnemyController : MonoBehaviour
 
                 if (detectionPlayer <= 7f)//プレイヤーが検知範囲に入ったら
                 {
-                    DestroyONOFF = false;
+                    DestroyONOFF = true;
                 }
             }
         }
