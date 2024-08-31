@@ -129,7 +129,6 @@ public class Enemycontroller : MonoBehaviour
         float VisualizationPlayer = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
         if (VisualizationPlayer <=10f)//プレイヤーが検知範囲に入ったら
         {
-            Chase();
             Ray ray;
             RaycastHit hit;
             Vector3 direction;   // Rayを飛ばす方向
@@ -155,6 +154,7 @@ public class Enemycontroller : MonoBehaviour
                         //タグが"PlayerParts"である子オブジェクトを見えるようにする
                         playerParts.gameObject.GetComponent<Renderer>().enabled = true;
                     }
+                    Chase();
                 }
 
                 if (hit.collider.gameObject.CompareTag("Wall") )
@@ -220,7 +220,6 @@ public class Enemycontroller : MonoBehaviour
         float ChasePlayer = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
         if(ChasePlayer<=10)
         {
-            transform.LookAt(TargetPlayer.transform);//プレイヤーの方向にむく
             GameObject soundobj = GameObject.Find("SoundVolume");
             LevelMeter levelMeter = soundobj.GetComponent<LevelMeter>(); //付いているスクリプトを取得
             if (levelMeter.nowdB > 0.0f)
@@ -318,7 +317,7 @@ public class Enemycontroller : MonoBehaviour
             if (isFront) //ターゲットが自身の前方にあるなら
             {
                 if (ONOFF == 0) { ChaseONOFF = false; }
-                DestroyONOFF = false;
+                DestroyONOFF = true;
                 if (Front==true) {Ray();}
             }
             else if (isBack)// ターゲットが自身の後方にあるなら
@@ -327,7 +326,7 @@ public class Enemycontroller : MonoBehaviour
 
                 if (detectionPlayer <= 7f)//プレイヤーが検知範囲に入ったら
                 {   
-                    DestroyONOFF = true;
+                    DestroyONOFF = false;
                 }
             }
         }

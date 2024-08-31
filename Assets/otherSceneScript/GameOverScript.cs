@@ -54,7 +54,7 @@ public class GameOverScript : MonoBehaviour
         if(other.CompareTag("Enemy"))
         {
             Enemycontroller EC = other.GetComponent<Enemycontroller>();
-            if (EC.ONOFF == 1&&PS.onoff==1)
+            if (EC.ONOFF == 1)
             {
                 LifeCount--;
             }
@@ -63,16 +63,34 @@ public class GameOverScript : MonoBehaviour
         if (other.CompareTag("EnemyG"))
         {
             Enemycontroller EC = other.GetComponent<Enemycontroller>();
-            if (EC.ONOFF == 1 && PS.onoff == 1)
+            if (EC.ONOFF == 1)
             {
                     LifeCount--;
+            }
+        }
+
+        if (other.CompareTag("Enemy1"))
+        {
+            EnemyController EC1 = other.GetComponent<EnemyController>();
+            if (EC1.ONOFF == 1)
+            {
+                LifeCount--;
+            }
+        }
+
+        if (other.CompareTag("Enemy2G"))
+        {
+            EnemyController ECG = other.GetComponent<EnemyController>();
+            if (ECG.ONOFF == 1 )
+            {
+                LifeCount--;
             }
         }
 
         if (other.CompareTag("EnemySearch"))
         {
             EnemySearchcontroller ESC = other.GetComponent<EnemySearchcontroller>();
-            if (ESC.ONOFF == 1 && PS.onoff == 1)
+            if (ESC.ONOFF == 1 )
             {
                 LifeCount--;
             }

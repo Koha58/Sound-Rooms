@@ -55,6 +55,9 @@ public class EnemyController : MonoBehaviour
     public bool zero;
     AudioSetting AS;
 
+    bool isFront;
+    bool isBack;
+
     private void Chase()//プレイヤーを追いかける
     {
         GameObject gobj = GameObject.Find("Player");//Playerオブジェクトを探す
@@ -85,7 +88,7 @@ public class EnemyController : MonoBehaviour
     {
         CurrentPointIndex++;
         if (CurrentPointIndex >= PatrolPoints.Length)//巡回ポイントが最後まで行ったら最初に戻る
-            CurrentPointIndex = 0;
+        { CurrentPointIndex = 0; }
     }
 
     private void Visualization()//自身の可視化のON OFF
@@ -224,7 +227,6 @@ public class EnemyController : MonoBehaviour
         float ChasePlayer = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
         if (ChasePlayer <= 7)
         {
-            transform.LookAt(TargetPlayer.transform);//プレイヤーの方向にむく
             GameObject soundobj = GameObject.Find("SoundVolume");
             LevelMeter levelMeter = soundobj.GetComponent<LevelMeter>(); //付いているスクリプトを取得
             if (levelMeter.nowdB > 0.0f)
@@ -272,7 +274,7 @@ public class EnemyController : MonoBehaviour
             }
             UpON = true;
         }
-        else if (Player >= 1.5f) { UpON = false; }
+        else if (Player >= 1.0f) { UpON = false; }
 
         if (UpON == false)
         {
@@ -286,14 +288,14 @@ public class EnemyController : MonoBehaviour
 
             Visualization();
 
-            if (ChaseONOFF == false || TouchWall == true)
+            if (ChaseONOFF == false || TouchWall == false)
             {
                 if (Front == false)
                 {
                     transform.position = Vector3.MoveTowards(transform.position, PatrolPoints[CurrentPointIndex].position, MoveSpeed * Time.deltaTime);
                     transform.LookAt(PatrolPoints[CurrentPointIndex].transform);//次のポイントの方向を向く
 
-                    if (transform.position == PatrolPoints[CurrentPointIndex].position)// 次の巡回ポイントへのインデックスを更新
+                    if (this.transform.position == PatrolPoints[CurrentPointIndex].position)// 次の巡回ポイントへのインデックスを更新
                     {
                         animator.SetBool("Walk", false);
                         animator.SetBool("Run", false);
@@ -314,16 +316,15 @@ public class EnemyController : MonoBehaviour
                 }
             }
 
-
             Vector3 Position = TargetPlayer.position - transform.position; // ターゲットの位置と自身の位置の差を計算
-            bool isFront = Vector3.Dot(Position, transform.forward) > 0;  // ターゲットが自身の前方にあるかどうか判定
-            bool isBack = Vector3.Dot(Position, transform.forward) < 0;  // ターゲットが自身の後方にあるかどうか判定
+            isFront = Vector3.Dot(Position, transform.forward) > 0;  // ターゲットが自身の前方にあるかどうか判定
+            isBack = Vector3.Dot(Position, transform.forward) < 0;  // ターゲットが自身の後方にあるかどうか判定
 
             if (isFront) //ターゲットが自身の前方にあるなら
             {
                 if (ONOFF == 0) { ChaseONOFF = false; }
-                DestroyONOFF = false;
-                if (Front == true) { Ray(); }
+                else if (ONOFF == 1) { Ray(); }
+                DestroyONOFF = true;
             }
             else if (isBack)// ターゲットが自身の後方にあるなら
             {
@@ -331,7 +332,7 @@ public class EnemyController : MonoBehaviour
 
                 if (detectionPlayer <= 7f)//プレイヤーが検知範囲に入ったら
                 {
-                    DestroyONOFF = true;
+                    DestroyONOFF = false;
                 }
             }
         }

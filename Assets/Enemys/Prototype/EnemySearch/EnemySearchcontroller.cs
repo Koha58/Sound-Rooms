@@ -141,7 +141,6 @@ public class EnemySearchcontroller : MonoBehaviour
 
         if (VisualizationPlayer <= 7f)//プレイヤーが検知範囲に入ったら
         {
-            Chase();
             Ray ray;
             RaycastHit hit;
             Vector3 direction;   // Rayを飛ばす方向
@@ -166,6 +165,7 @@ public class EnemySearchcontroller : MonoBehaviour
                         //タグが"PlayerParts"である子オブジェクトを見えるようにする
                         playerParts.gameObject.GetComponent<Renderer>().enabled = true;
                     }
+                    Chase();
                 }
 
                 if (hit.collider.gameObject.CompareTag("Wall"))
@@ -282,14 +282,14 @@ public class EnemySearchcontroller : MonoBehaviour
 
             if (isFront) //ターゲットが自身の前方にあるなら
             {
-                DestroyONOFF = false;
+                DestroyONOFF = true;
                 Ray();
             }
             else if (isBack)// ターゲットが自身の後方にあるなら
             {
                 float detectionPlayer = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
                 //プレイヤーが検知範囲に入ったら
-                if (detectionPlayer <= 7f){DestroyONOFF = true;}
+                if (detectionPlayer <= 7f){DestroyONOFF = false;}
             }
         }
     }

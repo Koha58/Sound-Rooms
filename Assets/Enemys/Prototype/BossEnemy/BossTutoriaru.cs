@@ -58,13 +58,10 @@ public class BossTutoriaru : MonoBehaviour
         float ChasePlayer = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
         if (TouchWall == false)
         {
-            Debug.Log("3");
             if (ChasePlayer <= 10f)//プレイヤーが検知範囲に入ったら
             {
-                Debug.Log("2");
                 if (PS.onoff == 1)//プレイヤーが可視化していたら
                 {
-                    Debug.Log("1");
                     // Run();
                     ONOFF = 1;//自分自身を可視化
                     animator.SetBool("Idle", false);
@@ -90,37 +87,29 @@ public class BossTutoriaru : MonoBehaviour
     private void Visualization()//自身の可視化のON OFF
     {
 
-        /*
         if (ONOFF == 0)//見えないとき
-        {
-            if (Front == false)
-            {
-                //3DモデルのRendererを見えない状態
-                PrototypeBodySkinnedMeshRenderer.enabled = false;
-                ONOFF = 1;//見える
-            }
-        }
-        else if (ONOFF == 1)//見えているとき
-        {
-            if (Front == true)
-            {
-                //3DモデルのRendererを見える状態
-                PrototypeBodySkinnedMeshRenderer.enabled = true;
-                ONOFF = 0;//見えない
-            }
-        }*/
-
-        if (Front == false)
         {
             //3DモデルのRendererを見えない状態
             PrototypeBodySkinnedMeshRenderer.enabled = false;
-            ONOFF = 0;//見える
+            //ONOFF = 1;//見える
+            VisualizationBoss.SetActive(false);
         }
-        if (Front == true)
+        else if (ONOFF == 1)//見えているとき
         {
             //3DモデルのRendererを見える状態
             PrototypeBodySkinnedMeshRenderer.enabled = true;
-            ONOFF = 1;//見えない
+
+            float PlayerPoint = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
+            if (PlayerPoint <= 20) { VisualizationBoss.SetActive(true); }
+
+            ONTime += Time.deltaTime;
+            if (ONTime >= 5.0f)
+            {
+                //3DモデルのRendererを見える状態
+                PrototypeBodySkinnedMeshRenderer.enabled = false;
+                ONOFF = 0;//見えない
+                VisualizationBoss.SetActive(false);
+            }
         }
     }
 
@@ -287,7 +276,7 @@ public class BossTutoriaru : MonoBehaviour
             if (isFront) //ターゲットが自身の前方にあるなら
             {
                 if (ONOFF == 0) { ChaseONOFF = false; }
-                DestroyONOFF = false;
+                DestroyONOFF =true;
                 if (Front == true) { if (PlayerRun.CrouchOn == false) { Ray(); } }
                 Chase();
             }
@@ -296,7 +285,7 @@ public class BossTutoriaru : MonoBehaviour
                 float detectionPlayer = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
 
                 //プレイヤーが検知範囲に入ったら
-                if (detectionPlayer <= 7f) { DestroyONOFF = true; }
+                if (detectionPlayer <= 7f) { DestroyONOFF = false; }
             }
         }
     }
