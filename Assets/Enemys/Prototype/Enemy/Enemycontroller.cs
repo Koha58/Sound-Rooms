@@ -29,7 +29,7 @@ public class Enemycontroller : MonoBehaviour
     public Transform TargetPlayer;
 
     //Playerを追跡
-    float ChaseSpeed = 0.4f;                           //Playerを追いかけるスピード
+    float ChaseSpeed = 0.6f;                           //Playerを追いかけるスピード
     [SerializeField] bool ChaseONOFF;
 
     //Destroyの判定
@@ -42,7 +42,6 @@ public class Enemycontroller : MonoBehaviour
     [SerializeField] Animator animator;
 
     public GameObject Player;
-    public GameObject VisualizationGameObject;
     private bool UpON=false;
     private float NextTime;
     private bool Front;
@@ -94,7 +93,6 @@ public class Enemycontroller : MonoBehaviour
                 //3DモデルのRendererを見えない状態
                 PrototypeBodySkinnedMeshRenderer.enabled = false;
                 ONOFF = 1;//見える
-                VisualizationGameObject.SetActive(true);//物を不可視化する判定をON  
             }
         }
         else if (ONOFF == 1)//見えているとき
@@ -104,7 +102,6 @@ public class Enemycontroller : MonoBehaviour
                 //3DモデルのRendererを見える状態
                 PrototypeBodySkinnedMeshRenderer.enabled = true;
                 ONOFF = 0;//見えない
-                VisualizationGameObject.SetActive(false);//物を不可視化する判定をOFF
             }
         }
     }
@@ -176,7 +173,7 @@ public class Enemycontroller : MonoBehaviour
             }
         }
     }
-
+    /*
     private void Ray2()
     {
         Ray ray;
@@ -199,7 +196,7 @@ public class Enemycontroller : MonoBehaviour
                 audioSourse.enabled = false;
             }
         }
-    }
+    }*/
 
 
     private void Chase2()
@@ -230,12 +227,14 @@ public class Enemycontroller : MonoBehaviour
         PrototypeBodySkinnedMeshRenderer.enabled = false;
         ChaseONOFF = false;//追跡中じゃない
         animator = GetComponent<Animator>();   //アニメーターコントローラーからアニメーションを取得する
+        TouchWall = false;
     }
 
     // Update is called once per frame
     private void Update()
     {
-        Ray2();
+        TouchWall = false;
+        //Ray2();
         float Player = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
         if (Player<= 0.65f)
         {

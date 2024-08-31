@@ -59,7 +59,7 @@ public class BoosEnemy : MonoBehaviour
         float ChasePlayer = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
         if (TouchWall == false)
         {
-            if (ChasePlayer <=30f)//プレイヤーが検知範囲に入ったら
+            if (ChasePlayer <= 30f)//プレイヤーが検知範囲に入ったら
             {
                 if (PS.onoff == 1)//プレイヤーが可視化していたら
                 {
@@ -79,9 +79,9 @@ public class BoosEnemy : MonoBehaviour
                     localAngle.y = 0f;
                     myTransform.localEulerAngles = localAngle;
                 }
-                else if (ONOFF == 0){ ChaseONOFF = false; }//追跡中じゃない
+                else if (ONOFF == 0) { ChaseONOFF = false; }//追跡中じゃない
             }
-            else { ChaseONOFF = false;}//追跡中じゃない
+            else { ChaseONOFF = false; }//追跡中じゃない
         }
     }
 
@@ -108,15 +108,8 @@ public class BoosEnemy : MonoBehaviour
             PrototypeBodySkinnedMeshRenderer.enabled = true;
 
             float PlayerPoint = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
-            if (PlayerPoint <= 20)
-            {
-                VisualizationBoss.SetActive(true);
-            }
-            /*
-            ONOFF = 1;
-            // 3DモデルのRendererを見える状態
-            PrototypeBodySkinnedMeshRenderer.enabled = true;
-            */
+            if (PlayerPoint <= 20){VisualizationBoss.SetActive(true);}
+          
             ONTime += Time.deltaTime;
             if (ONTime>=5.0f)
             {
@@ -134,6 +127,7 @@ public class BoosEnemy : MonoBehaviour
         PlayerSeen PS = obj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
         var childTransforms = PS._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
 
+        Chase();
         Ray ray;
         RaycastHit hit;
         Vector3 direction;   // Rayを飛ばす方向
@@ -159,14 +153,12 @@ public class BoosEnemy : MonoBehaviour
                     //タグが"PlayerParts"である子オブジェクトを見えるようにする
                     playerParts.gameObject.GetComponent<Renderer>().enabled = true;
                 }
-                Chase();
             }
-
         }
         else
         {
             OFFTime += Time.deltaTime;
-            if (OFFTime >= 5.0f)
+            if (OFFTime >= 15.0f)
             {
                 ONOFF = 0;
                 OFFTime = 0;
@@ -222,7 +214,7 @@ public class BoosEnemy : MonoBehaviour
         else{VisualizationBoss.SetActive(false);}
 
         float Player = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
-        if (Player <= 2f)
+        if (Player <= 3.5f)
         {
             GameObject obj = GameObject.Find("Player"); //Playerオブジェクトを探す
             PlayerSeen PS = obj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
@@ -240,7 +232,7 @@ public class BoosEnemy : MonoBehaviour
             }
             UpON = true;
         }
-        else if (Player >= 2.5f){UpON = false;}
+        else if (Player >= 4f){UpON = false;}
 
         if (UpON == false)
         {
@@ -254,7 +246,7 @@ public class BoosEnemy : MonoBehaviour
 
             Visualization();
 
-            if (ChaseONOFF == false || TouchWall == true)
+            if (ChaseONOFF == false)
             {
                 if (Front == false)
                 {
@@ -278,6 +270,7 @@ public class BoosEnemy : MonoBehaviour
                         NextPatrolPoint();
                         NextTime = 0;
                         Front = false;
+                        TouchWall = false;
                     }
                 }
             }
@@ -389,6 +382,15 @@ public class BoosEnemy : MonoBehaviour
                 myTransform.localEulerAngles = localAngle;
                 // Physics.gravity = new Vector3(0, -10f, 0);
             }
+        }
+
+        if (other.CompareTag("RoomOut"))
+        {
+            TouchWall = true;
+            animator.SetBool("Run", true);
+            CurrentPointIndex--;
+            //巡回ポイントが最後まで行ったら最初に戻る
+            if (CurrentPointIndex <= PatrolPoints.Length) { CurrentPointIndex = 0; }
         }
     }
 }

@@ -133,6 +133,51 @@ public class EnemyAttack : MonoBehaviour
             BS.ONOFF = 1;
 
         }
+
+        if (other.CompareTag("Enemy1"))
+        {
+           
+            EnemyController EC1 = other.GetComponent<EnemyController>();
+            if (EC1.DestroyONOFF == true)
+            {
+                enemyDeathcnt++;
+                DeathRange += 1.0f;
+                GetComponent<ParticleSystem>().Play();
+                Debug.Log(enemyDeathcnt);
+                Destroy(other.gameObject);
+
+                GameObject Boss = GameObject.FindWithTag("Boss");
+                BoosEnemy BS = Boss.GetComponent<BoosEnemy>();
+
+                BS.MoveSpeed -= 0.1f;
+                BS.ChaseSpeed -= 0.01f;
+                BS.SphereCollider.radius -= 0.1f;
+                BS.ONOFF = 1;
+            }
+        }
+
+        if (other.CompareTag("Enemy2G"))
+        {
+            EnemyController ECG = other.GetComponent<EnemyController>();
+
+            enemyDeathcnt++;
+            DeathRange += 1.0f;
+            GetComponent<ParticleSystem>().Play();
+            Destroy(other.gameObject);
+            //Enemyincrease.enemyDeathcnt++;
+            PickupSound.PlayOneShot(PickupSound.clip);
+            count += 1;
+            SetCountText();
+
+            GameObject Boss = GameObject.FindWithTag("Boss");
+            BoosEnemy BS = Boss.GetComponent<BoosEnemy>();
+
+            BS.MoveSpeed -= 0.1f;
+            BS.ChaseSpeed -= 0.01f;
+            BS.SphereCollider.radius -= 0.1f;
+            BS.ONOFF = 1;
+
+        }
     }
 
     void SetCountText()
