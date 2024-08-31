@@ -155,6 +155,8 @@ public class EnemyAttack : MonoBehaviour
                 Debug.Log(enemyDeathcnt);
                 Destroy(other.gameObject);
 
+                BossTiming = true;
+
                 GameObject Boss = GameObject.FindWithTag("Boss");
                 BoosEnemy BS = Boss.GetComponent<BoosEnemy>();
 
@@ -178,6 +180,8 @@ public class EnemyAttack : MonoBehaviour
                 PickupSound.PlayOneShot(PickupSound.clip);
                 count += 1;
                 SetCountText();
+
+                BossTiming = true;
 
                 GameObject Boss = GameObject.FindWithTag("Boss");
                 BoosEnemy BS = Boss.GetComponent<BoosEnemy>();
