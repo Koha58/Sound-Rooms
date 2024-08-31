@@ -192,7 +192,7 @@ public class EnemySearchcontroller : MonoBehaviour
             }
         }
     }
-
+    /*
     private void Ray2()
     {
         Ray ray;
@@ -215,7 +215,7 @@ public class EnemySearchcontroller : MonoBehaviour
                 audioSourse.enabled = false;
             }
         }
-    }
+    }*/
 
     // Start is called before the first frame update
     private void Start()
@@ -235,7 +235,7 @@ public class EnemySearchcontroller : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        Ray2();
+        //Ray2();
         float Player = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
         if (Player <= 2.0f)
         {
@@ -263,6 +263,7 @@ public class EnemySearchcontroller : MonoBehaviour
                 animator.SetBool("StandUp", false);
                 animator.SetBool("Run", false);
                 this.transform.localRotation = rotation;
+                TouchWall = false;
             }
 
             Visualization();

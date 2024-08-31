@@ -4,25 +4,5 @@ using UnityEngine;
 
 public class EnemysSeen : MonoBehaviour
 {
-    public CapsuleCollider Enemys;
-    // Start is called before the first frame update
-    void Start()
-    {
-        Enemys.enabled = false;//音波非表示→表示
-    }
-
-    // Update is called once per frame
-    private void Update()
-    {
-        GameObject eobj = GameObject.FindWithTag("Enemy");
-        EnemyController EC = eobj.GetComponent<EnemyController>(); //Enemyに付いているスクリプトを取得
-        if (EC.ONoff == 0)//見えないとき
-        {
-            Enemys.enabled = false;//音波非表示→表示
-        }
-        if (EC.ONoff == 1)//見えているとき
-        {
-            Enemys.enabled = true;//音波表示→非表示
-        }
-    }
+ 
 }

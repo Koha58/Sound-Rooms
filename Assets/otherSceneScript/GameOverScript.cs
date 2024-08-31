@@ -18,6 +18,8 @@ public class GameOverScript : MonoBehaviour
     [SerializeField] GameObject LostLife4;
     [SerializeField] GameObject LostLife5;
 
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -39,7 +41,7 @@ public class GameOverScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+    
     }
 
    
@@ -51,40 +53,28 @@ public class GameOverScript : MonoBehaviour
 
         if(other.CompareTag("Enemy"))
         {
-            if (PS.onoff == 1)
+            Enemycontroller EC = other.GetComponent<Enemycontroller>();
+            if (EC.ONOFF == 1&&PS.onoff==1)
             {
-                Enemycontroller EC = other.GetComponent<Enemycontroller>();
-                //Debug.Log("1");
-                if (EC.ONOFF == 1)
-                {
-                    LifeCount--;
-                }
+                LifeCount--;
             }
         }
 
         if (other.CompareTag("EnemyG"))
         {
-            if (PS.onoff == 1)
+            Enemycontroller EC = other.GetComponent<Enemycontroller>();
+            if (EC.ONOFF == 1 && PS.onoff == 1)
             {
-                Enemycontroller EC = other.GetComponent<Enemycontroller>();
-                //Debug.Log("1");
-                if (EC.ONOFF == 1)
-                {
                     LifeCount--;
-                }
             }
         }
 
         if (other.CompareTag("EnemySearch"))
         {
-            if (PS.onoff == 1)
+            EnemySearchcontroller ESC = other.GetComponent<EnemySearchcontroller>();
+            if (ESC.ONOFF == 1 && PS.onoff == 1)
             {
-                EnemySearchcontroller ESC = other.GetComponent<EnemySearchcontroller>();
-                if (ESC.ONOFF==1)
-                {
-                    //Debug.Log("1");
-                    LifeCount--;
-                }
+                LifeCount--;
             }
         }
         if (LifeCount == 4)
@@ -124,7 +114,6 @@ public class GameOverScript : MonoBehaviour
         {
             if (PS.onoff == 1)
             {
-                //Debug.Log("1");
                 LifeCount--;
             }
         }
