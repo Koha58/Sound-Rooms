@@ -15,7 +15,7 @@ public class VisualizationBoss : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        this.transform.position = Boss.position;
+
     }
 
     private void OnTriggerStay(Collider other)

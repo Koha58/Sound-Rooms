@@ -90,6 +90,7 @@ public class BossTutoriaru : MonoBehaviour
     private void Visualization()//©g‚Ì‰Â‹‰»‚ÌON OFF
     {
 
+        /*
         if (ONOFF == 0)//Œ©‚¦‚È‚¢‚Æ‚«
         {
             if (Front == false)
@@ -107,6 +108,19 @@ public class BossTutoriaru : MonoBehaviour
                 PrototypeBodySkinnedMeshRenderer.enabled = true;
                 ONOFF = 0;//Œ©‚¦‚È‚¢
             }
+        }*/
+
+        if (Front == false)
+        {
+            //3Dƒ‚ƒfƒ‹‚ÌRenderer‚ğŒ©‚¦‚È‚¢ó‘Ô
+            PrototypeBodySkinnedMeshRenderer.enabled = false;
+            ONOFF = 0;//Œ©‚¦‚é
+        }
+        if (Front == true)
+        {
+            //3Dƒ‚ƒfƒ‹‚ÌRenderer‚ğŒ©‚¦‚éó‘Ô
+            PrototypeBodySkinnedMeshRenderer.enabled = true;
+            ONOFF = 1;//Œ©‚¦‚È‚¢
         }
     }
 
