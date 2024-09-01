@@ -15,6 +15,7 @@ public class TutorialMessageControll : MonoBehaviour
     bool SoundCheck = false;
     bool AutoCheck = false;
     float moveTimecnt;
+    bool hurryUp;
 
     // Start is called before the first frame update
     void Start()
@@ -25,6 +26,7 @@ public class TutorialMessageControll : MonoBehaviour
         SoundCheck = false;
         AutoCheck = false;
         moveTimecnt = 0f;
+        hurryUp = false;
     }
 
     // Update is called once per frame
@@ -91,6 +93,22 @@ public class TutorialMessageControll : MonoBehaviour
                 timeCnt = 0f;
             }
         }
+        if (Message == 20)
+        {
+            if(!hurryUp)
+            {
+                timeCnt += 4.0f;
+                hurryUp = true;
+            }
+        }
+        else if (Message == 21)
+        {
+            if (hurryUp)
+            {
+                timeCnt += 4.0f;
+                hurryUp = false;
+            }
+        }
         if (Message == 22)
         {
             if (PlayerRun.CrouchOn == true)
@@ -101,6 +119,10 @@ public class TutorialMessageControll : MonoBehaviour
             {
                 MoveWays[1].state = 1;
             }
+        }
+        else
+        {
+            MoveWays[1].state = 0;
         }
         if (Message == 33)
         {
