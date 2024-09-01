@@ -272,15 +272,13 @@ public class BoosEnemy : MonoBehaviour
 
                     if (transform.position == PatrolPoints[CurrentPointIndex].position)// 次の巡回ポイントへのインデックスを更新
                     {
-                        animator.SetBool("Idle", true);
-                        animator.SetBool("Move", false);
+                        animator.SetBool("Move", true);
                         Front = true;
                     }
                 }
                 else
                 {
-                    animator.SetBool("Idle", true);
-                    animator.SetBool("Move", false);
+                    animator.SetBool("Move", true);
                     NextTime += Time.deltaTime;
                     if (NextTime >= 5.0f)
                     {
