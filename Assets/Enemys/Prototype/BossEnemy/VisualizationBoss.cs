@@ -15,7 +15,15 @@ public class VisualizationBoss : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Boss.transform.position = transform.position;
+       transform.position = Boss.transform.position ;
+        GameObject gameObject =GameObject.FindWithTag("Boss"); //Playerオブジェクトを探す
+        BoosEnemy BC = gameObject.GetComponent<BoosEnemy>();
+        BC.PrototypeBodySkinnedMeshRenderer.enabled = true;
+        BC.ONOFF = 1;
+        if (BC.ONOFF == 1)
+        {
+            this.gameObject.SetActive(true);
+        }
     }
 
     private void OnTriggerStay(Collider other)
@@ -26,6 +34,27 @@ public class VisualizationBoss : MonoBehaviour
             Enemycontroller EC =other.GetComponent<Enemycontroller>();
             EC.PrototypeBodySkinnedMeshRenderer.enabled=true;
             EC.ONOFF = 1;
+        }
+
+        if (other.CompareTag("Enemy1"))
+        {
+            EnemyController EC1 = other.GetComponent<EnemyController>();
+            EC1.PrototypeBodySkinnedMeshRenderer.enabled = true;
+            EC1.ONOFF = 1;
+        }
+
+        if (other.CompareTag("EnemyG"))
+        {
+            Enemycontroller ECG = other.GetComponent<Enemycontroller>();
+            ECG.PrototypeBodySkinnedMeshRenderer.enabled = true;
+            ECG.ONOFF = 1;
+        }
+
+        if (other.CompareTag("EnemySearch"))
+        {
+            EnemySearchcontroller ES = other.GetComponent<EnemySearchcontroller>();
+            ES.PrototypeBodySkinnedMeshRenderer.enabled = true;
+            ES.ONOFF = 1;
         }
 
         if (other.CompareTag("Player"))

@@ -62,29 +62,25 @@ public class BossTutoriaru : MonoBehaviour
         float ChasePlayer = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
         if (TouchWall == false)
         {
-            if (ChasePlayer <= 10f)//プレイヤーが検知範囲に入ったら
+            if (ChaseONOFF==true)//プレイヤーが可視化していたら
             {
-                if (PS.onoff == 1)//プレイヤーが可視化していたら
+                // Run();
+                //ONOFF = 1;//自分自身を可視化
+                animator.SetBool("Idle", false);
+                animator.SetBool("Move", true);
+                ChaseONOFF = true;//追跡中
+                transform.LookAt(TargetPlayer.transform);//プレイヤーの方向にむく
+                transform.position += transform.forward * ChaseSpeed; //プレイヤーの方向に向かう
+                PS.Visualization = true;
+                PS.onoff = 1;  //見えているから1
+                foreach (var playerParts in childTransforms)
                 {
-                    // Run();
-                    //ONOFF = 1;//自分自身を可視化
-                    animator.SetBool("Idle", false);
-                    animator.SetBool("Move", true);
-                    ChaseONOFF = true;//追跡中
-                    transform.LookAt(TargetPlayer.transform);//プレイヤーの方向にむく
-                    transform.position += transform.forward * ChaseSpeed; //プレイヤーの方向に向かう
-                    PS.Visualization = true;
-                    PS.onoff = 1;  //見えているから1
-                    foreach (var playerParts in childTransforms)
-                    {
-                        //タグが"PlayerParts"である子オブジェクトを見えるようにする
-                        playerParts.gameObject.GetComponent<Renderer>().enabled = true;
-                    }
-
+                    //タグが"PlayerParts"である子オブジェクトを見えるようにする
+                    playerParts.gameObject.GetComponent<Renderer>().enabled = true;
                 }
-                else if (ONOFF == 0) { ChaseONOFF = false; }//追跡中じゃない
+
             }
-            else { ChaseONOFF = false; }//追跡中じゃない
+            else if (ONOFF == 0) { ChaseONOFF = false; }//追跡中じゃない
         }
     }
 
@@ -110,9 +106,6 @@ public class BossTutoriaru : MonoBehaviour
             //3DモデルのRendererを見える状態
             PrototypeBodySkinnedMeshRenderer.enabled = true;
 
-            float PlayerPoint = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
-            if (PlayerPoint <= 20) { VisualizationBoss.SetActive(true); }
-
             ONTime += Time.deltaTime;
             if (ONTime >=15.0f)
             {
@@ -134,7 +127,7 @@ public class BossTutoriaru : MonoBehaviour
         Ray ray;
         RaycastHit hit;
         Vector3 direction;   // Rayを飛ばす方向
-        float distance = 10.0f;    // Rayを飛ばす距離
+        float distance = 15.0f;    // Rayを飛ばす距離
 
         // Rayを飛ばす方向を計算
         Vector3 temp = Player.transform.position - transform.position;
@@ -183,7 +176,7 @@ public class BossTutoriaru : MonoBehaviour
         PlayerSeen PS = gobj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
 
         float ChasePlayer = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
-        if (ChasePlayer <= 30)
+        if (ChasePlayer <=15)
         {
             transform.LookAt(TargetPlayer.transform);//プレイヤーの方向にむく
             GameObject soundobj = GameObject.Find("SoundVolume");
@@ -331,6 +324,7 @@ public class BossTutoriaru : MonoBehaviour
             ONTime = 0;
             //3DモデルのRendererを見える状態
             PrototypeBodySkinnedMeshRenderer.enabled = true;
+            ChaseONOFF = true;
         }
 
         Transform myTransform = this.transform;

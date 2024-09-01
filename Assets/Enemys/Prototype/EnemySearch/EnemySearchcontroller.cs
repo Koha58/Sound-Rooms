@@ -63,7 +63,7 @@ public class EnemySearchcontroller : MonoBehaviour
         float ChasePlayer = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
         if (TouchWall == false)
         {
-            if (ChasePlayer <= 7f)//プレイヤーが検知範囲に入ったら
+            if (ChasePlayer <= 4f)//プレイヤーが検知範囲に入ったら
             {
                 if (PS.onoff == 1)//プレイヤーが可視化していたら
                 {
@@ -143,12 +143,12 @@ public class EnemySearchcontroller : MonoBehaviour
 
         float VisualizationPlayer = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
 
-        if (VisualizationPlayer <= 7f)//プレイヤーが検知範囲に入ったら
+        if (VisualizationPlayer <= 4f)//プレイヤーが検知範囲に入ったら
         {
             Ray ray;
             RaycastHit hit;
             Vector3 direction;   // Rayを飛ばす方向
-            float distance = 7;    // Rayを飛ばす距離
+            float distance = 4;    // Rayを飛ばす距離
 
             // Rayを飛ばす方向を計算
             Vector3 temp = Player.transform.position - transform.position;

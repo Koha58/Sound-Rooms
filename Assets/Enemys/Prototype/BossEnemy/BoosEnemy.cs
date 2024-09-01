@@ -63,28 +63,23 @@ public class BoosEnemy : MonoBehaviour
         float ChasePlayer = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
         if (TouchWall == false)
         {
-            if (ChasePlayer <= 30f)//プレイヤーが検知範囲に入ったら
+            if (ChaseONOFF==true)//プレイヤーが検知範囲に入ったら
             {
-                if (PS.onoff == 1)//プレイヤーが可視化していたら
-                {
-                    // Run();
-                    ONOFF = 1;//自分自身を可視化
-                    animator.SetBool("Idle", false);
-                    animator.SetBool("Move", true);
-                    ChaseONOFF = true;//追跡中
-                    transform.LookAt(TargetPlayer.transform);//プレイヤーの方向にむく
-                    transform.position += transform.forward * ChaseSpeed; //プレイヤーの方向に向かう
-                   
-                    Transform myTransform = this.transform;
-                    Vector3 localAngle = myTransform.localEulerAngles;
+                // Run();
+                ONOFF = 1;//自分自身を可視化
+                animator.SetBool("Idle", false);
+                animator.SetBool("Move", true);
+                ChaseONOFF = true;//追跡中
+                transform.LookAt(TargetPlayer.transform);//プレイヤーの方向にむく
+                transform.position += transform.forward * ChaseSpeed; //プレイヤーの方向に向かう
 
-                    localAngle.x = 0f;
-                    localAngle.z = 0f;
-                    localAngle.y = 0f;
-                    myTransform.localEulerAngles = localAngle;
+                Transform myTransform = this.transform;
+                Vector3 localAngle = myTransform.localEulerAngles;
 
-                }
-                else if (ONOFF == 0) { ChaseONOFF = false; }//追跡中じゃない
+                localAngle.x = 0f;
+                localAngle.z = 0f;
+                localAngle.y = 0f;
+                myTransform.localEulerAngles = localAngle;
             }
             else { ChaseONOFF = false; }//追跡中じゃない
         }
@@ -111,10 +106,6 @@ public class BoosEnemy : MonoBehaviour
         {
             //3DモデルのRendererを見える状態
             PrototypeBodySkinnedMeshRenderer.enabled = true;
-
-            float PlayerPoint = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
-            if (PlayerPoint <= 20){VisualizationBoss.SetActive(true);}
-          
             ONTime += Time.deltaTime;
             if (ONTime>=5.0f)
             {
@@ -136,7 +127,7 @@ public class BoosEnemy : MonoBehaviour
         Ray ray;
         RaycastHit hit;
         Vector3 direction;   // Rayを飛ばす方向
-        float distance = 30.0f;    // Rayを飛ばす距離
+        float distance = 15.0f;    // Rayを飛ばす距離
 
         // Rayを飛ばす方向を計算
         Vector3 temp = Player.transform.position - transform.position;
@@ -150,13 +141,16 @@ public class BoosEnemy : MonoBehaviour
         {
             if (hit.collider.CompareTag("Player"))
             {
-                PS.onoff = 1;  //見えているから1
-                PS.Visualization = true;
-                ONOFF = 1;
-                foreach (var playerParts in childTransforms)
+                if (ONOFF == 1)
                 {
-                    //タグが"PlayerParts"である子オブジェクトを見えるようにする
-                    playerParts.gameObject.GetComponent<Renderer>().enabled = true;
+                    PS.onoff = 1;  //見えているから1
+                    PS.Visualization = true;
+                    ONOFF = 1;
+                    foreach (var playerParts in childTransforms)
+                    {
+                        //タグが"PlayerParts"である子オブジェクトを見えるようにする
+                        playerParts.gameObject.GetComponent<Renderer>().enabled = true;
+                    }
                 }
             }
         }
@@ -184,7 +178,7 @@ public class BoosEnemy : MonoBehaviour
         PlayerSeen PS = gobj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
 
         float ChasePlayer = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
-        if (ChasePlayer <= 30)
+        if (ChasePlayer <= 15)
         {
             transform.LookAt(TargetPlayer.transform);//プレイヤーの方向にむく
             GameObject soundobj = GameObject.Find("SoundVolume");
@@ -328,6 +322,7 @@ public class BoosEnemy : MonoBehaviour
             ONTime = 0;
            //3DモデルのRendererを見える状態
             PrototypeBodySkinnedMeshRenderer.enabled = true;
+            ChaseONOFF = true;
         }
 
         Transform myTransform = this.transform;
