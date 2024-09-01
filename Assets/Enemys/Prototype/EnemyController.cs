@@ -300,6 +300,18 @@ public class EnemyController : MonoBehaviour
                         animator.SetBool("Walk", false);
                         animator.SetBool("Run", false);
                         Front = true;
+
+                        GameObject obj = GameObject.Find("Player"); //Playerオブジェクトを探す
+                        PlayerSeen PS = obj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
+                        var childTransforms = PS._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
+
+                        PS.Visualization = false;
+                        PS.onoff = 0;  //見えているから1
+                        foreach (var playerParts in childTransforms)
+                        {
+                            //タグが"PlayerParts"である子オブジェクトを見えなくする
+                            playerParts.gameObject.GetComponent<Renderer>().enabled = false;
+                        }
                     }
                 }
                 else
