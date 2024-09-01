@@ -183,13 +183,22 @@ public class BoosEnemy : MonoBehaviour
         float ChasePlayer = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
         if (ChasePlayer <= 15)
         {
-            transform.LookAt(TargetPlayer.transform);//プレイヤーの方向にむく
-            GameObject soundobj = GameObject.Find("SoundVolume");
-            LevelMeter levelMeter = soundobj.GetComponent<LevelMeter>(); //付いているスクリプトを取得
-            if (levelMeter.nowdB > 0.0f)
+            if (TouchWall == false)
             {
                 transform.LookAt(TargetPlayer.transform);//プレイヤーの方向にむく
-                transform.position += transform.forward * (MoveSpeed * 0.09f); //プレイヤーの方向に向かう
+                GameObject soundobj = GameObject.Find("SoundVolume");
+                LevelMeter levelMeter = soundobj.GetComponent<LevelMeter>(); //付いているスクリプトを取得
+                if (levelMeter.nowdB > 0.0f)
+                {
+                    transform.LookAt(TargetPlayer.transform);//プレイヤーの方向にむく
+                    transform.position += transform.forward * (MoveSpeed * 0.01f); //プレイヤーの方向に向かう
+                }
+            }
+            else
+            {
+                CurrentPointIndex--;
+                //巡回ポイントが最後まで行ったら最初に戻る
+                if (CurrentPointIndex <= PatrolPoints.Length) { CurrentPointIndex = 0; }
             }
         }
     }
@@ -299,6 +308,8 @@ public class BoosEnemy : MonoBehaviour
             if (isFront) //ターゲットが自身の前方にあるなら
             {
                 if (ONOFF == 0) {ChaseONOFF = false;}
+                float ChasePlayer = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
+                if (ONOFF == 1&& ChasePlayer <= 30) { ChaseONOFF = true;}
                 DestroyONOFF =false;
                 if (Front == true) { if (PlayerRun.CrouchOn == false){Ray();}}
             }
@@ -323,7 +334,6 @@ public class BoosEnemy : MonoBehaviour
             ONTime = 0;
            //3DモデルのRendererを見える状態
             PrototypeBodySkinnedMeshRenderer.enabled = true;
-            ChaseONOFF = true;
         }
 
         Transform myTransform = this.transform;
