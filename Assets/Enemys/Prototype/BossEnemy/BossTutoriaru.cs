@@ -7,7 +7,7 @@ public class BossTutoriaru : MonoBehaviour
 {
     //移動
     [SerializeField] private Transform[] PatrolPoints; // 巡回ポイントの配列
-    public float MoveSpeed = 0.5f; // 動く速度
+    public float MoveSpeed = 15.0f; // 動く速度
     private int CurrentPointIndex = 0;// 現在の巡回ポイントのインデックス
 
     //可視化
@@ -28,7 +28,7 @@ public class BossTutoriaru : MonoBehaviour
     public Transform TargetPlayer;
 
     //Playerを追跡
-    public float ChaseSpeed = 0.07f;//Playerを追いかけるスピード
+    public float ChaseSpeed = 2.0f;//Playerを追いかけるスピード
     [SerializeField] bool ChaseONOFF;
 
     //Destroyの判定
@@ -62,7 +62,7 @@ public class BossTutoriaru : MonoBehaviour
         float ChasePlayer = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
         if (TouchWall == false)
         {
-            if (ChaseONOFF==true)//プレイヤーが可視化していたら
+            if (ChaseONOFF == true)//プレイヤーが検知範囲に入ったら
             {
                 // Run();
                 //ONOFF = 1;//自分自身を可視化
@@ -71,16 +71,16 @@ public class BossTutoriaru : MonoBehaviour
                 ChaseONOFF = true;//追跡中
                 transform.LookAt(TargetPlayer.transform);//プレイヤーの方向にむく
                 transform.position += transform.forward * ChaseSpeed; //プレイヤーの方向に向かう
-                PS.Visualization = true;
-                PS.onoff = 1;  //見えているから1
-                foreach (var playerParts in childTransforms)
-                {
-                    //タグが"PlayerParts"である子オブジェクトを見えるようにする
-                    playerParts.gameObject.GetComponent<Renderer>().enabled = true;
-                }
 
+                Transform myTransform = this.transform;
+                Vector3 localAngle = myTransform.localEulerAngles;
+
+                localAngle.x = 0f;
+                localAngle.z = 0f;
+                localAngle.y = 0f;
+                myTransform.localEulerAngles = localAngle;
             }
-            else if (ONOFF == 0) { ChaseONOFF = false; }//追跡中じゃない
+            else { ChaseONOFF = false; }//追跡中じゃない
         }
     }
 
@@ -105,9 +105,8 @@ public class BossTutoriaru : MonoBehaviour
         {
             //3DモデルのRendererを見える状態
             PrototypeBodySkinnedMeshRenderer.enabled = true;
-
             ONTime += Time.deltaTime;
-            if (ONTime >=15.0f)
+            if (ONTime >= 5.0f)
             {
                 //3DモデルのRendererを見える状態
                 PrototypeBodySkinnedMeshRenderer.enabled = false;
@@ -127,7 +126,7 @@ public class BossTutoriaru : MonoBehaviour
         Ray ray;
         RaycastHit hit;
         Vector3 direction;   // Rayを飛ばす方向
-        float distance = 15.0f;    // Rayを飛ばす距離
+        float distance = 30.0f;    // Rayを飛ばす距離
 
         // Rayを飛ばす方向を計算
         Vector3 temp = Player.transform.position - transform.position;
@@ -142,20 +141,23 @@ public class BossTutoriaru : MonoBehaviour
             /*
             if (hit.collider.CompareTag("Player"))
             {
-                PS.onoff = 1;  //見えているから1
-                PS.Visualization = true;
-                ONOFF = 1;
-                foreach (var playerParts in childTransforms)
+                if (ONOFF == 1)
                 {
-                    //タグが"PlayerParts"である子オブジェクトを見えるようにする
-                    playerParts.gameObject.GetComponent<Renderer>().enabled = true;
+                    PS.onoff = 1;  //見えているから1
+                    PS.Visualization = true;
+                    ONOFF = 1;
+                    foreach (var playerParts in childTransforms)
+                    {
+                        //タグが"PlayerParts"である子オブジェクトを見えるようにする
+                        playerParts.gameObject.GetComponent<Renderer>().enabled = true;
+                    }
                 }
             }*/
         }
         else
         {
             OFFTime += Time.deltaTime;
-            if (OFFTime >= 5.0f)
+            if (OFFTime >= 15.0f)
             {
                 ONOFF = 0;
                 OFFTime = 0;
@@ -176,7 +178,7 @@ public class BossTutoriaru : MonoBehaviour
         PlayerSeen PS = gobj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
 
         float ChasePlayer = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
-        if (ChasePlayer <=15)
+        if (ChasePlayer <= 30)
         {
             transform.LookAt(TargetPlayer.transform);//プレイヤーの方向にむく
             GameObject soundobj = GameObject.Find("SoundVolume");
@@ -202,13 +204,11 @@ public class BossTutoriaru : MonoBehaviour
         ChaseONOFF = false;//追跡中じゃない
 
         animator = GetComponent<Animator>();   //アニメーターコントローラーからアニメーションを取得する
-        TouchWall = false;
     }
 
     // Update is called once per frame
     private void Update()
     {
-        TouchWall = false;
         if (PlayerRun.CrouchOn == false) { VisualizationBoss.SetActive(true); }
         else { VisualizationBoss.SetActive(false); }
 
@@ -224,16 +224,15 @@ public class BossTutoriaru : MonoBehaviour
                 transform.LookAt(TargetPlayer.transform);//プレイヤーの方向にむく
                 animator.SetBool("Idle", true);
                 animator.SetBool("Move", false);
-                /*
                 PS.Visualization = true;
                 PS.onoff = 1;  //見えているから1
                 foreach (var playerParts in childTransforms)
                 {
                     //タグが"PlayerParts"である子オブジェクトを見えるようにする
                     playerParts.gameObject.GetComponent<Renderer>().enabled = true;
-                }*/
-                UpON = true;
+                }
 
+                UpON = true;
                 Count += Time.deltaTime;
                 if (Count <= 10.0f)
                 {
@@ -299,9 +298,8 @@ public class BossTutoriaru : MonoBehaviour
             if (isFront) //ターゲットが自身の前方にあるなら
             {
                 if (ONOFF == 0) { ChaseONOFF = false; }
-                DestroyONOFF =false;
+                DestroyONOFF = false;
                 if (Front == true) { if (PlayerRun.CrouchOn == false) { Ray(); } }
-                Chase();
             }
             else if (isBack)// ターゲットが自身の後方にあるなら
             {
@@ -403,7 +401,7 @@ public class BossTutoriaru : MonoBehaviour
             }
         }
 
-        if (other.CompareTag("RoomOut"))
+        if (other.CompareTag("RoomIN"))
         {
             TouchWall = true;
             animator.SetBool("Run", true);

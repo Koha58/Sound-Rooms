@@ -26,6 +26,8 @@ public class EnemyAttack : MonoBehaviour
 
     bool DB = false;
 
+    bool DB2 = false;
+
     //[SerializeField]
     //private GameObject[] Prototype;
 
@@ -81,6 +83,24 @@ public class EnemyAttack : MonoBehaviour
                 DB = false;
             }
         }
+
+        if (DB2 == true)
+        {
+            DC += Time.deltaTime;
+            if (DC >= 10.0f)
+            {
+                GameObject Boss = GameObject.FindWithTag("Boss1");
+                BossTutoriaru BS = Boss.GetComponent<BossTutoriaru>();
+
+                BS.MoveSpeed -= 0.1f;
+                BS.ChaseSpeed -= 0.01f;
+                BS.SphereCollider.radius -= 0.1f;
+                BS.ONOFF = 1;
+
+                DC = 0;
+                DB2 = false;
+            }
+        }
     }
     private void OnTriggerStay(Collider other)
     {
@@ -97,6 +117,21 @@ public class EnemyAttack : MonoBehaviour
         if (other.CompareTag("Boss"))
         {
             BoosEnemy EC = other.GetComponent<BoosEnemy>();
+            if (EC.DestroyONOFF == true)
+            {
+                enemyDeathcnt++;
+                DeathRange += 1.0f;
+                GetComponent<ParticleSystem>().Play();
+                Debug.Log(enemyDeathcnt);
+                Destroy(other.gameObject);
+
+                DB = true;
+            }
+        }
+
+        if (other.CompareTag("Boss1"))
+        {
+            BossTutoriaru EC = other.GetComponent<BossTutoriaru>();
             if (EC.DestroyONOFF == true)
             {
                 enemyDeathcnt++;
@@ -177,7 +212,7 @@ public class EnemyAttack : MonoBehaviour
 
                 BossTiming = true;
 
-                DB = true;
+                DB2 = true;
             }
         }
 
@@ -197,7 +232,7 @@ public class EnemyAttack : MonoBehaviour
 
                 BossTiming = true;
 
-                DB = true;
+                DB2 = true;
             }
         }
     }

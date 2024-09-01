@@ -66,7 +66,7 @@ public class BoosEnemy : MonoBehaviour
             if (ChaseONOFF==true)//プレイヤーが検知範囲に入ったら
             {
                 // Run();
-                ONOFF = 1;//自分自身を可視化
+                //ONOFF = 1;//自分自身を可視化
                 animator.SetBool("Idle", false);
                 animator.SetBool("Move", true);
                 ChaseONOFF = true;//追跡中
@@ -139,6 +139,7 @@ public class BoosEnemy : MonoBehaviour
         // Rayが最初に当たった物体を調べる
         if (Physics.Raycast(ray.origin, ray.direction * distance, out hit))
         {
+            /*
             if (hit.collider.CompareTag("Player"))
             {
                 if (ONOFF == 1)
@@ -152,7 +153,7 @@ public class BoosEnemy : MonoBehaviour
                         playerParts.gameObject.GetComponent<Renderer>().enabled = true;
                     }
                 }
-            }
+            }*/
         }
         else
         {
