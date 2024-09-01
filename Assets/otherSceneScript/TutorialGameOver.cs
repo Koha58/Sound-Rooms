@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class GameOverScript : MonoBehaviour
+public class TutorialGameOver : MonoBehaviour
 {
     public int LifeCount;
     [SerializeField] GameObject Life1;
@@ -41,17 +41,17 @@ public class GameOverScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-    
+
     }
 
-   
+
     private void OnTriggerEnter(Collider other)
     {
         PlayerSeen PS;
         GameObject gobj = GameObject.Find("Player");
         PS = gobj.GetComponent<PlayerSeen>();
 
-        if(other.CompareTag("Enemy"))
+        if (other.CompareTag("Enemy"))
         {
             Enemycontroller EC = other.GetComponent<Enemycontroller>();
             if (EC.ONOFF == 1)
@@ -65,7 +65,7 @@ public class GameOverScript : MonoBehaviour
             Enemycontroller EC = other.GetComponent<Enemycontroller>();
             if (EC.ONOFF == 1)
             {
-                    LifeCount--;
+                LifeCount--;
             }
         }
 
@@ -81,7 +81,7 @@ public class GameOverScript : MonoBehaviour
         if (other.CompareTag("Enemy2G"))
         {
             EnemyController ECG = other.GetComponent<EnemyController>();
-            if (ECG.ONOFF == 1 )
+            if (ECG.ONOFF == 1)
             {
                 LifeCount--;
             }
@@ -90,7 +90,7 @@ public class GameOverScript : MonoBehaviour
         if (other.CompareTag("EnemySearch"))
         {
             EnemySearchcontroller ESC = other.GetComponent<EnemySearchcontroller>();
-            if (ESC.ONOFF == 1 )
+            if (ESC.ONOFF == 1)
             {
                 LifeCount--;
             }
@@ -138,16 +138,16 @@ public class GameOverScript : MonoBehaviour
             Life3.GetComponent<Image>().enabled = false;
             LostLife3.GetComponent<Image>().enabled = true;
         }
-        else if(LifeCount == 1)
+        else if (LifeCount == 1)
         {
             Life2.GetComponent<Image>().enabled = false;
             LostLife2.GetComponent<Image>().enabled = true;
         }
-        else if(LifeCount == 0)
+        else if (LifeCount == 0)
         {
             Life1.GetComponent<Image>().enabled = false;
             LostLife1.GetComponent<Image>().enabled = true;
-            SceneManager.LoadScene("GameOver");
+            SceneManager.LoadScene("GameOver_Tutorial");
         }
 
     }
