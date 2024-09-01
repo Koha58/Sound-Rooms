@@ -2127,7 +2127,7 @@ Transform:
   m_GameObject: {fileID: 51888590}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -9.9}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -42419,6 +42419,7 @@ GameObject:
   - component: {fileID: 952996512}
   - component: {fileID: 952996510}
   - component: {fileID: 952996513}
+  - component: {fileID: 952996514}
   m_Layer: 0
   m_Name: VisualizationBox (1)
   m_TagString: BossV
@@ -42445,7 +42446,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 15
+  m_Radius: 20
   m_Center: {x: 0, y: 0, z: -4}
 --- !u!4 &952996512
 Transform:
@@ -42475,6 +42476,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Boss: {fileID: 468429979}
+--- !u!65 &952996514
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 952996509}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 50, y: 5, z: 50}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!4 &953975511 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5549474624755547815, guid: 21aac7d89197f1146ad1a6c1f505ebf7,
@@ -50434,7 +50456,7 @@ PrefabInstance:
     - target: {fileID: 2961262510330166276, guid: 9236a33d9e51afc49819a8cdadeb7489,
         type: 3}
       propertyPath: MaxDistance
-      value: 30
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 2961262510330166276, guid: 9236a33d9e51afc49819a8cdadeb7489,
         type: 3}
@@ -50515,7 +50537,7 @@ PrefabInstance:
         type: 3}
       propertyPath: SphereCollider
       value: 
-      objectReference: {fileID: 952996510}
+      objectReference: {fileID: 0}
     - target: {fileID: 6990219589820309155, guid: 9236a33d9e51afc49819a8cdadeb7489,
         type: 3}
       propertyPath: VisualizationBoss
