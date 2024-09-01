@@ -253,7 +253,7 @@ public class EnemySearchcontroller : MonoBehaviour
     {
         //Ray2();
         float Player = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
-        if (Player <= 1.5f)
+        if (Player <= 2f)
         {
             if (ONOFF == 1)
             {
@@ -261,7 +261,6 @@ public class EnemySearchcontroller : MonoBehaviour
                 PlayerSeen PS = obj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
                 var childTransforms = PS._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
 
-                transform.LookAt(TargetPlayer.transform);//プレイヤーの方向にむく
                 animator.SetBool("Run", true);
                 PS.Visualization = true;
                 PS.onoff = 1;  //見えているから1
@@ -273,7 +272,7 @@ public class EnemySearchcontroller : MonoBehaviour
                 UpON = true;
             }
         }
-        else if (Player >= 2.0f) { UpON = false; }
+        else if (Player >= 2.5f) { UpON = false; }
 
         if (UpON == false)
         {

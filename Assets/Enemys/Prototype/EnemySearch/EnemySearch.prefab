@@ -1324,7 +1324,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 0
-  MaxDistance: 10
+  MaxDistance: 4
   Pan2D: 0
   rolloffMode: 1
   BypassEffects: 0
@@ -1424,6 +1424,7 @@ MonoBehaviour:
   rotation: {x: 0, y: 0, z: 0, w: 0}
   animator: {fileID: 6943470069220300604}
   Player: {fileID: 0}
+  initialTransform: {x: 0, y: 0, z: 0}
 --- !u!1 &822310583864198259
 GameObject:
   m_ObjectHideFlags: 0
