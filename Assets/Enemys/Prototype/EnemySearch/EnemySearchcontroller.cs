@@ -188,12 +188,21 @@ public class EnemySearchcontroller : MonoBehaviour
         else
         {
             OFFTime += Time.deltaTime;
-            if (OFFTime >= 10.0f)//10秒以上経ったら見えなくする
+            if (OFFTime >= 5.0f)//10秒以上経ったら見えなくする
             {
                 ONOFF = 0;
                 OFFTime = 0;
                 PS.Visualization = false;
+                PS.onoff = 0;//見えているから1
+                audioSourse.enabled = false;
+                foreach (var playerParts in childTransforms)
+                {
+                    //タグが"PlayerParts"である子オブジェクトを見えるようにする
+                    playerParts.gameObject.GetComponent<Renderer>().enabled = false;
+                }
+            
             }
+        
         }
     }
     /*

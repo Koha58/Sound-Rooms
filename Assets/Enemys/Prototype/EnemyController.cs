@@ -33,7 +33,7 @@ public class EnemyController : MonoBehaviour
     public Transform TargetPlayer;
 
     //Playerを追跡
-    float ChaseSpeed = 0.3f;                           //Playerを追いかけるスピード
+    float ChaseSpeed = 0.05f;                           //Playerを追いかけるスピード
     [SerializeField] bool ChaseONOFF;
 
     //Destroyの判定
@@ -123,7 +123,7 @@ public class EnemyController : MonoBehaviour
         {
             //3DモデルのRendererを見える状態
             PrototypeBodySkinnedMeshRenderer.enabled = true;
-            ONOFF = 1;//見えない
+            ONOFF = 1;
         }
     }
 
@@ -180,7 +180,7 @@ public class EnemyController : MonoBehaviour
         else
         {
             OFFTime += Time.deltaTime;
-            if (OFFTime >= 5.0f)
+            if (OFFTime >= 3.0f)
             {
                 ONOFF = 0;
                 OFFTime = 0;

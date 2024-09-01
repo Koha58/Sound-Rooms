@@ -114,7 +114,7 @@ public class BossTutoriaru : MonoBehaviour
             if (PlayerPoint <= 20) { VisualizationBoss.SetActive(true); }
 
             ONTime += Time.deltaTime;
-            if (ONTime >= 5.0f)
+            if (ONTime >=15.0f)
             {
                 //3Dƒ‚ƒfƒ‹‚ÌRenderer‚ğŒ©‚¦‚éó‘Ô
                 PrototypeBodySkinnedMeshRenderer.enabled = false;

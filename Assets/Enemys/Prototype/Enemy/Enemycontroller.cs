@@ -184,7 +184,7 @@ public class Enemycontroller : MonoBehaviour
         else 
         {
             OFFTime += Time.deltaTime;
-            if (OFFTime >= 5.0f)
+            if (OFFTime >=3.0f)
             {
                 ONOFF = 0;
                 OFFTime = 0;
