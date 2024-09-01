@@ -5,7 +5,6 @@ using Unity.Burst.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
-using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
 
 public class PrototypeController : MonoBehaviour
 {
