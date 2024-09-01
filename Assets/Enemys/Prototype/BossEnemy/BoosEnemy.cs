@@ -106,8 +106,10 @@ public class BoosEnemy : MonoBehaviour
         {
             //3Dƒ‚ƒfƒ‹‚ÌRenderer‚ğŒ©‚¦‚éó‘Ô
             PrototypeBodySkinnedMeshRenderer.enabled = true;
+            animator.SetBool("Idle", true);
+            animator.SetBool("Move", false);
             ONTime += Time.deltaTime;
-            if (ONTime>=5.0f)
+            if (ONTime>=10.0f)
             {
                 //3Dƒ‚ƒfƒ‹‚ÌRenderer‚ğŒ©‚¦‚éó‘Ô
                 PrototypeBodySkinnedMeshRenderer.enabled =false;

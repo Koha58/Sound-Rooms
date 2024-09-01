@@ -7,7 +7,7 @@ public class BossTutoriaru : MonoBehaviour
 {
     //移動
     [SerializeField] private Transform[] PatrolPoints; // 巡回ポイントの配列
-    public float MoveSpeed = 15.0f; // 動く速度
+    public float MoveSpeed =5.0f; // 動く速度
     private int CurrentPointIndex = 0;// 現在の巡回ポイントのインデックス
 
     //可視化
@@ -28,7 +28,7 @@ public class BossTutoriaru : MonoBehaviour
     public Transform TargetPlayer;
 
     //Playerを追跡
-    public float ChaseSpeed = 2.0f;//Playerを追いかけるスピード
+    public float ChaseSpeed = 0.1f;//Playerを追いかけるスピード
     [SerializeField] bool ChaseONOFF;
 
     //Destroyの判定
@@ -105,8 +105,10 @@ public class BossTutoriaru : MonoBehaviour
         {
             //3DモデルのRendererを見える状態
             PrototypeBodySkinnedMeshRenderer.enabled = true;
+            animator.SetBool("Idle", true);
+            animator.SetBool("Move", false);
             ONTime += Time.deltaTime;
-            if (ONTime >= 5.0f)
+            if (ONTime >= 10.0f)
             {
                 //3DモデルのRendererを見える状態
                 PrototypeBodySkinnedMeshRenderer.enabled = false;
@@ -271,15 +273,13 @@ public class BossTutoriaru : MonoBehaviour
 
                     if (transform.position == PatrolPoints[CurrentPointIndex].position)// 次の巡回ポイントへのインデックスを更新
                     {
-                        animator.SetBool("Idle", true);
-                        animator.SetBool("Move", false);
+                        animator.SetBool("Move",true);
                         Front = true;
                     }
                 }
                 else
                 {
-                    animator.SetBool("Idle", true);
-                    animator.SetBool("Move", false);
+                    animator.SetBool("Move", true);
                     NextTime += Time.deltaTime;
                     if (NextTime >= 5.0f)
                     {

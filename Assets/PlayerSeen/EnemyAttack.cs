@@ -89,13 +89,13 @@ public class EnemyAttack : MonoBehaviour
             DC += Time.deltaTime;
             if (DC >= 10.0f)
             {
-                GameObject Boss = GameObject.FindWithTag("Boss1");
-                BossTutoriaru BS = Boss.GetComponent<BossTutoriaru>();
+                GameObject Boss1 = GameObject.FindWithTag("Boss1");
+                BossTutoriaru BS1 = Boss1.GetComponent<BossTutoriaru>();
 
-                BS.MoveSpeed -= 0.1f;
-                BS.ChaseSpeed -= 0.01f;
-                BS.SphereCollider.radius -= 0.1f;
-                BS.ONOFF = 1;
+                BS1.MoveSpeed -= 0.1f;
+                BS1.ChaseSpeed -= 0.01f;
+                BS1.SphereCollider.radius -= 0.1f;
+                BS1.ONOFF = 1;
 
                 DC = 0;
                 DB2 = false;
