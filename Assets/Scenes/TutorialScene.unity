@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028331, g: 0.2257133, b: 0.3069217, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -4413,13 +4413,14 @@ GameObject:
   m_Component:
   - component: {fileID: 124924245}
   - component: {fileID: 124924246}
+  - component: {fileID: 124924247}
   m_Layer: 0
   m_Name: SoundcheckArea
   m_TagString: SoundCheck
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &124924245
 Transform:
   m_ObjectHideFlags: 0
@@ -4429,11 +4430,11 @@ Transform:
   m_GameObject: {fileID: 124924244}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.05, y: 1, z: 0.1}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0.55, y: 1, z: 6.73}
+  m_LocalScale: {x: 20, y: 20, z: 20}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2764094500274459442}
+  m_Father: {fileID: 1332868882}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!135 &124924246
 SphereCollider:
@@ -4456,6 +4457,19 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &124924247
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 124924244}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55fb968d66851bd4ab7959b5640d4c0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Enemy: {fileID: 2764094500274459442}
 --- !u!1001 &127488835
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -55213,6 +55227,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 124924245}
+  - {fileID: 1896459090}
   - {fileID: 491498141}
   - {fileID: 2764094500274459442}
   - {fileID: 1694921163}
@@ -67456,7 +67472,6 @@ Transform:
   - {fileID: 2083394483}
   - {fileID: 1583127745}
   - {fileID: 141441063}
-  - {fileID: 1896459090}
   m_Father: {fileID: 1332868882}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &1694921165
@@ -74919,13 +74934,14 @@ GameObject:
   m_Component:
   - component: {fileID: 1896459090}
   - component: {fileID: 1896459091}
+  - component: {fileID: 1896459092}
   m_Layer: 0
-  m_Name: SoundcheckArea
+  m_Name: SoundcheckArea1
   m_TagString: SoundCheck
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1896459090
 Transform:
   m_ObjectHideFlags: 0
@@ -74935,11 +74951,11 @@ Transform:
   m_GameObject: {fileID: 1896459089}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.05, y: 1, z: 0.1}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -12.55, y: 1, z: 13.900001}
+  m_LocalScale: {x: 20, y: 20, z: 20}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1694921163}
+  m_Father: {fileID: 1332868882}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!135 &1896459091
 SphereCollider:
@@ -74962,6 +74978,19 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1896459092
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1896459089}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55fb968d66851bd4ab7959b5640d4c0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Enemy: {fileID: 1694921163}
 --- !u!1 &1896616117
 GameObject:
   m_ObjectHideFlags: 0
@@ -88408,7 +88437,6 @@ Transform:
   - {fileID: 908903620325397327}
   - {fileID: 7216587096326634476}
   - {fileID: 2876683862029484504}
-  - {fileID: 124924245}
   m_Father: {fileID: 1332868882}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2771117348114196181
