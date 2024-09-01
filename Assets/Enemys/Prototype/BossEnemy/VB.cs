@@ -25,6 +25,7 @@ public class VB : MonoBehaviour
         {
             this.gameObject.SetActive(true);
         }
+
     }
 
     private void OnTriggerStay(Collider other)
