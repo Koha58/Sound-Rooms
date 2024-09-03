@@ -6,11 +6,11 @@ using UnityEngine.UI;
 
 public class StartManager : MonoBehaviour
 {
-    Image StartButtonImage;
-    Image TutorialButtonImage;
+    Image SelectButtonImage;
+    Image BackDesktopButtonImage;
 
-    public GameObject StartButton;
-    public GameObject TutorialButton;
+    public GameObject SelectButton;
+    public GameObject BackDesktopButton;
 
     public GameObject Cursor;
     public GameObject Cursor1;
@@ -20,11 +20,11 @@ public class StartManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        StartButtonImage = StartButton.GetComponent<Image>();
-        TutorialButtonImage = TutorialButton.GetComponent<Image>();
+        SelectButtonImage = SelectButton.GetComponent<Image>();
+        BackDesktopButtonImage = BackDesktopButton.GetComponent<Image>();
 
-        StartButtonImage.color = new Color32(255, 255, 255, 45);
-        TutorialButtonImage.color = new Color32(255, 255, 255, 45);
+        SelectButtonImage.color = new Color32(255, 255, 255, 45);
+        BackDesktopButtonImage.color = new Color32(255, 255, 255, 45);
 
         Cursor.SetActive(false);
         Cursor1.SetActive(false);
@@ -36,8 +36,8 @@ public class StartManager : MonoBehaviour
 
         if (Input.GetAxisRaw("Vertical") < 0)
         {
-            StartButtonImage.color = new Color32(255, 255, 255, 255);
-            TutorialButtonImage.color = new Color32(255, 255, 255, 45);
+            SelectButtonImage.color = new Color32(255, 255, 255, 255);
+            BackDesktopButtonImage.color = new Color32(255, 255, 255, 45);
             Cursor.SetActive(true);
             Cursor1.SetActive(false);
             UPDOWN = true;
@@ -45,8 +45,8 @@ public class StartManager : MonoBehaviour
 
         if (Input.GetAxisRaw("Vertical") > 0)
         {
-            StartButtonImage.color = new Color32(255, 255, 255, 45);
-            TutorialButtonImage.color = new Color32(255, 255, 255, 255);
+            SelectButtonImage.color = new Color32(255, 255, 255, 45);
+            BackDesktopButtonImage.color = new Color32(255, 255, 255, 255);
             Cursor1.SetActive(true);
             Cursor.SetActive(false);
             UPDOWN = false;
@@ -55,46 +55,54 @@ public class StartManager : MonoBehaviour
         {
             if (Input.GetKeyDown("joystick button 0"))
             {
-                SceneManager.LoadScene("GameScene");
+                SceneManager.LoadScene("StageSelectScene");
             }
         }
         else
         {
             if (Input.GetKeyDown("joystick button 0"))
             {
-                SceneManager.LoadScene("GameScene");
+#if UNITY_EDITOR
+                UnityEditor.EditorApplication.isPlaying = false;//ゲームプレイ終了
+#else
+    Application.Quit();//ゲームプレイ終了
+#endif
             }
         }
 
     }
 
-    public void OnStart()
+    public void OnSelect()
     {
-        SceneManager.LoadScene("GameScene");
+        SceneManager.LoadScene("StageSelectScene");
     }
 
-    public void OnTutorial()
+    public void OnBackDesktop()
     {
-        SceneManager.LoadScene("TutorialScene");
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;//ゲームプレイ終了
+#else
+    Application.Quit();//ゲームプレイ終了
+#endif
     }
 
-    public void EnterStartButton()
+    public void EnterSelectButton()
     {
-        StartButtonImage.color = new Color32(255, 255, 255, 255);
+        SelectButtonImage.color = new Color32(255, 255, 255, 255);
     }
 
-    public void ExitStartButton()
+    public void ExitSelectButton()
     {
-        StartButtonImage.color = new Color32(255, 255, 255, 45);
+        SelectButtonImage.color = new Color32(255, 255, 255, 45);
     }
 
-    public void EnterTutorialButton()
+    public void EnterBackDesktopButton()
     {
-        TutorialButtonImage.color = new Color32(255, 255, 255, 255);
+        BackDesktopButtonImage.color = new Color32(255, 255, 255, 255);
     }
 
-    public void ExitTutorialButton()
+    public void ExitBackDesktopButton()
     {
-        TutorialButtonImage.color = new Color32(255, 255, 255, 45);
+        BackDesktopButtonImage.color = new Color32(255, 255, 255, 45);
     }
 }
