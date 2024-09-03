@@ -170,6 +170,7 @@ public class BossTutoriaru : MonoBehaviour
                     //タグが"PlayerParts"である子オブジェクトを見えなくする
                     playerParts.gameObject.GetComponent<Renderer>().enabled = false;
                 }
+                EnemyAttack.SoundON = false;
             }
         }
     }
@@ -222,6 +223,12 @@ public class BossTutoriaru : MonoBehaviour
     {
         if (PlayerRun.CrouchOn == false) { VisualizationBoss.SetActive(true); }
         else { VisualizationBoss.SetActive(false); }
+
+        if (EnemyAttack.SoundON == true)
+        {
+            animator.SetBool("Idle", true);
+            animator.SetBool("Move", false);
+        }
 
         float Player = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
         if (Player <= 3.5f)

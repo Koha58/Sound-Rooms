@@ -28,6 +28,8 @@ public class EnemyAttack : MonoBehaviour
 
     bool DB2 = false;
 
+    public static bool SoundON;
+
     //[SerializeField]
     //private GameObject[] Prototype;
 
@@ -69,6 +71,16 @@ public class EnemyAttack : MonoBehaviour
         if (DB == true)
         {
             DC += Time.deltaTime;
+            if (DC >= 9.0f)
+            {
+                SoundON = true;
+
+                GameObject Boss1 = GameObject.FindWithTag("Boss1");
+                BossTutoriaru BS1 = Boss1.GetComponent<BossTutoriaru>();
+
+                BS1.ONOFF = 1;
+
+            }
             if (DC >= 10.0f)
             {
                 GameObject Boss = GameObject.FindWithTag("Boss");
@@ -87,6 +99,16 @@ public class EnemyAttack : MonoBehaviour
         if (DB2 == true)
         {
             DC += Time.deltaTime;
+            if (DC >= 9.0f) 
+            {
+                SoundON = true;
+
+                GameObject Boss1 = GameObject.FindWithTag("Boss1");
+                BossTutoriaru BS1 = Boss1.GetComponent<BossTutoriaru>();
+
+                BS1.ONOFF = 1;
+
+            }
             if (DC >= 10.0f)
             {
                 GameObject Boss1 = GameObject.FindWithTag("Boss1");
@@ -96,7 +118,7 @@ public class EnemyAttack : MonoBehaviour
                 BS1.ChaseSpeed -= 0.01f;
                 BS1.SphereCollider.radius -= 0.1f;
                 BS1.ONOFF = 1;
-
+                SoundON = true;
                 DC = 0;
                 DB2 = false;
             }

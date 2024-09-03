@@ -88,25 +88,6 @@ public class Enemycontroller : MonoBehaviour
 
     private void Visualization()//自身の可視化のON OFF
     {
-        /*
-        if (ONOFF == 0)//見えないとき
-        {
-            if (Front == false)
-            {
-                //3DモデルのRendererを見えない状態
-                PrototypeBodySkinnedMeshRenderer.enabled = false;
-                ONOFF = 1;//見える
-            }
-        }
-        else if (ONOFF == 1)//見えているとき
-        {
-            if (Front == true)
-            {
-                //3DモデルのRendererを見える状態
-                PrototypeBodySkinnedMeshRenderer.enabled = true;
-                ONOFF = 0;//見えない
-            }
-        }*/
         if (PianoRoom == false)
         {
             if (Front == false)
@@ -115,20 +96,14 @@ public class Enemycontroller : MonoBehaviour
                 PrototypeBodySkinnedMeshRenderer.enabled = false;
                 ONOFF = 0;//見える
             }
-        }
-        if (Front == true)
-        {
-            //3DモデルのRendererを見える状態
-            PrototypeBodySkinnedMeshRenderer.enabled = true;
-            ONOFF =1;//見えない
+           else if (Front == true)
+            {
+                //3DモデルのRendererを見える状態
+                PrototypeBodySkinnedMeshRenderer.enabled = true;
+                ONOFF = 1;//見えない
+            }
         }
 
-        if(PianoRoom == true)
-        {
-            //3DモデルのRendererを見える状態
-            PrototypeBodySkinnedMeshRenderer.enabled = true;
-            ONOFF = 1;//見えない
-        }
     }
 
     private void Ray()
@@ -198,32 +173,7 @@ public class Enemycontroller : MonoBehaviour
             }
         }
     }
-    /*
-    private void Ray2()
-    {
-        Ray ray;
-        RaycastHit hit;
-        Vector3 direction;   // Rayを飛ばす方向
-        float distance = 5.0f;    // Rayを飛ばす距離
-
-        // Rayを飛ばす方向を計算
-        Vector3 temp = Player.transform.position - transform.position;
-        direction = temp.normalized;
-
-        ray = new Ray(transform.position, direction);  // Rayを飛ばす
-        Debug.DrawRay(ray.origin, ray.direction * distance, Color.red);  // Rayをシーン上に描画
-
-        // Rayが最初に当たった物体を調べる
-        if (Physics.Raycast(ray.origin, ray.direction * distance, out hit))
-        {
-            if (hit.collider.gameObject.CompareTag("Wall"))
-            {
-                audioSourse.enabled = false;
-            }
-        }
-    }*/
-
-
+   
     private void Chase2()
     {
         GameObject gobj = GameObject.Find("Player");//Playerオブジェクトを探す
@@ -354,11 +304,29 @@ public class Enemycontroller : MonoBehaviour
             {
                 zero = true;
                 piano = false;
+                PianoRoom = false;
+                ONOFF = 0;
+                //3DモデルのRendererを見える状態
+                PrototypeBodySkinnedMeshRenderer.enabled = false;
+
+                if (Front == false)
+                {
+                    //3DモデルのRendererを見えない状態
+                    PrototypeBodySkinnedMeshRenderer.enabled = false;
+                    ONOFF = 0;//見える
+                }
+                else if (Front == true)
+                {
+                    //3DモデルのRendererを見える状態
+                    PrototypeBodySkinnedMeshRenderer.enabled = true;
+                    ONOFF = 1;//見えない
+                }
             }
             else
             {
                 piano = true;
                 zero = false;
+                PianoRoom = true;
                 ONOFF = 1;
                 //3DモデルのRendererを見える状態
                 PrototypeBodySkinnedMeshRenderer.enabled = true;
@@ -398,12 +366,12 @@ public class Enemycontroller : MonoBehaviour
         if (other.CompareTag("PianoRoom"))
         {
             PianoRoom = true;
-            ONOFF = 1;
             pianocnt++;
             if (!zero)
             {
                 piano = true;
                 if (pianocnt % 2 == 0){piano = false;}
+               
             }
         }
         else
