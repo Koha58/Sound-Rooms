@@ -108,7 +108,7 @@ public class GameSceneButton : MonoBehaviour
             Time.timeScale = 0;
         }
 
-        if (Input.GetKeyDown(KeyCode.B)||Input.GetKeyDown("joystick button 1"))//B
+        if (Input.GetKeyDown("joystick button 1"))//B
         {
             closeButton.GetComponent<Image>().enabled = false;
             closeKey.GetComponent<Image>().enabled = false;

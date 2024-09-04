@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static InputDeviceManager;
 
 public class TutorialMessageControll : MonoBehaviour
 {
@@ -9,6 +10,10 @@ public class TutorialMessageControll : MonoBehaviour
     private SlideUIControll[] Messages;
     [SerializeField]
     private SlideUIControll[] MoveWays;
+    [SerializeField]
+    private SlideUIControll[] ControllerMessages;
+    [SerializeField]
+    private SlideUIControll[] ControllerMoveWays;
     float timeCnt;
     int Message;
     PlayerSeen PS;
@@ -16,6 +21,8 @@ public class TutorialMessageControll : MonoBehaviour
     bool AutoCheck = false;
     float moveTimecnt;
     bool hurryUp;
+
+    bool deviceCheck;
 
     // Start is called before the first frame update
     void Start()
@@ -27,17 +34,34 @@ public class TutorialMessageControll : MonoBehaviour
         AutoCheck = false;
         moveTimecnt = 0f;
         hurryUp = false;
+        deviceCheck = false;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (InputDeviceManager.Instance.CurrentDeviceType == InputDeviceType.Xbox)
+        {
+            deviceCheck = true;
+        }
+        else if (InputDeviceManager.Instance.CurrentDeviceType == InputDeviceType.Keyboard)
+        {
+            deviceCheck = false;
+        }
+
         PS = GetComponent<PlayerSeen>();
 
         timeCnt += Time.deltaTime;
         if (timeCnt >= 7.0f && Message < 42)
         {
             Messages[Message - 1].state = 0;
+            if (deviceCheck)
+            {
+                if (Message == 1)
+                {
+                    Messages[Message] = ControllerMessages[0];
+                }
+            }
             Messages[Message].state = 1;
             Message++;
             timeCnt = 0f;
@@ -74,12 +98,26 @@ public class TutorialMessageControll : MonoBehaviour
             if (SoundCheck)
             {
                 timeCnt = 7.0f;
-                MoveWays[0].state = 0;
+                if(!deviceCheck)
+                {
+                    MoveWays[0].state = 0;
+                }
+                else
+                {
+                    ControllerMoveWays[0].state = 0;
+                }
             }
             else
             {
                 timeCnt = 0f;
-                MoveWays[0].state = 1;
+                if (!deviceCheck)
+                {
+                    MoveWays[0].state = 1;
+                }
+                else
+                {
+                    ControllerMoveWays[0].state = 1;
+                }
             }
         }
         if (Message == 19)
@@ -113,11 +151,25 @@ public class TutorialMessageControll : MonoBehaviour
         {
             if (PlayerRun.CrouchOn == true)
             {
-                MoveWays[1].state = 0;
+                if(!deviceCheck)
+                {
+                    MoveWays[1].state = 0;
+                }
+                else
+                {
+                    ControllerMoveWays[1].state = 0;
+                }
             }
             else
             {
-                MoveWays[1].state = 1;
+                if (!deviceCheck)
+                {
+                    MoveWays[1].state = 1;
+                }
+                else
+                {
+                    ControllerMoveWays[1].state = 1;
+                }
             }
         }
         else
