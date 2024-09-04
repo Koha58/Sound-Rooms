@@ -1,22 +1,16 @@
 using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
 
 public class TutorialManager : MonoBehaviour
 {
-    public GameObject Cursor;
-    public GameObject Cursor1;
-    public GameObject Cursor2;
-    public GameObject Cursor3;
-
-    //連続入力回避用フラグ
-    private bool isSel;
-    //選択中番号
-    private int selCnt;
-
+    public GameObject[] Cursors;
+    float y;
+    float speed = 10f;
 
     [SerializeField] AudioMixer audioMixer;
     [SerializeField] GameObject micObject;
@@ -32,15 +26,9 @@ public class TutorialManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Cursor.SetActive(true);
-        Cursor1.SetActive(false);
-        Cursor2.SetActive(false);
-        Cursor3.SetActive(false);
+        Cursors[0].SetActive(true);
 
-          //変数初期化
-        selCnt = 0;
-
-        AudioSource Mic = micObject.GetComponent<AudioSource>();
+       AudioSource Mic = micObject.GetComponent<AudioSource>();
         MicSlider.value = Mic.volume;
 
         MouseSlider.value = VCamera.m_YAxis.m_MaxSpeed;
@@ -58,56 +46,30 @@ public class TutorialManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float hori1 = Input.GetAxis("Horizontal");
-        float vert1 = Input.GetAxis("Vertical");
-        if ((hori1 != 0) || (vert1 != 0))//左スティック
+        
+        if (Input.GetAxisRaw("Vertical") > 0)
         {
-            Debug.Log("stick:" + hori1 + "," + vert1);
-        }
-
-        /*
-        if (vert1 <= 0.5 && selCnt == 0 && isSel == false)
-        {
-            isSel = true;
-            selCnt += 1;
-            if (isSel == true && selCnt == 1)
+            int i=+1;
+            if (Cursors[i] == Cursors[0])
             {
-                Cursor.SetActive(false);
-                Cursor1.SetActive(true);
-                Cursor2.SetActive(false);
-                Cursor3.SetActive(false);
-                isSel = false;
+                Cursors[0].SetActive(true);
+            }
+            if (Cursors[i] == Cursors[1])
+            {
+                Cursors[1].SetActive(true);
+            }
+            if (Cursors[i] == Cursors[2])
+            {
+                Cursors[2].SetActive(true);
+            }
+            if (Cursors[i] == Cursors[3])
+            {
+                Cursors[3].SetActive(true);
             }
         }
-
-        if (vert1 <= 0.5 && selCnt == 1 && isSel == false)
-        {
-            isSel = true;
-            selCnt += 1;
-            if (isSel == true && selCnt == 2)
-            {
-                Cursor.SetActive(false);
-                Cursor1.SetActive(false);
-                Cursor2.SetActive(true);
-                Cursor3.SetActive(false);
-                isSel = false;
-            }
-        }
-
-        if (vert1 <= 0.5 && selCnt == 2 && isSel == false)
-        {
-            isSel = true;
-            selCnt += 1;
-            if (isSel == true && selCnt == 3)
-            {
-                Cursor.SetActive(false);
-                Cursor1.SetActive(false);
-                Cursor2.SetActive(false);
-                Cursor3.SetActive(true);
-                isSel = false;
-            }
-        }*/
+       
     }
+
 
     public void SetBGM(float volume)
     {
