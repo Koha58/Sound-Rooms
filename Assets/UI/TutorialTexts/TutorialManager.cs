@@ -9,14 +9,16 @@ using UnityEngine.UI;
 public class TutorialManager : MonoBehaviour
 {
     public GameObject[] Cursors;
-    float timer;
+    public static bool TimerON;
     float count;
     bool Select;
 
     [SerializeField] AudioMixer audioMixer;
     [SerializeField] GameObject micObject;
     public float volume;
+    public float volume1;
     public float volume2;
+    public float volume3;
 
     public CinemachineFreeLook VCamera;
 
@@ -28,7 +30,6 @@ public class TutorialManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        timer=0; 
         count = 0;
         Select = false;
         for (int i = 0; i < Cursors.Length; i++)
@@ -51,70 +52,63 @@ public class TutorialManager : MonoBehaviour
         SESlider.value = seVolume;
     }
 
+
     // Update is called once per frame
     void Update()
     {
-        if (Select == true)
+        if (Input.GetAxis("Vertical") == 0)
         {
             Select = false;
         }
+
         if (Input.GetAxis("Vertical") > 0 && count == 0 && Select == false)
         {
-            Cursors[0].SetActive(true);
             count += 1;
             Select = true;
         }
         else if (Input.GetAxis("Vertical") > 0 && count == 1 && Select == false)
         {
-            Cursors[0].SetActive(false);
-            Cursors[1].SetActive(true);
             count += 1;
             Select = true;
         }
         else if (Input.GetAxis("Vertical") > 0 && count == 2 && Select == false)
         {
-            Cursors[1].SetActive(false);
-            Cursors[2].SetActive(true);
             count += 1;
             Select = true;
         }
         else if (Input.GetAxis("Vertical") > 0 && count == 3 && Select == false)
         {
-            Cursors[2].SetActive(false);
-            Cursors[3].SetActive(true);
             Select = true;
         }
 
 
         if (Input.GetAxis("Vertical") < 0 && count == 0 && Select == false)
         {
-            Cursors[0].SetActive(true);
-            Cursors[1].SetActive(false);
             Select = true;
         }
         else if (Input.GetAxis("Vertical") < 0 && count == 1 && Select == false)
         {
-            Cursors[1].SetActive(true);
-            Cursors[2].SetActive(false);
             count -= 1;
             Select = true;
         }
         else if (Input.GetAxis("Vertical") < 0 && count == 2 && Select == false)
         {
-            Cursors[2].SetActive(true);
-            Cursors[3].SetActive(false);
             count -= 1;
             Select = true;
         }
         else if (Input.GetAxis("Vertical") < 0 && count == 3 && Select == false)
         {
-            Cursors[3].SetActive(true);
             count -= 1;
             Select = true;
         }
 
         if (count == 0) 
         {
+            Cursors[0].SetActive(true);
+            Cursors[1].SetActive(false);
+            Cursors[2].SetActive(false);
+            Cursors[3].SetActive(false);
+
             if (Input.GetAxis("Horizontal") >0)
             {
                 if (volume < 1)
@@ -136,14 +130,18 @@ public class TutorialManager : MonoBehaviour
         }
         else if (count == 1) 
         {
+            Cursors[0].SetActive(false);
+            Cursors[1].SetActive(true);
+            Cursors[2].SetActive(false);
+            Cursors[3].SetActive(false);
             if (Input.GetAxis("Horizontal") > 0)
             {
                 if (volume2 < 0)
                 {
                     volume2 += 1f;
                 }
-                BGMSlider.value = volume;
-                SetMic(volume);
+                BGMSlider.value = volume2;
+                SetMic(volume2);
             }
             else if (Input.GetAxis("Horizontal") < 0)
             {
@@ -151,50 +149,59 @@ public class TutorialManager : MonoBehaviour
                 {
                     volume2 -= 1f;
                 }
-                BGMSlider.value = volume;
-                SetMic(volume);
+                BGMSlider.value = volume2;
+                SetMic(volume2);
             }
         }
         else if (count == 2)
         {
+            Cursors[0].SetActive(false);
+            Cursors[1].SetActive(false);
+            Cursors[2].SetActive(true);
+            Cursors[3].SetActive(false);
             if (Input.GetAxis("Horizontal") > 0)
             {
-                if (volume2 < 1)
+                if (volume3 < 0)
                 {
-                    volume2 += 1f;
+                    volume3 += 1f;
                 }
-                SESlider.value = volume;
-                SetMic(volume);
+                SESlider.value = volume3;
+                SetMic(volume3);
             }
             else if (Input.GetAxis("Horizontal") < 0)
             {
-                if (volume2 > -80 && volume != 0)
+                if (volume3 > -80 && volume != 0)
                 {
-                    volume2 -= 1f;
+                    volume3 -= 1f;
                 }
-                SESlider.value = volume;
-                SetMic(volume);
+                SESlider.value = volume3;
+                SetMic(volume3);
             }
         }
         else if (count == 3)
         {
+            Cursors[0].SetActive(false);
+            Cursors[1].SetActive(false);
+            Cursors[2].SetActive(false);
+            Cursors[3].SetActive(true);
+
             if (Input.GetAxis("Horizontal") > 0)
             {
-                if (volume < 1)
+                if (volume1 < 1)
                 {
-                    volume += 0.01f;
+                    volume1 += 0.01f;
                 }
-                MouseSlider.value = volume;
-                SetMic(volume);
+                MouseSlider.value = volume1;
+                SetMic(volume1);
             }
             else if (Input.GetAxis("Horizontal") < 0)
             {
-                if (volume > 0 && volume != 0)
+                if (volume1 > 0 && volume1 != 0)
                 {
-                    volume -= 0.01f;
+                    volume1 -= 0.01f;
                 }
-                MouseSlider.value = volume;
-                SetMic(volume);
+                MouseSlider.value = volume1;
+                SetMic(volume1);
             }
         }
 
@@ -206,9 +213,9 @@ public class TutorialManager : MonoBehaviour
         audioMixer.SetFloat("BGM", volume2);
     }
 
-    public void SetSE(float volume2)
+    public void SetSE(float volume3)
     {
-        audioMixer.SetFloat("SE", volume2);
+        audioMixer.SetFloat("SE", volume3);
     }
 
     public void SetMic(float volume)
@@ -217,7 +224,7 @@ public class TutorialManager : MonoBehaviour
         Mic.volume = MicSlider.value;
     }
 
-    public void SetMouse(float level)
+    public void SetMouse(float level1)
     {
         VCamera.m_YAxis.m_MaxSpeed = MouseSlider.value / 50;
         VCamera.m_XAxis.m_MaxSpeed = MouseSlider.value * 50;

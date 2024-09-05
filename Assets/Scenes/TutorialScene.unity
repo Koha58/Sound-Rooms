@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028331, g: 0.2257133, b: 0.3069217, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -18956,6 +18956,18 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1653341028}
         m_TargetAssemblyTypeName: AudioSetting, Assembly-CSharp
+        m_MethodName: SetMouse
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1169437509}
+        m_TargetAssemblyTypeName: TutorialManager, Assembly-CSharp
         m_MethodName: SetMouse
         m_Mode: 0
         m_Arguments:
@@ -50163,7 +50175,9 @@ MonoBehaviour:
   audioMixer: {fileID: 24100000, guid: bf5be84fde00e394d82d970ecd5a5aa2, type: 2}
   micObject: {fileID: 1792768138}
   volume: 0
+  volume1: 0
   volume2: 0
+  volume3: 0
   VCamera: {fileID: 1708718795}
   MicSlider: {fileID: 2034277450}
   BGMSlider: {fileID: 234826214}
