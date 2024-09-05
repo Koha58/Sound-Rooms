@@ -8208,6 +8208,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1169437509}
+        m_TargetAssemblyTypeName: TutorialManager, Assembly-CSharp
+        m_MethodName: SetBGM
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!224 &234826215
 RectTransform:
   m_ObjectHideFlags: 0
@@ -50144,13 +50156,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Cursors:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  audioMixer: {fileID: 0}
-  micObject: {fileID: 0}
+  - {fileID: 2034403564}
+  - {fileID: 385184826}
+  - {fileID: 93220638}
+  - {fileID: 1197117716}
+  audioMixer: {fileID: 24100000, guid: bf5be84fde00e394d82d970ecd5a5aa2, type: 2}
+  micObject: {fileID: 1792768138}
   volume: 0
-  VCamera: {fileID: 0}
+  volume2: 0
+  VCamera: {fileID: 1708718795}
   MicSlider: {fileID: 2034277450}
   BGMSlider: {fileID: 234826214}
   SESlider: {fileID: 1402192764}
@@ -58333,6 +58347,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1169437509}
+        m_TargetAssemblyTypeName: TutorialManager, Assembly-CSharp
+        m_MethodName: SetSE
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!4 &1402236979 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4156034290451276482, guid: ebbd9c8c6e67d454d9aad0c6d56af841,
@@ -63114,8 +63140,11 @@ MonoBehaviour:
   - {fileID: 1315176834}
   - {fileID: 239809487}
   - {fileID: 1804912627}
-  ControllerMessages: []
-  ControllerMoveWays: []
+  ControllerMessages:
+  - {fileID: 880881753}
+  ControllerMoveWays:
+  - {fileID: 1750036988}
+  - {fileID: 1823696655}
 --- !u!114 &1573040151
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -69787,7 +69816,7 @@ MonoBehaviour:
   state: 0
   loop: 0
   outPos01: {x: -1300, y: -300, z: 0}
-  inPos: {x: -780, y: -300, z: 0}
+  inPos: {x: -710, y: -300, z: 0}
   outPos02: {x: -1300, y: -300, z: 0}
 --- !u!114 &1750036989
 MonoBehaviour:
@@ -79086,6 +79115,18 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1653341028}
         m_TargetAssemblyTypeName: AudioSetting, Assembly-CSharp
+        m_MethodName: SetMic
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1169437509}
+        m_TargetAssemblyTypeName: TutorialManager, Assembly-CSharp
         m_MethodName: SetMic
         m_Mode: 0
         m_Arguments:

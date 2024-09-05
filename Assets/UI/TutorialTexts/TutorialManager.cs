@@ -9,12 +9,14 @@ using UnityEngine.UI;
 public class TutorialManager : MonoBehaviour
 {
     public GameObject[] Cursors;
-    float y;
-    float speed = 10f;
+    float timer;
+    float count;
+    bool Select;
 
     [SerializeField] AudioMixer audioMixer;
     [SerializeField] GameObject micObject;
     public float volume;
+    public float volume2;
 
     public CinemachineFreeLook VCamera;
 
@@ -26,9 +28,15 @@ public class TutorialManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Cursors[0].SetActive(true);
+        timer=0; 
+        count = 0;
+        Select = false;
+        for (int i = 0; i < Cursors.Length; i++)
+        {
+            Cursors[i].SetActive(false);
+        }
 
-       AudioSource Mic = micObject.GetComponent<AudioSource>();
+        AudioSource Mic = micObject.GetComponent<AudioSource>();
         MicSlider.value = Mic.volume;
 
         MouseSlider.value = VCamera.m_YAxis.m_MaxSpeed;
@@ -46,39 +54,161 @@ public class TutorialManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
-        if (Input.GetAxisRaw("Vertical") > 0)
+        if (Select == true)
         {
-            int i=+1;
-            if (Cursors[i] == Cursors[0])
+            Select = false;
+        }
+        if (Input.GetAxis("Vertical") > 0 && count == 0 && Select == false)
+        {
+            Cursors[0].SetActive(true);
+            count += 1;
+            Select = true;
+        }
+        else if (Input.GetAxis("Vertical") > 0 && count == 1 && Select == false)
+        {
+            Cursors[0].SetActive(false);
+            Cursors[1].SetActive(true);
+            count += 1;
+            Select = true;
+        }
+        else if (Input.GetAxis("Vertical") > 0 && count == 2 && Select == false)
+        {
+            Cursors[1].SetActive(false);
+            Cursors[2].SetActive(true);
+            count += 1;
+            Select = true;
+        }
+        else if (Input.GetAxis("Vertical") > 0 && count == 3 && Select == false)
+        {
+            Cursors[2].SetActive(false);
+            Cursors[3].SetActive(true);
+            Select = true;
+        }
+
+
+        if (Input.GetAxis("Vertical") < 0 && count == 0 && Select == false)
+        {
+            Cursors[0].SetActive(true);
+            Cursors[1].SetActive(false);
+            Select = true;
+        }
+        else if (Input.GetAxis("Vertical") < 0 && count == 1 && Select == false)
+        {
+            Cursors[1].SetActive(true);
+            Cursors[2].SetActive(false);
+            count -= 1;
+            Select = true;
+        }
+        else if (Input.GetAxis("Vertical") < 0 && count == 2 && Select == false)
+        {
+            Cursors[2].SetActive(true);
+            Cursors[3].SetActive(false);
+            count -= 1;
+            Select = true;
+        }
+        else if (Input.GetAxis("Vertical") < 0 && count == 3 && Select == false)
+        {
+            Cursors[3].SetActive(true);
+            count -= 1;
+            Select = true;
+        }
+
+        if (count == 0) 
+        {
+            if (Input.GetAxis("Horizontal") >0)
             {
-                Cursors[0].SetActive(true);
+                if (volume < 1)
+                {
+                    volume +=0.01f;
+                }
+                MicSlider.value = volume;
+                SetMic(volume);
             }
-            if (Cursors[i] == Cursors[1])
+            else if (Input.GetAxis("Horizontal") < 0)
             {
-                Cursors[1].SetActive(true);
-            }
-            if (Cursors[i] == Cursors[2])
-            {
-                Cursors[2].SetActive(true);
-            }
-            if (Cursors[i] == Cursors[3])
-            {
-                Cursors[3].SetActive(true);
+                if (volume > 0&&volume!=0)
+                {
+                    volume -= 0.01f;
+                }
+                MicSlider.value = volume;
+                SetMic(volume);
             }
         }
-       
+        else if (count == 1) 
+        {
+            if (Input.GetAxis("Horizontal") > 0)
+            {
+                if (volume2 < 0)
+                {
+                    volume2 += 1f;
+                }
+                BGMSlider.value = volume;
+                SetMic(volume);
+            }
+            else if (Input.GetAxis("Horizontal") < 0)
+            {
+                if (volume2 > -80 && volume != 0)
+                {
+                    volume2 -= 1f;
+                }
+                BGMSlider.value = volume;
+                SetMic(volume);
+            }
+        }
+        else if (count == 2)
+        {
+            if (Input.GetAxis("Horizontal") > 0)
+            {
+                if (volume2 < 1)
+                {
+                    volume2 += 1f;
+                }
+                SESlider.value = volume;
+                SetMic(volume);
+            }
+            else if (Input.GetAxis("Horizontal") < 0)
+            {
+                if (volume2 > -80 && volume != 0)
+                {
+                    volume2 -= 1f;
+                }
+                SESlider.value = volume;
+                SetMic(volume);
+            }
+        }
+        else if (count == 3)
+        {
+            if (Input.GetAxis("Horizontal") > 0)
+            {
+                if (volume < 1)
+                {
+                    volume += 0.01f;
+                }
+                MouseSlider.value = volume;
+                SetMic(volume);
+            }
+            else if (Input.GetAxis("Horizontal") < 0)
+            {
+                if (volume > 0 && volume != 0)
+                {
+                    volume -= 0.01f;
+                }
+                MouseSlider.value = volume;
+                SetMic(volume);
+            }
+        }
+
     }
 
 
-    public void SetBGM(float volume)
+    public void SetBGM(float volume2)
     {
-        audioMixer.SetFloat("BGM", volume);
+        audioMixer.SetFloat("BGM", volume2);
     }
 
-    public void SetSE(float volume)
+    public void SetSE(float volume2)
     {
-        audioMixer.SetFloat("SE", volume);
+        audioMixer.SetFloat("SE", volume2);
     }
 
     public void SetMic(float volume)
