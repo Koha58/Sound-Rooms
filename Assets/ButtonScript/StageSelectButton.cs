@@ -26,6 +26,8 @@ public class StageSelectButton : MonoBehaviour
 
     bool deviceCheck;
 
+    bool SetGameStart;
+
     private float originPositionX = -583;
     private float originPositionY = 245;
     private float originPositionZ = 0;
@@ -191,19 +193,19 @@ public class StageSelectButton : MonoBehaviour
 
                 Continue = true;
             }
+
             if (Input.GetAxisRaw("Horizontal") > 0 && Continue == false && !readyStart)
             {
                 cursorTransform.transform.localPosition = new Vector3(StartPositionX, StartPositionY, StartPositionZ);
                 cursorTransform.transform.localScale = new Vector3(StartSizeX, StartSizeY, StartSizeZ);
                 Continue = true;
                 readyStart = true;
-                if(Input.GetKeyDown("joystick button 0"))
-                {
-                    OnStart();
-                }
+                SetGameStart = true;
+
             }
             else if(Input.GetAxisRaw("Horizontal") < 0 && Continue == false && readyStart)
             {
+                SetGameStart=false;
                 readyStart = false;
                 cursorTransform.transform.localPosition = new Vector3(originPositionX, originPositionY, originPositionZ);
                 cursorTransform.transform.localScale = new Vector3(originSizeX, originSizeY, originSizeZ);
@@ -211,6 +213,14 @@ public class StageSelectButton : MonoBehaviour
         }
 
         StageSelect();
+
+        if (SetGameStart == true) 
+        {
+            if (Input.GetKeyDown("joystick button 0"))
+            {
+                OnStart();
+            }
+        }
 
     }
 
@@ -370,7 +380,7 @@ public class StageSelectButton : MonoBehaviour
 
     public void OnStart()
     {
-        if(stage == 0)
+        if (stage == 0)
         {
             SceneManager.LoadScene("TutorialScene");
         }
