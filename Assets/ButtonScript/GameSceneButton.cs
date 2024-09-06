@@ -33,6 +33,8 @@ public class GameSceneButton : MonoBehaviour
     //カーソル(コントローラー用)
     [SerializeField] GameObject Cursor;
 
+   public GameObject SettingBack;
+
     Image ExplainFontImage;
     Image SettingFontImage;
     bool deviceCheck;
@@ -66,7 +68,11 @@ public class GameSceneButton : MonoBehaviour
 
         Cursor.GetComponent<Image>().enabled = false;
 
-        deviceCheck = false;
+        TutorialManager.ON = false;
+
+        SettingBack.SetActive(false);
+
+       deviceCheck = false;
     }
 
     // Update is called once per frame
@@ -83,6 +89,8 @@ public class GameSceneButton : MonoBehaviour
 
         if (Input.GetKeyDown("joystick button 7"))//メニュー ボタン 
         {
+            TutorialManager.ON=true;
+
             SettingMenu.GetComponent<Image>().enabled = true;
             MicSlider.gameObject.SetActive(true);
             BGMSlider.gameObject.SetActive(true);
@@ -91,6 +99,8 @@ public class GameSceneButton : MonoBehaviour
             SettingFont.GetComponent<Image>().enabled = true;
             ExplainFont .GetComponent<Image>().enabled = true;
             Slash .GetComponent<Image>().enabled = true;
+
+            SettingBack.SetActive(true);
 
             Cursor.GetComponent<Image>().enabled = true;
 
@@ -122,6 +132,8 @@ public class GameSceneButton : MonoBehaviour
             ExplainFont.GetComponent<Image>().enabled = false;
             Slash.GetComponent<Image>().enabled = false;
             Cursor.GetComponent<Image>().enabled = false;
+            TutorialManager.ON =false;
+            SettingBack.SetActive(false);
             Time.timeScale = 1;
         }
 
@@ -137,6 +149,8 @@ public class GameSceneButton : MonoBehaviour
         SettingFont.GetComponent<Image>().enabled = true;
         ExplainFont.GetComponent<Image>().enabled = true;
         Slash.GetComponent<Image>().enabled = true;
+
+        SettingBack.SetActive(true);
 
         ExplainFontImage = ExplainFont.GetComponent<Image>();
         ExplainFontImage.color = new Color32(255, 255, 255, 45);
@@ -167,6 +181,8 @@ public class GameSceneButton : MonoBehaviour
         ExplainFont.GetComponent<Image>().enabled = false;
         Slash.GetComponent<Image>().enabled = false;
         Time.timeScale = 1;
+        SettingBack.SetActive(true);
+
     }
 
     public void SettingFontButton()
@@ -179,6 +195,8 @@ public class GameSceneButton : MonoBehaviour
         SettingFont.GetComponent<Image>().enabled = true;
         ExplainFont.GetComponent<Image>().enabled = true;
         Slash.GetComponent<Image>().enabled = true;
+
+        SettingBack.SetActive(true);
 
         ExplainFontImage = ExplainFont.GetComponent<Image>();
         ExplainFontImage.color = new Color32(255, 255, 255, 45);
