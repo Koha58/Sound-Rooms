@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Drawing;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.ProBuilder.MeshOperations;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using static InputDeviceManager;
 
 public class StageSelectButton : MonoBehaviour
 {
@@ -14,14 +16,37 @@ public class StageSelectButton : MonoBehaviour
     public GameObject LeftButton;
 
     public GameObject Cursor;
-    public GameObject Cursor1;
 
     public GameObject[] StageVideos;
     public GameObject[] StageTitles;
 
-    bool UPDOWN;
+    bool Continue;
 
     int stage;
+
+    bool deviceCheck;
+
+    private float originPositionX = -583;
+    private float originPositionY = 245;
+    private float originPositionZ = 0;
+
+    private float changePositionY;
+
+    private float mostUnderPositionY;
+
+    private float originSizeX = 1.0f;
+    private float originSizeY = 0.5f;
+    private float originSizeZ = 1.0f;
+
+    private float StartPositionX = 448;
+    private float StartPositionY = -447;
+    private float StartPositionZ = 0;
+
+    private float StartSizeX = 1.65f;
+    private float StartSizeY = 0.7f;
+    private float StartSizeZ = 1.0f;
+
+    bool readyStart;
 
     // Start is called before the first frame update
     void Start()
@@ -50,46 +75,140 @@ public class StageSelectButton : MonoBehaviour
 
         StageTitles[stage].GetComponent<Image>().enabled = true;
 
-        Cursor.GetComponent<Image>().enabled = false;
+        if (InputDeviceManager.Instance.CurrentDeviceType == InputDeviceType.Xbox)
+        {
+            deviceCheck = true;
+        }
+        else if (InputDeviceManager.Instance.CurrentDeviceType == InputDeviceType.Keyboard)
+        {
+            deviceCheck = false;
+        }
+
+        if (deviceCheck)
+        {
+            Transform cursorTransform = Cursor.transform;
+            cursorTransform.transform.localPosition = new Vector3(originPositionX, originPositionY, originPositionZ);
+            changePositionY = originPositionY;
+            mostUnderPositionY = 160;
+
+            cursorTransform.transform.localScale = new Vector3(originSizeX, originSizeY, originSizeZ);
+
+            Cursor.GetComponent<Image>().enabled = true;
+        }
+        else
+        {
+            Cursor.GetComponent<Image>().enabled = false;
+        }
+
+        Continue = false;
+
+        readyStart = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        //Transform cursorTransform = Cursor.transform;
-        //if (Input.GetAxisRaw("Vertical") < 0)
-        //{
-        //   if(stage == 0)
-        //    {
+        Transform cursorTransform = Cursor.transform;
+        if (InputDeviceManager.Instance.CurrentDeviceType == InputDeviceType.Xbox)
+        {
+            deviceCheck = true;
+            Cursor.GetComponent<Image>().enabled = true;
+        }
+        else if (InputDeviceManager.Instance.CurrentDeviceType == InputDeviceType.Keyboard)
+        {
+            deviceCheck = false;
+            Cursor.GetComponent<Image>().enabled = false;
+        }
 
-        //    }
-        //    Stage0ButtonImage.color = new Color32(255, 255, 255, 255);
-        //    Stage1ButtonImage.color = new Color32(255, 255, 255, 45);
-        //    Cursor.SetActive(true);
-        //    Cursor1.SetActive(false);
-        //    UPDOWN = true;
-        //}
+        if(deviceCheck)
+        {
+            if(Input.GetAxisRaw("Vertical") == 0)
+            {
+                Continue = false;
+            }
 
-        //if (Input.GetAxisRaw("Vertical") > 0)
-        //{
-        //    Stage0ButtonImage.color = new Color32(255, 255, 255, 45);
-        //    Stage1ButtonImage.color = new Color32(255, 255, 255, 255);
-        //    UPDOWN = false;
-        //}
-        //if (UPDOWN == true)
-        //{
-        //    if (Input.GetKeyDown("joystick button 0"))
-        //    {
-        //        SceneManager.LoadScene("TutorialScene");
-        //    }
-        //}
-        //else
-        //{
-        //    if (Input.GetKeyDown("joystick button 0"))
-        //    {
-        //        SceneManager.LoadScene("GameScene");
-        //    }
-        //}
+
+            if (Input.GetAxisRaw("Vertical") < 0 && Continue == false)
+            {
+                cursorTransform.transform.localScale = new Vector3(originSizeX, originSizeY, originSizeZ);
+                if (stage != 1)
+                {
+                    stage++;
+                    for (int i = 0; i < StageButtons.Length; i++)
+                    {
+                        StageButtons[i].GetComponent<Image>().color = new Color32(255, 255, 255, 45);
+                    }
+
+                    StageButtons[stage].GetComponent<Image>().color = new Color32(255, 255, 255, 255);
+
+                    changePositionY -= 80;
+                    cursorTransform.transform.localPosition = new Vector3(originPositionX, changePositionY, originPositionZ);
+                }
+                else
+                {
+                    stage = 0;
+                    for (int i = 0; i < StageButtons.Length; i++)
+                    {
+                        StageButtons[i].GetComponent<Image>().color = new Color32(255, 255, 255, 45);
+                    }
+
+                    StageButtons[stage].GetComponent<Image>().color = new Color32(255, 255, 255, 255);
+
+                    cursorTransform.transform.localPosition = new Vector3(originPositionX, originPositionY, originPositionZ);
+                    changePositionY = originPositionY;
+                }
+                Continue = true;
+            }
+            else if(Input.GetAxisRaw("Vertical") > 0 && Continue == false)
+            {
+                cursorTransform.transform.localScale = new Vector3(originSizeX, originSizeY, originSizeZ);
+                if (stage != 0)
+                {
+                    stage--;
+                    for (int i = 0; i < StageButtons.Length; i++)
+                    {
+                        StageButtons[i].GetComponent<Image>().color = new Color32(255, 255, 255, 45);
+                    }
+
+                    StageButtons[stage].GetComponent<Image>().color = new Color32(255, 255, 255, 255);
+
+                    changePositionY += 80;
+                    cursorTransform.transform.localPosition = new Vector3(originPositionX, changePositionY, originPositionZ);
+                }
+                else
+                {
+                    stage = 1;
+                    for (int i = 0; i < StageButtons.Length; i++)
+                    {
+                        StageButtons[i].GetComponent<Image>().color = new Color32(255, 255, 255, 45);
+                    }
+
+                    StageButtons[stage].GetComponent<Image>().color = new Color32(255, 255, 255, 255);
+
+                    cursorTransform.transform.localPosition = new Vector3(originPositionX, mostUnderPositionY, originPositionZ);
+                    changePositionY = mostUnderPositionY;
+                }
+
+                Continue = true;
+            }
+            if (Input.GetAxisRaw("Horizontal") > 0 && Continue == false && !readyStart)
+            {
+                cursorTransform.transform.localPosition = new Vector3(StartPositionX, StartPositionY, StartPositionZ);
+                cursorTransform.transform.localScale = new Vector3(StartSizeX, StartSizeY, StartSizeZ);
+                Continue = true;
+                readyStart = true;
+                if(Input.GetKeyDown("joystick button 0"))
+                {
+                    OnStart();
+                }
+            }
+            else if(Input.GetAxisRaw("Horizontal") < 0 && Continue == false && readyStart)
+            {
+                readyStart = false;
+                cursorTransform.transform.localPosition = new Vector3(originPositionX, originPositionY, originPositionZ);
+                cursorTransform.transform.localScale = new Vector3(originSizeX, originSizeY, originSizeZ);
+            }
+        }
 
         StageSelect();
 
