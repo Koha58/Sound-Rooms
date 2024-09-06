@@ -12,6 +12,7 @@ public class TutorialManager : MonoBehaviour
     public static bool TimerON;
     float count;
     bool Select;
+    public static bool ON;
 
     [SerializeField] AudioMixer audioMixer;
     [SerializeField] GameObject micObject;
@@ -27,6 +28,18 @@ public class TutorialManager : MonoBehaviour
     [SerializeField] Slider SESlider;
     [SerializeField] Slider MouseSlider;
 
+    //ëÄçÏê‡ñæâÊñ 
+    [SerializeField] GameObject OperationExplanation;
+    //ê‡ñæâÊñ ï\é¶å„ÇÃâ∫ÇÃÅuëÄçÏê‡ñæÅvï∂éö
+    [SerializeField] GameObject ExplainFont;
+    //ê›íËâÊñ 
+    [SerializeField] GameObject SettingMenu;
+
+    [SerializeField] GameObject SettingBack;
+
+    Image ExplainFontImage;
+    Image SettingFontImage;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -37,6 +50,7 @@ public class TutorialManager : MonoBehaviour
             Cursors[i].SetActive(false);
         }
 
+        SettingBack.SetActive(false);
         AudioSource Mic = micObject.GetComponent<AudioSource>();
         MicSlider.value = Mic.volume;
 
@@ -56,155 +70,189 @@ public class TutorialManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetAxis("Vertical") == 0)
+        if(ON==false) 
         {
-            Select = false;
+            for (int i = 0; i < Cursors.Length; i++)
+            {
+                Cursors[i].SetActive(false);
+            }
+            SettingBack.SetActive(false);
         }
+        else if (ON == true)
+        {
+            SettingBack.SetActive(true);
+            if (Input.GetAxis("Vertical") == 0)
+            {
+                Select = false;
+            }
 
-        if (Input.GetAxis("Vertical") > 0 && count == 0 && Select == false)
-        {
-            count += 1;
-            Select = true;
-        }
-        else if (Input.GetAxis("Vertical") > 0 && count == 1 && Select == false)
-        {
-            count += 1;
-            Select = true;
-        }
-        else if (Input.GetAxis("Vertical") > 0 && count == 2 && Select == false)
-        {
-            count += 1;
-            Select = true;
-        }
-        else if (Input.GetAxis("Vertical") > 0 && count == 3 && Select == false)
-        {
-            Select = true;
-        }
+            if (Input.GetAxis("Vertical") > 0 && count == 0 && Select == false)
+            {
+                count += 1;
+                Select = true;
+            }
+            else if (Input.GetAxis("Vertical") > 0 && count == 1 && Select == false)
+            {
+                count += 1;
+                Select = true;
+            }
+            else if (Input.GetAxis("Vertical") > 0 && count == 2 && Select == false)
+            {
+                count += 1;
+                Select = true;
+            }
+            else if (Input.GetAxis("Vertical") > 0 && count == 3 && Select == false)
+            {
+                count += 1;
+                Select = true;
+            }
+            else if (Input.GetAxis("Vertical") > 0 && count == 4 && Select == false)
+            {
+                Select = true;
+            }
 
 
-        if (Input.GetAxis("Vertical") < 0 && count == 0 && Select == false)
-        {
-            Select = true;
-        }
-        else if (Input.GetAxis("Vertical") < 0 && count == 1 && Select == false)
-        {
-            count -= 1;
-            Select = true;
-        }
-        else if (Input.GetAxis("Vertical") < 0 && count == 2 && Select == false)
-        {
-            count -= 1;
-            Select = true;
-        }
-        else if (Input.GetAxis("Vertical") < 0 && count == 3 && Select == false)
-        {
-            count -= 1;
-            Select = true;
-        }
+            if (Input.GetAxis("Vertical") < 0 && count == 0 && Select == false)
+            {
+                Select = true;
+            }
+            else if (Input.GetAxis("Vertical") < 0 && count == 1 && Select == false)
+            {
+                count -= 1;
+                Select = true;
+            }
+            else if (Input.GetAxis("Vertical") < 0 && count == 2 && Select == false)
+            {
+                count -= 1;
+                Select = true;
+            }
+            else if (Input.GetAxis("Vertical") < 0 && count == 3 && Select == false)
+            {
+                count -= 1;
+                Select = true;
+            }
+            else if (Input.GetAxis("Vertical") > 0 && count == 4 && Select == false)
+            {
+                count -= 1;
+                Select = true;
+            }
 
-        if (count == 0) 
-        {
-            Cursors[0].SetActive(true);
-            Cursors[1].SetActive(false);
-            Cursors[2].SetActive(false);
-            Cursors[3].SetActive(false);
+            if (count == 0)
+            {
+                Cursors[0].SetActive(true);
+                Cursors[1].SetActive(false);
+                Cursors[2].SetActive(false);
+                Cursors[3].SetActive(false);
 
-            if (Input.GetAxis("Horizontal") >0)
-            {
-                if (volume < 1)
+                if (Input.GetAxis("Horizontal") > 0)
                 {
-                    volume +=0.01f;
+                    if (volume < 1)
+                    {
+                        volume += 0.01f;
+                    }
+                    MicSlider.value = volume;
+                    SetMic(volume);
                 }
-                MicSlider.value = volume;
-                SetMic(volume);
-            }
-            else if (Input.GetAxis("Horizontal") < 0)
-            {
-                if (volume > 0&&volume!=0)
+                else if (Input.GetAxis("Horizontal") < 0)
                 {
-                    volume -= 0.01f;
+                    if (volume > 0 && volume != 0)
+                    {
+                        volume -= 0.01f;
+                    }
+                    MicSlider.value = volume;
+                    SetMic(volume);
                 }
-                MicSlider.value = volume;
-                SetMic(volume);
             }
-        }
-        else if (count == 1) 
-        {
-            Cursors[0].SetActive(false);
-            Cursors[1].SetActive(true);
-            Cursors[2].SetActive(false);
-            Cursors[3].SetActive(false);
-            if (Input.GetAxis("Horizontal") > 0)
+            else if (count == 1)
             {
-                if (volume2 < 0)
+                Cursors[0].SetActive(false);
+                Cursors[1].SetActive(true);
+                Cursors[2].SetActive(false);
+                Cursors[3].SetActive(false);
+                if (Input.GetAxis("Horizontal") > 0)
                 {
-                    volume2 += 1f;
+                    if (volume2 < 0)
+                    {
+                        volume2 += 1f;
+                    }
+                    BGMSlider.value = volume2;
+                    SetMic(volume2);
                 }
-                BGMSlider.value = volume2;
-                SetMic(volume2);
+                else if (Input.GetAxis("Horizontal") < 0)
+                {
+                    if (volume2 > -80 && volume != 0)
+                    {
+                        volume2 -= 1f;
+                    }
+                    BGMSlider.value = volume2;
+                    SetMic(volume2);
+                }
             }
-            else if (Input.GetAxis("Horizontal") < 0)
+            else if (count == 2)
             {
-                if (volume2 > -80 && volume != 0)
+                Cursors[0].SetActive(false);
+                Cursors[1].SetActive(false);
+                Cursors[2].SetActive(true);
+                Cursors[3].SetActive(false);
+                if (Input.GetAxis("Horizontal") > 0)
                 {
-                    volume2 -= 1f;
+                    if (volume3 < 0)
+                    {
+                        volume3 += 1f;
+                    }
+                    SESlider.value = volume3;
+                    SetMic(volume3);
                 }
-                BGMSlider.value = volume2;
-                SetMic(volume2);
+                else if (Input.GetAxis("Horizontal") < 0)
+                {
+                    if (volume3 > -80 && volume != 0)
+                    {
+                        volume3 -= 1f;
+                    }
+                    SESlider.value = volume3;
+                    SetMic(volume3);
+                }
             }
-        }
-        else if (count == 2)
-        {
-            Cursors[0].SetActive(false);
-            Cursors[1].SetActive(false);
-            Cursors[2].SetActive(true);
-            Cursors[3].SetActive(false);
-            if (Input.GetAxis("Horizontal") > 0)
+            else if (count == 3)
             {
-                if (volume3 < 0)
-                {
-                    volume3 += 1f;
-                }
-                SESlider.value = volume3;
-                SetMic(volume3);
-            }
-            else if (Input.GetAxis("Horizontal") < 0)
-            {
-                if (volume3 > -80 && volume != 0)
-                {
-                    volume3 -= 1f;
-                }
-                SESlider.value = volume3;
-                SetMic(volume3);
-            }
-        }
-        else if (count == 3)
-        {
-            Cursors[0].SetActive(false);
-            Cursors[1].SetActive(false);
-            Cursors[2].SetActive(false);
-            Cursors[3].SetActive(true);
+                Cursors[0].SetActive(false);
+                Cursors[1].SetActive(false);
+                Cursors[2].SetActive(false);
+                Cursors[3].SetActive(true);
 
-            if (Input.GetAxis("Horizontal") > 0)
-            {
-                if (volume1 < 1)
+                if (Input.GetAxis("Horizontal") > 0)
                 {
-                    volume1 += 0.01f;
+                    if (volume1 < 1)
+                    {
+                        volume1 += 0.01f;
+                    }
+                    MouseSlider.value = volume1;
+                    SetMic(volume1);
                 }
-                MouseSlider.value = volume1;
-                SetMic(volume1);
+                else if (Input.GetAxis("Horizontal") < 0)
+                {
+                    if (volume1 > 0 && volume1 != 0)
+                    {
+                        volume1 -= 0.01f;
+                    }
+                    MouseSlider.value = volume1;
+                    SetMic(volume1);
+                }
             }
-            else if (Input.GetAxis("Horizontal") < 0)
+            else if (count == 4)
             {
-                if (volume1 > 0 && volume1 != 0)
+                if (Input.GetAxis("Horizontal") > 0)
                 {
-                    volume1 -= 0.01f;
+                    ExitExplainFontButton();
+                    EnterSettingFontButton();
                 }
-                MouseSlider.value = volume1;
-                SetMic(volume1);
+                else if (Input.GetAxis("Horizontal") < 0)
+                {
+                    ExitSettingFontButton();
+                    EnterExplainFontButton();
+                }
             }
         }
-
     }
 
 
@@ -228,5 +276,37 @@ public class TutorialManager : MonoBehaviour
     {
         VCamera.m_YAxis.m_MaxSpeed = MouseSlider.value / 50;
         VCamera.m_XAxis.m_MaxSpeed = MouseSlider.value * 50;
+    }
+
+    public void EnterSettingFontButton()
+    {
+        if (SettingFontImage.color != new Color32(255, 255, 255, 255))
+        {
+            SettingFontImage.color = new Color32(255, 255, 255, 255);
+        }
+    }
+
+    public void EnterExplainFontButton()
+    {
+        if (ExplainFontImage.color != new Color32(255, 255, 255, 255))
+        {
+            ExplainFontImage.color = new Color32(255, 255, 255, 255);
+        }
+    }
+
+    public void ExitSettingFontButton()
+    {
+        if (SettingMenu.GetComponent<Image>().enabled == false)
+        {
+            SettingFontImage.color = new Color32(255, 255, 255, 45);
+        }
+    }
+
+    public void ExitExplainFontButton()
+    {
+        if (OperationExplanation.GetComponent<Image>().enabled == false)
+        {
+            ExplainFontImage.color = new Color32(255, 255, 255, 45);
+        }
     }
 }

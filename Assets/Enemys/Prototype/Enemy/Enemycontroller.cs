@@ -12,7 +12,6 @@ public class Enemycontroller : MonoBehaviour
 
     //‰Â‹‰»
     public float ONOFF = 0;                            //(0‚ªŒ©‚¦‚È‚¢G‚P‚ªŒ©‚¦‚éó‘Ôj
-    private float ONTime;
     private float OFFTime;
     float VisualizationRandom;                         //‰Â‹‰»ŠÔ‚ğƒ‰ƒ“ƒ_ƒ€
 
@@ -350,7 +349,6 @@ public class Enemycontroller : MonoBehaviour
         if (other.CompareTag("SeenArea"))
         {
             ONOFF = 1;
-            ONTime = 0;
             //3Dƒ‚ƒfƒ‹‚ÌRenderer‚ğŒ©‚¦‚éó‘Ô
             PrototypeBodySkinnedMeshRenderer.enabled = true;
         }

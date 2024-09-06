@@ -16,7 +16,6 @@ public class EnemyController : MonoBehaviour
 
     //可視化
     public float ONOFF = 0;                            //(0が見えない；１が見える状態）
-    private float ONTime;
     private float OFFTime;
     float VisualizationRandom;                         //可視化時間をランダム
 
@@ -33,7 +32,7 @@ public class EnemyController : MonoBehaviour
     public Transform TargetPlayer;
 
     //Playerを追跡
-    float ChaseSpeed = 0.05f;                           //Playerを追いかけるスピード
+    float ChaseSpeed = 0.1f;                           //Playerを追いかけるスピード
     [SerializeField] bool ChaseONOFF;
 
     //Destroyの判定
@@ -44,6 +43,8 @@ public class EnemyController : MonoBehaviour
 
     //アニメーション
     [SerializeField] Animator animator;
+
+    //[SerializeField] GameObject EnemySound;
 
     public GameObject Player;
     private bool UpON = false;
@@ -93,26 +94,6 @@ public class EnemyController : MonoBehaviour
 
     private void Visualization()//自身の可視化のON OFF
     {
-        /*
-        if (ONOFF == 0)//見えないとき
-        {
-            if (Front == false)
-            {
-                //3DモデルのRendererを見えない状態
-                PrototypeBodySkinnedMeshRenderer.enabled = false;
-                ONOFF = 1;//見える
-            }
-        }
-        else if (ONOFF == 1)//見えているとき
-        {
-            if (Front == true)
-            {
-                //3DモデルのRendererを見える状態
-                PrototypeBodySkinnedMeshRenderer.enabled = true;
-                ONOFF = 0;//見えない
-            }
-        }*/
-
         if (Front == false)
         {
             //3DモデルのRendererを見えない状態
@@ -194,49 +175,7 @@ public class EnemyController : MonoBehaviour
             }
         }
     }
-    /*
-    private void Ray2()
-    {
-        Ray ray;
-        RaycastHit hit;
-        Vector3 direction;   // Rayを飛ばす方向
-        float distance = 5.0f;    // Rayを飛ばす距離
-
-        // Rayを飛ばす方向を計算
-        Vector3 temp = Player.transform.position - transform.position;
-        direction = temp.normalized;
-
-        ray = new Ray(transform.position, direction);  // Rayを飛ばす
-        Debug.DrawRay(ray.origin, ray.direction * distance, Color.red);  // Rayをシーン上に描画
-
-        // Rayが最初に当たった物体を調べる
-        if (Physics.Raycast(ray.origin, ray.direction * distance, out hit))
-        {
-            if (hit.collider.gameObject.CompareTag("Wall"))
-            {
-                audioSourse.enabled = false;
-            }
-        }
-    }*/
-
-    /*
-    private void Chase2()
-    {
-        GameObject gobj = GameObject.Find("Player");//Playerオブジェクトを探す
-        PlayerSeen PS = gobj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
-        float ChasePlayer = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
-        if (ChasePlayer <= 7)
-        {
-            GameObject soundobj = GameObject.Find("SoundVolume");
-            LevelMeter levelMeter = soundobj.GetComponent<LevelMeter>(); //付いているスクリプトを取得
-            if (levelMeter.nowdB > 0.0f)
-            {
-                transform.LookAt(TargetPlayer.transform);//プレイヤーの方向にむく
-                transform.position += transform.forward * (MoveSpeed * 0.09f); //プレイヤーの方向に向かう
-            }
-        }
-    }*/
-
+  
     // Start is called before the first frame update
     private void Start()
     {
@@ -282,6 +221,9 @@ public class EnemyController : MonoBehaviour
 
             if (ChaseONOFF == false)
             {
+                CurrentPointIndex--;
+                if (CurrentPointIndex <= PatrolPoints.Length)//巡回ポイントが最後まで行ったら最初に戻る
+                { CurrentPointIndex = 0; }
                 animator.SetBool("Run", false);
                 animator.SetBool("Walk", true);
             }
@@ -386,7 +328,6 @@ public class EnemyController : MonoBehaviour
         if (other.CompareTag("SeenArea"))
         {
             ONOFF = 1;
-            ONTime = 0;
             //3DモデルのRendererを見える状態
             PrototypeBodySkinnedMeshRenderer.enabled = true;
         }

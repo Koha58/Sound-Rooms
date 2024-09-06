@@ -37,7 +37,6 @@ public class EnemyAnimcontroller : MonoBehaviour
 
     //Wallに当たった時
     private bool TouchWall;
-    float WallONOFF = 0.0f;
 
     //アニメーション
     [SerializeField] Animator animator;
