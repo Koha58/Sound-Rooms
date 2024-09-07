@@ -37,8 +37,8 @@ public class TutorialManager : MonoBehaviour
 
     [SerializeField] GameObject SettingBack;
 
-    Image ExplainFontImage;
-    Image SettingFontImage;
+    [SerializeField] Image ExplainFontImage;
+    [SerializeField] Image SettingFontImage;
 
     // Start is called before the first frame update
     void Start()
@@ -64,6 +64,8 @@ public class TutorialManager : MonoBehaviour
         //SE
         audioMixer.GetFloat("SE", out float seVolume);
         SESlider.value = seVolume;
+
+        SettingBack.SetActive(false);
     }
 
 
@@ -243,11 +245,15 @@ public class TutorialManager : MonoBehaviour
             {
                 if (Input.GetAxis("Horizontal") > 0)
                 {
+                    OperationExplanation.SetActive(false);
+                    SettingMenu.SetActive(true);
                     ExitExplainFontButton();
                     EnterSettingFontButton();
                 }
                 else if (Input.GetAxis("Horizontal") < 0)
                 {
+                    OperationExplanation.SetActive(true);
+                    SettingMenu.SetActive(false);
                     ExitSettingFontButton();
                     EnterExplainFontButton();
                 }
