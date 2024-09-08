@@ -284,10 +284,8 @@ public class EnemyController : MonoBehaviour
             {
                 float detectionPlayer = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
 
-                if (detectionPlayer <= 7f)//プレイヤーが検知範囲に入ったら
-                {
-                    DestroyONOFF = true;
-                }
+                //プレイヤーが検知範囲に入ったら
+                if (detectionPlayer <= 7f){DestroyONOFF = true;}
             }
         }
 

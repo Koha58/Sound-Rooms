@@ -13,6 +13,7 @@ public class TutorialManager : MonoBehaviour
     float count;
     bool Select;
     public static bool ON;
+    public static bool ON2;
 
     [SerializeField] AudioMixer audioMixer;
     [SerializeField] GameObject micObject;
@@ -24,7 +25,7 @@ public class TutorialManager : MonoBehaviour
     public CinemachineFreeLook VCamera;
 
     [SerializeField] Slider MicSlider;
-    [SerializeField] public Slider BGMSlider;
+    [SerializeField] Slider BGMSlider;
     [SerializeField] Slider SESlider;
     [SerializeField] Slider MouseSlider;
 
@@ -37,8 +38,15 @@ public class TutorialManager : MonoBehaviour
 
     [SerializeField] GameObject SettingBack;
 
+    [SerializeField] GameObject MicSliderGameObject;
+    [SerializeField] GameObject BGMSliderGameObject;
+    [SerializeField] GameObject SESliderGameObject;
+    [SerializeField] GameObject MouseSliderGameObject;
+
+
     [SerializeField] Image ExplainFontImage;
     [SerializeField] Image SettingFontImage;
+    [SerializeField] Image OperationExplanationImage;
 
     // Start is called before the first frame update
     void Start()
@@ -243,19 +251,36 @@ public class TutorialManager : MonoBehaviour
             }
             else if (count == 4)
             {
+                Cursors[0].SetActive(false);
+                Cursors[1].SetActive(false);
+                Cursors[2].SetActive(false);
+                Cursors[3].SetActive(false);
                 if (Input.GetAxis("Horizontal") > 0)
                 {
-                    OperationExplanation.SetActive(false);
-                    SettingMenu.SetActive(true);
-                    ExitExplainFontButton();
-                    EnterSettingFontButton();
+                    OperationExplanationImage.enabled = true;
+                    OperationExplanation.SetActive(true);
+                    SettingMenu.SetActive(false);
+                    MicSliderGameObject.SetActive(false);
+                    BGMSliderGameObject.SetActive(false);
+                    SESliderGameObject.SetActive(false);
+                    MouseSliderGameObject.SetActive(false);
+
+                    ExitSettingFontButton();
+                    EnterExplainFontButton();
+                    ON2 = false;
                 }
                 else if (Input.GetAxis("Horizontal") < 0)
                 {
-                    OperationExplanation.SetActive(true);
-                    SettingMenu.SetActive(false);
-                    ExitSettingFontButton();
-                    EnterExplainFontButton();
+                    OperationExplanationImage.enabled = false;
+                    OperationExplanation.SetActive(false);
+                    SettingMenu.SetActive(true);
+                    MicSliderGameObject.SetActive(true);
+                    BGMSliderGameObject.SetActive(true);
+                    SESliderGameObject.SetActive(true);
+                    MouseSliderGameObject.SetActive(true);
+                    ExitExplainFontButton();
+                    EnterSettingFontButton();
+                    ON2 = true;
                 }
             }
         }
