@@ -17,7 +17,6 @@ public class EnemyController : MonoBehaviour
     //可視化
     public float ONOFF = 0;                            //(0が見えない；１が見える状態）
     private float OFFTime;
-    float VisualizationRandom;                         //可視化時間をランダム
 
     //3DモデルのRendererのONOFF
     public SkinnedMeshRenderer PrototypeBodySkinnedMeshRenderer;
@@ -32,7 +31,7 @@ public class EnemyController : MonoBehaviour
     public Transform TargetPlayer;
 
     //Playerを追跡
-    float ChaseSpeed = 0.1f;                           //Playerを追いかけるスピード
+    float ChaseSpeed = 0.13f;                           //Playerを追いかけるスピード
     [SerializeField] bool ChaseONOFF;
 
     //Destroyの判定
@@ -44,8 +43,6 @@ public class EnemyController : MonoBehaviour
     //アニメーション
     [SerializeField] Animator animator;
 
-    //[SerializeField] GameObject EnemySound;
-
     public GameObject Player;
     private bool UpON = false;
     private float NextTime;
@@ -56,17 +53,22 @@ public class EnemyController : MonoBehaviour
     public bool zero;
     AudioSetting AS;
 
+   [SerializeField] GameObject VisualizationBoxGameObject;
+
     bool isFront;
     bool isBack;
 
     private void Chase()//プレイヤーを追いかける
     {
-        GameObject gobj = GameObject.Find("Player");//Playerオブジェクトを探す
-        PlayerSeen PS = gobj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
+        GameObject obj = GameObject.Find("Player"); //Playerオブジェクトを探す
+        PlayerSeen PS = obj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
+        var childTransforms = PS._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
 
         float ChasePlayer = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
         if (TouchWall == false)
         {
+            if (ONOFF == 0) { ChaseONOFF = false; }//追跡中じゃない
+
             if (ChasePlayer <= 7f)//プレイヤーが検知範囲に入ったら
             {
                 if (PS.onoff == 1)//プレイヤーが可視化していたら
@@ -79,9 +81,29 @@ public class EnemyController : MonoBehaviour
                     transform.LookAt(TargetPlayer.transform);//プレイヤーの方向にむく
                     transform.position += transform.forward * ChaseSpeed; //プレイヤーの方向に向かう
                 }
-                else if (ONOFF == 0) { ChaseONOFF = false; }//追跡中じゃない
+                else
+                {
+                    PS.Visualization = false;
+                    PS.onoff = 0;  //見えているから1
+                    foreach (var playerParts in childTransforms)
+                    {
+                        //タグが"PlayerParts"である子オブジェクトを見えるようにする
+                        playerParts.gameObject.GetComponent<Renderer>().enabled = false;
+                    }
+                }
             }
-            else { ChaseONOFF = false; }//追跡中じゃない
+            else 
+            {
+                VisualizationBoxGameObject.SetActive(false);
+                ChaseONOFF = false;
+                PS.Visualization = false;
+                PS.onoff = 0;  //見えているから1
+                foreach (var playerParts in childTransforms)
+                {
+                    //タグが"PlayerParts"である子オブジェクトを見えるようにする
+                    playerParts.gameObject.GetComponent<Renderer>().enabled = false;
+                }
+            }//追跡中じゃない
         }
     }
 
@@ -96,12 +118,15 @@ public class EnemyController : MonoBehaviour
     {
         if (Front == false)
         {
+            VisualizationBoxGameObject.SetActive(false);
             //3DモデルのRendererを見えない状態
             PrototypeBodySkinnedMeshRenderer.enabled = false;
             ONOFF = 0;//見える
+            
         }
         if (Front == true)
         {
+            VisualizationBoxGameObject.SetActive(true);
             //3DモデルのRendererを見える状態
             PrototypeBodySkinnedMeshRenderer.enabled = true;
             ONOFF = 1;
@@ -133,18 +158,6 @@ public class EnemyController : MonoBehaviour
             // Rayが最初に当たった物体を調べる
             if (Physics.Raycast(ray.origin, ray.direction * distance, out hit))
             {
-                if (hit.collider.CompareTag("Player"))
-                {
-                    PS.onoff = 1;  //見えているから1
-                    PS.Visualization = true;
-                    ONOFF = 1;
-                    foreach (var playerParts in childTransforms)
-                    {
-                        //タグが"PlayerParts"である子オブジェクトを見えるようにする
-                        playerParts.gameObject.GetComponent<Renderer>().enabled = true;
-                    }
-                }
-
                 if (hit.collider.gameObject.CompareTag("Wall"))
                 {
                     PS.Visualization = false;
@@ -161,16 +174,23 @@ public class EnemyController : MonoBehaviour
         else
         {
             OFFTime += Time.deltaTime;
-            if (OFFTime >= 3.0f)
+            if (OFFTime >= 6.0f)
             {
-                ONOFF = 0;
-                OFFTime = 0;
+                ChaseONOFF = false;
                 PS.Visualization = false;
                 PS.onoff = 0;  //見えているから1
                 foreach (var playerParts in childTransforms)
                 {
                     //タグが"PlayerParts"である子オブジェクトを見えなくする
                     playerParts.gameObject.GetComponent<Renderer>().enabled = false;
+                }
+
+                if (VisualizationBox.VBON == true)
+                {
+                    VisualizationBoxGameObject.SetActive(false);
+                    //3DモデルのRendererを見える状態
+                    PrototypeBodySkinnedMeshRenderer.enabled = false;
+                    ONOFF = 0;
                 }
             }
         }
@@ -180,7 +200,6 @@ public class EnemyController : MonoBehaviour
     private void Start()
     {
         ONOFF = 0;//見えない状態
-        VisualizationRandom = Random.Range(5.0f, 10.0f);
         audioSourse = GetComponent<AudioSource>();
         //3DモデルのRendererを見えない状態
         PrototypeBodySkinnedMeshRenderer.enabled = false;
@@ -193,17 +212,16 @@ public class EnemyController : MonoBehaviour
     private void Update()
     {
         TouchWall = false;
-        //Ray2();
         float Player = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
-        if (Player <= 0.65f)
+        if (Player <= 0.8f)
         {
             GameObject obj = GameObject.Find("Player"); //Playerオブジェクトを探す
             PlayerSeen PS = obj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
             var childTransforms = PS._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
 
             transform.LookAt(TargetPlayer.transform);//プレイヤーの方向にむく
-            animator.SetBool("Walk", false);
-            animator.SetBool("Run", false);
+            //animator.SetBool("Walk", false);
+            //animator.SetBool("Run", false);
             PS.Visualization = true;
             PS.onoff = 1;  //見えているから1
             foreach (var playerParts in childTransforms)
@@ -213,12 +231,10 @@ public class EnemyController : MonoBehaviour
             }
             UpON = true;
         }
-        else if (Player >= 1.0f) { UpON = false; }
+        else if (Player >= 2f) { UpON = false; }
 
         if (UpON == false)
         {
-            //Chase2();
-
             if (ChaseONOFF == false)
             {
                 CurrentPointIndex--;
@@ -242,18 +258,6 @@ public class EnemyController : MonoBehaviour
                         animator.SetBool("Walk", false);
                         animator.SetBool("Run", false);
                         Front = true;
-
-                        GameObject obj = GameObject.Find("Player"); //Playerオブジェクトを探す
-                        PlayerSeen PS = obj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
-                        var childTransforms = PS._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
-
-                        PS.Visualization = false;
-                        PS.onoff = 0;  //見えているから1
-                        foreach (var playerParts in childTransforms)
-                        {
-                            //タグが"PlayerParts"である子オブジェクトを見えなくする
-                            playerParts.gameObject.GetComponent<Renderer>().enabled = false;
-                        }
                     }
                 }
                 else
