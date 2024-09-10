@@ -22,7 +22,7 @@ public class GameClear : MonoBehaviour
         GameObject cobj = GameObject.Find("EnemyAttackArea");
         EnemyAttack EAtack = cobj.GetComponent<EnemyAttack>(); //付いているスクリプトを取得
 
-        if (other.gameObject.name == "Door1")
+        if (other.gameObject.name == "ExitDoor")
         {
             if(EAtack.count == 4)
             {
