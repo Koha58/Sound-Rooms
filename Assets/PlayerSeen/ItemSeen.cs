@@ -33,7 +33,7 @@ public class ItemSeen : MonoBehaviour
 
     void Start()
     {
-        GameObject doorObject = GameObject.Find("Door1");
+        GameObject doorObject = GameObject.Find("ExitDoor");
 
         // 子オブジェクトの数を取得
         int doorparts = doorObject.transform.childCount;
@@ -106,7 +106,7 @@ public class ItemSeen : MonoBehaviour
 
         InShelfs = GameObject.FindGameObjectsWithTag("InShelf");
 
-        GameObject doorObject = GameObject.Find("Door1");
+        GameObject doorObject = GameObject.Find("ExitDoor");
 
         Capsules = GameObject.FindGameObjectsWithTag("Capsule");
 
@@ -185,7 +185,7 @@ public class ItemSeen : MonoBehaviour
 
     void OnTriggerStay(Collider other)
     {
-        GameObject doorObject = GameObject.Find("Door1");
+        GameObject doorObject = GameObject.Find("ExitDoor");
         objName = other.gameObject.name;
 
         if (other.CompareTag("Box"))//接触したオブジェクトのタグが"Box"のとき
@@ -227,7 +227,7 @@ public class ItemSeen : MonoBehaviour
             }
         }
 
-        else if (objName == "Door1")
+        else if (objName == "ExitDoor")
         {
             // 子オブジェクトの数を取得
             int doorparts = doorObject.transform.childCount;
