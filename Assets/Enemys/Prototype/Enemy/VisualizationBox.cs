@@ -16,7 +16,7 @@ public class VisualizationBox : MonoBehaviour
     private void Update()
     {
         this.transform.position = Enemy.transform.position;
-        EnemyGameObject.transform.parent = null;
+        //EnemyGameObject.transform.parent = null;
     }
 
     private void OnTriggerStay(Collider other)

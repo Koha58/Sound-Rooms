@@ -55,9 +55,6 @@ public class EnemyController : MonoBehaviour
 
    [SerializeField] GameObject VisualizationBoxGameObject;
 
-    bool isFront;
-    bool isBack;
-
     private void Chase()//プレイヤーを追いかける
     {
         GameObject obj = GameObject.Find("Player"); //Playerオブジェクトを探す
@@ -83,6 +80,9 @@ public class EnemyController : MonoBehaviour
                 }
                 else
                 {
+                    ChaseONOFF = false;//追跡中じゃない
+                    animator.SetBool("Run", false);
+                    animator.SetBool("Walk", true);
                     PS.Visualization = false;
                     PS.onoff = 0;  //見えているから1
                     foreach (var playerParts in childTransforms)
@@ -94,6 +94,9 @@ public class EnemyController : MonoBehaviour
             }
             else 
             {
+                ChaseONOFF = false;//追跡中じゃない
+                animator.SetBool("Run", false);
+                animator.SetBool("Walk", true);
                 VisualizationBoxGameObject.SetActive(false);
                 ChaseONOFF = false;
                 PS.Visualization = false;
@@ -192,6 +195,7 @@ public class EnemyController : MonoBehaviour
                     PrototypeBodySkinnedMeshRenderer.enabled = false;
                     ONOFF = 0;
                 }
+                OFFTime = 0;
             }
         }
     }
@@ -235,6 +239,7 @@ public class EnemyController : MonoBehaviour
 
         if (UpON == false)
         {
+            /*
             if (ChaseONOFF == false)
             {
                 CurrentPointIndex--;
@@ -242,7 +247,7 @@ public class EnemyController : MonoBehaviour
                 { CurrentPointIndex = 0; }
                 animator.SetBool("Run", false);
                 animator.SetBool("Walk", true);
-            }
+            }*/
 
             Visualization();
 
@@ -265,7 +270,7 @@ public class EnemyController : MonoBehaviour
                     animator.SetBool("Walk", false);
                     animator.SetBool("Run", false);
                     NextTime += Time.deltaTime;
-                    if (NextTime >= 10.0f)
+                    if (NextTime >= 5.0f)
                     {
                         NextPatrolPoint();
                         NextTime = 0;
@@ -275,8 +280,8 @@ public class EnemyController : MonoBehaviour
             }
 
             Vector3 Position = TargetPlayer.position - transform.position; // ターゲットの位置と自身の位置の差を計算
-            isFront = Vector3.Dot(Position, transform.forward) > 0;  // ターゲットが自身の前方にあるかどうか判定
-            isBack = Vector3.Dot(Position, transform.forward) < 0;  // ターゲットが自身の後方にあるかどうか判定
+            bool isFront = Vector3.Dot(Position, transform.forward) > 0;  // ターゲットが自身の前方にあるかどうか判定
+            bool isBack = Vector3.Dot(Position, transform.forward) < 0;  // ターゲットが自身の後方にあるかどうか判定
 
             if (isFront) //ターゲットが自身の前方にあるなら
             {
