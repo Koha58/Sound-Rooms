@@ -67,7 +67,7 @@ public class EnemyAttack : MonoBehaviour
                 onoff = 0;  //Œ©‚¦‚Ä‚¢‚È‚¢‚©‚ç0
             }
         }
-
+        /*
         if (DB == true)
         {
             DC += Time.deltaTime;
@@ -122,7 +122,7 @@ public class EnemyAttack : MonoBehaviour
                 DC = 0;
                 DB2 = false;
             }
-        }
+        }*/
     }
     private void OnTriggerStay(Collider other)
     {
