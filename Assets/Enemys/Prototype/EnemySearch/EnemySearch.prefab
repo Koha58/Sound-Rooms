@@ -1324,7 +1324,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 0
-  MaxDistance: 10
+  MaxDistance: 2.0406103
   Pan2D: 0
   rolloffMode: 1
   BypassEffects: 0
@@ -8932,7 +8932,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8461601138083335482}
   - component: {fileID: 5110985693742059220}
-  - component: {fileID: 1873113141138138372}
   m_Layer: 0
   m_Name: Body
   m_TagString: Untagged
@@ -8949,7 +8948,7 @@ Transform:
   m_GameObject: {fileID: 8537786141856308636}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.00069955876, y: 0.80340266, z: 0.05831133}
+  m_LocalPosition: {x: 0.00069955876, y: 0.78, z: 0.05831133}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -9256,29 +9255,6 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.00024103967, y: -0.0025001713, z: 0.008823486}
     m_Extent: {x: 0.004014177, y: 0.0044348715, z: 0.0068140198}
   m_DirtyAABB: 0
---- !u!136 &1873113141138138372
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8537786141856308636}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.24291542
-  m_Height: 1.2881193
-  m_Direction: 2
-  m_Center: {x: 0.024827838, y: -0.35204753, z: 1.2946408}
 --- !u!1 &8555365264079653574
 GameObject:
   m_ObjectHideFlags: 0

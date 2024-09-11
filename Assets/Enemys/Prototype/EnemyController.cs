@@ -186,15 +186,14 @@ public class EnemyController : MonoBehaviour
         }
         else
         {
-           
-                ChaseONOFF = false;
-                PS.Visualization = false;
-                PS.onoff = 0;  　　　　　　　　　　　　　　　　　　　//見えているから1
-                foreach (var playerParts in childTransforms)
-                {
-                    //タグが"PlayerParts"である子オブジェクトを見えなくする
-                    playerParts.gameObject.GetComponent<Renderer>().enabled = false;
-                }
+            ChaseONOFF = false;
+            PS.Visualization = false;
+            PS.onoff = 0;                     //見えているから1
+            foreach (var playerParts in childTransforms)
+            {
+                //タグが"PlayerParts"である子オブジェクトを見えなくする
+                playerParts.gameObject.GetComponent<Renderer>().enabled = false;
+            }
             OFFTime += Time.deltaTime;
             if (OFFTime >= 6.0f)
             {
@@ -226,19 +225,22 @@ public class EnemyController : MonoBehaviour
         float Player = Vector3.Distance(transform.position, TargetPlayer.position);   //プレイヤーと敵の位置の計算
         if (Player <= 0.8f)
         {
-            GameObject obj = GameObject.Find("Player");                               //Playerオブジェクトを探す
-            PlayerSeen PS = obj.GetComponent<PlayerSeen>();                           //付いているスクリプトを取得
-            var childTransforms = PS._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
-
-            transform.LookAt(TargetPlayer.transform);                                 //プレイヤーの方向にむく
-            PS.Visualization = true;
-            PS.onoff = 1;                                                             //見えているから1
-            foreach (var playerParts in childTransforms)
+            if (ONOFF == 1)
             {
-                //タグが"PlayerParts"である子オブジェクトを見えるようにする
-                playerParts.gameObject.GetComponent<Renderer>().enabled = true;
+                GameObject obj = GameObject.Find("Player");                               //Playerオブジェクトを探す
+                PlayerSeen PS = obj.GetComponent<PlayerSeen>();                           //付いているスクリプトを取得
+                var childTransforms = PS._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
+
+                transform.LookAt(TargetPlayer.transform);                                 //プレイヤーの方向にむく
+                PS.Visualization = true;
+                PS.onoff = 1;                                                             //見えているから1
+                foreach (var playerParts in childTransforms)
+                {
+                    //タグが"PlayerParts"である子オブジェクトを見えるようにする
+                    playerParts.gameObject.GetComponent<Renderer>().enabled = true;
+                }
+                INPlayerONOFF = true;
             }
-            INPlayerONOFF = true;
         }
         else if (Player >= 2f) { INPlayerONOFF = false; }
 
@@ -348,5 +350,23 @@ public class EnemyController : MonoBehaviour
             }
         }
         else { PianoRoom = false; }
+
+        if (other.CompareTag("Player"))
+        {
+            if (ONOFF == 0)
+            {
+                GameObject obj = GameObject.Find("Player");                               //Playerオブジェクトを探す
+                PlayerSeen PS = obj.GetComponent<PlayerSeen>();                           //付いているスクリプトを取得
+                var childTransforms = PS._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
+
+                PS.Visualization = false;
+                PS.onoff = 0;                                                             //見えているから1
+                foreach (var playerParts in childTransforms)
+                {
+                    //タグが"PlayerParts"である子オブジェクトを見えるようにする
+                    playerParts.gameObject.GetComponent<Renderer>().enabled = false;
+                }
+            }
+        }
     }
 }
