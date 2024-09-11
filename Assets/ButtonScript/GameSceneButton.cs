@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -7,20 +8,30 @@ using static InputDeviceManager;
 
 public class GameSceneButton : MonoBehaviour
 {
+    //設定背景画面
+    [SerializeField] GameObject BackGround;
+    //操作設定画面
+    [SerializeField] GameObject SettingMenu;
     //操作説明画面
     [SerializeField] GameObject OperationExplanation;
-    //コントローラー用：閉じる「B：close」
-    [SerializeField] GameObject closeButton;
-    //「close」
-    [SerializeField] GameObject closeKey;
-    //説明画面表示後の下の「設定」文字
-    [SerializeField] GameObject SettingFont;
-    //説明画面表示後の下の「操作説明」文字
-    [SerializeField] GameObject ExplainFont;
-    //説明画面表示後の下の「/」
-    [SerializeField] GameObject Slash;
-    //設定画面
-    [SerializeField] GameObject SettingMenu;
+    //タイトルの「設定」文字
+    [SerializeField] GameObject SettingTitle;
+    //各種設定画面背景
+    [SerializeField] GameObject SettingBack;
+    //設定選択目印
+    [SerializeField] GameObject Select;
+    //操作設定画面カーソル
+    [SerializeField] GameObject MenuCursor;
+    //設定を閉じるボタン
+    [SerializeField] GameObject CloseButton;
+    //設定を閉じるボタン(コントローラー)
+    [SerializeField] GameObject CloseButtonB;
+    //ゲーム内設定を変更する画面へ遷移するボタン
+    [SerializeField] GameObject SettingButton;
+    //操作説明画面へ遷移するボタン
+    [SerializeField] GameObject OperationExplanationButton;
+    //タイトル画面へ遷移するボタン
+    [SerializeField] GameObject TitleButton;
     //マイクスライダー
     [SerializeField] Slider MicSlider;
     //BGMスライダー
@@ -31,32 +42,35 @@ public class GameSceneButton : MonoBehaviour
     [SerializeField] Slider MouseSlider;
 
     //カーソル(コントローラー用)
-    [SerializeField] GameObject Cursor;
-
-   public GameObject SettingBack;
-
-    Image ExplainFontImage;
-    Image SettingFontImage;
+   // [SerializeField] GameObject Cursor;
     bool deviceCheck;
 
     // Start is called before the first frame update
     void Start()
     {
+        BackGround.GetComponent<Image>().enabled = false;
+
+        SettingMenu.GetComponent<Image>().enabled = false;
+
         OperationExplanation.GetComponent<Image>().enabled = false;
 
-        closeButton.GetComponent<Image>().enabled = false;
+        SettingTitle.GetComponent<Image>().enabled = false;
 
-        closeKey.GetComponent<Image>().enabled = false;
+        SettingBack.GetComponent<Image>().enabled = false;
 
-        SettingFont.GetComponent<Image>().enabled = false;
+        Select.GetComponent<Image>().enabled = false;
 
-        SettingMenu.GetComponent<Image>().enabled = false;
+        MenuCursor.GetComponent<Image>().enabled = false;
 
-        ExplainFont.GetComponent<Image>().enabled = false;
+        CloseButton.GetComponent<Image>().enabled = false;
 
-        Slash.GetComponent<Image>().enabled = false;
+        CloseButtonB.GetComponent<Image>().enabled = false;
 
-        SettingMenu.GetComponent<Image>().enabled = false;
+        SettingButton.GetComponent<Image>().enabled = false;
+
+        OperationExplanationButton.GetComponent<Image>().enabled = false;
+
+        TitleButton.GetComponent<Image>().enabled = false;
 
         MicSlider.gameObject.SetActive(false);
 
@@ -66,11 +80,11 @@ public class GameSceneButton : MonoBehaviour
 
         MouseSlider.gameObject.SetActive(false);
 
-        Cursor.GetComponent<Image>().enabled = false;
+        //Cursor.GetComponent<Image>().enabled = false;
 
         TutorialManager.ON = false;
 
-        SettingBack.SetActive(false);
+        //SettingBack.SetActive(false);
 
        deviceCheck = false;
     }
@@ -78,11 +92,11 @@ public class GameSceneButton : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (InputDeviceManager.Instance.CurrentDeviceType == InputDeviceType.Xbox && closeButton != null)
+        if (InputDeviceManager.Instance.CurrentDeviceType == InputDeviceType.Xbox && CloseButtonB != null)
         {
             deviceCheck = true;
         }
-        else if (InputDeviceManager.Instance.CurrentDeviceType == InputDeviceType.Keyboard && closeKey != null)
+        else if (InputDeviceManager.Instance.CurrentDeviceType == InputDeviceType.Keyboard && CloseButton != null)
         {
             deviceCheck = false;
         }
@@ -91,101 +105,168 @@ public class GameSceneButton : MonoBehaviour
         {
             TutorialManager.ON=true;
 
+            BackGround.GetComponent<Image>().enabled = true;
+
             SettingMenu.GetComponent<Image>().enabled = true;
+
+            SettingTitle.GetComponent<Image>().enabled = true;
+
+            SettingBack.GetComponent<Image>().enabled = true;
+
+            Select.GetComponent<Image>().enabled = true;
+
+            MenuCursor.GetComponent<Image>().enabled = true;
+
+            SettingButton.GetComponent<Image>().enabled = true;
+
+            OperationExplanationButton.GetComponent<Image>().enabled = true;
+
+            TitleButton.GetComponent<Image>().enabled = true;
+
             MicSlider.gameObject.SetActive(true);
+
             BGMSlider.gameObject.SetActive(true);
+
             SESlider.gameObject.SetActive(true);
+
             MouseSlider.gameObject.SetActive(true);
-            SettingFont.GetComponent<Image>().enabled = true;
-            ExplainFont .GetComponent<Image>().enabled = true;
-            Slash .GetComponent<Image>().enabled = true;
 
-            SettingBack.SetActive(true);
+            //Cursor.GetComponent<Image>().enabled = true;
 
-            Cursor.GetComponent<Image>().enabled = true;
-
-            ExplainFontImage = ExplainFont.GetComponent<Image>();
-            ExplainFontImage.color = new Color32(255, 255, 255, 45);
+            // ExplainFontImage = ExplainFont.GetComponent<Image>();
+            //  ExplainFontImage.color = new Color32(255, 255, 255, 45);
 
             if (deviceCheck)
             {
-                closeButton.GetComponent<Image>().enabled = true;
+                CloseButtonB.GetComponent<Image>().enabled = true;
             }
             else
             {
-                closeKey.GetComponent<Image>().enabled = true;
+                CloseButton.GetComponent<Image>().enabled = true;
             }
             Time.timeScale = 0;
         }
 
         if (Input.GetKeyDown("joystick button 1"))//B
         {
-            closeButton.GetComponent<Image>().enabled = false;
-            closeKey.GetComponent<Image>().enabled = false;
-            OperationExplanation.GetComponent<Image>().enabled = false;
+            BackGround.GetComponent<Image>().enabled = false;
+
             SettingMenu.GetComponent<Image>().enabled = false;
+
+            OperationExplanation.GetComponent<Image>().enabled = false;
+
+            SettingTitle.GetComponent<Image>().enabled = false;
+
+            SettingBack.GetComponent<Image>().enabled = false;
+
+            Select.GetComponent<Image>().enabled = false;
+
+            MenuCursor.GetComponent<Image>().enabled = false;
+
+            CloseButton.GetComponent<Image>().enabled = false;
+
+            CloseButtonB.GetComponent<Image>().enabled = false;
+
+            SettingButton.GetComponent<Image>().enabled = false;
+
+            OperationExplanationButton.GetComponent<Image>().enabled = false;
+
+            TitleButton.GetComponent<Image>().enabled = false;
+
             MicSlider.gameObject.SetActive(false);
+
             BGMSlider.gameObject.SetActive(false);
+
             SESlider.gameObject.SetActive(false);
+
             MouseSlider.gameObject.SetActive(false);
-            SettingFont.GetComponent<Image>().enabled = false;
-            ExplainFont.GetComponent<Image>().enabled = false;
-            Slash.GetComponent<Image>().enabled = false;
-            Cursor.GetComponent<Image>().enabled = false;
             TutorialManager.ON =false;
-            SettingBack.SetActive(false);
+            //SettingBack.SetActive(false);
             Time.timeScale = 1;
         }
 
     }
 
-    public void SettingButton()
+    public void SettingButtonON()
     {
+        BackGround.GetComponent<Image>().enabled = true;
+
         SettingMenu.GetComponent<Image>().enabled = true;
+
+        SettingTitle.GetComponent<Image>().enabled = true;
+
+        SettingBack.GetComponent<Image>().enabled = true;
+
+        Select.GetComponent<Image>().enabled = true;
+
+        MenuCursor.GetComponent<Image>().enabled = true;
+
+        SettingButton.GetComponent<Image>().enabled = true;
+
+        OperationExplanationButton.GetComponent<Image>().enabled = true;
+
+        TitleButton.GetComponent<Image>().enabled = true;
+
         MicSlider.gameObject.SetActive(true);
+
         BGMSlider.gameObject.SetActive(true);
+
         SESlider.gameObject.SetActive(true);
+
         MouseSlider.gameObject.SetActive(true);
-        SettingFont.GetComponent<Image>().enabled = true;
-        ExplainFont.GetComponent<Image>().enabled = true;
-        Slash.GetComponent<Image>().enabled = true;
 
-        SettingBack.SetActive(true);
-
-        ExplainFontImage = ExplainFont.GetComponent<Image>();
-        ExplainFontImage.color = new Color32(255, 255, 255, 45);
+        //SettingBack.SetActive(true);
 
         if (deviceCheck)
         {
-            closeButton.GetComponent<Image>().enabled = true;
-            Cursor.GetComponent<Image>().enabled = true;
+            CloseButtonB.GetComponent<Image>().enabled = true;
         }
         else
         {
-            closeKey.GetComponent<Image>().enabled = true;
+            CloseButton.GetComponent<Image>().enabled = true;
         }
         Time.timeScale = 0;
     }
 
-    public void CloseButton()
+    public void CloseSetting()
     {
-        closeButton.GetComponent<Image>().enabled = false;
-        closeKey.GetComponent<Image>().enabled = false;
-        OperationExplanation.GetComponent<Image>().enabled = false;
+        BackGround.GetComponent<Image>().enabled = false;
+
         SettingMenu.GetComponent<Image>().enabled = false;
+
+        OperationExplanation.GetComponent<Image>().enabled = false;
+
+        SettingTitle.GetComponent<Image>().enabled = false;
+
+        SettingBack.GetComponent<Image>().enabled = false;
+
+        Select.GetComponent<Image>().enabled = false;
+
+        MenuCursor.GetComponent<Image>().enabled = false;
+
+        CloseButton.GetComponent<Image>().enabled = false;
+
+        CloseButtonB.GetComponent<Image>().enabled = false;
+
+        SettingButton.GetComponent<Image>().enabled = false;
+
+        OperationExplanationButton.GetComponent<Image>().enabled = false;
+
+        TitleButton.GetComponent<Image>().enabled = false;
+
         MicSlider.gameObject.SetActive(false);
+
         BGMSlider.gameObject.SetActive(false);
+
         SESlider.gameObject.SetActive(false);
+
         MouseSlider.gameObject.SetActive(false);
-        SettingFont.GetComponent<Image>().enabled = false;
-        ExplainFont.GetComponent<Image>().enabled = false;
-        Slash.GetComponent<Image>().enabled = false;
         Time.timeScale = 1;
-        SettingBack.SetActive(true);
+        //SettingBack.SetActive(true);
 
     }
 
-    public void SettingFontButton()
+    public void OnSettingMenuButton()
     {
         SettingMenu.GetComponent<Image>().enabled = true;
         MicSlider.gameObject.SetActive(true);
