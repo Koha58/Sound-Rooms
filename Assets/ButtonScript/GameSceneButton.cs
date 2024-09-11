@@ -268,98 +268,98 @@ public class GameSceneButton : MonoBehaviour
 
     public void OnSettingMenuButton()
     {
-        SettingMenu.GetComponent<Image>().enabled = true;
-        MicSlider.gameObject.SetActive(true);
-        BGMSlider.gameObject.SetActive(true);
-        SESlider.gameObject.SetActive(true);
-        MouseSlider.gameObject.SetActive(true);
-        SettingFont.GetComponent<Image>().enabled = true;
-        ExplainFont.GetComponent<Image>().enabled = true;
-        Slash.GetComponent<Image>().enabled = true;
+        //SettingMenu.GetComponent<Image>().enabled = true;
+        //MicSlider.gameObject.SetActive(true);
+        //BGMSlider.gameObject.SetActive(true);
+        //SESlider.gameObject.SetActive(true);
+        //MouseSlider.gameObject.SetActive(true);
+        //SettingFont.GetComponent<Image>().enabled = true;
+        //ExplainFont.GetComponent<Image>().enabled = true;
+        //Slash.GetComponent<Image>().enabled = true;
 
-        SettingBack.SetActive(true);
+        //SettingBack.SetActive(true);
 
-        ExplainFontImage = ExplainFont.GetComponent<Image>();
-        ExplainFontImage.color = new Color32(255, 255, 255, 45);
+        //ExplainFontImage = ExplainFont.GetComponent<Image>();
+        //ExplainFontImage.color = new Color32(255, 255, 255, 45);
 
-        if (OperationExplanation.GetComponent<Image>().enabled == true)
-        {
-            OperationExplanation.GetComponent<Image>().enabled = false;
-            SettingFontImage = SettingFont.GetComponent<Image>();
-            SettingFontImage.color = new Color32(255, 255, 255, 255);
-        }
+        //if (OperationExplanation.GetComponent<Image>().enabled == true)
+        //{
+        //    OperationExplanation.GetComponent<Image>().enabled = false;
+        //    SettingFontImage = SettingFont.GetComponent<Image>();
+        //    SettingFontImage.color = new Color32(255, 255, 255, 255);
+        //}
 
-        if (deviceCheck)
-        {
-            closeButton.GetComponent<Image>().enabled = true;
-        }
-        else
-        {
-            closeKey.GetComponent<Image>().enabled = true;
-        }
-        Time.timeScale = 0;
+        //if (deviceCheck)
+        //{
+        //    closeButton.GetComponent<Image>().enabled = true;
+        //}
+        //else
+        //{
+        //    closeKey.GetComponent<Image>().enabled = true;
+        //}
+        //Time.timeScale = 0;
     }
 
     public void ExplainFontButton()
     {
-        OperationExplanation.GetComponent<Image>().enabled = true;
-        SettingFont.GetComponent<Image>().enabled = true;
-        ExplainFont.GetComponent<Image>().enabled = true;
-        Slash.GetComponent<Image>().enabled = true;
-        SettingFontImage = SettingFont.GetComponent<Image>();
-        SettingFontImage.color = new Color32(255, 255, 255, 45);
+        //OperationExplanation.GetComponent<Image>().enabled = true;
+        //SettingFont.GetComponent<Image>().enabled = true;
+        //ExplainFont.GetComponent<Image>().enabled = true;
+        //Slash.GetComponent<Image>().enabled = true;
+        //SettingFontImage = SettingFont.GetComponent<Image>();
+        //SettingFontImage.color = new Color32(255, 255, 255, 45);
 
-        if (SettingMenu.GetComponent<Image>().enabled == true)
-        {
-            SettingMenu.GetComponent<Image>().enabled = false;
-            MicSlider.gameObject.SetActive(false);
-            BGMSlider.gameObject.SetActive(false);
-            SESlider.gameObject.SetActive(false);
-            MouseSlider.gameObject.SetActive(false);
-            ExplainFontImage = ExplainFont.GetComponent<Image>();
-            ExplainFontImage.color = new Color32(255, 255, 255, 255);
-        }
+        //if (SettingMenu.GetComponent<Image>().enabled == true)
+        //{
+        //    SettingMenu.GetComponent<Image>().enabled = false;
+        //    MicSlider.gameObject.SetActive(false);
+        //    BGMSlider.gameObject.SetActive(false);
+        //    SESlider.gameObject.SetActive(false);
+        //    MouseSlider.gameObject.SetActive(false);
+        //    ExplainFontImage = ExplainFont.GetComponent<Image>();
+        //    ExplainFontImage.color = new Color32(255, 255, 255, 255);
+        //}
 
-        if (deviceCheck)
-        {
-            closeButton.GetComponent<Image>().enabled = true;
-        }
-        else
-        {
-            closeKey.GetComponent<Image>().enabled = true;
-        }
-        Time.timeScale = 0;
+        //if (deviceCheck)
+        //{
+        //    closeButton.GetComponent<Image>().enabled = true;
+        //}
+        //else
+        //{
+        //    closeKey.GetComponent<Image>().enabled = true;
+        //}
+        //Time.timeScale = 0;
     }
 
     public void EnterSettingFontButton()
     {
-        if(SettingFontImage.color != new Color32(255, 255, 255, 255))
-        {
-            SettingFontImage.color = new Color32(255, 255, 255, 255);
-        }
+        //if(SettingFontImage.color != new Color32(255, 255, 255, 255))
+        //{
+        //    SettingFontImage.color = new Color32(255, 255, 255, 255);
+        //}
     }
 
     public void EnterExplainFontButton()
     {
-        if (ExplainFontImage.color != new Color32(255, 255, 255, 255))
-        {
-            ExplainFontImage.color = new Color32(255, 255, 255, 255);
-        }
+        //if (ExplainFontImage.color != new Color32(255, 255, 255, 255))
+        //{
+        //    ExplainFontImage.color = new Color32(255, 255, 255, 255);
+        //}
     }
 
     public void ExitSettingFontButton()
     {
-        if(SettingMenu.GetComponent<Image>().enabled == false)
-        {
-            SettingFontImage.color = new Color32(255, 255, 255, 45);
-        }
+        //if(SettingMenu.GetComponent<Image>().enabled == false)
+        //{
+        //    SettingFontImage.color = new Color32(255, 255, 255, 45);
+        //}
     }
 
     public void ExitExplainFontButton()
     {
-        if(OperationExplanation.GetComponent<Image>().enabled == false)
-        {
-            ExplainFontImage.color = new Color32(255, 255, 255, 45);
-        }
+        //if(OperationExplanation.GetComponent<Image>().enabled == false)
+        //{
+        //    ExplainFontImage.color = new Color32(255, 255, 255, 45);
+        //}
     }
 }
