@@ -16,7 +16,6 @@ public class Enemycontroller : MonoBehaviour
     public float ONOFF = 0;                               　　　 //(0が見えない；１が見える状態）
     private float OFFTime;                                　　　 //プレイヤーを見失ってから時間を
     float VisualizationRandom;                             　　　//可視化時間をランダム
-    //[SerializeField] GameObject VisualizationBoxGameObject;　　　//プレイヤーを可視化するためのオブジェクト
     public SkinnedMeshRenderer PrototypeBodySkinnedMeshRenderer; //3DモデルのRenderer
 
     //サウンド
@@ -195,12 +194,10 @@ public class Enemycontroller : MonoBehaviour
                     playerParts.gameObject.GetComponent<Renderer>().enabled = false;
                 }
 
-                if (VisualizationBox.VBON == true)
-                {
-                    //VisualizationBoxGameObject.SetActive(false);
-                    PrototypeBodySkinnedMeshRenderer.enabled = false; //3DモデルのRendererを見える状態
-                    ONOFF = 0;
-                }
+                //VisualizationBoxGameObject.SetActive(false);
+                PrototypeBodySkinnedMeshRenderer.enabled = false; //3DモデルのRendererを見える状態
+                ONOFF = 0;
+
                 OFFTime = 0;
             }
         }
@@ -245,15 +242,6 @@ public class Enemycontroller : MonoBehaviour
         if (INPlayerONOFF == false)
         {
             Visualization();
-            /*
-            if (ChaseONOFF == false)
-            {
-                CurrentPointIndex--;
-                if (CurrentPointIndex <= PatrolPoints.Length)                                  //巡回ポイントが最後まで行ったら最初に戻る
-                { CurrentPointIndex = 0; }
-                animator.SetBool("Run", false);
-                animator.SetBool("Walk", true);
-            }*/
 
             if (ChaseONOFF == false || TouchWallONOFF == false)
             {
@@ -359,5 +347,23 @@ public class Enemycontroller : MonoBehaviour
             }
         }
         else{PianoRoom = false;}
+
+        if (other.CompareTag("Player"))
+        {
+            if (ONOFF == 0)
+            {
+                GameObject obj = GameObject.Find("Player");                               //Playerオブジェクトを探す
+                PlayerSeen PS = obj.GetComponent<PlayerSeen>();                           //付いているスクリプトを取得
+                var childTransforms = PS._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
+
+                PS.Visualization = false;
+                PS.onoff = 0;                                                             //見えているから1
+                foreach (var playerParts in childTransforms)
+                {
+                    //タグが"PlayerParts"である子オブジェクトを見えるようにする
+                    playerParts.gameObject.GetComponent<Renderer>().enabled = false;
+                }
+            }
+        }
     }
 }
