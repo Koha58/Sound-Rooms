@@ -96,16 +96,19 @@ public class BoosEnemy : MonoBehaviour
             VisualizationBoss.SetActive(false);
             //3Dƒ‚ƒfƒ‹‚ÌRenderer‚ğŒ©‚¦‚È‚¢ó‘Ô
             PrototypeBodySkinnedMeshRenderer.enabled = false;
+            audioSourse.maxDistance = 5;
         }
         else if (ONOFF == 1)//Œ©‚¦‚Ä‚¢‚é‚Æ‚«
         {
             //3Dƒ‚ƒfƒ‹‚ÌRenderer‚ğŒ©‚¦‚éó‘Ô
             VisualizationBoss.SetActive(true);
             PrototypeBodySkinnedMeshRenderer.enabled = true;
+            audioSourse.maxDistance = 300;
             animator.SetBool("Idle", true);
             animator.SetBool("Move", false);
             ONTime += Time.deltaTime;
-            if (ONTime >= 10.0f)
+            Debug.Log(ONTime);
+            if (ONTime >= 5.0f)
             {
                 //3Dƒ‚ƒfƒ‹‚ÌRenderer‚ğŒ©‚¦‚éó‘Ô
                 PrototypeBodySkinnedMeshRenderer.enabled = false;

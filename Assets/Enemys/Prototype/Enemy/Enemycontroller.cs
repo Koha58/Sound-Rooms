@@ -241,6 +241,7 @@ public class Enemycontroller : MonoBehaviour
 
         if (INPlayerONOFF == false)
         {
+            animator.SetBool("Walk", true);
             Visualization();
 
             if (ChaseONOFF == false || TouchWallONOFF == false)

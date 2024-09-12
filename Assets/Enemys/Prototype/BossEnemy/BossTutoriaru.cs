@@ -94,6 +94,7 @@ public class BossTutoriaru : MonoBehaviour
             VisualizationBoss.SetActive(false);
             //3Dƒ‚ƒfƒ‹‚ÌRenderer‚ğŒ©‚¦‚È‚¢ó‘Ô
             PrototypeBodySkinnedMeshRenderer.enabled = false;
+            audioSourse.maxDistance = 5;
         }
         else if (ONOFF == 1)//Œ©‚¦‚Ä‚¢‚é‚Æ‚«
         {
@@ -102,8 +103,9 @@ public class BossTutoriaru : MonoBehaviour
             PrototypeBodySkinnedMeshRenderer.enabled = true;
             animator.SetBool("Idle", true);
             animator.SetBool("Move", false);
+            audioSourse.maxDistance = 300;
             ONTime += Time.deltaTime;
-            if (ONTime >= 10.0f)
+            if (ONTime >= 5.0f)
             {
                 //3Dƒ‚ƒfƒ‹‚ÌRenderer‚ğŒ©‚¦‚éó‘Ô
                 PrototypeBodySkinnedMeshRenderer.enabled = false;
