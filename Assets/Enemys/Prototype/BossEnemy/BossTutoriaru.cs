@@ -41,7 +41,6 @@ public class BossTutoriaru : MonoBehaviour
     [SerializeField] Animator animator;
 
     public GameObject Player;
-    private bool UpON = false;
     private float NextTime;
     private bool Front;
 
@@ -50,8 +49,6 @@ public class BossTutoriaru : MonoBehaviour
     public GameObject VisualizationBoss;
 
     public SphereCollider SphereCollider;
-
-    float Count;
 
     private void Chase()//プレイヤーを追いかける
     {
@@ -64,8 +61,6 @@ public class BossTutoriaru : MonoBehaviour
         {
             if (ChaseONOFF == true)//プレイヤーが検知範囲に入ったら
             {
-                // Run();
-                //ONOFF = 1;//自分自身を可視化
                 animator.SetBool("Idle", false);
                 animator.SetBool("Move", true);
                 ChaseONOFF = true;//追跡中
@@ -96,14 +91,14 @@ public class BossTutoriaru : MonoBehaviour
 
         if (ONOFF == 0)//見えないとき
         {
+            VisualizationBoss.SetActive(false);
             //3DモデルのRendererを見えない状態
             PrototypeBodySkinnedMeshRenderer.enabled = false;
-            //ONOFF = 1;//見える
-            VisualizationBoss.SetActive(false);
         }
         else if (ONOFF == 1)//見えているとき
         {
             //3DモデルのRendererを見える状態
+            VisualizationBoss.SetActive(true);
             PrototypeBodySkinnedMeshRenderer.enabled = true;
             animator.SetBool("Idle", true);
             animator.SetBool("Move", false);
@@ -113,7 +108,6 @@ public class BossTutoriaru : MonoBehaviour
                 //3DモデルのRendererを見える状態
                 PrototypeBodySkinnedMeshRenderer.enabled = false;
                 ONOFF = 0;//見えない
-                VisualizationBoss.SetActive(false);
             }
         }
     }
@@ -175,157 +169,82 @@ public class BossTutoriaru : MonoBehaviour
         }
     }
 
-    private void Chase2()
-    {
-        GameObject gobj = GameObject.Find("Player");//Playerオブジェクトを探す
-        PlayerSeen PS = gobj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
-
-        float ChasePlayer = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
-        if (ChasePlayer <= 30)
-        {
-            if (TouchWall == false)
-            {
-                transform.LookAt(TargetPlayer.transform);//プレイヤーの方向にむく
-                GameObject soundobj = GameObject.Find("SoundVolume");
-                LevelMeter levelMeter = soundobj.GetComponent<LevelMeter>(); //付いているスクリプトを取得
-                if (levelMeter.nowdB > 0.0f)
-                {
-                    transform.LookAt(TargetPlayer.transform);//プレイヤーの方向にむく
-                    transform.position += transform.forward * (MoveSpeed * 0.01f); //プレイヤーの方向に向かう
-                }
-            }
-            else
-            {
-                CurrentPointIndex--;
-                //巡回ポイントが最後まで行ったら最初に戻る
-                if (CurrentPointIndex <= PatrolPoints.Length) { CurrentPointIndex = 0; }
-            }
-        }
-    }
-
     // Start is called before the first frame update
     private void Start()
     {
         ONOFF = 0;//見えない状態
+        VisualizationBoss.SetActive(false);
         VisualizationRandom = Random.Range(5.0f, 10.0f);
         audioSourse = GetComponent<AudioSource>();
-
         //3DモデルのRendererを見えない状態
         PrototypeBodySkinnedMeshRenderer.enabled = false;
-
         ChaseONOFF = false;//追跡中じゃない
-
         animator = GetComponent<Animator>();   //アニメーターコントローラーからアニメーションを取得する
     }
 
     // Update is called once per frame
     private void Update()
     {
-        if (PlayerRun.CrouchOn == false) { VisualizationBoss.SetActive(true); }
-        else { VisualizationBoss.SetActive(false); }
-
+        animator.SetBool("Walk", true);
         if (EnemyAttack.SoundON == true)
         {
             animator.SetBool("Idle", true);
             animator.SetBool("Move", false);
         }
 
-        float Player = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
-        if (Player <= 3.5f)
+
+        if (ChaseONOFF == false)
         {
-            if (ONOFF == 1)
+            animator.SetBool("Idle", false);
+            animator.SetBool("Move", true);
+        }
+
+        Visualization();
+
+        if (ChaseONOFF == false)
+        {
+            if (Front == false)
             {
-                GameObject obj = GameObject.Find("Player"); //Playerオブジェクトを探す
-                PlayerSeen PS = obj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
-                var childTransforms = PS._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
+                transform.position = Vector3.MoveTowards(transform.position, PatrolPoints[CurrentPointIndex].position, MoveSpeed * Time.deltaTime);
+                transform.LookAt(PatrolPoints[CurrentPointIndex].transform);//次のポイントの方向を向く
 
-                transform.LookAt(TargetPlayer.transform);//プレイヤーの方向にむく
-                animator.SetBool("Idle", true);
-                animator.SetBool("Move", false);
-                PS.Visualization = true;
-                PS.onoff = 1;  //見えているから1
-                foreach (var playerParts in childTransforms)
+                if (transform.position == PatrolPoints[CurrentPointIndex].position)// 次の巡回ポイントへのインデックスを更新
                 {
-                    //タグが"PlayerParts"である子オブジェクトを見えるようにする
-                    playerParts.gameObject.GetComponent<Renderer>().enabled = true;
+                    animator.SetBool("Move", true);
+                    Front = true;
                 }
-
-                UpON = true;
-                Count += Time.deltaTime;
-                if (Count <= 10.0f)
+            }
+            else
+            {
+                animator.SetBool("Move", true);
+                NextTime += Time.deltaTime;
+                if (NextTime >= 5.0f)
                 {
-                    TouchWall = true;
-                    animator.SetBool("Run", true);
-                    CurrentPointIndex--;
-                    //巡回ポイントが最後まで行ったら最初に戻る
-                    if (CurrentPointIndex <= PatrolPoints.Length) { CurrentPointIndex = 0; }
-                }
-                else
-                {
-                    Count = 0;
+                    NextPatrolPoint();
+                    NextTime = 0;
+                    Front = false;
+                    TouchWall = false;
                 }
             }
         }
-        else if (Player >= 4f) { UpON = false; }
 
-        if (UpON == false)
+        Vector3 Position = TargetPlayer.position - transform.position; // ターゲットの位置と自身の位置の差を計算
+        bool isFront = Vector3.Dot(Position, transform.forward) > 0;  // ターゲットが自身の前方にあるかどうか判定
+        bool isBack = Vector3.Dot(Position, transform.forward) < 0;  // ターゲットが自身の後方にあるかどうか判定
+
+        if (isFront) //ターゲットが自身の前方にあるなら
         {
-            Chase2();
+            if (ONOFF == 0) { ChaseONOFF = false; }
+            float ChasePlayer = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
+            if (ONOFF == 1 && ChasePlayer <= 30) { ChaseONOFF = true; }
+            DestroyONOFF = false;
+        }
+        else if (isBack)// ターゲットが自身の後方にあるなら
+        {
+            float detectionPlayer = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
 
-            if (ChaseONOFF == false)
-            {
-                animator.SetBool("Idle", false);
-                animator.SetBool("Move", true);
-            }
-
-            Visualization();
-
-            if (ChaseONOFF == false)
-            {
-                if (Front == false)
-                {
-                    transform.position = Vector3.MoveTowards(transform.position, PatrolPoints[CurrentPointIndex].position, MoveSpeed * Time.deltaTime);
-                    transform.LookAt(PatrolPoints[CurrentPointIndex].transform);//次のポイントの方向を向く
-
-                    if (transform.position == PatrolPoints[CurrentPointIndex].position)// 次の巡回ポイントへのインデックスを更新
-                    {
-                        animator.SetBool("Move",true);
-                        Front = true;
-                    }
-                }
-                else
-                {
-                    animator.SetBool("Move", true);
-                    NextTime += Time.deltaTime;
-                    if (NextTime >= 5.0f)
-                    {
-                        NextPatrolPoint();
-                        NextTime = 0;
-                        Front = false;
-                        TouchWall = false;
-                    }
-                }
-            }
-
-            Vector3 Position = TargetPlayer.position - transform.position; // ターゲットの位置と自身の位置の差を計算
-            bool isFront = Vector3.Dot(Position, transform.forward) > 0;  // ターゲットが自身の前方にあるかどうか判定
-            bool isBack = Vector3.Dot(Position, transform.forward) < 0;  // ターゲットが自身の後方にあるかどうか判定
-
-            if (isFront) //ターゲットが自身の前方にあるなら
-            {
-                if (ONOFF == 0) { ChaseONOFF = false; }
-                float ChasePlayer = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
-                if (ONOFF == 1 && ChasePlayer <= 30) { ChaseONOFF = true; }
-                DestroyONOFF = false;
-                if (Front == true) { if (PlayerRun.CrouchOn == false) { Ray(); } }
-            }
-            else if (isBack)// ターゲットが自身の後方にあるなら
-            {
-                float detectionPlayer = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
-
-                //プレイヤーが検知範囲に入ったら
-                if (detectionPlayer <= 7f) { DestroyONOFF = true; }
-            }
+            //プレイヤーが検知範囲に入ったら
+            if (detectionPlayer <= 7f) { DestroyONOFF = true; }
         }
     }
     void Idle() { audioSourse.PlayOneShot(BossIdle); }
@@ -349,7 +268,6 @@ public class BossTutoriaru : MonoBehaviour
         {
             if (ChaseONOFF == false)
             {
-                //Debug.Log("1");
                 localAngle.x = 0f;
                 localAngle.z = -90f;
                 localAngle.y = 0f;
@@ -361,7 +279,6 @@ public class BossTutoriaru : MonoBehaviour
         {
             if (ChaseONOFF == false)
             {
-                //Debug.Log("2");
                 localAngle.x = 0f;
                 localAngle.z = 90f;
                 localAngle.y = 0f;
@@ -372,8 +289,7 @@ public class BossTutoriaru : MonoBehaviour
         else if (other.gameObject.tag == "Ceiling")
         {
             if (ChaseONOFF == false)
-            {
-                //Debug.Log("3");
+            { 
                 localAngle.x = 0f;
                 localAngle.y = 0f;
                 localAngle.z = 180f;
@@ -385,7 +301,6 @@ public class BossTutoriaru : MonoBehaviour
         {
             if (ChaseONOFF == false)
             {
-                //Debug.Log("4");
                 localAngle.x = 0f;
                 localAngle.z = 0f;
                 localAngle.y = 0f;
@@ -397,7 +312,6 @@ public class BossTutoriaru : MonoBehaviour
         {
             if (ChaseONOFF == false)
             {
-                //Debug.Log("5");
                 localAngle.x = 0f;
                 localAngle.z = -90f;
                 localAngle.y = -90f;
@@ -409,7 +323,6 @@ public class BossTutoriaru : MonoBehaviour
         {
             if (ChaseONOFF == false)
             {
-                //Debug.Log("6");
                 localAngle.x = 0f;
                 localAngle.z = -90f;
                 localAngle.y = -90f;
@@ -421,9 +334,7 @@ public class BossTutoriaru : MonoBehaviour
         if (other.CompareTag("RoomOut"))
         {
             TouchWall = true;
-            CurrentPointIndex--;
-            //巡回ポイントが最後まで行ったら最初に戻る
-            if (CurrentPointIndex <= PatrolPoints.Length) { CurrentPointIndex = 0; }
+            NextPatrolPoint();
         }
     }
 }

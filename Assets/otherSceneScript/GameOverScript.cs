@@ -18,6 +18,9 @@ public class GameOverScript : MonoBehaviour
     [SerializeField] GameObject LostLife4;
     [SerializeField] GameObject LostLife5;
 
+    private float Timer;
+    private float Count;
+
 
 
     // Start is called before the first frame update
@@ -41,7 +44,15 @@ public class GameOverScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-    
+        if (Count == 1)
+        {
+            Timer += Time.deltaTime;
+            if (Timer >=3)
+            {
+                Timer = 0;
+                Count = 0;
+            }
+        }
     }
 
    
@@ -55,7 +66,11 @@ public class GameOverScript : MonoBehaviour
             Enemycontroller EC = other.GetComponent<Enemycontroller>();
             if (EC.ONOFF == 1&&PS.onoff==1)
             {
-                LifeCount--;
+                if (Count == 0)
+                {
+                    LifeCount--;
+                    Count = 1;
+                }
             }
         }
 
@@ -64,7 +79,11 @@ public class GameOverScript : MonoBehaviour
             Enemycontroller EC = other.GetComponent<Enemycontroller>();
             if (EC.ONOFF == 1 && PS.onoff == 1)
             {
+                if (Count == 0)
+                {
                     LifeCount--;
+                    Count = 1;
+                }
             }
         }
 
@@ -73,16 +92,11 @@ public class GameOverScript : MonoBehaviour
             EnemyController EC1 = other.GetComponent<EnemyController>();
             if (EC1.ONOFF == 1 && PS.onoff == 1)
             {
-                LifeCount--;
-            }
-        }
-
-        if (other.CompareTag("Enemy2G"))
-        {
-            EnemyController ECG = other.GetComponent<EnemyController>();
-            if (ECG.ONOFF == 1 && PS.onoff == 1)
-            {
-                LifeCount--;
+                if (Count == 0)
+                {
+                    LifeCount--;
+                    Count = 1;
+                }
             }
         }
 
@@ -91,7 +105,11 @@ public class GameOverScript : MonoBehaviour
             EnemySearchcontroller ESC = other.GetComponent<EnemySearchcontroller>();
             if (ESC.ONOFF == 1 && PS.onoff == 1)
             {
-                LifeCount--;
+                if (Count == 0)
+                {
+                    LifeCount--;
+                    Count = 1;
+                }
             }
         }
 
@@ -144,5 +162,4 @@ public class GameOverScript : MonoBehaviour
             LifeCount--;
         }
     }  
-
 }

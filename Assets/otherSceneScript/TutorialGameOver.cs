@@ -18,7 +18,8 @@ public class TutorialGameOver : MonoBehaviour
     [SerializeField] GameObject LostLife4;
     [SerializeField] GameObject LostLife5;
 
-
+    private float Timer;
+    private float Count;
 
     // Start is called before the first frame update
     void Start()
@@ -41,12 +42,21 @@ public class TutorialGameOver : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if (Count == 1)
+        {
+            Timer += Time.deltaTime;
+            if (Timer >= 3)
+            {
+                Timer = 0;
+                Count = 0;
+            }
+        }
     }
 
 
     private void OnTriggerEnter(Collider other)
     {
+
         PlayerSeen PS;
         GameObject gobj = GameObject.Find("Player");
         PS = gobj.GetComponent<PlayerSeen>();
@@ -56,7 +66,11 @@ public class TutorialGameOver : MonoBehaviour
             Enemycontroller EC = other.GetComponent<Enemycontroller>();
             if (EC.ONOFF == 1)
             {
-                LifeCount--;
+                if (Count == 0)
+                {
+                    LifeCount--;
+                    Count = 1;
+                }
             }
         }
 
@@ -65,7 +79,11 @@ public class TutorialGameOver : MonoBehaviour
             Enemycontroller EC = other.GetComponent<Enemycontroller>();
             if (EC.ONOFF == 1)
             {
-                LifeCount--;
+                if (Count == 0)
+                {
+                    LifeCount--;
+                    Count = 1;
+                }
             }
         }
 
@@ -74,16 +92,11 @@ public class TutorialGameOver : MonoBehaviour
             EnemyController EC1 = other.GetComponent<EnemyController>();
             if (EC1.ONOFF == 1)
             {
-                LifeCount--;
-            }
-        }
-
-        if (other.CompareTag("Enemy2G"))
-        {
-            EnemyController ECG = other.GetComponent<EnemyController>();
-            if (ECG.ONOFF == 1)
-            {
-                LifeCount--;
+                if (Count == 0)
+                {
+                    LifeCount--;
+                    Count = 1;
+                }
             }
         }
 
@@ -92,7 +105,11 @@ public class TutorialGameOver : MonoBehaviour
             EnemySearchcontroller ESC = other.GetComponent<EnemySearchcontroller>();
             if (ESC.ONOFF == 1)
             {
-                LifeCount--;
+                if (Count == 0)
+                {
+                    LifeCount--;
+                    Count = 1;
+                }
             }
         }
 
@@ -101,27 +118,28 @@ public class TutorialGameOver : MonoBehaviour
             BoosEnemy BE = other.GetComponent<BoosEnemy>();
             if (BE.ONOFF == 1)
             {
-                LifeCount--;
+                if (PlayerRun.CrouchOn !=true)
+                {
+                    if (Count == 0)
+                    {
+                        LifeCount--;
+                        Count = 1;
+                    }
+                }
             }
-
         }
+
         if (other.CompareTag("BossV"))
         {
-            if (PS.onoff == 1)
+            if (PlayerRun.CrouchOn != true) 
             {
-                LifeCount--;
+                if (Count == 0)
+                {
+                    LifeCount--;
+                    Count = 1;
+                }
             }
         }
-        /*
-        if (other.CompareTag("Boss"))
-        {
-            BossTutoriaru BT = other.GetComponent<BossTutoriaru>();
-            if (BT.ONOFF == 1)
-            {
-                LifeCount--;
-            }
-        }*/
-
 
         if (LifeCount == 4)
         {
@@ -151,17 +169,4 @@ public class TutorialGameOver : MonoBehaviour
         }
 
     }
-    //private void OnTriggerStay(Collider other)
-    //{
-    //    PlayerSeen PS;
-    //    GameObject gobj = GameObject.Find("Player");
-    //    PS = gobj.GetComponent<PlayerSeen>();
-    //    if (other.CompareTag("BossV"))
-    //    {
-    //        if (PS.onoff == 1)
-    //        {
-    //            LifeCount--;
-    //        }
-    //    }
-    //}
 }

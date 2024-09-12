@@ -246,6 +246,7 @@ public class EnemyController : MonoBehaviour
 
         if (INPlayerONOFF == false)
         {
+            animator.SetBool("Walk", true);
             Visualization();
 
             if (ChaseONOFF == false || TouchWallONOFF == false)
@@ -264,7 +265,7 @@ public class EnemyController : MonoBehaviour
                 }
                 else if (Front == true)
                 {
-                    animator.SetBool("Walk", false);
+                    animator.SetBool("Walk",false);
                     animator.SetBool("Run", false);
                     NextTime += Time.deltaTime;
                     if (NextTime >= 5.0f)

@@ -7,6 +7,7 @@ public class VB : MonoBehaviour
 {
 
     [SerializeField] Transform Boss;
+    [SerializeField] TutorialGameOver overScript;
     // Start is called before the first frame update
     void Start()
     {

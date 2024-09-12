@@ -67,7 +67,7 @@ public class EnemyAttack : MonoBehaviour
                 onoff = 0;  //Œ©‚¦‚Ä‚¢‚È‚¢‚©‚ç0
             }
         }
-        /*
+        
         if (DB == true)
         {
             DC += Time.deltaTime;
@@ -95,7 +95,7 @@ public class EnemyAttack : MonoBehaviour
                 DB = false;
             }
         }
-
+        
         if (DB2 == true)
         {
             DC += Time.deltaTime;
@@ -122,7 +122,7 @@ public class EnemyAttack : MonoBehaviour
                 DC = 0;
                 DB2 = false;
             }
-        }*/
+        }
     }
     private void OnTriggerStay(Collider other)
     {
@@ -228,7 +228,7 @@ public class EnemyAttack : MonoBehaviour
                 enemyDeathcnt++;
                 DeathRange += 1.0f;
                 GetComponent<ParticleSystem>().Play();
-                // Destroy(other.gameObject);
+                Destroy(other.gameObject);
 
                 other.gameObject.SetActive(false);
 

@@ -121,4 +121,12 @@ public class PlayerSeen : MonoBehaviour
             }
         }
     }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.CompareTag("RoomOut"))
+        {
+            onoff = 0;
+        }
+    }
 }
