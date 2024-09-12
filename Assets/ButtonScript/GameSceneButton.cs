@@ -55,6 +55,18 @@ public class GameSceneButton : MonoBehaviour
    // [SerializeField] GameObject Cursor;
     bool deviceCheck;
 
+    private float MainSettingOriginPositionX = -773;
+    private float MainSettingOriginPositionY = 317;
+    private float MainSettingOriginPositionZ = 0;
+
+    private float MainSettingChangePositionY;
+
+    private float OperationExplanationOriginPositionX = -236;
+    private float OperationExplanationOriginPositionY = 317;
+    private float OperationExplanationOriginPositionZ = 0;
+
+    private float OperationExplanationChangePositionX;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -107,11 +119,21 @@ public class GameSceneButton : MonoBehaviour
         //SettingBack.SetActive(false);
 
        deviceCheck = false;
+
+        Transform MainSettingSelectTransform = Select.transform;
+        MainSettingSelectTransform.transform.localPosition = new Vector3(MainSettingOriginPositionX, MainSettingOriginPositionY, MainSettingOriginPositionZ);
+        MainSettingChangePositionY = MainSettingOriginPositionY;
+
+        Transform OperationExplanationSelectTransform = OperationExplanationSelect.transform;
+        OperationExplanationSelectTransform.transform.localPosition = new Vector3(OperationExplanationOriginPositionX, OperationExplanationOriginPositionY, OperationExplanationOriginPositionZ);
+        OperationExplanationChangePositionX = OperationExplanationOriginPositionX;
     }
 
     // Update is called once per frame
     void Update()
     {
+        Transform MainSettingSelectTransform = Select.transform;
+        Transform OperationExplanationSelectTransform = OperationExplanationSelect.transform;
         if (InputDeviceManager.Instance.CurrentDeviceType == InputDeviceType.Xbox && CloseButtonB != null)
         {
             deviceCheck = true;
@@ -219,6 +241,14 @@ public class GameSceneButton : MonoBehaviour
 
     public void SettingButtonON()
     {
+        Transform MainSettingSelectTransform = Select.transform;
+        MainSettingSelectTransform.transform.localPosition = new Vector3(MainSettingOriginPositionX, MainSettingOriginPositionY, MainSettingOriginPositionZ);
+        MainSettingChangePositionY = MainSettingOriginPositionY;
+
+        Transform OperationExplanationSelectTransform = OperationExplanationSelect.transform;
+        OperationExplanationSelectTransform.transform.localPosition = new Vector3(OperationExplanationOriginPositionX, OperationExplanationOriginPositionY, OperationExplanationOriginPositionZ);
+        OperationExplanationChangePositionX = OperationExplanationOriginPositionX;
+
         BackGround.GetComponent<Image>().enabled = true;
 
         SettingMenu.GetComponent<Image>().enabled = true;
@@ -308,6 +338,8 @@ public class GameSceneButton : MonoBehaviour
 
     public void OnSettingMenuButton()
     {
+        Transform MainSettingSelectTransform = Select.transform;
+
         SettingMenu.GetComponent<Image>().enabled = true;
 
         Select.GetComponent<Image>().enabled = true;
@@ -336,6 +368,8 @@ public class GameSceneButton : MonoBehaviour
 
         OperationExplanationSelect.GetComponent<Image>().enabled = false;
 
+        MainSettingSelectTransform.transform.localPosition = new Vector3(MainSettingOriginPositionX, MainSettingOriginPositionY, MainSettingOriginPositionZ);
+
         if (deviceCheck)
         {
             CloseButtonB.GetComponent<Image>().enabled = true;
@@ -349,6 +383,13 @@ public class GameSceneButton : MonoBehaviour
 
     public void OnOperationExplanationButton()
     {
+        Transform MainSettingSelectTransform = Select.transform;
+        MainSettingChangePositionY = 212;
+        MainSettingSelectTransform.transform.localPosition = new Vector3(MainSettingOriginPositionX, MainSettingChangePositionY, MainSettingOriginPositionZ);
+
+        Transform OperationExplanationSelectTransform = OperationExplanationSelect.transform;
+        OperationExplanationSelectTransform.transform.localPosition = new Vector3(OperationExplanationOriginPositionX, OperationExplanationOriginPositionY, OperationExplanationOriginPositionZ);
+
         Select.GetComponent<Image>().enabled = true;
 
         WhiteLine.GetComponent<Image>().enabled = true;
@@ -388,6 +429,10 @@ public class GameSceneButton : MonoBehaviour
 
     public void OnGamePadExplanationButton()
     {
+        Transform OperationExplanationSelectTransform = OperationExplanationSelect.transform;
+        OperationExplanationChangePositionX = 22;
+        OperationExplanationSelectTransform.transform.localPosition = new Vector3(OperationExplanationChangePositionX, OperationExplanationOriginPositionY, OperationExplanationOriginPositionZ);
+
         Select.GetComponent<Image>().enabled = true;
 
         WhiteLine.GetComponent<Image>().enabled = true;
@@ -427,6 +472,9 @@ public class GameSceneButton : MonoBehaviour
 
     public void BackTitleButton()
     {
+        Transform MainSettingSelectTransform = Select.transform;
+        MainSettingChangePositionY = 113;
+        MainSettingSelectTransform.transform.localPosition = new Vector3(MainSettingOriginPositionX, MainSettingChangePositionY, MainSettingOriginPositionZ);
         SceneManager.LoadScene("StartScene");
     }
 }
