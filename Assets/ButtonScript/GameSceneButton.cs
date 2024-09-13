@@ -67,6 +67,23 @@ public class GameSceneButton : MonoBehaviour
 
     private float OperationExplanationChangePositionX;
 
+    private float CursorOriginPositionX = 627;
+    private float CursorOriginPositionY = 73;
+    private float CursorOriginPositionZ = 0;
+
+    private float CursorChangePositionY;
+
+    int MainSelectPosition = 0;
+
+    int CursorPosition = 0;
+
+    bool Continue;
+
+    bool ExplainController;
+
+    //ÉÅÉCÉìÇÃê›íËÇÇ¢Ç∂Ç¡ÇƒÇ¢ÇÈÇ©
+    bool Main;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -118,8 +135,6 @@ public class GameSceneButton : MonoBehaviour
 
         //SettingBack.SetActive(false);
 
-       deviceCheck = false;
-
         Transform MainSettingSelectTransform = Select.transform;
         MainSettingSelectTransform.transform.localPosition = new Vector3(MainSettingOriginPositionX, MainSettingOriginPositionY, MainSettingOriginPositionZ);
         MainSettingChangePositionY = MainSettingOriginPositionY;
@@ -127,6 +142,16 @@ public class GameSceneButton : MonoBehaviour
         Transform OperationExplanationSelectTransform = OperationExplanationSelect.transform;
         OperationExplanationSelectTransform.transform.localPosition = new Vector3(OperationExplanationOriginPositionX, OperationExplanationOriginPositionY, OperationExplanationOriginPositionZ);
         OperationExplanationChangePositionX = OperationExplanationOriginPositionX;
+
+        Transform CursorTransform = MenuCursor.transform;
+        CursorTransform.transform.localPosition = new Vector3(CursorOriginPositionX, CursorOriginPositionY, CursorOriginPositionZ);
+        CursorChangePositionY = CursorOriginPositionY;
+
+        MainSelectPosition = 0;
+        CursorPosition = 0;
+        Continue = false;
+        ExplainController = false;
+        Main = true;
     }
 
     // Update is called once per frame
@@ -134,6 +159,7 @@ public class GameSceneButton : MonoBehaviour
     {
         Transform MainSettingSelectTransform = Select.transform;
         Transform OperationExplanationSelectTransform = OperationExplanationSelect.transform;
+        Transform CursorTransform = MenuCursor.transform;
         if (InputDeviceManager.Instance.CurrentDeviceType == InputDeviceType.Xbox && CloseButtonB != null)
         {
             deviceCheck = true;
@@ -159,8 +185,6 @@ public class GameSceneButton : MonoBehaviour
 
             Select.GetComponent<Image>().enabled = true;
 
-            MenuCursor.GetComponent<Image>().enabled = true;
-
             OperationExplanationButton.GetComponent<Image>().enabled = true;
 
             TitleButton.GetComponent<Image>().enabled = true;
@@ -173,11 +197,6 @@ public class GameSceneButton : MonoBehaviour
 
             MouseSlider.gameObject.SetActive(true);
 
-            //Cursor.GetComponent<Image>().enabled = true;
-
-            // ExplainFontImage = ExplainFont.GetComponent<Image>();
-            //  ExplainFontImage.color = new Color32(255, 255, 255, 45);
-
             if (deviceCheck)
             {
                 CloseButtonB.GetComponent<Image>().enabled = true;
@@ -186,7 +205,199 @@ public class GameSceneButton : MonoBehaviour
             {
                 CloseButton.GetComponent<Image>().enabled = true;
             }
+
+            MainSelectPosition = 0;
+            CursorPosition = 0;
+
+            MainSettingSelectTransform.transform.localPosition = new Vector3(MainSettingOriginPositionX, MainSettingOriginPositionY, MainSettingOriginPositionZ);
+            MainSettingChangePositionY = MainSettingOriginPositionY;
+
+            CursorTransform.transform.localPosition = new Vector3(CursorOriginPositionX, CursorOriginPositionY, CursorOriginPositionZ);
+            CursorChangePositionY = CursorOriginPositionY;
+
+            Main = true;
+
             Time.timeScale = 0;
+        }
+
+        if(deviceCheck)
+        {
+            if (Input.GetAxisRaw("Vertical") == 0)
+            {
+                Continue = false;
+            }
+
+            if (Input.GetAxisRaw("Vertical") < 0 && Continue == false && Main)
+            {
+                if(MainSelectPosition == 0)
+                {
+                    MainSelectPosition++;
+                    MainSettingChangePositionY = 212;
+                    MainSettingSelectTransform.transform.localPosition = new Vector3(MainSettingOriginPositionX, MainSettingChangePositionY, MainSettingOriginPositionZ);
+                }
+                else if(MainSelectPosition == 1)
+                {
+                    MainSelectPosition++;
+                    MainSettingChangePositionY = 113;
+                    MainSettingSelectTransform.transform.localPosition = new Vector3(MainSettingOriginPositionX, MainSettingChangePositionY, MainSettingOriginPositionZ);
+                }
+                else if(MainSelectPosition == 2)
+                {
+                    MainSelectPosition = 0;
+                    MainSettingSelectTransform.transform.localPosition = new Vector3(MainSettingOriginPositionX, MainSettingOriginPositionY, MainSettingOriginPositionZ);
+                    MainSettingChangePositionY = MainSettingOriginPositionY;
+                }
+                Continue = true;
+            }
+            else if (Input.GetAxisRaw("Vertical") > 0 && Continue == false && Main)
+            {
+                if (MainSelectPosition == 0)
+                {
+                    MainSelectPosition = 2;
+                    MainSettingChangePositionY = 113;
+                    MainSettingSelectTransform.transform.localPosition = new Vector3(MainSettingOriginPositionX, MainSettingChangePositionY, MainSettingOriginPositionZ);
+                }
+                else if (MainSelectPosition == 1)
+                {
+                    MainSelectPosition--;
+                    MainSettingSelectTransform.transform.localPosition = new Vector3(MainSettingOriginPositionX, MainSettingOriginPositionY, MainSettingOriginPositionZ);
+                    MainSettingChangePositionY = MainSettingOriginPositionY;
+                }
+                else if (MainSelectPosition == 2)
+                {
+                    MainSettingChangePositionY = 212;
+                    MainSettingSelectTransform.transform.localPosition = new Vector3(MainSettingOriginPositionX, MainSettingChangePositionY, MainSettingOriginPositionZ);
+                }
+                Continue = true;
+            }
+
+            if (MainSelectPosition == 0)
+            {
+                MainSettingSelectTransform.transform.localPosition = new Vector3(MainSettingOriginPositionX, MainSettingOriginPositionY, MainSettingOriginPositionZ);
+                MainSettingChangePositionY = MainSettingOriginPositionY;
+
+                if (Input.GetAxisRaw("Horizontal") > 0 && Continue == false)
+                {
+                    Main = false;
+                    MenuCursor.GetComponent<Image>().enabled = true;
+                    CursorPosition = 0;
+                    Continue = true;
+                }
+                else if (Input.GetAxisRaw("Horizontal") < 0 && Continue == false)
+                {
+                    Main = true;
+                    MenuCursor.GetComponent<Image>().enabled = false;
+                    CursorPosition = 0;
+                }
+
+                if (Input.GetAxisRaw("Vertical") == 0)
+                {
+                    Continue = false;
+                }
+
+                if (Input.GetAxisRaw("Vertical") > 0 && Continue == false)
+                {
+                    if (CursorPosition == 0)
+                    {
+                        CursorPosition++;
+                        CursorChangePositionY = -65;
+                        CursorTransform.transform.localPosition = new Vector3(CursorOriginPositionX, CursorChangePositionY, CursorOriginPositionZ);
+                    }
+                    else if (CursorPosition == 1)
+                    {
+                        CursorPosition++;
+                        CursorChangePositionY = -195;
+                        CursorTransform.transform.localPosition = new Vector3(CursorOriginPositionX, CursorChangePositionY, CursorOriginPositionZ);
+                    }
+                    else if (CursorPosition == 2)
+                    {
+                        CursorPosition++;
+                        CursorChangePositionY = -330;
+                        CursorTransform.transform.localPosition = new Vector3(CursorOriginPositionX, CursorChangePositionY, CursorOriginPositionZ);
+                    }
+                    else if (CursorPosition == 3)
+                    {
+                        CursorPosition = 0;
+                        CursorTransform.transform.localPosition = new Vector3(CursorOriginPositionX, CursorOriginPositionY, CursorOriginPositionZ);
+                        CursorChangePositionY = CursorOriginPositionY;
+                    }
+
+                    Continue = true;
+                }
+                else if (Input.GetAxisRaw("Vertical") < 0 && Continue == false)
+                {
+                    if (CursorPosition == 0)
+                    {
+                        CursorPosition = 3;
+                        CursorChangePositionY = -330;
+                        CursorTransform.transform.localPosition = new Vector3(CursorOriginPositionX, CursorChangePositionY, CursorOriginPositionZ);
+                    }
+                    else if (CursorPosition == 1)
+                    {
+                        CursorPosition--;
+                        CursorTransform.transform.localPosition = new Vector3(CursorOriginPositionX, CursorOriginPositionY, CursorOriginPositionZ);
+                        CursorChangePositionY = CursorOriginPositionY;
+                    }
+                    else if (CursorPosition == 2)
+                    {
+                        CursorPosition--;
+                        CursorChangePositionY = -65;
+                        CursorTransform.transform.localPosition = new Vector3(CursorOriginPositionX, CursorChangePositionY, CursorOriginPositionZ);
+                    }
+                    else if (CursorPosition == 3)
+                    {
+                        CursorPosition--;
+                        CursorChangePositionY = -195;
+                        CursorTransform.transform.localPosition = new Vector3(CursorOriginPositionX, CursorChangePositionY, CursorOriginPositionZ);
+                    }
+
+                    Continue = true;
+                }
+
+            }
+            else if (MainSelectPosition == 1)
+            {
+                if (Input.GetAxisRaw("Horizontal") > 0 && Continue == false)
+                {
+                    Main = false;
+                    if(ExplainController)
+                    {
+                        OnGamePadExplanationButton();
+                        ExplainController = false;
+                    }
+                    else
+                    {
+                        OnOperationExplanationButton();
+                        ExplainController = true;
+                    }
+                    Continue = true;
+                }
+                else if (Input.GetAxisRaw("Horizontal") < 0 && Continue == false)
+                {
+                    if (ExplainController)
+                    {
+                        OnGamePadExplanationButton();
+                        ExplainController = false;
+                    }
+                    else
+                    {
+                        OnOperationExplanationButton();
+                        ExplainController = true;
+                        if(Input.GetAxisRaw("Horizontal") < 0 && Continue == false)
+                        {
+                            Main = true;
+                        }
+                    }
+                    Continue = true;
+                }
+            }
+            else if (MainSelectPosition == 2)
+            {
+                if (Input.GetKeyDown("joystick button 0"))
+                {
+                    BackTitleButton();
+                }
+            }
         }
 
         if (Input.GetKeyDown("joystick button 1"))//B
@@ -472,6 +683,7 @@ public class GameSceneButton : MonoBehaviour
 
     public void BackTitleButton()
     {
+        Time.timeScale = 1;
         Transform MainSettingSelectTransform = Select.transform;
         MainSettingChangePositionY = 113;
         MainSettingSelectTransform.transform.localPosition = new Vector3(MainSettingOriginPositionX, MainSettingChangePositionY, MainSettingOriginPositionZ);
