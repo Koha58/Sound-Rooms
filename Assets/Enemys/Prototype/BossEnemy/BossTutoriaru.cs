@@ -105,8 +105,9 @@ public class BossTutoriaru : MonoBehaviour
             animator.SetBool("Move", false);
             audioSourse.maxDistance = 300;
             ONTime += Time.deltaTime;
-            if (ONTime >= 5.0f)
+            if (ONTime >= 7.0f)
             {
+                VisualizationBoss.SetActive(false);
                 //3Dƒ‚ƒfƒ‹‚ÌRenderer‚ðŒ©‚¦‚éó‘Ô
                 PrototypeBodySkinnedMeshRenderer.enabled = false;
                 ONOFF = 0;//Œ©‚¦‚È‚¢
@@ -155,7 +156,7 @@ public class BossTutoriaru : MonoBehaviour
         else
         {
             OFFTime += Time.deltaTime;
-            if (OFFTime >= 15.0f)
+            if (OFFTime >= 7.0f)
             {
                 ONOFF = 0;
                 OFFTime = 0;

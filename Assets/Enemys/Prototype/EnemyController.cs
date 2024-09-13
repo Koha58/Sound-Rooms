@@ -129,6 +129,8 @@ public class EnemyController : MonoBehaviour
                 //VisualizationBoxGameObject.SetActive(true);　　　　////プレイヤーを可視化するためのオブジェクトをON
                 PrototypeBodySkinnedMeshRenderer.enabled = true;　//3DモデルのRendererを見える状態
                 ONOFF = 1;
+                animator.SetBool("Run", false);
+                animator.SetBool("Walk", true);
             }
         }
 
