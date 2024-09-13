@@ -472,6 +472,7 @@ public class GameSceneButton : MonoBehaviour
 
     public void BackTitleButton()
     {
+        Time.timeScale = 1;
         Transform MainSettingSelectTransform = Select.transform;
         MainSettingChangePositionY = 113;
         MainSettingSelectTransform.transform.localPosition = new Vector3(MainSettingOriginPositionX, MainSettingChangePositionY, MainSettingOriginPositionZ);
