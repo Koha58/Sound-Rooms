@@ -18,6 +18,10 @@ public class GameSceneButton : MonoBehaviour
     [SerializeField] GameObject SettingBack;
     //設定選択目印
     [SerializeField] GameObject Select;
+    //設定選択目印
+    [SerializeField] GameObject Select1;
+    //設定選択目印
+    [SerializeField] GameObject Select2;
     //操作設定画面カーソル
     [SerializeField] GameObject MenuCursor;
     //設定を閉じるボタン
@@ -42,6 +46,8 @@ public class GameSceneButton : MonoBehaviour
     [SerializeField] GameObject KeyboardSetting;
     //操作説明画面内選択目印
     [SerializeField] GameObject OperationExplanationSelect;
+    //操作説明画面内選択目印
+    [SerializeField] GameObject OperationExplanationSelect1;
     //マイクスライダー
     [SerializeField] Slider MicSlider;
     //BGMスライダー
@@ -84,6 +90,13 @@ public class GameSceneButton : MonoBehaviour
     //メインの設定をいじっているか
     bool Main;
 
+    bool MainSelectPositionSelect;
+
+    bool NoUI;
+
+    bool ExplanationSelect;
+    float ExplanationSelectCount;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -96,6 +109,10 @@ public class GameSceneButton : MonoBehaviour
         SettingBack.GetComponent<Image>().enabled = false;
 
         Select.GetComponent<Image>().enabled = false;
+
+        Select1.GetComponent<Image>().enabled = false;
+
+        Select2.GetComponent<Image>().enabled = false;
 
         MenuCursor.GetComponent<Image>().enabled = false;
 
@@ -121,6 +138,8 @@ public class GameSceneButton : MonoBehaviour
 
         OperationExplanationSelect.GetComponent<Image>().enabled = false;
 
+        OperationExplanationSelect1.GetComponent<Image>().enabled = false;
+
         MicSlider.gameObject.SetActive(false);
 
         BGMSlider.gameObject.SetActive(false);
@@ -135,9 +154,9 @@ public class GameSceneButton : MonoBehaviour
 
         //SettingBack.SetActive(false);
 
-        Transform MainSettingSelectTransform = Select.transform;
-        MainSettingSelectTransform.transform.localPosition = new Vector3(MainSettingOriginPositionX, MainSettingOriginPositionY, MainSettingOriginPositionZ);
-        MainSettingChangePositionY = MainSettingOriginPositionY;
+      //  Transform MainSettingSelectTransform = Select.transform;
+      //  MainSettingSelectTransform.transform.localPosition = new Vector3(MainSettingOriginPositionX, MainSettingOriginPositionY, MainSettingOriginPositionZ);
+      //  MainSettingChangePositionY = MainSettingOriginPositionY;
 
         Transform OperationExplanationSelectTransform = OperationExplanationSelect.transform;
         OperationExplanationSelectTransform.transform.localPosition = new Vector3(OperationExplanationOriginPositionX, OperationExplanationOriginPositionY, OperationExplanationOriginPositionZ);
@@ -152,11 +171,15 @@ public class GameSceneButton : MonoBehaviour
         Continue = false;
         ExplainController = false;
         Main = true;
+
+        ExplanationSelectCount = 0;
+        ExplanationSelect = false;
     }
 
     // Update is called once per frame
     void Update()
     {
+        /*
         Transform MainSettingSelectTransform = Select.transform;
         Transform OperationExplanationSelectTransform = OperationExplanationSelect.transform;
         Transform CursorTransform = MenuCursor.transform;
@@ -167,7 +190,7 @@ public class GameSceneButton : MonoBehaviour
         else if (InputDeviceManager.Instance.CurrentDeviceType == InputDeviceType.Keyboard && CloseButton != null)
         {
             deviceCheck = false;
-        }
+        }*/
 
         if (Input.GetKeyDown("joystick button 7"))//メニュー ボタン 
         {
@@ -209,19 +232,23 @@ public class GameSceneButton : MonoBehaviour
             MainSelectPosition = 0;
             CursorPosition = 0;
 
-            MainSettingSelectTransform.transform.localPosition = new Vector3(MainSettingOriginPositionX, MainSettingOriginPositionY, MainSettingOriginPositionZ);
+           // MainSettingSelectTransform.transform.localPosition = new Vector3(MainSettingOriginPositionX, MainSettingOriginPositionY, MainSettingOriginPositionZ);
             MainSettingChangePositionY = MainSettingOriginPositionY;
 
-            CursorTransform.transform.localPosition = new Vector3(CursorOriginPositionX, CursorOriginPositionY, CursorOriginPositionZ);
+           // CursorTransform.transform.localPosition = new Vector3(CursorOriginPositionX, CursorOriginPositionY, CursorOriginPositionZ);
             CursorChangePositionY = CursorOriginPositionY;
 
             Main = true;
 
             Time.timeScale = 0;
+
+            NoUI = true;
         }
 
-        if(deviceCheck)
+        Controller();
+     /*   if (deviceCheck)
         {
+            
             if (Input.GetAxisRaw("Vertical") == 0)
             {
                 Continue = false;
@@ -398,7 +425,7 @@ public class GameSceneButton : MonoBehaviour
                     BackTitleButton();
                 }
             }
-        }
+        }*/
 
         if (Input.GetKeyDown("joystick button 1"))//B
         {
@@ -413,6 +440,10 @@ public class GameSceneButton : MonoBehaviour
             SettingButton.GetComponent<Image>().enabled = false;
 
             Select.GetComponent<Image>().enabled = false;
+
+            Select1.GetComponent<Image>().enabled = false;
+
+            Select2.GetComponent<Image>().enabled = false;
 
             MenuCursor.GetComponent<Image>().enabled = false;
 
@@ -688,5 +719,140 @@ public class GameSceneButton : MonoBehaviour
         MainSettingChangePositionY = 113;
         MainSettingSelectTransform.transform.localPosition = new Vector3(MainSettingOriginPositionX, MainSettingChangePositionY, MainSettingOriginPositionZ);
         SceneManager.LoadScene("StartScene");
+    }
+
+    private void Controller()
+    {
+        if (NoUI == true)
+        {
+
+            if (Input.GetAxis("Vertical") == 0 && MainSelectPositionSelect == true)
+            {
+                MainSelectPositionSelect = false;
+            }
+
+            if (Input.GetAxis("Horizontal") == 0 && ExplanationSelect == true)
+            {
+                ExplanationSelect = false;
+            }
+
+            if (MainSelectPositionSelect == false && MainSelectPosition == -1)
+            {
+                MainSelectPosition=2;
+                MainSelectPositionSelect = true;
+            }
+            else if (Input.GetAxisRaw("Vertical") < 0 && MainSelectPositionSelect == false && MainSelectPosition == 0)
+            {
+                MainSelectPosition--;
+                MainSelectPositionSelect = true;
+            }
+            else if (Input.GetAxisRaw("Vertical") < 0 && MainSelectPositionSelect == false && MainSelectPosition == 1)
+            {
+                MainSelectPosition--;
+                MainSelectPositionSelect = true;
+            }
+            else if (Input.GetAxisRaw("Vertical") < 0 && MainSelectPositionSelect == false && MainSelectPosition == 2)
+            {
+                MainSelectPosition--;
+                MainSelectPositionSelect = true;
+            }
+
+            if (Input.GetAxisRaw("Vertical") > 0 && MainSelectPositionSelect == false && MainSelectPosition == 0)
+            {
+                MainSelectPosition++;
+                MainSelectPositionSelect = true;
+            }
+            else if (Input.GetAxisRaw("Vertical") > 0 && MainSelectPositionSelect == false && MainSelectPosition == 1)
+            {
+                MainSelectPosition++;
+                MainSelectPositionSelect = true;
+            }
+            else if (Input.GetAxisRaw("Vertical") > 0 && MainSelectPositionSelect == false && MainSelectPosition == 2)
+            {
+                MainSelectPosition++;
+                MainSelectPositionSelect = true;
+            }
+            else if (MainSelectPositionSelect == false && MainSelectPosition == 3)
+            {
+                MainSelectPosition=0;
+                MainSelectPositionSelect = true;
+            }
+
+            if (MainSelectPosition == 0)
+            {
+                WhiteLine.GetComponent<Image>().enabled = false;
+                KeyboardcharaButton.GetComponent<Image>().enabled = false;
+                GamepadcharaButton.GetComponent<Image>().enabled = false;
+                ControllerSetting.GetComponent<Image>().enabled = false;
+                KeyboardSetting.GetComponent<Image>().enabled = false;
+                SettingMenu.GetComponent<Image>().enabled = true;
+                MicSlider.gameObject.SetActive(true);
+                BGMSlider.gameObject.SetActive(true);
+                SESlider.gameObject.SetActive(true);
+                MouseSlider.gameObject.SetActive(true);
+                Select.GetComponent<Image>().enabled = true;
+                Select1.GetComponent<Image>().enabled = false;
+                Select2.GetComponent<Image>().enabled = false;
+                OperationExplanationSelect.GetComponent<Image>().enabled = false;
+                OperationExplanationSelect1.GetComponent<Image>().enabled = false;
+
+            }
+            else if (MainSelectPosition == 1)
+            {
+                WhiteLine.GetComponent<Image>().enabled = true;
+                KeyboardcharaButton.GetComponent<Image>().enabled = true;
+                GamepadcharaButton.GetComponent<Image>().enabled =true;
+                SettingMenu.GetComponent<Image>().enabled = false;
+                MicSlider.gameObject.SetActive(false);
+                BGMSlider.gameObject.SetActive(false);
+                SESlider.gameObject.SetActive(false);
+                MouseSlider.gameObject.SetActive(false);
+                Select.GetComponent<Image>().enabled = false;
+                Select1.GetComponent<Image>().enabled =true;
+                Select2.GetComponent<Image>().enabled = false;
+
+                if (Input.GetAxis("Horizontal") > 0 && ExplanationSelect == false&& ExplanationSelectCount == 0)
+                {
+                    ExplanationSelectCount=1;
+                    OperationExplanationSelect.GetComponent<Image>().enabled = true;
+                    OperationExplanationSelect1.GetComponent<Image>().enabled = false;
+                    Select1.GetComponent<Image>().enabled = false;
+                    KeyboardSetting.GetComponent<Image>().enabled = true;
+                    ControllerSetting.GetComponent<Image>().enabled = false;
+                    ExplanationSelect = true;
+                }
+                else if (Input.GetAxis("Horizontal") < 0 && ExplanationSelect==false&& ExplanationSelectCount == 1)
+                {
+                    ExplanationSelectCount = 0;
+                    OperationExplanationSelect1.GetComponent<Image>().enabled = true;
+                    OperationExplanationSelect.GetComponent<Image>().enabled = false;
+                    Select1.GetComponent<Image>().enabled = false;
+                    ControllerSetting.GetComponent<Image>().enabled =true;
+                    KeyboardSetting.GetComponent<Image>().enabled = false;
+                    ExplanationSelect = true;
+                }
+             
+              
+            }
+            else
+            {
+                WhiteLine.GetComponent<Image>().enabled = false;
+                KeyboardcharaButton.GetComponent<Image>().enabled = false;
+                GamepadcharaButton.GetComponent<Image>().enabled = false;
+                ControllerSetting.GetComponent<Image>().enabled = false;
+                KeyboardSetting.GetComponent<Image>().enabled = false;
+                SettingMenu.GetComponent<Image>().enabled = false;
+                MicSlider.gameObject.SetActive(false);
+                BGMSlider.gameObject.SetActive(false);
+                SESlider.gameObject.SetActive(false);
+                MouseSlider.gameObject.SetActive(false);
+                Select.GetComponent<Image>().enabled = false;
+                Select1.GetComponent<Image>().enabled = false;
+                Select2.GetComponent<Image>().enabled = true;
+
+                OperationExplanationSelect.GetComponent<Image>().enabled = false;
+                OperationExplanationSelect1.GetComponent<Image>().enabled = false;
+            }
+        }
     }
 }
