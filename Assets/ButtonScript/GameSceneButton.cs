@@ -205,6 +205,7 @@ public class GameSceneButton : MonoBehaviour
         NoUI = false;
         ButtonON = false;
         volume += 0.1f;
+        SelectCount = 0;
     }
 
     // Update is called once per frame
@@ -471,12 +472,13 @@ public class GameSceneButton : MonoBehaviour
             SettingButton.GetComponent<Image>().enabled = false;
 
             Select.GetComponent<Image>().enabled = false;
-
             Select1.GetComponent<Image>().enabled = false;
-
             Select2.GetComponent<Image>().enabled = false;
 
             MenuCursor.GetComponent<Image>().enabled = false;
+            MenuCursor1.GetComponent<Image>().enabled = false;
+            MenuCursor2.GetComponent<Image>().enabled = false;
+            MenuCursor3.GetComponent<Image>().enabled = false;
 
             CloseButton.GetComponent<Image>().enabled = false;
 
@@ -497,6 +499,7 @@ public class GameSceneButton : MonoBehaviour
             KeyboardSetting.GetComponent<Image>().enabled = false;
 
             OperationExplanationSelect.GetComponent<Image>().enabled = false;
+            OperationExplanationSelect1.GetComponent<Image>().enabled = false;
 
             MicSlider.gameObject.SetActive(false);
 
@@ -508,7 +511,7 @@ public class GameSceneButton : MonoBehaviour
             TutorialManager.ON =false;
             //SettingBack.SetActive(false);
             Time.timeScale = 1;
-
+            SelectCount = 0;
             NoUI = false;
         }
 
@@ -621,6 +624,7 @@ public class GameSceneButton : MonoBehaviour
 
         MenuCursor.GetComponent<Image>().enabled = true;
 
+
         SettingButton.GetComponent<Image>().enabled = true;
 
         MicSlider.gameObject.SetActive(true);
@@ -642,6 +646,7 @@ public class GameSceneButton : MonoBehaviour
         KeyboardSetting.GetComponent<Image>().enabled = false;
 
         OperationExplanationSelect.GetComponent<Image>().enabled = false;
+        OperationExplanationSelect1.GetComponent<Image>().enabled = false;
 
         MainSettingSelectTransform.transform.localPosition = new Vector3(MainSettingOriginPositionX, MainSettingOriginPositionY, MainSettingOriginPositionZ);
 
@@ -856,11 +861,12 @@ public class GameSceneButton : MonoBehaviour
                 {
                     MainSelectPositionSelect = true;
                 }
-                
+
+                /*
                 if (Input.GetAxis("Horizontal") < 0 && SelectCount == 0 && ExplanationSelect == false)
                 {
-                    if (Input.GetKeyUp("joystick button 0")&& ButtonON ==true)
-                    {
+                    //if (Input.GetKeyUp("joystick button 0")&& ButtonON ==true)
+                    //{
                         SelectCount = -1;
                         MenuCursor.GetComponent<Image>().enabled = false;
                         MenuCursor1.GetComponent<Image>().enabled = false;
@@ -871,8 +877,22 @@ public class GameSceneButton : MonoBehaviour
                         ExplanationSelect = true;
                         NotSelect = false;
                         ButtonON = false;
-                    }
+                    //}
+                }*/
+                if (Input.GetAxisRaw("Vertical") < 0 && SelectCount ==0 && MainSelectPositionSelect == false)
+                {
+                    SelectCount = -1;
+                    MenuCursor.GetComponent<Image>().enabled = false;
+                    MenuCursor1.GetComponent<Image>().enabled = false;
+                    MenuCursor2.GetComponent<Image>().enabled = false;
+                    MenuCursor3.GetComponent<Image>().enabled = false;
+                    ButtonCount = 0;
+                    ButtonON = false;
+                    ExplanationSelect = true;
+                    NotSelect = false;
+                    ButtonON = false;
                 }
+
                 else if (Input.GetAxisRaw("Vertical") < 0 && SelectCount == 1 && MainSelectPositionSelect == false)
                 {
                     MainSelectPositionSelect = true;
@@ -923,11 +943,7 @@ public class GameSceneButton : MonoBehaviour
                             SetMic(volume2);
                         }
 
-                        if (Input.GetKeyDown("joystick button 0"))
-                        {
-                            ButtonCount = 1;
-                            ButtonON = true;
-                        }
+              
                     
                 }
                 else if(SelectCount == 1)
