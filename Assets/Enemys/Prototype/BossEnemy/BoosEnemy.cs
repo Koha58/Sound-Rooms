@@ -6,7 +6,6 @@ using UnityEngine;
 
 public class BoosEnemy : MonoBehaviour
 {
-
     //移動
     [SerializeField] private Transform[] PatrolPoints; // 巡回ポイントの配列
     public float MoveSpeed = 15.0f; // 動く速度
@@ -107,7 +106,6 @@ public class BoosEnemy : MonoBehaviour
             animator.SetBool("Idle", true);
             animator.SetBool("Move", false);
             ONTime += Time.deltaTime;
-            Debug.Log(ONTime);
             if (ONTime >= 7.0f)
             {
                 VisualizationBoss.SetActive(false);

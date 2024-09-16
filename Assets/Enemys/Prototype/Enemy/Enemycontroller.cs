@@ -28,7 +28,7 @@ public class Enemycontroller : MonoBehaviour
     public Transform TargetPlayer;　　　　　　　　　　 //プレイヤーの位置を取得
 
     //Playerを追跡
-    float ChaseSpeed = 0.5f;                           //Playerを追いかける速度
+    float ChaseSpeed = 0.1f;                           //Playerを追いかける速度
     [SerializeField] bool ChaseONOFF;                  //(ChaseON： true/ChaseOFF: false)
 
     //Destroyの判定
@@ -62,20 +62,33 @@ public class Enemycontroller : MonoBehaviour
  
         if (ChasePlayer <= 5f)                                                                                                    //プレイヤーが検知範囲に入ったら
         {
-            if (PS.onoff == 1)                                                                                                    //プレイヤーが可視化していたら
+            if (TouchWallONOFF == false)
             {
-                ONOFF = 1;                                                                                                        //自分自身を可視化
-                ChaseONOFF = true;                                                                                                //追跡中
-                transform.LookAt(TargetPlayer.transform);                                                                         //プレイヤーの方向にむく
-                transform.position += transform.forward * ChaseSpeed;                                                             //プレイヤーの方向に向かう
-                animator.SetBool("Walk", false);
-                animator.SetBool("Run", true);
-            }
-            else
-            {
-                ChaseONOFF = false;
-                animator.SetBool("Run", false);
-                animator.SetBool("Walk", true);
+                if (PS.onoff == 1)                                                                                                    //プレイヤーが可視化していたら
+                {
+                    ONOFF = 1;                                                                                                        //自分自身を可視化
+                    ChaseONOFF = true;                                                                                                //追跡中
+                    transform.LookAt(TargetPlayer.transform);                                                                         //プレイヤーの方向にむく
+                    transform.position += transform.forward * ChaseSpeed;                                                             //プレイヤーの方向に向かう
+                    animator.SetBool("Walk", false);
+                    animator.SetBool("Run", true);
+                }
+                else
+                {
+                    ChaseONOFF = false;
+                    animator.SetBool("Run", false);
+                    animator.SetBool("Walk", true);
+                    if (piano != true)
+                    {
+                        PS.Visualization = false;
+                        PS.onoff = 0;
+                        foreach (var playerParts in childTransforms)
+                        {
+                            //タグが"PlayerParts"である子オブジェクトを見えるようにする
+                            playerParts.gameObject.GetComponent<Renderer>().enabled = false;
+                        }
+                    }
+                }
             }
         }
         else
@@ -83,12 +96,15 @@ public class Enemycontroller : MonoBehaviour
             ChaseONOFF = false;
             animator.SetBool("Run", false);
             animator.SetBool("Walk", true);
-            PS.Visualization = false;
-            PS.onoff = 0;                                                                                                         
-            foreach (var playerParts in childTransforms)
+            if (piano != true)
             {
-                //タグが"PlayerParts"である子オブジェクトを見えるようにする
-                playerParts.gameObject.GetComponent<Renderer>().enabled = false;
+                PS.Visualization = false;
+                PS.onoff = 0;
+                foreach (var playerParts in childTransforms)
+                {
+                    //タグが"PlayerParts"である子オブジェクトを見えるようにする
+                    playerParts.gameObject.GetComponent<Renderer>().enabled = false;
+                }
             }
         }
     }
@@ -173,16 +189,22 @@ public class Enemycontroller : MonoBehaviour
         }
         else 
         {
+
             OFFTime += Time.deltaTime;
+            animator.SetBool("Run", false);
+            animator.SetBool("Walk", true);
             if (OFFTime >= 6.0f)
             {
                 ChaseONOFF = false;
-                PS.Visualization = false;
-                PS.onoff = 0;  　　　　　　　　　　　　　　　　　　　//見えているから1
-                foreach (var playerParts in childTransforms)
+                if (piano != true)
                 {
-                    //タグが"PlayerParts"である子オブジェクトを見えなくする
-                    playerParts.gameObject.GetComponent<Renderer>().enabled = false;
+                    PS.Visualization = false;
+                    PS.onoff = 0;
+                    foreach (var playerParts in childTransforms)
+                    {
+                        //タグが"PlayerParts"である子オブジェクトを見えるようにする
+                        playerParts.gameObject.GetComponent<Renderer>().enabled = false;
+                    }
                 }
                 PrototypeBodySkinnedMeshRenderer.enabled = false; //3DモデルのRendererを見える状態
                 ONOFF = 0;
@@ -250,10 +272,11 @@ public class Enemycontroller : MonoBehaviour
         Ray2();
         TouchWallONOFF = false;
         float Player = Vector3.Distance(transform.position, TargetPlayer.position);   //プレイヤーと敵の位置の計算
-        if (Player <= 1f)
+        if (Player <= 0.8f)
         {
             if (ONOFF == 1)
             {
+                TouchWallONOFF = true;
                 GameObject obj = GameObject.Find("Player");                               //Playerオブジェクトを探す
                 PlayerSeen PS = obj.GetComponent<PlayerSeen>();                           //付いているスクリプトを取得
                 var childTransforms = PS._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
@@ -286,10 +309,11 @@ public class Enemycontroller : MonoBehaviour
             }
                 INPlayerONOFF = true;
         }
-        else if (Player >= 1.5f) { INPlayerONOFF = false; }
+        else if (Player >= 2f) { INPlayerONOFF = false; }
 
         if (INPlayerONOFF == false)
         {
+            animator.SetBool("Run", false);
             animator.SetBool("Walk", true);
             Visualization();
 

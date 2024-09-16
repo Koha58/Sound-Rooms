@@ -113,7 +113,7 @@ public class GameSceneButton : MonoBehaviour
     [SerializeField] AudioMixer audioMixer;
     [SerializeField] GameObject micObject;
     public float volume;
-    public float volume1;
+    public float level1;
     public float volume2;
     public float volume3;
     public CinemachineFreeLook VCamera;
@@ -1005,21 +1005,21 @@ public class GameSceneButton : MonoBehaviour
                     MenuCursor3.GetComponent<Image>().enabled = true;
                     if (Input.GetAxis("Horizontal") > 0)
                     {
-                        if (volume1 < 1)
+                        if (level1 < 5)
                         {
-                            volume1 += 0.1f;
+                            level1 += 0.1f;
                         }
-                        MouseSlider.value = volume1;
-                        SetMic(volume1);
+                        MouseSlider.value = level1;
+                        SetMouse(level1);
                     }
                     else if (Input.GetAxis("Horizontal") < 0)
                     {
-                        if (volume1 > 0 && volume1 != 0)
+                        if (level1 > 0 && level1 != 0)
                         {
-                            volume1 -= 0.1f;
+                            level1 -= 0.1f;
                         }
-                        MouseSlider.value = volume1;
-                        SetMic(volume1);
+                        MouseSlider.value = level1;
+                        SetMouse(level1);
                     }
                 }
 

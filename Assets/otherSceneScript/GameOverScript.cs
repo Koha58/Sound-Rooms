@@ -124,7 +124,11 @@ public class GameOverScript : MonoBehaviour
         }
         if (other.CompareTag("BossV"))
         {
-            LifeCount--;
+            if (Count == 0)
+            {
+                LifeCount--;
+                Count = 1;
+            }
         }
      
         if (LifeCount == 4)
