@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 
@@ -71,18 +72,11 @@ public class EnemyAttack : MonoBehaviour
         if (DB == true)
         {
             DC += Time.deltaTime;
-            if (DC >= 9.0f)
+       
+            if (DC >= 10.0f)
             {
                 SoundON = true;
 
-                GameObject Boss = GameObject.FindWithTag("Boss");
-                BoosEnemy BS = Boss.GetComponent<BoosEnemy>();
-
-                BS.ONOFF = 1;
-
-            }
-            if (DC >= 10.0f)
-            {
                 GameObject Boss = GameObject.FindWithTag("Boss");
                 BoosEnemy BS = Boss.GetComponent<BoosEnemy>();
 
@@ -98,18 +92,12 @@ public class EnemyAttack : MonoBehaviour
         if (DB2 == true)
         {
             DC += Time.deltaTime;
-            if (DC >= 9.0f) 
-            {
-                SoundON = true;
-
-                GameObject Boss1 = GameObject.FindWithTag("Boss1");
-                BossTutoriaru BS1 = Boss1.GetComponent<BossTutoriaru>();
-
-                BS1.ONOFF = 1;
-
-            }
+          
             if (DC >= 10.0f)
             {
+
+                SoundON = true;
+
                 GameObject Boss1 = GameObject.FindWithTag("Boss1");
                 BossTutoriaru BS1 = Boss1.GetComponent<BossTutoriaru>();
 
@@ -263,4 +251,5 @@ public class EnemyAttack : MonoBehaviour
         keyCountText.text = count.ToString();
     }
 
+    
 }

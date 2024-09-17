@@ -28,7 +28,7 @@ public class Enemycontroller : MonoBehaviour
     public Transform TargetPlayer;　　　　　　　　　　 //プレイヤーの位置を取得
 
     //Playerを追跡
-    float ChaseSpeed = 0.1f;                           //Playerを追いかける速度
+    float ChaseSpeed = 0.2f;                           //Playerを追いかける速度
     [SerializeField] bool ChaseONOFF;                  //(ChaseON： true/ChaseOFF: false)
 
     //Destroyの判定
@@ -72,6 +72,7 @@ public class Enemycontroller : MonoBehaviour
                     transform.position += transform.forward * ChaseSpeed;                                                             //プレイヤーの方向に向かう
                     animator.SetBool("Walk", false);
                     animator.SetBool("Run", true);
+                   
                 }
                 else
                 {
@@ -276,6 +277,8 @@ public class Enemycontroller : MonoBehaviour
         {
             if (ONOFF == 1)
             {
+                   animator.SetBool("Walk", false);
+                    animator.SetBool("Run", true);
                 TouchWallONOFF = true;
                 GameObject obj = GameObject.Find("Player");                               //Playerオブジェクトを探す
                 PlayerSeen PS = obj.GetComponent<PlayerSeen>();                           //付いているスクリプトを取得
@@ -313,8 +316,6 @@ public class Enemycontroller : MonoBehaviour
 
         if (INPlayerONOFF == false)
         {
-            animator.SetBool("Run", false);
-            animator.SetBool("Walk", true);
             Visualization();
 
             if (ChaseONOFF == false || TouchWallONOFF == false)

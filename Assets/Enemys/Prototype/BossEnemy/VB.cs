@@ -75,4 +75,18 @@ public class VB : MonoBehaviour
         }
 
     }
+    private void OnTriggerExit(Collider other)
+    {
+        GameObject obj = GameObject.Find("Player");                               //Playerオブジェクトを探す
+        PlayerSeen PS = obj.GetComponent<PlayerSeen>();                           //付いているスクリプトを取得
+        var childTransforms = PS._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
+
+        PS.Visualization = false;
+        PS.onoff = 0;                                                             //見えているから1
+        foreach (var playerParts in childTransforms)
+        {
+            //タグが"PlayerParts"である子オブジェクトを見えるようにする
+            playerParts.gameObject.GetComponent<Renderer>().enabled = false;
+        }
+    }
 }

@@ -98,19 +98,29 @@ public class BossTutoriaru : MonoBehaviour
         }
         else if (ONOFF == 1)//見えているとき
         {
+            animator.SetBool("Idle", true);
+            animator.SetBool("Move", false);
+            GameObject gobj = GameObject.Find("Player");//Playerオブジェクトを探す
+            PlayerSeen PS = gobj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
+            var childTransforms = PS._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
             //3DモデルのRendererを見える状態
             VisualizationBoss.SetActive(true);
             PrototypeBodySkinnedMeshRenderer.enabled = true;
-            animator.SetBool("Idle", true);
-            animator.SetBool("Move", false);
             audioSourse.maxDistance = 300;
             ONTime += Time.deltaTime;
-            if (ONTime >= 7.0f)
+            if (ONTime >= 20.0f)
             {
                 VisualizationBoss.SetActive(false);
                 //3DモデルのRendererを見える状態
                 PrototypeBodySkinnedMeshRenderer.enabled = false;
                 ONOFF = 0;//見えない
+                PS.Visualization = false;
+                PS.onoff = 0;  //見えているから1
+                foreach (var playerParts in childTransforms)
+                {
+                    //タグが"PlayerParts"である子オブジェクトを見えなくする
+                    playerParts.gameObject.GetComponent<Renderer>().enabled = false;
+                }
             }
         }
     }
@@ -188,7 +198,7 @@ public class BossTutoriaru : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        animator.SetBool("Walk", true);
+       // animator.SetBool("Walk", true);
         if (EnemyAttack.SoundON == true)
         {
             animator.SetBool("Idle", true);
@@ -196,37 +206,37 @@ public class BossTutoriaru : MonoBehaviour
         }
 
 
-        if (ChaseONOFF == false)
-        {
-            animator.SetBool("Idle", false);
-            animator.SetBool("Move", true);
-        }
 
         Visualization();
 
         if (ChaseONOFF == false)
         {
-            if (Front == false)
+            if (ONOFF == 0)
             {
-                transform.position = Vector3.MoveTowards(transform.position, PatrolPoints[CurrentPointIndex].position, MoveSpeed * Time.deltaTime);
-                transform.LookAt(PatrolPoints[CurrentPointIndex].transform);//次のポイントの方向を向く
+                if (Front == false)
+                {
+                    transform.position = Vector3.MoveTowards(transform.position, PatrolPoints[CurrentPointIndex].position, MoveSpeed * Time.deltaTime);
+                    transform.LookAt(PatrolPoints[CurrentPointIndex].transform);//次のポイントの方向を向く
 
-                if (transform.position == PatrolPoints[CurrentPointIndex].position)// 次の巡回ポイントへのインデックスを更新
-                {
-                    animator.SetBool("Move", true);
-                    Front = true;
+                    if (transform.position == PatrolPoints[CurrentPointIndex].position)// 次の巡回ポイントへのインデックスを更新
+                    {
+                        animator.SetBool("Idle", false);
+                        animator.SetBool("Move", true);
+                        Front = true;
+                    }
                 }
-            }
-            else
-            {
-                animator.SetBool("Move", true);
-                NextTime += Time.deltaTime;
-                if (NextTime >= 5.0f)
+                else
                 {
-                    NextPatrolPoint();
-                    NextTime = 0;
-                    Front = false;
-                    TouchWall = false;
+                    animator.SetBool("Idle", false);
+                    animator.SetBool("Move", true);
+                    NextTime += Time.deltaTime;
+                    if (NextTime >= 5.0f)
+                    {
+                        NextPatrolPoint();
+                        NextTime = 0;
+                        Front = false;
+                        TouchWall = false;
+                    }
                 }
             }
         }
