@@ -163,13 +163,6 @@ public class BossEnemyControll : MonoBehaviour
             {
                 ONOFF = 0;
                 OFFTime = 0;
-                PS.Visualization = false;
-                PS.onoff = 0;  //見えているから1
-                foreach (var playerParts in childTransforms)
-                {
-                    //タグが"PlayerParts"である子オブジェクトを見えなくする
-                    playerParts.gameObject.GetComponent<Renderer>().enabled = false;
-                }
                 EnemyAttack.SoundON = false;
             }
         }

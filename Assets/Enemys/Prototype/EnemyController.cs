@@ -86,7 +86,7 @@ public class EnemyController : MonoBehaviour
             }
             else
             {
-                animator.SetBool("Walk", false);
+                animator.SetBool("Walk", true);
                 animator.SetBool("Run", false);
                 OFFTime += Time.deltaTime;
                 if (OFFTime >= 10.0f)
@@ -108,7 +108,7 @@ public class EnemyController : MonoBehaviour
         }
         else if(ChasePlayer >= 10f)
         {
-            animator.SetBool("Walk", false);
+            animator.SetBool("Walk", true);
             animator.SetBool("Run", false);
             OFFTime += Time.deltaTime;
             if (OFFTime >= 10.0f)
@@ -125,7 +125,6 @@ public class EnemyController : MonoBehaviour
                     playerParts.gameObject.GetComponent<Renderer>().enabled = false;
                 }
             }
-
         }
     }
 
@@ -144,7 +143,6 @@ public class EnemyController : MonoBehaviour
             {
                 animator.SetBool("Walk", true);
                 animator.SetBool("Run", false);
-                //VisualizationBoxGameObject.SetActive(false);　　　 //プレイヤーを可視化するためのオブジェクトをOFF
                 PrototypeBodySkinnedMeshRenderer.enabled = false;　//3DモデルのRendererを見えない状態
                 ONOFF = 0;                                         //見える
 
@@ -248,11 +246,8 @@ public class EnemyController : MonoBehaviour
             else if (ChaseONOFF == true)
             {
                 OFFTime = 0;
-
             }
-
         }
-            
     }
 
     // Start is called before the first frame update
@@ -271,7 +266,6 @@ public class EnemyController : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        Debug.Log(ChaseONOFF);
         TouchWallONOFF = false;
         float Player = Vector3.Distance(transform.position, TargetPlayer.position);   //プレイヤーと敵の位置の計算
         if (Player <= 0.8f)

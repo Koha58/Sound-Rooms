@@ -76,16 +76,19 @@ public class EnemyAttack : MonoBehaviour
             if (DC >= 10.0f)
             {
                 SoundON = true;
-
                 GameObject Boss = GameObject.FindWithTag("Boss");
                 BoosEnemy BS = Boss.GetComponent<BoosEnemy>();
 
                 BS.MoveSpeed -= 0.1f;
                 BS.ChaseSpeed -= 0.01f;
                 BS.SphereCollider.radius -= 0.1f;
+                BS.ONOFF = 1;
+                if (SoundON == true&& DC >= 12.0f)
+                {
 
-                DC = 0;
-                DB = false;
+                    DC = 0;
+                    DB = false;
+                }
             }
         }
         
@@ -95,9 +98,7 @@ public class EnemyAttack : MonoBehaviour
           
             if (DC >= 10.0f)
             {
-
                 SoundON = true;
-
                 GameObject Boss1 = GameObject.FindWithTag("Boss1");
                 BossTutoriaru BS1 = Boss1.GetComponent<BossTutoriaru>();
 
@@ -105,9 +106,12 @@ public class EnemyAttack : MonoBehaviour
                 BS1.ChaseSpeed -= 0.01f;
                 BS1.SphereCollider.radius -= 0.1f;
                 BS1.ONOFF = 1;
-                SoundON = true;
-                DC = 0;
-                DB2 = false;
+                if (SoundON == true&& DC >= 12.0f)
+                {
+
+                    DC = 0;
+                    DB2 = false;
+                }
             }
         }
     }

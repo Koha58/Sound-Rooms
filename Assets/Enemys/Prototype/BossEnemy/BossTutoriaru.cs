@@ -198,14 +198,12 @@ public class BossTutoriaru : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-       // animator.SetBool("Walk", true);
         if (EnemyAttack.SoundON == true)
         {
+            Front = true;
             animator.SetBool("Idle", true);
             animator.SetBool("Move", false);
         }
-
-
 
         Visualization();
 
@@ -227,8 +225,8 @@ public class BossTutoriaru : MonoBehaviour
                 }
                 else
                 {
-                    animator.SetBool("Idle", false);
-                    animator.SetBool("Move", true);
+                    animator.SetBool("Idle", true);
+                    animator.SetBool("Move", false);
                     NextTime += Time.deltaTime;
                     if (NextTime >= 5.0f)
                     {
