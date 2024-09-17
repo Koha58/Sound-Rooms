@@ -99,6 +99,9 @@ public class BoosEnemy : MonoBehaviour
         }
         else if (ONOFF == 1)//見えているとき
         {
+            GameObject gobj = GameObject.Find("Player");//Playerオブジェクトを探す
+            PlayerSeen PS = gobj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
+            var childTransforms = PS._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
             //3DモデルのRendererを見える状態
             VisualizationBoss.SetActive(true);
             PrototypeBodySkinnedMeshRenderer.enabled = true;
@@ -106,12 +109,19 @@ public class BoosEnemy : MonoBehaviour
             animator.SetBool("Idle", true);
             animator.SetBool("Move", false);
             ONTime += Time.deltaTime;
-            if (ONTime >= 7.0f)
+            if (ONTime >= 20.0f)
             {
                 VisualizationBoss.SetActive(false);
                 //3DモデルのRendererを見える状態
                 PrototypeBodySkinnedMeshRenderer.enabled = false;
                 ONOFF = 0;//見えない
+                PS.Visualization = false;
+                PS.onoff = 0;  //見えているから1
+                foreach (var playerParts in childTransforms)
+                {
+                    //タグが"PlayerParts"である子オブジェクトを見えなくする
+                    playerParts.gameObject.GetComponent<Renderer>().enabled = false;
+                }
             }
         }
     }
