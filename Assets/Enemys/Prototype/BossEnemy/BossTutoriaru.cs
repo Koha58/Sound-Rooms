@@ -206,6 +206,7 @@ public class BossTutoriaru : MonoBehaviour
             audioSourse.PlayOneShot(BossIdle);
         }
 
+
         Visualization();
 
         if (ChaseONOFF == false)
