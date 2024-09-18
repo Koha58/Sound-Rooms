@@ -91,6 +91,7 @@ public class BossTutoriaru : MonoBehaviour
 
         if (ONOFF == 0)//見えないとき
         {
+            ONOFF = 1;
             VisualizationBoss.SetActive(false);
             //3DモデルのRendererを見えない状態
             PrototypeBodySkinnedMeshRenderer.enabled = false;
@@ -108,8 +109,9 @@ public class BossTutoriaru : MonoBehaviour
             PrototypeBodySkinnedMeshRenderer.enabled = true;
             audioSourse.maxDistance = 300;
             ONTime += Time.deltaTime;
-            if (ONTime >= 20.0f)
+            if (ONTime >= 10.0f)
             {
+                ONTime = 0;
                 VisualizationBoss.SetActive(false);
                 //3DモデルのRendererを見える状態
                 PrototypeBodySkinnedMeshRenderer.enabled = false;
@@ -203,46 +205,55 @@ public class BossTutoriaru : MonoBehaviour
             Front = true;
             animator.SetBool("Idle", true);
             animator.SetBool("Move", false);
-            audioSourse.PlayOneShot(BossIdle);
+             VisualizationBoss.SetActive(true);
         }
 
         Visualization();
 
         if (ChaseONOFF == false)
         {
-            if (ONOFF == 0)
+            if (Front == false)
             {
-                if (Front == false)
-                {
-                    transform.position = Vector3.MoveTowards(transform.position, PatrolPoints[CurrentPointIndex].position, MoveSpeed * Time.deltaTime);
-                    transform.LookAt(PatrolPoints[CurrentPointIndex].transform);//次のポイントの方向を向く
+                transform.position = Vector3.MoveTowards(transform.position, PatrolPoints[CurrentPointIndex].position, MoveSpeed * Time.deltaTime);
+                transform.LookAt(PatrolPoints[CurrentPointIndex].transform);//次のポイントの方向を向く
 
-                    if (transform.position == PatrolPoints[CurrentPointIndex].position)// 次の巡回ポイントへのインデックスを更新
+                if (transform.position == PatrolPoints[CurrentPointIndex].position)// 次の巡回ポイントへのインデックスを更新
+                {
+                    if (ONOFF == 0)
                     {
                         animator.SetBool("Idle", false);
                         animator.SetBool("Move", true);
-                        Front = true;
                     }
+                    else
+                    {
+                        animator.SetBool("Idle", true);
+                        animator.SetBool("Move", false);
+                    }
+                    Front = true;
+                }
+            }
+            else
+            {
+                if (ONOFF == 0)
+                {
+                    animator.SetBool("Idle", false);
+                    animator.SetBool("Move", true);
                 }
                 else
                 {
                     animator.SetBool("Idle", true);
                     animator.SetBool("Move", false);
-                    NextTime += Time.deltaTime;
-                    if (NextTime >= 5.0f)
-                    {
-                        NextPatrolPoint();
-                        NextTime = 0;
-                        Front = false;
-                        TouchWall = false;
-                    }
+                }
+                NextTime += Time.deltaTime;
+                if (NextTime >= 5.0f)
+                {
+                    NextPatrolPoint();
+                    NextTime = 0;
+                    Front = false;
+                    TouchWall = false;
                 }
             }
-            else
-            {
-                animator.SetBool("Idle", true);
-                animator.SetBool("Move", false);
-            }
+
         }
 
         Vector3 Position = TargetPlayer.position - transform.position; // ターゲットの位置と自身の位置の差を計算

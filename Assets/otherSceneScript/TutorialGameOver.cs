@@ -87,6 +87,20 @@ public class TutorialGameOver : MonoBehaviour
             }
         }
 
+        if (other.CompareTag("Enemy2G"))
+        {
+            EnemyController EC = other.GetComponent<EnemyController>();
+            if (EC.ONOFF == 1 && PS.onoff == 1 && Table.ON == false)
+            {
+                if (Count == 0)
+                {
+                    LifeCount--;
+                    Count = 1;
+                }
+            }
+        }
+
+
         if (other.CompareTag("Enemy1"))
         {
             EnemyController EC1 = other.GetComponent<EnemyController>();
