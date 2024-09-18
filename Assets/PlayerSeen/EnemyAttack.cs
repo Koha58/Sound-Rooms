@@ -81,7 +81,6 @@ public class EnemyAttack : MonoBehaviour
 
                 BS.MoveSpeed -= 0.1f;
                 BS.ChaseSpeed -= 0.01f;
-                BS.SphereCollider.radius -= 0.1f;
                 BS.ONOFF = 1;
                 if (SoundON == true&& DC >= 12.0f)
                 {
@@ -104,7 +103,6 @@ public class EnemyAttack : MonoBehaviour
 
                 BS1.MoveSpeed -= 0.1f;
                 BS1.ChaseSpeed -= 0.01f;
-                BS1.SphereCollider.radius -= 0.1f;
                 BS1.ONOFF = 1;
                 if (SoundON == true&& DC >= 12.0f)
                 {

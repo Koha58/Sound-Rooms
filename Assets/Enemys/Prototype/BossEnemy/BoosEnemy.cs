@@ -199,11 +199,12 @@ public class BoosEnemy : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        animator.SetBool("Walk", true);
         if (EnemyAttack.SoundON == true)
         {
+            Front = true;
             animator.SetBool("Idle", true);
             animator.SetBool("Move", false);
+            audioSourse.PlayOneShot(BossIdle);
         }
 
 
@@ -211,30 +212,38 @@ public class BoosEnemy : MonoBehaviour
 
         if (ChaseONOFF == false)
         {
-            if (Front == false)
+            if (ONOFF == 0)
             {
-                transform.position = Vector3.MoveTowards(transform.position, PatrolPoints[CurrentPointIndex].position, MoveSpeed * Time.deltaTime);
-                transform.LookAt(PatrolPoints[CurrentPointIndex].transform);//次のポイントの方向を向く
-
-                if (transform.position == PatrolPoints[CurrentPointIndex].position)// 次の巡回ポイントへのインデックスを更新
+                if (Front == false)
                 {
-                    animator.SetBool("Idle", false);
-                    animator.SetBool("Move", true);
-                    Front = true;
+                    transform.position = Vector3.MoveTowards(transform.position, PatrolPoints[CurrentPointIndex].position, MoveSpeed * Time.deltaTime);
+                    transform.LookAt(PatrolPoints[CurrentPointIndex].transform);//次のポイントの方向を向く
+
+                    if (transform.position == PatrolPoints[CurrentPointIndex].position)// 次の巡回ポイントへのインデックスを更新
+                    {
+                        animator.SetBool("Idle", false);
+                        animator.SetBool("Move", true);
+                        Front = true;
+                    }
+                }
+                else
+                {
+                    animator.SetBool("Idle", true);
+                    animator.SetBool("Move", false);
+                    NextTime += Time.deltaTime;
+                    if (NextTime >= 5.0f)
+                    {
+                        NextPatrolPoint();
+                        NextTime = 0;
+                        Front = false;
+                        TouchWall = false;
+                    }
                 }
             }
             else
             {
                 animator.SetBool("Idle", true);
                 animator.SetBool("Move", false);
-                NextTime += Time.deltaTime;
-                if (NextTime >= 5.0f)
-                {
-                    NextPatrolPoint();
-                    NextTime = 0;
-                    Front = false;
-                    TouchWall = false;
-                }
             }
         }
 

@@ -93,8 +93,6 @@ public class TutorialMessageControll : MonoBehaviour
             GameObject.Find("Enemys").transform.Find("Enemy (1)").gameObject.SetActive(true);
             GameObject.Find("Enemys").transform.Find("Enemy (2)").gameObject.SetActive(true);
             GameObject.Find("Enemys").transform.Find("BossEnemy").gameObject.SetActive(true);
-            GameObject.Find("Enemys").transform.Find("SoundcheckArea").gameObject.SetActive(true);
-            GameObject.Find("Enemys").transform.Find("SoundcheckArea1").gameObject.SetActive(true);
             if (SoundCheck)
             {
                 timeCnt = 7.0f;
