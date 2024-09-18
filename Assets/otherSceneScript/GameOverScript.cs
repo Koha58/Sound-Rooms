@@ -64,7 +64,7 @@ public class GameOverScript : MonoBehaviour
         if(other.CompareTag("Enemy"))
         {
             Enemycontroller EC = other.GetComponent<Enemycontroller>();
-            if (EC.ONOFF == 1&&PS.onoff==1)
+            if (EC.ONOFF == 1&&PS.onoff == 1 && Table.ON == false)
             {
                 if (Count == 0)
                 {
@@ -77,7 +77,7 @@ public class GameOverScript : MonoBehaviour
         if (other.CompareTag("EnemyG"))
         {
             Enemycontroller EC = other.GetComponent<Enemycontroller>();
-            if (EC.ONOFF == 1 && PS.onoff == 1)
+            if (EC.ONOFF == 1 && PS.onoff == 1 && Table.ON == false)
             {
                 if (Count == 0)
                 {
@@ -90,7 +90,7 @@ public class GameOverScript : MonoBehaviour
         if (other.CompareTag("Enemy1"))
         {
             EnemyController EC1 = other.GetComponent<EnemyController>();
-            if (EC1.ONOFF == 1 && PS.onoff == 1)
+            if (EC1.ONOFF == 1 && PS.onoff == 1 && Table.ON == false)
             {
                 if (Count == 0)
                 {
@@ -103,7 +103,7 @@ public class GameOverScript : MonoBehaviour
         if (other.CompareTag("EnemySearch"))
         {
             EnemySearchcontroller ESC = other.GetComponent<EnemySearchcontroller>();
-            if (ESC.ONOFF == 1 && PS.onoff == 1)
+            if (ESC.ONOFF == 1 && PS.onoff == 1 && Table.ON == false)
             {
                 if (Count == 0)
                 {
@@ -116,9 +116,12 @@ public class GameOverScript : MonoBehaviour
         if (other.CompareTag("Boss"))
         {
             BoosEnemy BE = other.GetComponent<BoosEnemy>();
-            if (BE.ONOFF == 1 && PS.onoff == 1)
+            if (BE.ONOFF == 1 && PS.onoff == 1 && Table.ON == false)
             {
-                LifeCount--;
+                if (Count == 0)
+                {
+                    LifeCount--;
+                }
             }
 
         }
@@ -126,7 +129,10 @@ public class GameOverScript : MonoBehaviour
         {
             if (Count == 0)
             {
-                LifeCount--;
+                if ( Table.ON == false)
+                {
+                    LifeCount--;
+                }
                 Count = 1;
             }
         }

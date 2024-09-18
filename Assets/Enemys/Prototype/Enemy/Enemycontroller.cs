@@ -7,7 +7,7 @@ public class Enemycontroller : MonoBehaviour
 {
     //移動
     [SerializeField] private Transform[] PatrolPoints; // 巡回ポイントの配列
-    private float MoveSpeed = 0.6f;                    // 動く速度
+    private float MoveSpeed = 0.3f;                    // 動く速度
     private int CurrentPointIndex = 0;                 // 現在の巡回ポイントのインデックス
     private float NextTime;                            //次のポイントに向かうまでの時間
 　　private bool Front;                                //ポイントにたどり着いたときに返す
@@ -28,8 +28,10 @@ public class Enemycontroller : MonoBehaviour
     public Transform TargetPlayer;　　　　　　　　　　 //プレイヤーの位置を取得
 
     //Playerを追跡
-    float ChaseSpeed = 0.5f;                           //Playerを追いかける速度
+    float ChaseSpeed = 0.1f;                           //Playerを追いかける速度
     [SerializeField] bool ChaseONOFF;                  //(ChaseON： true/ChaseOFF: false)
+    [SerializeField] bool Search;                  
+
 
     //Destroyの判定
     public bool DestroyONOFF;                          //(DestroyON： true/DestroyOFF: false)
@@ -64,6 +66,10 @@ public class Enemycontroller : MonoBehaviour
         {
             if (PS.onoff == 1 && ONOFF == 1)                                                                                                    //プレイヤーが可視化していたら
             {
+                animator.SetBool("Walk", false);
+                animator.SetBool("Run", true);
+                ChaseONOFF = true;
+                ONOFF = 1;                                                                                                        //自分自身を可視化    
                 PS.Visualization = true;
                 PS.onoff = 1;  //見えているから1
                 foreach (var playerParts in childTransforms)
@@ -71,54 +77,31 @@ public class Enemycontroller : MonoBehaviour
                     //タグが"PlayerParts"である子オブジェクトを見えるようにする
                     playerParts.gameObject.GetComponent<Renderer>().enabled = true;
                 }
-                ONOFF = 1;                                                                                                        //自分自身を可視化
-                audioSourse.enabled = true;
-                animator.SetBool("Walk", false);
-                animator.SetBool("Run", true);
-                ChaseONOFF = true;                                                                                                //追跡中
-                transform.LookAt(TargetPlayer.transform);                                                                         //プレイヤーの方向にむく
+                transform.LookAt(TargetPlayer.transform);                                                                                 //追跡中                                                                      //プレイヤーの方向にむく
                 transform.position += transform.forward * ChaseSpeed;                                                             //プレイヤーの方向に向かう
             }
             else
             {
-                animator.SetBool("Walk", true);
                 animator.SetBool("Run", false);
                 OFFTime += Time.deltaTime;
                 if (OFFTime >= 10.0f)
                 {
                     ChaseONOFF = false;
-                    animator.SetBool("Run", false);
-                    animator.SetBool("Walk", true);
+                    Search = true;
                     OFFTime = 0;
-                    PS.Visualization = false;
-                    PS.onoff = 0;                                                                                                  　//見えているから1
-                    foreach (var playerParts in childTransforms)
-                    {
-                        //タグが"PlayerParts"である子オブジェクトを見えるようにする
-                        playerParts.gameObject.GetComponent<Renderer>().enabled = false;
-                    }
                 }
 
             }
         }
-        else if (ChasePlayer >= 10f)
+        else if (ChasePlayer > 10f)
         {
-            animator.SetBool("Walk", true);
             animator.SetBool("Run", false);
             OFFTime += Time.deltaTime;
             if (OFFTime >= 10.0f)
             {
                 ChaseONOFF = false;
-                animator.SetBool("Run", false);
-                animator.SetBool("Walk", true);
+                Search = true;
                 OFFTime = 0;
-                PS.Visualization = false;
-                PS.onoff = 0;                                                                                                   //見えているから1
-                foreach (var playerParts in childTransforms)
-                {
-                    //タグが"PlayerParts"である子オブジェクトを見えるようにする
-                    playerParts.gameObject.GetComponent<Renderer>().enabled = false;
-                }
             }
 
         }
@@ -140,8 +123,6 @@ public class Enemycontroller : MonoBehaviour
             {
                 ONOFF = 0;
                 PrototypeBodySkinnedMeshRenderer.enabled = false;　//3DモデルのRendererを見えない状態                                    
-                animator.SetBool("Run", false);
-                animator.SetBool("Walk", true);
 
             }
             if (Front == true)                                     //ポイントについたので見える状態
@@ -191,6 +172,7 @@ public class Enemycontroller : MonoBehaviour
 
                 if (hit.collider.CompareTag("Player"))
                 {
+                    Chase();
                     PS.Visualization = true;
                     PS.onoff = 1;  //見えているから1
                     foreach (var playerParts in childTransforms)
@@ -198,80 +180,63 @@ public class Enemycontroller : MonoBehaviour
                         //タグが"PlayerParts"である子オブジェクトを見えるようにする
                         playerParts.gameObject.GetComponent<Renderer>().enabled = true;
                     }
-                    Chase();
                 }
-            }
-        }
-        else
-        {
-           
-            Chase();
-            ONOFF = 1;
-            if (ChaseONOFF == false)
-            {
-              
-                OFFTime += Time.deltaTime;
-                if (OFFTime >= 30.0f)
-                {
-                    PS.Visualization = false;
-                    PS.onoff = 0;                                                                                                   //見えているから1
-                    foreach (var playerParts in childTransforms)
-                    {
-                        //タグが"PlayerParts"である子オブジェクトを見えるようにする
-                        playerParts.gameObject.GetComponent<Renderer>().enabled = false;
-                    }
-                    //VisualizationBoxGameObject.SetActive(false);
-                    PrototypeBodySkinnedMeshRenderer.enabled = false; //3DモデルのRendererを見える状態
-                    ONOFF = 0;
-                    OFFTime = 0;
-                }
-            }
-            else if (ChaseONOFF == true)
-            {
-                OFFTime = 0;
             }
         }
     }
-    /*
+    
+    
     private void Ray2()
     {
-        GameObject obj = GameObject.Find("Player");                                                                                 //Playerオブジェクトを探す
-        PlayerSeen PS = obj.GetComponent<PlayerSeen>();                                                                             //付いているスクリプトを取得
-        var childTransforms = PS._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
-
-        float VisualizationPlayer = Vector3.Distance(transform.position, TargetPlayer.position);                                    //プレイヤーと敵の位置の計算
-        if (VisualizationPlayer <= 5f)                                                                                              //プレイヤーが検知範囲に入ったら
+        if (PianoRoom != true)
         {
-            Ray ray;
-            RaycastHit hit;
-            Vector3 direction;                                                                                                      // Rayを飛ばす方向
-            float distance = 3f;                                                                                                  // Rayを飛ばす距離
+            GameObject obj = GameObject.Find("Player");                                                                                 //Playerオブジェクトを探す
+            PlayerSeen PS = obj.GetComponent<PlayerSeen>();                                                                             //付いているスクリプトを取得
+            var childTransforms = PS._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
 
-            // Rayを飛ばす方向を計算
-            Vector3 temp = Player.transform.position - transform.position;
-            direction = temp.normalized;
-
-            ray = new Ray(transform.position, direction);                                                                           // Rayを飛ばす
-            Debug.DrawRay(ray.origin, ray.direction * distance, Color.red);                                                         // Rayをシーン上に描画
-
-            // Rayが最初に当たった物体を調べる
-            if (Physics.Raycast(ray.origin, ray.direction * distance, out hit))
+            float VisualizationPlayer = Vector3.Distance(transform.position, TargetPlayer.position);                                    //プレイヤーと敵の位置の計算
+            if (VisualizationPlayer <= 5f)                                                                                              //プレイヤーが検知範囲に入ったら
             {
-                if (hit.collider.gameObject.CompareTag("Wall"))
+                Ray ray;
+                RaycastHit hit;
+                Vector3 direction;                                                                                                      // Rayを飛ばす方向
+                float distance = 5f;                                                                                                  // Rayを飛ばす距離
+
+                // Rayを飛ばす方向を計算
+                Vector3 temp = Player.transform.position - transform.position;
+                direction = temp.normalized;
+
+                ray = new Ray(transform.position, direction);                                                                           // Rayを飛ばす
+                Debug.DrawRay(ray.origin, ray.direction * distance, Color.red);                                                         // Rayをシーン上に描画
+
+                // Rayが最初に当たった物体を調べる
+                if (Physics.Raycast(ray.origin, ray.direction * distance, out hit))
                 {
-                    if (ChaseONOFF == false)
+                    if (hit.collider.gameObject.CompareTag("Wall"))
                     {
-                        audioSourse.maxDistance = 1;
+                        if (ChaseONOFF == false)
+                        {
+                            audioSourse.maxDistance = 1;
+                        }
+                        else
+                        {
+                            audioSourse.maxDistance = 3.5f;
+                        }
                     }
-                    else
+                    if (hit.collider.CompareTag("Player"))
                     {
-                        audioSourse.maxDistance = 3.5f;
+                        if (PS.onoff == 1)
+                        {
+
+                            transform.LookAt(TargetPlayer.transform);                                                                         //プレイヤーの方向にむく
+                            transform.position += transform.forward * 0.05f;                                                             //プレイヤーの方向に向かう
+                        }
                     }
                 }
             }
         }
-     
-    }*/
+
+    }
 
     // Start is called before the first frame update
     private void Start()
@@ -295,10 +260,7 @@ public class Enemycontroller : MonoBehaviour
         {
             if (ONOFF == 1)
             {
-                ChaseONOFF = true;
-                animator.SetBool("Walk", false);
-                animator.SetBool("Run", true);
-                ChaseONOFF = true;
+                ChaseONOFF =false;
                 GameObject obj = GameObject.Find("Player");                               //Playerオブジェクトを探す
                 PlayerSeen PS = obj.GetComponent<PlayerSeen>();                           //付いているスクリプトを取得
                 var childTransforms = PS._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
@@ -319,13 +281,14 @@ public class Enemycontroller : MonoBehaviour
 
         if (INPlayerONOFF == false)
         {
+           
             Visualization();
 
-            if (ChaseONOFF == false || TouchWallONOFF == false)
+            if (ChaseONOFF == false && TouchWallONOFF == false)
             {
                 if (Front == false)
                 {
-                    Chase();
+                    animator.SetBool("Walk", true);
                     transform.position = Vector3.MoveTowards(transform.position, PatrolPoints[CurrentPointIndex].position, MoveSpeed * Time.deltaTime);
                     transform.LookAt(PatrolPoints[CurrentPointIndex].transform);              //次のポイントの方向を向く
 
@@ -336,14 +299,12 @@ public class Enemycontroller : MonoBehaviour
                 }
                 else if (Front == true)
                 {
-                    animator.SetBool("Walk", false);
-                    animator.SetBool("Run", false);
+                    animator.SetBool("Walk",false);
                     NextTime += Time.deltaTime;
                     if (NextTime >= 5.0f)
                     {
-                        NextPatrolPoint();
                         animator.SetBool("Walk", false);
-                        animator.SetBool("Run", false);
+                        NextPatrolPoint();
                         NextTime = 0;
                         Front = false;
                     }
@@ -356,6 +317,8 @@ public class Enemycontroller : MonoBehaviour
 
             if (isFront)                                                                            //ターゲットが自身の前方にあるなら
             {
+                Chase();
+                Ray2();
                 if (ONOFF == 0) { ChaseONOFF = false; } else { Ray(); }
                 DestroyONOFF = false;
             }
@@ -365,6 +328,25 @@ public class Enemycontroller : MonoBehaviour
 
                 //プレイヤーが検知範囲に入ったら
                 if (detectionPlayer <= 5f) { DestroyONOFF = true; }
+            }
+        }
+
+        if(Search==true) 
+        {
+            GameObject obj = GameObject.Find("Player");                               //Playerオブジェクトを探す
+            PlayerSeen PS = obj.GetComponent<PlayerSeen>();                           //付いているスクリプトを取得
+            var childTransforms = PS._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
+            OFFTime += Time.deltaTime;
+            if(OFFTime >=5.0f) 
+            {
+                Search = false;
+                PS.Visualization = false;
+                PS.onoff = 0;                                                                                                   //見えているから1
+                foreach (var playerParts in childTransforms)
+                {
+                    //タグが"PlayerParts"である子オブジェクトを見えるようにする
+                    playerParts.gameObject.GetComponent<Renderer>().enabled = false;
+                }
             }
         }
 

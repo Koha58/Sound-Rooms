@@ -203,6 +203,7 @@ public class BossTutoriaru : MonoBehaviour
             Front = true;
             animator.SetBool("Idle", true);
             animator.SetBool("Move", false);
+            audioSourse.PlayOneShot(BossIdle);
         }
 
         Visualization();
@@ -236,6 +237,11 @@ public class BossTutoriaru : MonoBehaviour
                         TouchWall = false;
                     }
                 }
+            }
+            else
+            {
+                animator.SetBool("Idle", true);
+                animator.SetBool("Move", false);
             }
         }
 
