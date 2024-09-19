@@ -184,7 +184,6 @@ public class EnemySearchcontroller : MonoBehaviour
                 {
                     PS.Visualization = false;
                     PS.onoff = 0;//見えているから1
-                    audioSourse.enabled = false;
                     foreach (var playerParts in childTransforms)
                     {
                         //タグが"PlayerParts"である子オブジェクトを見えるようにする
@@ -199,7 +198,6 @@ public class EnemySearchcontroller : MonoBehaviour
             {
                 PS.Visualization = false;
                 PS.onoff = 0;//見えているから1
-                audioSourse.enabled = false;
                 foreach (var playerParts in childTransforms)
                 {
                     //タグが"PlayerParts"である子オブジェクトを見えるようにする
@@ -295,7 +293,6 @@ public class EnemySearchcontroller : MonoBehaviour
                         ChaseONOFF = false;
                         PS.Visualization = false;
                         PS.onoff = 0;//見えているから1
-                        audioSourse.enabled = false;
                         foreach (var playerParts in childTransforms)
                         {
                             //タグが"PlayerParts"である子オブジェクトを見えるようにする

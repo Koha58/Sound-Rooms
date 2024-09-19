@@ -39,6 +39,7 @@ public class GameOverScript : MonoBehaviour
         LostLife5.GetComponent<Image>().enabled = false;
 
         LifeCount = 5;
+        Count =0;
     }
 
     // Update is called once per frame
@@ -87,6 +88,19 @@ public class GameOverScript : MonoBehaviour
             }
         }
 
+        if (other.CompareTag("Enemy2G"))
+        {
+            EnemyController EC = other.GetComponent<EnemyController>();
+            if (EC.ONOFF == 1 && PS.onoff == 1 && Table.ON == false)
+            {
+                if (Count == 0)
+                {
+                    LifeCount--;
+                    Count = 1;
+                }
+            }
+        }
+
         if (other.CompareTag("Enemy1"))
         {
             EnemyController EC1 = other.GetComponent<EnemyController>();
@@ -125,15 +139,17 @@ public class GameOverScript : MonoBehaviour
             }
 
         }
+
         if (other.CompareTag("BossV"))
         {
             if (Count == 0)
             {
-                if ( Table.ON == false)
+                Debug.Log(1);
+                if (Table.ON == false)
                 {
                     LifeCount--;
+                    Count = 1;
                 }
-                Count = 1;
             }
         }
      
@@ -169,7 +185,15 @@ public class GameOverScript : MonoBehaviour
     {
         if (other.CompareTag("BossV"))
         {
-            LifeCount--;
+            /*
+            if (Count == 0)
+            {
+                if (Table.ON == false)
+                {
+                    LifeCount--;
+                    Count = 1;
+                }
+            }*/
         }
     }  
 }

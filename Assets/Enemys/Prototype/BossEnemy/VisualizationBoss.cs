@@ -20,10 +20,15 @@ public class VisualizationBoss : MonoBehaviour
         BoosEnemy BC = gameObject.GetComponent<BoosEnemy>();
         BC.PrototypeBodySkinnedMeshRenderer.enabled = true;
         BC.ONOFF = 1;
+
         if (BC.ONOFF == 1)
         {
             this.gameObject.SetActive(true);
 
+        }
+        else
+        {
+            this.gameObject.SetActive(false);
         }
     }
 
@@ -60,15 +65,21 @@ public class VisualizationBoss : MonoBehaviour
 
         if (other.CompareTag("Player"))
         {
-            GameObject obj = GameObject.Find("Player"); //Playerオブジェクトを探す
-            PlayerSeen PS = obj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
-            var childTransforms = PS._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
-            PS.onoff = 1;  //見えているから1
-            PS.Visualization = true;
-            foreach (var playerParts in childTransforms)
+            if (Table.ON == false)
             {
-                //タグが"PlayerParts"である子オブジェクトを見えるようにする
-                playerParts.gameObject.GetComponent<Renderer>().enabled = true;
+                GameObject obj = GameObject.Find("Player"); //Playerオブジェクトを探す
+                PlayerSeen PS = obj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
+                GameOverScript GOS = obj.GetComponent<GameOverScript>();
+                var childTransforms = PS._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
+                PS.onoff = 1;  //見えているから1
+                PS.Visualization = true;
+                foreach (var playerParts in childTransforms)
+                {
+                    //タグが"PlayerParts"である子オブジェクトを見えるようにする
+                    playerParts.gameObject.GetComponent<Renderer>().enabled = true;
+                }
+                //GOS.LifeCount--;
+
             }
         }
 

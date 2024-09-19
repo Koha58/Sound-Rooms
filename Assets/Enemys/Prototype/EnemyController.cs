@@ -65,24 +65,26 @@ public class EnemyController : MonoBehaviour
 
         float ChasePlayer = Vector3.Distance(transform.position, TargetPlayer.position);                                          //プレイヤーと敵の位置の計算
 
-        if (ChasePlayer <= 10f)                                                                                                    //プレイヤーが検知範囲に入ったら
+        if (ChasePlayer <= 6f)                                                                                                    //プレイヤーが検知範囲に入ったら
         {
-            if (PS.onoff == 1&&ONOFF==1)                                                                                                    //プレイヤーが可視化していたら
+            if (PS.onoff == 1 && ONOFF == 1)                                                                                                    //プレイヤーが可視化していたら
             {
-                PS.Visualization = true;
-                PS.onoff = 1;  //見えているから1
-                foreach (var playerParts in childTransforms)
+                if (TouchWallONOFF == false)
                 {
-                    //タグが"PlayerParts"である子オブジェクトを見えるようにする
-                    playerParts.gameObject.GetComponent<Renderer>().enabled = true;
+                    animator.SetBool("Walk", false);
+                    animator.SetBool("Run", true);
+                    ChaseONOFF = true;
+                    ONOFF = 1;                                                                                                        //自分自身を可視化    
+                    PS.Visualization = true;
+                    PS.onoff = 1;  //見えているから1
+                    foreach (var playerParts in childTransforms)
+                    {
+                        //タグが"PlayerParts"である子オブジェクトを見えるようにする
+                        playerParts.gameObject.GetComponent<Renderer>().enabled = true;
+                    }
+                    transform.LookAt(TargetPlayer.transform);                                                                                 //追跡中                                                                      //プレイヤーの方向にむく
+                    transform.position += transform.forward * ChaseSpeed;                                                             //プレイヤーの方向に向かう
                 }
-                ONOFF = 1;                                                                                                        //自分自身を可視化
-                audioSourse.enabled = true;
-                animator.SetBool("Walk", false);
-                animator.SetBool("Run", true);
-                ChaseONOFF = true;                                                                                                //追跡中
-                transform.LookAt(TargetPlayer.transform);                                                                         //プレイヤーの方向にむく
-                transform.position += transform.forward * ChaseSpeed;                                                             //プレイヤーの方向に向かう
             }
             else
             {
@@ -106,7 +108,7 @@ public class EnemyController : MonoBehaviour
                
             }
         }
-        else if(ChasePlayer >= 10f)
+        else if(ChasePlayer >= 7f)
         {
             animator.SetBool("Walk", true);
             animator.SetBool("Run", false);
@@ -308,6 +310,8 @@ public class EnemyController : MonoBehaviour
 
                     if (this.transform.position == PatrolPoints[CurrentPointIndex].position)  // 次の巡回ポイントへのインデックスを更新
                     {
+                        animator.SetBool("Walk", false);
+                        animator.SetBool("Run", false);
                         Front = true;
                     }
                 }
@@ -388,6 +392,8 @@ public class EnemyController : MonoBehaviour
         {
             TouchWallONOFF = true;
             NextPatrolPoint();
+            NextTime = 0;
+            Front = false;
         }
 
         if (other.CompareTag("PianoRoom"))

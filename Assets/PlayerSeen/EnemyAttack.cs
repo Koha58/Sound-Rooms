@@ -31,6 +31,9 @@ public class EnemyAttack : MonoBehaviour
 
     public static bool SoundON;
 
+    public static bool SoundOFF;
+
+
     //[SerializeField]
     //private GameObject[] Prototype;
 
@@ -72,31 +75,34 @@ public class EnemyAttack : MonoBehaviour
         if (DB == true)
         {
             DC += Time.deltaTime;
-       
+           
             if (DC >= 10.0f)
             {
                 SoundON = true;
+                SoundOFF = false;
                 GameObject Boss = GameObject.FindWithTag("Boss");
                 BoosEnemy BS = Boss.GetComponent<BoosEnemy>();
 
                 BS.MoveSpeed -= 0.1f;
                 BS.ChaseSpeed -= 0.01f;
                 BS.ONOFF = 1;
-                if (SoundON == true&& DC >= 12.0f)
-                {
-
-                    DC = 0;
-                    DB = false;
-                }
+            }
+            if (DC >= 11.0f)
+            {
+                SoundOFF = false;
+                DC = 0;
+                DB = false;
+                SoundON = false;
             }
         }
         
         if (DB2 == true)
         {
             DC += Time.deltaTime;
-          
+           
             if (DC >= 10.0f)
             {
+               
                 SoundON = true;
                 GameObject Boss1 = GameObject.FindWithTag("Boss1");
                 BossTutoriaru BS1 = Boss1.GetComponent<BossTutoriaru>();
@@ -104,12 +110,13 @@ public class EnemyAttack : MonoBehaviour
                 BS1.MoveSpeed -= 0.1f;
                 BS1.ChaseSpeed -= 0.01f;
                 BS1.ONOFF = 1;
-                if (SoundON == true&& DC >= 12.0f)
-                {
-
-                    DC = 0;
-                    DB2 = false;
-                }
+            }
+            if (DC >= 11.0f)
+            {
+                SoundOFF = false;
+                SoundON = false;
+                DC = 0;
+                DB2 = false;
             }
         }
     }
@@ -135,6 +142,7 @@ public class EnemyAttack : MonoBehaviour
                 GetComponent<ParticleSystem>().Play();
                 Debug.Log(enemyDeathcnt);
                 Destroy(other.gameObject);
+
 
                 DB = true;
             }
@@ -163,7 +171,6 @@ public class EnemyAttack : MonoBehaviour
                 enemyDeathcnt++;
                 DeathRange += 1.0f;
                 GetComponent<ParticleSystem>().Play();
-                Debug.Log(enemyDeathcnt);
                 Destroy(other.gameObject);
 
                 BossTiming = true;
