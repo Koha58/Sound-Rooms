@@ -40,13 +40,10 @@ public class EnemyAttack : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //ç≈èâÇÕå©Ç¶Ç»Ç¢èÛë‘
-        EnemyAttackArea.GetComponent<Collider>().enabled = false;
-
         count = 0;
         SetCountText();
+        EnemyAttackArea.GetComponent<Collider>().enabled = false;//ç≈èâÇÕå©Ç¶Ç»Ç¢èÛë‘
         PickupSound = GetComponent<AudioSource>();
-
         BossTiming = false;
     }
 
@@ -81,11 +78,11 @@ public class EnemyAttack : MonoBehaviour
                 SoundON = true;
                 SoundOFF = false;
                 GameObject Boss = GameObject.FindWithTag("Boss");
-                BoosEnemy BS = Boss.GetComponent<BoosEnemy>();
+                BossEnemyControll BEC = Boss.GetComponent<BossEnemyControll>();
 
-                BS.MoveSpeed -= 0.1f;
-                BS.ChaseSpeed -= 0.01f;
-                BS.ONOFF = 1;
+                BEC.MoveSpeed -= 0.1f;
+                BEC.ChaseSpeed -= 0.01f;
+                BEC.ONOFF = 1;
             }
             if (DC >= 11.0f)
             {
@@ -134,8 +131,8 @@ public class EnemyAttack : MonoBehaviour
         }
         if (other.CompareTag("Boss"))
         {
-            BoosEnemy EC = other.GetComponent<BoosEnemy>();
-            if (EC.DestroyONOFF == true)
+            BossEnemyControll BEC = other.GetComponent<BossEnemyControll>();
+            if (BEC.DestroyONOFF == true)
             {
                 enemyDeathcnt++;
                 DeathRange += 1.0f;
@@ -218,7 +215,7 @@ public class EnemyAttack : MonoBehaviour
 
         if (other.CompareTag("Enemy1"))
         {
-            EnemyController EC1 = other.GetComponent<EnemyController>();
+            TutorialEnemyController EC1 = other.GetComponent<TutorialEnemyController>();
             if (EC1.DestroyONOFF == true)
             {
                 enemyDeathcnt++;
@@ -236,14 +233,13 @@ public class EnemyAttack : MonoBehaviour
 
         if (other.CompareTag("Enemy2G"))
         {
-            EnemyController ECG = other.GetComponent<EnemyController>();
+            TutorialEnemyController ECG = other.GetComponent<TutorialEnemyController>();
             if (ECG.DestroyONOFF == true)
             {
                 enemyDeathcnt++;
                 DeathRange += 1.0f;
                 GetComponent<ParticleSystem>().Play();
                 Destroy(other.gameObject);
-                //Enemyincrease.enemyDeathcnt++;
                 PickupSound.PlayOneShot(PickupSound.clip);
                 count += 1;
                 SetCountText();

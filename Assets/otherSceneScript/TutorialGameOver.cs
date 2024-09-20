@@ -89,7 +89,7 @@ public class TutorialGameOver : MonoBehaviour
 
         if (other.CompareTag("Enemy2G"))
         {
-            EnemyController EC = other.GetComponent<EnemyController>();
+            TutorialEnemyController EC = other.GetComponent<TutorialEnemyController>();
             if (EC.ONOFF == 1 && PS.onoff == 1 && Table.ON == false)
             {
                 if (Count == 0)
@@ -103,7 +103,7 @@ public class TutorialGameOver : MonoBehaviour
 
         if (other.CompareTag("Enemy1"))
         {
-            EnemyController EC1 = other.GetComponent<EnemyController>();
+            TutorialEnemyController EC1 = other.GetComponent<TutorialEnemyController>();
             if (EC1.ONOFF == 1)
             {
                 if (Count == 0)
@@ -129,8 +129,8 @@ public class TutorialGameOver : MonoBehaviour
 
         if (other.CompareTag("Boss"))
         {
-            BoosEnemy BE = other.GetComponent<BoosEnemy>();
-            if (BE.ONOFF == 1)
+            BossEnemyControll BEC = other.GetComponent<BossEnemyControll>();
+            if (BEC.ONOFF == 1)
             {
                 if (PlayerRun.CrouchOn !=true)
                 {

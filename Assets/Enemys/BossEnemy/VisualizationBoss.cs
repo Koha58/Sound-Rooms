@@ -17,11 +17,11 @@ public class VisualizationBoss : MonoBehaviour
     {
        transform.position = Boss.transform.position ;
         GameObject gameObject =GameObject.FindWithTag("Boss"); //Playerオブジェクトを探す
-        BoosEnemy BC = gameObject.GetComponent<BoosEnemy>();
-        BC.PrototypeBodySkinnedMeshRenderer.enabled = true;
-        BC.ONOFF = 1;
+        BossEnemyControll BEC = gameObject.GetComponent<BossEnemyControll>();
+        BEC.PrototypeBodySkinnedMeshRenderer.enabled = true;
+        BEC.ONOFF = 1;
 
-        if (BC.ONOFF == 1)
+        if (BEC.ONOFF == 1)
         {
             this.gameObject.SetActive(true);
 
@@ -44,7 +44,7 @@ public class VisualizationBoss : MonoBehaviour
 
         if (other.CompareTag("Enemy1"))
         {
-            EnemyController EC1 = other.GetComponent<EnemyController>();
+            TutorialEnemyController EC1 = other.GetComponent<TutorialEnemyController>();
             EC1.PrototypeBodySkinnedMeshRenderer.enabled = true;
             EC1.ONOFF = 1;
         }
