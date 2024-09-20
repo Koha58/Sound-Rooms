@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028331, g: 0.2257133, b: 0.3069217, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -7846,7 +7846,6 @@ GameObject:
   - component: {fileID: 338841537}
   - component: {fileID: 338841536}
   - component: {fileID: 338841535}
-  - component: {fileID: 338841534}
   - component: {fileID: 338841539}
   m_Layer: 0
   m_Name: Enemy (2)
@@ -7854,7 +7853,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &338841533
 Transform:
   m_ObjectHideFlags: 0
@@ -7873,35 +7872,6 @@ Transform:
   - {fileID: 648975068}
   m_Father: {fileID: 1332868882}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &338841534
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 338841532}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 03b083c73d8895c42873ca59ae770089, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  PatrolPoints:
-  - {fileID: 244947331}
-  - {fileID: 1041319927}
-  - {fileID: 779364357}
-  - {fileID: 1205037468}
-  ONOFF: 0
-  PrototypeBodySkinnedMeshRenderer: {fileID: 17968592}
-  EnemySearch: {fileID: 8300000, guid: 9f82ad0d3a2cb104e8756814c0348e45, type: 3}
-  EnemyRun: {fileID: 8300000, guid: e6525d5f0bebe9949abd25ac340d7f05, type: 3}
-  EnemyWalk: {fileID: 8300000, guid: 11892326d64bf2543b641e9fb724effd, type: 3}
-  TargetPlayer: {fileID: 135133355}
-  ChaseONOFF: 0
-  DestroyONOFF: 0
-  animator: {fileID: 338841538}
-  Player: {fileID: 1573040124}
-  piano: 0
-  zero: 0
 --- !u!82 &338841535
 AudioSource:
   m_ObjectHideFlags: 0
@@ -8096,8 +8066,6 @@ MonoBehaviour:
   DestroyONOFF: 0
   animator: {fileID: 338841538}
   Player: {fileID: 1573040124}
-  piano: 0
-  zero: 0
 --- !u!1 &342562891
 GameObject:
   m_ObjectHideFlags: 0
@@ -36852,8 +36820,6 @@ MonoBehaviour:
   DestroyONOFF: 0
   animator: {fileID: 1321666693}
   Player: {fileID: 1573040124}
-  piano: 0
-  zero: 0
 --- !u!4 &1325384984 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4156034290451276482, guid: ebbd9c8c6e67d454d9aad0c6d56af841,
@@ -64292,7 +64258,6 @@ GameObject:
   - component: {fileID: 970886979803078381}
   - component: {fileID: 3995285442609536890}
   - component: {fileID: 781167897715054386}
-  - component: {fileID: 6696084456075070857}
   - component: {fileID: 6696084456075070858}
   m_Layer: 0
   m_Name: Enemy (1)
@@ -64300,7 +64265,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &3256068436422389585
 Transform:
   m_ObjectHideFlags: 0
@@ -68933,36 +68898,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &6696084456075070857
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3242426042362220779}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 03b083c73d8895c42873ca59ae770089, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  PatrolPoints:
-  - {fileID: 1959565108}
-  - {fileID: 1903645820}
-  - {fileID: 1490803555}
-  - {fileID: 1992055128}
-  - {fileID: 1734861409}
-  ONOFF: 0
-  PrototypeBodySkinnedMeshRenderer: {fileID: 1744059521922879829}
-  EnemySearch: {fileID: 8300000, guid: 9f82ad0d3a2cb104e8756814c0348e45, type: 3}
-  EnemyRun: {fileID: 8300000, guid: e6525d5f0bebe9949abd25ac340d7f05, type: 3}
-  EnemyWalk: {fileID: 8300000, guid: 11892326d64bf2543b641e9fb724effd, type: 3}
-  TargetPlayer: {fileID: 135133355}
-  ChaseONOFF: 0
-  DestroyONOFF: 0
-  animator: {fileID: 6696084456075070856}
-  Player: {fileID: 1573040124}
-  piano: 0
-  zero: 0
 --- !u!114 &6696084456075070858
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -68991,8 +68926,6 @@ MonoBehaviour:
   DestroyONOFF: 0
   animator: {fileID: 6696084456075070856}
   Player: {fileID: 1573040124}
-  piano: 0
-  zero: 0
 --- !u!1 &6701554405514127352
 GameObject:
   m_ObjectHideFlags: 0

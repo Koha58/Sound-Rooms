@@ -45,12 +45,6 @@ public class TutorialEnemyController : MonoBehaviour
     //プレイヤーが一定の範囲に入った時に返す
     private bool INPlayerONOFF; //(INPlayerON： true/ INPlayerOFF: false)
 
-    //ピアノの部屋に関すること
-    public bool piano;
-    int pianocnt;
-    public bool zero;
-    AudioSetting AS;
-    bool PianoRoom;
     private void MoveEnemy()
     {
         if (ChaseONOFF == false || TouchWallONOFF == false)
@@ -77,8 +71,11 @@ public class TutorialEnemyController : MonoBehaviour
                 if (NextTime >= 5.0f)
                 {
                     NextPatrolPoint();
-                    NextTime = 0;
-                    Front = false;
+                    if (ChaseONOFF == false) 
+                    { 
+                        Front = false;
+                        NextTime = 0;
+                    }
                 }
             }
         }
@@ -111,6 +108,7 @@ public class TutorialEnemyController : MonoBehaviour
             }
             else
             {
+                /*
                 animator.SetBool("Walk", true);
                 animator.SetBool("Run", false);
                 OFFTime += Time.deltaTime;
@@ -126,14 +124,16 @@ public class TutorialEnemyController : MonoBehaviour
 
                     ChaseONOFF = false;
                     OFFTime = 0;
-                }
-
+                }*/
+                ChaseONOFF = false;
             }
         }
         else
         {
-            animator.SetBool("Walk", true);
+            animator.SetBool("Walk", false);
             animator.SetBool("Run", false);
+            ONOFF = 1;
+
             OFFTime += Time.deltaTime;
             if (OFFTime >= 10.0f)
             {
@@ -145,7 +145,9 @@ public class TutorialEnemyController : MonoBehaviour
                     playerParts.gameObject.GetComponent<Renderer>().enabled = false;
                 }
 
-                ChaseONOFF = false;
+                //ChaseONOFF = false;
+                Front = false;
+                NextTime = 0;
                 OFFTime = 0;
             }
         }
@@ -159,20 +161,17 @@ public class TutorialEnemyController : MonoBehaviour
 
     private void Visualization() //自身の可視化のON OFF
     {
-        if (PianoRoom == false)                                 　//ピアノの部屋じゃない
+        if (Front == false)                                  //ポイントにつくまでは見えない状態
         {
-            if (Front == false)                                 　//ポイントにつくまでは見えない状態
-            {
-                animator.SetBool("Walk", true);
-                animator.SetBool("Run", false);
-                PrototypeBodySkinnedMeshRenderer.enabled = false;　//3DモデルのRendererを見えない状態
-                ONOFF = 0;                                         //見えない状態
-            }
-            if (Front == true)                                     //ポイントについたので見える状態
-            {
-                PrototypeBodySkinnedMeshRenderer.enabled = true;　//3DモデルのRendererを見える状態
-                ONOFF = 1;                                        //見える状態
-            }
+            animator.SetBool("Walk", true);
+            animator.SetBool("Run", false);
+            PrototypeBodySkinnedMeshRenderer.enabled = false; //3DモデルのRendererを見えない状態
+            ONOFF = 0;                                         //見えない状態
+        }
+        if (Front == true)                                     //ポイントについたので見える状態
+        {
+            PrototypeBodySkinnedMeshRenderer.enabled = true; //3DモデルのRendererを見える状態
+            ONOFF = 1;                                        //見える状態
         }
     }
 
@@ -285,30 +284,6 @@ public class TutorialEnemyController : MonoBehaviour
             else if (isBack){DestroyONOFF = true;} //プレイヤーが後方にいたら倒せるようになる
 
         }
-
-        //ピアノ部屋挙動
-        if (piano)
-        {
-            GameObject Setting = GameObject.Find("EventSystem");
-            AS = Setting.GetComponent<AudioSetting>();
-            if (AS.BGMSlider.value == -80)
-            {
-                zero = true;
-                piano = false;
-            }
-            else
-            {
-                piano = true;
-                zero = false;
-                ONOFF = 1;
-                PrototypeBodySkinnedMeshRenderer.enabled = true;                　　　　　　　　　　　//3DモデルのRendererを見える状態
-            }
-        }
-        else
-        {
-            zero = false;
-            if (pianocnt % 2 != 0 && AS.BGMSlider.value != -80) { piano = true; }
-        }
     }
 
     void Idle() { audioSourse.PlayOneShot(EnemySearch); }
@@ -332,18 +307,6 @@ public class TutorialEnemyController : MonoBehaviour
             NextPatrolPoint();
             NextTime = 0;
         }
-
-        if (other.CompareTag("PianoRoom"))
-        {
-            PianoRoom = true;
-            pianocnt++;
-            if (!zero)
-            {
-                piano = true;
-                if (pianocnt % 2 == 0) {piano = false;}
-            }
-        }
-        else {PianoRoom = false;}
 
         if (other.CompareTag("Player"))
         {
