@@ -126,7 +126,6 @@ public class Enemycontroller : MonoBehaviour
             {
                 ONOFF = 0;
                 PrototypeBodySkinnedMeshRenderer.enabled = false;　//3DモデルのRendererを見えない状態                                    
-
             }
             if (Front == true)                                     //ポイントについたので見える状態
             {
@@ -247,14 +246,14 @@ public class Enemycontroller : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
-        animator = GetComponent<Animator>();      　　　　//アニメーターコントローラーからアニメーションを取得する
-        audioSourse = GetComponent<AudioSource>();
         ONOFF = 0;                                　　　　//見えない状態
         VisualizationRandom = Random.Range(5.0f, 10.0f);
         PrototypeBodySkinnedMeshRenderer.enabled = false; //3DモデルのRendererを見えない状態
         ChaseONOFF = false;                       　　　　//追跡中じゃない
         TouchWallONOFF = false;
         INPlayerONOFF = false;
+        animator = GetComponent<Animator>();      　　　　//アニメーターコントローラーからアニメーションを取得する
+        audioSourse = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame

@@ -287,9 +287,9 @@ public class BoosEnemy : MonoBehaviour
             if (detectionPlayer <= 7f) { DestroyONOFF = true; }
         }
     }
-    void Idle() { audioSourse.PlayOneShot(BossIdle); }
+    //void Idle() { audioSourse.PlayOneShot(BossIdle); }
 
-    void Move() { audioSourse.PlayOneShot(BossMove); }
+    //void Move() { audioSourse.PlayOneShot(BossMove); }
 
     private void OnTriggerStay(Collider other)
     {

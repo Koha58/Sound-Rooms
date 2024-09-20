@@ -36,7 +36,7 @@ public class BossEnemyControll : MonoBehaviour
     private float NextTime;　　//そのポイントの待機時間
     private bool Front;        //ポイントについたかどうか
 
-    public GameObject VisualizationBoss;   //ボスの可視化の音(球体)
+    [SerializeField] GameObject VisualizationBoss;   //ボスの可視化の音(球体)
     public SphereCollider SphereCollider; //可視化時の音を小さくする
 
     private void Chase()//プレイヤーを追いかける
@@ -156,7 +156,6 @@ public class BossEnemyControll : MonoBehaviour
     {
         Visualization();
         MoveBossEnemy();
-        Chase();
 
         if (EnemyAttack.SoundON == true)
         {
@@ -178,6 +177,7 @@ public class BossEnemyControll : MonoBehaviour
 
         if (isFront) //ターゲットが自身の前方にあるなら
         {
+            Chase();
             DestroyONOFF = false;
             float ChasePlayer = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
             if (ONOFF == 0|| ChasePlayer > 5) { ChaseONOFF = false; }

@@ -44,7 +44,7 @@ public class VB : MonoBehaviour
 
         if (other.CompareTag("Enemy1"))
         {
-            EnemyController EC1 = other.GetComponent<EnemyController>();
+            TutorialEnemyController EC1 = other.GetComponent<TutorialEnemyController>();
             EC1.PrototypeBodySkinnedMeshRenderer.enabled = true;
             EC1.ONOFF = 1;
         }
