@@ -33,6 +33,7 @@ public class Table : MonoBehaviour
             if (PlayerRun.CrouchOn==true)
             {
                 ON = true;
+                Debug.Log(ON);
                 /*
                 GameObject obj = GameObject.Find("Player");                               //Playerオブジェクトを探す
                 PlayerSeen PS = obj.GetComponent<PlayerSeen>();                           //付いているスクリプトを取得

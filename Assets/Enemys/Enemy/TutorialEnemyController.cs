@@ -15,7 +15,6 @@ public class TutorialEnemyController : MonoBehaviour
     //可視化
     public float ONOFF = 0;                               　　　 //(0が見えない；１が見える状態）
     private float OFFTime;                                　　　 //プレイヤーを見失ってから時間を
-    float VisualizationRandom;                             　　　//可視化時間をランダム
     public SkinnedMeshRenderer PrototypeBodySkinnedMeshRenderer; //3DモデルのRenderer
 
     //サウンド
@@ -45,9 +44,13 @@ public class TutorialEnemyController : MonoBehaviour
     //プレイヤーが一定の範囲に入った時に返す
     private bool INPlayerONOFF; //(INPlayerON： true/ INPlayerOFF: false)
 
+    private bool IdleONOFF;
+    private bool SeenAreaONOFF;
+    private float VisualizationTime;
+
     private void MoveEnemy()
     {
-        if (ChaseONOFF == false || TouchWallONOFF == false)
+        if (ChaseONOFF == false && TouchWallONOFF == false)
         {
             if (Front == false)
             {
@@ -58,24 +61,21 @@ public class TutorialEnemyController : MonoBehaviour
 
                 if (this.transform.position == PatrolPoints[CurrentPointIndex].position)  // 次の巡回ポイントへのインデックスを更新
                 {
-                    animator.SetBool("Walk", false);
                     animator.SetBool("Run", false);
+                    animator.SetBool("Walk", false);
                     Front = true;
                 }
             }
             else if (Front == true)
             {
-                animator.SetBool("Walk", false);
                 animator.SetBool("Run", false);
+                animator.SetBool("Walk", false);
                 NextTime += Time.deltaTime;
                 if (NextTime >= 5.0f)
                 {
+                    Front = false;
                     NextPatrolPoint();
-                    if (ChaseONOFF == false) 
-                    { 
-                        Front = false;
-                        NextTime = 0;
-                    }
+                    NextTime = 0;
                 }
             }
         }
@@ -88,13 +88,13 @@ public class TutorialEnemyController : MonoBehaviour
         var childTransforms = PS._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
 
         float ChasePlayer = Vector3.Distance(transform.position, TargetPlayer.position); //プレイヤーと敵の位置の計算
-        if (ChasePlayer <= 6f) //プレイヤーが検知範囲に入ったら
+        if (ChasePlayer <= 5f) //プレイヤーが検知範囲に入ったら
         {
-            if (PS.onoff == 1 && ONOFF == 1&& TouchWallONOFF == false) //プレイヤーが可視化していたら
+            if ((PS.onoff == 1 && ONOFF == 1&& TouchWallONOFF == false)) //プレイヤーが可視化していたら
             {
                 animator.SetBool("Walk", false);
                 animator.SetBool("Run", true);
-                ONOFF = 1; //自分自身を可視化    
+                ONOFF=1; //自分自身を可視化    
                 ChaseONOFF = true; //追跡中   
                 transform.LookAt(TargetPlayer.transform); //プレイヤーの方向にむく
                 transform.position += transform.forward * ChaseSpeed; //プレイヤーの方向に向かう
@@ -106,49 +106,35 @@ public class TutorialEnemyController : MonoBehaviour
                     playerParts.gameObject.GetComponent<Renderer>().enabled = true;
                 }
             }
-            else
+        }
+        else if(ChasePlayer >5&&ChaseONOFF==true)
+        {
+            animator.SetBool("Walk", false);
+            animator.SetBool("Run", false);
+            SeenAreaONOFF = false;
+            ChaseONOFF = true;
+            IdleONOFF = true;
+            ONOFF = 1;
+
+            if (IdleONOFF == true)
             {
-                /*
-                animator.SetBool("Walk", true);
-                animator.SetBool("Run", false);
                 OFFTime += Time.deltaTime;
-                if (OFFTime >= 10.0f)
+                if (OFFTime >= 3.0f)
                 {
                     PS.Visualization = false;
-                    PS.onoff = 0;                                             
+                    PS.onoff = 0;
                     foreach (var playerParts in childTransforms)
                     {
                         //タグが"PlayerParts"である子オブジェクトを見えるようにする
                         playerParts.gameObject.GetComponent<Renderer>().enabled = false;
                     }
-
                     ChaseONOFF = false;
+                    IdleONOFF = false;
+                    ONOFF = 0;
+                    PrototypeBodySkinnedMeshRenderer.enabled = false; //3DモデルのRendererを見えない状態
+                    NextTime = 0;
                     OFFTime = 0;
-                }*/
-                ChaseONOFF = false;
-            }
-        }
-        else
-        {
-            animator.SetBool("Walk", false);
-            animator.SetBool("Run", false);
-            ONOFF = 1;
-
-            OFFTime += Time.deltaTime;
-            if (OFFTime >= 10.0f)
-            {
-                PS.Visualization = false;
-                PS.onoff = 0;
-                foreach (var playerParts in childTransforms)
-                {
-                    //タグが"PlayerParts"である子オブジェクトを見えるようにする
-                    playerParts.gameObject.GetComponent<Renderer>().enabled = false;
                 }
-
-                //ChaseONOFF = false;
-                Front = false;
-                NextTime = 0;
-                OFFTime = 0;
             }
         }
     }
@@ -163,8 +149,6 @@ public class TutorialEnemyController : MonoBehaviour
     {
         if (Front == false)                                  //ポイントにつくまでは見えない状態
         {
-            animator.SetBool("Walk", true);
-            animator.SetBool("Run", false);
             PrototypeBodySkinnedMeshRenderer.enabled = false; //3DモデルのRendererを見えない状態
             ONOFF = 0;                                         //見えない状態
         }
@@ -172,6 +156,21 @@ public class TutorialEnemyController : MonoBehaviour
         {
             PrototypeBodySkinnedMeshRenderer.enabled = true; //3DモデルのRendererを見える状態
             ONOFF = 1;                                        //見える状態
+        }
+
+        if (SeenAreaONOFF==true)
+        {
+            ONOFF = 1;
+            PrototypeBodySkinnedMeshRenderer.enabled = true;//3DモデルのRendererを見える状態
+            if (ChaseONOFF == false)
+            {
+                VisualizationTime += Time.deltaTime;
+                if (VisualizationTime >= 5)
+                {
+                    PrototypeBodySkinnedMeshRenderer.enabled = false; //3DモデルのRendererを見えない状態
+                    ONOFF = 0;                                         //見えない状態
+                }
+            }
         }
     }
 
@@ -224,11 +223,11 @@ public class TutorialEnemyController : MonoBehaviour
         }
     }
 
+
     // Start is called before the first frame update
     private void Start()
     {
         ONOFF = 0;                                　　　　//見えない状態
-        VisualizationRandom = Random.Range(5.0f, 10.0f);　//見える状態をランダムに抽出する
         PrototypeBodySkinnedMeshRenderer.enabled = false; //3DモデルのRendererを見えない状態
         ChaseONOFF = false;                       　　　　//追跡中じゃない
         TouchWallONOFF = false;                           //壁に当たっていない
@@ -240,6 +239,9 @@ public class TutorialEnemyController : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
+        //Debug.Log(Front);
+        //Debug.Log(NextTime);
+        //Debug.Log(ChaseONOFF);
         float Player = Vector3.Distance(transform.position, TargetPlayer.position);   //プレイヤーと敵の位置の計算
         if (Player <= 0.8f)
         {
@@ -259,12 +261,12 @@ public class TutorialEnemyController : MonoBehaviour
 
                 ONOFF = 1;
                 PrototypeBodySkinnedMeshRenderer.enabled = true;　                        //3DモデルのRendererを見える状態
-                ChaseONOFF = true;
+                ChaseONOFF = false;
                 INPlayerONOFF = true;
 
             }
         }
-        else if (Player >= 2f) {INPlayerONOFF = false;}
+        else if (Player >= 0.9f) {INPlayerONOFF = false;}
 
         if (INPlayerONOFF == false)
         {
@@ -281,8 +283,11 @@ public class TutorialEnemyController : MonoBehaviour
                 DestroyONOFF = false;　　　　　　　//前方にいたら倒せない
                 if (ONOFF == 1){ Ray(); }          //自分が見える状態なら線を飛ばす
             }
-            else if (isBack){DestroyONOFF = true;} //プレイヤーが後方にいたら倒せるようになる
-
+            else if (isBack)
+            {
+                DestroyONOFF = true;              //プレイヤーが後方にいたら倒せるようになる
+                ChaseONOFF = false;
+            }
         }
     }
 
@@ -298,6 +303,7 @@ public class TutorialEnemyController : MonoBehaviour
         {
             ONOFF = 1;
             PrototypeBodySkinnedMeshRenderer.enabled = true;//3DモデルのRendererを見える状態
+            SeenAreaONOFF = true;
         }
 
         if (other.CompareTag("Wall"))
@@ -308,6 +314,7 @@ public class TutorialEnemyController : MonoBehaviour
             NextTime = 0;
         }
 
+        /*
         if (other.CompareTag("Player"))
         {
             if (ONOFF == 0)
@@ -324,6 +331,6 @@ public class TutorialEnemyController : MonoBehaviour
                     playerParts.gameObject.GetComponent<Renderer>().enabled = false;
                 }
             }
-        }
+        }*/
     }
 }

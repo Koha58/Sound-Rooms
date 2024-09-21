@@ -48,7 +48,7 @@ public class GameOverScript : MonoBehaviour
         if (Count == 1)
         {
             Timer += Time.deltaTime;
-            if (Timer >=3)
+            if (Timer >=5)
             {
                 Timer = 0;
                 Count = 0;
@@ -180,19 +180,4 @@ public class GameOverScript : MonoBehaviour
         }
 
     }
-    private void OnTriggerStay(Collider other)
-    {
-        if (other.CompareTag("BossV"))
-        {
-            /*
-            if (Count == 0)
-            {
-                if (Table.ON == false)
-                {
-                    LifeCount--;
-                    Count = 1;
-                }
-            }*/
-        }
-    }  
 }
