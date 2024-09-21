@@ -24,6 +24,8 @@ public class TutorialMessageControll : MonoBehaviour
 
     bool deviceCheck;
 
+    TutorialEnemyController TEC;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -185,9 +187,19 @@ public class TutorialMessageControll : MonoBehaviour
                 timeCnt = 0f;
             }
         }
-        if (Message == 36)
+        if (Message == 35)
         {
             GameObject.Find("Enemys").transform.Find("EnemyG").gameObject.SetActive(true);
+            GameObject EnemyG = GameObject.Find("EnemyG");
+            TEC = EnemyG.GetComponent<TutorialEnemyController>();
+            if(TEC.ONOFF == 0)
+            {
+                timeCnt = 0f;
+            }
+            else
+            {
+                timeCnt = 7.0f;
+            }
         }
         if (Message == 39)
         {
