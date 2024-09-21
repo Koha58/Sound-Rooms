@@ -29,9 +29,8 @@ public class EnemyAttack : MonoBehaviour
 
     bool DB2 = false;
 
+    float Count;
     public static bool SoundON;
-
-    public static bool SoundOFF;
 
 
     //[SerializeField]
@@ -72,45 +71,51 @@ public class EnemyAttack : MonoBehaviour
         if (DB == true)
         {
             DC += Time.deltaTime;
-           
-            if (DC >= 10.0f)
+
+            if (DC >= 9.0f)
             {
                 SoundON = true;
-                SoundOFF = false;
-                GameObject Boss = GameObject.FindWithTag("Boss");
-                BossEnemyControll BEC = Boss.GetComponent<BossEnemyControll>();
-
-                BEC.MoveSpeed -= 0.1f;
-                BEC.ChaseSpeed -= 0.01f;
-                BEC.ONOFF = 1;
             }
-            if (DC >= 11.0f)
+            if (DC >= 10.0f)
             {
-                SoundOFF = false;
+                Count=1;
+                if (Count == 1)
+                {
+                    GameObject Boss = GameObject.FindWithTag("Boss");
+                    BossEnemyControll BEC = Boss.GetComponent<BossEnemyControll>();
+
+                    BEC.MoveSpeed -= 0.1f;
+                    BEC.ChaseSpeed -= 0.01f;
+                    BEC.ONOFF = 1;
+                    Count = 2;
+                }
+            }
+            if (DC >= 14.0f)
+            {
                 DC = 0;
                 DB = false;
                 SoundON = false;
+                Count = 0;
             }
         }
         
         if (DB2 == true)
         {
             DC += Time.deltaTime;
-           
+            if (DC >= 9.8f)
+            {
+                SoundON = true;
+            }
             if (DC >= 10.0f)
             {
-               
                 SoundON = true;
                 GameObject Boss1 = GameObject.FindWithTag("Boss1");
                 BossTutoriaru BS1 = Boss1.GetComponent<BossTutoriaru>();
 
-                BS1.MoveSpeed -= 0.1f;
-                BS1.ChaseSpeed -= 0.01f;
                 BS1.ONOFF = 1;
             }
-            if (DC >= 11.0f)
+            if (DC >= 14.0f)
             {
-                SoundOFF = false;
                 SoundON = false;
                 DC = 0;
                 DB2 = false;

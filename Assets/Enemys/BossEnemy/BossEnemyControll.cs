@@ -163,13 +163,14 @@ public class BossEnemyControll : MonoBehaviour
             animator.SetBool("Idle", true);
             animator.SetBool("Move", false);
         }
+        /*
         if (EnemyAttack.SoundOFF == true)
         {
             ONOFF = 1;
             animator.SetBool("Idle", true);
             animator.SetBool("Move", false);
             Idle();
-        }
+        }*/
 
         Vector3 Position = TargetPlayer.position - transform.position; // ターゲットの位置と自身の位置の差を計算
         bool isFront = Vector3.Dot(Position, transform.forward) > 0;  // ターゲットが自身の前方にあるかどうか判定

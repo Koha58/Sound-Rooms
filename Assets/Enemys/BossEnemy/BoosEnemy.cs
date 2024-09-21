@@ -210,13 +210,14 @@ public class BoosEnemy : MonoBehaviour
             animator.SetBool("Idle", true);
             animator.SetBool("Move", false);
         }
+        /*
         if (EnemyAttack.SoundOFF == true)
         {
             ONOFF = 1;
             animator.SetBool("Idle", true);
             animator.SetBool("Move", false);
             audioSourse.PlayOneShot(BossIdle); 
-        }
+        }*/
 
         Visualization();
 
