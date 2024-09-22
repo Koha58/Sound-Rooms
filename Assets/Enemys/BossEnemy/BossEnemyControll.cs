@@ -13,6 +13,7 @@ public class BossEnemyControll : MonoBehaviour
     //可視化
     public float ONOFF = 0; //(0が見えない；１が見える状態）
     private float OFFTime;  //(見えない状態になるまでの時間)
+    private float ONTime;
     public SkinnedMeshRenderer PrototypeBodySkinnedMeshRenderer; //3DモデルのRendererのONOFF
 
     //サウンド
@@ -33,43 +34,14 @@ public class BossEnemyControll : MonoBehaviour
     //アニメーション
     [SerializeField] Animator animator;
 
+    //Wallに当たった時
+    private bool TouchWall;
+
     private float NextTime;　　//そのポイントの待機時間
     private bool Front;        //ポイントについたかどうか
 
     [SerializeField] GameObject VisualizationBoss;   //ボスの可視化の音(球体)
     public SphereCollider SphereCollider; //可視化時の音を小さくする
-
-    private void Chase()//プレイヤーを追いかける
-    {
-        GameObject gobj = GameObject.Find("Player");     //Playerオブジェクトを探す
-        PlayerSeen PS = gobj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
-        var childTransforms = PS._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
-
-        float ChasePlayer = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
-        if (ChaseONOFF == true)                     //プレイヤーが検知範囲に入ったら
-        {
-            animator.SetBool("Idle", false);
-            animator.SetBool("Move", true);
-            ChaseONOFF = true;                                    //追跡中
-            transform.LookAt(TargetPlayer.transform);             //プレイヤーの方向にむく
-            transform.position += transform.forward * ChaseSpeed; //プレイヤーの方向に向かう
-
-            Transform myTransform = this.transform;
-            Vector3 localAngle = myTransform.localEulerAngles;
-
-            localAngle.x = 0f;
-            localAngle.z = 0f;
-            localAngle.y = 0f;
-            myTransform.localEulerAngles = localAngle;
-        }
-        else { ChaseONOFF = false; }//追跡中じゃない
-    }
-
-    private void NextPatrolPoint() //次のポイント
-    {
-        CurrentPointIndex++;
-        if (CurrentPointIndex >= PatrolPoints.Length){CurrentPointIndex = 0;}//巡回ポイントが最後まで行ったら最初に戻る
-    }
 
     private void MoveBossEnemy()
     {
@@ -82,60 +54,114 @@ public class BossEnemyControll : MonoBehaviour
 
                 if (transform.position == PatrolPoints[CurrentPointIndex].position)// 次の巡回ポイントへのインデックスを更新
                 {
+                    if (ONOFF == 0)
+                    {
+                        animator.SetBool("Idle", false);
+                        animator.SetBool("Move", true);
+                    }
+                    else
+                    {
+                        animator.SetBool("Idle", true);
+                        animator.SetBool("Move", false);
+                    }
                     Front = true;
                 }
             }
             else
             {
+                if (ONOFF == 0)
+                {
+                    animator.SetBool("Idle", false);
+                    animator.SetBool("Move", true);
+                }
+                else
+                {
+                    animator.SetBool("Idle", true);
+                    animator.SetBool("Move", false);
+                }
                 NextTime += Time.deltaTime;
                 if (NextTime >= 5.0f)
                 {
                     NextPatrolPoint();
                     NextTime = 0;
                     Front = false;
+                    TouchWall = false;
                 }
             }
-
         }
+    }
+
+    private void Chase()//プレイヤーを追いかける
+    {
+        GameObject gobj = GameObject.Find("Player");        //Playerオブジェクトを探す
+        PlayerSeen PS = gobj.GetComponent<PlayerSeen>();    //付いているスクリプトを取得
+        var childTransforms = PS._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
+
+        float ChasePlayer = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
+        if (TouchWall == false)
+        {
+            if (ChaseONOFF == true)//プレイヤーが検知範囲に入ったら
+            {
+                animator.SetBool("Idle", false);
+                animator.SetBool("Move", true);
+
+                ChaseONOFF = true;                                    //追跡中
+                transform.LookAt(TargetPlayer.transform);             //プレイヤーの方向にむく
+                transform.position += transform.forward * ChaseSpeed; //プレイヤーの方向に向かう
+
+                Transform myTransform = this.transform;
+                Vector3 localAngle = myTransform.localEulerAngles;
+
+                localAngle.x = 0f;
+                localAngle.z = 0f;
+                localAngle.y = 0f;
+                myTransform.localEulerAngles = localAngle;
+            }
+            else { ChaseONOFF = false; }//追跡中じゃない
+        }
+    }
+
+    private void NextPatrolPoint() //次のポイント
+    {
+        CurrentPointIndex++;
+        if (CurrentPointIndex >= PatrolPoints.Length){CurrentPointIndex = 0;}//巡回ポイントが最後まで行ったら最初に戻る
     }
 
     private void Visualization()//自身の可視化のON OFF
     {
         if (ONOFF == 0)//見えないとき
         {
-            animator.SetBool("Idle", false);
-            animator.SetBool("Move", true);
-            VisualizationBoss.SetActive(false);              //可視化の音(円)を見えない状態
-            PrototypeBodySkinnedMeshRenderer.enabled = false;//3DモデルのRendererを見えない状態
-            audioSourse.maxDistance = 5;                     //音が聞こえる範囲
+            VisualizationBoss.SetActive(false);               //可視化の音(円)を見えない状態
+            PrototypeBodySkinnedMeshRenderer.enabled = false; //3DモデルのRendererを見えない状態
+            audioSourse.maxDistance = 5;                      //音が聞こえる範囲
         }
         else if (ONOFF == 1)//見えているとき
         {
-            animator.SetBool("Idle", true);
-            animator.SetBool("Move", false);
             GameObject gobj = GameObject.Find("Player");     //Playerオブジェクトを探す
             PlayerSeen PS = gobj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
             var childTransforms = PS._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
-  
-            VisualizationBoss.SetActive(true);               　//可視化の音(円)を見える状態
-            PrototypeBodySkinnedMeshRenderer.enabled = true; 　//3DモデルのRendererを見える状態
-            audioSourse.maxDistance = 300;                  　//音が聞こえる範囲
 
-            OFFTime += Time.deltaTime;
-            if (OFFTime >= 7.0f)
+            animator.SetBool("Idle", true);
+            animator.SetBool("Move", false);
+            VisualizationBoss.SetActive(true);              //可視化の音(円)を見える状態
+            PrototypeBodySkinnedMeshRenderer.enabled = true;//3DモデルのRendererを見える状態
+            audioSourse.maxDistance = 300;                 //音が聞こえる範囲
+
+            ONTime += Time.deltaTime;
+            if (ONTime >= 15.0f)
             {
-                VisualizationBoss.SetActive(false);               //可視化の音(円)を見えない状態
-                PrototypeBodySkinnedMeshRenderer.enabled = false; //3DモデルのRendererを見える状態
-                ONOFF = 0;                                        //見えない状態
-                PS.Visualization = false;                         //Playerリング制限
-                PS.onoff = 0;                                     //Player見えない状態
+                PS.Visualization = false;
+                PS.onoff = 0;
                 foreach (var playerParts in childTransforms)
                 {
                     //タグが"PlayerParts"である子オブジェクトを見えなくする
                     playerParts.gameObject.GetComponent<Renderer>().enabled = false;
                 }
-                Front = false;                                    //次のポイント
-                OFFTime = 0;
+
+                ONTime = 0;
+                ONOFF = 0;                                       //見えない
+                VisualizationBoss.SetActive(false);              //可視化の音(円)を見えない状態
+                PrototypeBodySkinnedMeshRenderer.enabled = false;//3DモデルのRendererを見える状態
             }
         }
     }
@@ -155,22 +181,19 @@ public class BossEnemyControll : MonoBehaviour
     private void Update()
     {
         Visualization();
-        MoveBossEnemy();
 
         if (EnemyAttack.SoundON == true)
         {
             Front = true;
             animator.SetBool("Idle", true);
             animator.SetBool("Move", false);
-        }
-        /*
-        if (EnemyAttack.SoundOFF == true)
-        {
-            ONOFF = 1;
-            animator.SetBool("Idle", true);
-            animator.SetBool("Move", false);
+            VisualizationBoss.SetActive(true);
             Idle();
-        }*/
+        }
+        else if (EnemyAttack.SoundON == false)
+        {
+            MoveBossEnemy();
+        }
 
         Vector3 Position = TargetPlayer.position - transform.position; // ターゲットの位置と自身の位置の差を計算
         bool isFront = Vector3.Dot(Position, transform.forward) > 0;  // ターゲットが自身の前方にあるかどうか判定
@@ -179,17 +202,12 @@ public class BossEnemyControll : MonoBehaviour
         if (isFront) //ターゲットが自身の前方にあるなら
         {
             Chase();
-            DestroyONOFF = false;
             float ChasePlayer = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
-            if (ONOFF == 0|| ChasePlayer > 5) { ChaseONOFF = false; }
-            else if (ONOFF == 1 && ChasePlayer <= 5) { ChaseONOFF = true; }
-           
+            if (ONOFF == 0) { ChaseONOFF = false; }
+            if (ONOFF == 1 && ChasePlayer <= 5) { ChaseONOFF = true; }
+            DestroyONOFF = false;
         }
-        else if (isBack)// ターゲットが自身の後方にあるなら
-        {
-            float detectionPlayer = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
-            if (detectionPlayer <= 7f) { DestroyONOFF = true; }//プレイヤーが検知範囲に入ったら倒せる
-        }
+        else if (isBack) { DestroyONOFF = true; }
     }
     void Idle() { audioSourse.PlayOneShot(BossIdle); }
 

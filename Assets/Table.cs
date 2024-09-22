@@ -19,7 +19,7 @@ public class Table : MonoBehaviour
         if( ON==true )
         {
             Timer += Time.deltaTime;
-            if(Timer>1.0f)
+            if(Timer>20.0f)
             {
                 ON = false;
                 Timer = 0;
@@ -33,24 +33,11 @@ public class Table : MonoBehaviour
             if (PlayerRun.CrouchOn==true)
             {
                 ON = true;
-                Debug.Log(ON);
-                /*
-                GameObject obj = GameObject.Find("Player");                               //Playerオブジェクトを探す
-                PlayerSeen PS = obj.GetComponent<PlayerSeen>();                           //付いているスクリプトを取得
-                var childTransforms = PS._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
-
-                PS.Visualization = false;
-                PS.onoff = 0;                                                             //見えているから1
-                foreach (var playerParts in childTransforms)
-                {
-                    //タグが"PlayerParts"である子オブジェクトを見えるようにする
-                    playerParts.gameObject.GetComponent<Renderer>().enabled = false;
-                }*/
             }
         }
     }
     
-    
+    /*
     private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -76,5 +63,5 @@ public class Table : MonoBehaviour
                 ON = false;
             }
         }
-    }
+    }*/
 }

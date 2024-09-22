@@ -146,10 +146,10 @@ public class BossTutoriaru : MonoBehaviour
             animator.SetBool("Move", false);
             VisualizationBoss.SetActive(true);              //‰ÂŽ‹‰»‚Ì‰¹(‰~)‚ðŒ©‚¦‚éó‘Ô
             PrototypeBodySkinnedMeshRenderer.enabled = true;//3Dƒ‚ƒfƒ‹‚ÌRenderer‚ðŒ©‚¦‚éó‘Ô
-            audioSourse.maxDistance = 300;@                //‰¹‚ª•·‚±‚¦‚é”ÍˆÍ
+            audioSourse.maxDistance = 300;                 //‰¹‚ª•·‚±‚¦‚é”ÍˆÍ
 
             ONTime += Time.deltaTime;
-            if (ONTime >= 5.0f)
+            if (ONTime >= 15.0f)
             {
                 PS.Visualization = false;
                 PS.onoff = 0;
@@ -189,6 +189,7 @@ public class BossTutoriaru : MonoBehaviour
             animator.SetBool("Idle", true);
             animator.SetBool("Move", false);
             VisualizationBoss.SetActive(true);
+            Idle();
         }
         else if (EnemyAttack.SoundON == false)
         {

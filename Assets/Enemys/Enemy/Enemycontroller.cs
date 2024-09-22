@@ -28,9 +28,8 @@ public class Enemycontroller : MonoBehaviour
     public Transform TargetPlayer;　　　　　　　　　　 //プレイヤーの位置を取得
 
     //Playerを追跡
-    float ChaseSpeed = 0.1f;                           //Playerを追いかける速度
+    float ChaseSpeed = 0.2f;                           //Playerを追いかける速度
     [SerializeField] bool ChaseONOFF;                  //(ChaseON： true/ChaseOFF: false)
-    [SerializeField] bool Search;                  
 
 
     //Destroyの判定
@@ -54,61 +53,99 @@ public class Enemycontroller : MonoBehaviour
     AudioSetting AS;
     bool PianoRoom;
 
-    private void Chase()//プレイヤーを追いかける
+    private bool IdleONOFF;
+    private bool SeenAreaONOFF;
+    private float VisualizationTime;
+
+    private void MoveEnemy()
     {
-        GameObject obj = GameObject.Find("Player");                                                                               //Playerオブジェクトを探す
-        PlayerSeen PS = obj.GetComponent<PlayerSeen>();                                                                           //付いているスクリプトを取得
-        var childTransforms = PS._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
-
-        float ChasePlayer = Vector3.Distance(transform.position, TargetPlayer.position);                                          //プレイヤーと敵の位置の計算
-
-        if (ChasePlayer <= 5f)                                                                                                    //プレイヤーが検知範囲に入ったら
+        if (ChaseONOFF == false && TouchWallONOFF == false)
         {
-            if (PS.onoff == 1 && ONOFF == 1)                                                                                                    //プレイヤーが可視化していたら
+            if (Front == false)
             {
-                if (TouchWallONOFF ==false)
+                animator.SetBool("Walk", true);
+                animator.SetBool("Run", false);
+                transform.position = Vector3.MoveTowards(transform.position, PatrolPoints[CurrentPointIndex].position, MoveSpeed * Time.deltaTime);
+                transform.LookAt(PatrolPoints[CurrentPointIndex].transform);              //次のポイントの方向を向く
+
+                if (this.transform.position == PatrolPoints[CurrentPointIndex].position)  // 次の巡回ポイントへのインデックスを更新
                 {
+                    animator.SetBool("Run", false);
                     animator.SetBool("Walk", false);
-                    animator.SetBool("Run", true);
-                    ChaseONOFF = true;
-                    ONOFF = 1;                                                                                                        //自分自身を可視化    
-                    PS.Visualization = true;
-                    PS.onoff = 1;  //見えているから1
-                    foreach (var playerParts in childTransforms)
-                    {
-                        //タグが"PlayerParts"である子オブジェクトを見えるようにする
-                        playerParts.gameObject.GetComponent<Renderer>().enabled = true;
-                    }
-                    transform.LookAt(TargetPlayer.transform);                                                                                 //追跡中                                                                      //プレイヤーの方向にむく
-                    transform.position += transform.forward * ChaseSpeed;                                                             //プレイヤーの方向に向かう
+                    Front = true;
                 }
             }
-            else
+            else if (Front == true)
             {
                 animator.SetBool("Run", false);
+                animator.SetBool("Walk", false);
+                NextTime += Time.deltaTime;
+                if (NextTime >= 5.0f)
+                {
+                    Front = false;
+                    NextPatrolPoint();
+                    NextTime = 0;
+                }
+            }
+        }
+    }
+
+    private void Chase()//プレイヤーを追いかける
+    {
+        GameObject obj = GameObject.Find("Player");      //Playerオブジェクトを探す
+        PlayerSeen PS = obj.GetComponent<PlayerSeen>();  //付いているスクリプトを取得
+        var childTransforms = PS._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
+
+        float ChasePlayer = Vector3.Distance(transform.position, TargetPlayer.position); //プレイヤーと敵の位置の計算
+        if (ChasePlayer <= 5f) //プレイヤーが検知範囲に入ったら
+        {
+            if ((PS.onoff == 1 && ONOFF == 1 && TouchWallONOFF == false)) //プレイヤーが可視化していたら
+            {
+                animator.SetBool("Walk", false);
+                animator.SetBool("Run", true);
+                ONOFF = 1; //自分自身を可視化       
+                ChaseONOFF = true; //追跡中
+                transform.LookAt(TargetPlayer.transform); //プレイヤーの方向にむく
+                transform.position += transform.forward * ChaseSpeed; //プレイヤーの方向に向かう
+                PS.Visualization = true;
+                PS.onoff = 1;  //見えているから1
+                foreach (var playerParts in childTransforms)
+                {
+                    //タグが"PlayerParts"である子オブジェクトを見えるようにする
+                    playerParts.gameObject.GetComponent<Renderer>().enabled = true;
+                }
+            }
+        }
+        else if (ChasePlayer > 5 && ChaseONOFF == true)
+        {
+            PS.Visualization = false;
+            PS.onoff = 0;
+            foreach (var playerParts in childTransforms)
+            {
+                //タグが"PlayerParts"である子オブジェクトを見えるようにする
+                playerParts.gameObject.GetComponent<Renderer>().enabled = false;
+            }
+            animator.SetBool("Walk", false);
+            animator.SetBool("Run", false);
+            SeenAreaONOFF = false;
+            ChaseONOFF = true;
+            IdleONOFF = true;
+            ONOFF = 1;
+
+            if (IdleONOFF == true)
+            {
                 OFFTime += Time.deltaTime;
-                if (OFFTime >= 10.0f)
+                if (OFFTime >= 3.0f)
                 {
                     ChaseONOFF = false;
-                    Search = true;
+                    IdleONOFF = false;
+                    ONOFF = 0;
+                    PrototypeBodySkinnedMeshRenderer.enabled = false; //3DモデルのRendererを見えない状態
+                    NextTime = 0;
                     OFFTime = 0;
                 }
-
             }
         }
-        else if (ChasePlayer > 6f)
-        {
-            animator.SetBool("Run", false);
-            OFFTime += Time.deltaTime;
-            if (OFFTime >= 10.0f)
-            {
-                ChaseONOFF = false;
-                Search = true;
-                OFFTime = 0;
-            }
-
-        }
-
     }
 
     private void NextPatrolPoint()  　　　　　　　　　　//ポイントの更新                 
@@ -134,6 +171,61 @@ public class Enemycontroller : MonoBehaviour
             }
         }
 
+        if (SeenAreaONOFF == true)
+        {
+            GameObject obj = GameObject.Find("Player");                                                                                 //Playerオブジェクトを探す
+            PlayerSeen PS = obj.GetComponent<PlayerSeen>();                                                                             //付いているスクリプトを取得
+            var childTransforms = PS._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
+
+            ONOFF = 1;
+            PrototypeBodySkinnedMeshRenderer.enabled = true;//3DモデルのRendererを見える状態
+            Front = true;
+            if (ChaseONOFF == false)
+            {
+                VisualizationTime += Time.deltaTime;
+                if (VisualizationTime >= 5.0f)
+                {
+                    VisualizationTime = 0;
+                    PrototypeBodySkinnedMeshRenderer.enabled = false; //3DモデルのRendererを見えない状態
+                    ONOFF = 0;                                         //見えない状態
+                }
+            }
+            else
+            {
+                float ChasePlayer = Vector3.Distance(transform.position, TargetPlayer.position); //プレイヤーと敵の位置の計算
+                if (ChasePlayer > 5 && ChaseONOFF == true)
+                {
+                    PS.Visualization = false;
+                    PS.onoff = 0;
+                    foreach (var playerParts in childTransforms)
+                    {
+                        //タグが"PlayerParts"である子オブジェクトを見えるようにする
+                        playerParts.gameObject.GetComponent<Renderer>().enabled = false;
+                    }
+                    animator.SetBool("Walk", false);
+                    animator.SetBool("Run", false);
+                    SeenAreaONOFF = false;
+                    ChaseONOFF = true;
+                    IdleONOFF = true;
+                    ONOFF = 1;
+
+                    if (IdleONOFF == true)
+                    {
+                        ONOFF = 1;
+                        OFFTime += Time.deltaTime;
+                        if (OFFTime >= 3.0f)
+                        {
+                            ChaseONOFF = false;
+                            IdleONOFF = false;
+                            ONOFF = 0;
+                            PrototypeBodySkinnedMeshRenderer.enabled = false; //3DモデルのRendererを見えない状態
+                            NextTime = 0;
+                            OFFTime = 0;
+                        }
+                    }
+                }
+            }
+        }
     }
 
     private void Ray()
@@ -288,43 +380,15 @@ public class Enemycontroller : MonoBehaviour
         {
            
             Visualization();
-
-            if (ChaseONOFF == false && TouchWallONOFF == false)
-            {
-                if (Front == false)
-                {
-                    animator.SetBool("Walk", true);
-                    transform.position = Vector3.MoveTowards(transform.position, PatrolPoints[CurrentPointIndex].position, MoveSpeed * Time.deltaTime);
-                    transform.LookAt(PatrolPoints[CurrentPointIndex].transform);              //次のポイントの方向を向く
-
-                    if (this.transform.position == PatrolPoints[CurrentPointIndex].position)  // 次の巡回ポイントへのインデックスを更新
-                    {
-                        Front = true;
-                    }
-                }
-                else if (Front == true)
-                {
-                    animator.SetBool("Walk",false);
-                    NextTime += Time.deltaTime;
-                    if (NextTime >= 5.0f)
-                    {
-                        animator.SetBool("Walk", false);
-                        NextPatrolPoint();
-                        NextTime = 0;
-                        Front = false;
-                    }
-                }
-            }
+            MoveEnemy();
 
             Vector3 Position = TargetPlayer.position - transform.position;                          // ターゲットの位置と自身の位置の差を計算
             bool isFront = Vector3.Dot(Position, transform.forward) > 0;                            // ターゲットが自身の前方にあるかどうか判定
             bool isBack = Vector3.Dot(Position, transform.forward) < 0;                             // ターゲットが自身の後方にあるかどうか判定
 
             if (isFront)                                                                            //ターゲットが自身の前方にあるなら
-            {   if (TouchWallONOFF == false)
-                {
-                    Chase();
-                }
+            {
+                Chase();
                 Ray2();
                 if (ONOFF == 0) { ChaseONOFF = false; } else { Ray(); }
                 DestroyONOFF = false;
@@ -335,25 +399,6 @@ public class Enemycontroller : MonoBehaviour
 
                 //プレイヤーが検知範囲に入ったら
                 if (detectionPlayer <= 5f) { DestroyONOFF = true; }
-            }
-        }
-
-        if(Search==true) 
-        {
-            GameObject obj = GameObject.Find("Player");                               //Playerオブジェクトを探す
-            PlayerSeen PS = obj.GetComponent<PlayerSeen>();                           //付いているスクリプトを取得
-            var childTransforms = PS._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
-            OFFTime += Time.deltaTime;
-            if(OFFTime >=5.0f) 
-            {
-                Search = false;
-                PS.Visualization = false;
-                PS.onoff = 0;                                                                                                   //見えているから1
-                foreach (var playerParts in childTransforms)
-                {
-                    //タグが"PlayerParts"である子オブジェクトを見えるようにする
-                    playerParts.gameObject.GetComponent<Renderer>().enabled = false;
-                }
             }
         }
 
@@ -397,6 +442,7 @@ public class Enemycontroller : MonoBehaviour
         {
             ONOFF = 1;
             PrototypeBodySkinnedMeshRenderer.enabled = true;//3DモデルのRendererを見える状態
+            SeenAreaONOFF = true;
         }
 
         if (other.CompareTag("Wall"))
