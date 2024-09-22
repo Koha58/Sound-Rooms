@@ -27,7 +27,7 @@ public class TutorialEnemyController : MonoBehaviour
     public Transform TargetPlayer; //プレイヤーの位置を取得
 
     //Playerを追跡
-    float ChaseSpeed = 0.09f;         //Playerを追いかける速度
+    float ChaseSpeed = 0.083f;         //Playerを追いかける速度
     [SerializeField] bool ChaseONOFF; //(ChaseON： true/ChaseOFF: false)
 
     //Destroyの判定
@@ -94,8 +94,8 @@ public class TutorialEnemyController : MonoBehaviour
             {
                 animator.SetBool("Walk", false);
                 animator.SetBool("Run", true);
-                ONOFF=1; //自分自身を可視化    
-                ChaseONOFF = true; //追跡中   
+                ONOFF=1; //自分自身を可視化       
+                ChaseONOFF = true; //追跡中
                 transform.LookAt(TargetPlayer.transform); //プレイヤーの方向にむく
                 transform.position += transform.forward * ChaseSpeed; //プレイヤーの方向に向かう
                 PS.Visualization = true;
@@ -109,6 +109,13 @@ public class TutorialEnemyController : MonoBehaviour
         }
         else if(ChasePlayer >5&&ChaseONOFF==true)
         {
+            PS.Visualization = false;
+            PS.onoff = 0;
+            foreach (var playerParts in childTransforms)
+            {
+                //タグが"PlayerParts"である子オブジェクトを見えるようにする
+                playerParts.gameObject.GetComponent<Renderer>().enabled = false;
+            }
             animator.SetBool("Walk", false);
             animator.SetBool("Run", false);
             SeenAreaONOFF = false;
@@ -121,13 +128,6 @@ public class TutorialEnemyController : MonoBehaviour
                 OFFTime += Time.deltaTime;
                 if (OFFTime >= 3.0f)
                 {
-                    PS.Visualization = false;
-                    PS.onoff = 0;
-                    foreach (var playerParts in childTransforms)
-                    {
-                        //タグが"PlayerParts"である子オブジェクトを見えるようにする
-                        playerParts.gameObject.GetComponent<Renderer>().enabled = false;
-                    }
                     ChaseONOFF = false;
                     IdleONOFF = false;
                     ONOFF = 0;
@@ -147,6 +147,7 @@ public class TutorialEnemyController : MonoBehaviour
 
     private void Visualization() //自身の可視化のON OFF
     {
+
         if (Front == false)                                  //ポイントにつくまでは見えない状態
         {
             PrototypeBodySkinnedMeshRenderer.enabled = false; //3DモデルのRendererを見えない状態
@@ -160,15 +161,56 @@ public class TutorialEnemyController : MonoBehaviour
 
         if (SeenAreaONOFF==true)
         {
+            GameObject obj = GameObject.Find("Player");                                                                                 //Playerオブジェクトを探す
+            PlayerSeen PS = obj.GetComponent<PlayerSeen>();                                                                             //付いているスクリプトを取得
+            var childTransforms = PS._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
+
             ONOFF = 1;
             PrototypeBodySkinnedMeshRenderer.enabled = true;//3DモデルのRendererを見える状態
+            Front = true;
             if (ChaseONOFF == false)
             {
                 VisualizationTime += Time.deltaTime;
-                if (VisualizationTime >= 5)
+                if (VisualizationTime >= 5.0f)
                 {
+                    VisualizationTime = 0;
                     PrototypeBodySkinnedMeshRenderer.enabled = false; //3DモデルのRendererを見えない状態
                     ONOFF = 0;                                         //見えない状態
+                }
+            }
+            else
+            {
+                float ChasePlayer = Vector3.Distance(transform.position, TargetPlayer.position); //プレイヤーと敵の位置の計算
+                if (ChasePlayer > 5 && ChaseONOFF == true)
+                {
+                    PS.Visualization = false;
+                    PS.onoff = 0;
+                    foreach (var playerParts in childTransforms)
+                    {
+                        //タグが"PlayerParts"である子オブジェクトを見えるようにする
+                        playerParts.gameObject.GetComponent<Renderer>().enabled = false;
+                    }
+                    animator.SetBool("Walk", false);
+                    animator.SetBool("Run", false);
+                    SeenAreaONOFF = false;
+                    ChaseONOFF = true;
+                    IdleONOFF = true;
+                    ONOFF = 1;
+
+                    if (IdleONOFF == true)
+                    {
+                        ONOFF = 1;
+                        OFFTime += Time.deltaTime;
+                        if (OFFTime >= 3.0f)
+                        {
+                            ChaseONOFF = false;
+                            IdleONOFF = false;
+                            ONOFF = 0;
+                            PrototypeBodySkinnedMeshRenderer.enabled = false; //3DモデルのRendererを見えない状態
+                            NextTime = 0;
+                            OFFTime = 0;
+                        }
+                    }
                 }
             }
         }

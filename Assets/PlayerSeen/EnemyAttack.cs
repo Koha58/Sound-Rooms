@@ -72,7 +72,7 @@ public class EnemyAttack : MonoBehaviour
         {
             DC += Time.deltaTime;
 
-            if (DC >= 9.0f)
+            if (DC >= 9.5f)
             {
                 SoundON = true;
             }
@@ -83,14 +83,11 @@ public class EnemyAttack : MonoBehaviour
                 {
                     GameObject Boss = GameObject.FindWithTag("Boss");
                     BossEnemyControll BEC = Boss.GetComponent<BossEnemyControll>();
-
-                    BEC.MoveSpeed -= 0.1f;
-                    BEC.ChaseSpeed -= 0.01f;
                     BEC.ONOFF = 1;
                     Count = 2;
                 }
             }
-            if (DC >= 14.0f)
+            if (DC >= 20.0f)
             {
                 DC = 0;
                 DB = false;
@@ -102,23 +99,28 @@ public class EnemyAttack : MonoBehaviour
         if (DB2 == true)
         {
             DC += Time.deltaTime;
-            if (DC >= 9.8f)
+            if (DC >= 9.5f)
             {
                 SoundON = true;
             }
-            if (DC >= 10.0f)
+            if (DC >=10.0f)
             {
-                SoundON = true;
-                GameObject Boss1 = GameObject.FindWithTag("Boss1");
-                BossTutoriaru BS1 = Boss1.GetComponent<BossTutoriaru>();
-
-                BS1.ONOFF = 1;
+                Count = 1;
+                if (Count == 1)
+                {
+                    SoundON = true;
+                    GameObject Boss1 = GameObject.FindWithTag("Boss1");
+                    BossTutoriaru BS1 = Boss1.GetComponent<BossTutoriaru>();
+                    BS1.ONOFF = 1;
+                    Count = 2;
+                }
             }
-            if (DC >= 14.0f)
+            if (DC >= 20.0f)
             {
                 SoundON = false;
                 DC = 0;
                 DB2 = false;
+                Count = 0;
             }
         }
     }

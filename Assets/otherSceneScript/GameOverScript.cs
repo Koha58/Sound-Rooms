@@ -48,7 +48,7 @@ public class GameOverScript : MonoBehaviour
         if (Count == 1)
         {
             Timer += Time.deltaTime;
-            if (Timer >=5)
+            if (Timer >=5.0f)
             {
                 Timer = 0;
                 Count = 0;

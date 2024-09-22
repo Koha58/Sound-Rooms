@@ -51,6 +51,54 @@ public class BoosEnemy : MonoBehaviour
 
     public SphereCollider SphereCollider;
 
+    private void MoveBossEnemy()
+    {
+        if (ChaseONOFF == false)
+        {
+            if (Front == false)
+            {
+                transform.position = Vector3.MoveTowards(transform.position, PatrolPoints[CurrentPointIndex].position, MoveSpeed * Time.deltaTime);
+                transform.LookAt(PatrolPoints[CurrentPointIndex].transform);//次のポイントの方向を向く
+
+                if (transform.position == PatrolPoints[CurrentPointIndex].position)// 次の巡回ポイントへのインデックスを更新
+                {
+                    if (ONOFF == 0)
+                    {
+                        animator.SetBool("Idle", false);
+                        animator.SetBool("Move", true);
+                    }
+                    else
+                    {
+                        animator.SetBool("Idle", true);
+                        animator.SetBool("Move", false);
+                    }
+                    Front = true;
+                }
+            }
+            else
+            {
+                if (ONOFF == 0)
+                {
+                    animator.SetBool("Idle", false);
+                    animator.SetBool("Move", true);
+                }
+                else
+                {
+                    animator.SetBool("Idle", true);
+                    animator.SetBool("Move", false);
+                }
+                NextTime += Time.deltaTime;
+                if (NextTime >= 5.0f)
+                {
+                    NextPatrolPoint();
+                    NextTime = 0;
+                    Front = false;
+                    TouchWall = false;
+                }
+            }
+        }
+    }
+
     private void Chase()//プレイヤーを追いかける
     {
         GameObject gobj = GameObject.Find("Player");//Playerオブジェクトを探す
@@ -89,44 +137,39 @@ public class BoosEnemy : MonoBehaviour
 
     private void Visualization()//自身の可視化のON OFF
     {
-
         if (ONOFF == 0)//見えないとき
         {
-            animator.SetBool("Idle", false);
-            animator.SetBool("Move", true);
-            VisualizationBoss.SetActive(false);
-            //3DモデルのRendererを見えない状態
-            PrototypeBodySkinnedMeshRenderer.enabled = false;
-            audioSourse.maxDistance = 5;
+            VisualizationBoss.SetActive(false);               //可視化の音(円)を見えない状態
+            PrototypeBodySkinnedMeshRenderer.enabled = false; //3DモデルのRendererを見えない状態
+            audioSourse.maxDistance = 5;                      //音が聞こえる範囲
         }
         else if (ONOFF == 1)//見えているとき
         {
-            GameObject gobj = GameObject.Find("Player");//Playerオブジェクトを探す
+            GameObject gobj = GameObject.Find("Player");     //Playerオブジェクトを探す
             PlayerSeen PS = gobj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
             var childTransforms = PS._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
-            //3DモデルのRendererを見える状態
-            VisualizationBoss.SetActive(true);
-            PrototypeBodySkinnedMeshRenderer.enabled = true;
-            audioSourse.maxDistance = 300;
+
             animator.SetBool("Idle", true);
             animator.SetBool("Move", false);
+            VisualizationBoss.SetActive(true);              //可視化の音(円)を見える状態
+            PrototypeBodySkinnedMeshRenderer.enabled = true;//3DモデルのRendererを見える状態
+            audioSourse.maxDistance = 300;　                //音が聞こえる範囲
+
             ONTime += Time.deltaTime;
-            if (ONTime >=10.0f)
+            if (ONTime >= 5.0f)
             {
-                ONTime = 0;
-                VisualizationBoss.SetActive(false);
-                //3DモデルのRendererを見える状態
-                PrototypeBodySkinnedMeshRenderer.enabled = false;
-                ONOFF = 0;//見えない
                 PS.Visualization = false;
-                PS.onoff = 0;  //見えているから1
+                PS.onoff = 0;
                 foreach (var playerParts in childTransforms)
                 {
                     //タグが"PlayerParts"である子オブジェクトを見えなくする
                     playerParts.gameObject.GetComponent<Renderer>().enabled = false;
                 }
-                Front = false;
-                TouchWall = false;
+
+                ONTime = 0;
+                ONOFF = 0;                                       //見えない
+                VisualizationBoss.SetActive(false);              //可視化の音(円)を見えない状態
+                PrototypeBodySkinnedMeshRenderer.enabled = false;//3DモデルのRendererを見える状態
             }
         }
     }
