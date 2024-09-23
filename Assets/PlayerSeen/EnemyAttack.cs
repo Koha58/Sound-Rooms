@@ -87,7 +87,7 @@ public class EnemyAttack : MonoBehaviour
                     Count = 2;
                 }
             }
-            if (DC >= 20.0f)
+            if (DC >= 30.0f)
             {
                 DC = 0;
                 DB = false;
@@ -115,7 +115,7 @@ public class EnemyAttack : MonoBehaviour
                     Count = 2;
                 }
             }
-            if (DC >= 20.0f)
+            if (DC >= 30.0f)
             {
                 SoundON = false;
                 DC = 0;

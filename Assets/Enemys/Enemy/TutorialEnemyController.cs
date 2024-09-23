@@ -27,7 +27,7 @@ public class TutorialEnemyController : MonoBehaviour
     public Transform TargetPlayer; //プレイヤーの位置を取得
 
     //Playerを追跡
-    float ChaseSpeed = 0.083f;         //Playerを追いかける速度
+    float ChaseSpeed = 0.08f;         //Playerを追いかける速度
     [SerializeField] bool ChaseONOFF; //(ChaseON： true/ChaseOFF: false)
 
     //Destroyの判定
@@ -173,9 +173,10 @@ public class TutorialEnemyController : MonoBehaviour
                 VisualizationTime += Time.deltaTime;
                 if (VisualizationTime >= 5.0f)
                 {
-                    VisualizationTime = 0;
                     PrototypeBodySkinnedMeshRenderer.enabled = false; //3DモデルのRendererを見えない状態
                     ONOFF = 0;                                         //見えない状態
+                    VisualizationTime = 0;
+                    SeenAreaONOFF = false;
                 }
             }
             else
@@ -275,7 +276,7 @@ public class TutorialEnemyController : MonoBehaviour
         TouchWallONOFF = false;                           //壁に当たっていない
         INPlayerONOFF = false;                            //プレイヤーが範囲内に入っているか
         animator = GetComponent<Animator>();      　　　　//アニメーターコントローラーからアニメーションを取得する
-        audioSourse = GetComponent<AudioSource>();　 　　//オーディオソースを取得
+        audioSourse = GetComponent<AudioSource>();    //オーディオソースを取得
     }
 
     // Update is called once per frame
@@ -284,6 +285,7 @@ public class TutorialEnemyController : MonoBehaviour
         //Debug.Log(Front);
         //Debug.Log(NextTime);
         //Debug.Log(ChaseONOFF);
+
         float Player = Vector3.Distance(transform.position, TargetPlayer.position);   //プレイヤーと敵の位置の計算
         if (Player <= 0.8f)
         {

@@ -148,7 +148,7 @@ public class BossEnemyControll : MonoBehaviour
             audioSourse.maxDistance = 300;                 //‰¹‚ª•·‚±‚¦‚é”ÍˆÍ
 
             ONTime += Time.deltaTime;
-            if (ONTime >= 15.0f)
+            if (ONTime >= 30.0f)
             {
                 PS.Visualization = false;
                 PS.onoff = 0;
@@ -188,7 +188,7 @@ public class BossEnemyControll : MonoBehaviour
             animator.SetBool("Idle", true);
             animator.SetBool("Move", false);
             VisualizationBoss.SetActive(true);
-            Idle();
+            audioSourse.maxDistance = 300;                 //‰¹‚ª•·‚±‚¦‚é”ÍˆÍ
         }
         else if (EnemyAttack.SoundON == false)
         {

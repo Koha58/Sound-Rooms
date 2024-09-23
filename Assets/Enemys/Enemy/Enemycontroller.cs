@@ -185,9 +185,10 @@ public class Enemycontroller : MonoBehaviour
                 VisualizationTime += Time.deltaTime;
                 if (VisualizationTime >= 5.0f)
                 {
-                    VisualizationTime = 0;
                     PrototypeBodySkinnedMeshRenderer.enabled = false; //3Dƒ‚ƒfƒ‹‚ÌRenderer‚ğŒ©‚¦‚È‚¢ó‘Ô
                     ONOFF = 0;                                         //Œ©‚¦‚È‚¢ó‘Ô
+                    VisualizationTime = 0;
+                    SeenAreaONOFF = false;
                 }
             }
             else

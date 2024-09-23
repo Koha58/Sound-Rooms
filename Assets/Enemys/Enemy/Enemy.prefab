@@ -3178,6 +3178,7 @@ GameObject:
   - component: {fileID: 3995285442800940075}
   - component: {fileID: 781167897900301411}
   - component: {fileID: 3870195675039764077}
+  - component: {fileID: 8187552936399453245}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -3232,7 +3233,7 @@ Rigidbody:
   m_GameObject: {fileID: 3242426042137082810}
   serializedVersion: 4
   m_Mass: 40
-  m_Drag: 0
+  m_Drag: 5
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
@@ -3390,12 +3391,34 @@ MonoBehaviour:
   EnemyWalk: {fileID: 8300000, guid: 11892326d64bf2543b641e9fb724effd, type: 3}
   TargetPlayer: {fileID: 0}
   ChaseONOFF: 0
-  Search: 0
   DestroyONOFF: 0
   animator: {fileID: 6696084455752804057}
   Player: {fileID: 0}
   piano: 0
   zero: 0
+--- !u!136 &8187552936399453245
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3242426042137082810}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.25980338
+  m_Height: 1.1298362
+  m_Direction: 1
+  m_Center: {x: -0.01622954, y: 0.6686556, z: 0.10062283}
 --- !u!1 &3287467915339804367
 GameObject:
   m_ObjectHideFlags: 0
