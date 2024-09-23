@@ -44,6 +44,7 @@ public class EnemyAttack : MonoBehaviour
         EnemyAttackArea.GetComponent<Collider>().enabled = false;//ç≈èâÇÕå©Ç¶Ç»Ç¢èÛë‘
         PickupSound = GetComponent<AudioSource>();
         BossTiming = false;
+        enemyDeathcnt = 0;
     }
 
     // Update is called once per frame
@@ -258,7 +259,7 @@ public class EnemyAttack : MonoBehaviour
         }
     }
 
-    void SetCountText()
+    public void SetCountText()
     {
         keyCountText.text = count.ToString();
     }
