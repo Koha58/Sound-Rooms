@@ -12,11 +12,9 @@ public class VisualizationBox : MonoBehaviour
         transform.position = Boss.transform.position;
         GameObject gameObject = GameObject.FindWithTag("Boss"); //Playerオブジェクトを探す
         BossEnemyControll BEC = gameObject.GetComponent<BossEnemyControll>();
-        BEC.PrototypeBodySkinnedMeshRenderer.enabled = true;
         BEC.ONOFF = 1;
 
         if (BEC.ONOFF == 1){this.gameObject.SetActive(true);}
-        else{this.gameObject.SetActive(false);}
     }
 
     private void OnTriggerStay(Collider other)

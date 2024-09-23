@@ -146,23 +146,6 @@ public class BossEnemyControll : MonoBehaviour
             VisualizationBoss.SetActive(true);              //可視化の音(円)を見える状態
             PrototypeBodySkinnedMeshRenderer.enabled = true;//3DモデルのRendererを見える状態
             audioSourse.maxDistance = 300;                 //音が聞こえる範囲
-
-            ONTime += Time.deltaTime;
-            if (ONTime >= 30.0f)
-            {
-                PS.Visualization = false;
-                PS.onoff = 0;
-                foreach (var playerParts in childTransforms)
-                {
-                    //タグが"PlayerParts"である子オブジェクトを見えなくする
-                    playerParts.gameObject.GetComponent<Renderer>().enabled = false;
-                }
-
-                ONTime = 0;
-                ONOFF = 0;                                       //見えない
-                VisualizationBoss.SetActive(false);              //可視化の音(円)を見えない状態
-                PrototypeBodySkinnedMeshRenderer.enabled = false;//3DモデルのRendererを見える状態
-            }
         }
     }
 
@@ -181,6 +164,29 @@ public class BossEnemyControll : MonoBehaviour
     private void Update()
     {
         Visualization();
+        if (EnemyAttack.OFF == true)
+        {
+            ONTime += Time.deltaTime;
+            if (ONTime >= 30.0f)
+            {
+                GameObject gobj = GameObject.Find("Player");        //Playerオブジェクトを探す
+                PlayerSeen PS = gobj.GetComponent<PlayerSeen>();    //付いているスクリプトを取得
+                var childTransforms = PS._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
+                PS.Visualization = false;
+                PS.onoff = 0;
+                foreach (var playerParts in childTransforms)
+                {
+                    //タグが"PlayerParts"である子オブジェクトを見えなくする
+                    playerParts.gameObject.GetComponent<Renderer>().enabled = false;
+                }
+
+                ONTime = 0;
+                VisualizationBoss.SetActive(false);              //可視化の音(円)を見えない状態
+                ONOFF = 0;                                       //見えない
+                PrototypeBodySkinnedMeshRenderer.enabled = false;//3DモデルのRendererを見える状態
+                EnemyAttack.OFF = false;
+            }
+        }
 
         if (EnemyAttack.SoundON == true)
         {

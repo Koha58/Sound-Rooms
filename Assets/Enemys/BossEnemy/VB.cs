@@ -25,10 +25,6 @@ public class VB : MonoBehaviour
             this.gameObject.SetActive(true);
 
         }
-        else
-        {
-            this.gameObject.SetActive(false);
-        }
     }
 
     private void OnTriggerStay(Collider other)

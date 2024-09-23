@@ -31,6 +31,7 @@ public class EnemyAttack : MonoBehaviour
 
     float Count;
     public static bool SoundON;
+    public static bool OFF;
 
 
     //[SerializeField]
@@ -45,6 +46,7 @@ public class EnemyAttack : MonoBehaviour
         PickupSound = GetComponent<AudioSource>();
         BossTiming = false;
         enemyDeathcnt = 0;
+        OFF = false;
     }
 
     // Update is called once per frame
@@ -85,14 +87,18 @@ public class EnemyAttack : MonoBehaviour
                     GameObject Boss = GameObject.FindWithTag("Boss");
                     BossEnemyControll BEC = Boss.GetComponent<BossEnemyControll>();
                     BEC.ONOFF = 1;
+                    OFF = true;
                     Count = 2;
                 }
             }
-            if (DC >= 30.0f)
+            if (DC >= 16.0f)
             {
+                SoundON = false;
+                GameObject Boss = GameObject.FindWithTag("Boss");
+                BossEnemyControll BEC = Boss.GetComponent<BossEnemyControll>();
+                BEC.ONOFF = 0;
                 DC = 0;
                 DB = false;
-                SoundON = false;
                 Count = 0;
             }
         }
@@ -106,18 +112,23 @@ public class EnemyAttack : MonoBehaviour
             }
             if (DC >=10.0f)
             {
-                Count = 1;
+                Count=1;
                 if (Count == 1)
                 {
                     SoundON = true;
                     GameObject Boss1 = GameObject.FindWithTag("Boss1");
                     BossTutoriaru BS1 = Boss1.GetComponent<BossTutoriaru>();
                     BS1.ONOFF = 1;
+                    OFF = true;
                     Count = 2;
                 }
             }
-            if (DC >= 30.0f)
+            if (DC >= 16.0f)
             {
+                SoundON = false;
+                GameObject Boss1 = GameObject.FindWithTag("Boss1");
+                BossTutoriaru BS1 = Boss1.GetComponent<BossTutoriaru>();
+                BS1.ONOFF = 0;
                 SoundON = false;
                 DC = 0;
                 DB2 = false;
