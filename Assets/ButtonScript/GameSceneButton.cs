@@ -650,7 +650,13 @@ public class GameSceneButton : MonoBehaviour
                 else if (Input.GetAxisRaw("Vertical") > 0 && SelectCount == 3 && MainSelectPositionSelect == false)
                 {
                     MainSelectPositionSelect = true;
+                    SelectCount = 4;
                 }
+                else if (Input.GetAxisRaw("Vertical") > 0 && SelectCount == 4 && MainSelectPositionSelect == false)
+                {
+                    MainSelectPositionSelect = true;
+                }
+
 
                 if (Input.GetAxisRaw("Vertical") < 0 && SelectCount ==0 && MainSelectPositionSelect == false)
                 {
@@ -665,7 +671,6 @@ public class GameSceneButton : MonoBehaviour
                     NotSelect = false;
                     ButtonON = false;
                 }
-
                 else if (Input.GetAxisRaw("Vertical") < 0 && SelectCount == 1 && MainSelectPositionSelect == false)
                 {
                     MainSelectPositionSelect = true;
@@ -680,6 +685,11 @@ public class GameSceneButton : MonoBehaviour
                 { 
                     MainSelectPositionSelect = true;
                     SelectCount = 2;
+                }
+                else if (Input.GetAxisRaw("Vertical") < 0 && SelectCount == 4 && MainSelectPositionSelect == false)
+                {
+                    MainSelectPositionSelect = true;
+                    SelectCount = 3;
                 }
 
                 if (Input.GetAxis("Horizontal") > 0 && SelectCount == -1 && ExplanationSelect == false)
@@ -793,6 +803,20 @@ public class GameSceneButton : MonoBehaviour
                         }
                         MouseSlider.value = level1;
                         SetMouse(level1);
+                    }
+                }
+                else if (SelectCount == 4)
+                {
+                    MenuCursor.GetComponent<Image>().enabled = false;
+                    MenuCursor1.GetComponent<Image>().enabled = false;
+                    MenuCursor2.GetComponent<Image>().enabled = false;
+                    MenuCursor3.GetComponent<Image>().enabled = false;
+
+                    if(Input.GetAxisRaw("Vertical") > 0 && MainSelectPositionSelect == true)
+                    {
+                        NotSelect = false;
+                        MainSelectPositionSelect = false;
+                        MainSelectPosition = 0;
                     }
                 }
 
