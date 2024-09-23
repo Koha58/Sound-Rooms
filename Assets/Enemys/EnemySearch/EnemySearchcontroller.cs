@@ -58,6 +58,7 @@ public class EnemySearchcontroller : MonoBehaviour
     private bool IdleONOFF;
     private bool SeenAreaONOFF;
     private float VisualizationTime;
+    [SerializeField] GameObject HitBox;
 
     private void MoveEnemy()
     {
@@ -83,6 +84,7 @@ public class EnemySearchcontroller : MonoBehaviour
             if (PS.onoff == 1&&ONOFF==1)//プレイヤーが可視化していたら
             {
                 ONOFF = 1;
+                HitBox.SetActive(true);
                 PrototypeBodySkinnedMeshRenderer.enabled = true;
                 audioSourse.enabled = true;
                 animator.SetBool("StandUp", true);
@@ -129,6 +131,7 @@ public class EnemySearchcontroller : MonoBehaviour
                         if (VisualizationRandom <= 5.0f) { Count = 0; }
                         else { Count = 1; }
                         ONOFF = 1;
+                        HitBox.SetActive(true);
                         ONTime = 0;
                     }
                 }
@@ -141,6 +144,7 @@ public class EnemySearchcontroller : MonoBehaviour
                 if (OFFTime >= 5.0f)//10秒以上経ったら見えなくする
                 {
                     ONOFF = 0;
+                    HitBox.SetActive(false);
                     OFFTime = 0;
                 }
             }
@@ -163,6 +167,7 @@ public class EnemySearchcontroller : MonoBehaviour
             var childTransforms = PS._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
 
             ONOFF = 1;
+            HitBox.SetActive(true);
             PrototypeBodySkinnedMeshRenderer.enabled = true;//3DモデルのRendererを見える状態
             if (ChaseONOFF == false)
             {
@@ -172,6 +177,7 @@ public class EnemySearchcontroller : MonoBehaviour
                     VisualizationTime = 0;
                     PrototypeBodySkinnedMeshRenderer.enabled = false; //3DモデルのRendererを見えない状態
                     ONOFF = 0;                                         //見えない状態
+                    HitBox.SetActive(false);
                 }
             }
             else
@@ -192,16 +198,19 @@ public class EnemySearchcontroller : MonoBehaviour
                     ChaseONOFF = true;
                     IdleONOFF = true;
                     ONOFF = 1;
+                    HitBox.SetActive(true);
 
                     if (IdleONOFF == true)
                     {
                         ONOFF = 1;
+                        HitBox.SetActive(true);
                         OFFTime += Time.deltaTime;
                         if (OFFTime >= 3.0f)
                         {
                             ChaseONOFF = false;
                             IdleONOFF = false;
                             ONOFF = 0;
+                            HitBox.SetActive(false);
                             PrototypeBodySkinnedMeshRenderer.enabled = false; //3DモデルのRendererを見えない状態
                             OFFTime = 0;
                         }
@@ -279,6 +288,7 @@ public class EnemySearchcontroller : MonoBehaviour
     private void Start()
     {
         ONOFF = 0;//見えない状態
+        HitBox.SetActive(false);
         VisualizationRandom = Random.Range(4.0f, 6.0f);
         audioSourse = GetComponent<AudioSource>();
         PrototypeBodySkinnedMeshRenderer.enabled = false; //3DモデルのRendererを見えない状態
@@ -372,6 +382,7 @@ public class EnemySearchcontroller : MonoBehaviour
         if (other.CompareTag("SeenArea"))
         {
             ONOFF = 1;
+            HitBox.SetActive(true);
             ONTime = 0;//当たり判定ON
             PrototypeBodySkinnedMeshRenderer.enabled = true;　//3DモデルのRendererを見える状態
             SeenAreaONOFF = true;

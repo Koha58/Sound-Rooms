@@ -3201,6 +3201,7 @@ Transform:
   m_Children:
   - {fileID: 908903620147705886}
   - {fileID: 7216587095974924477}
+  - {fileID: 1493678621799296930}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &6696084455752804057
@@ -3396,6 +3397,7 @@ MonoBehaviour:
   Player: {fileID: 0}
   piano: 0
   zero: 0
+  HitBox: {fileID: 4278405947164951134}
 --- !u!136 &8187552936399453245
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -4417,6 +4419,61 @@ Transform:
   - {fileID: 4792675455310848963}
   m_Father: {fileID: 3726679602902357869}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4278405947164951134
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1493678621799296930}
+  - component: {fileID: 124912849372441279}
+  m_Layer: 0
+  m_Name: Hit Box
+  m_TagString: SoundCheck
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1493678621799296930
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4278405947164951134}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2764094499948853347}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &124912849372441279
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4278405947164951134}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.25980338
+  m_Height: 1.1298362
+  m_Direction: 1
+  m_Center: {x: -0.01622954, y: 0.6686556, z: 0.10062283}
 --- !u!1 &4310347048180022041
 GameObject:
   m_ObjectHideFlags: 0

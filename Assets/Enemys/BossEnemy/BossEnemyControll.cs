@@ -188,7 +188,6 @@ public class BossEnemyControll : MonoBehaviour
             animator.SetBool("Idle", true);
             animator.SetBool("Move", false);
             VisualizationBoss.SetActive(true);
-            audioSourse.maxDistance = 300;                 //‰¹‚ª•·‚±‚¦‚é”ÍˆÍ
         }
         else if (EnemyAttack.SoundON == false)
         {

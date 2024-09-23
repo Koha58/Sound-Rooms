@@ -47,6 +47,7 @@ public class TutorialEnemyController : MonoBehaviour
     private bool IdleONOFF;
     private bool SeenAreaONOFF;
     private float VisualizationTime;
+    [SerializeField] GameObject HitBox;
 
     private void MoveEnemy()
     {
@@ -122,6 +123,7 @@ public class TutorialEnemyController : MonoBehaviour
             ChaseONOFF = true;
             IdleONOFF = true;
             ONOFF = 1;
+            HitBox.SetActive(true);
 
             if (IdleONOFF == true)
             {
@@ -131,6 +133,7 @@ public class TutorialEnemyController : MonoBehaviour
                     ChaseONOFF = false;
                     IdleONOFF = false;
                     ONOFF = 0;
+                    HitBox.SetActive(false);
                     PrototypeBodySkinnedMeshRenderer.enabled = false; //3DモデルのRendererを見えない状態
                     NextTime = 0;
                     OFFTime = 0;
@@ -152,11 +155,13 @@ public class TutorialEnemyController : MonoBehaviour
         {
             PrototypeBodySkinnedMeshRenderer.enabled = false; //3DモデルのRendererを見えない状態
             ONOFF = 0;                                         //見えない状態
+            HitBox.SetActive(false);
         }
         if (Front == true)                                     //ポイントについたので見える状態
         {
             PrototypeBodySkinnedMeshRenderer.enabled = true; //3DモデルのRendererを見える状態
             ONOFF = 1;                                        //見える状態
+            HitBox.SetActive(true);
         }
 
         if (SeenAreaONOFF==true)
@@ -166,6 +171,7 @@ public class TutorialEnemyController : MonoBehaviour
             var childTransforms = PS._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
 
             ONOFF = 1;
+            HitBox.SetActive(true);
             PrototypeBodySkinnedMeshRenderer.enabled = true;//3DモデルのRendererを見える状態
             Front = true;
             if (ChaseONOFF == false)
@@ -175,6 +181,7 @@ public class TutorialEnemyController : MonoBehaviour
                 {
                     PrototypeBodySkinnedMeshRenderer.enabled = false; //3DモデルのRendererを見えない状態
                     ONOFF = 0;                                         //見えない状態
+                    HitBox.SetActive(false);
                     VisualizationTime = 0;
                     SeenAreaONOFF = false;
                 }
@@ -207,6 +214,7 @@ public class TutorialEnemyController : MonoBehaviour
                             ChaseONOFF = false;
                             IdleONOFF = false;
                             ONOFF = 0;
+                            HitBox.SetActive(false);
                             PrototypeBodySkinnedMeshRenderer.enabled = false; //3DモデルのRendererを見えない状態
                             NextTime = 0;
                             OFFTime = 0;
@@ -270,7 +278,8 @@ public class TutorialEnemyController : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
-        ONOFF = 0;                                　　　　//見えない状態
+        ONOFF = 0;                                    //見えない状態
+        HitBox.SetActive(false);
         PrototypeBodySkinnedMeshRenderer.enabled = false; //3DモデルのRendererを見えない状態
         ChaseONOFF = false;                       　　　　//追跡中じゃない
         TouchWallONOFF = false;                           //壁に当たっていない
@@ -291,23 +300,50 @@ public class TutorialEnemyController : MonoBehaviour
         {
             if (ONOFF == 1)
             {
-                GameObject obj = GameObject.Find("Player");                               //Playerオブジェクトを探す
-                PlayerSeen PS = obj.GetComponent<PlayerSeen>();                           //付いているスクリプトを取得
-                var childTransforms = PS._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
+                Vector3 Position = TargetPlayer.position - transform.position; // ターゲットの位置と自身の位置の差を計算
+                bool isFront = Vector3.Dot(Position, transform.forward) > 0;  // ターゲットが自身の前方にあるかどうか判定
+                bool isBack = Vector3.Dot(Position, transform.forward) < 0;   // ターゲットが自身の後方にあるかどうか判定
 
-                PS.Visualization = true;
-                PS.onoff = 1;
-                foreach (var playerParts in childTransforms)
+                if (isFront)
                 {
-                    //タグが"PlayerParts"である子オブジェクトを見えるようにする
-                    playerParts.gameObject.GetComponent<Renderer>().enabled = true;
+                    GameObject obj = GameObject.Find("Player");                               //Playerオブジェクトを探す
+                    PlayerSeen PS = obj.GetComponent<PlayerSeen>();                           //付いているスクリプトを取得
+                    var childTransforms = PS._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
+
+                    PS.Visualization = true;
+                    PS.onoff = 1;
+                    foreach (var playerParts in childTransforms)
+                    {
+                        //タグが"PlayerParts"である子オブジェクトを見えるようにする
+                        playerParts.gameObject.GetComponent<Renderer>().enabled = true;
+                    }
+
+                    ONOFF = 1;
+                    HitBox.SetActive(true);
+                    PrototypeBodySkinnedMeshRenderer.enabled = true;                         //3DモデルのRendererを見える状態
+                    ChaseONOFF = false;
+                    INPlayerONOFF = true;
                 }
+                else if (isBack)
+                {
+                    GameObject obj = GameObject.Find("Player");                               //Playerオブジェクトを探す
+                    PlayerSeen PS = obj.GetComponent<PlayerSeen>();                           //付いているスクリプトを取得
+                    var childTransforms = PS._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
 
-                ONOFF = 1;
-                PrototypeBodySkinnedMeshRenderer.enabled = true;　                        //3DモデルのRendererを見える状態
-                ChaseONOFF = false;
-                INPlayerONOFF = true;
+                    PS.Visualization = false;
+                    PS.onoff = 0;
+                    foreach (var playerParts in childTransforms)
+                    {
+                        //タグが"PlayerParts"である子オブジェクトを見えるようにする
+                        playerParts.gameObject.GetComponent<Renderer>().enabled = false;
+                    }
 
+                    ONOFF = 1;
+                    HitBox.SetActive(true);
+                    PrototypeBodySkinnedMeshRenderer.enabled = true;                         //3DモデルのRendererを見える状態
+                    ChaseONOFF = false;
+                    INPlayerONOFF = true;
+                }
             }
         }
         else if (Player >= 0.9f) {INPlayerONOFF = false;}
@@ -346,6 +382,7 @@ public class TutorialEnemyController : MonoBehaviour
         if (other.CompareTag("SeenArea"))//タグ（"SeenArea"）接触し続けていたら
         {
             ONOFF = 1;
+            HitBox.SetActive(true);
             PrototypeBodySkinnedMeshRenderer.enabled = true;//3DモデルのRendererを見える状態
             SeenAreaONOFF = true;
         }

@@ -449,6 +449,61 @@ Transform:
   - {fileID: 5100478475046446680}
   m_Father: {fileID: 8981760887202495803}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &350104748823392881
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8903217236785053683}
+  - component: {fileID: 6917902477518851671}
+  m_Layer: 0
+  m_Name: Hit Box
+  m_TagString: SoundCheck
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8903217236785053683
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 350104748823392881}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8731381559374942787}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &6917902477518851671
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 350104748823392881}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.28803855
+  m_Height: 1.3450006
+  m_Direction: 2
+  m_Center: {x: 0.04007875, y: 0.38996208, z: 0.78463036}
 --- !u!1 &379612202108641047
 GameObject:
   m_ObjectHideFlags: 0
@@ -1208,7 +1263,6 @@ GameObject:
   - component: {fileID: 42546062507820914}
   - component: {fileID: 7429983430552339231}
   - component: {fileID: 4568181082961009298}
-  - component: {fileID: 4441675250473258967}
   m_Layer: 0
   m_Name: EnemySearch
   m_TagString: Enemy2
@@ -1231,6 +1285,7 @@ Transform:
   m_Children:
   - {fileID: 3156850261005224011}
   - {fileID: 8461601138083335482}
+  - {fileID: 8903217236785053683}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &6943470069220300604
@@ -1426,29 +1481,7 @@ MonoBehaviour:
   animator: {fileID: 6943470069220300604}
   Player: {fileID: 0}
   initialTransform: {x: 0, y: 0, z: 0}
---- !u!136 &4441675250473258967
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 798233816613832786}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.28803855
-  m_Height: 1.3450006
-  m_Direction: 2
-  m_Center: {x: 0.04007875, y: 0.38996208, z: 0.78463036}
+  HitBox: {fileID: 350104748823392881}
 --- !u!1 &822310583864198259
 GameObject:
   m_ObjectHideFlags: 0
