@@ -132,9 +132,13 @@ public class GameOverScript : MonoBehaviour
             BossEnemyControll BEC = other.GetComponent<BossEnemyControll>();
             if (BEC.ONOFF == 1 && PS.onoff == 1 && Table.ON == false)
             {
-                if (Count == 0)
+                if (PlayerRun.CrouchOn != true)
                 {
-                    LifeCount--;
+                    if (Count == 0)
+                    {
+                        LifeCount--;
+                        Count = 1;
+                    }
                 }
             }
 
@@ -142,9 +146,9 @@ public class GameOverScript : MonoBehaviour
 
         if (other.CompareTag("BossV"))
         {
-            if (Count == 0)
+            if (PlayerRun.CrouchOn != true)
             {
-                if (Table.ON == false)
+                if (Count == 0)
                 {
                     LifeCount--;
                     Count = 1;
