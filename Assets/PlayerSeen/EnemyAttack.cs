@@ -160,8 +160,9 @@ public class EnemyAttack : MonoBehaviour
                 GetComponent<ParticleSystem>().Play();
                 Destroy(other.gameObject);
 
-                /*
+                
                 DB = true;
+                /*
                 SoundON = false;
                 BEC.ONOFF = 0;
                 DC = 0;
@@ -180,8 +181,9 @@ public class EnemyAttack : MonoBehaviour
                 GetComponent<ParticleSystem>().Play();
                 Destroy(other.gameObject);
 
-                /*
+                
                 DB = true;
+                /*
                 SoundON = false;
                 DC = 0;
                 DB2 = false;
@@ -203,13 +205,14 @@ public class EnemyAttack : MonoBehaviour
 
                 BossTiming = true;
 
-                /*
+               
                 DB = true;
-                SoundON = false;
-                EC.ONOFF = 0;
-                DC = 0;
-                Count = 0;
-                */
+                /*
+               SoundON = false;
+               EC.ONOFF = 0;
+               DC = 0;
+               Count = 0;
+               */
             }
         }
 
@@ -250,8 +253,9 @@ public class EnemyAttack : MonoBehaviour
 
             BossTiming = true;
 
-            /*
+            
             DB = true;
+            /*
             EC.ONOFF = 0;
             DC = 0;
             Count = 0;
@@ -272,13 +276,14 @@ public class EnemyAttack : MonoBehaviour
 
                 BossTiming = true;
 
-                /*
+               
                 DB2 = true;
-                SoundON = false;
-                DC = 0;
-                DB2 = false;
-                Count = 0;
-                */
+                /*
+               SoundON = false;
+               DC = 0;
+               DB2 = false;
+               Count = 0;
+               */
             }
         }
 
@@ -297,8 +302,9 @@ public class EnemyAttack : MonoBehaviour
 
                 BossTiming = true;
 
-                /*
+                
                 DB2 = true;
+                /*
                 SoundON = false;
                 DC = 0;
                 DB2 = false;
