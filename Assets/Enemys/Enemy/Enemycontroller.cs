@@ -363,7 +363,6 @@ public class Enemycontroller : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        Debug.Log(ChaseONOFF);
         TouchWallONOFF = false;
         float Player = Vector3.Distance(transform.position, TargetPlayer.position);   //プレイヤーと敵の位置の計算
         if (Player <= 0.8f)
