@@ -28,7 +28,7 @@ public class Enemycontroller : MonoBehaviour
     public Transform TargetPlayer;　　　　　　　　　　 //プレイヤーの位置を取得
 
     //Playerを追跡
-    float ChaseSpeed = 0.2f;                           //Playerを追いかける速度
+    float ChaseSpeed = 0.15f;                           //Playerを追いかける速度
     [SerializeField] bool ChaseONOFF;                  //(ChaseON： true/ChaseOFF: false)
 
 
@@ -363,53 +363,57 @@ public class Enemycontroller : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
+        Debug.Log(ChaseONOFF);
         TouchWallONOFF = false;
         float Player = Vector3.Distance(transform.position, TargetPlayer.position);   //プレイヤーと敵の位置の計算
         if (Player <= 0.8f)
         {
-            Vector3 Position = TargetPlayer.position - transform.position; // ターゲットの位置と自身の位置の差を計算
-            bool isFront = Vector3.Dot(Position, transform.forward) > 0;  // ターゲットが自身の前方にあるかどうか判定
-            bool isBack = Vector3.Dot(Position, transform.forward) < 0;   // ターゲットが自身の後方にあるかどうか判定
-
-            if (isFront)
+            if (ONOFF == 1)
             {
-                GameObject obj = GameObject.Find("Player");                               //Playerオブジェクトを探す
-                PlayerSeen PS = obj.GetComponent<PlayerSeen>();                           //付いているスクリプトを取得
-                var childTransforms = PS._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
+                Vector3 Position = TargetPlayer.position - transform.position; // ターゲットの位置と自身の位置の差を計算
+                bool isFront = Vector3.Dot(Position, transform.forward) > 0;  // ターゲットが自身の前方にあるかどうか判定
+                bool isBack = Vector3.Dot(Position, transform.forward) < 0;   // ターゲットが自身の後方にあるかどうか判定
 
-                PS.Visualization = true;
-                PS.onoff = 1;
-                foreach (var playerParts in childTransforms)
+                if (isFront)
                 {
-                    //タグが"PlayerParts"である子オブジェクトを見えるようにする
-                    playerParts.gameObject.GetComponent<Renderer>().enabled = true;
+                    GameObject obj = GameObject.Find("Player");                               //Playerオブジェクトを探す
+                    PlayerSeen PS = obj.GetComponent<PlayerSeen>();                           //付いているスクリプトを取得
+                    var childTransforms = PS._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
+
+                    PS.Visualization = true;
+                    PS.onoff = 1;
+                    foreach (var playerParts in childTransforms)
+                    {
+                        //タグが"PlayerParts"である子オブジェクトを見えるようにする
+                        playerParts.gameObject.GetComponent<Renderer>().enabled = true;
+                    }
+
+                    ONOFF = 1;
+                    HitBox.SetActive(true);
+                    PrototypeBodySkinnedMeshRenderer.enabled = true;                         //3DモデルのRendererを見える状態
+                    ChaseONOFF = false;
+                    INPlayerONOFF = true;
                 }
-
-                ONOFF = 1;
-                HitBox.SetActive(true);
-                PrototypeBodySkinnedMeshRenderer.enabled = true;                         //3DモデルのRendererを見える状態
-                ChaseONOFF = false;
-                INPlayerONOFF = true;
-            }
-            else if (isBack)
-            {
-                GameObject obj = GameObject.Find("Player");                               //Playerオブジェクトを探す
-                PlayerSeen PS = obj.GetComponent<PlayerSeen>();                           //付いているスクリプトを取得
-                var childTransforms = PS._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
-
-                PS.Visualization = false;
-                PS.onoff = 0;
-                foreach (var playerParts in childTransforms)
+                else if (isBack)
                 {
-                    //タグが"PlayerParts"である子オブジェクトを見えるようにする
-                    playerParts.gameObject.GetComponent<Renderer>().enabled = false;
-                }
+                    GameObject obj = GameObject.Find("Player");                               //Playerオブジェクトを探す
+                    PlayerSeen PS = obj.GetComponent<PlayerSeen>();                           //付いているスクリプトを取得
+                    var childTransforms = PS._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
 
-                ONOFF = 1;
-                HitBox.SetActive(true);
-                PrototypeBodySkinnedMeshRenderer.enabled = true;                         //3DモデルのRendererを見える状態
-                ChaseONOFF = false;
-                INPlayerONOFF = true;
+                    PS.Visualization = false;
+                    PS.onoff = 0;
+                    foreach (var playerParts in childTransforms)
+                    {
+                        //タグが"PlayerParts"である子オブジェクトを見えるようにする
+                        playerParts.gameObject.GetComponent<Renderer>().enabled = false;
+                    }
+
+                    ONOFF = 1;
+                    HitBox.SetActive(true);
+                    PrototypeBodySkinnedMeshRenderer.enabled = true;                         //3DモデルのRendererを見える状態
+                    ChaseONOFF = false;
+                    INPlayerONOFF = true;
+                }
             }
         }
         else if (Player >= 2f) { INPlayerONOFF = false; }
@@ -505,11 +509,11 @@ public class Enemycontroller : MonoBehaviour
 
         if (other.CompareTag("Player"))
         {
+            GameObject obj = GameObject.Find("Player");                               //Playerオブジェクトを探す
+            PlayerSeen PS = obj.GetComponent<PlayerSeen>();                           //付いているスクリプトを取得
+            var childTransforms = PS._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
             if (ONOFF == 0)
             {
-                GameObject obj = GameObject.Find("Player");                               //Playerオブジェクトを探す
-                PlayerSeen PS = obj.GetComponent<PlayerSeen>();                           //付いているスクリプトを取得
-                var childTransforms = PS._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
 
                 PS.Visualization = false;
                 PS.onoff = 0;                                                             //見えているから1

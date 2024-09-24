@@ -302,7 +302,7 @@ public class EnemySearchcontroller : MonoBehaviour
         var childTransforms = PS._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
 
         float Player = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
-        if (Player <= 2f)
+        if (Player <= 0.2f)
         {
             if (ONOFF == 1)
             {
@@ -318,7 +318,7 @@ public class EnemySearchcontroller : MonoBehaviour
                 UpON = true;
             }
         }
-        else if (Player > 2.0f) { UpON = false; }
+        else if (Player > 1.0f) { UpON = false; }
 
         if (UpON == false)
         {
@@ -352,7 +352,8 @@ public class EnemySearchcontroller : MonoBehaviour
             else if (isBack)// ターゲットが自身の後方にあるなら
             {
                 DestroyONOFF = true;
-                if(ChaseONOFF==true) 
+                if (ONOFF == 0) { ChaseONOFF = false; }
+                if (ChaseONOFF==true) 
                 {
                     animator.SetBool("Run", true);
                     ChaseONOFF = false;
