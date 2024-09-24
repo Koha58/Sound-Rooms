@@ -29,7 +29,7 @@ public class EnemySearchcontroller : MonoBehaviour
     public Transform TargetPlayer;
 
     //Playerを追跡
-    float ChaseSpeed = 0.2f;//Playerを追いかけるスピード
+    float ChaseSpeed = 0.1f;//Playerを追いかけるスピード
     bool ChaseONOFF;
 
     //Destroyの判定

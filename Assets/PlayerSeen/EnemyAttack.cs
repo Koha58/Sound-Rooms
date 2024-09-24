@@ -151,17 +151,22 @@ public class EnemyAttack : MonoBehaviour
         }
         if (other.CompareTag("Boss"))
         {
-            BossEnemyControll BEC = other.GetComponent<BossEnemyControll>();
+            GameObject Boss = GameObject.FindWithTag("Boss");
+            BossEnemyControll BEC = Boss.GetComponent<BossEnemyControll>();
             if (BEC.DestroyONOFF == true)
             {
                 enemyDeathcnt++;
                 DeathRange += 1.0f;
                 GetComponent<ParticleSystem>().Play();
-                Debug.Log(enemyDeathcnt);
                 Destroy(other.gameObject);
 
-
+                /*
                 DB = true;
+                SoundON = false;
+                BEC.ONOFF = 0;
+                DC = 0;
+                Count = 0;
+                */
             }
         }
 
@@ -173,16 +178,22 @@ public class EnemyAttack : MonoBehaviour
                 enemyDeathcnt++;
                 DeathRange += 1.0f;
                 GetComponent<ParticleSystem>().Play();
-                Debug.Log(enemyDeathcnt);
                 Destroy(other.gameObject);
 
+                /*
                 DB = true;
+                SoundON = false;
+                DC = 0;
+                DB2 = false;
+                Count = 0;
+                */
             }
         }
 
         if (other.CompareTag("Enemy"))
         {
-            Enemycontroller EC = other.GetComponent<Enemycontroller>();
+            GameObject Boss = GameObject.FindWithTag("Boss");
+            BossEnemyControll EC = Boss.GetComponent<BossEnemyControll>();
             if (EC.DestroyONOFF == true)
             {
                 enemyDeathcnt++;
@@ -192,24 +203,35 @@ public class EnemyAttack : MonoBehaviour
 
                 BossTiming = true;
 
+                /*
                 DB = true;
+                SoundON = false;
+                EC.ONOFF = 0;
+                DC = 0;
+                Count = 0;
+                */
             }
         }
 
         if (other.CompareTag("EnemySearch"))
         {
-            EnemySearchcontroller ESC = other.GetComponent<EnemySearchcontroller>();
+            GameObject Boss = GameObject.FindWithTag("Boss");
+            BossEnemyControll ESC = Boss.GetComponent<BossEnemyControll>();
             if (ESC.DestroyONOFF == true)
             {
                 enemyDeathcnt++;
                 DeathRange += 1.0f;
-                GetComponent<ParticleSystem>().Play();
-                Debug.Log(enemyDeathcnt);
+                GetComponent<ParticleSystem>().Play();;
                 Destroy(other.gameObject);
 
                 BossTiming = true;
 
+                /*
                 DB = true;
+                ESC.ONOFF = 0;
+                DC = 0;
+                Count = 0;
+                */
             }
         }
 
@@ -228,9 +250,12 @@ public class EnemyAttack : MonoBehaviour
 
             BossTiming = true;
 
-
+            /*
             DB = true;
-
+            EC.ONOFF = 0;
+            DC = 0;
+            Count = 0;
+            */
         }
 
         if (other.CompareTag("Enemy1"))
@@ -247,7 +272,13 @@ public class EnemyAttack : MonoBehaviour
 
                 BossTiming = true;
 
+                /*
                 DB2 = true;
+                SoundON = false;
+                DC = 0;
+                DB2 = false;
+                Count = 0;
+                */
             }
         }
 
@@ -266,7 +297,13 @@ public class EnemyAttack : MonoBehaviour
 
                 BossTiming = true;
 
+                /*
                 DB2 = true;
+                SoundON = false;
+                DC = 0;
+                DB2 = false;
+                Count = 0;
+                */
             }
         }
     }
