@@ -263,6 +263,7 @@ public class EnemyController : MonoBehaviour
         ChaseONOFF = false;                       　　　　//追跡中じゃない
         TouchWallONOFF = false;
         INPlayerONOFF = false;
+        animator.SetBool("Walk", true);
     }
 
     // Update is called once per frame

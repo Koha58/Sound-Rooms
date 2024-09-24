@@ -29,7 +29,7 @@ public class EnemySearchcontroller : MonoBehaviour
     public Transform TargetPlayer;
 
     //Playerを追跡
-    float ChaseSpeed = 0.3f;//Playerを追いかけるスピード
+    float ChaseSpeed = 0.1f;//Playerを追いかけるスピード
     bool ChaseONOFF;
 
     //Destroyの判定
@@ -131,7 +131,6 @@ public class EnemySearchcontroller : MonoBehaviour
                         if (VisualizationRandom <= 5.0f) { Count = 0; }
                         else { Count = 1; }
                         ONOFF = 1;
-                        HitBox.SetActive(true);
                         ONTime = 0;
                     }
                 }
@@ -167,7 +166,6 @@ public class EnemySearchcontroller : MonoBehaviour
             var childTransforms = PS._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
 
             ONOFF = 1;
-            HitBox.SetActive(true);
             PrototypeBodySkinnedMeshRenderer.enabled = true;//3DモデルのRendererを見える状態
             if (ChaseONOFF == false)
             {
@@ -203,7 +201,6 @@ public class EnemySearchcontroller : MonoBehaviour
                     if (IdleONOFF == true)
                     {
                         ONOFF = 1;
-                        HitBox.SetActive(true);
                         OFFTime += Time.deltaTime;
                         if (OFFTime >= 3.0f)
                         {
@@ -382,7 +379,6 @@ public class EnemySearchcontroller : MonoBehaviour
         if (other.CompareTag("SeenArea"))
         {
             ONOFF = 1;
-            HitBox.SetActive(true);
             ONTime = 0;//当たり判定ON
             PrototypeBodySkinnedMeshRenderer.enabled = true;　//3DモデルのRendererを見える状態
             SeenAreaONOFF = true;

@@ -47,6 +47,7 @@ public class EnemyAttack : MonoBehaviour
         BossTiming = false;
         enemyDeathcnt = 0;
         OFF = false;
+        SoundON = false;
     }
 
     // Update is called once per frame
