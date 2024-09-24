@@ -286,6 +286,7 @@ public class TutorialEnemyController : MonoBehaviour
         INPlayerONOFF = false;                            //プレイヤーが範囲内に入っているか
         animator = GetComponent<Animator>();      　　　　//アニメーターコントローラーからアニメーションを取得する
         audioSourse = GetComponent<AudioSource>();    //オーディオソースを取得
+        animator.SetBool("Walk", true);
     }
 
     // Update is called once per frame

@@ -357,6 +357,7 @@ public class Enemycontroller : MonoBehaviour
         INPlayerONOFF = false;
         animator = GetComponent<Animator>();      　　　　//アニメーターコントローラーからアニメーションを取得する
         audioSourse = GetComponent<AudioSource>();
+        animator.SetBool("Walk", true);
     }
 
     // Update is called once per frame
