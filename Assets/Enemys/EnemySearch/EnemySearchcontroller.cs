@@ -29,7 +29,7 @@ public class EnemySearchcontroller : MonoBehaviour
     public Transform TargetPlayer;
 
     //Playerを追跡
-    float ChaseSpeed = 0.1f;//Playerを追いかけるスピード
+    float ChaseSpeed = 0.2f;//Playerを追いかけるスピード
     bool ChaseONOFF;
 
     //Destroyの判定
@@ -79,7 +79,7 @@ public class EnemySearchcontroller : MonoBehaviour
 
         float ChasePlayer = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
 
-        if (ChasePlayer <= 5f)//プレイヤーが検知範囲に入ったら
+        if (ChasePlayer <= 6f)//プレイヤーが検知範囲に入ったら
         {
             if (PS.onoff == 1&&ONOFF==1)//プレイヤーが可視化していたら
             {
@@ -94,7 +94,7 @@ public class EnemySearchcontroller : MonoBehaviour
                 transform.position += transform.forward * ChaseSpeed;//プレイヤーの方向に向かう
             }
         }
-        else if(ChasePlayer >= 5f &&ChaseONOFF==true)
+        else if(ChasePlayer >= 6f &&ChaseONOFF==true)
         {
             animator.SetBool("Run", true);
             ChaseONOFF = false;
@@ -181,7 +181,7 @@ public class EnemySearchcontroller : MonoBehaviour
             else
             {
                 float ChasePlayer = Vector3.Distance(transform.position, TargetPlayer.position); //プレイヤーと敵の位置の計算
-                if (ChasePlayer > 5 && ChaseONOFF == true)
+                if (ChasePlayer > 6 && ChaseONOFF == true)
                 {
                     PS.Visualization = false;
                     PS.onoff = 0;
