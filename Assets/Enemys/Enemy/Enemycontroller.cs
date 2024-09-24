@@ -28,7 +28,7 @@ public class Enemycontroller : MonoBehaviour
     public Transform TargetPlayer;　　　　　　　　　　 //プレイヤーの位置を取得
 
     //Playerを追跡
-    float ChaseSpeed = 0.08f;                           //Playerを追いかける速度
+    float ChaseSpeed = 0.025f;                           //Playerを追いかける速度
     [SerializeField] bool ChaseONOFF;                  //(ChaseON： true/ChaseOFF: false)
 
 
@@ -436,7 +436,7 @@ public class Enemycontroller : MonoBehaviour
             }
             else if (isBack)                                                                         // ターゲットが自身の後方にあるなら
             {
-             DestroyONOFF = true; 
+               DestroyONOFF = true; 
             }
         }
 
