@@ -162,6 +162,8 @@ public class EnemyAttack : MonoBehaviour
 
                 
                 DB = true;
+                SoundON = false;
+                DC = 0;
                 /*
                 SoundON = false;
                 BEC.ONOFF = 0;
@@ -183,6 +185,8 @@ public class EnemyAttack : MonoBehaviour
 
                 
                 DB = true;
+                SoundON = false;
+                DC = 0;
                 /*
                 SoundON = false;
                 DC = 0;
@@ -207,6 +211,8 @@ public class EnemyAttack : MonoBehaviour
 
                
                 DB = true;
+                SoundON = false;
+                DC = 0;
                 /*
                SoundON = false;
                EC.ONOFF = 0;
@@ -229,8 +235,11 @@ public class EnemyAttack : MonoBehaviour
 
                 BossTiming = true;
 
-                /*
+                
                 DB = true;
+                SoundON = false;
+                DC = 0;
+                /*
                 ESC.ONOFF = 0;
                 DC = 0;
                 Count = 0;
@@ -255,6 +264,7 @@ public class EnemyAttack : MonoBehaviour
 
             
             DB = true;
+            SoundON = false;
             /*
             EC.ONOFF = 0;
             DC = 0;
@@ -278,6 +288,8 @@ public class EnemyAttack : MonoBehaviour
 
                
                 DB2 = true;
+                SoundON = false;
+                DC = 0;
                 /*
                SoundON = false;
                DC = 0;
@@ -304,6 +316,8 @@ public class EnemyAttack : MonoBehaviour
 
                 
                 DB2 = true;
+                SoundON = false;
+                DC = 0;
                 /*
                 SoundON = false;
                 DC = 0;

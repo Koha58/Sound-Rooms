@@ -436,10 +436,7 @@ public class Enemycontroller : MonoBehaviour
             }
             else if (isBack)                                                                         // ターゲットが自身の後方にあるなら
             {
-                float detectionPlayer = Vector3.Distance(transform.position, TargetPlayer.position); //プレイヤーと敵の位置の計算
-
-                //プレイヤーが検知範囲に入ったら
-                if (detectionPlayer <= 5f) { DestroyONOFF = true; }
+             DestroyONOFF = true; 
             }
         }
 
