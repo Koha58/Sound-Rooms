@@ -120,33 +120,61 @@ public class Enemycontroller : MonoBehaviour
         }
         else if (ChasePlayer > 5 && ChaseONOFF == true)
         {
-            PS.Visualization = false;
-            PS.onoff = 0;
-            foreach (var playerParts in childTransforms)
+            if (PianoRoom != true)
             {
-                //タグが"PlayerParts"である子オブジェクトを見えるようにする
-                playerParts.gameObject.GetComponent<Renderer>().enabled = false;
-            }
-            animator.SetBool("Walk", false);
-            animator.SetBool("Run", false);
-            SeenAreaONOFF = false;
-            ChaseONOFF = true;
-            IdleONOFF = true;
-            ONOFF = 1;
-            HitBox.SetActive(true);
-
-            if (IdleONOFF == true)
-            {
-                OFFTime += Time.deltaTime;
-                if (OFFTime >= 3.0f)
+                PS.Visualization = false;
+                PS.onoff = 0;
+                foreach (var playerParts in childTransforms)
                 {
-                    ChaseONOFF = false;
-                    IdleONOFF = false;
-                    ONOFF = 0;
-                    HitBox.SetActive(false);
-                    PrototypeBodySkinnedMeshRenderer.enabled = false; //3DモデルのRendererを見えない状態
-                    NextTime = 0;
-                    OFFTime = 0;
+                    //タグが"PlayerParts"である子オブジェクトを見えるようにする
+                    playerParts.gameObject.GetComponent<Renderer>().enabled = false;
+                }
+                animator.SetBool("Walk", false);
+                animator.SetBool("Run", false);
+                SeenAreaONOFF = false;
+                ChaseONOFF = true;
+                IdleONOFF = true;
+                ONOFF = 1;
+                HitBox.SetActive(true);
+
+                if (IdleONOFF == true)
+                {
+                    OFFTime += Time.deltaTime;
+                    if (OFFTime >= 3.0f)
+                    {
+                        ChaseONOFF = false;
+                        IdleONOFF = false;
+                        ONOFF = 0;
+                        HitBox.SetActive(false);
+                        PrototypeBodySkinnedMeshRenderer.enabled = false; //3DモデルのRendererを見えない状態
+                        NextTime = 0;
+                        OFFTime = 0;
+                    }
+                }
+            }
+            else if (PianoRoom == true)
+            {
+                animator.SetBool("Walk", false);
+                animator.SetBool("Run", false);
+                SeenAreaONOFF = false;
+                ChaseONOFF = true;
+                IdleONOFF = true;
+                ONOFF = 1;
+                HitBox.SetActive(true);
+
+                if (IdleONOFF == true)
+                {
+                    OFFTime += Time.deltaTime;
+                    if (OFFTime >= 3.0f)
+                    {
+                        ChaseONOFF = false;
+                        IdleONOFF = false;
+                        ONOFF = 0;
+                        HitBox.SetActive(false);
+                        PrototypeBodySkinnedMeshRenderer.enabled = false; //3DモデルのRendererを見えない状態
+                        NextTime = 0;
+                        OFFTime = 0;
+                    }
                 }
             }
         }
@@ -203,35 +231,63 @@ public class Enemycontroller : MonoBehaviour
                 float ChasePlayer = Vector3.Distance(transform.position, TargetPlayer.position); //プレイヤーと敵の位置の計算
                 if (ChasePlayer > 5 && ChaseONOFF == true)
                 {
-                    PS.Visualization = false;
-                    PS.onoff = 0;
-                    foreach (var playerParts in childTransforms)
+                    if (PianoRoom != true)
                     {
-                        //タグが"PlayerParts"である子オブジェクトを見えるようにする
-                        playerParts.gameObject.GetComponent<Renderer>().enabled = false;
-                    }
-                    animator.SetBool("Walk", false);
-                    animator.SetBool("Run", false);
-                    SeenAreaONOFF = false;
-                    ChaseONOFF = true;
-                    IdleONOFF = true;
-                    ONOFF = 1;
-                    HitBox.SetActive(true);
-
-                    if (IdleONOFF == true)
-                    {
+                        PS.Visualization = false;
+                        PS.onoff = 0;
+                        foreach (var playerParts in childTransforms)
+                        {
+                            //タグが"PlayerParts"である子オブジェクトを見えるようにする
+                            playerParts.gameObject.GetComponent<Renderer>().enabled = false;
+                        }
+                        animator.SetBool("Walk", false);
+                        animator.SetBool("Run", false);
+                        SeenAreaONOFF = false;
+                        ChaseONOFF = true;
+                        IdleONOFF = true;
                         ONOFF = 1;
                         HitBox.SetActive(true);
-                        OFFTime += Time.deltaTime;
-                        if (OFFTime >= 3.0f)
+
+                        if (IdleONOFF == true)
                         {
-                            ChaseONOFF = false;
-                            IdleONOFF = false;
-                            ONOFF = 0;
-                            HitBox.SetActive(false);
-                            PrototypeBodySkinnedMeshRenderer.enabled = false; //3DモデルのRendererを見えない状態
-                            NextTime = 0;
-                            OFFTime = 0;
+                            ONOFF = 1;
+                            HitBox.SetActive(true);
+                            OFFTime += Time.deltaTime;
+                            if (OFFTime >= 3.0f)
+                            {
+                                ChaseONOFF = false;
+                                IdleONOFF = false;
+                                ONOFF = 0;
+                                HitBox.SetActive(false);
+                                PrototypeBodySkinnedMeshRenderer.enabled = false; //3DモデルのRendererを見えない状態
+                                NextTime = 0;
+                                OFFTime = 0;
+                            }
+                        }
+                    }
+                    else if (PianoRoom == true)
+                    {
+                        animator.SetBool("Walk", false);
+                        animator.SetBool("Run", false);
+                        SeenAreaONOFF = false;
+                        ChaseONOFF = true;
+                        IdleONOFF = true;
+                        ONOFF = 1;
+                        HitBox.SetActive(true);
+
+                        if (IdleONOFF == true)
+                        {
+                            OFFTime += Time.deltaTime;
+                            if (OFFTime >= 3.0f)
+                            {
+                                ChaseONOFF = false;
+                                IdleONOFF = false;
+                                ONOFF = 0;
+                                HitBox.SetActive(false);
+                                PrototypeBodySkinnedMeshRenderer.enabled = false; //3DモデルのRendererを見えない状態
+                                NextTime = 0;
+                                OFFTime = 0;
+                            }
                         }
                     }
                 }

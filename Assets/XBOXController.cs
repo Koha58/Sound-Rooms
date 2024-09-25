@@ -54,18 +54,37 @@ public class XBOXController : MonoBehaviour
         }
         if (Input.GetKeyDown("joystick button 8"))
         {
-            Debug.Log("button8");//
+            Debug.Log("button8");//Lスティック押込み
         }
         if (Input.GetKeyDown("joystick button 9"))
         {
-            Debug.Log("button9");//
+            Debug.Log("button9");//Rスティック押込み
         }
-        float hori1 = Input.GetAxis("Horizontal");
-        float vert1 = Input.GetAxis("Vertical");
-        if ((hori1 != 0) || (vert1 != 0))//左スティック
+
+        if (Input.GetKeyDown("joystick button 10"))
         {
-            Debug.Log("stick:" + hori1 + "," + vert1);
+            Debug.Log("button10");//
         }
+        if (Input.GetKeyDown("joystick button 11"))
+        {
+            Debug.Log("button11");//
+        }
+
+        float hori = Input.GetAxis("Horizontal");
+        float vert = Input.GetAxis("Vertical");
+        if ((hori != 0) || (vert != 0))//左スティック
+        {
+            Debug.Log("stick:" + hori + "," + vert);
+        }
+
+        //追加
+        float DpadHorizontal = Input.GetAxis("DpadHorizontal");
+        float DpadVertical = Input.GetAxis("DpadVertical");
+        if (DpadHorizontal != 0||DpadVertical !=0) //十字キー
+        {
+            Debug.Log("DPad:" + DpadHorizontal + "," + DpadVertical);
+        }
+
         /*上の変数を入れてからここをUpdateに入れれば動きます
         x = 0;
         z = 0;
@@ -79,6 +98,6 @@ public class XBOXController : MonoBehaviour
         //ボタンの追加方法
         //https://dkrevel.com/unity-explain/input-manager/
         //https://hakonebox.hatenablog.com/entry/2018/04/15/125152#Input-Manager%E3%81%A7%E5%85%A5%E5%8A%9B%E8%A8%AD%E5%AE%9A
-
+        //https://simplestar-tech.hatenablog.com/entry/2017/11/05/181019
     }
 }

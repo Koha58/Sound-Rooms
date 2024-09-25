@@ -65,7 +65,7 @@ public class GameOverScript : MonoBehaviour
         if(other.CompareTag("Enemy"))
         {
             Enemycontroller EC = other.GetComponent<Enemycontroller>();
-            if (EC.ONOFF == 1&&PS.onoff == 1 && Table.ON == false)
+            if (EC.ONOFF == 1&&PS.onoff == 1)
             {
                 if (Count == 0)
                 {
@@ -78,7 +78,7 @@ public class GameOverScript : MonoBehaviour
         if (other.CompareTag("EnemyG"))
         {
             Enemycontroller EC = other.GetComponent<Enemycontroller>();
-            if (EC.ONOFF == 1 && PS.onoff == 1 && Table.ON == false)
+            if (EC.ONOFF == 1 && PS.onoff == 1)
             {
                 if (Count == 0)
                 {
@@ -91,7 +91,7 @@ public class GameOverScript : MonoBehaviour
         if (other.CompareTag("Enemy2G"))
         {
             TutorialEnemyController EC = other.GetComponent<TutorialEnemyController>();
-            if (EC.ONOFF == 1 && PS.onoff == 1 && Table.ON == false)
+            if (EC.ONOFF == 1 && PS.onoff == 1)
             {
                 if (Count == 0)
                 {
@@ -104,7 +104,7 @@ public class GameOverScript : MonoBehaviour
         if (other.CompareTag("Enemy1"))
         {
             TutorialEnemyController EC1 = other.GetComponent<TutorialEnemyController>();
-            if (EC1.ONOFF == 1 && PS.onoff == 1 && Table.ON == false)
+            if (EC1.ONOFF == 1 && PS.onoff == 1)
             {
                 if (Count == 0)
                 {
@@ -117,7 +117,7 @@ public class GameOverScript : MonoBehaviour
         if (other.CompareTag("EnemySearch"))
         {
             EnemySearchcontroller ESC = other.GetComponent<EnemySearchcontroller>();
-            if (ESC.ONOFF == 1 && PS.onoff == 1 && Table.ON == false)
+            if (ESC.ONOFF == 1 && PS.onoff == 1)
             {
                 if (Count == 0)
                 {

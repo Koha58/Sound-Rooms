@@ -201,6 +201,10 @@ public class GameSceneButton : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (NoUI == true)
+        {
+            Controller();
+        }
 
         if (Input.GetKeyDown("joystick button 7"))//メニュー ボタン 
         {
@@ -252,8 +256,6 @@ public class GameSceneButton : MonoBehaviour
 
             NoUI = true;
         }
-
-        Controller();
   
 
         if (Input.GetKeyDown("joystick button 1"))//B
@@ -706,28 +708,24 @@ public class GameSceneButton : MonoBehaviour
                     MenuCursor2.GetComponent<Image>().enabled = false;
                     MenuCursor3.GetComponent<Image>().enabled = false;
 
-                   
-                        if (Input.GetAxis("Horizontal") > 0)
+                    if (Input.GetAxis("Horizontal") > 0)
+                    {
+                        if (volume2 < 0)
                         {
-                            if (volume2 < 0)
-                            {
-                                volume2 += 10f;
-                            }
-                            BGMSlider.value = volume2;
-                            SetMic(volume2);
+                            volume2 += 1f;
                         }
-                        else if (Input.GetAxis("Horizontal") < 0)
+                        BGMSlider.value = volume2;
+                        SetMic(volume2);
+                    }
+                    else if (Input.GetAxis("Horizontal") < 0)
+                    {
+                        if (volume2 > -80 && volume != 0)
                         {
-                            if (volume2 > -80 && volume != 0)
-                            {
-                                volume2 -= 10f;
-                            }
-                            BGMSlider.value = volume2;
-                            SetMic(volume2);
+                            volume2 -= 1f;
                         }
-
-              
-                    
+                        BGMSlider.value = volume2;
+                        SetMic(volume2);
+                    }
                 }
                 else if(SelectCount == 1)
                 {
@@ -740,7 +738,7 @@ public class GameSceneButton : MonoBehaviour
                     {
                         if (volume3 < 0)
                         {
-                            volume3 += 10f;
+                            volume3 += 1f;
                         }
                         SESlider.value = volume3;
                         SetMic(volume3);
@@ -749,7 +747,7 @@ public class GameSceneButton : MonoBehaviour
                     {
                         if (volume3 > -80 && volume != 0)
                         {
-                            volume3 -= 10f;
+                            volume3 -= 1f;
                         }
                         SESlider.value = volume3;
                         SetMic(volume3);
@@ -765,7 +763,7 @@ public class GameSceneButton : MonoBehaviour
                     {
                         if (volume < 1)
                         {
-                            volume += 0.1f;
+                            volume += 0.02f;
                         }
                         MicSlider.value = volume;
                         SetMic(volume);
@@ -774,7 +772,7 @@ public class GameSceneButton : MonoBehaviour
                     {
                         if (volume > 0 && volume != 0)
                         {
-                            volume -= 0.1f;
+                            volume -= 0.02f;
                         }
                         MicSlider.value = volume;
                         SetMic(volume);

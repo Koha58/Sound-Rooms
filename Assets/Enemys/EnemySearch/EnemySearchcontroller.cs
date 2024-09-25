@@ -15,6 +15,7 @@ public class EnemySearchcontroller : MonoBehaviour
     private float ONTime;
     private float OFFTime;
     float VisualizationRandom;//‰Â‹‰»ŠÔ‚ğƒ‰ƒ“ƒ_ƒ€
+   [SerializeField] CapsuleCollider capsuleCollider;
 
     //3Dƒ‚ƒfƒ‹‚ÌRenderer‚ÌONOFF
     public SkinnedMeshRenderer PrototypeBodySkinnedMeshRenderer;
@@ -85,6 +86,7 @@ public class EnemySearchcontroller : MonoBehaviour
             {
                 ONOFF = 1;
                 HitBox.SetActive(true);
+                capsuleCollider.enabled = true;
                 PrototypeBodySkinnedMeshRenderer.enabled = true;
                 audioSourse.enabled = true;
                 animator.SetBool("StandUp", true);
@@ -98,6 +100,7 @@ public class EnemySearchcontroller : MonoBehaviour
         {
             animator.SetBool("Run", true);
             ChaseONOFF = false;
+            capsuleCollider.enabled = false;
             PS.Visualization = false;
             PS.onoff = 0;//Œ©‚¦‚Ä‚¢‚é‚©‚ç1
             foreach (var playerParts in childTransforms)
@@ -193,6 +196,7 @@ public class EnemySearchcontroller : MonoBehaviour
                     animator.SetBool("StandUp", false);
                     animator.SetBool("Run",true);
                     SeenAreaONOFF = false;
+                    capsuleCollider.enabled = true;
                     ChaseONOFF = true;
                     IdleONOFF = true;
                     ONOFF = 1;
@@ -204,6 +208,7 @@ public class EnemySearchcontroller : MonoBehaviour
                         OFFTime += Time.deltaTime;
                         if (OFFTime >= 3.0f)
                         {
+                            capsuleCollider.enabled = false;
                             ChaseONOFF = false;
                             IdleONOFF = false;
                             ONOFF = 0;
@@ -286,6 +291,7 @@ public class EnemySearchcontroller : MonoBehaviour
     {
         ONOFF = 0;//Œ©‚¦‚È‚¢ó‘Ô
         HitBox.SetActive(false);
+        capsuleCollider.enabled = false;
         VisualizationRandom = Random.Range(4.0f, 6.0f);
         audioSourse = GetComponent<AudioSource>();
         PrototypeBodySkinnedMeshRenderer.enabled = false; //3Dƒ‚ƒfƒ‹‚ÌRenderer‚ğŒ©‚¦‚È‚¢ó‘Ô

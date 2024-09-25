@@ -76,7 +76,7 @@ public class EnemyAttack : MonoBehaviour
         {
             DC += Time.deltaTime;
 
-            if (DC >= 9.5f)
+            if (DC >= 9.8f)
             {
                 SoundON = true;
             }
@@ -107,7 +107,7 @@ public class EnemyAttack : MonoBehaviour
         if (DB2 == true)
         {
             DC += Time.deltaTime;
-            if (DC >= 9.5f)
+            if (DC >= 9.8f)
             {
                 SoundON = true;
             }
