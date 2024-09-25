@@ -6,7 +6,7 @@ using UnityEngine;
 public class Table : MonoBehaviour
 {
     static public bool ON;
-    float Timer;
+    static public float Timer;
     // Start is called before the first frame update
     void Start()
     {

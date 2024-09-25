@@ -87,6 +87,8 @@ public class TutorialVisualizationBox : MonoBehaviour
                 //タグが"PlayerParts"である子オブジェクトを見えるようにする
                 playerParts.gameObject.GetComponent<Renderer>().enabled = false;
             }
+            Table.ON = false;
+            Table.Timer = 0;
         }
     }
 }
