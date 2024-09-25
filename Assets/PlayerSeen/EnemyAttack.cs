@@ -224,10 +224,10 @@ public class EnemyAttack : MonoBehaviour
 
         if (other.CompareTag("EnemySearch"))
         {
-            GameObject Boss = GameObject.FindWithTag("Boss");
-            BossEnemyControll ESC = Boss.GetComponent<BossEnemyControll>();
-            if (ESC.DestroyONOFF == true)
-            {
+            GameObject EnemySearch = GameObject.FindWithTag("EnemySearch");
+            EnemySearchcontroller ESC = EnemySearch.GetComponent<EnemySearchcontroller>();
+            //if (ESC.DestroyONOFF == true)
+            //{
                 enemyDeathcnt++;
                 DeathRange += 1.0f;
                 GetComponent<ParticleSystem>().Play();;
@@ -235,16 +235,10 @@ public class EnemyAttack : MonoBehaviour
 
                 BossTiming = true;
 
-                
                 DB = true;
                 SoundON = false;
                 DC = 0;
-                /*
-                ESC.ONOFF = 0;
-                DC = 0;
-                Count = 0;
-                */
-            }
+            //}
         }
 
         if (other.CompareTag("EnemyG"))

@@ -6,13 +6,16 @@ using UnityEngine;
 public class VisualizationBox : MonoBehaviour
 {
     [SerializeField] Transform Boss;
+    void Start()
+    {
+        gameObject.SetActive(false);
+    }
     // Update is called once per frame
     void Update()
     {
         transform.position = Boss.transform.position;
         GameObject gameObject = GameObject.FindWithTag("Boss"); //Playerオブジェクトを探す
         BossEnemyControll BEC = gameObject.GetComponent<BossEnemyControll>();
-        BEC.ONOFF = 1;
 
         if (BEC.ONOFF == 1){this.gameObject.SetActive(true);}
     }
@@ -86,8 +89,6 @@ public class VisualizationBox : MonoBehaviour
                 //タグが"PlayerParts"である子オブジェクトを見えるようにする
                 playerParts.gameObject.GetComponent<Renderer>().enabled = false;
             }
-            Table.ON = false;
-            Table.Timer = 0;
         }
     }
 }

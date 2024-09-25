@@ -131,7 +131,6 @@ public class BossEnemyControll : MonoBehaviour
     {
         if (ONOFF == 0)//Œ©‚¦‚È‚¢‚Æ‚«
         {
-            VisualizationBoss.SetActive(false);               //‰Â‹‰»‚Ì‰¹(‰~)‚ğŒ©‚¦‚È‚¢ó‘Ô
             PrototypeBodySkinnedMeshRenderer.enabled = false; //3Dƒ‚ƒfƒ‹‚ÌRenderer‚ğŒ©‚¦‚È‚¢ó‘Ô
             audioSourse.maxDistance = 5;                      //‰¹‚ª•·‚±‚¦‚é”ÍˆÍ
         }
@@ -197,6 +196,8 @@ public class BossEnemyControll : MonoBehaviour
         }
         else if (EnemyAttack.SoundON == false)
         {
+            ONOFF = 0;
+            PrototypeBodySkinnedMeshRenderer.enabled = false; //3Dƒ‚ƒfƒ‹‚ÌRenderer‚ğŒ©‚¦‚È‚¢ó‘Ô
             MoveBossEnemy();
         }
 

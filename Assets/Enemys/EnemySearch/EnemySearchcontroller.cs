@@ -15,7 +15,6 @@ public class EnemySearchcontroller : MonoBehaviour
     private float ONTime;
     private float OFFTime;
     float VisualizationRandom;//可視化時間をランダム
-   [SerializeField] CapsuleCollider capsuleCollider;
 
     //3DモデルのRendererのONOFF
     public SkinnedMeshRenderer PrototypeBodySkinnedMeshRenderer;
@@ -30,7 +29,7 @@ public class EnemySearchcontroller : MonoBehaviour
     public Transform TargetPlayer;
 
     //Playerを追跡
-    float ChaseSpeed = 0.05f;//Playerを追いかけるスピード
+    float ChaseSpeed = 0.07f;//Playerを追いかけるスピード
     bool ChaseONOFF;
 
     //Destroyの判定
@@ -86,7 +85,6 @@ public class EnemySearchcontroller : MonoBehaviour
             {
                 ONOFF = 1;
                 HitBox.SetActive(true);
-                capsuleCollider.enabled = true;
                 PrototypeBodySkinnedMeshRenderer.enabled = true;
                 audioSourse.enabled = true;
                 animator.SetBool("StandUp", true);
@@ -100,7 +98,6 @@ public class EnemySearchcontroller : MonoBehaviour
         {
             animator.SetBool("Run", true);
             ChaseONOFF = false;
-            capsuleCollider.enabled = false;
             PS.Visualization = false;
             PS.onoff = 0;//見えているから1
             foreach (var playerParts in childTransforms)
@@ -196,7 +193,6 @@ public class EnemySearchcontroller : MonoBehaviour
                     animator.SetBool("StandUp", false);
                     animator.SetBool("Run",true);
                     SeenAreaONOFF = false;
-                    capsuleCollider.enabled = true;
                     ChaseONOFF = true;
                     IdleONOFF = true;
                     ONOFF = 1;
@@ -208,7 +204,6 @@ public class EnemySearchcontroller : MonoBehaviour
                         OFFTime += Time.deltaTime;
                         if (OFFTime >= 3.0f)
                         {
-                            capsuleCollider.enabled = false;
                             ChaseONOFF = false;
                             IdleONOFF = false;
                             ONOFF = 0;
@@ -291,7 +286,6 @@ public class EnemySearchcontroller : MonoBehaviour
     {
         ONOFF = 0;//見えない状態
         HitBox.SetActive(false);
-        capsuleCollider.enabled = false;
         VisualizationRandom = Random.Range(4.0f, 6.0f);
         audioSourse = GetComponent<AudioSource>();
         PrototypeBodySkinnedMeshRenderer.enabled = false; //3DモデルのRendererを見えない状態
@@ -324,7 +318,7 @@ public class EnemySearchcontroller : MonoBehaviour
                 UpON = true;
             }
         }
-        else if (Player > 1.0f) { UpON = false; }
+        else if (Player > 0.2f) { UpON = false; }
 
         if (UpON == false)
         {
