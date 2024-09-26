@@ -63,6 +63,12 @@ public class TutorialMessageControll : MonoBehaviour
                 {
                     Messages[Message] = ControllerMessages[0];
                 }
+
+                if (!deviceCheck && Message == 1)
+                {
+                    Messages[Message].state = 0;
+                    Messages[Message] = Messages[1];
+                }
             }
             Messages[Message].state = 1;
             Message++;
@@ -113,10 +119,14 @@ public class TutorialMessageControll : MonoBehaviour
                 if (!deviceCheck)
                 {
                     MoveWays[0].state = 1;
+                    MoveWays[1].state = 0;
+                    MoveWays[2].state = 0;
                 }
                 else
                 {
                     ControllerMoveWays[0].state = 1;
+                    MoveWays[1].state = 0;
+                    MoveWays[2].state = 0;
                 }
             }
         }
@@ -165,10 +175,14 @@ public class TutorialMessageControll : MonoBehaviour
                 if (!deviceCheck)
                 {
                     MoveWays[1].state = 1;
+                    MoveWays[0].state = 0;
+                    MoveWays[2].state = 0;
                 }
                 else
                 {
                     ControllerMoveWays[1].state = 1;
+                    MoveWays[0].state = 0;
+                    MoveWays[2].state = 0;
                 }
             }
         }
@@ -226,6 +240,8 @@ public class TutorialMessageControll : MonoBehaviour
         }
         if (other.CompareTag("Right") || other.CompareTag("Left"))
         {
+            MoveWays[0].state = 0;
+            MoveWays[1].state = 0;
             MoveWays[2].state = 1;
             moveTimecnt += Time.deltaTime;
         }

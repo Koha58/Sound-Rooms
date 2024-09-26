@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static InputDeviceManager;
+using static UnityEditor.PlayerSettings;
 
 //プレイヤーの移動
 
@@ -578,6 +579,15 @@ public class PlayerRun : MonoBehaviour
         if (walk == true)
         {
             playerRb.velocity = moveSpeed;
+
+            //// 入力を取得
+            //var _h = Input.GetAxis("Horizontal");
+            //var _v = Input.GetAxis("Vertical");
+
+            //// 速度ベクトルを作成（3次元用）
+            //moveSpeed = new Vector3(_h, playerRb.velocity.y, _v);
+            //// 速度に正規化したベクトルを代入
+            //playerRb.velocity = moveSpeed.normalized;
         }
 
         if(run == true)
