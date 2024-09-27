@@ -20,15 +20,7 @@ public class PlayerSeen : MonoBehaviour
     public bool Visualization;
     void Start()
     {
-        //tagが"PlayerParts"である子オブジェクトのTransformのコレクションを取得
-        var childTransforms = _parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
-
-        foreach (var playerParts in childTransforms)
-        {
-            //タグが"PlayerParts"である子オブジェクトを見えなくする
-            playerParts.gameObject.GetComponent<Renderer>().enabled = false;
-        }
-
+        onoff = 0;
         Visualization = false;
 
         piano = false;
@@ -46,11 +38,6 @@ public class PlayerSeen : MonoBehaviour
         //音を出すことで見えるようになる
         if (levelMeter.nowdB > 0.0f && !piano)
         {
-            foreach (var playerParts in childTransforms)
-            {
-                //タグが"PlayerParts"である子オブジェクトを見えるようにする
-                playerParts.gameObject.GetComponent<Renderer>().enabled = true;
-            }
             onoff = 1;  //見えているから1
         }
 
@@ -61,11 +48,6 @@ public class PlayerSeen : MonoBehaviour
             {
                 if (levelMeter.nowdB <= 0.0f && !piano)
                 {
-                    foreach (var playerParts in childTransforms)
-                    {
-                        //タグが"PlayerParts"である子オブジェクトを見えなくする
-                        playerParts.gameObject.GetComponent<Renderer>().enabled = false;
-                    }
                     onoff = 0;  //見えていないから0
                 }
             }
@@ -74,11 +56,7 @@ public class PlayerSeen : MonoBehaviour
         //ピアノ部屋挙動
         if (piano)
         {
-            foreach (var playerParts in childTransforms)
-            {
-                //タグが"PlayerParts"である子オブジェクトを見えるようにする
-                playerParts.gameObject.GetComponent<Renderer>().enabled = true;
-            }
+            onoff = 1;
 
             GameObject Setting = GameObject.Find("EventSystem");
             AS = Setting.GetComponent<AudioSetting>();

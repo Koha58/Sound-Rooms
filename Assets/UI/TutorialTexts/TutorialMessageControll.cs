@@ -132,7 +132,7 @@ public class TutorialMessageControll : MonoBehaviour
         }
         if (Message == 19)
         {
-            if (EnemyAttack.enemyDeathcnt == 1)
+            if (EnemyAttack.enemyDeathcnt >= 1)
             {
                 timeCnt = 7.0f;
             }
