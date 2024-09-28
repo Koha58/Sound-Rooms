@@ -164,10 +164,14 @@ public class TutorialMessageControll : MonoBehaviour
                 if(!deviceCheck)
                 {
                     MoveWays[1].state = 0;
+                    MoveWays[0].state = 0;
+                    MoveWays[2].state = 0;
                 }
                 else
                 {
                     ControllerMoveWays[1].state = 0;
+                    MoveWays[0].state = 0;
+                    MoveWays[2].state = 0;
                 }
             }
             else

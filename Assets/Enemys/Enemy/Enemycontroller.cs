@@ -95,7 +95,6 @@ public class Enemycontroller : MonoBehaviour
     {
         GameObject obj = GameObject.Find("Player");      //Playerオブジェクトを探す
         PlayerSeen PS = obj.GetComponent<PlayerSeen>();  //付いているスクリプトを取得
-        var childTransforms = PS._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
 
         float ChasePlayer = Vector3.Distance(transform.position, TargetPlayer.position); //プレイヤーと敵の位置の計算
         if (ChasePlayer <= 5f) //プレイヤーが検知範囲に入ったら
@@ -111,11 +110,6 @@ public class Enemycontroller : MonoBehaviour
                 transform.position += transform.forward * ChaseSpeed; //プレイヤーの方向に向かう
                 PS.Visualization = true;
                 PS.onoff = 1;  //見えているから1
-                foreach (var playerParts in childTransforms)
-                {
-                    //タグが"PlayerParts"である子オブジェクトを見えるようにする
-                    playerParts.gameObject.GetComponent<Renderer>().enabled = true;
-                }
             }
         }
         else if (ChasePlayer > 5 && ChaseONOFF == true)
@@ -124,11 +118,6 @@ public class Enemycontroller : MonoBehaviour
             {
                 PS.Visualization = false;
                 PS.onoff = 0;
-                foreach (var playerParts in childTransforms)
-                {
-                    //タグが"PlayerParts"である子オブジェクトを見えるようにする
-                    playerParts.gameObject.GetComponent<Renderer>().enabled = false;
-                }
                 animator.SetBool("Walk", false);
                 animator.SetBool("Run", false);
                 SeenAreaONOFF = false;
@@ -208,7 +197,6 @@ public class Enemycontroller : MonoBehaviour
         {
             GameObject obj = GameObject.Find("Player");                                                                                 //Playerオブジェクトを探す
             PlayerSeen PS = obj.GetComponent<PlayerSeen>();                                                                             //付いているスクリプトを取得
-            var childTransforms = PS._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
 
             ONOFF = 1;
             HitBox.SetActive(true);
@@ -235,11 +223,6 @@ public class Enemycontroller : MonoBehaviour
                     {
                         PS.Visualization = false;
                         PS.onoff = 0;
-                        foreach (var playerParts in childTransforms)
-                        {
-                            //タグが"PlayerParts"である子オブジェクトを見えるようにする
-                            playerParts.gameObject.GetComponent<Renderer>().enabled = false;
-                        }
                         animator.SetBool("Walk", false);
                         animator.SetBool("Run", false);
                         SeenAreaONOFF = false;
@@ -299,7 +282,6 @@ public class Enemycontroller : MonoBehaviour
     {
         GameObject obj = GameObject.Find("Player");                                                                                 //Playerオブジェクトを探す
         PlayerSeen PS = obj.GetComponent<PlayerSeen>();                                                                             //付いているスクリプトを取得
-        var childTransforms = PS._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
 
         float VisualizationPlayer = Vector3.Distance(transform.position, TargetPlayer.position);                                    //プレイヤーと敵の位置の計算
         if (VisualizationPlayer <=5f)                                                                                              //プレイヤーが検知範囲に入ったら
@@ -324,11 +306,6 @@ public class Enemycontroller : MonoBehaviour
                 {
                     PS.Visualization = false;
                     PS.onoff = 0;                                                                                                   //見えているから1
-                    foreach (var playerParts in childTransforms)
-                    {
-                        //タグが"PlayerParts"である子オブジェクトを見えるようにする
-                        playerParts.gameObject.GetComponent<Renderer>().enabled = false;
-                    }
                 }
 
                 if (hit.collider.CompareTag("Player"))
@@ -336,11 +313,6 @@ public class Enemycontroller : MonoBehaviour
                     Chase();
                     PS.Visualization = true;
                     PS.onoff = 1;  //見えているから1
-                    foreach (var playerParts in childTransforms)
-                    {
-                        //タグが"PlayerParts"である子オブジェクトを見えるようにする
-                        playerParts.gameObject.GetComponent<Renderer>().enabled = true;
-                    }
                 }
             }
         }
@@ -355,7 +327,6 @@ public class Enemycontroller : MonoBehaviour
             {
                 GameObject obj = GameObject.Find("Player");                                                                                 //Playerオブジェクトを探す
                 PlayerSeen PS = obj.GetComponent<PlayerSeen>();                                                                             //付いているスクリプトを取得
-                var childTransforms = PS._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
 
                 float VisualizationPlayer = Vector3.Distance(transform.position, TargetPlayer.position);                                    //プレイヤーと敵の位置の計算
                 if (VisualizationPlayer <= 5f)                                                                                              //プレイヤーが検知範囲に入ったら
@@ -453,15 +424,9 @@ public class Enemycontroller : MonoBehaviour
                 {
                     GameObject obj = GameObject.Find("Player");                               //Playerオブジェクトを探す
                     PlayerSeen PS = obj.GetComponent<PlayerSeen>();                           //付いているスクリプトを取得
-                    var childTransforms = PS._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
 
                     PS.Visualization = false;
                     PS.onoff = 0;
-                    foreach (var playerParts in childTransforms)
-                    {
-                        //タグが"PlayerParts"である子オブジェクトを見えるようにする
-                        playerParts.gameObject.GetComponent<Renderer>().enabled = false;
-                    }
 
                     ONOFF = 1;
                     HitBox.SetActive(true);
@@ -563,17 +528,11 @@ public class Enemycontroller : MonoBehaviour
         {
             GameObject obj = GameObject.Find("Player");                               //Playerオブジェクトを探す
             PlayerSeen PS = obj.GetComponent<PlayerSeen>();                           //付いているスクリプトを取得
-            var childTransforms = PS._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
             if (ONOFF == 0)
             {
 
                 PS.Visualization = false;
                 PS.onoff = 0;                                                             //見えているから1
-                foreach (var playerParts in childTransforms)
-                {
-                    //タグが"PlayerParts"である子オブジェクトを見えるようにする
-                    playerParts.gameObject.GetComponent<Renderer>().enabled = false;
-                }
             }
         }
     }

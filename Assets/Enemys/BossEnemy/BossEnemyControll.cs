@@ -95,7 +95,6 @@ public class BossEnemyControll : MonoBehaviour
     {
         GameObject gobj = GameObject.Find("Player");        //Playerオブジェクトを探す
         PlayerSeen PS = gobj.GetComponent<PlayerSeen>();    //付いているスクリプトを取得
-        var childTransforms = PS._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
 
         float ChasePlayer = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
         if (TouchWall == false)
@@ -170,14 +169,8 @@ public class BossEnemyControll : MonoBehaviour
             {
                 GameObject gobj = GameObject.Find("Player");        //Playerオブジェクトを探す
                 PlayerSeen PS = gobj.GetComponent<PlayerSeen>();    //付いているスクリプトを取得
-                var childTransforms = PS._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
                 PS.Visualization = false;
                 PS.onoff = 0;
-                foreach (var playerParts in childTransforms)
-                {
-                    //タグが"PlayerParts"である子オブジェクトを見えなくする
-                    playerParts.gameObject.GetComponent<Renderer>().enabled = false;
-                }
 
                 ONTime = 0;
                 VisualizationBoss.SetActive(false);              //可視化の音(円)を見えない状態
