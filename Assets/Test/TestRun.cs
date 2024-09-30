@@ -8,31 +8,60 @@ public class TestRun : MonoBehaviour
     //移動用の変数
     float x, z;
 
-    //スピード調整用の変数
+    //歩くスピード調整用の変数
     float Walkspeed = 1f/100;
-    //スピード調整用の変数
+    //走るスピード調整用の変数
     float Runspeed = 2f / 100;
 
-    //プレイヤーのRigidbody
-    Rigidbody PlayerRigidbody;
     Animator Animator;
 
-    public float Speed=10;
+    // 最大の回転角速度[deg/s]
+    [SerializeField] private float _maxAngularSpeed = Mathf.Infinity;
+
+    // 進行方向に向くのにかかるおおよその時間[s]
+    [SerializeField] private float _smoothTime = 0.1f;
+
+    private Transform _transform;
+
+    // 前フレームのワールド位置
+    private Vector3 _prevPosition;
+
+    bool Move;
 
     // Start is called before the first frame update
     void Start()
     {
-        PlayerRigidbody = GetComponent<Rigidbody>();
         Animator = GetComponent<Animator>();   //アニメーターコントローラーからアニメーションを取得する
+
+        _transform = transform;
+
+        _prevPosition = _transform.position;
     }
 
     // Update is called once per frame
     void Update()
     {
-        PlayerWalk();
-        if (Input.GetKey("joystick button 5")){PlayerRun();}
-        Rotation();
+        Idle();
+        Controller();
+        if (Move == true)
+        {
+            Rotation();
+            PlayerWalk();
+            if (Input.GetKey("joystick button 5")) { PlayerRun(); }
+        }
+    }
 
+    private void Idle()
+    {
+        if(Input.GetAxisRaw("Horizontal")==0&&Input.GetAxisRaw("Vertical")==0)
+        {
+            Animator.SetBool("Walking", false);
+            Animator.SetBool("Running", false);
+            Animator.SetBool("Squatting", false);
+            Animator.SetBool("CrouchWalking", false);
+            Move = false;
+        }
+        else {Move = true;}
     }
 
     private void PlayerWalk()
@@ -41,8 +70,7 @@ public class TestRun : MonoBehaviour
         z = Input.GetAxisRaw("Vertical") * Walkspeed;
         Animator.SetBool("Walking", true);
         Animator.SetBool("Running", false);
-
-        PlayerRigidbody.transform.position += new Vector3(x * -1, 0, z);
+        transform.position += new Vector3(x*-1 , 0, z);
     }
 
     private void PlayerRun()
@@ -52,16 +80,36 @@ public class TestRun : MonoBehaviour
         Animator.SetBool("Walking", false);
         Animator.SetBool("Running", true);
 
-        PlayerRigidbody.transform.position += new Vector3(x * -1, 0, z);
+        transform.position += new Vector3(x*-1, 0, z);
     }
 
     private void Rotation()
     {
-        float H1 = Input.GetAxisRaw("Horizontal");
-        float V1 = Input.GetAxisRaw("Vertical");
+        // 現在フレームのワールド位置
+        var position = _transform.position;
 
-        Vector3 rotation = new Vector3(V1, H1, 0)*Speed*Time.deltaTime;
+        // 移動量を計算
+        var delta = position - _prevPosition;
 
-        transform.LookAt(rotation);
+        // 次のUpdateで使うための前フレーム位置更新
+        _prevPosition = position;
+
+        // 静止している状態だと、進行方向を特定できないため回転しない
+        if (delta == Vector3.zero)
+            return;
+
+        // 進行方向（移動量ベクトル）に向くようなクォータニオンを取得
+        var rotation = Quaternion.LookRotation(delta, Vector3.up);
+
+        // オブジェクトの回転に反映
+        _transform.rotation = rotation;
+    }
+
+    private void Controller()
+    {
+        if (transform.localRotation.y==0)
+        {
+
+        }
     }
 }
