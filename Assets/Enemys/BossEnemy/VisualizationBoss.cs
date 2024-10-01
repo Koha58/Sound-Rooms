@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class VisualizationBoss : MonoBehaviour
 {
-   [SerializeField] Transform Boss;
     // Start is called before the first frame update
     void Start()
     {
@@ -15,7 +14,6 @@ public class VisualizationBoss : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       transform.position = Boss.transform.position ;
         GameObject gameObject =GameObject.FindWithTag("Boss"); //Playerオブジェクトを探す
         BossEnemyControll BEC = gameObject.GetComponent<BossEnemyControll>();
         BEC.PrototypeBodySkinnedMeshRenderer.enabled = true;

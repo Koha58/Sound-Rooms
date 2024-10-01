@@ -11,7 +11,7 @@ public class TestRun : MonoBehaviour
     //歩くスピード調整用の変数
     float Walkspeed = 1f/100;
     //走るスピード調整用の変数
-    float Runspeed = 2f / 100;
+    float Runspeed = 2f / 50;
 
     Animator Animator;
 

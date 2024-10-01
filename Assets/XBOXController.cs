@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class XBOXController : MonoBehaviour
 {
@@ -12,11 +13,27 @@ public class XBOXController : MonoBehaviour
    // float speed = 0.1f;
 
     // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
+    private IEnumerator Start()
+    {
+        var gamepad = Gamepad.current;
+        if (gamepad == null)
+        {
+            Debug.Log("ゲームパッド未接続");
+            yield break;
+        }
+
+        Debug.Log("左モーター振動");
+        gamepad.SetMotorSpeeds(1.0f, 0.0f);
+        yield return new WaitForSeconds(1.0f);
+
+        Debug.Log("右モーター振動");
+        gamepad.SetMotorSpeeds(0.0f, 1.0f);
+        yield return new WaitForSeconds(1.0f);
+
+        Debug.Log("モーター停止");
+        gamepad.SetMotorSpeeds(0.0f, 0.0f);
+    }
     // Update is called once per frame
     void Update()
     {
@@ -84,7 +101,6 @@ public class XBOXController : MonoBehaviour
         {
             Debug.Log("DPad:" + DpadHorizontal + "," + DpadVertical);
         }
-
         /*上の変数を入れてからここをUpdateに入れれば動きます
         x = 0;
         z = 0;
