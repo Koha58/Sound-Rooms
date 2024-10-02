@@ -312,7 +312,7 @@ public class EnemySearchcontroller : MonoBehaviour
             if (isFront) //ターゲットが自身の前方にあるなら
             {
                 Chase();
-                if (ONOFF == 0) { ChaseONOFF = false; }else{ Ray(); }
+                if (ONOFF == 0) { ChaseONOFF = false; }else if(ONOFF == 1) { Ray(); }
                 DestroyONOFF = false;
             }
             else if (isBack)// ターゲットが自身の後方にあるなら

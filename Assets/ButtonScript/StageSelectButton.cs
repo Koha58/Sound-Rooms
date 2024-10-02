@@ -48,8 +48,6 @@ public class StageSelectButton : MonoBehaviour
     private float StartSizeY = 0.7f;
     private float StartSizeZ = 1.0f;
 
-    bool readyStart;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -103,8 +101,6 @@ public class StageSelectButton : MonoBehaviour
         }
 
         Continue = false;
-
-        readyStart = false;
     }
 
     // Update is called once per frame
@@ -194,19 +190,17 @@ public class StageSelectButton : MonoBehaviour
                 Continue = true;
             }
 
-            if (Input.GetAxisRaw("Horizontal") > 0 && Continue == false && !readyStart)
+            if (Input.GetAxisRaw("Horizontal") > 0 && Continue == false )
             {
                 cursorTransform.transform.localPosition = new Vector3(StartPositionX, StartPositionY, StartPositionZ);
                 cursorTransform.transform.localScale = new Vector3(StartSizeX, StartSizeY, StartSizeZ);
                 Continue = true;
-                readyStart = true;
                 SetGameStart = true;
 
             }
-            else if(Input.GetAxisRaw("Horizontal") < 0 && Continue == false && readyStart)
+            else if(Input.GetAxisRaw("Horizontal") < 0 && Continue == false)
             {
                 SetGameStart=false;
-                readyStart = false;
                 cursorTransform.transform.localPosition = new Vector3(originPositionX, originPositionY, originPositionZ);
                 cursorTransform.transform.localScale = new Vector3(originSizeX, originSizeY, originSizeZ);
             }

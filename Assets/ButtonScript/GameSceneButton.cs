@@ -701,7 +701,7 @@ public class GameSceneButton : MonoBehaviour
                     NotSelect = false;
                 }
 
-                if (SelectCount ==0)
+                if (SelectCount == 0)
                 {
                     MenuCursor.GetComponent<Image>().enabled = true;
                     MenuCursor1.GetComponent<Image>().enabled = false;
@@ -727,13 +727,13 @@ public class GameSceneButton : MonoBehaviour
                         SetMic(volume2);
                     }
                 }
-                else if(SelectCount == 1)
+                else if (SelectCount == 1)
                 {
                     MenuCursor.GetComponent<Image>().enabled = false;
                     MenuCursor1.GetComponent<Image>().enabled = true;
                     MenuCursor2.GetComponent<Image>().enabled = false;
                     MenuCursor3.GetComponent<Image>().enabled = false;
-                  
+
                     if (Input.GetAxis("Horizontal") > 0)
                     {
                         if (volume3 < 0)
@@ -753,7 +753,7 @@ public class GameSceneButton : MonoBehaviour
                         SetMic(volume3);
                     }
                 }
-                else if(SelectCount == 2)
+                else if (SelectCount == 2)
                 {
                     MenuCursor.GetComponent<Image>().enabled = false;
                     MenuCursor1.GetComponent<Image>().enabled = false;
@@ -778,7 +778,7 @@ public class GameSceneButton : MonoBehaviour
                         SetMic(volume);
                     }
                 }
-                else if(SelectCount == 3)
+                else if (SelectCount == 3)
                 {
                     MenuCursor.GetComponent<Image>().enabled = false;
                     MenuCursor1.GetComponent<Image>().enabled = false;
@@ -810,7 +810,7 @@ public class GameSceneButton : MonoBehaviour
                     MenuCursor2.GetComponent<Image>().enabled = false;
                     MenuCursor3.GetComponent<Image>().enabled = false;
 
-                    if(Input.GetAxisRaw("Vertical") > 0 && MainSelectPositionSelect == true)
+                    if (Input.GetAxisRaw("Vertical") > 0 && MainSelectPositionSelect == true)
                     {
                         NotSelect = false;
                         MainSelectPositionSelect = false;
@@ -818,6 +818,13 @@ public class GameSceneButton : MonoBehaviour
                     }
                 }
 
+                if (Input.GetKeyDown("joystick button 2"))
+                {
+                        MainSelectPosition = 2;
+                    MainSelectPositionSelect = false;
+                    ExplanationSelect = true;
+                    NotSelect = false;
+                }
             }
             else if (MainSelectPosition == 1)
             {
