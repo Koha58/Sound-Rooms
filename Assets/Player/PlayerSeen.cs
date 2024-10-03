@@ -32,8 +32,6 @@ public class PlayerSeen : MonoBehaviour
     {
         GameObject soundobj = GameObject.Find("SoundVolume");
         levelMeter = soundobj.GetComponent<LevelMeter>(); //付いているスクリプトを取得
-        //tagが"PlayerParts"である子オブジェクトのTransformのコレクションを取得
-        var childTransforms = _parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
 
         //音を出すことで見えるようになる
         if (levelMeter.nowdB > 0.0f && !piano)
