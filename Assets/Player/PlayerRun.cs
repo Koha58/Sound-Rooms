@@ -164,6 +164,60 @@ public class PlayerRun : MonoBehaviour
             CrouchOn = false;
         }
 
+        if (!crouch && (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.D)))
+        {
+            moveSpeed = (-moveSpeedIn * cameraForward) + (moveSpeedIn * cameraRight);
+            animator.SetBool("Walking", true);
+            animator.SetBool("Running", false);
+            animator.SetBool("Squatting", false);
+            animator.SetBool("CrouchWalking", false);
+            moving = 1;
+            walk = true;
+            run = false;
+            crouch = false;
+            crouchWalk = false;
+        }
+        if (!crouch && (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.D)))
+        {
+            moveSpeed = (moveSpeedIn * cameraForward) + (moveSpeedIn * cameraRight);
+            animator.SetBool("Walking", true);
+            animator.SetBool("Running", false);
+            animator.SetBool("Squatting", false);
+            animator.SetBool("CrouchWalking", false);
+            moving = 1;
+            walk = true;
+            run = false;
+            crouch = false;
+            crouchWalk = false;
+        }
+        if (!crouch && (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.A)))
+        {
+            moveSpeed = (moveSpeedIn * cameraForward) + (-moveSpeedIn * cameraRight);
+            animator.SetBool("Walking", true);
+            animator.SetBool("Running", false);
+            animator.SetBool("Squatting", false);
+            animator.SetBool("CrouchWalking", false);
+            moving = 1;
+            walk = true;
+            run = false;
+            crouch = false;
+            crouchWalk = false;
+        }
+        if (!crouch && (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.D)))
+        {
+            moveSpeed = (-moveSpeedIn * cameraForward) + (-moveSpeedIn * cameraRight);
+            animator.SetBool("Walking", true);
+            animator.SetBool("Running", false);
+            animator.SetBool("Squatting", false);
+            animator.SetBool("CrouchWalking", false);
+            moving = 1;
+            walk = true;
+            run = false;
+            crouch = false;
+            crouchWalk = false;
+        }
+
+
         //歩くとき(Xbox)
         if (!crouch && Input.GetAxisRaw("Vertical") < 0)
         {
@@ -354,7 +408,61 @@ public class PlayerRun : MonoBehaviour
             crouch = false;
             crouchWalk = false;
         }
-        
+
+        if (!crouch && (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.D)) && Input.GetMouseButton(1))
+        {
+            moveSpeed = (-moveSpeedIn * cameraForward) + (moveSpeedIn * cameraRight);
+            animator.SetBool("Walking", false);
+            animator.SetBool("Running", true);
+            animator.SetBool("Squatting", false);
+            animator.SetBool("CrouchWalking", false);
+            moving = 1;
+            run = true;
+            walk = false;
+            crouch = false;
+            crouchWalk = false;
+        }
+        if (!crouch && (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.D)) && Input.GetMouseButton(1))
+        {
+            moveSpeed = (moveSpeedIn * cameraForward) + (moveSpeedIn * cameraRight);
+            animator.SetBool("Walking", false);
+            animator.SetBool("Running", true);
+            animator.SetBool("Squatting", false);
+            animator.SetBool("CrouchWalking", false);
+            moving = 1;
+            run = true;
+            walk = false;
+            crouch = false;
+            crouchWalk = false;
+        }
+        if (!crouch && (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.A)) && Input.GetMouseButton(1))
+        {
+            moveSpeed = (moveSpeedIn * cameraForward) + (-moveSpeedIn * cameraRight);
+            animator.SetBool("Walking", false);
+            animator.SetBool("Running", true);
+            animator.SetBool("Squatting", false);
+            animator.SetBool("CrouchWalking", false);
+            moving = 1;
+            run = true;
+            walk = false;
+            crouch = false;
+            crouchWalk = false;
+        }
+        if (!crouch && (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.A)) && Input.GetMouseButton(1))
+        {
+            moveSpeed = (-moveSpeedIn * cameraForward) + (-moveSpeedIn * cameraRight);
+            animator.SetBool("Walking", false);
+            animator.SetBool("Running", true);
+            animator.SetBool("Squatting", false);
+            animator.SetBool("CrouchWalking", false);
+            moving = 1;
+            run = true;
+            walk = false;
+            crouch = false;
+            crouchWalk = false;
+
+        }
+
         //走るとき(Xbox)
         if (!crouch && Input.GetAxisRaw("Vertical") < 0 && Input.GetKey("joystick button 5"))
         {
@@ -534,6 +642,62 @@ public class PlayerRun : MonoBehaviour
             crouchWalk = true;
         }
 
+
+        if (CrouchOn == true && !crouch && (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.D)))
+        {
+            moveSpeed = (-moveSpeedIn * cameraForward) + (moveSpeedIn * cameraRight);
+            animator.SetBool("Walking", false);
+            animator.SetBool("Running", false);
+            animator.SetBool("Squatting", false);
+            animator.SetBool("CrouchWalking", true);
+            moving = 1;
+            run = false;
+            walk = false;
+            crouch = false;
+            crouchWalk = true;
+        }
+        if (CrouchOn == true && !crouch && (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.D)))
+        {
+            moveSpeed = (moveSpeedIn * cameraForward) + (moveSpeedIn * cameraRight);
+            animator.SetBool("Walking", false);
+            animator.SetBool("Running", false);
+            animator.SetBool("Squatting", false);
+            animator.SetBool("CrouchWalking", true);
+            moving = 1;
+            run = false;
+            walk = false;
+            crouch = false;
+            crouchWalk = true;
+        }
+        if (CrouchOn == true && !crouch && (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.A)))
+        {
+            moveSpeed = (moveSpeedIn * cameraForward) + (-moveSpeedIn * cameraRight);
+            animator.SetBool("Walking", false);
+            animator.SetBool("Running", false);
+            animator.SetBool("Squatting", false);
+            animator.SetBool("CrouchWalking", true);
+            moving = 1;
+            run = false;
+            walk = false;
+            crouch = false;
+            crouchWalk = true;
+        }
+        if (CrouchOn == true && !crouch && (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.A)))
+        {
+            moveSpeed = (-moveSpeedIn * cameraForward) + (-moveSpeedIn * cameraRight);
+            animator.SetBool("Walking", false);
+            animator.SetBool("Running", false);
+            animator.SetBool("Squatting", false);
+            animator.SetBool("CrouchWalking", true);
+            moving = 1;
+            run = false;
+            walk = false;
+            crouch = false;
+            crouchWalk = true;
+
+        }
+
+
         //しゃがみ歩き(Xbox)
         if (crouch && Input.GetAxisRaw("Vertical") < 0)
         {
@@ -599,7 +763,7 @@ public class PlayerRun : MonoBehaviour
             cond = 12;
         }
 
-        if (crouch&& (Input.GetAxisRaw("Horizontal") > 0 && Input.GetAxisRaw("Vertical") > 0))
+        if (CrouchOn == true && !crouch&& (Input.GetAxisRaw("Horizontal") > 0 && Input.GetAxisRaw("Vertical") > 0))
         {
             moveSpeed = (-moveSpeedIn * cameraForward) + (moveSpeedIn * cameraRight);
             animator.SetBool("Walking", false);
@@ -614,7 +778,7 @@ public class PlayerRun : MonoBehaviour
             cond = 11;
             cond = 12;
         }
-        if (crouch && (Input.GetAxisRaw("Horizontal") > 0 && Input.GetAxisRaw("Vertical") < 0))
+        if (CrouchOn == true && !crouch && (Input.GetAxisRaw("Horizontal") > 0 && Input.GetAxisRaw("Vertical") < 0))
         {
             moveSpeed = (moveSpeedIn * cameraForward) + (moveSpeedIn * cameraRight);
             animator.SetBool("Walking", false);
@@ -629,7 +793,7 @@ public class PlayerRun : MonoBehaviour
             cond = 12;
             cond = 9;
         }
-        if (crouch && (Input.GetAxisRaw("Horizontal") < 0 && Input.GetAxisRaw("Vertical") < 0))
+        if (CrouchOn == true && !crouch && (Input.GetAxisRaw("Horizontal") < 0 && Input.GetAxisRaw("Vertical") < 0))
         {
             moveSpeed = (moveSpeedIn * cameraForward) + (-moveSpeedIn * cameraRight);
             animator.SetBool("Walking", false);
@@ -644,7 +808,7 @@ public class PlayerRun : MonoBehaviour
             cond = 9;
             cond = 10;
         }
-        if (crouch && (Input.GetAxisRaw("Horizontal") < 0 && Input.GetAxisRaw("Vertical") > 0))
+        if (CrouchOn==true&&!crouch && (Input.GetAxisRaw("Horizontal") < 0 && Input.GetAxisRaw("Vertical") > 0))
         {
             moveSpeed = (-moveSpeedIn * cameraForward) + (-moveSpeedIn * cameraRight);
             animator.SetBool("Walking", false);
@@ -660,7 +824,6 @@ public class PlayerRun : MonoBehaviour
             cond = 11;
 
         }
-
 
         //Moveメソッドで、力加えてもらう
         Move();

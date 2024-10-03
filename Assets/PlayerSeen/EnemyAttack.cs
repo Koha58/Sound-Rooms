@@ -33,7 +33,6 @@ public class EnemyAttack : MonoBehaviour
     public static bool SoundON;
     public static bool OFF;
 
-
     //[SerializeField]
     //private GameObject[] Prototype;
 
@@ -92,7 +91,7 @@ public class EnemyAttack : MonoBehaviour
                     Count = 2;
                 }
             }
-            if (DC >= 16.0f)
+            if (DC >= 30.0f)
             {
                 SoundON = false;
                 GameObject Boss = GameObject.FindWithTag("Boss");
@@ -124,7 +123,7 @@ public class EnemyAttack : MonoBehaviour
                     Count = 2;
                 }
             }
-            if (DC >= 16.0f)
+            if (DC >= 30.0f)
             {
                 SoundON = false;
                 GameObject Boss1 = GameObject.FindWithTag("Boss1");
@@ -226,8 +225,8 @@ public class EnemyAttack : MonoBehaviour
         {
             GameObject EnemySearch = GameObject.FindWithTag("EnemySearch");
             EnemySearchcontroller ESC = EnemySearch.GetComponent<EnemySearchcontroller>();
-            //if (ESC.DestroyONOFF == true)
-            //{
+            if (ESC.DestroyONOFF == true)
+            {
                 enemyDeathcnt++;
                 DeathRange += 1.0f;
                 GetComponent<ParticleSystem>().Play();;
@@ -235,10 +234,10 @@ public class EnemyAttack : MonoBehaviour
 
                 BossTiming = true;
 
-                DB = true;
+                DB2 = true;
                 SoundON = false;
                 DC = 0;
-            //}
+            }
         }
 
         if (other.CompareTag("EnemyG"))
