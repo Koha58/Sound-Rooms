@@ -43,6 +43,9 @@ public class BossTutoriaru : MonoBehaviour
     public GameObject VisualizationBoss;   //ボスの可視化の音(球体)
     public SphereCollider SphereCollider; //可視化時の音を小さくする
 
+    public GameObject gravity;
+    public GameObject game;
+
     private　void MoveBossEnemy()
     {
         if (ChaseONOFF == false)
@@ -131,6 +134,8 @@ public class BossTutoriaru : MonoBehaviour
     {
         if (ONOFF == 0)//見えないとき
         {
+            gravity.SetActive(false);
+            game.SetActive(false);
             PrototypeBodySkinnedMeshRenderer.enabled = false; //3DモデルのRendererを見えない状態
             audioSourse.maxDistance = 5;                      //音が聞こえる範囲
         }
@@ -139,6 +144,8 @@ public class BossTutoriaru : MonoBehaviour
             GameObject gobj = GameObject.Find("Player");     //Playerオブジェクトを探す
             PlayerSeen PS = gobj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
 
+            gravity.SetActive(true);
+            game.SetActive(true);
             animator.SetBool("Idle", true);
             animator.SetBool("Move", false);
             VisualizationBoss.SetActive(true);              //可視化の音(円)を見える状態
@@ -193,6 +200,7 @@ public class BossTutoriaru : MonoBehaviour
             ONOFF = 0;
             PrototypeBodySkinnedMeshRenderer.enabled = false; //3DモデルのRendererを見えない状態
             MoveBossEnemy();
+            VisualizationBoss.SetActive(false);
         }
 
         Vector3 Position = TargetPlayer.position - transform.position; // ターゲットの位置と自身の位置の差を計算

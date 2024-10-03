@@ -203,7 +203,7 @@ public class GameSceneButton : MonoBehaviour
     {
         if (NoUI == true)
         {
-            Controller();
+             Controller();
         }
 
         if (Input.GetKeyDown("joystick button 7"))//メニュー ボタン 
@@ -907,6 +907,11 @@ public class GameSceneButton : MonoBehaviour
                 }
             }
         }
+    }
+
+    private void Controller2()
+    {
+
     }
     public void SetBGM(float volume2)
     {
