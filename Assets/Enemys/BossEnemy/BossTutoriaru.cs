@@ -44,7 +44,7 @@ public class BossTutoriaru : MonoBehaviour
     public SphereCollider SphereCollider; //可視化時の音を小さくする
 
     public GameObject gravity;
-    public GameObject game;
+    public GameObject Blur;
 
     private　void MoveBossEnemy()
     {
@@ -135,7 +135,7 @@ public class BossTutoriaru : MonoBehaviour
         if (ONOFF == 0)//見えないとき
         {
             gravity.SetActive(false);
-            game.SetActive(false);
+            Blur.SetActive(false);
             PrototypeBodySkinnedMeshRenderer.enabled = false; //3DモデルのRendererを見えない状態
             audioSourse.maxDistance = 5;                      //音が聞こえる範囲
         }
@@ -145,7 +145,7 @@ public class BossTutoriaru : MonoBehaviour
             PlayerSeen PS = gobj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
 
             gravity.SetActive(true);
-            game.SetActive(true);
+            Blur.SetActive(true);
             animator.SetBool("Idle", true);
             animator.SetBool("Move", false);
             VisualizationBoss.SetActive(true);              //可視化の音(円)を見える状態
