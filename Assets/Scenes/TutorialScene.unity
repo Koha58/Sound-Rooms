@@ -16498,7 +16498,7 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 3
+      scalar: 1
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -16994,7 +16994,7 @@ ParticleSystem:
     serializedVersion: 6
     enabled: 1
     type: 4
-    angle: 20
+    angle: 50
     length: 5
     boxThickness: {x: 0, y: 0, z: 0}
     radiusThickness: 1
@@ -24669,6 +24669,8 @@ MonoBehaviour:
   Player: {fileID: 1573040124}
   VisualizationBoss: {fileID: 952996509}
   SphereCollider: {fileID: 952996510}
+  gravity: {fileID: 0}
+  game: {fileID: 0}
 --- !u!95 &769982875 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 5312426229931526957, guid: 9236a33d9e51afc49819a8cdadeb7489,
