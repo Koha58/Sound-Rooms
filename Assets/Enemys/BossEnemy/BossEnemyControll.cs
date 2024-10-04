@@ -43,8 +43,6 @@ public class BossEnemyControll : MonoBehaviour
     [SerializeField] GameObject VisualizationBoss;   //ボスの可視化の音(球体)
     public SphereCollider SphereCollider; //可視化時の音を小さくする
 
-    public GameObject gravity;
-    public GameObject game;
     private void MoveBossEnemy()
     {
         if (ChaseONOFF == false)
@@ -134,8 +132,7 @@ public class BossEnemyControll : MonoBehaviour
         {
             PrototypeBodySkinnedMeshRenderer.enabled = false; //3DモデルのRendererを見えない状態
             audioSourse.maxDistance = 5;                      //音が聞こえる範囲
-            gravity.SetActive(false);
-            game.SetActive(false);
+
         }
         else if (ONOFF == 1)//見えているとき
         {
@@ -145,8 +142,7 @@ public class BossEnemyControll : MonoBehaviour
 
             animator.SetBool("Idle", true);
             animator.SetBool("Move", false);
-            gravity.SetActive(true);
-            game.SetActive(true);
+
             VisualizationBoss.SetActive(true);              //可視化の音(円)を見える状態
             PrototypeBodySkinnedMeshRenderer.enabled = true;//3DモデルのRendererを見える状態
             audioSourse.maxDistance = 300;                 //音が聞こえる範囲
