@@ -121,10 +121,8 @@ public class GameSceneButton : MonoBehaviour
     public bool ButtonON;
 
     bool Reset;
-
-    bool UP;
-    bool DOWN;
-    bool SelectON;
+    bool MenuSelect;
+    float MenuSelectCount;
 
     // Start is called before the first frame update
     void Start()
@@ -919,8 +917,38 @@ public class GameSceneButton : MonoBehaviour
     {
         if (NoUI == true)
         {
-            SelectON = true;
-            if (MainSelectPosition == 0)
+            Debug.Log(MainSelectPosition);
+
+            if (Input.GetAxis("Vertical") == 0 && Reset == false)
+            {
+               Reset =true;
+            }
+
+            MainSelectPositionSelect = true;
+            if (MainSelectPositionSelect==true&&Reset)
+            {
+                if ((Input.GetAxisRaw("Vertical") > 0))
+                {
+                    MainSelectPosition++;
+                    Reset = false;
+                    if(MainSelectPosition>2)
+                    {
+                        MainSelectPosition = 2;
+                    }
+                }
+
+                if ((Input.GetAxisRaw("Vertical") < 0))
+                {
+                    MainSelectPosition--;
+                    Reset = false;
+                    if (MainSelectPosition < 0)
+                    {
+                        MainSelectPosition = 0;
+                    }
+                }
+            }
+
+            if (MainSelectPosition==0&&MainSelectPositionSelect)
             {
                 WhiteLine.GetComponent<Image>().enabled = false;
                 KeyboardcharaButton.GetComponent<Image>().enabled = false;
@@ -932,108 +960,82 @@ public class GameSceneButton : MonoBehaviour
                 BGMSlider.gameObject.SetActive(true);
                 SESlider.gameObject.SetActive(true);
                 MouseSlider.gameObject.SetActive(true);
+                Select.GetComponent<Image>().enabled = true;
                 Select1.GetComponent<Image>().enabled = false;
                 Select2.GetComponent<Image>().enabled = false;
+                ControllerSetting.GetComponent<Image>().enabled = false;
+                KeyboardSetting.GetComponent<Image>().enabled = false;
                 OperationExplanationSelect.GetComponent<Image>().enabled = false;
                 OperationExplanationSelect1.GetComponent<Image>().enabled = false;
                 ExplanationSelectCount = 0;
+            }
+            else if(MainSelectPosition==1 && MainSelectPositionSelect)
+            {
+                MenuCursor.GetComponent<Image>().enabled = false;
+                MenuCursor1.GetComponent<Image>().enabled = false;
+                MenuCursor2.GetComponent<Image>().enabled = false;
+                MenuCursor3.GetComponent<Image>().enabled = false;
+                WhiteLine.GetComponent<Image>().enabled = true;
+                KeyboardcharaButton.GetComponent<Image>().enabled = true;
+                GamepadcharaButton.GetComponent<Image>().enabled = true;
+                ControllerSetting.GetComponent<Image>().enabled = true;
+                KeyboardSetting.GetComponent<Image>().enabled = true;
+                SettingMenu.GetComponent<Image>().enabled = true;
+                MicSlider.gameObject.SetActive(false);
+                BGMSlider.gameObject.SetActive(false);
+                SESlider.gameObject.SetActive(false);
+                MouseSlider.gameObject.SetActive(false);
+                Select.GetComponent<Image>().enabled = false;
+                Select1.GetComponent<Image>().enabled = true;
+                Select2.GetComponent<Image>().enabled = false;
+                SelectCount = 0;
+            }
+            else if(MainSelectPosition == 2 && MainSelectPositionSelect)
+            {
+                MenuCursor.GetComponent<Image>().enabled = false;
+                MenuCursor1.GetComponent<Image>().enabled = false;
+                MenuCursor2.GetComponent<Image>().enabled = false;
+                MenuCursor3.GetComponent<Image>().enabled = false;
+                WhiteLine.GetComponent<Image>().enabled = false;
+                ControllerSetting.GetComponent<Image>().enabled = false;
+                KeyboardSetting.GetComponent<Image>().enabled = false;
+                KeyboardcharaButton.GetComponent<Image>().enabled = false;
+                GamepadcharaButton.GetComponent<Image>().enabled = false;
+                ControllerSetting.GetComponent<Image>().enabled = false;
+                KeyboardSetting.GetComponent<Image>().enabled = false;
+                SettingMenu.GetComponent<Image>().enabled = false;
+                MicSlider.gameObject.SetActive(false);
+                BGMSlider.gameObject.SetActive(false);
+                SESlider.gameObject.SetActive(false);
+                MouseSlider.gameObject.SetActive(false);
+                Select.GetComponent<Image>().enabled = false;
+                Select1.GetComponent<Image>().enabled = false;
+                Select2.GetComponent<Image>().enabled = true;
+                ExplanationSelectCount = 0;
+                OperationExplanationSelect.GetComponent<Image>().enabled = false;
+                OperationExplanationSelect1.GetComponent<Image>().enabled = false;
+                SelectCount = 0;
 
-                if (SelectON == true)
+                if (Input.GetKeyDown("joystick button 0"))
                 {
-                    if (Input.GetAxis("Horizontal") > 0)
-                    {
-                        Select.GetComponent<Image>().enabled = false;
-                        MenuCursor.GetComponent<Image>().enabled = true;
-                        MenuCursor1.GetComponent<Image>().enabled = false;
-                        MenuCursor2.GetComponent<Image>().enabled = false;
-                        MenuCursor3.GetComponent<Image>().enabled = false;
-                        SelectON = false;
-                        if (Input.GetAxis("Vertical") <0)
-                        {
-                            if (SelectCount == 0)
-                            {
-                                NotSelect = true;
-                                if (Input.GetAxisRaw("Vertical") > 0 && MainSelectPositionSelect == false)
-                                {
-                                    SelectCount = 1;
-                                    MainSelectPositionSelect = true;
-                                }
-                            }
-                            else if (Input.GetAxisRaw("Vertical") > 0 && SelectCount == 1 && MainSelectPositionSelect == false)
-                            {
-                                MainSelectPositionSelect = true;
-                                SelectCount = 2;
-                            }
-                            else if (Input.GetAxisRaw("Vertical") > 0 && SelectCount == 2 && MainSelectPositionSelect == false)
-                            {
-                                MainSelectPositionSelect = true;
-                                SelectCount = 3;
-                            }
-                            else if (Input.GetAxisRaw("Vertical") > 0 && SelectCount == 3 && MainSelectPositionSelect == false)
-                            {
-                                MainSelectPositionSelect = true;
-                                SelectCount = 4;
-                            }
-                            else if (Input.GetAxisRaw("Vertical") > 0 && SelectCount == 4 && MainSelectPositionSelect == false)
-                            {
-                                MainSelectPositionSelect = true;
-                            }
-
-
-                            if (Input.GetAxisRaw("Vertical") < 0 && SelectCount == 0 && MainSelectPositionSelect == false)
-                            {
-                                SelectCount = -1;
-                                MenuCursor.GetComponent<Image>().enabled = false;
-                                MenuCursor1.GetComponent<Image>().enabled = false;
-                                MenuCursor2.GetComponent<Image>().enabled = false;
-                                MenuCursor3.GetComponent<Image>().enabled = false;
-                                ButtonCount = 0;
-                                ButtonON = false;
-                                ExplanationSelect = true;
-                                NotSelect = false;
-                                ButtonON = false;
-                            }
-                            else if (Input.GetAxisRaw("Vertical") < 0 && SelectCount == 1 && MainSelectPositionSelect == false)
-                            {
-                                MainSelectPositionSelect = true;
-                                SelectCount = 0;
-                            }
-                            else if (Input.GetAxisRaw("Vertical") < 0 && SelectCount == 2 && MainSelectPositionSelect == false)
-                            {
-                                MainSelectPositionSelect = true;
-                                SelectCount = 1;
-                            }
-                            else if (Input.GetAxisRaw("Vertical") < 0 && SelectCount == 3 && MainSelectPositionSelect == false)
-                            {
-                                MainSelectPositionSelect = true;
-                                SelectCount = 2;
-                            }
-                            else if (Input.GetAxisRaw("Vertical") < 0 && SelectCount == 4 && MainSelectPositionSelect == false)
-                            {
-                                MainSelectPositionSelect = true;
-                                SelectCount = 3;
-                            }
-
-                            if (Input.GetAxis("Horizontal") > 0 && SelectCount == -1 && ExplanationSelect == false)
-                            {
-                                SelectCount = 0;
-                                ExplanationSelect = true;
-                                NotSelect = false;
-                            }
-                        }
-                    }
-                    else if (Input.GetAxis("Horizontal") < 0)
-                    { 
-                        Select.GetComponent<Image>().enabled = true;
-                        MenuCursor.GetComponent<Image>().enabled = false;
-                        MenuCursor1.GetComponent<Image>().enabled = false;
-                        MenuCursor2.GetComponent<Image>().enabled = false;
-                        MenuCursor3.GetComponent<Image>().enabled = false;
-                        SelectON = true;
-                    }
+                    BackTitleButton();
                 }
+            }
 
-                if (SelectCount == 1)
+            if(MainSelectPosition==0&& (Input.GetAxisRaw("Horizontal") > 0))
+            {
+                MenuSelect=true;
+                MainSelectPositionSelect = false;
+            }
+            else if(MainSelectPosition == 0 && (Input.GetAxisRaw("Horizontal") < 0))
+            {
+                MenuSelect =false;
+                MainSelectPositionSelect = true;
+            }
+
+            if (MenuSelect ==true)
+            {
+                if (SelectCount == 0)
                 {
                     MenuCursor.GetComponent<Image>().enabled = true;
                     MenuCursor1.GetComponent<Image>().enabled = false;
@@ -1059,7 +1061,7 @@ public class GameSceneButton : MonoBehaviour
                         SetMic(volume2);
                     }
                 }
-                else if (SelectCount == 2)
+                else if (SelectCount == 1)
                 {
                     MenuCursor.GetComponent<Image>().enabled = false;
                     MenuCursor1.GetComponent<Image>().enabled = true;
@@ -1085,7 +1087,7 @@ public class GameSceneButton : MonoBehaviour
                         SetMic(volume3);
                     }
                 }
-                else if (SelectCount == 3)
+                else if (SelectCount == 2)
                 {
                     MenuCursor.GetComponent<Image>().enabled = false;
                     MenuCursor1.GetComponent<Image>().enabled = false;
@@ -1110,7 +1112,7 @@ public class GameSceneButton : MonoBehaviour
                         SetMic(volume);
                     }
                 }
-                else if (SelectCount == 4)
+                else if (SelectCount == 3)
                 {
                     MenuCursor.GetComponent<Image>().enabled = false;
                     MenuCursor1.GetComponent<Image>().enabled = false;
@@ -1135,71 +1137,22 @@ public class GameSceneButton : MonoBehaviour
                         SetMouse(level1);
                     }
                 }
-            }
-            else if (MainSelectPosition == 1)
-            {
-                MenuCursor.GetComponent<Image>().enabled = false;
-                MenuCursor1.GetComponent<Image>().enabled = false;
-                MenuCursor2.GetComponent<Image>().enabled = false;
-                MenuCursor3.GetComponent<Image>().enabled = false;
-                WhiteLine.GetComponent<Image>().enabled = true;
-                KeyboardcharaButton.GetComponent<Image>().enabled = true;
-                GamepadcharaButton.GetComponent<Image>().enabled = true;
-                SettingMenu.GetComponent<Image>().enabled = false;
-                MicSlider.gameObject.SetActive(false);
-                BGMSlider.gameObject.SetActive(false);
-                SESlider.gameObject.SetActive(false);
-                MouseSlider.gameObject.SetActive(false);
-                Select.GetComponent<Image>().enabled = false;
-                Select1.GetComponent<Image>().enabled = true;
-                Select2.GetComponent<Image>().enabled = false;
-                SelectCount = 0;
-
-                if (SelectON == true)
+                else if (SelectCount == 4)
                 {
-                    if (Input.GetAxis("Horizontal") > 0)
-                    {
-                        Select.GetComponent<Image>().enabled = false;
-                        
-                        SelectON = false;
-                    }
-                    else if (Input.GetAxis("Horizontal") < 0)
-                    {
-                        Select.GetComponent<Image>().enabled = true;
+                    MenuCursor.GetComponent<Image>().enabled = false;
+                    MenuCursor1.GetComponent<Image>().enabled = false;
+                    MenuCursor2.GetComponent<Image>().enabled = false;
+                    MenuCursor3.GetComponent<Image>().enabled = false;
 
-                        SelectON = true;
+                    if (Input.GetAxisRaw("Vertical") > 0 && MainSelectPositionSelect == true)
+                    {
+                        NotSelect = false;
+                        MainSelectPositionSelect = false;
+                        MainSelectPosition = 0;
                     }
                 }
             }
-            else
-            {
-                MenuCursor.GetComponent<Image>().enabled = false;
-                MenuCursor1.GetComponent<Image>().enabled = false;
-                MenuCursor2.GetComponent<Image>().enabled = false;
-                MenuCursor3.GetComponent<Image>().enabled = false;
-                WhiteLine.GetComponent<Image>().enabled = false;
-                KeyboardcharaButton.GetComponent<Image>().enabled = false;
-                GamepadcharaButton.GetComponent<Image>().enabled = false;
-                ControllerSetting.GetComponent<Image>().enabled = false;
-                KeyboardSetting.GetComponent<Image>().enabled = false;
-                SettingMenu.GetComponent<Image>().enabled = false;
-                MicSlider.gameObject.SetActive(false);
-                BGMSlider.gameObject.SetActive(false);
-                SESlider.gameObject.SetActive(false);
-                MouseSlider.gameObject.SetActive(false);
-                Select.GetComponent<Image>().enabled = false;
-                Select1.GetComponent<Image>().enabled = false;
-                Select2.GetComponent<Image>().enabled = true;
-                ExplanationSelectCount = 0;
-                OperationExplanationSelect.GetComponent<Image>().enabled = false;
-                OperationExplanationSelect1.GetComponent<Image>().enabled = false;
-                SelectCount = 0;
-
-                if (Input.GetKeyDown("joystick button 0"))
-                {
-                    BackTitleButton();
-                }
-            }
+           
         }
     }
     public void SetBGM(float volume2)
