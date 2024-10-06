@@ -43,7 +43,7 @@ public class BossTutoriaru : MonoBehaviour
     public GameObject VisualizationBoss;   //ボスの可視化の音(球体)
     public SphereCollider SphereCollider; //可視化時の音を小さくする
 
-    public GameObject gravity;
+    public GameObject Gravity;
     public GameObject Blur;
 
     private　void MoveBossEnemy()
@@ -134,17 +134,14 @@ public class BossTutoriaru : MonoBehaviour
     {
         if (ONOFF == 0)//見えないとき
         {
-            gravity.SetActive(false);
+            Gravity.SetActive(false);
             Blur.SetActive(false);
             PrototypeBodySkinnedMeshRenderer.enabled = false; //3DモデルのRendererを見えない状態
             audioSourse.maxDistance = 5;                      //音が聞こえる範囲
         }
         else if (ONOFF == 1)//見えているとき
         {
-            GameObject gobj = GameObject.Find("Player");     //Playerオブジェクトを探す
-            PlayerSeen PS = gobj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
-
-            gravity.SetActive(true);
+            Gravity.SetActive(true);
             Blur.SetActive(true);
             animator.SetBool("Idle", true);
             animator.SetBool("Move", false);
@@ -169,6 +166,7 @@ public class BossTutoriaru : MonoBehaviour
     private void Update()
     {
         Visualization();
+        /*
         if (EnemyAttack.OFF == true)
         {
             ONTime += Time.deltaTime;
@@ -186,7 +184,7 @@ public class BossTutoriaru : MonoBehaviour
                 PrototypeBodySkinnedMeshRenderer.enabled = false;//3DモデルのRendererを見える状態
                 EnemyAttack.OFF = false;
             }
-        }
+        }*/
 
         if (EnemyAttack.SoundON == true)
         {
@@ -198,9 +196,13 @@ public class BossTutoriaru : MonoBehaviour
         else if (EnemyAttack.SoundON == false)
         {
             ONOFF = 0;
-            PrototypeBodySkinnedMeshRenderer.enabled = false; //3DモデルのRendererを見えない状態
             MoveBossEnemy();
+            PrototypeBodySkinnedMeshRenderer.enabled = false; //3DモデルのRendererを見えない状態
             VisualizationBoss.SetActive(false);
+
+            GameObject gobj = GameObject.Find("Player");        //Playerオブジェクトを探す
+            PlayerSeen PS = gobj.GetComponent<PlayerSeen>();    //付いているスクリプトを取得
+            PS.onoff = 0;
         }
 
         Vector3 Position = TargetPlayer.position - transform.position; // ターゲットの位置と自身の位置の差を計算
@@ -211,11 +213,11 @@ public class BossTutoriaru : MonoBehaviour
         {
             Chase();
             float ChasePlayer = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
-            if (ONOFF == 0) { ChaseONOFF = false;}
+            if (ONOFF == 0) { ChaseONOFF = false; }
             if (ONOFF == 1 && ChasePlayer <= 5) { ChaseONOFF = true; }
             DestroyONOFF = false;
         }
-        else if (isBack){DestroyONOFF = true;}
+        else if (isBack) { }//DestroyONOFF = true;}
     }
     void Idle() { audioSourse.PlayOneShot(BossIdle); }
 

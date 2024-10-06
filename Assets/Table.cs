@@ -33,6 +33,7 @@ public class Table : MonoBehaviour
             if (PlayerRun.CrouchOn==true)
             {
                 ON = true;
+                Timer = 0;
             }
         }
     }

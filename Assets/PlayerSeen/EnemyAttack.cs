@@ -31,10 +31,7 @@ public class EnemyAttack : MonoBehaviour
 
     float Count;
     public static bool SoundON;
-    public static bool OFF;
-
-    //[SerializeField]
-    //private GameObject[] Prototype;
+    //public static bool OFF;
 
     // Start is called before the first frame update
     void Start()
@@ -45,7 +42,7 @@ public class EnemyAttack : MonoBehaviour
         PickupSound = GetComponent<AudioSource>();
         BossTiming = false;
         enemyDeathcnt = 0;
-        OFF = false;
+        //OFF = false;
         SoundON = false;
     }
 
@@ -87,7 +84,7 @@ public class EnemyAttack : MonoBehaviour
                     GameObject Boss = GameObject.FindWithTag("Boss");
                     BossEnemyControll BEC = Boss.GetComponent<BossEnemyControll>();
                     BEC.ONOFF = 1;
-                    OFF = true;
+                    //OFF = true;
                     Count = 2;
                 }
             }
@@ -119,7 +116,7 @@ public class EnemyAttack : MonoBehaviour
                     GameObject Boss1 = GameObject.FindWithTag("Boss1");
                     BossTutoriaru BS1 = Boss1.GetComponent<BossTutoriaru>();
                     BS1.ONOFF = 1;
-                    OFF = true;
+                    //OFF = true;
                     Count = 2;
                 }
             }
@@ -159,16 +156,9 @@ public class EnemyAttack : MonoBehaviour
                 GetComponent<ParticleSystem>().Play();
                 Destroy(other.gameObject);
 
-                
                 DB = true;
                 SoundON = false;
                 DC = 0;
-                /*
-                SoundON = false;
-                BEC.ONOFF = 0;
-                DC = 0;
-                Count = 0;
-                */
             }
         }
 
@@ -182,16 +172,9 @@ public class EnemyAttack : MonoBehaviour
                 GetComponent<ParticleSystem>().Play();
                 Destroy(other.gameObject);
 
-                
                 DB = true;
                 SoundON = false;
                 DC = 0;
-                /*
-                SoundON = false;
-                DC = 0;
-                DB2 = false;
-                Count = 0;
-                */
             }
         }
 
@@ -208,16 +191,9 @@ public class EnemyAttack : MonoBehaviour
 
                 BossTiming = true;
 
-               
                 DB = true;
                 SoundON = false;
                 DC = 0;
-                /*
-               SoundON = false;
-               EC.ONOFF = 0;
-               DC = 0;
-               Count = 0;
-               */
             }
         }
 
@@ -234,7 +210,7 @@ public class EnemyAttack : MonoBehaviour
 
                 BossTiming = true;
 
-                DB2 = true;
+                DB = true;
                 SoundON = false;
                 DC = 0;
             }
@@ -255,14 +231,8 @@ public class EnemyAttack : MonoBehaviour
 
             BossTiming = true;
 
-            
             DB = true;
             SoundON = false;
-            /*
-            EC.ONOFF = 0;
-            DC = 0;
-            Count = 0;
-            */
         }
 
         if (other.CompareTag("Enemy1"))
@@ -279,16 +249,9 @@ public class EnemyAttack : MonoBehaviour
 
                 BossTiming = true;
 
-               
                 DB2 = true;
                 SoundON = false;
                 DC = 0;
-                /*
-               SoundON = false;
-               DC = 0;
-               DB2 = false;
-               Count = 0;
-               */
             }
         }
 
@@ -307,16 +270,9 @@ public class EnemyAttack : MonoBehaviour
 
                 BossTiming = true;
 
-                
                 DB2 = true;
                 SoundON = false;
                 DC = 0;
-                /*
-                SoundON = false;
-                DC = 0;
-                DB2 = false;
-                Count = 0;
-                */
             }
         }
     }

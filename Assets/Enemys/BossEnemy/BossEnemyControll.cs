@@ -43,6 +43,9 @@ public class BossEnemyControll : MonoBehaviour
     [SerializeField] GameObject VisualizationBoss;   //ボスの可視化の音(球体)
     public SphereCollider SphereCollider; //可視化時の音を小さくする
 
+    public GameObject Gravity;
+    public GameObject Blur;
+
     private void MoveBossEnemy()
     {
         if (ChaseONOFF == false)
@@ -132,6 +135,8 @@ public class BossEnemyControll : MonoBehaviour
         {
             PrototypeBodySkinnedMeshRenderer.enabled = false; //3DモデルのRendererを見えない状態
             audioSourse.maxDistance = 5;                      //音が聞こえる範囲
+            Gravity.SetActive(false);
+            Blur.SetActive(false);
 
         }
         else if (ONOFF == 1)//見えているとき
@@ -143,6 +148,8 @@ public class BossEnemyControll : MonoBehaviour
             animator.SetBool("Idle", true);
             animator.SetBool("Move", false);
 
+            Gravity.SetActive(true);
+            Blur.SetActive(true);
             VisualizationBoss.SetActive(true);              //可視化の音(円)を見える状態
             PrototypeBodySkinnedMeshRenderer.enabled = true;//3DモデルのRendererを見える状態
             audioSourse.maxDistance = 300;                 //音が聞こえる範囲
@@ -164,6 +171,7 @@ public class BossEnemyControll : MonoBehaviour
     private void Update()
     {
         Visualization();
+        /*
         if (EnemyAttack.OFF == true)
         {
             ONTime += Time.deltaTime;
@@ -180,7 +188,7 @@ public class BossEnemyControll : MonoBehaviour
                 PrototypeBodySkinnedMeshRenderer.enabled = false;//3DモデルのRendererを見える状態
                 EnemyAttack.OFF = false;
             }
-        }
+        }*/
 
         if (EnemyAttack.SoundON == true)
         {
@@ -193,7 +201,12 @@ public class BossEnemyControll : MonoBehaviour
         {
             ONOFF = 0;
             PrototypeBodySkinnedMeshRenderer.enabled = false; //3DモデルのRendererを見えない状態
+            VisualizationBoss.SetActive(false);
             MoveBossEnemy();
+
+            GameObject gobj = GameObject.Find("Player");        //Playerオブジェクトを探す
+            PlayerSeen PS = gobj.GetComponent<PlayerSeen>();    //付いているスクリプトを取得
+            PS.onoff = 0;
         }
 
         Vector3 Position = TargetPlayer.position - transform.position; // ターゲットの位置と自身の位置の差を計算
