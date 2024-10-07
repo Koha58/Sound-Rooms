@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using UnityEngine;
 using UnityEngine.UI;
-//using NAudio.CoreAudioApi;
+using NAudio.CoreAudioApi;
 
 public class GetDeviceCheck : MonoBehaviour
 {
@@ -41,25 +41,25 @@ public class GetDeviceCheck : MonoBehaviour
             Debug.Log("ƒ}ƒCƒN‚ªÚ‘±‚³‚ê‚Ä‚¢‚Ü‚¹‚ñ");
         }
 
-        //CheckAudioDevices();
+        CheckAudioDevices();
     }
 
     void CheckAudioDevices()
     {
-        //var deviceEnumerator = new MMDeviceEnumerator();
-        //var devices = deviceEnumerator.EnumerateAudioEndPoints(DataFlow.Render, DeviceState.Active);
+        var deviceEnumerator = new MMDeviceEnumerator();
+        var devices = deviceEnumerator.EnumerateAudioEndPoints(DataFlow.Render, DeviceState.Active);
 
-        //if (devices.Count > 0)
-        //{
-        //    Debug.Log("Active audio output devices detected:");
-        //    foreach (var device in devices)
-        //    {
-        //        Debug.Log($"- {device.FriendlyName}");
-        //    }
-        //}
-        //else
-        //{
-        //    Debug.LogWarning("No active audio output devices found.");
-        //}
+        if (devices.Count > 0)
+        {
+            Debug.Log("Active audio output devices detected:");
+            foreach (var device in devices)
+            {
+                Debug.Log($"- {device.FriendlyName}");
+            }
+        }
+        else
+        {
+            Debug.LogWarning("No active audio output devices found.");
+        }
     }
 }
