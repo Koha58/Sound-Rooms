@@ -148,7 +148,7 @@ public class GameOverScript : MonoBehaviour
         {
             if (PlayerRun.CrouchOn != true)
             {
-                if (Count == 0)
+                if (Count == 0 && Table.ON == false)
                 {
                     LifeCount--;
                     Count = 1;

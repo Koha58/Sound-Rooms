@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class TutorialVisualizationBox : MonoBehaviour
 {
+    [SerializeField] Transform Boss;
     // Start is called before the first frame update
     void Start()
     {
@@ -14,6 +15,7 @@ public class TutorialVisualizationBox : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        transform.position = Boss.transform.position;
         GameObject gameObject = GameObject.FindWithTag("Boss1"); //Playerオブジェクトを探す
         BossTutoriaru BC = gameObject.GetComponent<BossTutoriaru>();
         if (BC.ONOFF == 1)

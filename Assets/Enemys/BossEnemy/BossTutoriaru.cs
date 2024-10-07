@@ -200,9 +200,11 @@ public class BossTutoriaru : MonoBehaviour
             PrototypeBodySkinnedMeshRenderer.enabled = false; //3DモデルのRendererを見えない状態
             VisualizationBoss.SetActive(false);
 
-            GameObject gobj = GameObject.Find("Player");        //Playerオブジェクトを探す
-            PlayerSeen PS = gobj.GetComponent<PlayerSeen>();    //付いているスクリプトを取得
-            PS.onoff = 0;
+        }
+        if (EnemyAttack.SoundON2 == true)
+        {
+            Idle();
+            VisualizationBoss.SetActive(true);
         }
 
         Vector3 Position = TargetPlayer.position - transform.position; // ターゲットの位置と自身の位置の差を計算

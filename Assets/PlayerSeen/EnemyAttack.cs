@@ -31,7 +31,7 @@ public class EnemyAttack : MonoBehaviour
 
     float Count;
     public static bool SoundON;
-    //public static bool OFF;
+    public static bool SoundON2;
 
     // Start is called before the first frame update
     void Start()
@@ -51,6 +51,8 @@ public class EnemyAttack : MonoBehaviour
     {
         GameObject soundobj = GameObject.Find("SoundVolume");
         levelMeter = soundobj.GetComponent<LevelMeter>(); //付いているスクリプトを取得
+        GameObject gobj = GameObject.Find("Player");        //Playerオブジェクトを探す
+        PlayerSeen PS = gobj.GetComponent<PlayerSeen>();    //付いているスクリプトを取得
 
         //音を出すことで範囲内を可視化
         if (levelMeter.nowdB > 0.0f)
@@ -75,10 +77,12 @@ public class EnemyAttack : MonoBehaviour
             if (DC >= 9.8f)
             {
                 SoundON = true;
+                SoundON2=true;
             }
             if (DC >= 10.0f)
             {
                 Count=1;
+                SoundON2 = false;
                 if (Count == 1)
                 {
                     GameObject Boss = GameObject.FindWithTag("Boss");
@@ -93,6 +97,7 @@ public class EnemyAttack : MonoBehaviour
                 SoundON = false;
                 GameObject Boss = GameObject.FindWithTag("Boss");
                 BossEnemyControll BEC = Boss.GetComponent<BossEnemyControll>();
+                PS.onoff = 0;
                 BEC.ONOFF = 0;
                 DC = 0;
                 DB = false;
@@ -106,10 +111,12 @@ public class EnemyAttack : MonoBehaviour
             if (DC >= 9.8f)
             {
                 SoundON = true;
+                SoundON2 = true;
             }
             if (DC >=10.0f)
             {
-                Count=1;
+                SoundON2 = false;
+                Count =1;
                 if (Count == 1)
                 {
                     SoundON = true;
@@ -126,6 +133,7 @@ public class EnemyAttack : MonoBehaviour
                 GameObject Boss1 = GameObject.FindWithTag("Boss1");
                 BossTutoriaru BS1 = Boss1.GetComponent<BossTutoriaru>();
                 BS1.ONOFF = 0;
+                PS.onoff = 0;
                 SoundON = false;
                 DC = 0;
                 DB2 = false;
@@ -157,7 +165,6 @@ public class EnemyAttack : MonoBehaviour
                 Destroy(other.gameObject);
 
                 DB = true;
-                SoundON = false;
                 DC = 0;
             }
         }
@@ -173,7 +180,6 @@ public class EnemyAttack : MonoBehaviour
                 Destroy(other.gameObject);
 
                 DB = true;
-                SoundON = false;
                 DC = 0;
             }
         }
@@ -192,7 +198,6 @@ public class EnemyAttack : MonoBehaviour
                 BossTiming = true;
 
                 DB = true;
-                SoundON = false;
                 DC = 0;
             }
         }
@@ -203,15 +208,15 @@ public class EnemyAttack : MonoBehaviour
             EnemySearchcontroller ESC = EnemySearch.GetComponent<EnemySearchcontroller>();
             if (ESC.DestroyONOFF == true)
             {
+                //Debug.Log("ASDFGHJK");
                 enemyDeathcnt++;
                 DeathRange += 1.0f;
-                GetComponent<ParticleSystem>().Play();;
+                GetComponent<ParticleSystem>().Play();
                 Destroy(other.gameObject);
 
                 BossTiming = true;
 
                 DB = true;
-                SoundON = false;
                 DC = 0;
             }
         }
@@ -250,7 +255,6 @@ public class EnemyAttack : MonoBehaviour
                 BossTiming = true;
 
                 DB2 = true;
-                SoundON = false;
                 DC = 0;
             }
         }
@@ -271,7 +275,6 @@ public class EnemyAttack : MonoBehaviour
                 BossTiming = true;
 
                 DB2 = true;
-                SoundON = false;
                 DC = 0;
             }
         }
