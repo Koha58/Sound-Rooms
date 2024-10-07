@@ -128,6 +128,10 @@ public class GameSceneButton : MonoBehaviour
     bool ExplainSelect;
     float ExplainSelectCount;
 
+    bool MenuSelectIN;
+    bool MenuSelectOUT;
+    float MenuSelectOUTCount;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -263,6 +267,8 @@ public class GameSceneButton : MonoBehaviour
             Time.timeScale = 0;
 
             NoUI = true;
+
+            MainSelectPositionSelect = true;
         }
   
 
@@ -922,7 +928,7 @@ public class GameSceneButton : MonoBehaviour
         if (NoUI == true)
         {
             //MainSelectPositionSelect = true;
-            //Debug.Log(ExplainSelectCount);
+            //Debug.Log(MenuSelectCount);
 
             if (Input.GetAxis("Vertical") == 0 && Reset == false)
             {
@@ -1067,22 +1073,33 @@ public class GameSceneButton : MonoBehaviour
                 {
                     MenuSelectCount--;
                     Reset = false;
-                    if (MenuSelectCount < 0)
+                    if (MenuSelectCount < -1)
                     {
-                        MenuSelectCount = 0;
+                        MenuSelectCount = -1;
                     }
                 }
             }
 
             if (MenuSelect ==true && MainSelectPositionSelect == false)
             {
+                if(MenuSelectCount==-1)
+                {
+                    MenuCursor.GetComponent<Image>().enabled = false;
+                    MenuCursor1.GetComponent<Image>().enabled = false;
+                    MenuCursor2.GetComponent<Image>().enabled = false;
+                    MenuCursor3.GetComponent<Image>().enabled = false;
+                    MenuSelect = false;
+                    MainSelectPositionSelect = true;
+                    Select.GetComponent<Image>().enabled = true;
+                    MenuSelectCount = 0;
+                }
                 if (MenuSelectCount == 0)
                 {
                     MenuCursor.GetComponent<Image>().enabled = true;
                     MenuCursor1.GetComponent<Image>().enabled = false;
                     MenuCursor2.GetComponent<Image>().enabled = false;
                     MenuCursor3.GetComponent<Image>().enabled = false;
-
+                    MenuSelectOUTCount = 0;
                     if (Input.GetAxis("Horizontal") > 0)
                     {
                         if (volume2 < 0)
@@ -1108,6 +1125,7 @@ public class GameSceneButton : MonoBehaviour
                     MenuCursor1.GetComponent<Image>().enabled = true;
                     MenuCursor2.GetComponent<Image>().enabled = false;
                     MenuCursor3.GetComponent<Image>().enabled = false;
+                    MenuSelectOUTCount = 0;
 
                     if (Input.GetAxis("Horizontal") > 0)
                     {
@@ -1134,6 +1152,8 @@ public class GameSceneButton : MonoBehaviour
                     MenuCursor1.GetComponent<Image>().enabled = false;
                     MenuCursor2.GetComponent<Image>().enabled = true;
                     MenuCursor3.GetComponent<Image>().enabled = false;
+                    MenuSelectOUTCount = 0;
+
                     if (Input.GetAxis("Horizontal") > 0)
                     {
                         if (volume < 1)
@@ -1159,6 +1179,8 @@ public class GameSceneButton : MonoBehaviour
                     MenuCursor1.GetComponent<Image>().enabled = false;
                     MenuCursor2.GetComponent<Image>().enabled = false;
                     MenuCursor3.GetComponent<Image>().enabled = true;
+                    MenuSelectOUTCount = 0;
+
                     if (Input.GetAxis("Horizontal") > 0)
                     {
                         if (level1 < 5)
@@ -1178,19 +1200,16 @@ public class GameSceneButton : MonoBehaviour
                         SetMouse(level1);
                     }
                 }
-                else if (MenuSelectCount == 4)
+                else if(MenuSelectCount == 4) 
                 {
-                    if (Input.GetKeyDown("joystick button 0"))
-                    {
-                        MenuSelect = false;
-                        MainSelectPositionSelect = true;
-
-                        Select.GetComponent<Image>().enabled = true;
-                        MenuCursor.GetComponent<Image>().enabled = false;
-                        MenuCursor1.GetComponent<Image>().enabled = false;
-                        MenuCursor2.GetComponent<Image>().enabled = false;
-                        MenuCursor3.GetComponent<Image>().enabled = false;
-                    }
+                    MenuCursor.GetComponent<Image>().enabled = false;
+                    MenuCursor1.GetComponent<Image>().enabled = false;
+                    MenuCursor2.GetComponent<Image>().enabled = false;
+                    MenuCursor3.GetComponent<Image>().enabled = false;
+                    MenuSelect = false;
+                    MainSelectPositionSelect = true;
+                    Select.GetComponent<Image>().enabled = true;
+                    MenuSelectCount = 0;
                 }
             }
 
