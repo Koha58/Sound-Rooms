@@ -14,6 +14,9 @@ public class EnemyAttack : MonoBehaviour
     public TextMeshProUGUI keyCountText;
     public int count;
     [SerializeField] AudioSource PickupSound;
+    [SerializeField] AudioSource EnemyDeadSound;
+    [SerializeField] AudioSource TrickyDeadSound;
+    [SerializeField] AudioSource BossDeadSound;
 
     LevelMeter levelMeter;
 
@@ -171,7 +174,8 @@ public class EnemyAttack : MonoBehaviour
             if (BEC.DestroyONOFF == true)
             {
                 enemyDeathcnt++;
-                DeathRange += 1.0f;
+                DeathRange += 5.0f;
+                BossDeadSound.PlayOneShot(BossDeadSound.clip);
                 GetComponent<ParticleSystem>().Play();
                 Destroy(other.gameObject);
 
@@ -186,7 +190,8 @@ public class EnemyAttack : MonoBehaviour
             if (EC.DestroyONOFF == true)
             {
                 enemyDeathcnt++;
-                DeathRange += 1.0f;
+                DeathRange += 5.0f;
+                BossDeadSound.PlayOneShot(BossDeadSound.clip);
                 GetComponent<ParticleSystem>().Play();
                 Destroy(other.gameObject);
 
@@ -204,6 +209,7 @@ public class EnemyAttack : MonoBehaviour
                 enemyDeathcnt++;
                 DeathRange += 1.0f;
                 GetComponent<ParticleSystem>().Play();
+                EnemyDeadSound.PlayOneShot(EnemyDeadSound.clip);
                 Destroy(other.gameObject);
 
                 BossTiming = true;
@@ -217,19 +223,20 @@ public class EnemyAttack : MonoBehaviour
         {
             GameObject EnemySearch = GameObject.FindWithTag("EnemySearch");
             EnemySearchcontroller ESC = EnemySearch.GetComponent<EnemySearchcontroller>();
-           // if (ESC.DestroyONOFF == true)
-           // {
-                //Debug.Log("ASDFGHJK");
-                GetComponent<ParticleSystem>().Play();
-                Destroy(other.gameObject);
-                enemyDeathcnt++;
-                DeathRange += 1.0f;
+            // if (ESC.DestroyONOFF == true)
+            // {
+            //Debug.Log("ASDFGHJK");
+            GetComponent<ParticleSystem>().Play();
+            TrickyDeadSound.PlayOneShot(TrickyDeadSound.clip);
+            Destroy(other.gameObject);
+            enemyDeathcnt++;
+            DeathRange += 1.0f;
 
-                BossTiming = true;
+            BossTiming = true;
 
-                DB = true;
-                DC = 0;
-           // }
+            DB = true;
+            DC = 0;
+            // }
         }
 
         if (other.CompareTag("EnemyG"))
@@ -239,6 +246,7 @@ public class EnemyAttack : MonoBehaviour
             enemyDeathcnt++;
             DeathRange += 1.0f;
             GetComponent<ParticleSystem>().Play();
+            EnemyDeadSound.PlayOneShot(EnemyDeadSound.clip);
             Destroy(other.gameObject);
             //Enemyincrease.enemyDeathcnt++;
             PickupSound.PlayOneShot(PickupSound.clip);
@@ -259,6 +267,7 @@ public class EnemyAttack : MonoBehaviour
                 enemyDeathcnt++;
                 DeathRange += 1.0f;
                 GetComponent<ParticleSystem>().Play();
+                EnemyDeadSound.PlayOneShot(EnemyDeadSound.clip);
                 Destroy(other.gameObject);
 
                 other.gameObject.SetActive(false);
@@ -278,6 +287,7 @@ public class EnemyAttack : MonoBehaviour
                 enemyDeathcnt++;
                 DeathRange += 1.0f;
                 GetComponent<ParticleSystem>().Play();
+                EnemyDeadSound.PlayOneShot(EnemyDeadSound.clip);
                 Destroy(other.gameObject);
                 PickupSound.PlayOneShot(PickupSound.clip);
                 count += 1;
