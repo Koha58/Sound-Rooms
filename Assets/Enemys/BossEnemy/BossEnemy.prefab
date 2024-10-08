@@ -745,7 +745,6 @@ GameObject:
   - component: {fileID: 4176677108771117836}
   - component: {fileID: 1499376657053395639}
   - component: {fileID: 2961262510330166276}
-  - component: {fileID: 6990219589820309155}
   m_Layer: 0
   m_Name: BossEnemy
   m_TagString: Boss
@@ -935,33 +934,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &6990219589820309155
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 483592056278693470}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 170aaa303c426a24db03a3595508802e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  PatrolPoints: []
-  MoveSpeed: 15
-  ONOFF: 0
-  PrototypeBodySkinnedMeshRenderer: {fileID: 2093102431013532659}
-  BossIdle: {fileID: 8300000, guid: 37b2e9f3b8a5eaa40b42fd242d014d56, type: 3}
-  BossMove: {fileID: 8300000, guid: 0ed66dc7c0585cb489e1db3b78f7fe8d, type: 3}
-  TargetPlayer: {fileID: 0}
-  ChaseSpeed: 2
-  ChaseONOFF: 0
-  DestroyONOFF: 0
-  animator: {fileID: 5312426229931526957}
-  Player: {fileID: 0}
-  rotation: {x: 0, y: 0, z: 0, w: 0}
-  VisualizationBoss: {fileID: 0}
-  SphereCollider: {fileID: 0}
 --- !u!1 &570991104216011154
 GameObject:
   m_ObjectHideFlags: 0

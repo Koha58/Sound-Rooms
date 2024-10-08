@@ -153,6 +153,17 @@ public class EnemyAttack : MonoBehaviour
 
             rb.AddForce(transform.forward * 500.0f, ForceMode.Force);
         }
+        /*
+        if (other.CompareTag("Box"))
+        {
+            //RigidbodyÇéÊìæ
+            var rb = other.GetComponent<Rigidbody>();
+
+            //à⁄ìÆÅAâÒì]Çâ¬î\Ç…Ç∑ÇÈ
+            rb.constraints = RigidbodyConstraints.None;
+
+            rb.AddForce(transform.forward * 500.0f, ForceMode.Force);
+        }*/
         if (other.CompareTag("Boss"))
         {
             GameObject Boss = GameObject.FindWithTag("Boss");
@@ -206,19 +217,19 @@ public class EnemyAttack : MonoBehaviour
         {
             GameObject EnemySearch = GameObject.FindWithTag("EnemySearch");
             EnemySearchcontroller ESC = EnemySearch.GetComponent<EnemySearchcontroller>();
-            if (ESC.DestroyONOFF == true)
-            {
+           // if (ESC.DestroyONOFF == true)
+           // {
                 //Debug.Log("ASDFGHJK");
-                enemyDeathcnt++;
-                DeathRange += 1.0f;
                 GetComponent<ParticleSystem>().Play();
                 Destroy(other.gameObject);
+                enemyDeathcnt++;
+                DeathRange += 1.0f;
 
                 BossTiming = true;
 
                 DB = true;
                 DC = 0;
-            }
+           // }
         }
 
         if (other.CompareTag("EnemyG"))

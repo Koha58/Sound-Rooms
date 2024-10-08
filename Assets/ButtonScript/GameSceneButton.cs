@@ -132,6 +132,9 @@ public class GameSceneButton : MonoBehaviour
     bool MenuSelectOUT;
     float MenuSelectOUTCount;
 
+    float Timer;
+    bool TimeON;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -929,15 +932,29 @@ public class GameSceneButton : MonoBehaviour
         {
             //MainSelectPositionSelect = true;
             //Debug.Log(MenuSelectCount);
+            Timer = Timer + 0.01f;
+            //Debug.Log(Timer);
 
-            if (Input.GetAxis("Vertical") == 0 && Reset == false)
+            if (TimeON == true)
             {
-               Reset =true;
+                if (/*Input.GetAxis("Vertical") == 0 */ Timer >= 0.11f && Reset == false)
+                {
+                    Reset = true;
+                    Timer = 0;
+                    TimeON = false;
+                }
+
+                if (/*Input.GetAxis("Horizontal") == 0*/ Timer >= 0.11f && Reset1 == false)
+                {
+                    Reset1 = true;
+                    Timer = 0;
+                    TimeON = false;
+                }
             }
 
-            if (Input.GetAxis("Horizontal") == 0 && Reset1 == false)
+            if(Input.GetAxis("Vertical") == 0&& Input.GetAxis("Horizontal") == 0)
             {
-                Reset1 = true;
+                Timer = 0;
             }
 
 
@@ -948,6 +965,7 @@ public class GameSceneButton : MonoBehaviour
                 {
                     MainSelectPosition++;
                     Reset = false;
+                    TimeON = true;
                     if(MainSelectPosition>2)
                     {
                         MainSelectPosition = 2;
@@ -958,6 +976,7 @@ public class GameSceneButton : MonoBehaviour
                 {
                     MainSelectPosition--;
                     Reset = false;
+                    TimeON = true;
                     if (MainSelectPosition < 0)
                     {
                         MainSelectPosition = 0;
@@ -1051,10 +1070,7 @@ public class GameSceneButton : MonoBehaviour
                 MainSelectPositionSelect = false;
 
                 Select.GetComponent<Image>().enabled = false;
-            }
-            else if(MainSelectPosition == 0 && (Input.GetAxisRaw("Horizontal") < 0))
-            {
-               
+                TimeON = true;
             }
 
             if(MenuSelect==true && Reset) 
@@ -1063,6 +1079,7 @@ public class GameSceneButton : MonoBehaviour
                 {
                     MenuSelectCount++;
                     Reset = false;
+                    TimeON = true;
                     if (MenuSelectCount > 4)
                     {
                         MenuSelectCount = 4;
@@ -1073,6 +1090,7 @@ public class GameSceneButton : MonoBehaviour
                 {
                     MenuSelectCount--;
                     Reset = false;
+                    TimeON = true;
                     if (MenuSelectCount < -1)
                     {
                         MenuSelectCount = -1;
@@ -1219,12 +1237,14 @@ public class GameSceneButton : MonoBehaviour
             {
                 MainSelectPositionSelect = false;
                 ExplainSelect = true;
+                TimeON = true;
                 if (ExplainSelect == true && Reset1)
                 {
                     if ((Input.GetAxisRaw("Horizontal") > 0))
                     {
                         ExplainSelectCount++;
                         Reset1 = false;
+                        TimeON = true;
 
                         if (ExplainSelectCount > 2)
                         {
@@ -1235,6 +1255,7 @@ public class GameSceneButton : MonoBehaviour
                     {
                         ExplainSelectCount--;
                         Reset1 = false;
+                        TimeON = true;
 
                         if (ExplainSelectCount < 0)
                         {
@@ -1251,6 +1272,7 @@ public class GameSceneButton : MonoBehaviour
                     {
                         ExplainSelectCount--;
                         Reset1 = false;
+                        TimeON = true;
 
                         if (ExplainSelectCount < 0)
                         {

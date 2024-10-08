@@ -23,6 +23,7 @@ public class XBOXController : MonoBehaviour
             yield break;
         }
 
+        /*
         Debug.Log("左モーター振動");
         gamepad.SetMotorSpeeds(1.0f, 0.0f);
         yield return new WaitForSeconds(1.0f);
@@ -33,6 +34,7 @@ public class XBOXController : MonoBehaviour
 
         Debug.Log("モーター停止");
         gamepad.SetMotorSpeeds(0.0f, 0.0f);
+        */
     }
     // Update is called once per frame
     void Update()
