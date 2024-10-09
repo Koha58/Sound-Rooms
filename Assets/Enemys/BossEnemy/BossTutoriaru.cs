@@ -83,7 +83,7 @@ public class BossTutoriaru : MonoBehaviour
                     animator.SetBool("Move", false);
                 }
                 NextTime += Time.deltaTime;
-                if (NextTime >= 5.0f)
+                if (NextTime >= 3.0f)
                 {
                     NextPatrolPoint();
                     NextTime = 0;
@@ -192,6 +192,7 @@ public class BossTutoriaru : MonoBehaviour
             animator.SetBool("Idle", true);
             animator.SetBool("Move", false);
             VisualizationBoss.SetActive(true);
+            MoveBossEnemy();
         }
         else if (EnemyAttack.SoundON == false)
         {
@@ -206,6 +207,14 @@ public class BossTutoriaru : MonoBehaviour
             Idle();
             VisualizationBoss.SetActive(true);
         }
+        else if (EnemyAttack.SoundON2 == false)
+        {
+            Front = false;
+            MoveBossEnemy();
+            animator.SetBool("Idle", false);
+            animator.SetBool("Move", true);
+            audioSourse.maxDistance = 5;                      //音が聞こえる範囲
+        }
 
         Vector3 Position = TargetPlayer.position - transform.position; // ターゲットの位置と自身の位置の差を計算
         bool isFront = Vector3.Dot(Position, transform.forward) > 0;  // ターゲットが自身の前方にあるかどうか判定
@@ -219,7 +228,7 @@ public class BossTutoriaru : MonoBehaviour
             if (ONOFF == 1 && ChasePlayer <= 5) { ChaseONOFF = true; }
             DestroyONOFF = false;
         }
-        else if (isBack) { }//DestroyONOFF = true;}
+        else if (isBack) {DestroyONOFF = true;}
     }
     void Idle() { audioSourse.PlayOneShot(BossIdle); }
 

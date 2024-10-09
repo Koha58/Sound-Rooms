@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class VisualizationBox : MonoBehaviour
 {
-    [SerializeField] Transform Boss;
     void Start()
     {
         gameObject.SetActive(false);
@@ -13,7 +12,6 @@ public class VisualizationBox : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position = Boss.transform.position;
         GameObject gameObject = GameObject.FindWithTag("Boss"); //Playerオブジェクトを探す
         BossEnemyControll BEC = gameObject.GetComponent<BossEnemyControll>();
 

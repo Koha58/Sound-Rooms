@@ -28,6 +28,7 @@ public class StartManager : MonoBehaviour
 
         Cursor.SetActive(false);
         Cursor1.SetActive(false);
+        UPDOWN = true;
     }
 
     // Update is called once per frame

@@ -83,7 +83,7 @@ public class BossEnemyControll : MonoBehaviour
                     animator.SetBool("Move", false);
                 }
                 NextTime += Time.deltaTime;
-                if (NextTime >= 5.0f)
+                if (NextTime >= 3.0f)
                 {
                     NextPatrolPoint();
                     NextTime = 0;
@@ -192,23 +192,32 @@ public class BossEnemyControll : MonoBehaviour
 
         if (EnemyAttack.SoundON == true)
         {
-            Front = true;
+            Front=true;
             animator.SetBool("Idle", true);
             animator.SetBool("Move", false);
             VisualizationBoss.SetActive(true);
+            MoveBossEnemy();
         }
         else if (EnemyAttack.SoundON == false)
         {
             ONOFF = 0;
+            MoveBossEnemy();
             PrototypeBodySkinnedMeshRenderer.enabled = false; //3DモデルのRendererを見えない状態
             VisualizationBoss.SetActive(false);
-            MoveBossEnemy();
 
         }
         if (EnemyAttack.SoundON2 == true)
         {
             Idle();
             VisualizationBoss.SetActive(true);
+        }
+        else if (EnemyAttack.SoundON2 == false)
+        {
+            Front = false;
+            MoveBossEnemy();
+            animator.SetBool("Idle", false);
+            animator.SetBool("Move", true);
+            audioSourse.maxDistance = 5;                      //音が聞こえる範囲
         }
 
         Vector3 Position = TargetPlayer.position - transform.position; // ターゲットの位置と自身の位置の差を計算

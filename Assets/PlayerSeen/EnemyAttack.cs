@@ -36,6 +36,12 @@ public class EnemyAttack : MonoBehaviour
     public static bool SoundON;
     public static bool SoundON2;
 
+    public GameObject Gravity;
+    public GameObject Blur;
+    [SerializeField] GameObject VisualizationBoss;   //ボスの可視化の音(球体)
+
+    bool BossDes;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -72,20 +78,27 @@ public class EnemyAttack : MonoBehaviour
                 onoff = 0;  //見えていないから0
             }
         }
-        
+
+        if (BossDes == true)
+        {
+            PS.onoff = 0;                                                             //見えているから1
+            PS.Visualization = false;
+            BossDes = false;
+        }
+
         if (DB == true)
         {
             DC += Time.deltaTime;
-
             if (DC >= 9.8f)
             {
                 SoundON = true;
                 SoundON2=true;
+                BossDes = true;
             }
             if (DC >= 10.0f)
             {
-                Count=1;
-                SoundON2 = false;
+                BossDes = false;
+                Count =1;
                 if (Count == 1)
                 {
                     GameObject Boss = GameObject.FindWithTag("Boss");
@@ -94,6 +107,10 @@ public class EnemyAttack : MonoBehaviour
                     //OFF = true;
                     Count = 2;
                 }
+            }
+            if (DC >= 16.0f)
+            {
+                SoundON2 = false;
             }
             if (DC >= 30.0f)
             {
@@ -115,10 +132,11 @@ public class EnemyAttack : MonoBehaviour
             {
                 SoundON = true;
                 SoundON2 = true;
+                BossDes = true;
             }
             if (DC >=10.0f)
             {
-                SoundON2 = false;
+                BossDes = false;
                 Count =1;
                 if (Count == 1)
                 {
@@ -129,6 +147,10 @@ public class EnemyAttack : MonoBehaviour
                     //OFF = true;
                     Count = 2;
                 }
+            }
+            if(DC >= 16.0f)
+            {
+                SoundON2 = false;
             }
             if (DC >= 30.0f)
             {
@@ -156,17 +178,7 @@ public class EnemyAttack : MonoBehaviour
 
             rb.AddForce(transform.forward * 500.0f, ForceMode.Force);
         }
-        /*
-        if (other.CompareTag("Box"))
-        {
-            //Rigidbodyを取得
-            var rb = other.GetComponent<Rigidbody>();
 
-            //移動、回転を可能にする
-            rb.constraints = RigidbodyConstraints.None;
-
-            rb.AddForce(transform.forward * 500.0f, ForceMode.Force);
-        }*/
         if (other.CompareTag("Boss"))
         {
             GameObject Boss = GameObject.FindWithTag("Boss");
@@ -178,6 +190,9 @@ public class EnemyAttack : MonoBehaviour
                 BossDeadSound.PlayOneShot(BossDeadSound.clip);
                 GetComponent<ParticleSystem>().Play();
                 Destroy(other.gameObject);
+                Destroy(Gravity.gameObject);
+                Destroy(Blur.gameObject);
+                Destroy(VisualizationBoss.gameObject);
 
                 DB = true;
                 DC = 0;
@@ -194,6 +209,9 @@ public class EnemyAttack : MonoBehaviour
                 BossDeadSound.PlayOneShot(BossDeadSound.clip);
                 GetComponent<ParticleSystem>().Play();
                 Destroy(other.gameObject);
+                Destroy(Gravity.gameObject);
+                Destroy(Blur.gameObject);
+                Destroy(VisualizationBoss.gameObject);
 
                 DB = true;
                 DC = 0;
