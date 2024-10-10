@@ -194,6 +194,10 @@ public class EnemyAttack : MonoBehaviour
                 Destroy(Blur.gameObject);
                 Destroy(VisualizationBoss.gameObject);
 
+                PickupSound.PlayOneShot(PickupSound.clip);
+                count += 4;
+                SetCountText();
+
                 DB = true;
                 DC = 0;
             }
@@ -212,6 +216,10 @@ public class EnemyAttack : MonoBehaviour
                 Destroy(Gravity.gameObject);
                 Destroy(Blur.gameObject);
                 Destroy(VisualizationBoss.gameObject);
+
+                PickupSound.PlayOneShot(PickupSound.clip);
+                count += 1;
+                SetCountText();
 
                 DB = true;
                 DC = 0;

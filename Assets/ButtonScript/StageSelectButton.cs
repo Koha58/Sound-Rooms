@@ -16,6 +16,8 @@ public class StageSelectButton : MonoBehaviour
     public GameObject LeftButton;
 
     public GameObject Cursor;
+    public GameObject Cursor1;
+    public GameObject Cursor2;
 
     public GameObject[] StageVideos;
     public GameObject[] StageTitles;
@@ -47,6 +49,10 @@ public class StageSelectButton : MonoBehaviour
     private float StartSizeX = 1.65f;
     private float StartSizeY = 0.7f;
     private float StartSizeZ = 1.0f;
+
+
+    float Timer;
+    bool TimeON;
 
     // Start is called before the first frame update
     void Start()
@@ -86,12 +92,12 @@ public class StageSelectButton : MonoBehaviour
 
         if (deviceCheck)
         {
-            Transform cursorTransform = Cursor.transform;
-            cursorTransform.transform.localPosition = new Vector3(originPositionX, originPositionY, originPositionZ);
-            changePositionY = originPositionY;
+            //Transform cursorTransform = Cursor.transform;
+           // cursorTransform.transform.localPosition = new Vector3(originPositionX, originPositionY, originPositionZ);
+           // changePositionY = originPositionY;
             mostUnderPositionY = 160;
 
-            cursorTransform.transform.localScale = new Vector3(originSizeX, originSizeY, originSizeZ);
+           // cursorTransform.transform.localScale = new Vector3(originSizeX, originSizeY, originSizeZ);
 
             Cursor.GetComponent<Image>().enabled = true;
         }
@@ -101,12 +107,15 @@ public class StageSelectButton : MonoBehaviour
         }
 
         Continue = false;
+        Cursor.SetActive(false);
+        Cursor1.SetActive(false);
+        Cursor2.SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
-        Transform cursorTransform = Cursor.transform;
+        //Transform cursorTransform = Cursor.transform;
         if (InputDeviceManager.Instance.CurrentDeviceType == InputDeviceType.Xbox)
         {
             deviceCheck = true;
@@ -116,19 +125,49 @@ public class StageSelectButton : MonoBehaviour
         {
             deviceCheck = false;
             Cursor.GetComponent<Image>().enabled = false;
+            Cursor.SetActive(false);
+            Cursor1.SetActive(false);
+            Cursor2.SetActive(false);
         }
 
         if(deviceCheck)
         {
-            if(Input.GetAxisRaw("Vertical") == 0)
+            Timer = Timer + 0.01f;
+            Debug.Log(Timer);
+            if (TimeON == true)
             {
+                if (/*Input.GetAxis("Vertical") == 0 */ Timer >= 1.0f && Continue == true)
+                {
+                    Continue = false;
+                    Timer = 0;
+                    TimeON = false;
+                }
+
+                if (/*Input.GetAxis("Horizontal") == 0*/ Timer >= 1.0f && Continue == true )
+                {
+                    Continue = false;
+                    Timer = 0;
+                    TimeON = false;
+                }
+            }
+
+            if (Input.GetAxis("Vertical") == 0&& Input.GetAxisRaw("Horizontal") ==0)
+            {
+                Timer = 0.01f;
                 Continue = false;
             }
+
+            /*
+            if (Input.GetAxisRaw("Vertical") == 0)
+            {
+                Continue = false;
+            }*/
 
 
             if (Input.GetAxisRaw("Vertical") < 0 && Continue == false)
             {
-                cursorTransform.transform.localScale = new Vector3(originSizeX, originSizeY, originSizeZ);
+                TimeON = true;
+                //cursorTransform.transform.localScale = new Vector3(originSizeX, originSizeY, originSizeZ);
                 if (stage != 1)
                 {
                     stage++;
@@ -138,9 +177,11 @@ public class StageSelectButton : MonoBehaviour
                     }
 
                     StageButtons[stage].GetComponent<Image>().color = new Color32(255, 255, 255, 255);
-
-                    changePositionY -= 80;
-                    cursorTransform.transform.localPosition = new Vector3(originPositionX, changePositionY, originPositionZ);
+                    Cursor.SetActive(false);
+                    Cursor1.SetActive(false);
+                    Cursor2.SetActive(true);
+                    //changePositionY -= 80;
+                    //cursorTransform.transform.localPosition = new Vector3(originPositionX, changePositionY, originPositionZ);
                 }
                 else
                 {
@@ -151,15 +192,18 @@ public class StageSelectButton : MonoBehaviour
                     }
 
                     StageButtons[stage].GetComponent<Image>().color = new Color32(255, 255, 255, 255);
-
-                    cursorTransform.transform.localPosition = new Vector3(originPositionX, originPositionY, originPositionZ);
-                    changePositionY = originPositionY;
+                    Cursor.SetActive(false);
+                    Cursor1.SetActive(true);
+                    Cursor2.SetActive(false);
+                    //cursorTransform.transform.localPosition = new Vector3(originPositionX, originPositionY, originPositionZ);
+                    // changePositionY = originPositionY;
                 }
                 Continue = true;
             }
             else if(Input.GetAxisRaw("Vertical") > 0 && Continue == false)
             {
-                cursorTransform.transform.localScale = new Vector3(originSizeX, originSizeY, originSizeZ);
+                TimeON = true;
+                //cursorTransform.transform.localScale = new Vector3(originSizeX, originSizeY, originSizeZ);
                 if (stage != 0)
                 {
                     stage--;
@@ -169,9 +213,12 @@ public class StageSelectButton : MonoBehaviour
                     }
 
                     StageButtons[stage].GetComponent<Image>().color = new Color32(255, 255, 255, 255);
+                    Cursor.SetActive(false);
+                    Cursor1.SetActive(true);
+                    Cursor2.SetActive(false);
 
-                    changePositionY += 80;
-                    cursorTransform.transform.localPosition = new Vector3(originPositionX, changePositionY, originPositionZ);
+                    //changePositionY += 80;
+                    // cursorTransform.transform.localPosition = new Vector3(originPositionX, changePositionY, originPositionZ);
                 }
                 else
                 {
@@ -182,9 +229,11 @@ public class StageSelectButton : MonoBehaviour
                     }
 
                     StageButtons[stage].GetComponent<Image>().color = new Color32(255, 255, 255, 255);
-
-                    cursorTransform.transform.localPosition = new Vector3(originPositionX, mostUnderPositionY, originPositionZ);
-                    changePositionY = mostUnderPositionY;
+                    Cursor.SetActive(false);
+                    Cursor1.SetActive(false);
+                    Cursor2.SetActive(true);
+                    //cursorTransform.transform.localPosition = new Vector3(originPositionX, mostUnderPositionY, originPositionZ);
+                    //changePositionY = mostUnderPositionY;
                 }
 
                 Continue = true;
@@ -192,21 +241,35 @@ public class StageSelectButton : MonoBehaviour
 
             if (Input.GetAxisRaw("Horizontal") > 0 && Continue == false )
             {
-                cursorTransform.transform.localPosition = new Vector3(StartPositionX, StartPositionY, StartPositionZ);
-                cursorTransform.transform.localScale = new Vector3(StartSizeX, StartSizeY, StartSizeZ);
+                TimeON = true;
+                //cursorTransform.transform.localPosition = new Vector3(StartPositionX, StartPositionY, StartPositionZ);
+                //cursorTransform.transform.localScale = new Vector3(StartSizeX, StartSizeY, StartSizeZ);
+                Cursor.SetActive(true);
+                Cursor1.SetActive(false);
+                Cursor2.SetActive(false);
+
                 Continue = true;
                 SetGameStart = true;
 
             }
             else if(Input.GetAxisRaw("Horizontal") < 0 && Continue == false)
             {
-                SetGameStart=false;
-                cursorTransform.transform.localPosition = new Vector3(originPositionX, originPositionY, originPositionZ);
-                cursorTransform.transform.localScale = new Vector3(originSizeX, originSizeY, originSizeZ);
+                TimeON = true;
+                SetGameStart =false;
+                //cursorTransform.transform.localPosition = new Vector3(originPositionX, originPositionY, originPositionZ);
+                //cursorTransform.transform.localScale = new Vector3(originSizeX, originSizeY, originSizeZ);
+                Cursor.SetActive(false);
+                Cursor1.SetActive(true);
+                Cursor2.SetActive(false);
+
+                StageButtons[0].GetComponent<Image>().color = new Color32(255, 255, 255, 255);
+                StageButtons[1].GetComponent<Image>().color = new Color32(255, 255, 255, 45);
+                Continue = true;
+                stage = 0;
             }
         }
 
-        StageSelect();
+       // StageSelect();
 
         if (SetGameStart == true) 
         {
