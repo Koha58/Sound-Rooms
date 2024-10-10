@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class AudioOutputChecker : MonoBehaviour
 {
@@ -6,6 +7,8 @@ public class AudioOutputChecker : MonoBehaviour
     private AudioClip audioClip;
     public bool overflowOccurred = false; // オーバーフロー発生フラグ
     public OverflowHandler overflowHandler;
+
+    public GameObject SpeakerConnectionBadUI;
 
     void Start()
     {
@@ -15,13 +18,14 @@ public class AudioOutputChecker : MonoBehaviour
         audioSource.mute = true;
         overflowOccurred = true; // オーバーフロー発生フラグ
         audioSource.Play();
+        SpeakerConnectionBadUI.GetComponent<Image>().enabled = false;
     }
 
     void Update()
     {
         // 1秒待ってから実行する処理を開始
         StartCoroutine(WaitAndExecute());
-
+        SpeakerConnectionBadUI.GetComponent<Image>().enabled = false;
         // 毎フレームオーバーフローが発生していないか確認
         if (overflowOccurred)
         {
@@ -53,7 +57,7 @@ public class AudioOutputChecker : MonoBehaviour
         }
         else
         {
-            overflowOccurred = true; // オーバーフローが発生しなかった場合はフラグをリセット
+            overflowOccurred = true; // オーバーフローが発生した場合はフラグを立てる
             HandleBufferOverflow((uint)data.Length);
         }
     }
@@ -71,8 +75,9 @@ public class AudioOutputChecker : MonoBehaviour
 
     public void Overflow()
     {
-        // オーバーフローが発生しなかった場合に実行する処理
+        // オーバーフローが発生した場合に実行する処理
         Debug.LogError("スピーカーが接続されていません");
+        SpeakerConnectionBadUI.GetComponent<Image>().enabled = true;
     }
 
     void OnDestroy()
