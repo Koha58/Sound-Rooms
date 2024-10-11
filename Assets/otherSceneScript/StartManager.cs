@@ -23,8 +23,8 @@ public class StartManager : MonoBehaviour
         SelectButtonImage = SelectButton.GetComponent<Image>();
         BackDesktopButtonImage = BackDesktopButton.GetComponent<Image>();
 
-        SelectButtonImage.color = new Color32(255, 255, 255, 45);
-        BackDesktopButtonImage.color = new Color32(255, 255, 255, 45);
+        SelectButtonImage.color = new Color32(0, 0, 0, 120);
+        BackDesktopButtonImage.color = new Color32(0, 0, 0, 120);
 
         Cursor.SetActive(false);
         Cursor1.SetActive(false);
@@ -37,8 +37,8 @@ public class StartManager : MonoBehaviour
 
         if (Input.GetAxisRaw("Vertical") < 0)
         {
-            SelectButtonImage.color = new Color32(255, 255, 255, 255);
-            BackDesktopButtonImage.color = new Color32(255, 255, 255, 45);
+            SelectButtonImage.color = new Color32(0, 0, 0, 255);
+            BackDesktopButtonImage.color = new Color32(0, 0, 0, 120);
             Cursor.SetActive(true);
             Cursor1.SetActive(false);
             UPDOWN = true;
@@ -46,8 +46,8 @@ public class StartManager : MonoBehaviour
 
         if (Input.GetAxisRaw("Vertical") > 0)
         {
-            SelectButtonImage.color = new Color32(255, 255, 255, 45);
-            BackDesktopButtonImage.color = new Color32(255, 255, 255, 255);
+            SelectButtonImage.color = new Color32(0, 0, 0, 120);
+            BackDesktopButtonImage.color = new Color32(0, 0, 0, 255);
             Cursor1.SetActive(true);
             Cursor.SetActive(false);
             UPDOWN = false;
@@ -89,21 +89,21 @@ public class StartManager : MonoBehaviour
 
     public void EnterSelectButton()
     {
-        SelectButtonImage.color = new Color32(255, 255, 255, 255);
+        SelectButtonImage.color = new Color32(0, 0, 0, 255);
     }
 
     public void ExitSelectButton()
     {
-        SelectButtonImage.color = new Color32(255, 255, 255, 45);
+        SelectButtonImage.color = new Color32(0, 0, 0, 120);
     }
 
     public void EnterBackDesktopButton()
     {
-        BackDesktopButtonImage.color = new Color32(255, 255, 255, 255);
+        BackDesktopButtonImage.color = new Color32(0, 0, 0, 255);
     }
 
     public void ExitBackDesktopButton()
     {
-        BackDesktopButtonImage.color = new Color32(255, 255, 255, 45);
+        BackDesktopButtonImage.color = new Color32(0, 0, 0, 120);
     }
 }

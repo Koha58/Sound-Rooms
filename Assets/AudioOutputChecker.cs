@@ -18,12 +18,12 @@ public class AudioOutputChecker : MonoBehaviour
         audioSource.mute = true;
         overflowOccurred = true; // オーバーフロー発生フラグ
         audioSource.Play();
-        SpeakerConnectionBadUI.GetComponent<Image>().enabled = false;
+        SpeakerConnectionBadUI.GetComponent<Image>().enabled = true;
     }
 
     void Update()
     {
-        // 1秒待ってから実行する処理を開始
+        // 3秒待ってから実行する処理を開始
         StartCoroutine(WaitAndExecute());
         SpeakerConnectionBadUI.GetComponent<Image>().enabled = false;
         // 毎フレームオーバーフローが発生していないか確認
@@ -35,7 +35,7 @@ public class AudioOutputChecker : MonoBehaviour
 
     private System.Collections.IEnumerator WaitAndExecute()
     {
-        // 1秒待機
+        // 3秒待機
         yield return new WaitForSeconds(3f);
     }
 
@@ -76,7 +76,7 @@ public class AudioOutputChecker : MonoBehaviour
     public void Overflow()
     {
         // オーバーフローが発生した場合に実行する処理
-        Debug.LogError("スピーカーが接続されていません");
+        Debug.LogWarning("スピーカーが接続されていません");
         SpeakerConnectionBadUI.GetComponent<Image>().enabled = true;
     }
 
