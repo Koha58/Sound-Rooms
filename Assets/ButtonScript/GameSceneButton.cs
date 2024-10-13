@@ -736,7 +736,7 @@ public class GameSceneButton : MonoBehaviour
                     MenuCursor2.GetComponent<Image>().enabled = false;
                     MenuCursor3.GetComponent<Image>().enabled = false;
 
-                    if (Input.GetAxis("Horizontal") > 0)
+                    if (Input.GetKeyDown("joystick button 5"))
                     {
                         if (volume2 < 0)
                         {
@@ -745,7 +745,7 @@ public class GameSceneButton : MonoBehaviour
                         BGMSlider.value = volume2;
                         SetMic(volume2);
                     }
-                    else if (Input.GetAxis("Horizontal") < 0)
+                    else if (Input.GetKeyDown("joystick button 4"))
                     {
                         if (volume2 > -80 && volume != 0)
                         {
@@ -762,7 +762,7 @@ public class GameSceneButton : MonoBehaviour
                     MenuCursor2.GetComponent<Image>().enabled = false;
                     MenuCursor3.GetComponent<Image>().enabled = false;
 
-                    if (Input.GetAxis("Horizontal") > 0)
+                    if (Input.GetKeyDown("joystick button 5"))
                     {
                         if (volume3 < 0)
                         {
@@ -771,7 +771,7 @@ public class GameSceneButton : MonoBehaviour
                         SESlider.value = volume3;
                         SetMic(volume3);
                     }
-                    else if (Input.GetAxis("Horizontal") < 0)
+                    else if (Input.GetKeyDown("joystick button 4"))
                     {
                         if (volume3 > -80 && volume != 0)
                         {
@@ -787,7 +787,7 @@ public class GameSceneButton : MonoBehaviour
                     MenuCursor1.GetComponent<Image>().enabled = false;
                     MenuCursor2.GetComponent<Image>().enabled = true;
                     MenuCursor3.GetComponent<Image>().enabled = false;
-                    if (Input.GetAxis("Horizontal") > 0)
+                    if (Input.GetKeyDown("joystick button 5"))
                     {
                         if (volume < 1)
                         {
@@ -796,7 +796,7 @@ public class GameSceneButton : MonoBehaviour
                         MicSlider.value = volume;
                         SetMic(volume);
                     }
-                    else if (Input.GetAxis("Horizontal") < 0)
+                    else if (Input.GetKeyDown("joystick button 4"))
                     {
                         if (volume > 0 && volume != 0)
                         {
@@ -812,7 +812,7 @@ public class GameSceneButton : MonoBehaviour
                     MenuCursor1.GetComponent<Image>().enabled = false;
                     MenuCursor2.GetComponent<Image>().enabled = false;
                     MenuCursor3.GetComponent<Image>().enabled = true;
-                    if (Input.GetAxis("Horizontal") > 0)
+                    if (Input.GetKeyDown("joystick button 5"))
                     {
                         if (level1 < 5)
                         {
@@ -821,7 +821,7 @@ public class GameSceneButton : MonoBehaviour
                         MouseSlider.value = level1;
                         SetMouse(level1);
                     }
-                    else if (Input.GetAxis("Horizontal") < 0)
+                    else if (Input.GetKeyDown("joystick button 4"))
                     {
                         if (level1 > 0 && level1 != 0)
                         {
@@ -1137,7 +1137,7 @@ public class GameSceneButton : MonoBehaviour
                     MenuCursor3.GetComponent<Image>().enabled = false;
                     Cursor.gameObject.SetActive(false);
                     MenuSelectOUTCount = 0;
-                    if (Input.GetAxis("Horizontal") > 0 && VH ==false)
+                    if (Input.GetKey("joystick button 5") && VH ==false)
                     {
                         if (volume2 < 0)
                         {
@@ -1146,7 +1146,7 @@ public class GameSceneButton : MonoBehaviour
                         BGMSlider.value = volume2;
                         SetMic(volume2);
                     }
-                    else if (Input.GetAxis("Horizontal") < 0 && VH == false)
+                    else if (Input.GetKey("joystick button 4") && VH == false)
                     {
                         if (volume2 > -80 && volume != 0)
                         {
@@ -1173,7 +1173,7 @@ public class GameSceneButton : MonoBehaviour
                     Cursor.gameObject.SetActive(false);
                     MenuSelectOUTCount = 0;
 
-                    if (Input.GetAxis("Horizontal") > 0 && VH == false)
+                    if (Input.GetKey("joystick button 5") && VH == false)
                     {
                         if (volume3 < 0)
                         {
@@ -1182,7 +1182,7 @@ public class GameSceneButton : MonoBehaviour
                         SESlider.value = volume3;
                         SetMic(volume3);
                     }
-                    else if (Input.GetAxis("Horizontal") < 0 && VH == false)
+                    else if (Input.GetKey("joystick button 4") && VH == false)
                     {
                         if (volume3 > -80 && volume != 0)
                         {
@@ -1209,7 +1209,7 @@ public class GameSceneButton : MonoBehaviour
                     Cursor.gameObject.SetActive(false);
                     MenuSelectOUTCount = 0;
 
-                    if (Input.GetAxis("Horizontal") > 0 && VH == false)
+                    if (Input.GetKey("joystick button 5") && VH == false)
                     {
                         if (volume < 1)
                         {
@@ -1218,7 +1218,7 @@ public class GameSceneButton : MonoBehaviour
                         MicSlider.value = volume;
                         SetMic(volume);
                     }
-                    else if (Input.GetAxis("Horizontal") < 0 && VH == false)
+                    else if (Input.GetKey("joystick button 4") && VH == false)
                     {
                         if (volume > 0 && volume != 0)
                         {
@@ -1245,7 +1245,7 @@ public class GameSceneButton : MonoBehaviour
                     Cursor.gameObject.SetActive(false);
                     MenuSelectOUTCount = 0;
 
-                    if (Input.GetAxis("Horizontal") > 0 && VH == false)
+                    if (Input.GetKey("joystick button 5") && VH == false)
                     {
                         if (level1 < 5)
                         {
@@ -1254,7 +1254,7 @@ public class GameSceneButton : MonoBehaviour
                         MouseSlider.value = level1;
                         SetMouse(level1);
                     }
-                    else if (Input.GetAxis("Horizontal") < 0 && VH == false)
+                    else if (Input.GetKey("joystick button 4") && VH == false)
                     {
                         if (level1 > 0 && level1 != 0)
                         {
