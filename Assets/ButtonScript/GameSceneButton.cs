@@ -141,6 +141,9 @@ public class GameSceneButton : MonoBehaviour
 
     float Timervh;
     bool VH;
+    int i = 0;
+
+    [SerializeField] GameObject[] RBLB;
 
     // Start is called before the first frame update
     void Start()
@@ -222,6 +225,16 @@ public class GameSceneButton : MonoBehaviour
         ButtonON = false;
         volume += 0.1f;
         SelectCount = 0;
+
+        RBLB[0].gameObject.SetActive(false);
+        RBLB[1].gameObject.SetActive(false);
+        RBLB[2].gameObject.SetActive(false);
+        RBLB[3].gameObject.SetActive(false);
+        RBLB[4].gameObject.SetActive(false);
+        RBLB[5].gameObject.SetActive(false);
+        RBLB[6].gameObject.SetActive(false);
+        RBLB[7].gameObject.SetActive(false);
+     
     }
 
     // Update is called once per frame
@@ -1051,10 +1064,20 @@ public class GameSceneButton : MonoBehaviour
                 Select.GetComponent<Image>().enabled = false;
                 Select1.GetComponent<Image>().enabled = true;
                 Select2.GetComponent<Image>().enabled = false;
+                OperationExplanationSelect.GetComponent<Image>().enabled = true;
+                OperationExplanationSelect1.GetComponent<Image>().enabled = false;
                 decisionA.gameObject.SetActive(false);
                 Cursor.gameObject.SetActive(false);
                 MenuSelect = false;
                 MenuSelectCount = 0;
+                RBLB[0].gameObject.SetActive(false);
+                RBLB[1].gameObject.SetActive(false);
+                RBLB[2].gameObject.SetActive(false);
+                RBLB[3].gameObject.SetActive(false);
+                RBLB[4].gameObject.SetActive(false);
+                RBLB[5].gameObject.SetActive(false);
+                RBLB[6].gameObject.SetActive(false);
+                RBLB[7].gameObject.SetActive(false);
 
             }
             else if(MainSelectPosition == 2 && MainSelectPositionSelect)
@@ -1083,7 +1106,17 @@ public class GameSceneButton : MonoBehaviour
                 ExplanationSelectCount = 0;
                 OperationExplanationSelect.GetComponent<Image>().enabled = false;
                 OperationExplanationSelect1.GetComponent<Image>().enabled = false;
+                decisionA.gameObject.SetActive(true);
                 SelectCount = 0;
+                RBLB[0].gameObject.SetActive(false);
+                RBLB[1].gameObject.SetActive(false);
+                RBLB[2].gameObject.SetActive(false);
+                RBLB[3].gameObject.SetActive(false);
+                RBLB[4].gameObject.SetActive(false);
+                RBLB[5].gameObject.SetActive(false);
+                RBLB[6].gameObject.SetActive(false);
+                RBLB[7].gameObject.SetActive(false);
+
 
                 if (Input.GetKeyDown("joystick button 0"))
                 {
@@ -1096,7 +1129,6 @@ public class GameSceneButton : MonoBehaviour
                 MenuSelect=true;
                 MainSelectPositionSelect = false;
 
-                Select.GetComponent<Image>().enabled = false;
                 TimeON = true;
             }
 
@@ -1135,8 +1167,18 @@ public class GameSceneButton : MonoBehaviour
                     MenuCursor1.GetComponent<Image>().enabled = false;
                     MenuCursor2.GetComponent<Image>().enabled = false;
                     MenuCursor3.GetComponent<Image>().enabled = false;
+                    RBLB[0].gameObject.SetActive(true);
+                    RBLB[1].gameObject.SetActive(true);
+                    RBLB[2].gameObject.SetActive(false);
+                    RBLB[3].gameObject.SetActive(false);
+                    RBLB[4].gameObject.SetActive(false);
+                    RBLB[5].gameObject.SetActive(false);
+                    RBLB[6].gameObject.SetActive(false);
+                    RBLB[7].gameObject.SetActive(false);
+
                     Cursor.gameObject.SetActive(false);
                     MenuSelectOUTCount = 0;
+
                     if (Input.GetKey("joystick button 5") && VH ==false)
                     {
                         if (volume2 < 0)
@@ -1145,6 +1187,7 @@ public class GameSceneButton : MonoBehaviour
                         }
                         BGMSlider.value = volume2;
                         SetMic(volume2);
+
                     }
                     else if (Input.GetKey("joystick button 4") && VH == false)
                     {
@@ -1170,7 +1213,17 @@ public class GameSceneButton : MonoBehaviour
                     MenuCursor1.GetComponent<Image>().enabled = true;
                     MenuCursor2.GetComponent<Image>().enabled = false;
                     MenuCursor3.GetComponent<Image>().enabled = false;
+                    RBLB[0].gameObject.SetActive(false);
+                    RBLB[1].gameObject.SetActive(false);
+                    RBLB[2].gameObject.SetActive(true);
+                    RBLB[3].gameObject.SetActive(true);
+                    RBLB[4].gameObject.SetActive(false);
+                    RBLB[5].gameObject.SetActive(false);
+                    RBLB[6].gameObject.SetActive(false);
+                    RBLB[7].gameObject.SetActive(false);
+
                     Cursor.gameObject.SetActive(false);
+                    MenuSelectOUTCount = 0;
                     MenuSelectOUTCount = 0;
 
                     if (Input.GetKey("joystick button 5") && VH == false)
@@ -1206,6 +1259,14 @@ public class GameSceneButton : MonoBehaviour
                     MenuCursor1.GetComponent<Image>().enabled = false;
                     MenuCursor2.GetComponent<Image>().enabled = true;
                     MenuCursor3.GetComponent<Image>().enabled = false;
+                    RBLB[0].gameObject.SetActive(false);
+                    RBLB[1].gameObject.SetActive(false);
+                    RBLB[2].gameObject.SetActive(false);
+                    RBLB[3].gameObject.SetActive(false);
+                    RBLB[4].gameObject.SetActive(true);
+                    RBLB[5].gameObject.SetActive(true);
+                    RBLB[6].gameObject.SetActive(false);
+                    RBLB[7].gameObject.SetActive(false);
                     Cursor.gameObject.SetActive(false);
                     MenuSelectOUTCount = 0;
 
@@ -1242,6 +1303,15 @@ public class GameSceneButton : MonoBehaviour
                     MenuCursor1.GetComponent<Image>().enabled = false;
                     MenuCursor2.GetComponent<Image>().enabled = false;
                     MenuCursor3.GetComponent<Image>().enabled = true;
+                    RBLB[0].gameObject.SetActive(false);
+                    RBLB[1].gameObject.SetActive(false);
+                    RBLB[2].gameObject.SetActive(false);
+                    RBLB[3].gameObject.SetActive(false);
+                    RBLB[4].gameObject.SetActive(false);
+                    RBLB[5].gameObject.SetActive(false);
+                    RBLB[6].gameObject.SetActive(true);
+                    RBLB[7].gameObject.SetActive(true);
+
                     Cursor.gameObject.SetActive(false);
                     MenuSelectOUTCount = 0;
 
@@ -1272,22 +1342,7 @@ public class GameSceneButton : MonoBehaviour
                         MenuSelectCount = 0;
                     }
                 }
-                /*
-                else if(MenuSelectCount == 4) 
-                {
-                    MenuCursor.GetComponent<Image>().enabled = false;
-                    MenuCursor1.GetComponent<Image>().enabled = false;
-                    MenuCursor2.GetComponent<Image>().enabled = false;
-                    MenuCursor3.GetComponent<Image>().enabled = false;
-                    Cursor.gameObject.SetActive(true);
-                    if (Input.GetKeyDown("joystick button 0"))
-                    {
-                        MenuSelect = false;
-                        MainSelectPositionSelect = true;
-                        Select.GetComponent<Image>().enabled = true;
-                        MenuSelectCount = 0;
-                    }
-                }*/
+             
             }
 
 
@@ -1347,14 +1402,13 @@ public class GameSceneButton : MonoBehaviour
                 if (ExplainSelectCount == 0)
                 {
                     Select1.GetComponent<Image>().enabled = true;
-                    OperationExplanationSelect.GetComponent<Image>().enabled = false;
+                    OperationExplanationSelect.GetComponent<Image>().enabled =true;
                     OperationExplanationSelect1.GetComponent<Image>().enabled = false;
                     KeyboardSetting.GetComponent<Image>().enabled = true;
                     MainSelectPositionSelect = true;
                 }
                 else if (ExplainSelectCount == 1)
                 {
-                    Select1.GetComponent<Image>().enabled = false;
                     OperationExplanationSelect.GetComponent<Image>().enabled = true;
                     OperationExplanationSelect1.GetComponent<Image>().enabled = false;
                     ControllerSetting.GetComponent<Image>().enabled = false;
@@ -1363,7 +1417,6 @@ public class GameSceneButton : MonoBehaviour
                 }
                 else if (ExplainSelectCount == 2)
                 {
-                    Select1.GetComponent<Image>().enabled = false;
                     OperationExplanationSelect.GetComponent<Image>().enabled = false;
                     OperationExplanationSelect1.GetComponent<Image>().enabled = true;
                     ControllerSetting.GetComponent<Image>().enabled = true;
@@ -1401,6 +1454,15 @@ public class GameSceneButton : MonoBehaviour
                 ExplainSelect = false;
                 ExplainSelectCount = 0;
                 Reset1 = false;
+                RBLB[0].gameObject.SetActive(false);
+                RBLB[1].gameObject.SetActive(false);
+                RBLB[2].gameObject.SetActive(false);
+                RBLB[3].gameObject.SetActive(false);
+                RBLB[4].gameObject.SetActive(false);
+                RBLB[5].gameObject.SetActive(false);
+                RBLB[6].gameObject.SetActive(false);
+                RBLB[7].gameObject.SetActive(false);
+
             }
         }
     }
