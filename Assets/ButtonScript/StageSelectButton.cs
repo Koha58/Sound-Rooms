@@ -269,7 +269,7 @@ public class StageSelectButton : MonoBehaviour
             }
         }
 
-       // StageSelect();
+        StageSelect();
 
         if (SetGameStart == true) 
         {
