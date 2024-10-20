@@ -179,6 +179,7 @@ public class EnemyAttack : MonoBehaviour
             rb.AddForce(transform.forward * 500.0f, ForceMode.Force);
         }
 
+        /*
         if (other.CompareTag("Boss"))
         {
             GameObject Boss = GameObject.FindWithTag("Boss");
@@ -224,7 +225,7 @@ public class EnemyAttack : MonoBehaviour
                 DB = true;
                 DC = 0;
             }
-        }
+        }*/
 
         if (other.CompareTag("Enemy"))
         {

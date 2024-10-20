@@ -6,6 +6,7 @@ using UnityEngine;
 public class TutorialVisualizationBox : MonoBehaviour
 {
     [SerializeField] Transform Boss;
+    static public bool BossOn;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,6 +22,7 @@ public class TutorialVisualizationBox : MonoBehaviour
         if (BC.ONOFF == 1)
         {
             this.gameObject.SetActive(true);
+            BossOn = true;
         }
     }
 
