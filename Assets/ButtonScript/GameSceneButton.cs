@@ -242,7 +242,7 @@ public class GameSceneButton : MonoBehaviour
     {
         if (NoUI == true)
         {
-            Controller2();
+           Controller2();
         }
 
         if (Input.GetKeyDown("joystick button 7"))//メニュー ボタン 
@@ -593,7 +593,7 @@ public class GameSceneButton : MonoBehaviour
         SceneManager.LoadScene("StartScene");
     }
 
-    private void Controller()
+    /*private void Controller()
     {
         if (NoUI == true)
         {
@@ -948,7 +948,7 @@ public class GameSceneButton : MonoBehaviour
                 }
             }
         }
-    }
+    }*/
 
     private void Controller2()
     {
@@ -987,21 +987,21 @@ public class GameSceneButton : MonoBehaviour
 
             }
 
-            if(Input.GetAxis("Vertical") == 0&& Input.GetAxis("Horizontal") == 0)
+            if (Input.GetAxis("Vertical") == 0 && Input.GetAxis("Horizontal") == 0)
             {
                 Timer = 0;
             }
 
 
 
-            if (MainSelectPositionSelect==true&&Reset)
+            if (MainSelectPositionSelect == true && Reset)
             {
                 if ((Input.GetAxisRaw("Vertical") > 0))
                 {
                     MainSelectPosition++;
                     Reset = false;
                     TimeON = true;
-                    if(MainSelectPosition>2)
+                    if (MainSelectPosition > 2)
                     {
                         MainSelectPosition = 2;
                     }
@@ -1080,7 +1080,7 @@ public class GameSceneButton : MonoBehaviour
                 RBLB[7].gameObject.SetActive(false);
 
             }
-            else if(MainSelectPosition == 2 && MainSelectPositionSelect)
+            else if (MainSelectPosition == 2 && MainSelectPositionSelect)
             {
                 MenuCursor.GetComponent<Image>().enabled = false;
                 MenuCursor1.GetComponent<Image>().enabled = false;
@@ -1124,16 +1124,16 @@ public class GameSceneButton : MonoBehaviour
                 }
             }
 
-            if(MainSelectPosition==0&& (Input.GetAxisRaw("Horizontal") > 0))
+            if (MainSelectPosition == 0 && (Input.GetAxisRaw("Horizontal") > 0))
             {
-                MenuSelect=true;
+                MenuSelect = true;
                 MainSelectPositionSelect = false;
 
                 TimeON = true;
             }
 
-            if(MenuSelect==true && Reset) 
-            { 
+            if (MenuSelect == true && Reset)
+            {
                 if ((Input.GetAxisRaw("Vertical") > 0))
                 {
                     MenuSelectCount++;
@@ -1152,14 +1152,14 @@ public class GameSceneButton : MonoBehaviour
                     Reset = false;
                     TimeON = true;
                     VH = true;
-                    if (MenuSelectCount <0)
+                    if (MenuSelectCount < 0)
                     {
                         MenuSelectCount = 0;
                     }
                 }
             }
 
-            if (MenuSelect ==true && MainSelectPositionSelect == false)
+            if (MenuSelect == true && MainSelectPositionSelect == false)
             {
                 if (MenuSelectCount == 0)
                 {
@@ -1179,7 +1179,7 @@ public class GameSceneButton : MonoBehaviour
                     Cursor.gameObject.SetActive(false);
                     MenuSelectOUTCount = 0;
 
-                    if (Input.GetKey("joystick button 5") && VH ==false)
+                    if (Input.GetKey("joystick button 5") && VH == false)
                     {
                         if (volume2 < 0)
                         {
@@ -1342,7 +1342,7 @@ public class GameSceneButton : MonoBehaviour
                         MenuSelectCount = 0;
                     }
                 }
-             
+
             }
 
 
@@ -1397,12 +1397,12 @@ public class GameSceneButton : MonoBehaviour
                 }
             }
 
-            if (ExplainSelect == true&& MainSelectPositionSelect == false)
+            if (ExplainSelect == true && MainSelectPositionSelect == false)
             {
                 if (ExplainSelectCount == 0)
                 {
                     Select1.GetComponent<Image>().enabled = true;
-                    OperationExplanationSelect.GetComponent<Image>().enabled =true;
+                    OperationExplanationSelect.GetComponent<Image>().enabled = true;
                     OperationExplanationSelect1.GetComponent<Image>().enabled = false;
                     KeyboardSetting.GetComponent<Image>().enabled = true;
                     MainSelectPositionSelect = true;
@@ -1466,6 +1466,7 @@ public class GameSceneButton : MonoBehaviour
             }
         }
     }
+
     public void SetBGM(float volume2)
     {
         audioMixer.SetFloat("BGM", volume2);
