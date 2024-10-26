@@ -96,10 +96,6 @@ public class BossTutoriaru : MonoBehaviour
 
     private void Chase()//プレイヤーを追いかける
     {
-        GameObject gobj = GameObject.Find("Player");        //Playerオブジェクトを探す
-        PlayerSeen PS = gobj.GetComponent<PlayerSeen>();    //付いているスクリプトを取得
-
-        float ChasePlayer = Vector3.Distance(transform.position, TargetPlayer.position);//プレイヤーと敵の位置の計算
         if (TouchWall == false)
         {
             if (ChaseONOFF == true)//プレイヤーが検知範囲に入ったら
@@ -166,25 +162,6 @@ public class BossTutoriaru : MonoBehaviour
     private void Update()
     {
         Visualization();
-        /*
-        if (EnemyAttack.OFF == true)
-        {
-            ONTime += Time.deltaTime;
-            if (ONTime >= 30.0f)
-            {
-                GameObject gobj = GameObject.Find("Player");        //Playerオブジェクトを探す
-                PlayerSeen PS = gobj.GetComponent<PlayerSeen>();    //付いているスクリプトを取得
-               
-                PS.Visualization = false;
-                PS.onoff = 0;
-
-                ONTime = 0;
-                VisualizationBoss.SetActive(false);              //可視化の音(円)を見えない状態
-                ONOFF = 0;                                       //見えない
-                PrototypeBodySkinnedMeshRenderer.enabled = false;//3DモデルのRendererを見える状態
-                EnemyAttack.OFF = false;
-            }
-        }*/
 
         if (EnemyAttack.SoundON == true)
         {
@@ -213,7 +190,7 @@ public class BossTutoriaru : MonoBehaviour
             MoveBossEnemy();
             animator.SetBool("Idle", false);
             animator.SetBool("Move", true);
-            audioSourse.maxDistance = 5;                      //音が聞こえる範囲
+            audioSourse.maxDistance = 5;//音が聞こえる範囲
         }
 
         Vector3 Position = TargetPlayer.position - transform.position; // ターゲットの位置と自身の位置の差を計算

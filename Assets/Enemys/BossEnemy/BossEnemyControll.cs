@@ -171,24 +171,6 @@ public class BossEnemyControll : MonoBehaviour
     private void Update()
     {
         Visualization();
-        /*
-        if (EnemyAttack.OFF == true)
-        {
-            ONTime += Time.deltaTime;
-            if (ONTime >= 30.0f)
-            {
-                GameObject gobj = GameObject.Find("Player");        //Playerオブジェクトを探す
-                PlayerSeen PS = gobj.GetComponent<PlayerSeen>();    //付いているスクリプトを取得
-                PS.Visualization = false;
-                PS.onoff = 0;
-
-                ONTime = 0;
-                VisualizationBoss.SetActive(false);              //可視化の音(円)を見えない状態
-                ONOFF = 0;                                       //見えない
-                PrototypeBodySkinnedMeshRenderer.enabled = false;//3DモデルのRendererを見える状態
-                EnemyAttack.OFF = false;
-            }
-        }*/
 
         if (EnemyAttack.SoundON == true)
         {
