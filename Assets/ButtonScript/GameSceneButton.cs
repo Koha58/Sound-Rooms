@@ -242,7 +242,7 @@ public class GameSceneButton : MonoBehaviour
     {
         if (NoUI == true)
         {
-           //Controller2();
+           Controller2();
         }
 
         if (Input.GetKeyDown("joystick button 7"))//メニュー ボタン 
