@@ -37,9 +37,9 @@ public class PlayerRun : MonoBehaviour
 
     Quaternion nextRot;//‚Ç‚Ì‚­‚ç‚¢‰ñ“]‚·‚é‚©
 
-    private bool walk = false;
-    private bool run = false;
-    public bool crouch = false;
+    public static bool walk = false;
+    public static bool run = false;
+    public static bool crouch = false;
     public bool crouchWalk = false;
 
     private Rigidbody rb;

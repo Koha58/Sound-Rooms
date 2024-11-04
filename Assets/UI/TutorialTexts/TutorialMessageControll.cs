@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Timers;
 using UnityEngine;
 using static InputDeviceManager;
 
@@ -26,6 +27,9 @@ public class TutorialMessageControll : MonoBehaviour
 
     TutorialEnemyController TEC;
 
+    public GameObject Conceal;
+    public GameObject Conceal2;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -37,6 +41,9 @@ public class TutorialMessageControll : MonoBehaviour
         moveTimecnt = 0f;
         hurryUp = false;
         deviceCheck = false;
+
+        Conceal.SetActive(true);
+        Conceal2.SetActive(true);
     }
 
     // Update is called once per frame
@@ -54,22 +61,10 @@ public class TutorialMessageControll : MonoBehaviour
         PS = GetComponent<PlayerSeen>();
 
         timeCnt += Time.deltaTime;
-        if (timeCnt >= 7.0f && Message < 42)
+        if (timeCnt >= 7.0f && Message < 23)
         {
             Messages[Message - 1].state = 0;
-            if (deviceCheck)
-            {
-                if (Message == 1)
-                {
-                    Messages[Message] = ControllerMessages[0];
-                }
-
-                if (!deviceCheck && Message == 1)
-                {
-                    Messages[Message].state = 0;
-                    Messages[Message] = Messages[1];
-                }
-            }
+            Controller();
             Messages[Message].state = 1;
             Message++;
             timeCnt = 0f;
@@ -85,9 +80,9 @@ public class TutorialMessageControll : MonoBehaviour
 
     void MoveWait()
     {
-        if(Message == 2)
+        if (Message == 1)
         {
-            if(PS.onoff == 1)
+            if(PlayerRun.walk == true)
             {
                 timeCnt = 7.0f;
             }
@@ -96,6 +91,60 @@ public class TutorialMessageControll : MonoBehaviour
                 timeCnt = 0f;
             }
         }
+
+        if (Message == 2)
+        {
+            if (PlayerRun.run == true)
+            {
+                timeCnt = 7.0f;
+            }
+            else
+            {
+                timeCnt = 0f;
+            }
+        }
+
+        if (Message == 3)
+        {
+            if (PlayerRun.crouch == true)
+            {
+                timeCnt = 7.0f;
+            }
+            else
+            {
+                timeCnt = 0f;
+            }
+        }
+
+        if (Message == 4)
+        {
+            if (PS.onoff == 1)
+            {
+                timeCnt = 7.0f;
+            }
+            else
+            {
+                timeCnt = 0f;
+            }
+        }
+
+        if (Message == 5)
+        {
+            Conceal.SetActive(false);
+        }
+
+        if(Message == 6)
+        {
+            if (AutoCheck)
+            {
+                timeCnt = 7.0f;
+            }
+            else
+            {
+                timeCnt = 0f;
+            }
+        }
+
         if (Message == 7)
         {
             GameObject.Find("Enemys").transform.Find("Enemy (1)").gameObject.SetActive(true);
@@ -104,7 +153,7 @@ public class TutorialMessageControll : MonoBehaviour
             if (SoundCheck)
             {
                 timeCnt = 7.0f;
-                if(!deviceCheck)
+                if (!deviceCheck)
                 {
                     MoveWays[0].state = 0;
                 }
@@ -228,6 +277,51 @@ public class TutorialMessageControll : MonoBehaviour
             else
             {
                 timeCnt = 0f;
+            }
+        }
+    }
+
+    void Controller()
+    {
+        if (deviceCheck)
+        {
+            if (Message == 1)
+            {
+                Messages[Message] = ControllerMessages[0];
+            }
+            else if(Message == 2)
+            {
+                Messages[Message] = ControllerMessages[1];
+            }
+            else if (Message == 3)
+            {
+                Messages[Message] = ControllerMessages[2];
+            }
+            else if((Message == 4))
+            {
+                Messages[Message] = ControllerMessages[3];
+            }
+
+
+            if (!deviceCheck && Message == 1)
+            {
+                Messages[Message].state = 0;
+                Messages[Message] = Messages[0];
+            }
+            else if(!deviceCheck && Message == 1)
+            {
+                Messages[Message].state = 0;
+                Messages[Message] = Messages[1];
+            }
+            else if (!deviceCheck && Message == 2)
+            {
+                Messages[Message].state = 0;
+                Messages[Message] = Messages[2];
+            }
+            else if (!deviceCheck && Message == 3)
+            {
+                Messages[Message].state = 0;
+                Messages[Message] = Messages[3];
             }
         }
     }
