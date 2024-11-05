@@ -30,6 +30,9 @@ public class TutorialMessageControll : MonoBehaviour
     //É|Å[ÉYUI
     [SerializeField] GameObject Pause;
 
+    [SerializeField]
+    private GameObject[] AutoDoors;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -45,6 +48,11 @@ public class TutorialMessageControll : MonoBehaviour
         Pause.GetComponent<Image>().enabled = false;
 
         MessageSound = GetComponent<AudioSource>();
+
+        for(int i = 0; i < AutoDoors.Length; i++)
+        {
+            AutoDoors[i].GetComponent<Collider>().enabled = false;
+        }
     }
 
     // Update is called once per frame
@@ -138,6 +146,8 @@ public class TutorialMessageControll : MonoBehaviour
         if (Message == 5)
         {
             Conceal.SetActive(false);
+            AutoDoors[0].GetComponent<Collider>().enabled = true;
+            AutoDoors[1].GetComponent<Collider>().enabled = true;
         }
 
         if(Message == 6)
@@ -184,9 +194,10 @@ public class TutorialMessageControll : MonoBehaviour
         {
             Time.timeScale = 0;
             Pause.GetComponent<Image>().enabled = true;
+            timeCnt += 5.0f;
         }
 
-        if(Message == 12)
+        if (Message == 12)
         {
             Time.timeScale = 1;
             Pause.GetComponent<Image>().enabled = false;
@@ -197,7 +208,10 @@ public class TutorialMessageControll : MonoBehaviour
         {
             Conceal2.SetActive(false);
 
-            if(AutoCheck)
+            AutoDoors[2].GetComponent<Collider>().enabled = true;
+            AutoDoors[3].GetComponent<Collider>().enabled = true;
+
+            if (AutoCheck)
             {
                 timeCnt = 7.0f;
             }
