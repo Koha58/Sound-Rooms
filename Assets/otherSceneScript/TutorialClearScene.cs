@@ -18,7 +18,7 @@ public class TutorialClearScene : MonoBehaviour
     {
         stayTime += Time.deltaTime;
 
-        if (stayTime > 10f)
+        if (stayTime > 12f)
         {
             SceneManager.LoadScene("GameScene");
         }

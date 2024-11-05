@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Timers;
 using UnityEngine;
 using static InputDeviceManager;
+using UnityEngine.UI;
 
 public class TutorialMessageControll : MonoBehaviour
 {
@@ -13,15 +14,11 @@ public class TutorialMessageControll : MonoBehaviour
     private SlideUIControll[] MoveWays;
     [SerializeField]
     private SlideUIControll[] ControllerMessages;
-    [SerializeField]
-    private SlideUIControll[] ControllerMoveWays;
+    [SerializeField] AudioSource MessageSound;
     float timeCnt;
-    int Message;
+    public int Message;
     PlayerSeen PS;
-    bool SoundCheck = false;
     bool AutoCheck = false;
-    float moveTimecnt;
-    bool hurryUp;
 
     bool deviceCheck;
 
@@ -30,20 +27,24 @@ public class TutorialMessageControll : MonoBehaviour
     public GameObject Conceal;
     public GameObject Conceal2;
 
+    //É|Å[ÉYUI
+    [SerializeField] GameObject Pause;
+
     // Start is called before the first frame update
     void Start()
     {
         timeCnt = 0f;
         Message = 1;
         Messages[Message-1].state = 1;
-        SoundCheck = false;
         AutoCheck = false;
-        moveTimecnt = 0f;
-        hurryUp = false;
         deviceCheck = false;
 
         Conceal.SetActive(true);
         Conceal2.SetActive(true);
+
+        Pause.GetComponent<Image>().enabled = false;
+
+        MessageSound = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -60,21 +61,27 @@ public class TutorialMessageControll : MonoBehaviour
 
         PS = GetComponent<PlayerSeen>();
 
-        timeCnt += Time.deltaTime;
-        if (timeCnt >= 7.0f && Message < 23)
+        timeCnt += Time.unscaledDeltaTime;
+        if (timeCnt >= 7.0f && Message < 22)
         {
             Messages[Message - 1].state = 0;
             Controller();
             Messages[Message].state = 1;
             Message++;
             timeCnt = 0f;
+            MessageSound.PlayOneShot(MessageSound.clip);
         }
 
         MoveWait();
 
-        if (moveTimecnt > 5.0f)
+        if(TutorialEnemyController.ChaseONOFF == true)
         {
-            MoveWays[2].state = 0;
+            MoveWays[0].state = 1;
+            MoveWays[1].state = 0;
+        }
+        else
+        {
+            MoveWays[0].state = 0;
         }
     }
 
@@ -138,6 +145,8 @@ public class TutorialMessageControll : MonoBehaviour
             if (AutoCheck)
             {
                 timeCnt = 7.0f;
+                GameObject.Find("Enemys").transform.Find("Enemy (1)").gameObject.SetActive(true);
+                GameObject.Find("Enemys").transform.Find("BossEnemy").gameObject.SetActive(true);
             }
             else
             {
@@ -147,39 +156,19 @@ public class TutorialMessageControll : MonoBehaviour
 
         if (Message == 7)
         {
-            GameObject.Find("Enemys").transform.Find("Enemy (1)").gameObject.SetActive(true);
-            GameObject.Find("Enemys").transform.Find("Enemy (2)").gameObject.SetActive(true);
-            GameObject.Find("Enemys").transform.Find("BossEnemy").gameObject.SetActive(true);
-            if (SoundCheck)
+            GameObject Enemy = GameObject.Find("Enemy (1)");
+            TEC = Enemy.GetComponent<TutorialEnemyController>();
+            if (TEC.ONOFF == 0)
             {
-                timeCnt = 7.0f;
-                if (!deviceCheck)
-                {
-                    MoveWays[0].state = 0;
-                }
-                else
-                {
-                    ControllerMoveWays[0].state = 0;
-                }
+                timeCnt = 0f;
             }
             else
             {
-                timeCnt = 0f;
-                if (!deviceCheck)
-                {
-                    MoveWays[0].state = 1;
-                    MoveWays[1].state = 0;
-                    MoveWays[2].state = 0;
-                }
-                else
-                {
-                    ControllerMoveWays[0].state = 1;
-                    MoveWays[1].state = 0;
-                    MoveWays[2].state = 0;
-                }
+                timeCnt = 7.0f;
             }
         }
-        if (Message == 19)
+
+        if(Message == 8)
         {
             if (EnemyAttack.enemyDeathcnt >= 1)
             {
@@ -190,62 +179,25 @@ public class TutorialMessageControll : MonoBehaviour
                 timeCnt = 0f;
             }
         }
-        if (Message == 20)
+
+        if(Message == 9)
         {
-            if(!hurryUp)
-            {
-                timeCnt += 4.0f;
-                hurryUp = true;
-            }
+            Time.timeScale = 0;
+            Pause.GetComponent<Image>().enabled = true;
         }
-        else if (Message == 21)
+
+        if(Message == 12)
         {
-            if (hurryUp)
-            {
-                timeCnt += 4.0f;
-                hurryUp = false;
-            }
+            Time.timeScale = 1;
+            Pause.GetComponent<Image>().enabled = false;
+            AutoCheck = false;
         }
-        if (Message == 22)
+
+        if(Message == 16)
         {
-            if (PlayerRun.CrouchOn == true)
-            {
-                if(!deviceCheck)
-                {
-                    MoveWays[1].state = 0;
-                    MoveWays[0].state = 0;
-                    MoveWays[2].state = 0;
-                }
-                else
-                {
-                    ControllerMoveWays[1].state = 0;
-                    MoveWays[0].state = 0;
-                    MoveWays[2].state = 0;
-                }
-            }
-            else
-            {
-                if (!deviceCheck)
-                {
-                    MoveWays[1].state = 1;
-                    MoveWays[0].state = 0;
-                    MoveWays[2].state = 0;
-                }
-                else
-                {
-                    ControllerMoveWays[1].state = 1;
-                    MoveWays[0].state = 0;
-                    MoveWays[2].state = 0;
-                }
-            }
-        }
-        else
-        {
-            MoveWays[1].state = 0;
-        }
-        if (Message == 33)
-        {
-            if (AutoCheck)
+            Conceal2.SetActive(false);
+
+            if(AutoCheck)
             {
                 timeCnt = 7.0f;
             }
@@ -254,23 +206,27 @@ public class TutorialMessageControll : MonoBehaviour
                 timeCnt = 0f;
             }
         }
-        if (Message == 35)
+
+        if (Message == 17)
         {
             GameObject.Find("Enemys").transform.Find("EnemyG").gameObject.SetActive(true);
-            GameObject EnemyG = GameObject.Find("EnemyG");
-            TEC = EnemyG.GetComponent<TutorialEnemyController>();
-            if(TEC.ONOFF == 0)
-            {
-                timeCnt = 0f;
-            }
-            else
+        }
+
+        if (Message == 18)
+        {
+            if (EnemyAttack.enemyDeathcnt >= 2)
             {
                 timeCnt = 7.0f;
             }
+            else
+            {
+                timeCnt = 0f;
+            }
         }
-        if (Message == 39)
+
+        if(Message == 21)
         {
-            if(ItemSeen.FindDoor == true)
+            if (ItemSeen.FindDoor == true)
             {
                 timeCnt = 7.0f;
             }
@@ -328,10 +284,6 @@ public class TutorialMessageControll : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag("SoundCheck"))
-        {
-            SoundCheck = true;
-        }
         if (other.CompareTag("AutoCheck"))
         {
             AutoCheck = true;
@@ -339,9 +291,11 @@ public class TutorialMessageControll : MonoBehaviour
         if (other.CompareTag("Right") || other.CompareTag("Left"))
         {
             MoveWays[0].state = 0;
+            MoveWays[1].state = 1;
+        }
+        else
+        {
             MoveWays[1].state = 0;
-            MoveWays[2].state = 1;
-            moveTimecnt += Time.deltaTime;
         }
     }
 }

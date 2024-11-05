@@ -28,7 +28,7 @@ public class TutorialEnemyController : MonoBehaviour
 
     //Playerを追跡
     float ChaseSpeed = 0.03f;         //Playerを追いかける速度
-    [SerializeField] bool ChaseONOFF; //(ChaseON： true/ChaseOFF: false)
+    [SerializeField] public static bool ChaseONOFF; //(ChaseON： true/ChaseOFF: false)
 
     //Destroyの判定
     public bool DestroyONOFF; //(DestroyON： true/DestroyOFF: false)
