@@ -33,6 +33,8 @@ public class TutorialMessageControll : MonoBehaviour
     [SerializeField]
     private GameObject[] AutoDoors;
 
+    LevelMeter levelMeter;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -195,6 +197,16 @@ public class TutorialMessageControll : MonoBehaviour
             Time.timeScale = 0;
             Pause.GetComponent<Image>().enabled = true;
             timeCnt += 5.0f;
+            GameObject soundobj = GameObject.Find("SoundVolume");
+            levelMeter = soundobj.GetComponent<LevelMeter>(); //付いているスクリプトを取得
+            levelMeter.nowdB = 0;
+        }
+
+        if (Message == 10 || Message == 11)
+        {
+            GameObject soundobj = GameObject.Find("SoundVolume");
+            levelMeter = soundobj.GetComponent<LevelMeter>(); //付いているスクリプトを取得
+            levelMeter.nowdB = 0;
         }
 
         if (Message == 12)
@@ -204,7 +216,7 @@ public class TutorialMessageControll : MonoBehaviour
             AutoCheck = false;
         }
 
-        if(Message == 16)
+        if (Message == 16)
         {
             Conceal2.SetActive(false);
 
