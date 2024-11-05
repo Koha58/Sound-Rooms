@@ -181,7 +181,7 @@ public class BossTutoriaru : MonoBehaviour
         }
         if (EnemyAttack.SoundON2 == true)
         {
-            Idle();
+           // Idle();
             VisualizationBoss.SetActive(true);
         }
         else if (EnemyAttack.SoundON2 == false)

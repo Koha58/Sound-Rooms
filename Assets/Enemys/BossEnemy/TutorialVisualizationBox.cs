@@ -64,7 +64,7 @@ public class TutorialVisualizationBox : MonoBehaviour
                 PlayerSeen PS = obj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
                 GameOverScript GOS = obj.GetComponent<GameOverScript>();
                 PS.onoff = 1;  //見えているから1
-                PS.Visualization = true;
+                //PS.Visualization = true;
             }
         }
 
