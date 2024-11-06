@@ -141,9 +141,6 @@ public class BossEnemyControll : MonoBehaviour
         }
         else if (ONOFF == 1)//見えているとき
         {
-            GameObject gobj = GameObject.Find("Player");     //Playerオブジェクトを探す
-            PlayerSeen PS = gobj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
-            var childTransforms = PS._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
 
             animator.SetBool("Idle", true);
             animator.SetBool("Move", false);

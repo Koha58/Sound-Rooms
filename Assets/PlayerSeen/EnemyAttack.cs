@@ -64,6 +64,7 @@ public class EnemyAttack : MonoBehaviour
         levelMeter = soundobj.GetComponent<LevelMeter>(); //付いているスクリプトを取得
         GameObject gobj = GameObject.Find("Player");        //Playerオブジェクトを探す
         PlayerSeen PS = gobj.GetComponent<PlayerSeen>();    //付いているスクリプトを取得
+        var childTransforms = PS._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
 
         //音を出すことで範囲内を可視化
         if (levelMeter.nowdB > 0.0f)
@@ -84,7 +85,6 @@ public class EnemyAttack : MonoBehaviour
         if (EnemyDes == true)
         {
             PS.onoff = 0;
-
             PS.Visualization = false;
             EnemyDes = false;
         }
@@ -111,6 +111,7 @@ public class EnemyAttack : MonoBehaviour
                 Count =1;
                 if (Count == 1)
                 {
+                    SoundON = true;
                     GameObject Boss = GameObject.FindWithTag("Boss");
                     BossEnemyControll BEC = Boss.GetComponent<BossEnemyControll>();
                     BEC.ONOFF = 1;
@@ -121,7 +122,6 @@ public class EnemyAttack : MonoBehaviour
             if (DC >= 16.0f)
             {
                 SoundON2 = false;
-                PS.Visualization = false;
             }
             if (DC >= 30.0f)
             {
@@ -245,9 +245,6 @@ public class EnemyAttack : MonoBehaviour
             BossEnemyControll EC = Boss.GetComponent<BossEnemyControll>();
             if (EC.DestroyONOFF == true)
             {
-                GameObject obj = GameObject.Find("Player"); //Playerオブジェクトを探す
-                PlayerSeen PS = obj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
-                PS.onoff = 0;  //見えているから1
                 enemyDeathcnt++;
                 DeathRange += 1.0f;
                 GetComponent<ParticleSystem>().Play();
@@ -264,12 +261,6 @@ public class EnemyAttack : MonoBehaviour
         if (other.CompareTag("EnemySearch"))
         {
 
-            GameObject obj = GameObject.Find("Player"); //Playerオブジェクトを探す
-            PlayerSeen PS = obj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
-            PS.onoff = 0;  //見えているから1
-            GameObject EnemySearch = GameObject.FindWithTag("EnemySearch");
-            EnemySearchcontroller ESC = EnemySearch.GetComponent<EnemySearchcontroller>();
-
             GetComponent<ParticleSystem>().Play();
             TrickyDeadSound.PlayOneShot(TrickyDeadSound.clip);
             Destroy(other.gameObject);
@@ -285,8 +276,6 @@ public class EnemyAttack : MonoBehaviour
 
         if (other.CompareTag("EnemyG"))
         {
-            Enemycontroller EC = other.GetComponent<Enemycontroller>();
-
             enemyDeathcnt++;
             DeathRange += 1.0f;
             GetComponent<ParticleSystem>().Play();

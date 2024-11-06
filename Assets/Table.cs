@@ -10,7 +10,7 @@ public class Table : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        ON = false;
     }
 
     // Update is called once per frame
