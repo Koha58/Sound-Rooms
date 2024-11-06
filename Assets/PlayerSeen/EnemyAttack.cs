@@ -95,14 +95,6 @@ public class EnemyAttack : MonoBehaviour
             PS.Visualization = false;
             BossDes = false;
         }
-        if (BossDes ==false)
-        {
-           if(PS.piano==true)
-            {
-                PS.Visualization = true;
-                PS.piano = true;
-            }
-        }
 
         if (DB == true)
         {
@@ -125,6 +117,7 @@ public class EnemyAttack : MonoBehaviour
                     BEC.ONOFF = 1;
                     //OFF = true;
                     Count = 2;
+                    PS.piano = true;
                 }
             }
             if (DC >= 16.0f)

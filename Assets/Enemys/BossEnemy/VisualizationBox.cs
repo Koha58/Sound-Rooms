@@ -71,41 +71,23 @@ public class VisualizationBox : MonoBehaviour
                     playerParts.gameObject.GetComponent<Renderer>().enabled = true;
                 }
             }
-
-            if (Table.ON == true)
-            {
-                GameObject obj = GameObject.Find("Player"); //Playerオブジェクトを探す
-                PlayerSeen PS = obj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
-                var childTransforms = PS._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
-                if (PS.piano == true)
-                {
-                    PS.piano = true;
-                    PS.onoff = 1;  //見えているから1
-                    PS.Visualization = true;
-                    foreach (var playerParts in childTransforms)
-                    {
-                        //タグが"PlayerParts"である子オブジェクトを見えるようにする
-                        playerParts.gameObject.GetComponent<Renderer>().enabled = true;
-                    }
-                }
-            }
         }
 
     }
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            GameObject obj = GameObject.Find("Player"); //Playerオブジェクトを探す
-            PlayerSeen PS = obj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
-            var childTransforms = PS._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
-            PS.Visualization = false;
-            PS.onoff = 0;                                                             //見えているから1
-            foreach (var playerParts in childTransforms)
-            {
-                //タグが"PlayerParts"である子オブジェクトを見えるようにする
-                playerParts.gameObject.GetComponent<Renderer>().enabled = false;
-            }
-        }
-    }
+    //private void OnTriggerExit(Collider other)
+    //{
+    //    if (other.CompareTag("Player"))
+    //    {
+    //        GameObject obj = GameObject.Find("Player"); //Playerオブジェクトを探す
+    //        PlayerSeen PS = obj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
+    //        var childTransforms = PS._parentTransform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("PlayerParts"));
+    //        PS.Visualization = false;
+    //        PS.onoff = 0;                                                             //見えているから1
+    //        foreach (var playerParts in childTransforms)
+    //        {
+    //            //タグが"PlayerParts"である子オブジェクトを見えるようにする
+    //            playerParts.gameObject.GetComponent<Renderer>().enabled = false;
+    //        }
+    //    }
+    //}
 }
