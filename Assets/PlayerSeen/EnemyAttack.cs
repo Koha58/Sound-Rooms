@@ -121,6 +121,7 @@ public class EnemyAttack : MonoBehaviour
             if (DC >= 16.0f)
             {
                 SoundON2 = false;
+                PS.Visualization = false;
             }
             if (DC >= 30.0f)
             {
@@ -169,6 +170,7 @@ public class EnemyAttack : MonoBehaviour
                 BossTutoriaru BS1 = Boss1.GetComponent<BossTutoriaru>();
                 BS1.ONOFF = 0;
                 PS.onoff = 0;
+                PS.Visualization = false;
                 SoundON = false;
                 DC = 0;
                 DB2 = false;
