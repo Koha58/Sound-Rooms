@@ -130,6 +130,8 @@ public class EnemyAttack : MonoBehaviour
                 BossEnemyControll BEC = Boss.GetComponent<BossEnemyControll>();
                 PS.onoff = 0;
                 BEC.ONOFF = 0;
+                PS.Visualization = false;
+                SoundON = false;
                 DC = 0;
                 DB = false;
                 Count = 0;
