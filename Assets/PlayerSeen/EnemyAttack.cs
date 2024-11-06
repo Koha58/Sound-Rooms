@@ -42,6 +42,8 @@ public class EnemyAttack : MonoBehaviour
 
     bool BossDes;
 
+    bool EnemyDes;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -77,6 +79,14 @@ public class EnemyAttack : MonoBehaviour
                 EnemyAttackArea.GetComponent<Collider>().enabled = false;//見えない（無効）
                 onoff = 0;  //見えていないから0
             }
+        }
+
+        if (EnemyDes == true)
+        {
+            PS.onoff = 0;
+
+            PS.Visualization = false;
+            EnemyDes = false;
         }
 
         if (BossDes == true)
@@ -233,13 +243,16 @@ public class EnemyAttack : MonoBehaviour
             BossEnemyControll EC = Boss.GetComponent<BossEnemyControll>();
             if (EC.DestroyONOFF == true)
             {
+                GameObject obj = GameObject.Find("Player"); //Playerオブジェクトを探す
+                PlayerSeen PS = obj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
+                PS.onoff = 0;  //見えているから1
                 enemyDeathcnt++;
                 DeathRange += 1.0f;
                 GetComponent<ParticleSystem>().Play();
                 EnemyDeadSound.PlayOneShot(EnemyDeadSound.clip);
                 Destroy(other.gameObject);
-
                 BossTiming = true;
+                EnemyDes = true;
 
                 DB = true;
                 DC = 0;
@@ -248,18 +261,20 @@ public class EnemyAttack : MonoBehaviour
 
         if (other.CompareTag("EnemySearch"))
         {
+
+            GameObject obj = GameObject.Find("Player"); //Playerオブジェクトを探す
+            PlayerSeen PS = obj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
+            PS.onoff = 0;  //見えているから1
             GameObject EnemySearch = GameObject.FindWithTag("EnemySearch");
             EnemySearchcontroller ESC = EnemySearch.GetComponent<EnemySearchcontroller>();
-            // if (ESC.DestroyONOFF == true)
-            // {
-            //Debug.Log("ASDFGHJK");
+
             GetComponent<ParticleSystem>().Play();
             TrickyDeadSound.PlayOneShot(TrickyDeadSound.clip);
             Destroy(other.gameObject);
             enemyDeathcnt++;
             DeathRange += 1.0f;
-
             BossTiming = true;
+            EnemyDes = true;
 
             DB = true;
             DC = 0;
