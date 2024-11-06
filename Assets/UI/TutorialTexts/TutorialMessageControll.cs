@@ -269,19 +269,19 @@ public class TutorialMessageControll : MonoBehaviour
         {
             if (Message == 1)
             {
-                Messages[Message] = ControllerMessages[0];
+                Messages[Message] = ControllerMessages[1];
             }
             else if(Message == 2)
             {
-                Messages[Message] = ControllerMessages[1];
+                Messages[Message] = ControllerMessages[2];
             }
             else if (Message == 3)
             {
-                Messages[Message] = ControllerMessages[2];
+                Messages[Message] = ControllerMessages[3];
             }
             else if((Message == 4))
             {
-                Messages[Message] = ControllerMessages[3];
+                timeCnt += 5.0f;
             }
 
 

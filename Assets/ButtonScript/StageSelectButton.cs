@@ -133,7 +133,6 @@ public class StageSelectButton : MonoBehaviour
         if(deviceCheck)
         {
             Timer = Timer + 0.01f;
-            Debug.Log(Timer);
             if (TimeON == true)
             {
                 if (/*Input.GetAxis("Vertical") == 0 */ Timer >= 1.0f && Continue == true)

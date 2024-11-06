@@ -213,80 +213,80 @@ public class BossTutoriaru : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        Transform myTransform = this.transform;
-        Vector3 localAngle = myTransform.localEulerAngles;
+    //    Transform myTransform = this.transform;
+    //    Vector3 localAngle = myTransform.localEulerAngles;
 
-        if (other.gameObject.tag == "LeftWall")
-        {
-            if (ChaseONOFF == false)
-            {
-                localAngle.x = 0f;
-                localAngle.z = -90f;
-                localAngle.y = 0f;
-                myTransform.localEulerAngles = localAngle;
-                // Physics.gravity = new Vector3(10f, 0, 0);
-            }
-        }
-        else if (other.gameObject.tag == "RightWall")
-        {
-            if (ChaseONOFF == false)
-            {
-                localAngle.x = 0f;
-                localAngle.z = 90f;
-                localAngle.y = 0f;
-                myTransform.localEulerAngles = localAngle;
-                //Physics.gravity = new Vector3(-10f, 0, 0);
-            }
-        }
-        else if (other.gameObject.tag == "Ceiling")
-        {
-            if (ChaseONOFF == false)
-            { 
-                localAngle.x = 0f;
-                localAngle.y = 0f;
-                localAngle.z = 180f;
-                myTransform.localEulerAngles = localAngle;
-                // Physics.gravity = new Vector3(0, 10f, 0);
-            }
-        }
-        else if (other.gameObject.tag == "Floor")
-        {
-            if (ChaseONOFF == false)
-            {
-                localAngle.x = 0f;
-                localAngle.z = 0f;
-                localAngle.y = 0f;
-                myTransform.localEulerAngles = localAngle;
-                // Physics.gravity = new Vector3(0, -10f, 0);
-            }
-        }
-        else if (other.gameObject.tag == "RW2")
-        {
-            if (ChaseONOFF == false)
-            {
-                localAngle.x = 0f;
-                localAngle.z = -90f;
-                localAngle.y = -90f;
-                myTransform.localEulerAngles = localAngle;
-                // Physics.gravity = new Vector3(0, -10f, 0);
-            }
-        }
-        else if (other.gameObject.tag == "LW2")
-        {
-            if (ChaseONOFF == false)
-            {
-                localAngle.x = 0f;
-                localAngle.z = -90f;
-                localAngle.y = -90f;
-                myTransform.localEulerAngles = localAngle;
-                // Physics.gravity = new Vector3(0, -10f, 0);
-            }
-        }
+    //    if (other.gameObject.tag == "LeftWall")
+    //    {
+    //        if (ChaseONOFF == false)
+    //        {
+    //            localAngle.x = 0f;
+    //            localAngle.z = -90f;
+    //            localAngle.y = 0f;
+    //            myTransform.localEulerAngles = localAngle;
+    //            // Physics.gravity = new Vector3(10f, 0, 0);
+    //        }
+    //    }
+    //    else if (other.gameObject.tag == "RightWall")
+    //    {
+    //        if (ChaseONOFF == false)
+    //        {
+    //            localAngle.x = 0f;
+    //            localAngle.z = 90f;
+    //            localAngle.y = 0f;
+    //            myTransform.localEulerAngles = localAngle;
+    //            //Physics.gravity = new Vector3(-10f, 0, 0);
+    //        }
+    //    }
+    //    else if (other.gameObject.tag == "Ceiling")
+    //    {
+    //        if (ChaseONOFF == false)
+    //        { 
+    //            localAngle.x = 0f;
+    //            localAngle.y = 0f;
+    //            localAngle.z = 180f;
+    //            myTransform.localEulerAngles = localAngle;
+    //            // Physics.gravity = new Vector3(0, 10f, 0);
+    //        }
+    //    }
+    //    else if (other.gameObject.tag == "Floor")
+    //    {
+    //        if (ChaseONOFF == false)
+    //        {
+    //            localAngle.x = 0f;
+    //            localAngle.z = 0f;
+    //            localAngle.y = 0f;
+    //            myTransform.localEulerAngles = localAngle;
+    //            // Physics.gravity = new Vector3(0, -10f, 0);
+    //        }
+    //    }
+    //    else if (other.gameObject.tag == "RW2")
+    //    {
+    //        if (ChaseONOFF == false)
+    //        {
+    //            localAngle.x = 0f;
+    //            localAngle.z = -90f;
+    //            localAngle.y = -90f;
+    //            myTransform.localEulerAngles = localAngle;
+    //            // Physics.gravity = new Vector3(0, -10f, 0);
+    //        }
+    //    }
+    //    else if (other.gameObject.tag == "LW2")
+    //    {
+    //        if (ChaseONOFF == false)
+    //        {
+    //            localAngle.x = 0f;
+    //            localAngle.z = -90f;
+    //            localAngle.y = -90f;
+    //            myTransform.localEulerAngles = localAngle;
+    //            // Physics.gravity = new Vector3(0, -10f, 0);
+    //        }
+    //    }
 
-        if (other.CompareTag("RoomOut"))
-        {
-            TouchWall = true;
-            NextPatrolPoint();
-        }
+    //    if (other.CompareTag("RoomOut"))
+    //    {
+    //        TouchWall = true;
+    //        NextPatrolPoint();
+    //    }
     }
 }
