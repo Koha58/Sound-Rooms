@@ -20,7 +20,7 @@ public class Table : MonoBehaviour
         if( ON==true )
         {
             Timer += Time.deltaTime;
-            if(Timer>15.0f)
+            if(Timer>45.0f)
             {
                 ON = false;
                 Timer = 0;
