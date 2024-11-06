@@ -35,9 +35,6 @@ public class Table : MonoBehaviour
             {
                 ON = true;
                 Timer = 0;
-                GameObject obj = GameObject.Find("Player"); //Playerオブジェクトを探す
-                PlayerSeen PS = obj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
-                PS.Visualization = false;
             }
         }
     }

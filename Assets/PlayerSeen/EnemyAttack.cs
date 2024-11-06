@@ -95,6 +95,14 @@ public class EnemyAttack : MonoBehaviour
             PS.Visualization = false;
             BossDes = false;
         }
+        if (BossDes ==false)
+        {
+           if(PS.piano==true)
+            {
+                PS.Visualization = true;
+                PS.piano = true;
+            }
+        }
 
         if (DB == true)
         {
@@ -104,6 +112,7 @@ public class EnemyAttack : MonoBehaviour
                 SoundON = true;
                 SoundON2=true;
                 BossDes = true;
+              
             }
             if (DC >= 10.0f)
             {
@@ -111,7 +120,6 @@ public class EnemyAttack : MonoBehaviour
                 Count =1;
                 if (Count == 1)
                 {
-                    SoundON = true;
                     GameObject Boss = GameObject.FindWithTag("Boss");
                     BossEnemyControll BEC = Boss.GetComponent<BossEnemyControll>();
                     BEC.ONOFF = 1;
@@ -131,7 +139,6 @@ public class EnemyAttack : MonoBehaviour
                 PS.onoff = 0;
                 BEC.ONOFF = 0;
                 PS.Visualization = false;
-                SoundON = false;
                 DC = 0;
                 DB = false;
                 Count = 0;
