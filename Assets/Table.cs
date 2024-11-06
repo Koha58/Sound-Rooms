@@ -20,7 +20,7 @@ public class Table : MonoBehaviour
         if( ON==true )
         {
             Timer += Time.deltaTime;
-            if(Timer>45.0f)
+            if(Timer>30.0f)
             {
                 ON = false;
                 Timer = 0;
@@ -34,6 +34,10 @@ public class Table : MonoBehaviour
             if (PlayerRun.CrouchOn==true)
             {
                 ON = true;
+                Timer = 0;
+                GameObject obj = GameObject.Find("Player"); //Playerオブジェクトを探す
+                PlayerSeen PS = obj.GetComponent<PlayerSeen>(); //付いているスクリプトを取得
+                PS.Visualization = false;
             }
         }
     }
