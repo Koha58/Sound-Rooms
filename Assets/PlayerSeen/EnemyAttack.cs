@@ -108,10 +108,9 @@ public class EnemyAttack : MonoBehaviour
             }
             if (DC >= 10.0f)
             {
-                if (Table.ON == false)
-                {
+              
                     BossDes = false;
-                }
+              
                 Count =1;
                 if (Count == 1)
                 {
