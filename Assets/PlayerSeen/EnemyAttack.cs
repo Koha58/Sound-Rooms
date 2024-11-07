@@ -108,7 +108,10 @@ public class EnemyAttack : MonoBehaviour
             }
             if (DC >= 10.0f)
             {
-                BossDes = false;
+                if (Table.ON == false)
+                {
+                    BossDes = false;
+                }
                 Count =1;
                 if (Count == 1)
                 {
@@ -117,7 +120,10 @@ public class EnemyAttack : MonoBehaviour
                     BEC.ONOFF = 1;
                     //OFF = true;
                     Count = 2;
-                    PS.piano = true;
+                    if (PS.piano == true)
+                    {
+                        PS.piano = true;
+                    }
                 }
             }
             if (DC >= 16.0f)
