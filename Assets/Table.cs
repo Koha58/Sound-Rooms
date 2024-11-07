@@ -6,6 +6,7 @@ using UnityEngine;
 public class Table : MonoBehaviour
 {
     static public bool ON;
+    public bool ON2;
     float Timer;
     // Start is called before the first frame update
     void Start()
@@ -16,14 +17,22 @@ public class Table : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Debug.Log(ON);
+        Debug.Log(ON);
         if( ON==true )
         {
             Timer += Time.deltaTime;
-            if(Timer>35.0f)
+            if(Timer>=35.0f)
             {
-                ON = false;
                 Timer = 0;
+                ON = false;
+                ON2 = false;
+            }
+        }
+        if (ON2 == true)
+        {
+            if (PlayerRun.CrouchOn == true)
+            {
+                ON = true;
             }
         }
     }
@@ -31,14 +40,26 @@ public class Table : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            ON2 = true;
             if (PlayerRun.CrouchOn==true)
             {
                 ON = true;
-                Timer = 0;
             }
         }
     }
-    
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            ON2 = true;
+            if (PlayerRun.CrouchOn == true)
+            {
+                ON = true;
+              
+            }
+        }
+    }
+
     /*
     private void OnTriggerExit(Collider other)
     {

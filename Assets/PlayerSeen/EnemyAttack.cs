@@ -108,10 +108,17 @@ public class EnemyAttack : MonoBehaviour
             }
             if (DC >= 10.0f)
             {
-              
+                if (Table.ON == true)
+                {
                     BossDes = false;
-              
-                Count =1;
+                }
+                else
+                {
+                    PS.onoff = 1;                                                             //Œ©‚¦‚Ä‚¢‚é‚©‚ç1
+                    PS.Visualization = true;
+                }
+
+                Count = 1;
                 if (Count == 1)
                 {
                     GameObject Boss = GameObject.FindWithTag("Boss");
