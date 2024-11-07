@@ -112,7 +112,7 @@ public class EnemyAttack : MonoBehaviour
                 {
                     BossDes = false;
                 }
-                else
+                else if(Table.ON ==false||PS.piano==true)
                 {
                     PS.onoff = 1;                                                             //Œ©‚¦‚Ä‚¢‚é‚©‚ç1
                     PS.Visualization = true;

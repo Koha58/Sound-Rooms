@@ -17,7 +17,6 @@ public class Table : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(ON);
         if( ON==true )
         {
             Timer += Time.deltaTime;
