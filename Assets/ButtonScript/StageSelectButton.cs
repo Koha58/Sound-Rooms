@@ -54,6 +54,9 @@ public class StageSelectButton : MonoBehaviour
     float Timer;
     bool TimeON;
 
+    [SerializeField] AudioSource StartSound;  // AudioSourceをSerializeFieldとしてインスペクターから設定
+    [SerializeField] AudioClip startClip;     // ボタン選択時に使用するAudioClip
+
     // Start is called before the first frame update
     void Start()
     {
@@ -110,6 +113,9 @@ public class StageSelectButton : MonoBehaviour
         Cursor.SetActive(false);
         Cursor1.SetActive(false);
         Cursor2.SetActive(false);
+
+        // AudioSource コンポーネントを取得
+        StartSound = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -274,6 +280,7 @@ public class StageSelectButton : MonoBehaviour
         {
             if (Input.GetKeyDown("joystick button 0"))
             {
+                PlayStartSound(); // 音を再生
                 OnStart();
             }
         }
@@ -443,6 +450,15 @@ public class StageSelectButton : MonoBehaviour
         else if(stage == 1)
         {
             SceneManager.LoadScene("GameScene");
+        }
+    }
+
+    // 音を再生するメソッド
+    private void PlayStartSound()
+    {
+        if (StartSound != null && startClip != null)
+        {
+            StartSound.PlayOneShot(startClip); // 音を一度だけ再生
         }
     }
 }

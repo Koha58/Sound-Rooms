@@ -17,24 +17,40 @@ public class StartManager : MonoBehaviour
 
     bool UPDOWN;
 
+    Vector3 originalSelectButtonPosition; // 元の位置を保存するための変数
+    Vector3 originalBackDesktopButtonPosition; // 元の位置を保存するための変数
+
+    [SerializeField] AudioSource SelectSound;  // AudioSourceをSerializeFieldとしてインスペクターから設定
+    [SerializeField] AudioClip selectClip;     // ボタン選択時に使用するAudioClip
+
     // Start is called before the first frame update
     void Start()
     {
         SelectButtonImage = SelectButton.GetComponent<Image>();
         BackDesktopButtonImage = BackDesktopButton.GetComponent<Image>();
 
-        SelectButtonImage.color = new Color32(0, 0, 0, 120);
+        SelectButtonImage.color = new Color32(0, 0, 0, 255);
         BackDesktopButtonImage.color = new Color32(0, 0, 0, 120);
+
+        // ボタンの元の位置を保存
+        originalSelectButtonPosition = SelectButton.GetComponent<RectTransform>().localPosition;
+        originalBackDesktopButtonPosition = BackDesktopButton.GetComponent<RectTransform>().localPosition;
+
+        // Selectボタンを少しマイナスX方向に移動
+        SelectButton.GetComponent<RectTransform>().localPosition = originalSelectButtonPosition + new Vector3(-20f, 0f, 0f);
+        BackDesktopButton.GetComponent<RectTransform>().localPosition = originalBackDesktopButtonPosition; // BackDesktopButtonは移動しない
 
         Cursor.SetActive(false);
         Cursor1.SetActive(false);
         UPDOWN = true;
+
+        // AudioSource コンポーネントを取得
+        SelectSound = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
     void Update()
     {
-
         if (Input.GetAxisRaw("Vertical") < 0)
         {
             SelectButtonImage.color = new Color32(0, 0, 0, 255);
@@ -42,6 +58,10 @@ public class StartManager : MonoBehaviour
             Cursor.SetActive(true);
             Cursor1.SetActive(false);
             UPDOWN = true;
+
+            // Selectボタンを少しマイナスX方向に移動
+            SelectButton.GetComponent<RectTransform>().localPosition = originalSelectButtonPosition + new Vector3(-20f, 0f, 0f);
+            BackDesktopButton.GetComponent<RectTransform>().localPosition = originalBackDesktopButtonPosition; // BackDesktopButtonは移動しない
         }
 
         if (Input.GetAxisRaw("Vertical") > 0)
@@ -51,11 +71,18 @@ public class StartManager : MonoBehaviour
             Cursor1.SetActive(true);
             Cursor.SetActive(false);
             UPDOWN = false;
+
+            // BackDesktopボタンを少しマイナスX方向に移動
+            BackDesktopButton.GetComponent<RectTransform>().localPosition = originalBackDesktopButtonPosition + new Vector3(-20f, 0f, 0f);
+            SelectButton.GetComponent<RectTransform>().localPosition = originalSelectButtonPosition; // SelectButtonは移動しない
         }
+
+        // ボタンが選択された状態でボタンが押された場合の処理
         if (UPDOWN == true)
         {
             if (Input.GetKeyDown("joystick button 0"))
             {
+                PlaySelectSound(); // 音を再生
                 SceneManager.LoadScene("StageSelectScene");
             }
         }
@@ -63,47 +90,67 @@ public class StartManager : MonoBehaviour
         {
             if (Input.GetKeyDown("joystick button 0"))
             {
+                PlaySelectSound(); // 音を再生
 #if UNITY_EDITOR
-                UnityEditor.EditorApplication.isPlaying = false;//ゲームプレイ終了
+                UnityEditor.EditorApplication.isPlaying = false; // ゲームプレイ終了
 #else
-    Application.Quit();//ゲームプレイ終了
+                Application.Quit(); // ゲームプレイ終了
 #endif
             }
         }
-
     }
 
+    // Selectボタンが選択されたときにシーン遷移
     public void OnSelect()
     {
+        PlaySelectSound(); // 音を再生
         SceneManager.LoadScene("StageSelectScene");
     }
 
+    // BackDesktopボタンが選択されたときにゲームを終了
     public void OnBackDesktop()
     {
 #if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;//ゲームプレイ終了
+        UnityEditor.EditorApplication.isPlaying = false; // ゲームプレイ終了
 #else
-    Application.Quit();//ゲームプレイ終了
+        Application.Quit(); // ゲームプレイ終了
 #endif
     }
 
     public void EnterSelectButton()
     {
         SelectButtonImage.color = new Color32(0, 0, 0, 255);
+        // Selectボタンを少しマイナスX方向に移動
+        SelectButton.GetComponent<RectTransform>().localPosition = originalSelectButtonPosition + new Vector3(-20f, 0f, 0f);
+        BackDesktopButton.GetComponent<RectTransform>().localPosition = originalBackDesktopButtonPosition; // BackDesktopButtonは移動しない
     }
 
     public void ExitSelectButton()
     {
         SelectButtonImage.color = new Color32(0, 0, 0, 120);
+        SelectButton.GetComponent<RectTransform>().localPosition = originalSelectButtonPosition;
     }
 
     public void EnterBackDesktopButton()
     {
         BackDesktopButtonImage.color = new Color32(0, 0, 0, 255);
+        // BackDesktopボタンを少しマイナスX方向に移動
+        BackDesktopButton.GetComponent<RectTransform>().localPosition = originalBackDesktopButtonPosition + new Vector3(-20f, 0f, 0f);
+        SelectButton.GetComponent<RectTransform>().localPosition = originalSelectButtonPosition; // SelectButtonは移動しない
     }
 
     public void ExitBackDesktopButton()
     {
         BackDesktopButtonImage.color = new Color32(0, 0, 0, 120);
+        BackDesktopButton.GetComponent<RectTransform>().localPosition = originalBackDesktopButtonPosition;
+    }
+
+    // 音を再生するメソッド
+    private void PlaySelectSound()
+    {
+        if (SelectSound != null && selectClip != null)
+        {
+            SelectSound.PlayOneShot(selectClip); // 音を一度だけ再生
+        }
     }
 }
