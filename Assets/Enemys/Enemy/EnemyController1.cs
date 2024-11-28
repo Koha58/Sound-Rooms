@@ -12,25 +12,28 @@ public class EnemyController1 : MonoBehaviour
 
     //サウンド
     [SerializeField] AudioSource audioSourse; //オーディオソース取得
-    [SerializeField] AudioClip searchClip;    //探す音
-    [SerializeField] AudioClip runClip;       //走る音
-    [SerializeField] AudioClip walkClip;      //歩く音
+    //[SerializeField] AudioClip searchClip;    //探す音
+    //[SerializeField] AudioClip runClip;       //走る音
+    //[SerializeField] AudioClip walkClip;      //歩く音
 
     //ステートベースAI
     #region
     enum enemyState
     {
-        walk,
-        chase,
-        search,
-        doNothing
+        walk,    //歩く
+        chase,   //追いかける
+        search,  //探す
+        doNothing//何もしない
     }
 
     float walking = 0;//歩いている　0～１;
+    float walkingTime;//歩いている時間
 
     float chasing = 0;//追いかけている　0～１;
+    float chaseTime; //追いかけている時間（ステートの切り替えだけにある時間）
 
     float searching = 0;//探している　0～１;
+    float searchTime;//探している時間
 
     enemyState curretState = enemyState.doNothing;//現在のステートは何もしていない
     bool stateEnter = true;                    　 //ステートの変化時に一回だけ特殊な処理をさせたいときに使用
@@ -50,10 +53,20 @@ public class EnemyController1 : MonoBehaviour
 
     private void Update()
     {
-        //if(curretState != enemyState.walk) 
-        //{ 
+        if (curretState != enemyState.search)//現在のステートがsearchじゃなかったら
+        {
+            searchTime += Time.deltaTime;
+        }
 
-        //}
+        if (curretState != enemyState.walk)//現在のステートがwalkじゃなかったら
+        {
+            walkingTime += Time.deltaTime/3;
+        }
+
+        if (curretState != enemyState.chase)//現在のステートがchaseじゃなかったら
+        {
+            chaseTime += Time.deltaTime/5;
+        }
 
         switch (curretState)
         {
@@ -65,7 +78,11 @@ public class EnemyController1 : MonoBehaviour
                     Debug.Log("何もしない");
                 }
 
-
+                if (searchTime <= 1)
+                {
+                    ChangeState(enemyState.search);
+                    return;
+                }
 
                 #endregion
                 break;
@@ -77,7 +94,11 @@ public class EnemyController1 : MonoBehaviour
                     Debug.Log("どこにいるかな？");
                 }
 
-
+                if (walkingTime >= 3)
+                {
+                    ChangeState(enemyState.walk);
+                    return;
+                }
 
                 #endregion
                 break;
@@ -89,7 +110,11 @@ public class EnemyController1 : MonoBehaviour
                     Debug.Log("歩いている");
                 }
 
-
+                if (chaseTime >= 5)
+                {
+                    ChangeState(enemyState.chase);
+                    return;
+                }
 
                 #endregion
                 break;
