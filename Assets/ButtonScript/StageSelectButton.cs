@@ -55,7 +55,6 @@ public class StageSelectButton : MonoBehaviour
     bool TimeON;
 
     [SerializeField] AudioSource StartSound;  // AudioSourceをSerializeFieldとしてインスペクターから設定
-    [SerializeField] AudioClip startClip;     // ボタン選択時に使用するAudioClip
 
     // Start is called before the first frame update
     void Start()
@@ -126,6 +125,8 @@ public class StageSelectButton : MonoBehaviour
         {
             deviceCheck = true;
             Cursor.GetComponent<Image>().enabled = true;
+            RightButton.SetActive(false);
+            LeftButton.SetActive(false);
         }
         else if (InputDeviceManager.Instance.CurrentDeviceType == InputDeviceType.Keyboard)
         {
@@ -443,22 +444,27 @@ public class StageSelectButton : MonoBehaviour
 
     public void OnStart()
     {
+        // 音を再生してシーン遷移するコルーチンを開始
+        StartCoroutine(PlayStartSound());
+    }
+
+    // 音を再生するメソッド
+    private IEnumerator PlayStartSound()
+    {
+        // 音を再生
+        StartSound.PlayOneShot(StartSound.clip);
+
+        // 音が再生されるのを待機 (音の長さ分だけ待機)
+        yield return new WaitForSeconds(StartSound.clip.length);
+
+        // 音が終了した後にシーンを遷移
         if (stage == 0)
         {
             SceneManager.LoadScene("TutorialScene");
         }
-        else if(stage == 1)
+        else if (stage == 1)
         {
             SceneManager.LoadScene("GameScene");
-        }
-    }
-
-    // 音を再生するメソッド
-    private void PlayStartSound()
-    {
-        if (StartSound != null && startClip != null)
-        {
-            StartSound.PlayOneShot(startClip); // 音を一度だけ再生
         }
     }
 }

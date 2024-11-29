@@ -21,7 +21,6 @@ public class StartManager : MonoBehaviour
     Vector3 originalBackDesktopButtonPosition; // 元の位置を保存するための変数
 
     [SerializeField] AudioSource SelectSound;  // AudioSourceをSerializeFieldとしてインスペクターから設定
-    [SerializeField] AudioClip selectClip;     // ボタン選択時に使用するAudioClip
 
     // Start is called before the first frame update
     void Start()
@@ -82,7 +81,8 @@ public class StartManager : MonoBehaviour
         {
             if (Input.GetKeyDown("joystick button 0"))
             {
-                PlaySelectSound(); // 音を再生
+                // 音を再生してシーン遷移するコルーチンを開始
+                StartCoroutine(PlaySelectSoundAndLoadScene());
                 SceneManager.LoadScene("StageSelectScene");
             }
         }
@@ -90,7 +90,6 @@ public class StartManager : MonoBehaviour
         {
             if (Input.GetKeyDown("joystick button 0"))
             {
-                PlaySelectSound(); // 音を再生
 #if UNITY_EDITOR
                 UnityEditor.EditorApplication.isPlaying = false; // ゲームプレイ終了
 #else
@@ -103,8 +102,8 @@ public class StartManager : MonoBehaviour
     // Selectボタンが選択されたときにシーン遷移
     public void OnSelect()
     {
-        PlaySelectSound(); // 音を再生
-        SceneManager.LoadScene("StageSelectScene");
+        // 音を再生してシーン遷移するコルーチンを開始
+        StartCoroutine(PlaySelectSoundAndLoadScene());
     }
 
     // BackDesktopボタンが選択されたときにゲームを終了
@@ -145,12 +144,16 @@ public class StartManager : MonoBehaviour
         BackDesktopButton.GetComponent<RectTransform>().localPosition = originalBackDesktopButtonPosition;
     }
 
-    // 音を再生するメソッド
-    private void PlaySelectSound()
+    // 音を再生してシーン遷移するコルーチン
+    private IEnumerator PlaySelectSoundAndLoadScene()
     {
-        if (SelectSound != null && selectClip != null)
-        {
-            SelectSound.PlayOneShot(selectClip); // 音を一度だけ再生
-        }
+        // 音を再生
+        SelectSound.PlayOneShot(SelectSound.clip);
+
+        // 音が再生されるのを待機 (音の長さ分だけ待機)
+        yield return new WaitForSeconds(SelectSound.clip.length);
+
+        // 音が終了した後にシーンを遷移
+        SceneManager.LoadScene("StageSelectScene");
     }
 }
