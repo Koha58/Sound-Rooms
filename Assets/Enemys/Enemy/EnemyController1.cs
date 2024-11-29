@@ -26,6 +26,60 @@ public class EnemyController1 : MonoBehaviour
         doNothing//‰½‚à‚µ‚È‚¢
     }
 
+    enum BehaviorType
+    {
+        walk,    //•à‚­
+        chase,   //’Ç‚¢‚©‚¯‚é
+        search,  //’T‚·
+    }
+
+    class Behavior
+    { 
+        public BehaviorType type { get; private set; }
+        public float value;
+
+        public Behavior(BehaviorType _type) 
+        { 
+            type = _type;
+            value = 0f;
+        }
+    }
+
+    class Behaviors
+    { 
+        public List<Behavior> behaviorList { get; private set; }=new List<Behavior>();
+        //public Behavior GetBehavior(BehaviorType type)
+        //{
+        //    foreach (Behaviour behaviour in behaviorList)
+        //    {
+        //        if (behaviour.type == type)
+        //        {
+        //            return behaviour;
+        //        }
+        //    }
+        //    return null;
+        //}
+
+
+        //ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+        public Behaviors()
+        {
+            int BehaviorNum = System.Enum.GetNames(typeof(BehaviorType)).Length;
+
+            for(int i=0; i< BehaviorNum; i++)
+            {
+                BehaviorType type = (BehaviorType)System.Enum.ToObject(typeof(BehaviorType),i);
+                Behavior newBehavior=new Behavior(type);
+
+                behaviorList.Add(newBehavior);
+            }
+        }
+    }
+
+
+
+    float doNothingTime;//‰½‚à‚µ‚È‚¢ŽžŠÔ
+
     float walking = 0;//•à‚¢‚Ä‚¢‚é@0`‚P;
     float walkingTime;//•à‚¢‚Ä‚¢‚éŽžŠÔ
 
@@ -67,6 +121,12 @@ public class EnemyController1 : MonoBehaviour
         {
             chaseTime += Time.deltaTime/5;
         }
+
+        if(curretState != enemyState.doNothing)
+        {
+            doNothingTime += Time.deltaTime/5;
+        }
+
 
         switch (curretState)
         {
@@ -126,7 +186,11 @@ public class EnemyController1 : MonoBehaviour
                     Debug.Log("’Ç‚¢‚©‚¯‚¢‚é‚æ");
                 }
 
-
+                if (doNothingTime >= 10)
+                {
+                    ChangeState(enemyState.doNothing);
+                    return;
+                }
 
                 #endregion
                 break;
