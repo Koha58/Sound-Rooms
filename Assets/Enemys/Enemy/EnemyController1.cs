@@ -1,7 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
+using static UnityEngine.InputSystem.OnScreen.OnScreenStick;
 
 public class EnemyController1 : MonoBehaviour
 {
@@ -35,11 +34,12 @@ public class EnemyController1 : MonoBehaviour
 
     class Behavior
     { 
-        public BehaviorType type { get; private set; }
-        public float value;
+        public BehaviorType type { get; private set; }　//行動パターン（書き換えできない）
+        public float value;　　　　　　　　　　　　　　//行動パターン変化を表す値
 
         public Behavior(BehaviorType _type) 
         { 
+            //各変数の初期化
             type = _type;
             value = 0f;
         }
@@ -47,47 +47,47 @@ public class EnemyController1 : MonoBehaviour
 
     class Behaviors
     { 
-        public List<Behavior> behaviorList { get; private set; }=new List<Behavior>();
-        //public Behavior GetBehavior(BehaviorType type)
-        //{
-        //    foreach (Behaviour behaviour in behaviorList)
-        //    {
-        //        if (behaviour.type == type)
-        //        {
-        //            return behaviour;
-        //        }
-        //    }
-        //    return null;
-        //}
+        public List<Behavior> behaviorList { get; private set; }=new List<Behavior>();　//行動パターンの種類を表す変数
 
+        //BehaviorTypeを引数に、該当するBehaviorクラスを参照する
+        public Behavior GetBehavior(BehaviorType type)
+        {
+            foreach (Behavior behaviour in behaviorList)// behaviorListを一個ずつ確認
+            {
+                if (behaviour.type == type)
+                {
+                    return behaviour;
+                }
+            }
+            return null;
+        }
+
+        public void SortDesire()
+        {
+            //要素を降順でソートしていく
+            behaviorList.Sort((behaviour1, behaviour2) => behaviour2.value.CompareTo(behaviour1.value));
+            //昇順にしたい場合は behaviour1.value.CompareTo(behaviour2.value)
+        }
 
         //コンストラクタ
         public Behaviors()
         {
+            //列挙型を文字列の配列に変換、Lengthで要素数を取得
             int BehaviorNum = System.Enum.GetNames(typeof(BehaviorType)).Length;
 
-            for(int i=0; i< BehaviorNum; i++)
+            // Behaviorクラスを生成初期化、リストに追加していく
+            for (int i=0; i< BehaviorNum; i++)
             {
-                BehaviorType type = (BehaviorType)System.Enum.ToObject(typeof(BehaviorType),i);
-                Behavior newBehavior=new Behavior(type);
+                BehaviorType type = (BehaviorType)System.Enum.ToObject(typeof(BehaviorType),i);//列挙型をインデックスで取得する
+                Behavior newBehavior=new Behavior(type);　　　　　　　　　　　　　　　　　　　 //初期化　　　　　　　　　　　　　　　　　　　
 
-                behaviorList.Add(newBehavior);
+                behaviorList.Add(newBehavior);//追加
             }
         }
     }
 
+    Behaviors behaviors = new Behaviors();//クラスの実態
 
-
-    float doNothingTime;//何もしない時間
-
-    float walking = 0;//歩いている　0～１;
-    float walkingTime;//歩いている時間
-
-    float chasing = 0;//追いかけている　0～１;
-    float chaseTime; //追いかけている時間（ステートの切り替えだけにある時間）
-
-    float searching = 0;//探している　0～１;
-    float searchTime;//探している時間
 
     enemyState curretState = enemyState.doNothing;//現在のステートは何もしていない
     bool stateEnter = true;                    　 //ステートの変化時に一回だけ特殊な処理をさせたいときに使用
@@ -109,22 +109,17 @@ public class EnemyController1 : MonoBehaviour
     {
         if (curretState != enemyState.search)//現在のステートがsearchじゃなかったら
         {
-            searchTime += Time.deltaTime;
+            behaviors.GetBehavior(BehaviorType.search).value += Time.deltaTime;
         }
 
         if (curretState != enemyState.walk)//現在のステートがwalkじゃなかったら
         {
-            walkingTime += Time.deltaTime/3;
+            behaviors.GetBehavior(BehaviorType.walk).value += Time.deltaTime / 3;
         }
 
         if (curretState != enemyState.chase)//現在のステートがchaseじゃなかったら
         {
-            chaseTime += Time.deltaTime/5;
-        }
-
-        if(curretState != enemyState.doNothing)
-        {
-            doNothingTime += Time.deltaTime/5;
+            behaviors.GetBehavior(BehaviorType.chase).value += Time.deltaTime / 5;
         }
 
 
@@ -138,10 +133,23 @@ public class EnemyController1 : MonoBehaviour
                     Debug.Log("何もしない");
                 }
 
-                if (searchTime <= 1)
+                behaviors.SortDesire();//行動パターンをソート
+
+                if (behaviors.behaviorList[0].value >=1)
                 {
-                    ChangeState(enemyState.search);
-                    return;
+                    Behavior behavior = behaviors.behaviorList[0];
+                    switch(behavior.type)
+                    {
+                        case BehaviorType.search:
+                            ChangeState(enemyState.search);
+                            return;
+                        case BehaviorType.chase:
+                            ChangeState(enemyState.chase);
+                            return;
+                        case BehaviorType.walk:
+                            ChangeState(enemyState.walk);
+                            return;
+                    }
                 }
 
                 #endregion
@@ -152,12 +160,27 @@ public class EnemyController1 : MonoBehaviour
                 {
                     stateEnter = false;
                     Debug.Log("どこにいるかな？");
+                    behaviors.GetBehavior(BehaviorType.search).value = 1;
                 }
 
-                if (walkingTime >= 3)
+                //behaviors.GetBehavior(BehaviorType.search).value += Time.deltaTime;
+
+                behaviors.SortDesire();
+                if (behaviors.behaviorList[0].value >= 1)
                 {
-                    ChangeState(enemyState.walk);
-                    return;
+                    Behavior behavior = behaviors.behaviorList[0];
+                    switch (behavior.type)
+                    {
+                        case BehaviorType.search:
+                            ChangeState(enemyState.search);
+                            return;
+                        case BehaviorType.chase:
+                            ChangeState(enemyState.chase);
+                            return;
+                        case BehaviorType.walk:
+                            ChangeState(enemyState.walk);
+                            return;
+                    }
                 }
 
                 #endregion
@@ -168,12 +191,27 @@ public class EnemyController1 : MonoBehaviour
                 {
                     stateEnter = false;
                     Debug.Log("歩いている");
+                    behaviors.GetBehavior(BehaviorType.search).value = 1;
                 }
 
-                if (chaseTime >= 5)
+               // behaviors.GetBehavior(BehaviorType.walk).value += Time.deltaTime / 3;
+
+                behaviors.SortDesire();
+                if (behaviors.behaviorList[0].value >= 1)
                 {
-                    ChangeState(enemyState.chase);
-                    return;
+                    Behavior behavior = behaviors.behaviorList[0];
+                    switch (behavior.type)
+                    {
+                        case BehaviorType.search:
+                            ChangeState(enemyState.search);
+                            return;
+                        case BehaviorType.chase:
+                            ChangeState(enemyState.chase);
+                            return;
+                        case BehaviorType.walk:
+                            ChangeState(enemyState.walk);
+                            return;
+                    }
                 }
 
                 #endregion
@@ -184,12 +222,27 @@ public class EnemyController1 : MonoBehaviour
                 {
                     stateEnter = false;
                     Debug.Log("追いかけいるよ");
+                    behaviors.GetBehavior(BehaviorType.search).value = 1;
                 }
 
-                if (doNothingTime >= 10)
+                //behaviors.GetBehavior(BehaviorType.chase).value += Time.deltaTime / 5;
+
+                behaviors.SortDesire();
+                if (behaviors.behaviorList[0].value >= 1)
                 {
-                    ChangeState(enemyState.doNothing);
-                    return;
+                    Behavior behavior = behaviors.behaviorList[0];
+                    switch (behavior.type)
+                    {
+                        case BehaviorType.search:
+                            ChangeState(enemyState.search);
+                            return;
+                        case BehaviorType.chase:
+                            ChangeState(enemyState.chase);
+                            return;
+                        case BehaviorType.walk:
+                            ChangeState(enemyState.walk);
+                            return;
+                    }
                 }
 
                 #endregion
