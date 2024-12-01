@@ -1,10 +1,28 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
-using static UnityEngine.InputSystem.OnScreen.OnScreenStick;
+using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class EnemyController1 : MonoBehaviour
 {
-    private Transform player;
+    public Transform player;
+
+    NavMeshAgent navMeshAgent;
+
+    float chaseRange = 5f;  //Playerを検知する範囲
+    float distanceToPlayer = Mathf.Infinity;
+
+    private float realizeTime;
+    private float realizeMaxTime=10f;
+
+    private float searchTime;
+
+    public Slider slider;
+
+    public Canvas canvas;
+
+    int i = 0;
 
     //アニメーション
     [SerializeField] Animator animator;　//アニメーター取得
@@ -19,17 +37,36 @@ public class EnemyController1 : MonoBehaviour
     #region
     enum enemyState
     {
-        walk,    //歩く
-        chase,   //追いかける
-        search,  //探す
+        patrol,    //巡回
+        chase,     //追いかける
+        search,    //探す
+        discussion,//話し合い
+        faind,     //見つける
+        Stand,     //立ちはだかる
+        restraint, //拘束
+        enjoy,     //楽しむ
+        anticipate,//先回り(予測)
+        shout,     //叫ぶ
+        sleep,     //眠る
+        rage,      //暴れる
         doNothing//何もしない
     }
 
     enum BehaviorType
     {
-        walk,    //歩く
-        chase,   //追いかける
-        search,  //探す
+        patrol,    //巡回
+        chase,     //追いかける
+        search,    //探す
+        discussion,//話し合い
+        faind,     //見つける
+        Stand,     //立ちはだかる
+        restraint, //拘束
+        enjoy,     //楽しむ
+        anticipate,//先回り(予測)
+        shout,     //叫ぶ
+        sleep,     //眠る
+        rage,      //暴れる
+        doNothing//何もしない
     }
 
     class Behavior
@@ -88,7 +125,6 @@ public class EnemyController1 : MonoBehaviour
 
     Behaviors behaviors = new Behaviors();//クラスの実態
 
-
     enemyState curretState = enemyState.doNothing;//現在のステートは何もしていない
     bool stateEnter = true;                    　 //ステートの変化時に一回だけ特殊な処理をさせたいときに使用
 
@@ -102,26 +138,38 @@ public class EnemyController1 : MonoBehaviour
 
     private void Start()
     {
-        player = GameObject.FindWithTag("Player").transform;　//プレイヤーの位置を取得
+        realizeTime = 0;
+        slider.value = 0;
+        navMeshAgent = GetComponent<NavMeshAgent>();
     }
 
     private void Update()
     {
-        if (curretState != enemyState.search)//現在のステートがsearchじゃなかったら
+        slider.value = realizeTime/realizeMaxTime;
+
+        canvas.transform.rotation =Camera.main.transform.rotation;
+
+        distanceToPlayer = Vector3.Distance(player.position, transform.position);
+
+        if (distanceToPlayer <= chaseRange)
         {
-            behaviors.GetBehavior(BehaviorType.search).value += Time.deltaTime;
+            behaviors.GetBehavior(BehaviorType.search).value = 2;
+            realizeTime += 0.2f;
+        }
+        else
+        {
+            realizeTime -= 0.2f;
+            ChangeState(enemyState.patrol);
         }
 
-        if (curretState != enemyState.walk)//現在のステートがwalkじゃなかったら
+        if (realizeTime == realizeMaxTime||slider.value==1f)
         {
-            behaviors.GetBehavior(BehaviorType.walk).value += Time.deltaTime / 3;
+            ChangeState(enemyState.chase);
         }
-
-        if (curretState != enemyState.chase)//現在のステートがchaseじゃなかったら
+        else
         {
-            behaviors.GetBehavior(BehaviorType.chase).value += Time.deltaTime / 5;
+            behaviors.GetBehavior(BehaviorType.search).value = 1f;
         }
-
 
         switch (curretState)
         {
@@ -131,11 +179,12 @@ public class EnemyController1 : MonoBehaviour
                 {
                     stateEnter = false;
                     Debug.Log("何もしない");
+                    ChangeState(enemyState.patrol);
                 }
 
                 behaviors.SortDesire();//行動パターンをソート
 
-                if (behaviors.behaviorList[0].value >=1)
+                if (behaviors.behaviorList[0].value >=1)//リストの一番上の1を上回ったら
                 {
                     Behavior behavior = behaviors.behaviorList[0];
                     switch(behavior.type)
@@ -146,8 +195,8 @@ public class EnemyController1 : MonoBehaviour
                         case BehaviorType.chase:
                             ChangeState(enemyState.chase);
                             return;
-                        case BehaviorType.walk:
-                            ChangeState(enemyState.walk);
+                        case BehaviorType.patrol:
+                            ChangeState(enemyState.patrol);
                             return;
                     }
                 }
@@ -160,10 +209,16 @@ public class EnemyController1 : MonoBehaviour
                 {
                     stateEnter = false;
                     Debug.Log("どこにいるかな？");
-                    behaviors.GetBehavior(BehaviorType.search).value = 1;
+                    navMeshAgent.SetDestination(this.transform.position);
+                    behaviors.GetBehavior(BehaviorType.search).value = 0;
+                    searchTime += Time.deltaTime;
                 }
 
-                //behaviors.GetBehavior(BehaviorType.search).value += Time.deltaTime;
+                if(searchTime>=10f)
+                {
+                    searchTime = 0;
+                    ChangeState(enemyState.patrol);
+                }
 
                 behaviors.SortDesire();
                 if (behaviors.behaviorList[0].value >= 1)
@@ -177,24 +232,32 @@ public class EnemyController1 : MonoBehaviour
                         case BehaviorType.chase:
                             ChangeState(enemyState.chase);
                             return;
-                        case BehaviorType.walk:
-                            ChangeState(enemyState.walk);
+                        case BehaviorType.patrol:
+                            ChangeState(enemyState.patrol);
                             return;
                     }
                 }
 
                 #endregion
                 break;
-            case enemyState.walk:
+            case enemyState.patrol:
                 #region
                 if (stateEnter)
                 {
                     stateEnter = false;
-                    Debug.Log("歩いている");
-                    behaviors.GetBehavior(BehaviorType.search).value = 1;
+                    Debug.Log("巡回中");
+                    navMeshAgent.SetDestination(GameManager.instance.testPos[i].position);
                 }
 
-               // behaviors.GetBehavior(BehaviorType.walk).value += Time.deltaTime / 3;
+                if (navMeshAgent.remainingDistance <= 0.1f && !navMeshAgent.pathPending)
+                {
+                    i += 1;
+
+                    if (i > 2)
+                    {
+                        i = 0;
+                    }
+                }
 
                 behaviors.SortDesire();
                 if (behaviors.behaviorList[0].value >= 1)
@@ -208,8 +271,8 @@ public class EnemyController1 : MonoBehaviour
                         case BehaviorType.chase:
                             ChangeState(enemyState.chase);
                             return;
-                        case BehaviorType.walk:
-                            ChangeState(enemyState.walk);
+                        case BehaviorType.patrol:
+                            ChangeState(enemyState.patrol);
                             return;
                     }
                 }
@@ -222,7 +285,8 @@ public class EnemyController1 : MonoBehaviour
                 {
                     stateEnter = false;
                     Debug.Log("追いかけいるよ");
-                    behaviors.GetBehavior(BehaviorType.search).value = 1;
+                    navMeshAgent.speed = 4.0f;
+                    Chase();
                 }
 
                 //behaviors.GetBehavior(BehaviorType.chase).value += Time.deltaTime / 5;
@@ -239,8 +303,66 @@ public class EnemyController1 : MonoBehaviour
                         case BehaviorType.chase:
                             ChangeState(enemyState.chase);
                             return;
-                        case BehaviorType.walk:
-                            ChangeState(enemyState.walk);
+                        case BehaviorType.patrol:
+                            ChangeState(enemyState.patrol);
+                            return;
+                    }
+                }
+
+                #endregion
+                break;
+            case enemyState.discussion:
+                #region
+                if (stateEnter)
+                {
+                    stateEnter = false;
+                    Debug.Log("話し合っている");
+                }
+
+                behaviors.SortDesire();
+                if (behaviors.behaviorList[0].value >= 1)
+                {
+                    Behavior behavior = behaviors.behaviorList[0];
+                    switch (behavior.type)
+                    {
+                        case BehaviorType.search:
+                            ChangeState(enemyState.search);
+                            return;
+                        case BehaviorType.chase:
+                            ChangeState(enemyState.chase);
+                            return;
+                        case BehaviorType.patrol:
+                            ChangeState(enemyState.patrol);
+                            return;
+                        case BehaviorType.discussion:
+                            ChangeState(enemyState.discussion);
+                            return;
+                        case BehaviorType.faind:
+                            ChangeState(enemyState.faind);
+                            return;
+                        case BehaviorType.Stand:
+                            ChangeState(enemyState.Stand);
+                            return;
+                        case BehaviorType.restraint:
+                            ChangeState(enemyState.restraint);
+                            return;
+                        case BehaviorType.enjoy:
+                            ChangeState(enemyState.enjoy);
+                            return;
+                        case BehaviorType.anticipate:
+                            ChangeState(enemyState.anticipate);
+                            return;
+                        case BehaviorType.shout:
+                            ChangeState(enemyState.shout);
+                            return;
+                        case BehaviorType.sleep:
+                            ChangeState(enemyState.sleep);
+                            return;
+                        case BehaviorType.rage:
+                            ChangeState(enemyState.rage);
+                            return;
+                        case BehaviorType.doNothing:
+                            ChangeState(enemyState.doNothing);
                             return;
                     }
                 }
@@ -250,5 +372,10 @@ public class EnemyController1 : MonoBehaviour
 
 
         }
+    }
+
+    void Chase()
+    {
+        navMeshAgent.SetDestination(player.transform.position);
     }
 }
