@@ -23,4 +23,10 @@ public static class EditorSceneLauncher
     {
         EditorSceneManager.OpenScene("Assets/Scenes/StartScene.unity", OpenSceneMode.Single);
     }
+
+    [MenuItem("Launcher/TestScene", priority = 0)]
+    public static void OpenTestScene()
+    {
+        EditorSceneManager.OpenScene("Assets/Scenes/Test/TestScene.unity", OpenSceneMode.Single);
+    }
 }

@@ -10,19 +10,12 @@ public class EnemyController1 : MonoBehaviour
 
     NavMeshAgent navMeshAgent;
 
-    float chaseRange = 5f;  //Playerを検知する範囲
+    float chaseRange = 7f;  //Playerを検知する範囲
     float distanceToPlayer = Mathf.Infinity;
 
-    private float realizeTime;
-    private float realizeMaxTime=10f;
+    float searchTime;
 
-    private float searchTime;
-
-    public Slider slider;
-
-    public Canvas canvas;
-
-    int i = 0;
+    int pointCount;
 
     //アニメーション
     [SerializeField] Animator animator;　//アニメーター取得
@@ -138,40 +131,25 @@ public class EnemyController1 : MonoBehaviour
 
     private void Start()
     {
-        realizeTime = 0;
-        slider.value = 0;
         navMeshAgent = GetComponent<NavMeshAgent>();
     }
 
     private void Update()
     {
-        slider.value = realizeTime/realizeMaxTime;
-
-        canvas.transform.rotation =Camera.main.transform.rotation;
-
         distanceToPlayer = Vector3.Distance(player.position, transform.position);
 
         if (distanceToPlayer <= chaseRange)
         {
-            behaviors.GetBehavior(BehaviorType.search).value = 2;
-            realizeTime += 0.2f;
-        }
-        else
-        {
-            realizeTime -= 0.2f;
-            ChangeState(enemyState.patrol);
-        }
-
-        if (realizeTime == realizeMaxTime||slider.value==1f)
-        {
-            ChangeState(enemyState.chase);
-        }
-        else
-        {
-            behaviors.GetBehavior(BehaviorType.search).value = 1f;
+            Vector3 Position = player.position - transform.position;                          // ターゲットの位置と自身の位置の差を計算
+            bool isFront = Vector3.Dot(Position, transform.forward) > 0;                            // ターゲットが自身の前方にあるかどうか判定
+            bool isBack = Vector3.Dot(Position, transform.forward) < 0;                             // ターゲットが自身の後方にあるかどうか判定
+            if (isFront)
+            {
+                behaviors.GetBehavior(BehaviorType.chase).value = 2;
+            }
         }
 
-        switch (curretState)
+            switch (curretState)
         {
             case enemyState.doNothing:
                 #region
@@ -203,21 +181,24 @@ public class EnemyController1 : MonoBehaviour
 
                 #endregion
                 break;
-            case enemyState.search:
+            case enemyState.patrol:
                 #region
                 if (stateEnter)
                 {
                     stateEnter = false;
-                    Debug.Log("どこにいるかな？");
-                    navMeshAgent.SetDestination(this.transform.position);
-                    behaviors.GetBehavior(BehaviorType.search).value = 0;
-                    searchTime += Time.deltaTime;
+                    Debug.Log("巡回中");
+                    behaviors.GetBehavior(BehaviorType.patrol).value = 0;
+                    animator.SetBool("Walk", true);
+                    animator.SetBool("Run", false);
+                    navMeshAgent.speed = 2.0f;
+                    navMeshAgent.SetDestination(GameManager.instance.testPos[pointCount].position);
                 }
 
-                if(searchTime>=10f)
+                if (navMeshAgent.remainingDistance <= 0.1f && !navMeshAgent.pathPending)
                 {
-                    searchTime = 0;
-                    ChangeState(enemyState.patrol);
+                    pointCount += 1;
+                    ChangeState(enemyState.search);
+                    if (pointCount > 2) { pointCount = 0; }
                 }
 
                 behaviors.SortDesire();
@@ -240,23 +221,24 @@ public class EnemyController1 : MonoBehaviour
 
                 #endregion
                 break;
-            case enemyState.patrol:
+            case enemyState.search:
                 #region
                 if (stateEnter)
                 {
                     stateEnter = false;
-                    Debug.Log("巡回中");
-                    navMeshAgent.SetDestination(GameManager.instance.testPos[i].position);
+                    Debug.Log("どこにいるかな？");
+                    animator.SetBool("Walk", false);
+                    animator.SetBool("Run", false);
+                    //navMeshAgent.SetDestination(this.transform.position);
                 }
 
-                if (navMeshAgent.remainingDistance <= 0.1f && !navMeshAgent.pathPending)
-                {
-                    i += 1;
+                searchTime += Time.deltaTime;
 
-                    if (i > 2)
-                    {
-                        i = 0;
-                    }
+                if (searchTime >= 3.0f)
+                {
+                    searchTime = 0;
+                    behaviors.GetBehavior(BehaviorType.search).value = 0;
+                    behaviors.GetBehavior(BehaviorType.patrol).value = 2;
                 }
 
                 behaviors.SortDesire();
@@ -285,11 +267,14 @@ public class EnemyController1 : MonoBehaviour
                 {
                     stateEnter = false;
                     Debug.Log("追いかけいるよ");
+                    behaviors.GetBehavior(BehaviorType.chase).value = 0;
+                    animator.SetBool("Walk",false);
+                    animator.SetBool("Run", true);
                     navMeshAgent.speed = 4.0f;
                     Chase();
                 }
 
-                //behaviors.GetBehavior(BehaviorType.chase).value += Time.deltaTime / 5;
+                if (distanceToPlayer >= chaseRange) { behaviors.GetBehavior(BehaviorType.search).value = 2; }
 
                 behaviors.SortDesire();
                 if (behaviors.behaviorList[0].value >= 1)
