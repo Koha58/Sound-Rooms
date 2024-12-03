@@ -29,4 +29,10 @@ public static class EditorSceneLauncher
     {
         EditorSceneManager.OpenScene("Assets/Scenes/Test/TestScene.unity", OpenSceneMode.Single);
     }
+
+    [MenuItem("Launcher/StageSelectScene", priority = 0)]
+    public static void OpenStageSelectScene()
+    {
+        EditorSceneManager.OpenScene("Assets/Scenes/StageSelectScene.unity", OpenSceneMode.Single);
+    }
 }

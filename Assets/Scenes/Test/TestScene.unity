@@ -1280,7 +1280,7 @@ RectTransform:
   m_Father: {fileID: 265749553}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -2434,8 +2434,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 877445901}
-  slider: {fileID: 1040166743}
-  canvas: {fileID: 974304885}
   animator: {fileID: 495716206}
   audioSourse: {fileID: 495716203}
 --- !u!82 &495716203
@@ -5057,7 +5055,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &974304882
 RectTransform:
   m_ObjectHideFlags: 0
