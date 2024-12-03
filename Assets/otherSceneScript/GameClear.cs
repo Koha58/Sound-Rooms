@@ -24,7 +24,7 @@ public class GameClear : MonoBehaviour
 
         if (other.gameObject.name == "ExitDoor")
         {
-            if(EAtack.count == 4)
+            if(EAtack.count == 1)
             {
                 SceneManager.LoadScene("GameClear");
             }
