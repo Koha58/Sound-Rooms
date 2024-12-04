@@ -33,16 +33,9 @@ public class EnemyController1 : MonoBehaviour
         patrol,    //巡回
         chase,     //追いかける
         search,    //探す
-        discussion,//話し合い
-        faind,     //見つける
-        Stand,     //立ちはだかる
-        restraint, //拘束
-        enjoy,     //楽しむ
-        anticipate,//先回り(予測)
-        shout,     //叫ぶ
-        sleep,     //眠る
-        rage,      //暴れる
-        doNothing//何もしない
+        hear,      //聞く
+        near,      //近づく
+        doNothing  //何もしない
     }
 
     enum BehaviorType
@@ -50,16 +43,9 @@ public class EnemyController1 : MonoBehaviour
         patrol,    //巡回
         chase,     //追いかける
         search,    //探す
-        discussion,//話し合い
-        faind,     //見つける
-        Stand,     //立ちはだかる
-        restraint, //拘束
-        enjoy,     //楽しむ
-        anticipate,//先回り(予測)
-        shout,     //叫ぶ
-        sleep,     //眠る
-        rage,      //暴れる
-        doNothing//何もしない
+        hear,      //聞く
+        near,      //近づく
+        doNothing　//何もしない
     }
 
     class Behavior
@@ -141,14 +127,14 @@ public class EnemyController1 : MonoBehaviour
         if (distanceToPlayer <= chaseRange)
         {
             Vector3 Position = player.position - transform.position;                          // ターゲットの位置と自身の位置の差を計算
-            bool isFront = Vector3.Dot(Position, transform.forward) > 0;                            // ターゲットが自身の前方にあるかどうか判定
+            bool isFront = Vector3.Dot(Position, transform.forward) > 0;                      // ターゲットが自身の前方にあるかどうか判定
             if (isFront)
             {
                 behaviors.GetBehavior(BehaviorType.chase).value = 2;
             }
         }
 
-            switch (curretState)
+        switch (curretState)
         {
             case enemyState.doNothing:
                 #region
@@ -295,16 +281,17 @@ public class EnemyController1 : MonoBehaviour
 
                 #endregion
                 break;
-            case enemyState.discussion:
+            case enemyState.hear:
                 #region
                 if (stateEnter)
                 {
                     stateEnter = false;
-                    Debug.Log("話し合っている");
+                    Debug.Log("聞く");
                 }
 
-                behaviors.SortDesire();
-                if (behaviors.behaviorList[0].value >= 1)
+                behaviors.SortDesire();//行動パターンをソート
+
+                if (behaviors.behaviorList[0].value >= 1)//リストの一番上の1を上回ったら
                 {
                     Behavior behavior = behaviors.behaviorList[0];
                     switch (behavior.type)
@@ -318,43 +305,40 @@ public class EnemyController1 : MonoBehaviour
                         case BehaviorType.patrol:
                             ChangeState(enemyState.patrol);
                             return;
-                        case BehaviorType.discussion:
-                            ChangeState(enemyState.discussion);
+                    }
+                }
+
+                #endregion
+                break;
+            case enemyState.near:
+                #region
+                if (stateEnter)
+                {
+                    stateEnter = false;
+                    Debug.Log("近づく");
+                }
+
+                behaviors.SortDesire();//行動パターンをソート
+
+                if (behaviors.behaviorList[0].value >= 1)//リストの一番上の1を上回ったら
+                {
+                    Behavior behavior = behaviors.behaviorList[0];
+                    switch (behavior.type)
+                    {
+                        case BehaviorType.search:
+                            ChangeState(enemyState.search);
                             return;
-                        case BehaviorType.faind:
-                            ChangeState(enemyState.faind);
+                        case BehaviorType.chase:
+                            ChangeState(enemyState.chase);
                             return;
-                        case BehaviorType.Stand:
-                            ChangeState(enemyState.Stand);
-                            return;
-                        case BehaviorType.restraint:
-                            ChangeState(enemyState.restraint);
-                            return;
-                        case BehaviorType.enjoy:
-                            ChangeState(enemyState.enjoy);
-                            return;
-                        case BehaviorType.anticipate:
-                            ChangeState(enemyState.anticipate);
-                            return;
-                        case BehaviorType.shout:
-                            ChangeState(enemyState.shout);
-                            return;
-                        case BehaviorType.sleep:
-                            ChangeState(enemyState.sleep);
-                            return;
-                        case BehaviorType.rage:
-                            ChangeState(enemyState.rage);
-                            return;
-                        case BehaviorType.doNothing:
-                            ChangeState(enemyState.doNothing);
+                        case BehaviorType.patrol:
+                            ChangeState(enemyState.patrol);
                             return;
                     }
                 }
 
                 #endregion
                 break;
-
-
         }
     }
 
