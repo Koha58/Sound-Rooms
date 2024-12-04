@@ -249,18 +249,6 @@ public class TutorialMessageControll : MonoBehaviour
                 timeCnt = 0f;
             }
         }
-
-        if(Message == 21)
-        {
-            if (ItemSeen.FindDoor == true)
-            {
-                timeCnt = 7.0f;
-            }
-            else
-            {
-                timeCnt = 0f;
-            }
-        }
     }
 
     void Controller()
