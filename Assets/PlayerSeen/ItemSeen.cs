@@ -29,21 +29,8 @@ public class ItemSeen : MonoBehaviour
 
     GameObject haveChildren;
 
-    public static bool FindDoor;
-
     void Start()
     {
-        GameObject doorObject = GameObject.Find("ExitDoor");
-
-        // 子オブジェクトの数を取得
-        int doorparts = doorObject.transform.childCount;
-        for (int j = 0; j < doorparts; j++)
-        {
-            Transform childTransform = doorObject.transform.GetChild(j);
-            GameObject door = childTransform.gameObject;
-            door.GetComponent<Renderer>().enabled = false;
-        }
-
         //最初は見えない状態
         SeenArea.GetComponent<Collider>().enabled = false;
 
@@ -94,8 +81,6 @@ public class ItemSeen : MonoBehaviour
         {
             CapsulePartss.GetComponent<Renderer>().enabled = true;
         }
-
-        FindDoor = false;
     }
 
     private void Update()
@@ -105,8 +90,6 @@ public class ItemSeen : MonoBehaviour
         Shelfs = GameObject.FindGameObjectsWithTag("Shelf");
 
         InShelfs = GameObject.FindGameObjectsWithTag("InShelf");
-
-        GameObject doorObject = GameObject.Find("ExitDoor");
 
         Capsules = GameObject.FindGameObjectsWithTag("Capsule");
 
@@ -131,15 +114,6 @@ public class ItemSeen : MonoBehaviour
             if (levelMeter.nowdB <= 0.0f)
             {
                 SeenArea.GetComponent<Collider>().enabled = false;//見えない（無効）
-
-                // 子オブジェクトの数を取得
-                int doorparts = doorObject.transform.childCount;
-                for (int j = 0; j < doorparts; j++)
-                {
-                    Transform childTransform = doorObject.transform.GetChild(j);
-                    GameObject door = childTransform.gameObject;
-                    door.GetComponent<Renderer>().enabled = false;
-                }
 
                 foreach (GameObject Shelf in Shelfs)
                 {
@@ -185,7 +159,6 @@ public class ItemSeen : MonoBehaviour
 
     void OnTriggerStay(Collider other)
     {
-        GameObject doorObject = GameObject.Find("ExitDoor");
         objName = other.gameObject.name;
 
         if (other.CompareTag("Box"))//接触したオブジェクトのタグが"Box"のとき
@@ -225,20 +198,6 @@ public class ItemSeen : MonoBehaviour
                 //タグが"PlayerParts"である子オブジェクトを見えなくする
                 capsuleParts.gameObject.GetComponent<Renderer>().enabled = false;
             }
-        }
-
-        else if (objName == "ExitDoor")
-        {
-            // 子オブジェクトの数を取得
-            int doorparts = doorObject.transform.childCount;
-            for (int j = 0; j < doorparts; j++)
-            {
-                Transform childTransform = doorObject.transform.GetChild(j);
-                GameObject door = childTransform.gameObject;
-                door.GetComponent<Renderer>().enabled = true;
-            }
-
-            FindDoor = true;
         }
 
     }
