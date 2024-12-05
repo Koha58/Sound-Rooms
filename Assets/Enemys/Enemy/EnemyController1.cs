@@ -26,9 +26,17 @@ public class EnemyController1 : MonoBehaviour
 
     //サウンド
     [SerializeField] AudioSource audioSourse; //オーディオソース取得
-    //[SerializeField] AudioClip searchClip;    //探す音
-    //[SerializeField] AudioClip runClip;       //走る音
-    //[SerializeField] AudioClip walkClip;      //歩く音
+    [SerializeField] AudioClip searchClip;    //探す音
+    [SerializeField] AudioClip runClip;       //走る音
+    [SerializeField] AudioClip walkClip;      //歩く音
+
+
+    void Idle() { audioSourse.PlayOneShot(searchClip); }
+
+    void Run() { audioSourse.PlayOneShot(runClip); }
+
+    void Walk() { audioSourse.PlayOneShot(walkClip); }
+
 
     //ステートベースAI
     #region
