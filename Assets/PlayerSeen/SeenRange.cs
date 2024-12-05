@@ -28,18 +28,6 @@ public class SeenRange : MonoBehaviour
     void Update()
     {
         GameObject soundobj = GameObject.Find("SoundVolume");
-        levelMeter = soundobj.GetComponent<LevelMeter>(); //付いているスクリプトを取得
-
-        if (preHeight != EnemyAttack.enemyDeathcnt)
-        {
-            plusSize += 1.0f;
-
-            preHeight++;
-        }
-
-        originSizeX = (levelMeter.nowdB * 10) + plusSize;
-
-        transform.localScale = new Vector3(originSizeX, originSizeY, originSizeZ);
 
     }
 }

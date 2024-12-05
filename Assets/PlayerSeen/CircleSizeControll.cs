@@ -43,34 +43,5 @@ public class CircleSizeControll : MonoBehaviour
     void Update()
     {
         GameObject soundobj = GameObject.Find("SoundVolume");
-        levelMeter = soundobj.GetComponent<LevelMeter>(); //付いているスクリプトを取得
-
-        if (levelMeter.nowdB > 0.0f)
-        {
-            if (preHeight != EnemyAttack.enemyDeathcnt)
-            {
-                plusSize += 1.0f;
-
-                preHeight++;
-            }
-
-            originSizeX = (levelMeter.nowdB * 10) + plusSize;
-            originSizeZ = (levelMeter.nowdB * 10) + plusSize;
-
-            Sound.transform.localScale = new Vector3(originSizeX, 1, originSizeZ);
-
-            originSizemX = 10.3f + plusSize;
-            originSizemZ = 10.3f + plusSize;
-
-            MaxSound.transform.localScale = new Vector3(originSizemX, 1, originSizemZ);
-
-            Sound.SetActive(true);
-            MaxSound.SetActive(true);
-        }
-        else
-        {
-            Sound.SetActive(false);
-            MaxSound.SetActive(false);
-        }
     }
 }

@@ -24,7 +24,7 @@ public class PlayerSetMode : MonoBehaviour
 
         if (PS.onoff == 0)
         {
-            targetAlpha = 0.2f; // 透明にする（アルファ0.05）
+            targetAlpha = 0.15f; // 透明にする（アルファ0.05）
         }
         else
         {

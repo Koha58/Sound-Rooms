@@ -180,18 +180,6 @@ public class TutorialMessageControll : MonoBehaviour
             }
         }
 
-        if(Message == 8)
-        {
-            if (EnemyAttack.enemyDeathcnt >= 1)
-            {
-                timeCnt = 7.0f;
-            }
-            else
-            {
-                timeCnt = 0f;
-            }
-        }
-
         if(Message == 9)
         {
             Time.timeScale = 0;
@@ -236,18 +224,6 @@ public class TutorialMessageControll : MonoBehaviour
         if (Message == 17)
         {
             GameObject.Find("Enemys").transform.Find("EnemyG").gameObject.SetActive(true);
-        }
-
-        if (Message == 18)
-        {
-            if (EnemyAttack.enemyDeathcnt >= 2)
-            {
-                timeCnt = 7.0f;
-            }
-            else
-            {
-                timeCnt = 0f;
-            }
         }
     }
 

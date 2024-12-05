@@ -32,26 +32,18 @@ public class LevelMeter : MonoBehaviour
     {
         //dB値からlevelMeterImage用のfillAountの値に変換
         float fillAmountValue = dB_ToFillAmountValue(micAS.now_dB);
-        if (Input.GetMouseButton(0) || Input.GetKey("joystick button 0"))
-        {
-            //fillAmount値更新
-            this.levelMeterImage.fillAmount = fillAmountValue;
-            nowdB = fillAmountValue;
 
-            if(nowdB > 0.4f)
-            {
-                levelMeterImage.color = new Color32(255, 2, 2, 154);
-            }
-            else
-            {
-                levelMeterImage.color = new Color32(255, 255, 255, 154);
-            }
+        //fillAmount値更新
+        this.levelMeterImage.fillAmount = fillAmountValue;
+        nowdB = fillAmountValue;
+
+        if (nowdB > 0.4f)
+        {
+            levelMeterImage.color = new Color32(255, 2, 2, 154);
         }
         else
         {
-            //fillAmount値更新
-            this.levelMeterImage.fillAmount = 0.0f;
-            nowdB = 0.0f;
+            levelMeterImage.color = new Color32(255, 255, 255, 154);
         }
     }
 
