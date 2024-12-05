@@ -170,10 +170,6 @@ public class ItemSeen : MonoBehaviour
             other.GetComponent<Renderer>().enabled = false;
             other.GetComponent<Collider>().enabled = false;
         }
-        else if (other.CompareTag("Door"))
-        {
-            other.GetComponent<Collider>().enabled = false;
-        }
 
         else if (other.CompareTag("Shelf"))
         {

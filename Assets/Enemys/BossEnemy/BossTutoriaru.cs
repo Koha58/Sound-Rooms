@@ -163,36 +163,6 @@ public class BossTutoriaru : MonoBehaviour
     {
         Visualization();
 
-        if (EnemyAttack.SoundON == true)
-        {
-            Front = true;
-            animator.SetBool("Idle", true);
-            animator.SetBool("Move", false);
-            VisualizationBoss.SetActive(true);
-            MoveBossEnemy();
-        }
-        else if (EnemyAttack.SoundON == false)
-        {
-            ONOFF = 0;
-            MoveBossEnemy();
-            PrototypeBodySkinnedMeshRenderer.enabled = false; //3DモデルのRendererを見えない状態
-            VisualizationBoss.SetActive(false);
-
-        }
-        if (EnemyAttack.SoundON2 == true)
-        {
-           // Idle();
-            VisualizationBoss.SetActive(true);
-        }
-        else if (EnemyAttack.SoundON2 == false)
-        {
-            Front = false;
-            MoveBossEnemy();
-            animator.SetBool("Idle", false);
-            animator.SetBool("Move", true);
-            audioSourse.maxDistance = 5;//音が聞こえる範囲
-        }
-
         Vector3 Position = TargetPlayer.position - transform.position; // ターゲットの位置と自身の位置の差を計算
         bool isFront = Vector3.Dot(Position, transform.forward) > 0;  // ターゲットが自身の前方にあるかどうか判定
         bool isBack = Vector3.Dot(Position, transform.forward) < 0;  // ターゲットが自身の後方にあるかどうか判定
