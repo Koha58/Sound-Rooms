@@ -17,6 +17,10 @@ public class EnemyController1 : MonoBehaviour
 
     int pointCount;
 
+    public float detectionRange = 10f; // 音を聞き取れる範囲
+    private Vector3 soundPosition;
+    private bool isMovingToSound = false;
+
     //アニメーション
     [SerializeField] Animator animator;　//アニメーター取得
 
@@ -131,6 +135,18 @@ public class EnemyController1 : MonoBehaviour
             if (isFront)
             {
                 behaviors.GetBehavior(BehaviorType.chase).value = 2;
+            }
+        }
+
+        if (isMovingToSound)
+        {
+            // 音の位置へ移動
+            navMeshAgent.SetDestination(soundPosition);
+
+            // 目的地に近づいたら停止
+            if (Vector3.Distance(transform.position, soundPosition) < 1f)
+            {
+                isMovingToSound = false;
             }
         }
 
@@ -345,5 +361,15 @@ public class EnemyController1 : MonoBehaviour
     void Chase()
     {
         navMeshAgent.SetDestination(player.transform.position);
+    }
+
+    public void OnSoundHeard(Vector3 position)
+    {
+        // 範囲内の場合のみ音に反応
+        if (Vector3.Distance(transform.position, position) <= detectionRange)
+        {
+            soundPosition = position;
+            isMovingToSound = true;
+        }
     }
 }
