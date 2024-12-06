@@ -17,10 +17,9 @@ public class SoundEmitter : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            EmitSound();
-        }
+
+        EmitSound();
+
     }
 
     public void EmitSound()
@@ -33,9 +32,19 @@ public class SoundEmitter : MonoBehaviour
         foreach (Collider collider in hitColliders)
         {
             EnemyController1 enemy = collider.GetComponent<EnemyController1>();
+            EnemyController2 enemy2 = collider.GetComponent<EnemyController2>();
+            EnemyController3 enemy3 = collider.GetComponent<EnemyController3>();
             if (enemy != null)
             {
                 enemy.OnSoundHeard(transform.position);
+            }
+            if (enemy2 != null)
+            {
+                enemy2.OnSoundHeard(transform.position);
+            }
+            if (enemy3 != null)
+            {
+                enemy3.OnSoundHeard(transform.position);
             }
         }
     }

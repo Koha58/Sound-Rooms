@@ -64,8 +64,7 @@ public class GameOverScript : MonoBehaviour
 
         if(other.CompareTag("Enemy"))
         {
-            Enemycontroller EC = other.GetComponent<Enemycontroller>();
-            if (EC.ONOFF == 1&&PS.onoff == 1)
+            if (PS.onoff == 1)
             {
                 if (Count == 0)
                 {

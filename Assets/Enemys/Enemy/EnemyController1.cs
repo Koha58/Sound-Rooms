@@ -17,6 +17,8 @@ public class EnemyController1 : MonoBehaviour
 
     int pointCount;
 
+    bool hear;
+
     public float detectionRange = 10f; // 音を聞き取れる範囲
     private Vector3 soundPosition;
     private bool isMovingToSound = false;
@@ -130,19 +132,26 @@ public class EnemyController1 : MonoBehaviour
     private void Start()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
+        hear = false;
     }
 
     private void Update()
     {
+        GameObject obj = GameObject.Find("Player");      //Playerオブジェクトを探す
+        PlayerSeen PS = obj.GetComponent<PlayerSeen>();  //付いているスクリプトを取得
+
         distanceToPlayer = Vector3.Distance(player.position, transform.position);
 
-        if (distanceToPlayer <= chaseRange)
+        if (hear == false)
         {
-            Vector3 Position = player.position - transform.position;                          // ターゲットの位置と自身の位置の差を計算
-            bool isFront = Vector3.Dot(Position, transform.forward) > 0;                      // ターゲットが自身の前方にあるかどうか判定
-            if (isFront)
+            if (distanceToPlayer <= chaseRange)
             {
-                behaviors.GetBehavior(BehaviorType.chase).value = 2;
+                Vector3 Position = player.position - transform.position;                          // ターゲットの位置と自身の位置の差を計算
+                bool isFront = Vector3.Dot(Position, transform.forward) > 0;                      // ターゲットが自身の前方にあるかどうか判定
+                if (isFront && PS.onoff == 1)
+                {
+                    behaviors.GetBehavior(BehaviorType.chase).value = 2;
+                }
             }
         }
 
@@ -154,7 +163,10 @@ public class EnemyController1 : MonoBehaviour
             // 目的地に近づいたら停止
             if (Vector3.Distance(transform.position, soundPosition) < 1f)
             {
+                animator.SetBool("Walk", true);
+                animator.SetBool("Run", false);
                 isMovingToSound = false;
+                hear = true;
             }
         }
 
@@ -238,7 +250,7 @@ public class EnemyController1 : MonoBehaviour
                     Debug.Log("どこにいるかな？");
                     animator.SetBool("Walk", false);
                     animator.SetBool("Run", false);
-                    //navMeshAgent.SetDestination(this.transform.position);
+                    navMeshAgent.SetDestination(this.transform.position);
                 }
 
                 searchTime += Time.deltaTime;
@@ -248,6 +260,9 @@ public class EnemyController1 : MonoBehaviour
                     searchTime = 0;
                     behaviors.GetBehavior(BehaviorType.search).value = 0;
                     behaviors.GetBehavior(BehaviorType.patrol).value = 2;
+                    //transform.LookAt(GameManager.instance.testPos[pointCount].position);
+                    animator.SetBool("Walk", true);
+                    animator.SetBool("Run", false);
                 }
 
                 behaviors.SortDesire();
@@ -280,10 +295,16 @@ public class EnemyController1 : MonoBehaviour
                     animator.SetBool("Walk",false);
                     animator.SetBool("Run", true);
                     navMeshAgent.speed = 4.0f;
+                    PS.onoff = 1;
+                    PS.Visualization = true;
+                    // transform.LookAt(player.transform); //プレイヤーの方向にむく
                     Chase();
                 }
 
-                if (distanceToPlayer >= chaseRange) { behaviors.GetBehavior(BehaviorType.search).value = 2; }
+                if (distanceToPlayer >= chaseRange) {
+                    behaviors.GetBehavior(BehaviorType.search).value = 2;
+                    PS.Visualization = false;
+                }
 
                 behaviors.SortDesire();
                 if (behaviors.behaviorList[0].value >= 1)

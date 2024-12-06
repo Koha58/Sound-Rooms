@@ -22,7 +22,9 @@ public class GameManager : MonoBehaviour
 
     public Transform[] testPos;
 
-    //public Transform[] movePos;
+    public Transform[] testPos2;
+
+    public Transform[] testPos3;
 
     //public Text text;
 }
