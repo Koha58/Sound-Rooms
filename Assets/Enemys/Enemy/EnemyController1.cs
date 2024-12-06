@@ -17,8 +17,6 @@ public class EnemyController1 : MonoBehaviour
 
     int pointCount;
 
-    bool hear;
-
     public float detectionRange = 10f; // 音を聞き取れる範囲
     private Vector3 soundPosition;
     private bool isMovingToSound = false;
@@ -27,17 +25,13 @@ public class EnemyController1 : MonoBehaviour
     [SerializeField] Animator animator;　//アニメーター取得
 
     //サウンド
-    [SerializeField] AudioSource audioSourse; //オーディオソース取得
-    [SerializeField] AudioClip searchClip;    //探す音
-    [SerializeField] AudioClip runClip;       //走る音
-    [SerializeField] AudioClip walkClip;      //歩く音
-
-
-    void Idle() { audioSourse.PlayOneShot(searchClip); }
-
-    void Run() { audioSourse.PlayOneShot(runClip); }
-
-    void Walk() { audioSourse.PlayOneShot(walkClip); }
+    //[SerializeField] AudioSource audioSourse; //オーディオソース取得
+    //[SerializeField] AudioClip searchClip;    //探す音
+    //[SerializeField] AudioClip runClip;       //走る音
+    //[SerializeField] AudioClip walkClip;      //歩く音
+    //void Idle() { audioSourse.PlayOneShot(searchClip); }
+    //void Run() { audioSourse.PlayOneShot(runClip); }
+    //void Walk() { audioSourse.PlayOneShot(walkClip); }
 
 
     //ステートベースAI
@@ -132,7 +126,6 @@ public class EnemyController1 : MonoBehaviour
     private void Start()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
-        hear = false;
     }
 
     private void Update()
@@ -142,16 +135,14 @@ public class EnemyController1 : MonoBehaviour
 
         distanceToPlayer = Vector3.Distance(player.position, transform.position);
 
-        if (hear == false)
+
+        if (distanceToPlayer <= chaseRange)
         {
-            if (distanceToPlayer <= chaseRange)
+            Vector3 Position = player.position - transform.position;                          // ターゲットの位置と自身の位置の差を計算
+            bool isFront = Vector3.Dot(Position, transform.forward) > 0;                      // ターゲットが自身の前方にあるかどうか判定
+            if (isFront && PS.onoff == 1)
             {
-                Vector3 Position = player.position - transform.position;                          // ターゲットの位置と自身の位置の差を計算
-                bool isFront = Vector3.Dot(Position, transform.forward) > 0;                      // ターゲットが自身の前方にあるかどうか判定
-                if (isFront && PS.onoff == 1)
-                {
-                    behaviors.GetBehavior(BehaviorType.chase).value = 2;
-                }
+                behaviors.GetBehavior(BehaviorType.chase).value = 2;
             }
         }
 
@@ -163,10 +154,7 @@ public class EnemyController1 : MonoBehaviour
             // 目的地に近づいたら停止
             if (Vector3.Distance(transform.position, soundPosition) < 1f)
             {
-                animator.SetBool("Walk", true);
-                animator.SetBool("Run", false);
                 isMovingToSound = false;
-                hear = true;
             }
         }
 
