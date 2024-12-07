@@ -16,6 +16,7 @@ public class EnemyAttack : MonoBehaviour
     [SerializeField] GameObject ControllerKeyUI;
     [SerializeField] GameObject KeyboardKeyUI;
     GameObject Key;
+    GameObject KeyCheck;
 
     LevelMeter levelMeter;
 
@@ -28,6 +29,7 @@ public class EnemyAttack : MonoBehaviour
         SetCountText();
         PickupSound = GetComponent<AudioSource>();
         Key = GameObject.FindGameObjectWithTag("Key");
+        KeyCheck = GameObject.FindGameObjectWithTag("KeyCheck");
 
         if (InputDeviceManager.Instance.CurrentDeviceType == InputDeviceType.Xbox)
         {
@@ -66,7 +68,7 @@ public class EnemyAttack : MonoBehaviour
 
             rb.AddForce(transform.forward * 500.0f, ForceMode.Force);
         }
-        else if (other.CompareTag("Key"))
+        else if (other.CompareTag("KeyCheck"))
         {
             if(deviceCheck)
             {
@@ -85,6 +87,7 @@ public class EnemyAttack : MonoBehaviour
                 KeyboardKeyUI.GetComponent<Image>().enabled = false;
                 ControllerKeyUI.GetComponent<Image>().enabled = false;
                 Key.SetActive(false);
+                KeyCheck.SetActive(false);
                 PickupSound.PlayOneShot(PickupSound.clip);
                 count++;
                 SetCountText();
