@@ -2,20 +2,23 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.InputSystem.XR;
 using UnityEngine.UI;
 
 public class EnemyController1 : MonoBehaviour
 {
+    public int characterID;       // キャラクターのID
     public Transform player;
-
-    NavMeshAgent navMeshAgent;
+    private List<Transform> route; // 巡回ルート
+    public NavMeshAgent navMeshAgent;
 
     float chaseRange = 7f;  //Playerを検知する範囲
     float distanceToPlayer = Mathf.Infinity;
 
     float searchTime;
-
     int pointCount;
+
+
 
     public float detectionRange = 10f; // 音を聞き取れる範囲
     private Vector3 soundPosition;
@@ -126,6 +129,9 @@ public class EnemyController1 : MonoBehaviour
     private void Start()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
+
+        // RouteManagerからルートを取得
+        route = GameManager.instance.GetRoute(characterID);
     }
 
     private void Update()
@@ -133,13 +139,13 @@ public class EnemyController1 : MonoBehaviour
         GameObject obj = GameObject.Find("Player");      //Playerオブジェクトを探す
         PlayerSeen PS = obj.GetComponent<PlayerSeen>();  //付いているスクリプトを取得
 
-        distanceToPlayer = Vector3.Distance(player.position, transform.position);
+        Vector3 Position = player.position - transform.position;                          // ターゲットの位置と自身の位置の差を計算
+        bool isFront = Vector3.Dot(Position, transform.forward) > 0;                      // ターゲットが自身の前方にあるかどうか判定
 
+        distanceToPlayer = Vector3.Distance(player.position, transform.position);
 
         if (distanceToPlayer <= chaseRange)
         {
-            Vector3 Position = player.position - transform.position;                          // ターゲットの位置と自身の位置の差を計算
-            bool isFront = Vector3.Dot(Position, transform.forward) > 0;                      // ターゲットが自身の前方にあるかどうか判定
             if (isFront && PS.onoff == 1)
             {
                 behaviors.GetBehavior(BehaviorType.chase).value = 2;
@@ -200,14 +206,14 @@ public class EnemyController1 : MonoBehaviour
                     animator.SetBool("Walk", true);
                     animator.SetBool("Run", false);
                     navMeshAgent.speed = 2.0f;
-                    navMeshAgent.SetDestination(GameManager.instance.testPos[pointCount].position);
+                    navMeshAgent.SetDestination(route[pointCount].position);
                 }
 
                 if (navMeshAgent.remainingDistance <= 0.1f && !navMeshAgent.pathPending)
                 {
                     pointCount += 1;
-                    ChangeState(enemyState.search);
                     if (pointCount > 2) { pointCount = 0; }
+                    ChangeState(enemyState.search);
                 }
 
                 behaviors.SortDesire();
@@ -248,7 +254,6 @@ public class EnemyController1 : MonoBehaviour
                     searchTime = 0;
                     behaviors.GetBehavior(BehaviorType.search).value = 0;
                     behaviors.GetBehavior(BehaviorType.patrol).value = 2;
-                    //transform.LookAt(GameManager.instance.testPos[pointCount].position);
                     animator.SetBool("Walk", true);
                     animator.SetBool("Run", false);
                 }
@@ -283,15 +288,14 @@ public class EnemyController1 : MonoBehaviour
                     animator.SetBool("Walk",false);
                     animator.SetBool("Run", true);
                     navMeshAgent.speed = 4.0f;
-                    PS.onoff = 1;
-                    PS.Visualization = true;
-                    // transform.LookAt(player.transform); //プレイヤーの方向にむく
+                    //PS.onoff = 1;
+                    //PS.Visualization = true;
                     Chase();
                 }
 
                 if (distanceToPlayer >= chaseRange) {
                     behaviors.GetBehavior(BehaviorType.search).value = 2;
-                    PS.Visualization = false;
+                    //PS.Visualization = false;
                 }
 
                 behaviors.SortDesire();
