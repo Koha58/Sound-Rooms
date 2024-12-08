@@ -10,7 +10,6 @@ public class SoundTiming : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        SoundParticle = GetComponent<ParticleSystem>();
         GameObject soundobj = GameObject.Find("SoundVolume");
         levelMeter = soundobj.GetComponent<LevelMeter>(); //付いているスクリプトを取得
         GameObject SoundEffect = GameObject.Find("SoundParticle");
