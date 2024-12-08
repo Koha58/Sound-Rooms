@@ -28,24 +28,6 @@ public partial class @UIInputActions: IInputActionCollection2, IDisposable
             ""id"": ""93e67c19-246e-472c-814e-9627ded8b999"",
             ""actions"": [
                 {
-                    ""name"": ""MainSelectUp"",
-                    ""type"": ""Button"",
-                    ""id"": ""87780b6d-e72e-4c6f-bb94-9f11ec9592ab"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": true
-                },
-                {
-                    ""name"": ""MainSelectDown"",
-                    ""type"": ""Button"",
-                    ""id"": ""1d391eec-22ef-4c8e-a843-74dea8e3ddcc"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": true
-                },
-                {
                     ""name"": ""Pouse"",
                     ""type"": ""Button"",
                     ""id"": ""87aa2d3c-1c0e-4ae0-9ffc-2cb3abf8727b"",
@@ -55,54 +37,36 @@ public partial class @UIInputActions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""SettingPanel1"",
+                    ""name"": ""MainSelsectUp"",
                     ""type"": ""Button"",
-                    ""id"": ""5fec8a7a-62f2-48e0-aab5-6659849e98a4"",
+                    ""id"": ""d4424fc3-1884-4da0-8eeb-610f1ca0551f"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Settingpanel1Up"",
+                    ""name"": ""MainSelsectDown"",
                     ""type"": ""Button"",
-                    ""id"": ""7ec55b44-4469-4330-b6f8-36fa5a7678a6"",
+                    ""id"": ""e59cf797-8ed0-49b9-8920-d9f358b4b632"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Settingpanel1Down"",
+                    ""name"": ""MainSelectLeft"",
                     ""type"": ""Button"",
-                    ""id"": ""d6450723-feed-4926-9b4b-3316ae011d71"",
+                    ""id"": ""7184306a-a337-4245-b59b-1bae771f5d63"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""SettingPanel2"",
+                    ""name"": ""MainSelectRight"",
                     ""type"": ""Button"",
-                    ""id"": ""17e65689-6afd-475c-94f3-2364697efdc5"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Settingpanel2Up"",
-                    ""type"": ""Button"",
-                    ""id"": ""ad34c293-5b6c-45ea-906d-5af188e8e1f9"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Settingpanel2Down"",
-                    ""type"": ""Button"",
-                    ""id"": ""220bf834-4963-4aaf-bdcf-b9b3e289fe20"",
+                    ""id"": ""52aa17d8-b12f-4251-9cd6-8eb925d90ef0"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -123,89 +87,45 @@ public partial class @UIInputActions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""40dff9f6-2fb9-4709-ae6b-d1bd0742f3dd"",
-                    ""path"": ""<Gamepad>/buttonSouth"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""SettingPanel1"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""3a411bd4-c095-4b85-bc54-72ff37f96284"",
-                    ""path"": """",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""SettingPanel2"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""b493f2c2-8aab-4ba9-a5dd-845585131300"",
+                    ""id"": ""95cac082-83cd-4acb-945f-cbd22d1b1c96"",
                     ""path"": ""<Gamepad>/leftStick/up"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""MainSelectUp"",
+                    ""action"": ""MainSelsectUp"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
-                    ""id"": ""d03996be-8be4-4a16-ac1c-8b7ce5865f3b"",
+                    ""id"": ""907268b3-3db1-4d3e-8a50-b529c8096cad"",
                     ""path"": ""<Gamepad>/leftStick/down"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""MainSelectDown"",
+                    ""action"": ""MainSelsectDown"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
-                    ""id"": ""fc665770-d295-4e50-82bd-2e736ddab796"",
-                    ""path"": ""<Gamepad>/dpad/up"",
+                    ""id"": ""90b7ba15-3356-4b5f-bfee-a96aea1d015a"",
+                    ""path"": ""<Gamepad>/leftStick/left"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Settingpanel2Up"",
+                    ""action"": ""MainSelectLeft"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
-                    ""id"": ""188eeabd-ed74-4ce5-838f-8627d4ca5599"",
-                    ""path"": ""<Gamepad>/dpad/down"",
+                    ""id"": ""fad875ba-68c6-44f5-9dab-d784c3d3bfee"",
+                    ""path"": ""<Gamepad>/leftStick/right"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Settingpanel2Down"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""4d333c48-5e8b-4aad-9aaf-d01358044722"",
-                    ""path"": ""<Gamepad>/dpad/down"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Settingpanel1Down"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""b130812b-7282-4895-98b5-02dac64bc04b"",
-                    ""path"": ""<Gamepad>/dpad/up"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Settingpanel1Up"",
+                    ""action"": ""MainSelectRight"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -216,15 +136,11 @@ public partial class @UIInputActions: IInputActionCollection2, IDisposable
 }");
         // SettingUI
         m_SettingUI = asset.FindActionMap("SettingUI", throwIfNotFound: true);
-        m_SettingUI_MainSelectUp = m_SettingUI.FindAction("MainSelectUp", throwIfNotFound: true);
-        m_SettingUI_MainSelectDown = m_SettingUI.FindAction("MainSelectDown", throwIfNotFound: true);
         m_SettingUI_Pouse = m_SettingUI.FindAction("Pouse", throwIfNotFound: true);
-        m_SettingUI_SettingPanel1 = m_SettingUI.FindAction("SettingPanel1", throwIfNotFound: true);
-        m_SettingUI_Settingpanel1Up = m_SettingUI.FindAction("Settingpanel1Up", throwIfNotFound: true);
-        m_SettingUI_Settingpanel1Down = m_SettingUI.FindAction("Settingpanel1Down", throwIfNotFound: true);
-        m_SettingUI_SettingPanel2 = m_SettingUI.FindAction("SettingPanel2", throwIfNotFound: true);
-        m_SettingUI_Settingpanel2Up = m_SettingUI.FindAction("Settingpanel2Up", throwIfNotFound: true);
-        m_SettingUI_Settingpanel2Down = m_SettingUI.FindAction("Settingpanel2Down", throwIfNotFound: true);
+        m_SettingUI_MainSelsectUp = m_SettingUI.FindAction("MainSelsectUp", throwIfNotFound: true);
+        m_SettingUI_MainSelsectDown = m_SettingUI.FindAction("MainSelsectDown", throwIfNotFound: true);
+        m_SettingUI_MainSelectLeft = m_SettingUI.FindAction("MainSelectLeft", throwIfNotFound: true);
+        m_SettingUI_MainSelectRight = m_SettingUI.FindAction("MainSelectRight", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -286,28 +202,20 @@ public partial class @UIInputActions: IInputActionCollection2, IDisposable
     // SettingUI
     private readonly InputActionMap m_SettingUI;
     private List<ISettingUIActions> m_SettingUIActionsCallbackInterfaces = new List<ISettingUIActions>();
-    private readonly InputAction m_SettingUI_MainSelectUp;
-    private readonly InputAction m_SettingUI_MainSelectDown;
     private readonly InputAction m_SettingUI_Pouse;
-    private readonly InputAction m_SettingUI_SettingPanel1;
-    private readonly InputAction m_SettingUI_Settingpanel1Up;
-    private readonly InputAction m_SettingUI_Settingpanel1Down;
-    private readonly InputAction m_SettingUI_SettingPanel2;
-    private readonly InputAction m_SettingUI_Settingpanel2Up;
-    private readonly InputAction m_SettingUI_Settingpanel2Down;
+    private readonly InputAction m_SettingUI_MainSelsectUp;
+    private readonly InputAction m_SettingUI_MainSelsectDown;
+    private readonly InputAction m_SettingUI_MainSelectLeft;
+    private readonly InputAction m_SettingUI_MainSelectRight;
     public struct SettingUIActions
     {
         private @UIInputActions m_Wrapper;
         public SettingUIActions(@UIInputActions wrapper) { m_Wrapper = wrapper; }
-        public InputAction @MainSelectUp => m_Wrapper.m_SettingUI_MainSelectUp;
-        public InputAction @MainSelectDown => m_Wrapper.m_SettingUI_MainSelectDown;
         public InputAction @Pouse => m_Wrapper.m_SettingUI_Pouse;
-        public InputAction @SettingPanel1 => m_Wrapper.m_SettingUI_SettingPanel1;
-        public InputAction @Settingpanel1Up => m_Wrapper.m_SettingUI_Settingpanel1Up;
-        public InputAction @Settingpanel1Down => m_Wrapper.m_SettingUI_Settingpanel1Down;
-        public InputAction @SettingPanel2 => m_Wrapper.m_SettingUI_SettingPanel2;
-        public InputAction @Settingpanel2Up => m_Wrapper.m_SettingUI_Settingpanel2Up;
-        public InputAction @Settingpanel2Down => m_Wrapper.m_SettingUI_Settingpanel2Down;
+        public InputAction @MainSelsectUp => m_Wrapper.m_SettingUI_MainSelsectUp;
+        public InputAction @MainSelsectDown => m_Wrapper.m_SettingUI_MainSelsectDown;
+        public InputAction @MainSelectLeft => m_Wrapper.m_SettingUI_MainSelectLeft;
+        public InputAction @MainSelectRight => m_Wrapper.m_SettingUI_MainSelectRight;
         public InputActionMap Get() { return m_Wrapper.m_SettingUI; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -317,64 +225,40 @@ public partial class @UIInputActions: IInputActionCollection2, IDisposable
         {
             if (instance == null || m_Wrapper.m_SettingUIActionsCallbackInterfaces.Contains(instance)) return;
             m_Wrapper.m_SettingUIActionsCallbackInterfaces.Add(instance);
-            @MainSelectUp.started += instance.OnMainSelectUp;
-            @MainSelectUp.performed += instance.OnMainSelectUp;
-            @MainSelectUp.canceled += instance.OnMainSelectUp;
-            @MainSelectDown.started += instance.OnMainSelectDown;
-            @MainSelectDown.performed += instance.OnMainSelectDown;
-            @MainSelectDown.canceled += instance.OnMainSelectDown;
             @Pouse.started += instance.OnPouse;
             @Pouse.performed += instance.OnPouse;
             @Pouse.canceled += instance.OnPouse;
-            @SettingPanel1.started += instance.OnSettingPanel1;
-            @SettingPanel1.performed += instance.OnSettingPanel1;
-            @SettingPanel1.canceled += instance.OnSettingPanel1;
-            @Settingpanel1Up.started += instance.OnSettingpanel1Up;
-            @Settingpanel1Up.performed += instance.OnSettingpanel1Up;
-            @Settingpanel1Up.canceled += instance.OnSettingpanel1Up;
-            @Settingpanel1Down.started += instance.OnSettingpanel1Down;
-            @Settingpanel1Down.performed += instance.OnSettingpanel1Down;
-            @Settingpanel1Down.canceled += instance.OnSettingpanel1Down;
-            @SettingPanel2.started += instance.OnSettingPanel2;
-            @SettingPanel2.performed += instance.OnSettingPanel2;
-            @SettingPanel2.canceled += instance.OnSettingPanel2;
-            @Settingpanel2Up.started += instance.OnSettingpanel2Up;
-            @Settingpanel2Up.performed += instance.OnSettingpanel2Up;
-            @Settingpanel2Up.canceled += instance.OnSettingpanel2Up;
-            @Settingpanel2Down.started += instance.OnSettingpanel2Down;
-            @Settingpanel2Down.performed += instance.OnSettingpanel2Down;
-            @Settingpanel2Down.canceled += instance.OnSettingpanel2Down;
+            @MainSelsectUp.started += instance.OnMainSelsectUp;
+            @MainSelsectUp.performed += instance.OnMainSelsectUp;
+            @MainSelsectUp.canceled += instance.OnMainSelsectUp;
+            @MainSelsectDown.started += instance.OnMainSelsectDown;
+            @MainSelsectDown.performed += instance.OnMainSelsectDown;
+            @MainSelsectDown.canceled += instance.OnMainSelsectDown;
+            @MainSelectLeft.started += instance.OnMainSelectLeft;
+            @MainSelectLeft.performed += instance.OnMainSelectLeft;
+            @MainSelectLeft.canceled += instance.OnMainSelectLeft;
+            @MainSelectRight.started += instance.OnMainSelectRight;
+            @MainSelectRight.performed += instance.OnMainSelectRight;
+            @MainSelectRight.canceled += instance.OnMainSelectRight;
         }
 
         private void UnregisterCallbacks(ISettingUIActions instance)
         {
-            @MainSelectUp.started -= instance.OnMainSelectUp;
-            @MainSelectUp.performed -= instance.OnMainSelectUp;
-            @MainSelectUp.canceled -= instance.OnMainSelectUp;
-            @MainSelectDown.started -= instance.OnMainSelectDown;
-            @MainSelectDown.performed -= instance.OnMainSelectDown;
-            @MainSelectDown.canceled -= instance.OnMainSelectDown;
             @Pouse.started -= instance.OnPouse;
             @Pouse.performed -= instance.OnPouse;
             @Pouse.canceled -= instance.OnPouse;
-            @SettingPanel1.started -= instance.OnSettingPanel1;
-            @SettingPanel1.performed -= instance.OnSettingPanel1;
-            @SettingPanel1.canceled -= instance.OnSettingPanel1;
-            @Settingpanel1Up.started -= instance.OnSettingpanel1Up;
-            @Settingpanel1Up.performed -= instance.OnSettingpanel1Up;
-            @Settingpanel1Up.canceled -= instance.OnSettingpanel1Up;
-            @Settingpanel1Down.started -= instance.OnSettingpanel1Down;
-            @Settingpanel1Down.performed -= instance.OnSettingpanel1Down;
-            @Settingpanel1Down.canceled -= instance.OnSettingpanel1Down;
-            @SettingPanel2.started -= instance.OnSettingPanel2;
-            @SettingPanel2.performed -= instance.OnSettingPanel2;
-            @SettingPanel2.canceled -= instance.OnSettingPanel2;
-            @Settingpanel2Up.started -= instance.OnSettingpanel2Up;
-            @Settingpanel2Up.performed -= instance.OnSettingpanel2Up;
-            @Settingpanel2Up.canceled -= instance.OnSettingpanel2Up;
-            @Settingpanel2Down.started -= instance.OnSettingpanel2Down;
-            @Settingpanel2Down.performed -= instance.OnSettingpanel2Down;
-            @Settingpanel2Down.canceled -= instance.OnSettingpanel2Down;
+            @MainSelsectUp.started -= instance.OnMainSelsectUp;
+            @MainSelsectUp.performed -= instance.OnMainSelsectUp;
+            @MainSelsectUp.canceled -= instance.OnMainSelsectUp;
+            @MainSelsectDown.started -= instance.OnMainSelsectDown;
+            @MainSelsectDown.performed -= instance.OnMainSelsectDown;
+            @MainSelsectDown.canceled -= instance.OnMainSelsectDown;
+            @MainSelectLeft.started -= instance.OnMainSelectLeft;
+            @MainSelectLeft.performed -= instance.OnMainSelectLeft;
+            @MainSelectLeft.canceled -= instance.OnMainSelectLeft;
+            @MainSelectRight.started -= instance.OnMainSelectRight;
+            @MainSelectRight.performed -= instance.OnMainSelectRight;
+            @MainSelectRight.canceled -= instance.OnMainSelectRight;
         }
 
         public void RemoveCallbacks(ISettingUIActions instance)
@@ -394,14 +278,10 @@ public partial class @UIInputActions: IInputActionCollection2, IDisposable
     public SettingUIActions @SettingUI => new SettingUIActions(this);
     public interface ISettingUIActions
     {
-        void OnMainSelectUp(InputAction.CallbackContext context);
-        void OnMainSelectDown(InputAction.CallbackContext context);
         void OnPouse(InputAction.CallbackContext context);
-        void OnSettingPanel1(InputAction.CallbackContext context);
-        void OnSettingpanel1Up(InputAction.CallbackContext context);
-        void OnSettingpanel1Down(InputAction.CallbackContext context);
-        void OnSettingPanel2(InputAction.CallbackContext context);
-        void OnSettingpanel2Up(InputAction.CallbackContext context);
-        void OnSettingpanel2Down(InputAction.CallbackContext context);
+        void OnMainSelsectUp(InputAction.CallbackContext context);
+        void OnMainSelsectDown(InputAction.CallbackContext context);
+        void OnMainSelectLeft(InputAction.CallbackContext context);
+        void OnMainSelectRight(InputAction.CallbackContext context);
     }
 }

@@ -6,24 +6,6 @@
             "id": "93e67c19-246e-472c-814e-9627ded8b999",
             "actions": [
                 {
-                    "name": "MainSelectUp",
-                    "type": "Button",
-                    "id": "87780b6d-e72e-4c6f-bb94-9f11ec9592ab",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                },
-                {
-                    "name": "MainSelectDown",
-                    "type": "Button",
-                    "id": "1d391eec-22ef-4c8e-a843-74dea8e3ddcc",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                },
-                {
                     "name": "Pouse",
                     "type": "Button",
                     "id": "87aa2d3c-1c0e-4ae0-9ffc-2cb3abf8727b",
@@ -33,54 +15,36 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "SettingPanel1",
+                    "name": "MainSelsectUp",
                     "type": "Button",
-                    "id": "5fec8a7a-62f2-48e0-aab5-6659849e98a4",
+                    "id": "d4424fc3-1884-4da0-8eeb-610f1ca0551f",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Settingpanel1Up",
+                    "name": "MainSelsectDown",
                     "type": "Button",
-                    "id": "7ec55b44-4469-4330-b6f8-36fa5a7678a6",
+                    "id": "e59cf797-8ed0-49b9-8920-d9f358b4b632",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Settingpanel1Down",
+                    "name": "MainSelectLeft",
                     "type": "Button",
-                    "id": "d6450723-feed-4926-9b4b-3316ae011d71",
+                    "id": "7184306a-a337-4245-b59b-1bae771f5d63",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
                 },
                 {
-                    "name": "SettingPanel2",
+                    "name": "MainSelectRight",
                     "type": "Button",
-                    "id": "17e65689-6afd-475c-94f3-2364697efdc5",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Settingpanel2Up",
-                    "type": "Button",
-                    "id": "ad34c293-5b6c-45ea-906d-5af188e8e1f9",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Settingpanel2Down",
-                    "type": "Button",
-                    "id": "220bf834-4963-4aaf-bdcf-b9b3e289fe20",
+                    "id": "52aa17d8-b12f-4251-9cd6-8eb925d90ef0",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -101,89 +65,45 @@
                 },
                 {
                     "name": "",
-                    "id": "40dff9f6-2fb9-4709-ae6b-d1bd0742f3dd",
-                    "path": "<Gamepad>/buttonSouth",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "SettingPanel1",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "3a411bd4-c095-4b85-bc54-72ff37f96284",
-                    "path": "",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "SettingPanel2",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "b493f2c2-8aab-4ba9-a5dd-845585131300",
+                    "id": "95cac082-83cd-4acb-945f-cbd22d1b1c96",
                     "path": "<Gamepad>/leftStick/up",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "MainSelectUp",
+                    "action": "MainSelsectUp",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "d03996be-8be4-4a16-ac1c-8b7ce5865f3b",
+                    "id": "907268b3-3db1-4d3e-8a50-b529c8096cad",
                     "path": "<Gamepad>/leftStick/down",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "MainSelectDown",
+                    "action": "MainSelsectDown",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "fc665770-d295-4e50-82bd-2e736ddab796",
-                    "path": "<Gamepad>/dpad/up",
+                    "id": "90b7ba15-3356-4b5f-bfee-a96aea1d015a",
+                    "path": "<Gamepad>/leftStick/left",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Settingpanel2Up",
+                    "action": "MainSelectLeft",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "188eeabd-ed74-4ce5-838f-8627d4ca5599",
-                    "path": "<Gamepad>/dpad/down",
+                    "id": "fad875ba-68c6-44f5-9dab-d784c3d3bfee",
+                    "path": "<Gamepad>/leftStick/right",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Settingpanel2Down",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "4d333c48-5e8b-4aad-9aaf-d01358044722",
-                    "path": "<Gamepad>/dpad/down",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Settingpanel1Down",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "b130812b-7282-4895-98b5-02dac64bc04b",
-                    "path": "<Gamepad>/dpad/up",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Settingpanel1Up",
+                    "action": "MainSelectRight",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

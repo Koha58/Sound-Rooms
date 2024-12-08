@@ -6,14 +6,14 @@ using UnityEngine.UI;
 
 public class StartManager : MonoBehaviour
 {
+    private UIInputActions _uiInputActions;
+
     Image SelectButtonImage;
     Image BackDesktopButtonImage;
 
     public GameObject SelectButton;
     public GameObject BackDesktopButton;
 
-    public GameObject Cursor;
-    public GameObject Cursor1;
 
     bool UPDOWN;
 
@@ -25,6 +25,10 @@ public class StartManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
+        _uiInputActions = new UIInputActions();
+        _uiInputActions.Enable();
+
         SelectButtonImage = SelectButton.GetComponent<Image>();
         BackDesktopButtonImage = BackDesktopButton.GetComponent<Image>();
 
@@ -39,8 +43,6 @@ public class StartManager : MonoBehaviour
         SelectButton.GetComponent<RectTransform>().localPosition = originalSelectButtonPosition + new Vector3(-20f, 0f, 0f);
         BackDesktopButton.GetComponent<RectTransform>().localPosition = originalBackDesktopButtonPosition; // BackDesktopButtonは移動しない
 
-        Cursor.SetActive(false);
-        Cursor1.SetActive(false);
         UPDOWN = true;
 
         // AudioSource コンポーネントを取得
@@ -50,25 +52,20 @@ public class StartManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetAxisRaw("Vertical") < 0)
+        if (_uiInputActions.SettingUI.MainSelsectUp.triggered)
         {
             SelectButtonImage.color = new Color32(0, 0, 0, 255);
             BackDesktopButtonImage.color = new Color32(0, 0, 0, 120);
-            Cursor.SetActive(true);
-            Cursor1.SetActive(false);
             UPDOWN = true;
 
             // Selectボタンを少しマイナスX方向に移動
             SelectButton.GetComponent<RectTransform>().localPosition = originalSelectButtonPosition + new Vector3(-20f, 0f, 0f);
             BackDesktopButton.GetComponent<RectTransform>().localPosition = originalBackDesktopButtonPosition; // BackDesktopButtonは移動しない
         }
-
-        if (Input.GetAxisRaw("Vertical") > 0)
+        else if (_uiInputActions.SettingUI.MainSelsectDown.triggered)
         {
             SelectButtonImage.color = new Color32(0, 0, 0, 120);
             BackDesktopButtonImage.color = new Color32(0, 0, 0, 255);
-            Cursor1.SetActive(true);
-            Cursor.SetActive(false);
             UPDOWN = false;
 
             // BackDesktopボタンを少しマイナスX方向に移動

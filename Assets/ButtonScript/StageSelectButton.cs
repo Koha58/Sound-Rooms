@@ -10,14 +10,12 @@ using static InputDeviceManager;
 
 public class StageSelectButton : MonoBehaviour
 {
+
+    private UIInputActions _uiInputActions;
     public GameObject[] StageButtons;
 
     public GameObject RightButton;
     public GameObject LeftButton;
-
-    public GameObject Cursor;
-    public GameObject Cursor1;
-    public GameObject Cursor2;
 
     public GameObject[] StageVideos;
     public GameObject[] StageTitles;
@@ -59,6 +57,11 @@ public class StageSelectButton : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
+
+        _uiInputActions = new UIInputActions();
+        _uiInputActions.Enable();
+
         stage = 0;
         StageButtons[stage].GetComponent<Image>().enabled = true;
 
@@ -98,20 +101,12 @@ public class StageSelectButton : MonoBehaviour
            // cursorTransform.transform.localPosition = new Vector3(originPositionX, originPositionY, originPositionZ);
            // changePositionY = originPositionY;
             mostUnderPositionY = 160;
-
-           // cursorTransform.transform.localScale = new Vector3(originSizeX, originSizeY, originSizeZ);
-
-            Cursor.GetComponent<Image>().enabled = true;
         }
         else
         {
-            Cursor.GetComponent<Image>().enabled = false;
         }
 
         Continue = false;
-        Cursor.SetActive(false);
-        Cursor1.SetActive(false);
-        Cursor2.SetActive(false);
 
         // AudioSource コンポーネントを取得
         StartSound = GetComponent<AudioSource>();
@@ -124,166 +119,56 @@ public class StageSelectButton : MonoBehaviour
         if (InputDeviceManager.Instance.CurrentDeviceType == InputDeviceType.Xbox)
         {
             deviceCheck = true;
-            Cursor.GetComponent<Image>().enabled = true;
             RightButton.SetActive(false);
             LeftButton.SetActive(false);
         }
         else if (InputDeviceManager.Instance.CurrentDeviceType == InputDeviceType.Keyboard)
         {
             deviceCheck = false;
-            Cursor.GetComponent<Image>().enabled = false;
-            Cursor.SetActive(false);
-            Cursor1.SetActive(false);
-            Cursor2.SetActive(false);
         }
 
-        if(deviceCheck)
+        if (deviceCheck)
         {
-            Timer = Timer + 0.01f;
-            if (TimeON == true)
+            StageSelect();
+
+            if (_uiInputActions.SettingUI.MainSelsectUp.triggered)
             {
-                if (/*Input.GetAxis("Vertical") == 0 */ Timer >= 1.0f && Continue == true)
+                stage--;
+                for (int i = 0; i < StageButtons.Length; i++)
                 {
-                    Continue = false;
-                    Timer = 0;
-                    TimeON = false;
+                    StageButtons[i].GetComponent<Image>().color = new Color32(255, 255, 255, 45);
                 }
 
-                if (/*Input.GetAxis("Horizontal") == 0*/ Timer >= 1.0f && Continue == true )
-                {
-                    Continue = false;
-                    Timer = 0;
-                    TimeON = false;
-                }
-            }
-
-            if (Input.GetAxis("Vertical") == 0&& Input.GetAxisRaw("Horizontal") ==0)
-            {
-                Timer = 0.01f;
-                Continue = false;
-            }
-
-            /*
-            if (Input.GetAxisRaw("Vertical") == 0)
-            {
-                Continue = false;
-            }*/
-
-
-            if (Input.GetAxisRaw("Vertical") < 0 && Continue == false)
-            {
-                TimeON = true;
-                //cursorTransform.transform.localScale = new Vector3(originSizeX, originSizeY, originSizeZ);
-                if (stage != 1)
-                {
-                    stage++;
-                    for (int i = 0; i < StageButtons.Length; i++)
-                    {
-                        StageButtons[i].GetComponent<Image>().color = new Color32(255, 255, 255, 45);
-                    }
-
-                    StageButtons[stage].GetComponent<Image>().color = new Color32(255, 255, 255, 255);
-                    Cursor.SetActive(false);
-                    Cursor1.SetActive(false);
-                    Cursor2.SetActive(true);
-                    //changePositionY -= 80;
-                    //cursorTransform.transform.localPosition = new Vector3(originPositionX, changePositionY, originPositionZ);
-                }
-                else
+                if (stage < 0)
                 {
                     stage = 0;
-                    for (int i = 0; i < StageButtons.Length; i++)
-                    {
-                        StageButtons[i].GetComponent<Image>().color = new Color32(255, 255, 255, 45);
-                    }
-
-                    StageButtons[stage].GetComponent<Image>().color = new Color32(255, 255, 255, 255);
-                    Cursor.SetActive(false);
-                    Cursor1.SetActive(true);
-                    Cursor2.SetActive(false);
-                    //cursorTransform.transform.localPosition = new Vector3(originPositionX, originPositionY, originPositionZ);
-                    // changePositionY = originPositionY;
                 }
-                Continue = true;
+
+                StageButtons[stage].GetComponent<Image>().color = new Color32(255, 255, 255, 255);
             }
-            else if(Input.GetAxisRaw("Vertical") > 0 && Continue == false)
+            else if (_uiInputActions.SettingUI.MainSelsectDown.triggered)
             {
-                TimeON = true;
-                //cursorTransform.transform.localScale = new Vector3(originSizeX, originSizeY, originSizeZ);
-                if (stage != 0)
+                stage++;
+                for (int i = 0; i < StageButtons.Length; i++)
                 {
-                    stage--;
-                    for (int i = 0; i < StageButtons.Length; i++)
-                    {
-                        StageButtons[i].GetComponent<Image>().color = new Color32(255, 255, 255, 45);
-                    }
-
-                    StageButtons[stage].GetComponent<Image>().color = new Color32(255, 255, 255, 255);
-                    Cursor.SetActive(false);
-                    Cursor1.SetActive(true);
-                    Cursor2.SetActive(false);
-
-                    //changePositionY += 80;
-                    // cursorTransform.transform.localPosition = new Vector3(originPositionX, changePositionY, originPositionZ);
+                    StageButtons[i].GetComponent<Image>().color = new Color32(255, 255, 255, 45);
                 }
-                else
+
+                if (stage > 1)
                 {
                     stage = 1;
-                    for (int i = 0; i < StageButtons.Length; i++)
-                    {
-                        StageButtons[i].GetComponent<Image>().color = new Color32(255, 255, 255, 45);
-                    }
-
-                    StageButtons[stage].GetComponent<Image>().color = new Color32(255, 255, 255, 255);
-                    Cursor.SetActive(false);
-                    Cursor1.SetActive(false);
-                    Cursor2.SetActive(true);
-                    //cursorTransform.transform.localPosition = new Vector3(originPositionX, mostUnderPositionY, originPositionZ);
-                    //changePositionY = mostUnderPositionY;
                 }
 
-                Continue = true;
+                StageButtons[stage].GetComponent<Image>().color = new Color32(255, 255, 255, 255);
             }
 
-            if (Input.GetAxisRaw("Horizontal") > 0 && Continue == false )
-            {
-                TimeON = true;
-                //cursorTransform.transform.localPosition = new Vector3(StartPositionX, StartPositionY, StartPositionZ);
-                //cursorTransform.transform.localScale = new Vector3(StartSizeX, StartSizeY, StartSizeZ);
-                Cursor.SetActive(true);
-                Cursor1.SetActive(false);
-                Cursor2.SetActive(false);
 
-                Continue = true;
-                SetGameStart = true;
-
-            }
-            else if(Input.GetAxisRaw("Horizontal") < 0 && Continue == false)
-            {
-                TimeON = true;
-                SetGameStart =false;
-                //cursorTransform.transform.localPosition = new Vector3(originPositionX, originPositionY, originPositionZ);
-                //cursorTransform.transform.localScale = new Vector3(originSizeX, originSizeY, originSizeZ);
-                Cursor.SetActive(false);
-                Cursor1.SetActive(true);
-                Cursor2.SetActive(false);
-
-                StageButtons[0].GetComponent<Image>().color = new Color32(255, 255, 255, 255);
-                StageButtons[1].GetComponent<Image>().color = new Color32(255, 255, 255, 45);
-                Continue = true;
-                stage = 0;
-            }
-        }
-
-        StageSelect();
-
-        if (SetGameStart == true) 
-        {
             if (Input.GetKeyDown("joystick button 0"))
             {
                 PlayStartSound(); // 音を再生
                 OnStart();
             }
+
         }
 
     }

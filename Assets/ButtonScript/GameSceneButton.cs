@@ -124,25 +124,6 @@ public class GameSceneButton : MonoBehaviour
     public float ButtonCount;
     public bool ButtonON;
 
-    bool Reset;
-    bool MenuSelect;
-    float MenuSelectCount;
-
-    bool Reset1;
-    bool ExplainSelect;
-    float ExplainSelectCount;
-
-    bool MenuSelectIN;
-    bool MenuSelectOUT;
-    float MenuSelectOUTCount;
-
-    float Timer;
-    bool TimeON;
-
-    float Timervh;
-    bool VH;
-    int i = 0;
-
     [SerializeField] GameObject[] RBLB;
 
     // Start is called before the first frame update
