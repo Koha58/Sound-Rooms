@@ -45,25 +45,26 @@ public class MicAudioSource : MonoBehaviour
         micAS.Play();
     }
 
+    // MicAudioSource クラス
     void Update()
     {
         if (micAS.isPlaying)
         {
-            //GetOutputData用のバッファを準備
+            // GetOutputData 用のバッファを準備
             float[] data = new float[MOVING_AVE_SAMPLE];
 
-            //AudioSourceから出力されているサンプルを取得
+            // AudioSource から出力されているサンプルを取得
             micAS.GetOutputData(data, 0);
 
-            //バッファ内の平均振幅を取得（絶対値を平均する）
+            // バッファ内の平均振幅を取得（絶対値を平均する）
             float aveAmp = data.Average(s => Mathf.Abs(s));
 
-            //振幅をdB（デシベル）に変換
+            // 振幅を dB（デシベル）に変換
             float dB = 20.0f * Mathf.Log10(aveAmp);
 
-            //現在値（now_dB）を更新
+            // 現在値（now_dB）を更新
             _now_dB = dB;
-
         }
     }
+
 }
