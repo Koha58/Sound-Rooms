@@ -12,7 +12,7 @@ public class EnemyRoute : MonoBehaviour
         // Enemy1‚Ìƒ‹[ƒg‚ğ“o˜^
         GameManager.instance.RegisterRoute(1, enemy1RoutePoint);
 
-        // Enemy2‚Ìƒ‹[ƒg‚ğ“o˜^
-        GameManager.instance.RegisterRoute(2, enemy2Route2Point);
+        //// Enemy2‚Ìƒ‹[ƒg‚ğ“o˜^
+        //GameManager.instance.RegisterRoute(2, enemy2Route2Point);
     }
 }

@@ -18,7 +18,7 @@ public class LevelMeter : MonoBehaviour
 
     //dB‚ğæ“¾‚·‚é‘ÎÛ‚ÌmicAudioSource
     [SerializeField]
-    private MicAudioSource micAS = null;
+    public MicAudioSource micAS = null;
 
     public float nowdB;
 
@@ -26,6 +26,13 @@ public class LevelMeter : MonoBehaviour
     {
         //XV‚·‚é‘ÎÛ‚ÌImage‚ğæ“¾
         levelMeterImage = GetComponent<Image>();
+    }
+
+    void Start()
+    {
+        // MicAudioSource‚Ìæ“¾
+        micAS = FindObjectOfType<MicAudioSource>();
+       
     }
 
     void Update()

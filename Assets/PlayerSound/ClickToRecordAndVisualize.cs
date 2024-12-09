@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class ClickToRecordAndVisualize : MonoBehaviour
 {
@@ -9,16 +10,19 @@ public class ClickToRecordAndVisualize : MonoBehaviour
     public int recordingDuration = 20;
 
     private string microphoneDevice;
-    private bool isRecording = false;
+    public bool isRecording = false;
     private AudioClip recordedClip;
     private float recordingStartTime;
 
     public float nowdB;  // 録音中のdBを保持
-    private MicAudioSource micAudioSource;
+    public MicAudioSource micAudioSource;
     private ParticleSystem RecordParticle;
 
     void Start()
     {
+        // MicAudioSourceの取得
+        micAudioSource = FindObjectOfType<MicAudioSource>();
+
         microphoneDevice = Microphone.devices.Length > 0 ? Microphone.devices[0] : null;
         micAudioSource = GetComponent<MicAudioSource>();
         GameObject RecordEffect = GameObject.Find("RecordParticle");
@@ -47,8 +51,8 @@ public class ClickToRecordAndVisualize : MonoBehaviour
 
     public void StartRecording()
     {
-        recordedClip = Microphone.Start(microphoneDevice, false, recordingDuration, 44100);
         isRecording = true;
+        recordedClip = Microphone.Start(microphoneDevice, false, recordingDuration, 44100);
         recordingStartTime = Time.time;
         Debug.Log("録音を開始しました");
         RecordParticle.Play();
@@ -68,6 +72,7 @@ public class ClickToRecordAndVisualize : MonoBehaviour
         Debug.Log("録音を停止し、録音した音声を再生します");
         RecordParticle.Stop();
 
+
         // イベント通知: 録音が停止された
         OnRecordingStatusChanged?.Invoke(false);
 
@@ -78,5 +83,10 @@ public class ClickToRecordAndVisualize : MonoBehaviour
     public bool IsRecording()
     {
         return isRecording;
+    }
+    // UIクリック検知
+    public bool IsPointerOverUI()
+    {
+        return EventSystem.current.IsPointerOverGameObject();
     }
 }

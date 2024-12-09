@@ -28,13 +28,13 @@ public class EnemyController1 : MonoBehaviour
     [SerializeField] Animator animator;　//アニメーター取得
 
     //サウンド
-    //[SerializeField] AudioSource audioSourse; //オーディオソース取得
-    //[SerializeField] AudioClip searchClip;    //探す音
-    //[SerializeField] AudioClip runClip;       //走る音
-    //[SerializeField] AudioClip walkClip;      //歩く音
-    //void Idle() { audioSourse.PlayOneShot(searchClip); }
-    //void Run() { audioSourse.PlayOneShot(runClip); }
-    //void Walk() { audioSourse.PlayOneShot(walkClip); }
+    [SerializeField] AudioSource audioSourse; //オーディオソース取得
+    [SerializeField] AudioClip searchClip;    //探す音
+    [SerializeField] AudioClip runClip;       //走る音
+    [SerializeField] AudioClip walkClip;      //歩く音
+    void Idle() { audioSourse.PlayOneShot(searchClip); }
+    void Run() { audioSourse.PlayOneShot(runClip); }
+    void Walk() { audioSourse.PlayOneShot(walkClip); }
 
 
     //ステートベースAI
@@ -129,7 +129,7 @@ public class EnemyController1 : MonoBehaviour
     private void Start()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
-
+        audioSourse = GetComponent<AudioSource>();
         // RouteManagerからルートを取得
         route = GameManager.instance.GetRoute(characterID);
     }
