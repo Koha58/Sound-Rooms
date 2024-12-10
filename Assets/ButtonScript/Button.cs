@@ -8,7 +8,7 @@ public class Button : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     public void ButtonC()
@@ -24,12 +24,12 @@ public class Button : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown("joystick button 0"))//A
+        if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown("joystick button 0"))//A
         {
             SceneManager.LoadScene("GameScene");
         }
 
-        if(Input.GetKeyDown(KeyCode.B) || Input.GetKeyDown("joystick button 1"))//B
+        if (Input.GetKeyDown(KeyCode.B) || Input.GetKeyDown("joystick button 1"))//B
         {
             SceneManager.LoadScene("StartScene");
         }
