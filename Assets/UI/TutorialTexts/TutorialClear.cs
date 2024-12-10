@@ -14,13 +14,7 @@ public class TutorialClear : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        GameObject cobj = GameObject.Find("EnemyAttackArea");
-        EnemyAttack EAtack = cobj.GetComponent<EnemyAttack>(); //付いているスクリプトを取得
-        if (EAtack.count == 2)
-        {
-            EAtack.count = 1;
-            EAtack.SetCountText();
-        }
+
     }
 
     void OnCollisionEnter(Collision other)

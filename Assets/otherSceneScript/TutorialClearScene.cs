@@ -20,7 +20,7 @@ public class TutorialClearScene : MonoBehaviour
 
         if (stayTime > 12f)
         {
-            SceneManager.LoadScene("GameScene");
+            SceneManager.LoadScene("Stage1");
         }
 
     }
