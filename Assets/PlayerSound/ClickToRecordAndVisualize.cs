@@ -18,6 +18,8 @@ public class ClickToRecordAndVisualize : MonoBehaviour
     public MicAudioSource micAudioSource;
     private ParticleSystem RecordParticle;
 
+    public bool itemDrop;
+
     void Start()
     {
         // MicAudioSourceの取得
@@ -84,9 +86,11 @@ public class ClickToRecordAndVisualize : MonoBehaviour
     {
         return isRecording;
     }
+
     // UIクリック検知
     public bool IsPointerOverUI()
     {
+        itemDrop = true;
         return EventSystem.current.IsPointerOverGameObject();
     }
 }

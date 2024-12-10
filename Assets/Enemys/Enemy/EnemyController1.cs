@@ -164,6 +164,11 @@ public class EnemyController1 : MonoBehaviour
             }
         }
 
+        if (audioSourse.clip != null)
+        {
+            audioSourse.Play();
+        }
+
         switch (curretState)
         {
             case enemyState.doNothing:
@@ -205,6 +210,7 @@ public class EnemyController1 : MonoBehaviour
                     behaviors.GetBehavior(BehaviorType.patrol).value = 0;
                     animator.SetBool("Walk", true);
                     animator.SetBool("Run", false);
+                    audioSourse.clip = walkClip;
                     navMeshAgent.speed = 2.0f;
                     navMeshAgent.SetDestination(route[pointCount].position);
                 }
@@ -244,6 +250,7 @@ public class EnemyController1 : MonoBehaviour
                     Debug.Log("Ç«Ç±Ç…Ç¢ÇÈÇ©Ç»ÅH");
                     animator.SetBool("Walk", false);
                     animator.SetBool("Run", false);
+                    audioSourse.clip = runClip; ;
                     navMeshAgent.SetDestination(this.transform.position);
                 }
 

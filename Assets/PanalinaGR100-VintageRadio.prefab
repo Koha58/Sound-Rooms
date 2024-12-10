@@ -263,8 +263,6 @@ GameObject:
   - component: {fileID: 2373532744885042692}
   - component: {fileID: 4322845436407140570}
   - component: {fileID: 9007106396711070542}
-  - component: {fileID: 1876129790938012788}
-  - component: {fileID: 1953465430308354124}
   m_Layer: 0
   m_Name: PanalinaGR100-VintageRadio
   m_TagString: Untagged
@@ -370,7 +368,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 11892326d64bf2543b641e9fb724effd, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -456,36 +454,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &1876129790938012788
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3183858080913100468}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4ef2f8fffd3328e4f94e1c49e6b4c828, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  range: 10
-  audioLayer:
-    serializedVersion: 2
-    m_Bits: 0
---- !u!114 &1953465430308354124
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3183858080913100468}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c6b6685d5b035148bc6de49162bdef7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  soundRange: 5
-  audioSource: {fileID: 9007106396711070542}
 --- !u!1 &9199349794416829829
 GameObject:
   m_ObjectHideFlags: 0
