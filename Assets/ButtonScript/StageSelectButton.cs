@@ -195,6 +195,17 @@ public class StageSelectButton : MonoBehaviour
         StageButtons[stage].GetComponent<Image>().color = new Color32(255, 255, 255, 255);
     }
 
+    public void OnStage2Select()
+    {
+        stage = 2;
+        for (int i = 0; i < StageButtons.Length; i++)
+        {
+            StageButtons[i].GetComponent<Image>().color = new Color32(255, 255, 255, 45);
+        }
+
+        StageButtons[stage].GetComponent<Image>().color = new Color32(255, 255, 255, 255);
+    }
+
     public void EnterStage0SelectButton()
     {
         if(stage != 0)
@@ -227,9 +238,25 @@ public class StageSelectButton : MonoBehaviour
         }
     }
 
+    public void EnterStage2SelectButton()
+    {
+        if (stage != 2)
+        {
+            StageButtons[2].GetComponent<Image>().color = new Color32(255, 255, 255, 255);
+        }
+    }
+
+    public void ExitStage2SelectButton()
+    {
+        if (stage != 2)
+        {
+            StageButtons[2].GetComponent<Image>().color = new Color32(255, 255, 255, 45);
+        }
+    }
+
     public void OnRightButton()
     {
-        if(stage != 1)
+        if(stage != 2)
         {
             stage++;
         }
@@ -267,8 +294,9 @@ public class StageSelectButton : MonoBehaviour
         }
         else
         {
-            stage = 1;
+            stage = 2;
         }
+
         for (int i = 0; i < StageButtons.Length; i++)
         {
             StageButtons[i].GetComponent<Image>().color = new Color32(255, 255, 255, 45);
@@ -325,6 +353,22 @@ public class StageSelectButton : MonoBehaviour
 
             StageTitles[stage].GetComponent<Image>().enabled = true;
         }
+        else if (stage == 2)
+        {
+            for (int i = 0; i < StageVideos.Length; i++)
+            {
+                StageVideos[i].GetComponent<RawImage>().enabled = false;
+            }
+
+            StageVideos[stage].GetComponent<RawImage>().enabled = true;
+
+            for (int i = 0; i < StageTitles.Length; i++)
+            {
+                StageTitles[i].GetComponent<Image>().enabled = false;
+            }
+
+            StageTitles[stage].GetComponent<Image>().enabled = true;
+        }
     }
 
     public void OnStart()
@@ -349,7 +393,12 @@ public class StageSelectButton : MonoBehaviour
         }
         else if (stage == 1)
         {
+            SceneManager.LoadScene("Stage1");
+        }
+        else if (stage == 2)
+        {
             SceneManager.LoadScene("GameScene");
         }
+
     }
 }

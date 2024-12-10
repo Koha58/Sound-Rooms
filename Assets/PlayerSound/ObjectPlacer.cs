@@ -1,9 +1,8 @@
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 public class ObjectPlacer : MonoBehaviour
 {
-    GameObject Recorder;
+    public GameObject Recorder;
     public GameObject objectPrefab;  // 設置するオブジェクトのプレハブ
     private GameObject placedObject = null;  // 設置されているオブジェクト
 
@@ -12,17 +11,18 @@ public class ObjectPlacer : MonoBehaviour
 
     public ClickToRecordAndVisualize clickToRecordAndVisualize;
 
+    public bool isOnSettingPoint = false;  // 「SettingPoint」に設置されているかどうか
+
     private void Start()
     {
         Recorder = GameObject.Find("PanalinaGR100-VintageRadio");
         Recorder.SetActive(true);
         clickToRecordAndVisualize.GetComponent<ClickToRecordAndVisualize>();
-
     }
 
     void Update()
     {
-        if (clickToRecordAndVisualize.IsPointerOverUI()==false)
+        if (clickToRecordAndVisualize.IsPointerOverUI() == false)
         {
             if (Input.GetMouseButtonDown(0))  // 左クリックを検出
             {
@@ -32,15 +32,15 @@ public class ObjectPlacer : MonoBehaviour
                 // プレイヤー位置から0.19上にオブジェクトを配置
                 Vector3 placementPosition = new Vector3(playerPosition.x, playerPosition.y + 0.19f, playerPosition.z);
 
-
                 // オブジェクトがまだ設置されていない場合、新しく設置
                 if (placedObject == null && clickToRecordAndVisualize.isRecording == false)
                 {
-
                     // 新しいオブジェクトを設置
                     placedObject = Instantiate(objectPrefab, placementPosition, Quaternion.identity);
                     Recorder.SetActive(false);
 
+                    // 「SettingPoint」に接触しているかチェック
+                    CheckIfOnSettingPoint();
                 }
                 else
                 {
@@ -50,11 +50,36 @@ public class ObjectPlacer : MonoBehaviour
                         Destroy(placedObject);  // オブジェクトを回収
                         placedObject = null;  // 置かれているオブジェクトをリセット
                         Recorder.SetActive(true);
-                        clickToRecordAndVisualize.recordingTime = 0;
+                        isOnSettingPoint = false;  // 設置状態リセット
                     }
                 }
-
             }
+        }
+    }
+
+    private void CheckIfOnSettingPoint()
+    {
+        // 設置されたオブジェクトのコライダー周辺を探索
+        Collider[] colliders = Physics.OverlapSphere(placedObject.transform.position, 0.5f);
+        foreach (Collider collider in colliders)
+        {
+            if (collider.CompareTag("SettingPoint"))
+            {
+                isOnSettingPoint = true;
+                Debug.Log("Object is on a SettingPoint!");
+                return;
+            }
+        }
+        isOnSettingPoint = false;
+    }
+
+    private void OnDrawGizmos()
+    {
+        // デバッグ用：範囲を可視化
+        if (placedObject != null)
+        {
+            Gizmos.color = Color.green;
+            Gizmos.DrawWireSphere(placedObject.transform.position, 0.5f);
         }
     }
 }
