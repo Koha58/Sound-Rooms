@@ -1,41 +1,62 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
+using UnityEngine.TextCore.Text;
 
 public class PlayerAudioRecorder : MonoBehaviour
 {
-    public float detectionRadius = 5f; // プレイヤーが敵の音を検出する範囲
-    public AudioSource recorderAudioSource; // プレイヤーの録音機（AudioSource）
+    public float detectionRadius = 5f; // プレイヤーが音を録音する範囲
+    public AudioSource recorderAudioSource; // プレイヤーの録音機用AudioSource
     public ClickToRecordAndVisualize clickToRecordAndVisualize;
 
+    private void Start()
+    {
+        recorderAudioSource.clip =null; 
+    }
     void Update()
     {
-        // プレイヤーの周囲にいる敵を検出
-        Collider[] colliders = Physics.OverlapSphere(transform.position, detectionRadius);
+        // 敵を範囲内で検出し、最も近い敵の音を取得
+       EnemyController1 closestEnemy = FindClosestEnemy();
 
-        foreach (var collider in colliders)
+        if (closestEnemy != null)
         {
-            // 敵がAudioSourceを持っているか確認
-            AudioSource enemyAudioSource = collider.GetComponent<AudioSource>();
+            AudioSource enemyAudioSource = closestEnemy.GetComponent<AudioSource>();
             if (enemyAudioSource != null && enemyAudioSource.isPlaying)
             {
-                // 敵のAudioSourceの現在再生中の音を取得
-                AudioClip enemyClip = enemyAudioSource.clip;
-                if (enemyClip != null)
-                {
-                    if (clickToRecordAndVisualize.itemDrop) {
-                        PlayCapturedAudio(enemyClip);
-                        clickToRecordAndVisualize.itemDrop = false;
-                    }
-                }
-                break; // 最初に見つけた敵の音のみ再生（必要に応じて変更可能）
+                PlayCapturedAudio(enemyAudioSource.clip);
+                clickToRecordAndVisualize.recordingTime = 0;
             }
         }
+
+        if (clickToRecordAndVisualize.recordingTime==0)
+        {
+            recorderAudioSource = null;
+        }
+
+    }
+
+    private EnemyController1 FindClosestEnemy()
+    {
+        EnemyController1[] enemies = FindObjectsOfType<EnemyController1>(); // シーン内のすべてのEnemyを取得
+        EnemyController1 closestEnemy = null;
+        float closestDistance = detectionRadius;
+
+        foreach (var enemy in enemies)
+        {
+            float distance = Vector3.Distance(transform.position, enemy.transform.position);
+            if (distance < closestDistance)
+            {
+                closestEnemy = enemy;
+                closestDistance = distance;
+            }
+        }
+
+        return closestEnemy;
     }
 
     private void PlayCapturedAudio(AudioClip audioClip)
     {
-        // プレイヤーの録音機に敵の音をセットして再生
         if (recorderAudioSource != null && recorderAudioSource.clip != audioClip)
         {
             recorderAudioSource.clip = audioClip;
@@ -46,7 +67,7 @@ public class PlayerAudioRecorder : MonoBehaviour
     // デバッグ用：範囲の可視化
     private void OnDrawGizmosSelected()
     {
-        Gizmos.color = Color.red;
+        Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(transform.position, detectionRadius);
     }
 }

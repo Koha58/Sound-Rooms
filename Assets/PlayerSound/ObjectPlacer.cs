@@ -50,6 +50,7 @@ public class ObjectPlacer : MonoBehaviour
                         Destroy(placedObject);  // オブジェクトを回収
                         placedObject = null;  // 置かれているオブジェクトをリセット
                         Recorder.SetActive(true);
+                        clickToRecordAndVisualize.recordingTime = 0;
                     }
                 }
 

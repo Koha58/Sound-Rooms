@@ -18,7 +18,7 @@ public class ClickToRecordAndVisualize : MonoBehaviour
     public MicAudioSource micAudioSource;
     private ParticleSystem RecordParticle;
 
-    public bool itemDrop;
+    public float recordingTime;
 
     void Start()
     {
@@ -30,6 +30,8 @@ public class ClickToRecordAndVisualize : MonoBehaviour
         GameObject RecordEffect = GameObject.Find("RecordParticle");
         RecordParticle = RecordEffect.GetComponent<ParticleSystem>();
         RecordParticle.Stop();
+
+        recordingTime = 0;
     }
 
     void Update()
@@ -90,7 +92,7 @@ public class ClickToRecordAndVisualize : MonoBehaviour
     // UIクリック検知
     public bool IsPointerOverUI()
     {
-        itemDrop = true;
+        recordingTime = 1;
         return EventSystem.current.IsPointerOverGameObject();
     }
 }
