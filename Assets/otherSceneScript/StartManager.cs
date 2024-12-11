@@ -94,6 +94,7 @@ public class StartManager : MonoBehaviour
 #endif
             }
         }
+
     }
 
     // Selectボタンが選択されたときにシーン遷移

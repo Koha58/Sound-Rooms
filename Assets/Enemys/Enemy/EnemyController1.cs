@@ -10,6 +10,7 @@ public class EnemyController1 : MonoBehaviour
     public int characterID;       // キャラクターのID
     public Transform player;
     private List<Transform> route; // 巡回ルート
+    [SerializeField] private Transform[] PatrolPoints; // 巡回ポイントの配列
     public NavMeshAgent navMeshAgent;
 
     float chaseRange = 7f;  //Playerを検知する範囲
@@ -18,11 +19,11 @@ public class EnemyController1 : MonoBehaviour
     float searchTime;
     int pointCount;
 
-
-
     public float detectionRange = 10f; // 音を聞き取れる範囲
     private Vector3 soundPosition;
     private bool isMovingToSound = false;
+
+    public static bool ImageOn;
 
     //アニメーション
     [SerializeField] Animator animator;　//アニメーター取得
@@ -131,7 +132,9 @@ public class EnemyController1 : MonoBehaviour
         navMeshAgent = GetComponent<NavMeshAgent>();
         audioSourse = GetComponent<AudioSource>();
         // RouteManagerからルートを取得
+
         route = GameManager.instance.GetRoute(characterID);
+
     }
 
     private void Update()
@@ -212,7 +215,8 @@ public class EnemyController1 : MonoBehaviour
                     animator.SetBool("Run", false);
                     audioSourse.clip = walkClip;
                     navMeshAgent.speed = 2.0f;
-                    navMeshAgent.SetDestination(route[pointCount].position);
+                    // navMeshAgent.SetDestination(route[pointCount].position);
+                    navMeshAgent.SetDestination(PatrolPoints[pointCount].position);
                 }
 
                 if (navMeshAgent.remainingDistance <= 0.1f && !navMeshAgent.pathPending)
@@ -252,6 +256,7 @@ public class EnemyController1 : MonoBehaviour
                     animator.SetBool("Run", false);
                     audioSourse.clip = runClip; ;
                     navMeshAgent.SetDestination(this.transform.position);
+                    ImageOn = false;
                 }
 
                 searchTime += Time.deltaTime;
@@ -298,7 +303,10 @@ public class EnemyController1 : MonoBehaviour
                     //PS.onoff = 1;
                     //PS.Visualization = true;
                     Chase();
+
+                    ImageOn = true;
                 }
+
 
                 if (distanceToPlayer >= chaseRange) {
                     behaviors.GetBehavior(BehaviorType.search).value = 2;

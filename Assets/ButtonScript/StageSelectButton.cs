@@ -102,9 +102,6 @@ public class StageSelectButton : MonoBehaviour
            // changePositionY = originPositionY;
             mostUnderPositionY = 160;
         }
-        else
-        {
-        }
 
         Continue = false;
 
@@ -182,6 +179,20 @@ public class StageSelectButton : MonoBehaviour
         }
 
         StageButtons[stage].GetComponent<Image>().color = new Color32(255, 255, 255, 255);
+
+        for (int i = 0; i < StageVideos.Length; i++)
+        {
+            StageVideos[i].GetComponent<RawImage>().enabled = false;
+        }
+
+        StageVideos[stage].GetComponent<RawImage>().enabled = true;
+
+        for (int i = 0; i < StageTitles.Length; i++)
+        {
+            StageTitles[i].GetComponent<Image>().enabled = false;
+        }
+
+        StageTitles[stage].GetComponent<Image>().enabled = true;
     }
 
     public void OnStage1Select()
@@ -193,6 +204,20 @@ public class StageSelectButton : MonoBehaviour
         }
 
         StageButtons[stage].GetComponent<Image>().color = new Color32(255, 255, 255, 255);
+
+          for (int i = 0; i < StageVideos.Length; i++)
+        {
+            StageVideos[i].GetComponent<RawImage>().enabled = false;
+        }
+
+        StageVideos[stage].GetComponent<RawImage>().enabled = true;
+
+        for (int i = 0; i < StageTitles.Length; i++)
+        {
+            StageTitles[i].GetComponent<Image>().enabled = false;
+        }
+
+        StageTitles[stage].GetComponent<Image>().enabled = true;
     }
 
     public void OnStage2Select()
@@ -204,6 +229,20 @@ public class StageSelectButton : MonoBehaviour
         }
 
         StageButtons[stage].GetComponent<Image>().color = new Color32(255, 255, 255, 255);
+
+        for (int i = 0; i < StageVideos.Length; i++)
+        {
+            StageVideos[i].GetComponent<RawImage>().enabled = false;
+        }
+
+        StageVideos[stage].GetComponent<RawImage>().enabled = true;
+
+        for (int i = 0; i < StageTitles.Length; i++)
+        {
+            StageTitles[i].GetComponent<Image>().enabled = false;
+        }
+
+        StageTitles[stage].GetComponent<Image>().enabled = true;
     }
 
     public void EnterStage0SelectButton()
