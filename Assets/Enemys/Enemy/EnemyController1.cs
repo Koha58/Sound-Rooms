@@ -211,11 +211,14 @@ public class EnemyController1 : MonoBehaviour
                     stateEnter = false;
                     Debug.Log("„‰ñ’†");
                     behaviors.GetBehavior(BehaviorType.patrol).value = 0;
+
+                    animator.CrossFade("Walk", 0.3f);
                     animator.SetBool("Walk", true);
                     animator.SetBool("Run", false);
                     audioSourse.clip = walkClip;
                     navMeshAgent.speed = 2.0f;
                     // navMeshAgent.SetDestination(route[pointCount].position);
+                    transform.LookAt(PatrolPoints[pointCount].transform);
                     navMeshAgent.SetDestination(PatrolPoints[pointCount].position);
                 }
 
@@ -252,6 +255,7 @@ public class EnemyController1 : MonoBehaviour
                 {
                     stateEnter = false;
                     Debug.Log("‚Ç‚±‚É‚¢‚é‚©‚ÈH");
+                    animator.CrossFade("Idle", 0.3f);
                     animator.SetBool("Walk", false);
                     animator.SetBool("Run", false);
                     audioSourse.clip = runClip; ;
@@ -297,11 +301,13 @@ public class EnemyController1 : MonoBehaviour
                     stateEnter = false;
                     Debug.Log("’Ç‚¢‚©‚¯‚¢‚é‚æ");
                     behaviors.GetBehavior(BehaviorType.chase).value = 0;
+                    animator.CrossFade("Run", 0.3f);
                     animator.SetBool("Walk",false);
                     animator.SetBool("Run", true);
+                    transform.LookAt(player.transform);
                     navMeshAgent.speed = 4.0f;
-                    //PS.onoff = 1;
-                    //PS.Visualization = true;
+                    PS.onoff = 1;
+                    PS.Visualization = true;
                     Chase();
 
                     ImageOn = true;
@@ -310,7 +316,7 @@ public class EnemyController1 : MonoBehaviour
 
                 if (distanceToPlayer >= chaseRange) {
                     behaviors.GetBehavior(BehaviorType.search).value = 2;
-                    //PS.Visualization = false;
+                    PS.Visualization = false;
                 }
 
                 behaviors.SortDesire();

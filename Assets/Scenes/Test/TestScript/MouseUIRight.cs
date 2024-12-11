@@ -5,32 +5,30 @@ using UnityEngine.UI;
 
 public class MouseUIRight : MonoBehaviour
 {
-    float CloerTime;
+    public Image targetImage; // 点滅させたいImageコンポーネント
+    public Color color1 = Color.red; // 赤色
+    public Color color2 = Color.white; // 白色
+    public float blinkDuration = 1.0f; // 点滅の間隔（秒）
 
-    public Image mouseImage;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    private bool isColor1 = true; // 現在の色状態
+    private float timer = 0f; // タイマー
 
-    // Update is called once per frame
     void Update()
     {
+        if (targetImage == null) return;
 
-        mouseImage.color = new Color(255, 255, 255);
         if (EnemyController1.ImageOn)
         {
-            CloerTime += Time.deltaTime;
-            float red = 0;
+            // 時間を更新
+            timer += Time.deltaTime;
 
-            if (CloerTime > 0.5f)
+            // 指定された間隔を超えた場合に色を切り替える
+            if (timer >= blinkDuration)
             {
-                red = 255;
-                mouseImage.color = new Color(red, 0, 0);
-                CloerTime = 0;
+                isColor1 = !isColor1; // 色状態を切り替える
+                targetImage.color = isColor1 ? color1 : color2; // 色を変更
+                timer = 0f; // タイマーをリセット
             }
-            EnemyController1.ImageOn = false;
         }
     }
 }

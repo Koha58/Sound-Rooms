@@ -15975,7 +15975,7 @@ GameObject:
   - component: {fileID: 1090088575}
   m_Layer: 0
   m_Name: Enemy (1)
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -15994,6 +15994,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterID: 2
   player: {fileID: 135133355}
+  PatrolPoints:
+  - {fileID: 578225526}
+  - {fileID: 1613709628}
   navMeshAgent: {fileID: 1090088577}
   detectionRange: 10
   animator: {fileID: 1090088581}
@@ -23455,7 +23458,7 @@ GameObject:
   - component: {fileID: 1301852722}
   m_Layer: 0
   m_Name: Enemy (2)
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -23474,6 +23477,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterID: 3
   player: {fileID: 135133355}
+  PatrolPoints:
+  - {fileID: 315993192}
+  - {fileID: 1539384590}
   navMeshAgent: {fileID: 1301852724}
   detectionRange: 10
   animator: {fileID: 1301852728}
@@ -38146,7 +38152,7 @@ GameObject:
   - component: {fileID: 2120517580817973837}
   m_Layer: 0
   m_Name: Enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -38666,6 +38672,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterID: 1
   player: {fileID: 135133355}
+  PatrolPoints:
+  - {fileID: 1573608977}
+  - {fileID: 1884075388}
   navMeshAgent: {fileID: 2120517580817973839}
   detectionRange: 10
   animator: {fileID: 2120517580817973843}
