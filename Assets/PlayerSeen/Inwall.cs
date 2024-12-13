@@ -41,11 +41,6 @@ public class Inwall : MonoBehaviour
                 Pon = true;
             }
 
-            if (TutorialVisualizationBox.BossOn==true)
-            {
-                TutorialVisualizationBox.BossOn = false;
-                Pon = false;
-            }
         }
     }
 }

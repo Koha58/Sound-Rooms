@@ -212,7 +212,6 @@ public class EnemyController1 : MonoBehaviour
                     Debug.Log("èÑâÒíÜ");
                     behaviors.GetBehavior(BehaviorType.patrol).value = 0;
 
-                    animator.CrossFade("Walk", 0.3f);
                     animator.SetBool("Walk", true);
                     animator.SetBool("Run", false);
                     audioSourse.clip = walkClip;
@@ -255,10 +254,9 @@ public class EnemyController1 : MonoBehaviour
                 {
                     stateEnter = false;
                     Debug.Log("Ç«Ç±Ç…Ç¢ÇÈÇ©Ç»ÅH");
-                    animator.CrossFade("Idle", 0.3f);
                     animator.SetBool("Walk", false);
                     animator.SetBool("Run", false);
-                    audioSourse.clip = runClip; ;
+                    audioSourse.clip = runClip;
                     navMeshAgent.SetDestination(this.transform.position);
                     ImageOn = false;
                 }
@@ -301,7 +299,6 @@ public class EnemyController1 : MonoBehaviour
                     stateEnter = false;
                     Debug.Log("í«Ç¢Ç©ÇØÇ¢ÇÈÇÊ");
                     behaviors.GetBehavior(BehaviorType.chase).value = 0;
-                    animator.CrossFade("Run", 0.3f);
                     animator.SetBool("Walk",false);
                     animator.SetBool("Run", true);
                     transform.LookAt(player.transform);
