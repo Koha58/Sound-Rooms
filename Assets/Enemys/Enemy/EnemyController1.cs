@@ -7,11 +7,11 @@ using UnityEngine.UI;
 
 public class EnemyController1 : MonoBehaviour
 {
-    public int characterID;       // キャラクターのID
-    public Transform player;
-    private List<Transform> route; // 巡回ルート
+    public int characterID;       　// キャラクターのID
+    public Transform player;    　　//プレイヤーの位置
+    private List<Transform> route;　// 巡回ルート
     [SerializeField] private Transform[] PatrolPoints; // 巡回ポイントの配列
-    public NavMeshAgent navMeshAgent;
+    NavMeshAgent navMeshAgent;
 
     float chaseRange = 7f;  //Playerを検知する範囲
     float distanceToPlayer = Mathf.Infinity;
@@ -131,10 +131,7 @@ public class EnemyController1 : MonoBehaviour
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
         audioSourse = GetComponent<AudioSource>();
-        // RouteManagerからルートを取得
-
         route = GameManager.instance.GetRoute(characterID);
-
     }
 
     private void Update()
@@ -174,7 +171,7 @@ public class EnemyController1 : MonoBehaviour
 
         switch (curretState)
         {
-            case enemyState.doNothing:
+            case enemyState.doNothing: //何もしない
                 #region
                 if (stateEnter)
                 {
@@ -204,7 +201,7 @@ public class EnemyController1 : MonoBehaviour
 
                 #endregion
                 break;
-            case enemyState.patrol:
+            case enemyState.patrol:　//巡回
                 #region
                 if (stateEnter)
                 {
@@ -247,7 +244,7 @@ public class EnemyController1 : MonoBehaviour
 
                 #endregion
                 break;
-            case enemyState.search:
+            case enemyState.search: //探す
                 #region
                 if (stateEnter)
                 {
@@ -291,7 +288,7 @@ public class EnemyController1 : MonoBehaviour
 
                 #endregion
                 break;
-            case enemyState.chase:
+            case enemyState.chase:　//追いかける
                 #region
                 if (stateEnter)
                 {
@@ -335,7 +332,7 @@ public class EnemyController1 : MonoBehaviour
 
                 #endregion
                 break;
-            case enemyState.hear:
+            case enemyState.hear:　//聞く
                 #region
                 if (stateEnter)
                 {
@@ -364,7 +361,7 @@ public class EnemyController1 : MonoBehaviour
 
                 #endregion
                 break;
-            case enemyState.near:
+            case enemyState.near:　//音に近づく
                 #region
                 if (stateEnter)
                 {
