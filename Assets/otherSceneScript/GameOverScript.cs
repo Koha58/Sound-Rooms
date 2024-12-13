@@ -126,34 +126,7 @@ public class GameOverScript : MonoBehaviour
             }
         }
 
-        if (other.CompareTag("Boss"))
-        {
-            BossEnemyControll BEC = other.GetComponent<BossEnemyControll>();
-            if (BEC.ONOFF == 1 && PS.onoff == 1 && Table.ON == false)
-            {
-                if (PlayerRun.CrouchOn != true)
-                {
-                    if (Count == 0)
-                    {
-                        LifeCount--;
-                        Count = 1;
-                    }
-                }
-            }
-
-        }
-
-        if (other.CompareTag("BossV"))
-        {
-            if (PlayerRun.CrouchOn != true)
-            {
-                if (Count == 0 && Table.ON == false)
-                {
-                    LifeCount--;
-                    Count = 1;
-                }
-            }
-        }
+ 
      
         if (LifeCount == 4)
         {
