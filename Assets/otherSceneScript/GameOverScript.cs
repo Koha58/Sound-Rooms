@@ -59,74 +59,7 @@ public class GameOverScript : MonoBehaviour
    
     private void OnTriggerEnter(Collider other)
     {
-        GameObject gobj = GameObject.Find("Player");
-        PlayerSeen PS = gobj.GetComponent<PlayerSeen>();
-
-        if(other.CompareTag("Enemy"))
-        {
-            if (PS.onoff == 1)
-            {
-                if (Count == 0)
-                {
-                    LifeCount--;
-                    Count = 1;
-                }
-            }
-        }
-
-        if (other.CompareTag("EnemyG"))
-        {
-            Enemycontroller EC = other.GetComponent<Enemycontroller>();
-            if (EC.ONOFF == 1 && PS.onoff == 1)
-            {
-                if (Count == 0)
-                {
-                    LifeCount--;
-                    Count = 1;
-                }
-            }
-        }
-
-        if (other.CompareTag("Enemy2G"))
-        {
-            TutorialEnemyController EC = other.GetComponent<TutorialEnemyController>();
-            if (EC.ONOFF == 1 && PS.onoff == 1)
-            {
-                if (Count == 0)
-                {
-                    LifeCount--;
-                    Count = 1;
-                }
-            }
-        }
-
-        if (other.CompareTag("Enemy1"))
-        {
-            TutorialEnemyController EC1 = other.GetComponent<TutorialEnemyController>();
-            if (EC1.ONOFF == 1 && PS.onoff == 1)
-            {
-                if (Count == 0)
-                {
-                    LifeCount--;
-                    Count = 1;
-                }
-            }
-        }
-
-        if (other.CompareTag("EnemySearch"))
-        {
-            EnemySearchcontroller ESC = other.GetComponent<EnemySearchcontroller>();
-            if (ESC.ONOFF == 1 && PS.onoff == 1)
-            {
-                if (Count == 0)
-                {
-                    LifeCount--;
-                    Count = 1;
-                }
-            }
-        }
-
- 
+     
      
         if (LifeCount == 4)
         {
