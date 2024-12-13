@@ -216,7 +216,6 @@ public class EnemyController1 : MonoBehaviour
                     animator.SetBool("Run", false);
                     audioSourse.clip = walkClip;
                     navMeshAgent.speed = 2.0f;
-                    // navMeshAgent.SetDestination(route[pointCount].position);
                     transform.LookAt(PatrolPoints[pointCount].transform);
                     navMeshAgent.SetDestination(PatrolPoints[pointCount].position);
                 }
