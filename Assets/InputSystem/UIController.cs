@@ -4,17 +4,14 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Audio;
-using UnityEngine.EventSystems;
-using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using static UnityEngine.Rendering.DebugUI;
 
 public class UIController : MonoBehaviour
 {
     private UIInputActions _uiInputActions;
 
-    [SerializeField] GameObject UICanvas;
+    [SerializeField] GameObject Menyu;
     [SerializeField] GameObject SettingPanel1;
     [SerializeField] GameObject SettingPanel2;
 
@@ -25,14 +22,14 @@ public class UIController : MonoBehaviour
     bool mainSelect;
     int mainSelectCount;
 
-    [SerializeField] GameObject Cursors;
-    [SerializeField] GameObject Cursors1;
-    [SerializeField] GameObject Cursors2;
-    [SerializeField] GameObject Cursors3;
-    [SerializeField] GameObject RBButton;
-    [SerializeField] GameObject RBButton1;
-    [SerializeField] GameObject RBButton2;
-    [SerializeField] GameObject RBButton3;
+    //[SerializeField] GameObject Cursors;
+    //[SerializeField] GameObject Cursors1;
+    //[SerializeField] GameObject Cursors2;
+    //[SerializeField] GameObject Cursors3;
+    //[SerializeField] GameObject RBButton;
+    //[SerializeField] GameObject RBButton1;
+    //[SerializeField] GameObject RBButton2;
+    //[SerializeField] GameObject RBButton3;
 
     bool setting;
     bool menyu;
@@ -74,7 +71,7 @@ public class UIController : MonoBehaviour
         _uiInputActions = new UIInputActions();
         _uiInputActions.Enable();
 
-        UICanvas.SetActive(false);
+        Menyu.SetActive(false);
         SettingPanel1.SetActive(false);
         SettingPanel2.SetActive(false);
 
@@ -91,7 +88,7 @@ public class UIController : MonoBehaviour
 
         if (_uiInputActions.SettingUI.Pouse.triggered)
         {
-            UICanvas.SetActive(true);
+            Menyu.SetActive(true);
             mainSelect = true;
             Time.timeScale = 0;
         }
@@ -120,7 +117,7 @@ public class UIController : MonoBehaviour
 
             if (Input.GetKeyDown("joystick button 1"))
             {
-                UICanvas.SetActive(false);
+                Menyu.SetActive(false);
                 mainSelect = false;
                 Time.timeScale = 1;
             }
@@ -255,41 +252,41 @@ public class UIController : MonoBehaviour
 
         Image imageSettingButton = SettingButton.GetComponent<Image>();
 
-        Image imageCursorsButton = Cursors.GetComponent<Image>();
-        Image imageCursors1Button = Cursors1.GetComponent<Image>();
-        Image imageCursors2Button = Cursors2.GetComponent<Image>();
-        Image imageCursors3Button = Cursors3.GetComponent<Image>();
+        //Image imageCursorsButton = Cursors.GetComponent<Image>();
+        //Image imageCursors1Button = Cursors1.GetComponent<Image>();
+        //Image imageCursors2Button = Cursors2.GetComponent<Image>();
+        //Image imageCursors3Button = Cursors3.GetComponent<Image>();
 
         if (settingCount == 0)
         {
             mainSelect = true;
             imageSettingButton.color = yellowColor;
-            Cursors.SetActive(false);
-            Cursors1.SetActive(false);
-            Cursors2.SetActive(false);
-            Cursors3.SetActive(false);
-            RBButton.SetActive(false);
-            RBButton1.SetActive(false);
-            RBButton2.SetActive(false);
-            RBButton3.SetActive(false);
+            //Cursors.SetActive(false);
+            //Cursors1.SetActive(false);
+            //Cursors2.SetActive(false);
+            //Cursors3.SetActive(false);
+            //RBButton.SetActive(false);
+            //RBButton1.SetActive(false);
+            //RBButton2.SetActive(false);
+            //RBButton3.SetActive(false);
 
         }
         else if (settingCount == 1)
         {
-            imageSettingButton.color = whiteColor;
-            imageCursorsButton.color = yellowColor;
-            imageCursors1Button.color = whiteColor;
-            imageCursors2Button.color = whiteColor;
-            imageCursors3Button.color = whiteColor;
+            //imageSettingButton.color = whiteColor;
+            //imageCursorsButton.color = yellowColor;
+            //imageCursors1Button.color = whiteColor;
+            //imageCursors2Button.color = whiteColor;
+            //imageCursors3Button.color = whiteColor;
 
-            Cursors.SetActive(true);
-            Cursors1.SetActive(false);
-            Cursors2.SetActive(false);
-            Cursors3.SetActive(false);
-            RBButton.SetActive(true);
-            RBButton1.SetActive(false);
-            RBButton2.SetActive(false);
-            RBButton3.SetActive(false);
+            //Cursors.SetActive(true);
+            //Cursors1.SetActive(false);
+            //Cursors2.SetActive(false);
+            //Cursors3.SetActive(false);
+            //RBButton.SetActive(true);
+            //RBButton1.SetActive(false);
+            //RBButton2.SetActive(false);
+            //RBButton3.SetActive(false);
 
             if (Input.GetKey("joystick button 5"))
             {
@@ -312,20 +309,20 @@ public class UIController : MonoBehaviour
         }
         else if(settingCount ==2)
         {
-            imageSettingButton.color = whiteColor;
-            imageCursorsButton.color = whiteColor;
-            imageCursors1Button.color = yellowColor;
-            imageCursors2Button.color = whiteColor;
-            imageCursors3Button.color = whiteColor;
+            //imageSettingButton.color = whiteColor;
+            //imageCursorsButton.color = whiteColor;
+            //imageCursors1Button.color = yellowColor;
+            //imageCursors2Button.color = whiteColor;
+            //imageCursors3Button.color = whiteColor;
 
-            Cursors.SetActive(false);
-            Cursors1.SetActive(true);
-            Cursors2.SetActive(false);
-            Cursors3.SetActive(false);
-            RBButton.SetActive(false);
-            RBButton1.SetActive(true);
-            RBButton2.SetActive(false);
-            RBButton3.SetActive(false);
+            //Cursors.SetActive(false);
+            //Cursors1.SetActive(true);
+            //Cursors2.SetActive(false);
+            //Cursors3.SetActive(false);
+            //RBButton.SetActive(false);
+            //RBButton1.SetActive(true);
+            //RBButton2.SetActive(false);
+            //RBButton3.SetActive(false);
 
             if (Input.GetKey("joystick button 5"))
             {
@@ -348,20 +345,20 @@ public class UIController : MonoBehaviour
         }
         else if( settingCount==3)
         {
-            imageSettingButton.color = whiteColor;
-            imageCursorsButton.color = whiteColor;
-            imageCursors1Button.color = whiteColor;
-            imageCursors2Button.color = yellowColor;
-            imageCursors3Button.color = whiteColor;
+            //imageSettingButton.color = whiteColor;
+            //imageCursorsButton.color = whiteColor;
+            //imageCursors1Button.color = whiteColor;
+            //imageCursors2Button.color = yellowColor;
+            //imageCursors3Button.color = whiteColor;
 
-            Cursors.SetActive(false);
-            Cursors1.SetActive(false);
-            Cursors2.SetActive(true);
-            Cursors3.SetActive(false);
-            RBButton.SetActive(false);
-            RBButton1.SetActive(false);
-            RBButton2.SetActive(true);
-            RBButton3.SetActive(false);
+            //Cursors.SetActive(false);
+            //Cursors1.SetActive(false);
+            //Cursors2.SetActive(true);
+            //Cursors3.SetActive(false);
+            //RBButton.SetActive(false);
+            //RBButton1.SetActive(false);
+            //RBButton2.SetActive(true);
+            //RBButton3.SetActive(false);
 
             if (Input.GetKey("joystick button 5"))
             {
@@ -384,20 +381,20 @@ public class UIController : MonoBehaviour
         }
         else if(settingCount==4)
         {
-            imageSettingButton.color = whiteColor;
-            imageCursorsButton.color = whiteColor;
-            imageCursors1Button.color = whiteColor;
-            imageCursors2Button.color = whiteColor;
-            imageCursors3Button.color = yellowColor;
+            //imageSettingButton.color = whiteColor;
+            //imageCursorsButton.color = whiteColor;
+            //imageCursors1Button.color = whiteColor;
+            //imageCursors2Button.color = whiteColor;
+            //imageCursors3Button.color = yellowColor;
 
-            Cursors.SetActive(false);
-            Cursors1.SetActive(false);
-            Cursors2.SetActive(false);
-            Cursors3.SetActive(true);
-            RBButton.SetActive(false);
-            RBButton1.SetActive(false);
-            RBButton2.SetActive(false);
-            RBButton3.SetActive(true);
+            //Cursors.SetActive(false);
+            //Cursors1.SetActive(false);
+            //Cursors2.SetActive(false);
+            //Cursors3.SetActive(true);
+            //RBButton.SetActive(false);
+            //RBButton1.SetActive(false);
+            //RBButton2.SetActive(false);
+            //RBButton3.SetActive(true);
 
             if (Input.GetKey("joystick button 5"))
             {
@@ -488,4 +485,9 @@ public class UIController : MonoBehaviour
         SceneManager.LoadScene("StartScene");
     }
 
+    public void OnSettingMenuButton()
+    {
+        Debug.Log("1");
+        Menyu.SetActive(true);
+    }
 }

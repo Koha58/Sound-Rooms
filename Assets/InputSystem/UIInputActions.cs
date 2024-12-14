@@ -130,6 +130,34 @@ public partial class @UIInputActions: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""KeybordMouseUI"",
+            ""id"": ""470779c9-4d85-47c9-b202-4c9e2fc2569f"",
+            ""actions"": [
+                {
+                    ""name"": ""New action"",
+                    ""type"": ""Button"",
+                    ""id"": ""2f4f1f05-83ec-4e9e-b1fa-72e0a0b8e99d"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""65ec4002-0f18-4eab-be0f-1d3c4612abf5"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""New action"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -141,6 +169,9 @@ public partial class @UIInputActions: IInputActionCollection2, IDisposable
         m_SettingUI_MainSelsectDown = m_SettingUI.FindAction("MainSelsectDown", throwIfNotFound: true);
         m_SettingUI_MainSelectLeft = m_SettingUI.FindAction("MainSelectLeft", throwIfNotFound: true);
         m_SettingUI_MainSelectRight = m_SettingUI.FindAction("MainSelectRight", throwIfNotFound: true);
+        // KeybordMouseUI
+        m_KeybordMouseUI = asset.FindActionMap("KeybordMouseUI", throwIfNotFound: true);
+        m_KeybordMouseUI_Newaction = m_KeybordMouseUI.FindAction("New action", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -276,6 +307,52 @@ public partial class @UIInputActions: IInputActionCollection2, IDisposable
         }
     }
     public SettingUIActions @SettingUI => new SettingUIActions(this);
+
+    // KeybordMouseUI
+    private readonly InputActionMap m_KeybordMouseUI;
+    private List<IKeybordMouseUIActions> m_KeybordMouseUIActionsCallbackInterfaces = new List<IKeybordMouseUIActions>();
+    private readonly InputAction m_KeybordMouseUI_Newaction;
+    public struct KeybordMouseUIActions
+    {
+        private @UIInputActions m_Wrapper;
+        public KeybordMouseUIActions(@UIInputActions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Newaction => m_Wrapper.m_KeybordMouseUI_Newaction;
+        public InputActionMap Get() { return m_Wrapper.m_KeybordMouseUI; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(KeybordMouseUIActions set) { return set.Get(); }
+        public void AddCallbacks(IKeybordMouseUIActions instance)
+        {
+            if (instance == null || m_Wrapper.m_KeybordMouseUIActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_KeybordMouseUIActionsCallbackInterfaces.Add(instance);
+            @Newaction.started += instance.OnNewaction;
+            @Newaction.performed += instance.OnNewaction;
+            @Newaction.canceled += instance.OnNewaction;
+        }
+
+        private void UnregisterCallbacks(IKeybordMouseUIActions instance)
+        {
+            @Newaction.started -= instance.OnNewaction;
+            @Newaction.performed -= instance.OnNewaction;
+            @Newaction.canceled -= instance.OnNewaction;
+        }
+
+        public void RemoveCallbacks(IKeybordMouseUIActions instance)
+        {
+            if (m_Wrapper.m_KeybordMouseUIActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IKeybordMouseUIActions instance)
+        {
+            foreach (var item in m_Wrapper.m_KeybordMouseUIActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_KeybordMouseUIActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public KeybordMouseUIActions @KeybordMouseUI => new KeybordMouseUIActions(this);
     public interface ISettingUIActions
     {
         void OnPouse(InputAction.CallbackContext context);
@@ -283,5 +360,9 @@ public partial class @UIInputActions: IInputActionCollection2, IDisposable
         void OnMainSelsectDown(InputAction.CallbackContext context);
         void OnMainSelectLeft(InputAction.CallbackContext context);
         void OnMainSelectRight(InputAction.CallbackContext context);
+    }
+    public interface IKeybordMouseUIActions
+    {
+        void OnNewaction(InputAction.CallbackContext context);
     }
 }
