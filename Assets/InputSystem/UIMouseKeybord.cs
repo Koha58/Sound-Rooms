@@ -8,6 +8,8 @@ using UnityEngine.UI;
 
 public class UIMouseKeybord : MonoBehaviour
 {
+    private UIInputActions _uiInputActions; //Inputsystem取得
+
     //設定画面を表示、BGM、SE、マウス感度、マイク、コントローラー説明、キーボード説明、タイトルに戻る画面を表示
     [SerializeField] GameObject menyu, settingPanel1, settingPanel2, settingPanel3;
 
@@ -22,13 +24,15 @@ public class UIMouseKeybord : MonoBehaviour
     //マイクスライダー、BGMスライダー、SEスライダー、マウススライダー
     [SerializeField] Slider micSlider, bgmSlider,seSlider, mouseSlider; 　
 
-    [SerializeField] AudioMixer audioMixer;
+    [SerializeField] AudioMixer _audioMixer;
     [SerializeField] GameObject micObject;
 
     public float volume, level1, volume2, volume3;
     public CinemachineFreeLook VCamera;
     public float ButtonCount;
     public bool ButtonON;
+
+    float StartButton;//メニュー画面の表示　ON＝１、OFF＝０；
 
     //UI選択時の色
     Color whiteColor = Color.white;
@@ -47,22 +51,27 @@ public class UIMouseKeybord : MonoBehaviour
 
         imageGamePadSettingButton = gamePadSettingButton.GetComponent<Image>();
         imageKeyBoardSettingButton = keyBoardSettingButton.GetComponent<Image>();
+
+        //InputSystemのインスタンス化
+        _uiInputActions = new UIInputActions();
+        _uiInputActions.Enable();
+
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        OnSettingMenu();
     }
 
     void SetBGM(float volume2)
     {
-        audioMixer.SetFloat("BGM", volume2);
+        _audioMixer.SetFloat("BGM", volume2);
     }
 
     void SetSE(float volume3)
     {
-        audioMixer.SetFloat("SE", volume3);
+        _audioMixer.SetFloat("SE", volume3);
     }
 
     void SetMic(float volume)
@@ -77,7 +86,7 @@ public class UIMouseKeybord : MonoBehaviour
         VCamera.m_XAxis.m_MaxSpeed = mouseSlider.value * 50;
     }
 
-    //マウスでクリックした時
+    //マウス・キーボード設定
     #region
     //歯車マークを押した時
     public void OnSettingMenuButton()
@@ -155,5 +164,44 @@ public class UIMouseKeybord : MonoBehaviour
         settingPanel3.SetActive(false);
         Time.timeScale = 1;
     }
+    #endregion
+
+    //コントローラー設定
+    #region
+    
+    public void OnSettingMenu()
+    {
+        if (_uiInputActions.ControllerUI.StartButton.triggered) 
+        {
+            if (StartButton == 0)
+            {
+                menyu.SetActive(true);
+                imageSettingButton.color = yellowColor;
+                imageOperationExplanationButton.color = whiteColor;
+                imageTitleButton.color = whiteColor;
+                settingPanel1.SetActive(true);
+                Time.timeScale = 0;
+                StartButton = 1;
+            }
+            else if(StartButton == 1)
+            {
+                menyu.SetActive(false);
+                settingPanel1.SetActive(true);
+                settingPanel2.SetActive(false);
+                settingPanel3.SetActive(false);
+                Time.timeScale = 1;
+                StartButton = 0;
+            }
+        }
+    }
+
+    public void OnMainSelect()
+    {
+        //if (_uiInputActions.ControllerUI.LeftStick)
+        //{
+          
+        //}
+    }
+
     #endregion
 }

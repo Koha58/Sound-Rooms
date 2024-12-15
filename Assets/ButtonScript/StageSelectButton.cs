@@ -128,36 +128,36 @@ public class StageSelectButton : MonoBehaviour
         {
             StageSelect();
 
-            if (_uiInputActions.SettingUI.MainSelsectUp.triggered)
-            {
-                stage--;
-                for (int i = 0; i < StageButtons.Length; i++)
-                {
-                    StageButtons[i].GetComponent<Image>().color = new Color32(255, 255, 255, 45);
-                }
+            //if (_uiInputActions.SettingUI.MainSelsectUp.triggered)
+            //{
+            //    stage--;
+            //    for (int i = 0; i < StageButtons.Length; i++)
+            //    {
+            //        StageButtons[i].GetComponent<Image>().color = new Color32(255, 255, 255, 45);
+            //    }
 
-                if (stage < 0)
-                {
-                    stage = 0;
-                }
+            //    if (stage < 0)
+            //    {
+            //        stage = 0;
+            //    }
 
-                StageButtons[stage].GetComponent<Image>().color = new Color32(255, 255, 255, 255);
-            }
-            else if (_uiInputActions.SettingUI.MainSelsectDown.triggered)
-            {
-                stage++;
-                for (int i = 0; i < StageButtons.Length; i++)
-                {
-                    StageButtons[i].GetComponent<Image>().color = new Color32(255, 255, 255, 45);
-                }
+            //    StageButtons[stage].GetComponent<Image>().color = new Color32(255, 255, 255, 255);
+            //}
+            //else if (_uiInputActions.SettingUI.MainSelsectDown.triggered)
+            //{
+            //    stage++;
+            //    for (int i = 0; i < StageButtons.Length; i++)
+            //    {
+            //        StageButtons[i].GetComponent<Image>().color = new Color32(255, 255, 255, 45);
+            //    }
 
-                if (stage > 1)
-                {
-                    stage = 1;
-                }
+            //    if (stage > 1)
+            //    {
+            //        stage = 1;
+            //    }
 
-                StageButtons[stage].GetComponent<Image>().color = new Color32(255, 255, 255, 255);
-            }
+            //    StageButtons[stage].GetComponent<Image>().color = new Color32(255, 255, 255, 255);
+            //}
 
 
             if (Input.GetKeyDown("joystick button 0"))

@@ -86,113 +86,113 @@ public class UIController : MonoBehaviour
     void Update()
     {
 
-        if (_uiInputActions.SettingUI.Pouse.triggered)
-        {
-            Menyu.SetActive(true);
-            mainSelect = true;
-            Time.timeScale = 0;
-        }
+        //if (_uiInputActions.SettingUI.Pouse.triggered)
+        //{
+        //    Menyu.SetActive(true);
+        //    mainSelect = true;
+        //    Time.timeScale = 0;
+        //}
 
-        if (mainSelect)
-        {
-            operatinginstructions = false;
-            setting = false;
-            MainImage();
-            if (_uiInputActions.SettingUI.MainSelsectUp.triggered)
-            {
-                mainSelectCount++;
-                if (mainSelectCount > 3)
-                {
-                    mainSelectCount =2;
-                }
-            }
-            else if (_uiInputActions.SettingUI.MainSelsectDown.triggered)
-            {
-                mainSelectCount--;
-                if (mainSelectCount < 0)
-                {
-                    mainSelectCount = 0;
-                }
-            }
+        //if (mainSelect)
+        //{
+        //    operatinginstructions = false;
+        //    setting = false;
+        //    MainImage();
+        //    if (_uiInputActions.SettingUI.MainSelsectUp.triggered)
+        //    {
+        //        mainSelectCount++;
+        //        if (mainSelectCount > 3)
+        //        {
+        //            mainSelectCount =2;
+        //        }
+        //    }
+        //    else if (_uiInputActions.SettingUI.MainSelsectDown.triggered)
+        //    {
+        //        mainSelectCount--;
+        //        if (mainSelectCount < 0)
+        //        {
+        //            mainSelectCount = 0;
+        //        }
+        //    }
 
-            if (Input.GetKeyDown("joystick button 1"))
-            {
-                Menyu.SetActive(false);
-                mainSelect = false;
-                Time.timeScale = 1;
-            }
-        }
+        //    if (Input.GetKeyDown("joystick button 1"))
+        //    {
+        //        Menyu.SetActive(false);
+        //        mainSelect = false;
+        //        Time.timeScale = 1;
+        //    }
+        //}
 
-        if (setting)
-        {
-            operatinginstructions = false;
-            SettingPanel1Image();
-            if (_uiInputActions.SettingUI.MainSelectRight.triggered)
-            {
-                menyu = true;
-                settingCount = 1;
-            }
-            else if (_uiInputActions.SettingUI.MainSelectLeft.triggered)
-            {
-                menyu=false;
-                settingCount = 0;
-                mainSelect = true;
-            }
+        //if (setting)
+        //{
+        //    operatinginstructions = false;
+        //    SettingPanel1Image();
+        //    if (_uiInputActions.SettingUI.MainSelectRight.triggered)
+        //    {
+        //        menyu = true;
+        //        settingCount = 1;
+        //    }
+        //    else if (_uiInputActions.SettingUI.MainSelectLeft.triggered)
+        //    {
+        //        menyu=false;
+        //        settingCount = 0;
+        //        mainSelect = true;
+        //    }
 
-            if (menyu)
-            {
-                mainSelect = false;
-                if (_uiInputActions.SettingUI.MainSelsectUp.triggered)
-                {
-                    settingCount--;
-                    if (settingCount < 0)
-                    {
-                        settingCount = 1;
-                    }
+        //    if (menyu)
+        //    {
+        //        mainSelect = false;
+        //        if (_uiInputActions.SettingUI.MainSelsectUp.triggered)
+        //        {
+        //            settingCount--;
+        //            if (settingCount < 0)
+        //            {
+        //                settingCount = 1;
+        //            }
 
-                }
-                else if (_uiInputActions.SettingUI.MainSelsectDown.triggered)
-                {
+        //        }
+        //        else if (_uiInputActions.SettingUI.MainSelsectDown.triggered)
+        //        {
                 
 
-                    settingCount++;
-                    if (settingCount > 5)
-                    {
-                        settingCount = 4;
-                    }
-                }
-            }
+        //            settingCount++;
+        //            if (settingCount > 5)
+        //            {
+        //                settingCount = 4;
+        //            }
+        //        }
+        //    }
 
-             if (Input.GetKeyDown("joystick button 0"))
-            {
-                menyu = false;
-                settingCount = 0;
-                mainSelect = true;
-            }
-        }
+        //     if (Input.GetKeyDown("joystick button 0"))
+        //    {
+        //        menyu = false;
+        //        settingCount = 0;
+        //        mainSelect = true;
+        //    }
+        //}
 
-        if (operatinginstructions)
-        {
-            mainSelect = false;
-            setting = false;
-            SettingPanel2Image();
-            if (_uiInputActions.SettingUI.MainSelectRight.triggered)
-            {
-                operatinginstructionsCount++;
-                if (operatinginstructionsCount > 3)
-                {
-                    operatinginstructionsCount = 2;
-                }
-            }
-            else if (_uiInputActions.SettingUI.MainSelectLeft.triggered)
-            {
-                operatinginstructionsCount--;
-                if (operatinginstructionsCount < 0)
-                {
-                    operatinginstructionsCount = 0;
-                }
-            }
-        }
+        //if (operatinginstructions)
+        //{
+        //    mainSelect = false;
+        //    setting = false;
+        //    SettingPanel2Image();
+        //    if (_uiInputActions.SettingUI.MainSelectRight.triggered)
+        //    {
+        //        operatinginstructionsCount++;
+        //        if (operatinginstructionsCount > 3)
+        //        {
+        //            operatinginstructionsCount = 2;
+        //        }
+        //    }
+        //    else if (_uiInputActions.SettingUI.MainSelectLeft.triggered)
+        //    {
+        //        operatinginstructionsCount--;
+        //        if (operatinginstructionsCount < 0)
+        //        {
+        //            operatinginstructionsCount = 0;
+        //        }
+        //    }
+        //}
 
 
     }
