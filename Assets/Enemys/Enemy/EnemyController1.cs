@@ -33,6 +33,7 @@ public class EnemyController1 : MonoBehaviour
     [SerializeField] AudioClip searchClip;    //’T‚·‰¹
     [SerializeField] AudioClip runClip;       //‘–‚é‰¹
     [SerializeField] AudioClip walkClip;      //•à‚­‰¹
+
     void Idle() { audioSourse.PlayOneShot(searchClip); }
     void Run() { audioSourse.PlayOneShot(runClip); }
     void Walk() { audioSourse.PlayOneShot(walkClip); }
@@ -298,7 +299,7 @@ public class EnemyController1 : MonoBehaviour
                     animator.SetBool("Walk",false);
                     animator.SetBool("Run", true);
                     transform.LookAt(player.transform);
-                    navMeshAgent.speed = 4.0f;
+                    navMeshAgent.speed = 3.5f;
                     PS.onoff = 1;
                     PS.Visualization = true;
                     Chase();
