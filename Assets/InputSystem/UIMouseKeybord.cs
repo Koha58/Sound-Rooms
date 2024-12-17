@@ -1,10 +1,15 @@
 using Cinemachine;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Interactions;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using static UnityEngine.EventSystems.StandaloneInputModule;
 
 public class UIMouseKeybord : MonoBehaviour
 {
@@ -32,7 +37,10 @@ public class UIMouseKeybord : MonoBehaviour
     public float ButtonCount;
     public bool ButtonON;
 
-    float StartButton;//メニュー画面の表示　ON＝１、OFF＝０；
+    private Gamepad gamepad;
+
+    float isStartButton;//メニュー画面の表示　ON＝１、OFF＝０；
+    float mainSelectCount;//コントローラーのメニュー画面移動
 
     //UI選択時の色
     Color whiteColor = Color.white;
@@ -55,6 +63,13 @@ public class UIMouseKeybord : MonoBehaviour
         //InputSystemのインスタンス化
         _uiInputActions = new UIInputActions();
         _uiInputActions.Enable();
+
+        // 最初に接続されているゲームパッドを取得
+        gamepad = Gamepad.current;
+        if (gamepad == null)
+        {
+            Debug.Log("ゲームパッドが接続されていません。");
+        }
 
     }
 
@@ -168,12 +183,12 @@ public class UIMouseKeybord : MonoBehaviour
 
     //コントローラー設定
     #region
-    
+
     public void OnSettingMenu()
     {
         if (_uiInputActions.ControllerUI.StartButton.triggered) 
         {
-            if (StartButton == 0)
+            if (isStartButton == 0)
             {
                 menyu.SetActive(true);
                 imageSettingButton.color = yellowColor;
@@ -181,27 +196,27 @@ public class UIMouseKeybord : MonoBehaviour
                 imageTitleButton.color = whiteColor;
                 settingPanel1.SetActive(true);
                 Time.timeScale = 0;
-                StartButton = 1;
+                isStartButton = 1;
             }
-            else if(StartButton == 1)
+            else if(isStartButton == 1)
             {
                 menyu.SetActive(false);
                 settingPanel1.SetActive(true);
                 settingPanel2.SetActive(false);
                 settingPanel3.SetActive(false);
                 Time.timeScale = 1;
-                StartButton = 0;
+                isStartButton = 0;
             }
         }
     }
 
     public void OnMainSelect()
     {
-        //if (_uiInputActions.ControllerUI.LeftStick)
-        //{
-          
-        //}
+       
     }
+
+
 
     #endregion
 }
+
