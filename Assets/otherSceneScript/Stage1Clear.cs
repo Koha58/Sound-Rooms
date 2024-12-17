@@ -19,12 +19,12 @@ public class Stage1Clear : MonoBehaviour
 
     void OnCollisionEnter(Collision other)
     {
-        GameObject cobj = GameObject.Find("EnemyAttackArea");
-        EnemyAttack EAtack = cobj.GetComponent<EnemyAttack>(); //付いているスクリプトを取得
+        GameObject impactObjectsArea = GameObject.Find("ImpactOnObjectsArea");
+        ImpactOnObjects impactObjects = impactObjectsArea.GetComponent<ImpactOnObjects>(); //付いているスクリプトを取得
 
         if (other.gameObject.name == "ExitDoor")
         {
-            if (EAtack.count == 1)
+            if (impactObjects.count == 1)
             {
                 SceneManager.LoadScene("Stage1Clear");
             }

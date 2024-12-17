@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 0.524
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.09446845, g: 0.118273765, b: 0.16082697, a: 0.524}
+  m_IndirectSpecularColor: {r: 0.0944687, g: 0.1182742, b: 0.16082758, a: 0.524}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -15997,7 +15997,6 @@ MonoBehaviour:
   PatrolPoints:
   - {fileID: 578225526}
   - {fileID: 1613709628}
-  navMeshAgent: {fileID: 1090088577}
   detectionRange: 10
   animator: {fileID: 1090088581}
   audioSourse: {fileID: 1090088576}
@@ -23480,7 +23479,6 @@ MonoBehaviour:
   PatrolPoints:
   - {fileID: 315993192}
   - {fileID: 1539384590}
-  navMeshAgent: {fileID: 1301852724}
   detectionRange: 10
   animator: {fileID: 1301852728}
   audioSourse: {fileID: 1301852723}
@@ -27577,26 +27575,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 2670424832789362829}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1573040134
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1573040124}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cd80787246eef094f8868c6b03513adb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  uiCount: {fileID: 0}
-  uiCount2: {fileID: 0}
-  uiCount3: {fileID: 0}
-  uiCount4: {fileID: 0}
-  uiCount5: {fileID: 0}
-  uiCount6: {fileID: 0}
-  uiCount7: {fileID: 0}
-  uiCount8: {fileID: 0}
 --- !u!81 &1573040135
 AudioListener:
   m_ObjectHideFlags: 0
@@ -38675,7 +38653,6 @@ MonoBehaviour:
   PatrolPoints:
   - {fileID: 1573608977}
   - {fileID: 1884075388}
-  navMeshAgent: {fileID: 2120517580817973839}
   detectionRange: 10
   animator: {fileID: 2120517580817973843}
   audioSourse: {fileID: 2120517580817973838}
@@ -39613,8 +39590,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2445825737672717793, guid: 46909d51fabcb1e499e50df7b0a13ec1,
         type: 3}
+      propertyPath: m_Name
+      value: ImpactOnObjectsArea
+      objectReference: {fileID: 0}
+    - target: {fileID: 2445825737672717793, guid: 46909d51fabcb1e499e50df7b0a13ec1,
+        type: 3}
       propertyPath: m_TagString
-      value: EnemyAttackArea
+      value: ImpactOnObjectsArea
       objectReference: {fileID: 0}
     - target: {fileID: 2520331482759739018, guid: 46909d51fabcb1e499e50df7b0a13ec1,
         type: 3}
@@ -39952,14 +39934,15 @@ PrefabInstance:
     - {fileID: 6562518041278379172, guid: 46909d51fabcb1e499e50df7b0a13ec1, type: 3}
     - {fileID: 8238830485857108767, guid: 46909d51fabcb1e499e50df7b0a13ec1, type: 3}
     - {fileID: 436989097767746638, guid: 46909d51fabcb1e499e50df7b0a13ec1, type: 3}
+    - {fileID: 1393926831967751928, guid: 46909d51fabcb1e499e50df7b0a13ec1, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 1730480739002498145, guid: 46909d51fabcb1e499e50df7b0a13ec1,
         type: 3}
-      insertIndex: 19
+      insertIndex: 18
       addedObject: {fileID: 275328555}
     - targetCorrespondingSourceObject: {fileID: 1730480739002498145, guid: 46909d51fabcb1e499e50df7b0a13ec1,
         type: 3}
-      insertIndex: 20
+      insertIndex: 19
       addedObject: {fileID: 1934685981}
     - targetCorrespondingSourceObject: {fileID: 3651380053937961437, guid: 46909d51fabcb1e499e50df7b0a13ec1,
         type: 3}
@@ -39978,10 +39961,6 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 1573040135}
-    - targetCorrespondingSourceObject: {fileID: 1389421769132500699, guid: 46909d51fabcb1e499e50df7b0a13ec1,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1573040134}
     - targetCorrespondingSourceObject: {fileID: 1389421769132500699, guid: 46909d51fabcb1e499e50df7b0a13ec1,
         type: 3}
       insertIndex: -1

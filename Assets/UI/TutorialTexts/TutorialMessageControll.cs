@@ -127,9 +127,9 @@ public class TutorialMessageControll : MonoBehaviour
 
         if (Message == 3)
         {
-            GameObject cobj = GameObject.Find("EnemyAttackArea");
-            EnemyAttack EAtack = cobj.GetComponent<EnemyAttack>(); //付いているスクリプトを取得
-            if (EAtack.count == 1)
+            GameObject impactObjectsArea = GameObject.Find("ImpactOnObjectsArea");
+            ImpactOnObjects impactObjects = impactObjectsArea.GetComponent<ImpactOnObjects>(); //付いているスクリプトを取得
+            if (impactObjects.count == 1)
             {
                 Messages[2].state = 0;
                 Message++;

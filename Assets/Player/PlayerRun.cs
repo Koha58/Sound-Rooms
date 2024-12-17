@@ -44,22 +44,9 @@ public class PlayerRun : MonoBehaviour
 
     private Rigidbody rb;
 
-    public float count1;
-    public float count2;
-    public float count3;
-    public float count4;
-    public float count5;
-    public float count6;
-    public float count7;
-    public float count8;
-    public float count9;
-    public float count10;
-    public float count11;
-    public float count12;
-    public int cond;
-
     //しゃがむとき
     public static bool CrouchOn = false;
+
 
     void Start()
     {
@@ -70,20 +57,6 @@ public class PlayerRun : MonoBehaviour
         Application.targetFrameRate = 60;
 
         rb = GetComponent<Rigidbody>();
-
-        count1 = 0;
-        count2 = 0;
-        count3 = 0;
-        count4 = 0;
-        count5 = 0;
-        count6 = 0;
-        count7 = 0;
-        count8 = 0;
-        count9 = 0;
-        count10 = 0;
-        count11 = 0;
-        count12 = 0;
-        cond = 0;
     }
 
     void Update()
@@ -96,25 +69,8 @@ public class PlayerRun : MonoBehaviour
         //慣性管理、しゃがみ
         Inertia();
 
-        //コントローラー操作時の速度調整
-        if (Input.GetAxisRaw("Vertical") == 0 && Input.GetAxisRaw("Horizontal") == 0)
-        {
-            count1 = 0f;
-            count2 = 0f;
-            count3 = 0f;
-            count4 = 0f;
-            count5 = 0f;
-            count6 = 0f;
-            count7 = 0f;
-            count8 = 0f;
-            count9 = 0f;
-            count10 = 0f;
-            count11 = 0f;
-            count12 = 0f;
-            cond = 0;
-        }
-
-       Rotation();
+        //Playerの回転
+        Rotation();
 
     }
 
@@ -136,205 +92,7 @@ public class PlayerRun : MonoBehaviour
         if (crouchWalk == true)
         {
             playerRb.velocity = moveSpeed / 5;
-        }
-
-        if (InputDeviceManager.Instance.CurrentDeviceType == InputDeviceType.Xbox)
-        {
-            if (cond == 1)
-            {
-                count1 += Time.deltaTime;
-                count2 = 0;
-                count3 = 0f;
-                count4 = 0f;
-                count5 = 0;
-                count6 = 0f;
-                count7 = 0f;
-                count8 = 0f;
-                count9 = 0;
-                count10 = 0f;
-                count11 = 0f;
-                count12 = 0f;
-            }
-            else if (cond == 2)
-            {
-                count2 += Time.deltaTime;
-                count1 = 0;
-                count3 = 0f;
-                count4 = 0f;
-                count5 = 0;
-                count6 = 0f;
-                count7 = 0f;
-                count8 = 0f;
-                count9 = 0;
-                count10 = 0f;
-                count11 = 0f;
-                count12 = 0f;
-            }
-            else if (cond == 3)
-            {
-                count3 += Time.deltaTime;
-                count1 = 0;
-                count2 = 0f;
-                count4 = 0f;
-                count5 = 0;
-                count6 = 0f;
-                count7 = 0f;
-                count8 = 0f;
-                count9 = 0;
-                count10 = 0f;
-                count11 = 0f;
-                count12 = 0f;
-            }
-            else if (cond == 4)
-            {
-                count4 += Time.deltaTime;
-                count1 = 0;
-                count2 = 0f;
-                count3 = 0f;
-                count5 = 0;
-                count6 = 0f;
-                count7 = 0f;
-                count8 = 0f;
-                count9 = 0;
-                count10 = 0f;
-                count11 = 0f;
-                count12 = 0f;
-            }
-            else if (cond == 5)
-            {
-                count5 += Time.deltaTime;
-                count1 = 0;
-                count2 = 0f;
-                count3 = 0f;
-                count4 = 0;
-                count6 = 0f;
-                count7 = 0f;
-                count8 = 0f;
-                count9 = 0;
-                count10 = 0f;
-                count11 = 0f;
-                count12 = 0f;
-            }
-            else if (cond == 6)
-            {
-                count6 += Time.deltaTime;
-                count1 = 0;
-                count2 = 0f;
-                count3 = 0f;
-                count4 = 0;
-                count5 = 0f;
-                count7 = 0f;
-                count8 = 0f;
-                count9 = 0;
-                count10 = 0f;
-                count11 = 0f;
-                count12 = 0f;
-            }
-            else if (cond == 7)
-            {
-                count7 += Time.deltaTime;
-                count1 = 0;
-                count2 = 0f;
-                count3 = 0f;
-                count4 = 0;
-                count5 = 0f;
-                count6 = 0f;
-                count8 = 0f;
-                count9 = 0;
-                count10 = 0f;
-                count11 = 0f;
-                count12 = 0f;
-            }
-            else if (cond == 8)
-            {
-                count8 += Time.deltaTime;
-                count1 = 0;
-                count2 = 0f;
-                count3 = 0f;
-                count4 = 0;
-                count5 = 0f;
-                count6 = 0f;
-                count7 = 0f;
-                count9 = 0;
-                count10 = 0f;
-                count11 = 0f;
-                count12 = 0f;
-            }
-            else if (cond == 9)
-            {
-                count8 = 0;
-                count1 = 0;
-                count2 = 0f;
-                count3 = 0f;
-                count4 = 0;
-                count5 = 0f;
-                count6 = 0f;
-                count7 = 0f;
-                count9 += Time.deltaTime;
-                count10 = 0f;
-                count11 = 0f;
-                count12 = 0f;
-            }
-            else if (cond == 10)
-            {
-                count8 = 0;
-                count1 = 0;
-                count2 = 0f;
-                count3 = 0f;
-                count4 = 0;
-                count5 = 0f;
-                count6 = 0f;
-                count7 = 0f;
-                count9 = 0;
-                count10 += Time.deltaTime; ;
-                count11 = 0f;
-                count12 = 0f;
-            }
-            else if (cond == 11)
-            {
-                count8 = 0;
-                count1 = 0;
-                count2 = 0f;
-                count3 = 0f;
-                count4 = 0;
-                count5 = 0f;
-                count6 = 0f;
-                count7 = 0f;
-                count9 = 0;
-                count10 = 0f;
-                count11 += Time.deltaTime; ;
-                count12 = 0f;
-            }
-            else if (cond == 12)
-            {
-                count8 = 0;
-                count1 = 0;
-                count2 = 0f;
-                count3 = 0f;
-                count4 = 0;
-                count5 = 0f;
-                count6 = 0f;
-                count7 = 0f;
-                count9 = 0;
-                count10 = 0f;
-                count11 = 0f;
-                count12 += Time.deltaTime; ;
-            }
-
-            if (count1 < 0.5f && count1 != 0 || count2 < 0.5f && count2 != 0 || count3 < 0.5f && count3 != 0 || count4 < 0.5f && count4 != 0)
-            {
-                playerRb.velocity = moveSpeed * 1.5f;
-            }
-            else if (count5 < 0.5f && count5 != 0 || count6 < 0.5f && count6 != 0 || count7 < 0.5f && count7 != 0 || count8 < 0.5f && count8 != 0)
-            {
-                playerRb.velocity = moveSpeed * 2.5f;
-            }
-            else if (count9 < 0.5f && count9 != 0 || count10 < 0.5f && count10 != 0 || count11 < 0.5f && count11 != 0 || count12 < 0.5f && count12 != 0)
-            {
-                playerRb.velocity = moveSpeed * 1.2f;
-            }
-        }
-
+        }      
     }
 
     /// <summary>
@@ -365,7 +123,6 @@ public class PlayerRun : MonoBehaviour
             run = false;
             crouch = false;
             crouchWalk = false;
-
             CrouchOn = false;
         }
 
@@ -381,7 +138,6 @@ public class PlayerRun : MonoBehaviour
             run = false;
             crouch = false;
             crouchWalk = false;
-
             CrouchOn = false;
         }
 
@@ -397,7 +153,6 @@ public class PlayerRun : MonoBehaviour
             run = false;
             crouch = false;
             crouchWalk = false;
-
             CrouchOn = false;
         }
 
@@ -413,7 +168,6 @@ public class PlayerRun : MonoBehaviour
             run = false;
             crouch = false;
             crouchWalk = false;
-
             CrouchOn = false;
         }
 
@@ -484,10 +238,7 @@ public class PlayerRun : MonoBehaviour
             run = false;
             crouch = false;
             crouchWalk = false;
-
             CrouchOn = false;
-
-            cond = 1;
         }
 
         if (!crouch && Input.GetAxisRaw("Horizontal") < 0)
@@ -502,10 +253,7 @@ public class PlayerRun : MonoBehaviour
             run = false;
             crouch = false;
             crouchWalk = false;
-
             CrouchOn = false;
-
-            cond = 2;
         }
 
         if (!crouch && Input.GetAxisRaw("Vertical") > 0)
@@ -520,10 +268,7 @@ public class PlayerRun : MonoBehaviour
             run = false;
             crouch = false;
             crouchWalk = false;
-
             CrouchOn = false;
-
-            cond = 3;
         }
 
         if (!crouch && Input.GetAxisRaw("Horizontal") > 0)
@@ -538,10 +283,7 @@ public class PlayerRun : MonoBehaviour
             run = false;
             crouch = false;
             crouchWalk = false;
-
             CrouchOn = false;
-
-            cond = 4;
         }
 
         if (!crouch && (Input.GetAxisRaw("Horizontal") > 0 && Input.GetAxisRaw("Vertical") > 0))
@@ -556,8 +298,6 @@ public class PlayerRun : MonoBehaviour
             run = false;
             crouch = false;
             crouchWalk = false;
-            cond = 3;
-            cond = 4;
         }
         if (!crouch && (Input.GetAxisRaw("Horizontal") > 0 && Input.GetAxisRaw("Vertical") < 0))
         {
@@ -571,8 +311,6 @@ public class PlayerRun : MonoBehaviour
             run = false;
             crouch = false;
             crouchWalk = false;
-            cond = 1;
-            cond = 4;
         }
         if (!crouch && (Input.GetAxisRaw("Horizontal") < 0 && Input.GetAxisRaw("Vertical") < 0))
         {
@@ -586,8 +324,6 @@ public class PlayerRun : MonoBehaviour
             run = false;
             crouch = false;
             crouchWalk = false;
-            cond = 1;
-            cond = 2;
         }
         if (!crouch && (Input.GetAxisRaw("Horizontal") < 0 && Input.GetAxisRaw("Vertical") > 0))
         {
@@ -601,8 +337,6 @@ public class PlayerRun : MonoBehaviour
             run = false;
             crouch = false;
             crouchWalk = false;
-            cond = 2;
-            cond = 3;
         }
 
         //走るとき
@@ -729,8 +463,6 @@ public class PlayerRun : MonoBehaviour
             walk = false;
             crouch = false;
             crouchWalk = false;
-
-            cond = 5;
         }
 
         if (!crouch && Input.GetAxisRaw("Horizontal") < 0 && Input.GetKey("joystick button 5"))
@@ -745,8 +477,6 @@ public class PlayerRun : MonoBehaviour
             walk = false;
             crouch = false;
             crouchWalk = false;
-
-            cond = 6;
         }
 
         if (!crouch && Input.GetAxisRaw("Vertical") > 0 && Input.GetKey("joystick button 5"))
@@ -761,8 +491,6 @@ public class PlayerRun : MonoBehaviour
             walk = false;
             crouch = false;
             crouchWalk = false;
-
-            cond = 7;
         }
 
         if (!crouch && Input.GetAxisRaw("Horizontal") > 0 && Input.GetKey("joystick button 5"))
@@ -777,8 +505,6 @@ public class PlayerRun : MonoBehaviour
             walk = false;
             crouch = false;
             crouchWalk = false;
-
-            cond = 8;
         }
 
         if (!crouch && (Input.GetAxisRaw("Horizontal") > 0 && Input.GetAxisRaw("Vertical") > 0) && Input.GetKey("joystick button 5"))
@@ -793,8 +519,6 @@ public class PlayerRun : MonoBehaviour
             walk = false;
             crouch = false;
             crouchWalk = false;
-            cond = 7;
-            cond = 8;
         }
         if (!crouch && (Input.GetAxisRaw("Horizontal") > 0 && Input.GetAxisRaw("Vertical") < 0) && Input.GetKey("joystick button 5"))
         {
@@ -808,8 +532,6 @@ public class PlayerRun : MonoBehaviour
             walk = false;
             crouch = false;
             crouchWalk = false;
-            cond = 5;
-            cond = 8;
         }
         if (!crouch && (Input.GetAxisRaw("Horizontal") < 0 && Input.GetAxisRaw("Vertical") < 0) && Input.GetKey("joystick button 5"))
         {
@@ -823,8 +545,6 @@ public class PlayerRun : MonoBehaviour
             walk = false;
             crouch = false;
             crouchWalk = false;
-            cond = 5;
-            cond = 6;
         }
         if (!crouch && (Input.GetAxisRaw("Horizontal") < 0 && Input.GetAxisRaw("Vertical") > 0) && Input.GetKey("joystick button 5"))
         {
@@ -838,8 +558,6 @@ public class PlayerRun : MonoBehaviour
             walk = false;
             crouch = false;
             crouchWalk = false;
-            cond = 7;
-            cond = 6;
         }
 
         //しゃがみ歩き
@@ -964,8 +682,6 @@ public class PlayerRun : MonoBehaviour
             walk = false;
             crouch = false;
             crouchWalk = true;
-
-            cond = 9;
         }
 
         if (crouch && Input.GetAxisRaw("Horizontal") < 0)
@@ -980,8 +696,6 @@ public class PlayerRun : MonoBehaviour
             walk = false;
             crouch = false;
             crouchWalk = true;
-
-            cond = 10;
         }
 
         if (crouch && Input.GetAxisRaw("Vertical") > 0)
@@ -996,8 +710,6 @@ public class PlayerRun : MonoBehaviour
             walk = false;
             crouch = false;
             crouchWalk = true;
-
-            cond = 11;
         }
 
         if (crouch && Input.GetAxisRaw("Horizontal") > 0)
@@ -1012,8 +724,6 @@ public class PlayerRun : MonoBehaviour
             walk = false;
             crouch = false;
             crouchWalk = true;
-
-            cond = 12;
         }
 
         if (CrouchOn == true && !crouch && (Input.GetAxisRaw("Horizontal") > 0 && Input.GetAxisRaw("Vertical") > 0))
@@ -1028,8 +738,6 @@ public class PlayerRun : MonoBehaviour
             walk = false;
             crouch = false;
             crouchWalk = true;
-            cond = 11;
-            cond = 12;
         }
         if (CrouchOn == true && !crouch && (Input.GetAxisRaw("Horizontal") > 0 && Input.GetAxisRaw("Vertical") < 0))
         {
@@ -1043,8 +751,6 @@ public class PlayerRun : MonoBehaviour
             walk = false;
             crouch = false;
             crouchWalk = true;
-            cond = 12;
-            cond = 9;
         }
         if (CrouchOn == true && !crouch && (Input.GetAxisRaw("Horizontal") < 0 && Input.GetAxisRaw("Vertical") < 0))
         {
@@ -1058,8 +764,6 @@ public class PlayerRun : MonoBehaviour
             walk = false;
             crouch = false;
             crouchWalk = true;
-            cond = 9;
-            cond = 10;
         }
         if (CrouchOn == true && !crouch && (Input.GetAxisRaw("Horizontal") < 0 && Input.GetAxisRaw("Vertical") > 0))
         {
@@ -1073,9 +777,6 @@ public class PlayerRun : MonoBehaviour
             walk = false;
             crouch = false;
             crouchWalk = true;
-            cond = 10;
-            cond = 11;
-
         }
     }
 
@@ -1161,4 +862,5 @@ public class PlayerRun : MonoBehaviour
 
         transform.rotation = nextRot;
     }
+    
 }
