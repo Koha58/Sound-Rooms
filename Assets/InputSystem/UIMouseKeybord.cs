@@ -15,6 +15,8 @@ public class UIMouseKeybord : MonoBehaviour
 {
     private UIInputActions _uiInputActions; //Inputsystem取得
 
+    private Vector2 _moveInput;//スティックの縦横入力
+
     //設定画面を表示、BGM、SE、マウス感度、マイク、コントローラー説明、キーボード説明、タイトルに戻る画面を表示
     [SerializeField] GameObject menyu, settingPanel1, settingPanel2, settingPanel3;
 
@@ -45,6 +47,35 @@ public class UIMouseKeybord : MonoBehaviour
     //UI選択時の色
     Color whiteColor = Color.white;
     Color yellowColor = Color.yellow;
+
+    void Awake()
+    {
+        // Input Actionの初期化
+        _uiInputActions = new UIInputActions();
+    }
+
+    void OnEnable()
+    {
+        // Moveアクションにリスナーを設定
+        _uiInputActions.ControllerUI.StickMove.performed += OnMove;
+        _uiInputActions.ControllerUI.StickMove.canceled += OnMove;
+        _uiInputActions.Enable();
+    }
+
+    void OnDisable()
+    {
+        // リスナー解除
+        _uiInputActions.ControllerUI.StickMove.performed -= OnMove;
+        _uiInputActions.ControllerUI.StickMove.canceled -= OnMove;
+        _uiInputActions.Disable();
+    }
+
+    private void OnMove(InputAction.CallbackContext context)
+    {
+        // スティック入力値の取得
+        _moveInput = context.ReadValue<Vector2>();
+        Debug.Log($"スティック入力: {_moveInput}");
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -77,6 +108,11 @@ public class UIMouseKeybord : MonoBehaviour
     void Update()
     {
         OnSettingMenu();
+    }
+
+    private void MoveStick(Vector2 direction)
+    {
+
     }
 
     void SetBGM(float volume2)
@@ -212,11 +248,56 @@ public class UIMouseKeybord : MonoBehaviour
 
     public void OnMainSelect()
     {
-       
+        mainSelectCount = 0;
+
+        if (_moveInput.y >= 0.5f)
+        {
+            mainSelectCount++;
+        }
+        else if (_moveInput.y <= -0.5f)
+        {
+            mainSelectCount--;
+        }
+
+        if (mainSelectCount == 0)
+        {
+            imageSettingButton.color = yellowColor;
+            imageOperationExplanationButton.color = whiteColor;
+            imageTitleButton.color = whiteColor;
+
+            settingPanel1.SetActive(true);
+            settingPanel2.SetActive(false);
+            settingPanel3.SetActive(false);
+        }
+        else if (mainSelectCount == 1)
+        {
+            imageSettingButton.color = whiteColor;
+            imageOperationExplanationButton.color = yellowColor;
+            imageTitleButton.color = whiteColor;
+
+            settingPanel1.SetActive(false);
+            settingPanel2.SetActive(true);
+            settingPanel3.SetActive(false);
+
+            imageGamePadSettingButton.color = whiteColor;
+            imageKeyBoardSettingButton.color = yellowColor;
+            controllerUI.SetActive(false);
+            keyboardUI.SetActive(true);
+        }
+        else if(mainSelectCount == 2)
+        {
+            imageSettingButton.color = whiteColor;
+            imageOperationExplanationButton.color = whiteColor;
+            imageTitleButton.color = yellowColor;
+
+            settingPanel1.SetActive(false);
+            settingPanel2.SetActive(false);
+            settingPanel3.SetActive(true);
+        }
+
     }
 
 
 
     #endregion
 }
-

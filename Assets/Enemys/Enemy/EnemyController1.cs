@@ -11,7 +11,7 @@ public class EnemyController1 : MonoBehaviour
     public Transform player;    　　//プレイヤーの位置
     private List<Transform> route;　// 巡回ルート
     [SerializeField] private Transform[] PatrolPoints; // 巡回ポイントの配列
-    NavMeshAgent navMeshAgent;
+    NavMeshAgent navMeshAgent;      //ナヴィメッシュを取得
 
     float chaseRange = 7f;  //Playerを検知する範囲
     float distanceToPlayer = Mathf.Infinity;
@@ -20,10 +20,10 @@ public class EnemyController1 : MonoBehaviour
     int pointCount;
 
     public float detectionRange = 10f; // 音を聞き取れる範囲
-    private Vector3 soundPosition;
-    private bool isMovingToSound = false;
+    private Vector3 soundPosition;     
+    private bool isMovingToSound = false;//ラジオカセットに反応して移動する
 
-    public static bool ImageOn;
+    public static bool ImageOn;  
 
     //アニメーション
     [SerializeField] Animator animator;　//アニメーター取得

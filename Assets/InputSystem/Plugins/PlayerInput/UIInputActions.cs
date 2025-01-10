@@ -815,6 +815,15 @@ public partial class @UIInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""StickMove"",
+                    ""type"": ""Value"",
+                    ""id"": ""05ed3806-52c5-42ed-8bdc-e39e5e0459a5"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -883,6 +892,138 @@ public partial class @UIInputActions: IInputActionCollection2, IDisposable
                     ""action"": ""LeftStick"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""17a58663-8890-4014-9fe5-633ee99596a1"",
+                    ""path"": ""<Gamepad>/leftStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""StickMove"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""WASD"",
+                    ""id"": ""4159022a-f831-4bbd-9295-a2e39820fe30"",
+                    ""path"": ""Dpad"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""StickMove"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""9bf3c581-d45b-499c-90de-fec2d2daabad"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""StickMove"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""0e45cfd5-8320-487d-aa60-d60b4fd9f6bb"",
+                    ""path"": ""<Keyboard>/upArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""StickMove"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""9ee4ae33-f6a4-4edd-a88a-3129b10c0a21"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""StickMove"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""b852469a-6435-422e-86f3-90ee4cb73b3a"",
+                    ""path"": ""<Keyboard>/downArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""StickMove"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""5c98e482-743d-4331-8ef2-a0e6cfa09a2d"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""StickMove"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""a3055796-ab96-4ba2-adc7-8403f1434de0"",
+                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""StickMove"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""3952e3bb-e034-4e9e-92b0-99574c511ab1"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""StickMove"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""bd7c6563-50a0-4f60-b6bb-bf7905b398e1"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""StickMove"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""580b5751-f767-4c97-8bb9-cf7812880dc1"",
+                    ""path"": ""<XRController>/{Primary2DAxis}"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""XR"",
+                    ""action"": ""StickMove"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2bf58dc3-e256-46aa-83ee-065164ac07e0"",
+                    ""path"": ""<Joystick>/stick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Joystick"",
+                    ""action"": ""StickMove"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -971,6 +1112,7 @@ public partial class @UIInputActions: IInputActionCollection2, IDisposable
         m_ControllerUI = asset.FindActionMap("ControllerUI", throwIfNotFound: true);
         m_ControllerUI_StartButton = m_ControllerUI.FindAction("StartButton", throwIfNotFound: true);
         m_ControllerUI_LeftStick = m_ControllerUI.FindAction("LeftStick", throwIfNotFound: true);
+        m_ControllerUI_StickMove = m_ControllerUI.FindAction("StickMove", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -1214,12 +1356,14 @@ public partial class @UIInputActions: IInputActionCollection2, IDisposable
     private List<IControllerUIActions> m_ControllerUIActionsCallbackInterfaces = new List<IControllerUIActions>();
     private readonly InputAction m_ControllerUI_StartButton;
     private readonly InputAction m_ControllerUI_LeftStick;
+    private readonly InputAction m_ControllerUI_StickMove;
     public struct ControllerUIActions
     {
         private @UIInputActions m_Wrapper;
         public ControllerUIActions(@UIInputActions wrapper) { m_Wrapper = wrapper; }
         public InputAction @StartButton => m_Wrapper.m_ControllerUI_StartButton;
         public InputAction @LeftStick => m_Wrapper.m_ControllerUI_LeftStick;
+        public InputAction @StickMove => m_Wrapper.m_ControllerUI_StickMove;
         public InputActionMap Get() { return m_Wrapper.m_ControllerUI; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1235,6 +1379,9 @@ public partial class @UIInputActions: IInputActionCollection2, IDisposable
             @LeftStick.started += instance.OnLeftStick;
             @LeftStick.performed += instance.OnLeftStick;
             @LeftStick.canceled += instance.OnLeftStick;
+            @StickMove.started += instance.OnStickMove;
+            @StickMove.performed += instance.OnStickMove;
+            @StickMove.canceled += instance.OnStickMove;
         }
 
         private void UnregisterCallbacks(IControllerUIActions instance)
@@ -1245,6 +1392,9 @@ public partial class @UIInputActions: IInputActionCollection2, IDisposable
             @LeftStick.started -= instance.OnLeftStick;
             @LeftStick.performed -= instance.OnLeftStick;
             @LeftStick.canceled -= instance.OnLeftStick;
+            @StickMove.started -= instance.OnStickMove;
+            @StickMove.performed -= instance.OnStickMove;
+            @StickMove.canceled -= instance.OnStickMove;
         }
 
         public void RemoveCallbacks(IControllerUIActions instance)
@@ -1330,5 +1480,6 @@ public partial class @UIInputActions: IInputActionCollection2, IDisposable
     {
         void OnStartButton(InputAction.CallbackContext context);
         void OnLeftStick(InputAction.CallbackContext context);
+        void OnStickMove(InputAction.CallbackContext context);
     }
 }
