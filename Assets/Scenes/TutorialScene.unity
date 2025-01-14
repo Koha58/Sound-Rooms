@@ -18730,7 +18730,7 @@ GameObject:
   - component: {fileID: 2120517580817973837}
   m_Layer: 0
   m_Name: Enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -19254,7 +19254,6 @@ MonoBehaviour:
   - {fileID: 1573608977}
   - {fileID: 1951576067}
   - {fileID: 1118194862}
-  navMeshAgent: {fileID: 2120517580817973839}
   detectionRange: 10
   animator: {fileID: 2120517580817973843}
   audioSourse: {fileID: 2120517580817973838}
@@ -19367,7 +19366,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 2.5
+  m_Speed: 1.5
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -19421,10 +19420,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 3.4105127
-  m_Height: 7.3803606
+  m_Radius: 0.49523973
+  m_Height: 5.3039193
   m_Direction: 1
-  m_Center: {x: -0.009561062, y: 0.67071056, z: 0.046432734}
+  m_Center: {x: 0.04679537, y: -0.36751008, z: 0.123131275}
 --- !u!54 &2120517580817973842
 Rigidbody:
   m_ObjectHideFlags: 0

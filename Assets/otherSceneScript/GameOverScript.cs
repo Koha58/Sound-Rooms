@@ -21,7 +21,7 @@ public class GameOverScript : MonoBehaviour
     private float Timer;
     private float Count;
 
-
+    private bool istLife;
 
     // Start is called before the first frame update
     void Start()
@@ -52,15 +52,16 @@ public class GameOverScript : MonoBehaviour
             {
                 Timer = 0;
                 Count = 0;
+                istLife = false;
             }
         }
-    }
 
-   
-    private void OnTriggerEnter(Collider other)
-    {
-     
-     
+        if (istLife == true && Count ==0)
+        {
+            LifeCount--;
+            Count = 1;
+        }
+
         if (LifeCount == 4)
         {
             Life5.GetComponent<Image>().enabled = false;
@@ -76,16 +77,25 @@ public class GameOverScript : MonoBehaviour
             Life3.GetComponent<Image>().enabled = false;
             LostLife3.GetComponent<Image>().enabled = true;
         }
-        else if(LifeCount == 1)
+        else if (LifeCount == 1)
         {
             Life2.GetComponent<Image>().enabled = false;
             LostLife2.GetComponent<Image>().enabled = true;
         }
-        else if(LifeCount == 0)
+        else if (LifeCount == 0)
         {
             Life1.GetComponent<Image>().enabled = false;
             LostLife1.GetComponent<Image>().enabled = true;
             SceneManager.LoadScene("GameOver");
+        }
+    }
+
+   
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Enemy")
+        {
+            istLife=true;
         }
 
     }

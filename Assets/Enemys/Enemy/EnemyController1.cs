@@ -23,7 +23,9 @@ public class EnemyController1 : MonoBehaviour
     private Vector3 soundPosition;     
     private bool isMovingToSound = false;//ラジオカセットに反応して移動する
 
-    public static bool ImageOn;  
+    public static bool ImageOn;
+
+    float stopChaseRange = 2f; // 追跡をやめる範囲
 
     //アニメーション
     [SerializeField] Animator animator;　//アニメーター取得
@@ -145,7 +147,7 @@ public class EnemyController1 : MonoBehaviour
 
         distanceToPlayer = Vector3.Distance(player.position, transform.position);
 
-        if (distanceToPlayer <= chaseRange)
+        if (distanceToPlayer <= chaseRange && distanceToPlayer >= stopChaseRange)
         {
             if (isFront && PS.onoff == 1)
             {

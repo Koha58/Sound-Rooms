@@ -19,7 +19,7 @@ public class TutorialClear : MonoBehaviour
 
     void OnCollisionEnter(Collision other)
     {
-        GameObject impactObjectsArea = GameObject.Find("ImpactOnObjectsArea");
+        GameObject impactObjectsArea = GameObject.Find("EnemyAttackArea");
         ImpactOnObjects impactObjects = impactObjectsArea.GetComponent<ImpactOnObjects>(); //付いているスクリプトを取得
 
         if (other.gameObject.name == "ExitDoor")
