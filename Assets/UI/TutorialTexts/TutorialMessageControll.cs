@@ -9,102 +9,84 @@ using UnityEngine.SceneManagement;
 
 public class TutorialMessageControll : MonoBehaviour
 {
+    // チュートリアルメッセージのスライドUIを管理する配列
     [SerializeField]
     private SlideUIControll[] Messages;
-    //[SerializeField]
-    //private SlideUIControll[] MoveWays;
-    //[SerializeField]
-    //private SlideUIControll[] ControllerMessages;
-    //[SerializeField] AudioSource MessageSound;
-    //float timeCnt;
-    public int Message;
-    //PlayerSeen PS;
-    //bool AutoCheck = false;
 
-    //bool deviceCheck;
+    // コントローラー専用のチュートリアルメッセージを管理する配列
+    [SerializeField]
+    private SlideUIControll[] ControllerMessages;
 
-    //TutorialEnemyController TEC;
+    // メッセージが切り替わる際のサウンド
+    [SerializeField] AudioSource MessageSound;
 
-    //public GameObject Conceal;
-    //public GameObject Conceal2;
+    float timeCnt; // タイマーとして使用されるカウンタ
+    public int Message; // 現在のメッセージのインデックス
+    PlayerSeen PS; // プレイヤーが見られている状態を管理するスクリプト
 
-    ////ポーズUI
-    //[SerializeField] GameObject Pause;
+    bool deviceCheck; // 入力デバイスがコントローラーかをチェックするフラグ
 
-    //[SerializeField]
-    //private GameObject[] AutoDoors;
-
-    //LevelMeter levelMeter;
-
+    // 録音およびビジュアライズを管理するスクリプトへの参照
     public ClickToRecordAndVisualize clickToRecordAndVisualize;
 
+    // オブジェクト配置を管理するスクリプトへの参照
     public ObjectPlacer OP;
 
+    // ボタンのイメージコンポーネント
     public Image LeftButton;
 
-    // Start is called before the first frame update
+    // Startは最初のフレームが更新される前に一度だけ呼び出される
     void Start()
     {
+        // 全てのメッセージの状態を初期化
         for (int i = 0; i < Messages.Length; i++)
         {
             Messages[Message].state = 0;
         }
-        Message = 1;
-        Messages[Message-1].state = 1;
+        Message = 1; // 最初のメッセージを設定
+        Messages[Message - 1].state = 1;
+
+        // 各コンポーネントの初期化
         clickToRecordAndVisualize.GetComponent<ClickToRecordAndVisualize>();
         OP.GetComponent<ObjectPlacer>();
         LeftButton.GetComponent<Image>().enabled = false;
-        //AutoCheck = false;
-        //deviceCheck = false;
-
-        //Conceal.SetActive(true);
-        //Conceal2.SetActive(true);
     }
 
-    // Update is called once per frame
+    // Updateは毎フレーム呼び出される
     void Update()
     {
-        //if (InputDeviceManager.Instance.CurrentDeviceType == InputDeviceType.Xbox)
-        //{
-        //    deviceCheck = true;
-        //}
-        //else if (InputDeviceManager.Instance.CurrentDeviceType == InputDeviceType.Keyboard)
-        //{
-        //    deviceCheck = false;
-        //}
+        // 現在の入力デバイスを確認
+        if (InputDeviceManager.Instance.CurrentDeviceType == InputDeviceType.Xbox)
+        {
+            deviceCheck = true;
+        }
+        else if (InputDeviceManager.Instance.CurrentDeviceType == InputDeviceType.Keyboard)
+        {
+            deviceCheck = false;
+        }
 
-        //PS = GetComponent<PlayerSeen>();
+        // タイマーが7秒を超え、かつメッセージが22未満なら次のメッセージへ進む
+        if (timeCnt >= 7.0f && Message < 22)
+        {
+            Messages[Message - 1].state = 0; // 現在のメッセージを非表示に
+            Controller(); // 入力デバイスに応じた処理
+            Messages[Message].state = 1; // 次のメッセージを表示
+            Message++;
+            timeCnt = 0f; // タイマーをリセット
+            MessageSound.PlayOneShot(MessageSound.clip); // サウンドを再生
+        }
 
-        //if (timeCnt >= 7.0f && Message < 22)
-        //{
-        //    Messages[Message - 1].state = 0;
-        //    Controller();
-        //    Messages[Message].state = 1;
-        //    Message++;
-        //    timeCnt = 0f;
-        //    MessageSound.PlayOneShot(MessageSound.clip);
-        //}
+        MoveWait(); // メッセージ切り替え条件の確認
 
-        MoveWait();
-
-        Messages[Message - 1].state = 1;
-
-        //if(TutorialEnemyController.ChaseONOFF == true)
-        //{
-        //    MoveWays[0].state = 1;
-        //    MoveWays[1].state = 0;
-        //}
-        //else
-        //{
-        //    MoveWays[0].state = 0;
-        //}
+        Messages[Message - 1].state = 1; // 現在のメッセージを表示
     }
 
+    // メッセージの切り替え条件を確認
     void MoveWait()
     {
-
         if (Message == 1)
         {
+            // 録音が開始されたら次のメッセージへ
             if (clickToRecordAndVisualize.isRecording)
             {
                 Messages[0].state = 0;
@@ -114,21 +96,21 @@ public class TutorialMessageControll : MonoBehaviour
 
         if (Message == 2)
         {
-            StartCoroutine(FlashButton());
+            StartCoroutine(FlashButton()); // ボタン点滅を開始
             if (OP.isOnSettingPoint)
             {
                 Messages[1].state = 0;
                 Message++;
-                StopCoroutine(FlashButton());  // 点滅を停止
-                SetButtonColor(Color.white);  // ボタンを白に戻す
-                LeftButton.GetComponent<Image>().enabled = false;
+                StopCoroutine(FlashButton()); // 点滅を停止
+                SetButtonColor(Color.white); // ボタンの色を白に戻す
+                LeftButton.GetComponent<Image>().enabled = false; // ボタンを非表示に
             }
         }
 
         if (Message == 3)
         {
-            GameObject impactObjectsArea = GameObject.Find("ImpactOnObjectsArea");
-            ImpactOnObjects impactObjects = impactObjectsArea.GetComponent<ImpactOnObjects>(); //付いているスクリプトを取得
+            GameObject impactObjectsArea = GameObject.Find("EnemyAttackArea");
+            ImpactOnObjects impactObjects = impactObjectsArea.GetComponent<ImpactOnObjects>(); // スクリプトを取得
             if (impactObjects.count == 1)
             {
                 Messages[2].state = 0;
@@ -138,7 +120,7 @@ public class TutorialMessageControll : MonoBehaviour
 
         if (Message == 4)
         {
-            if(OP.Recorder.activeSelf == true)
+            if (OP.Recorder.activeSelf == true)
             {
                 Messages[3].state = 0;
                 Message++;
@@ -152,10 +134,10 @@ public class TutorialMessageControll : MonoBehaviour
         while (Message == 2)
         {
             LeftButton.GetComponent<Image>().enabled = true;
-            SetButtonColor(Color.red);  // ボタンを赤に
-            yield return new WaitForSeconds(0.5f);  // 0.5秒待機
-            SetButtonColor(Color.white);  // ボタンを白に
-            yield return new WaitForSeconds(0.5f);  // 0.5秒待機
+            SetButtonColor(Color.red); // ボタンを赤に
+            yield return new WaitForSeconds(0.5f); // 0.5秒待機
+            SetButtonColor(Color.white); // ボタンを白に
+            yield return new WaitForSeconds(0.5f); // 0.5秒待機
         }
     }
 
@@ -168,49 +150,22 @@ public class TutorialMessageControll : MonoBehaviour
         }
     }
 
-
-    //void Controller()
-    //{
-    //    if (deviceCheck)
-    //    {
-    //        if (Message == 1)
-    //        {
-    //            Messages[Message] = ControllerMessages[1];
-    //        }
-    //        else if(Message == 2)
-    //        {
-    //            Messages[Message] = ControllerMessages[2];
-    //        }
-    //        else if (Message == 3)
-    //        {
-    //            Messages[Message] = ControllerMessages[3];
-    //        }
-    //        else if((Message == 4))
-    //        {
-    //            timeCnt += 5.0f;
-    //        }
-
-
-    //        if (!deviceCheck && Message == 1)
-    //        {
-    //            Messages[Message].state = 0;
-    //            Messages[Message] = Messages[0];
-    //        }
-    //        else if(!deviceCheck && Message == 1)
-    //        {
-    //            Messages[Message].state = 0;
-    //            Messages[Message] = Messages[1];
-    //        }
-    //        else if (!deviceCheck && Message == 2)
-    //        {
-    //            Messages[Message].state = 0;
-    //            Messages[Message] = Messages[2];
-    //        }
-    //        else if (!deviceCheck && Message == 3)
-    //        {
-    //            Messages[Message].state = 0;
-    //            Messages[Message] = Messages[3];
-    //        }
-    //    }
-    //}
+    // 入力デバイスに応じたメッセージ処理
+    void Controller()
+    {
+        if (deviceCheck) // コントローラーの場合
+        {
+            if (Message == 1) Messages[Message] = ControllerMessages[1];
+            else if (Message == 2) Messages[Message] = ControllerMessages[2];
+            else if (Message == 3) Messages[Message] = ControllerMessages[3];
+            else if (Message == 4) timeCnt += 5.0f; // 追加時間を加算
+        }
+        else // キーボードの場合
+        {
+            if (Message == 1) Messages[Message] = Messages[0];
+            else if (Message == 2) Messages[Message] = Messages[1];
+            else if (Message == 3) Messages[Message] = Messages[2];
+            else if (Message == 4) Messages[Message] = Messages[3];
+        }
+    }
 }
