@@ -8,28 +8,28 @@ public class Stage1ClearScene : MonoBehaviour
 {
     private float StayTime = 0f;
 
-    [SerializeField] private VideoPlayer ClearVideo;
-    [SerializeField] private RawImage RawImage;
-    [SerializeField] private RawImage FirstImage; // 0.5秒間表示する別の画像
+    [SerializeField] private VideoPlayer clearVideo;
+    [SerializeField] private RawImage rawImage;
+    [SerializeField] private RawImage firstImage; // 0.5秒間表示する別の画像
 
     void OnEnable()
     {
         // 動画準備完了時のイベントリスナー
-        ClearVideo.prepareCompleted += PrepareCompleted;
+        clearVideo.prepareCompleted += PrepareCompleted;
         // フレームが準備できた時に呼ばれるイベント
-        ClearVideo.frameReady += FrameReady;
+        clearVideo.frameReady += FrameReady;
     }
 
     void OnDisable()
     {
-        ClearVideo.prepareCompleted -= PrepareCompleted;
-        ClearVideo.frameReady -= FrameReady;
+        clearVideo.prepareCompleted -= PrepareCompleted;
+        clearVideo.frameReady -= FrameReady;
     }
 
     // 動画の準備が完了したときに呼ばれる
     private void PrepareCompleted(VideoPlayer vp)
     {
-        if (vp != ClearVideo) { return; }
+        if (vp != clearVideo) { return; }
         StartCoroutine(ShowMovie(vp));
     }
 
@@ -39,20 +39,20 @@ public class Stage1ClearScene : MonoBehaviour
         // 最初のフレームが準備できたらRawImageを表示
         if (frameIndex == 0)
         {
-            RawImage.texture = vp.texture;
-            RawImage.enabled = true;
+            rawImage.texture = vp.texture;
+            rawImage.enabled = true;
         }
     }
 
     private IEnumerator ShowMovie(VideoPlayer vp)
     {
         // 最初の1秒間、FirstImage（別の画像）を表示
-        FirstImage.enabled = true;
+        firstImage.enabled = true;
 
         // 0.5秒後にFirstImageを非表示にする
         yield return new WaitForSeconds(0.5f);
         // 1. 動画再生前にRawImageを非表示にする
-        RawImage.enabled = false;
+        rawImage.enabled = false;
 
         // 動画の再生を開始
         vp.Play();
@@ -67,14 +67,14 @@ public class Stage1ClearScene : MonoBehaviour
         }
 
         // 動画の最初のフレームが準備できたらRawImageを有効にして表示
-        RawImage.texture = vp.texture;
-        RawImage.enabled = true;
+        rawImage.texture = vp.texture;
+        rawImage.enabled = true;
     }
 
     public void Play()
     {
         // 動画プリロード
-        ClearVideo.Prepare();
+        clearVideo.Prepare();
     }
 
     void Start()

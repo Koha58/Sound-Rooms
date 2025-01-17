@@ -7,31 +7,32 @@ public class ClickToRecordAndVisualize : MonoBehaviour
     public static event RecordingStatusHandler OnRecordingStatusChanged;
 
     public AudioSource audioSource;
-    public int recordingDuration = 20;
+    public int recordingDuration = 20;  // 録音時間（秒）
 
     private string microphoneDevice;
-    public bool isRecording = false;
+    public bool isRecording = false;  // 録音中かどうか
     private AudioClip recordedClip;
     private float recordingStartTime;
 
-    public float nowdB;  // 録音中のdBを保持
+    public float currentDB;  // 録音中のdB（音量）を保持
     public MicAudioSource micAudioSource;
-    private ParticleSystem RecordParticle;
+    private ParticleSystem recordEffectParticle;
 
     public float recordingTime;
 
+    private float stopRecordingTime = -1f;  // 録音停止後にUIを消すまでの時間
+
     void Start()
     {
-        // MicAudioSourceの取得
+        // 録音開始処理 (シーン開始時から録音を開始)
         micAudioSource = FindObjectOfType<MicAudioSource>();
-
         microphoneDevice = Microphone.devices.Length > 0 ? Microphone.devices[0] : null;
-        micAudioSource = GetComponent<MicAudioSource>();
-        GameObject RecordEffect = GameObject.Find("RecordParticle");
-        RecordParticle = RecordEffect.GetComponent<ParticleSystem>();
-        RecordParticle.Stop();
-
+        recordEffectParticle = GameObject.Find("RecordParticle").GetComponent<ParticleSystem>();
+        recordEffectParticle.Stop();
         recordingTime = 0;
+
+        // シーン開始時に録音を開始（録音が実際に行われるわけではなく、バックグラウンドで行われる）
+        StartRecording();
     }
 
     void Update()
@@ -43,56 +44,81 @@ public class ClickToRecordAndVisualize : MonoBehaviour
 
         if (micAudioSource != null)
         {
-            nowdB = micAudioSource.now_dB;
+            currentDB = micAudioSource.now_dB;
+        }
+
+        // 録音停止後、10秒後にUIを非表示にして再生を開始
+        if (stopRecordingTime > 0 && Time.time >= stopRecordingTime + 10f)
+        {
+            HideRecordingUI();
+            PlayRecordedAudio();
         }
     }
 
+    // 録音開始処理
     public void OnRecordButtonClicked()
     {
         if (isRecording || microphoneDevice == null) return;
+
+        // 録音開始ボタンが押されたタイミングでUIを表示
+        ShowRecordingUI();
+
+        // 実際に録音が始まる
         StartRecording();
     }
 
-    public void StartRecording()
+    // 録音開始
+    private void StartRecording()
     {
+        if (isRecording || microphoneDevice == null) return;
+
         isRecording = true;
         recordedClip = Microphone.Start(microphoneDevice, false, recordingDuration, 44100);
         recordingStartTime = Time.time;
         Debug.Log("録音を開始しました");
-        RecordParticle.Play();
+        recordEffectParticle.Play();  // 録音エフェクトを再生
 
-        // イベント通知: 録音が開始された
         OnRecordingStatusChanged?.Invoke(true);
     }
 
-    void StopRecording()
+    // 録音停止
+    private void StopRecording()
     {
         if (!isRecording) return;
 
         Microphone.End(microphoneDevice);
         isRecording = false;
         audioSource.clip = recordedClip;
-        audioSource.Play();
+        audioSource.Play();  // 録音した音声を再生
         Debug.Log("録音を停止し、録音した音声を再生します");
-        RecordParticle.Stop();
+        recordEffectParticle.Stop();  // 録音エフェクトを停止
 
-
-        // イベント通知: 録音が停止された
         OnRecordingStatusChanged?.Invoke(false);
 
-        recordedClip = null;
+        stopRecordingTime = Time.time;  // 録音停止時間を記録
+        recordedClip = null;  // 録音データを破棄
         Debug.Log("録音データを破棄しました");
     }
 
-    public bool IsRecording()
+    // UIの表示
+    private void ShowRecordingUI()
     {
-        return isRecording;
+        OnRecordingStatusChanged?.Invoke(true);  // UIを表示
     }
 
-    // UIクリック検知
-    public bool IsPointerOverUI()
+    // UIの非表示
+    private void HideRecordingUI()
     {
-        recordingTime = 1;
-        return EventSystem.current.IsPointerOverGameObject();
+        OnRecordingStatusChanged?.Invoke(false);  // UIを非表示
+    }
+
+    // 録音音声の再生
+    private void PlayRecordedAudio()
+    {
+        if (recordedClip != null)
+        {
+            audioSource.PlayOneShot(recordedClip);  // 録音された音声を再生
+            Debug.Log("録音音声を再生します");
+        }
     }
 }

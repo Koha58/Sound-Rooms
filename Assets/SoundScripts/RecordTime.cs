@@ -3,29 +3,29 @@ using UnityEngine.UI;
 
 public class RecordTime : MonoBehaviour
 {
-    public Image RecordText; // 「録音中」のImageコンポーネント
-    public Image circularGauge; // ゲージ用のImageコンポーネント
-    public float duration = 20f; // ゲージが満タンになるまでの時間
+    public Image recordText;
+    public Image circularGauge;
+    public float duration = 20f;
 
     private float elapsedTime = 0f;
     private bool isRecording = false;
 
     void OnEnable()
     {
-        // イベントの購読
+        // 録音状態変更イベントを購読
         ClickToRecordAndVisualize.OnRecordingStatusChanged += OnRecordingStatusChanged;
     }
 
     void OnDisable()
     {
-        // イベントの購読解除
+        // 録音状態変更イベントの購読解除
         ClickToRecordAndVisualize.OnRecordingStatusChanged -= OnRecordingStatusChanged;
     }
 
     private void Start()
     {
         circularGauge.enabled = false;
-        RecordText.enabled = false;
+        recordText.enabled = false;
     }
 
     void Update()
@@ -34,29 +34,39 @@ public class RecordTime : MonoBehaviour
         {
             elapsedTime += Time.deltaTime;
 
-            // 経過時間を正規化してゲージを更新
+            // 録音中のゲージの進行
             float fillAmount = Mathf.Clamp01(elapsedTime / duration);
             circularGauge.fillAmount = fillAmount;
         }
     }
 
+    // 録音状態変更時の処理
     private void OnRecordingStatusChanged(bool isRecording)
     {
         this.isRecording = isRecording;
 
         if (isRecording)
         {
-            // 録音が開始されたとき
             elapsedTime = 0f;
             circularGauge.enabled = true;
-            RecordText.enabled = true;
+            recordText.enabled = true;
         }
         else
         {
-            // 録音が終了したとき
             circularGauge.fillAmount = 0f;
             circularGauge.enabled = false;
-            RecordText.enabled = false;
+            recordText.enabled = false;
+
+            // 録音停止後にUIを非表示にする処理
+            StartCoroutine(HideUIAfterDelay(10f));
         }
+    }
+
+    // 録音停止後にUIを10秒後に非表示にする処理
+    private System.Collections.IEnumerator HideUIAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        circularGauge.enabled = false;
+        recordText.enabled = false;
     }
 }

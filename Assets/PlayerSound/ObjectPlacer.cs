@@ -22,36 +22,33 @@ public class ObjectPlacer : MonoBehaviour
 
     void Update()
     {
-        if (clickToRecordAndVisualize.IsPointerOverUI() == false)
+        if (Input.GetMouseButtonDown(0))  // 左クリックを検出
         {
-            if (Input.GetMouseButtonDown(0))  // 左クリックを検出
+            // プレイヤーの位置を取得
+            Vector3 playerPosition = player.position;
+
+            // プレイヤー位置から0.19上にオブジェクトを配置
+            Vector3 placementPosition = new Vector3(playerPosition.x, playerPosition.y + 0.19f, playerPosition.z);
+
+            // オブジェクトがまだ設置されていない場合、新しく設置
+            if (placedObject == null && clickToRecordAndVisualize.isRecording == false)
             {
-                // プレイヤーの位置を取得
-                Vector3 playerPosition = player.position;
+                // 新しいオブジェクトを設置
+                placedObject = Instantiate(objectPrefab, placementPosition, Quaternion.identity);
+                Recorder.SetActive(false);
 
-                // プレイヤー位置から0.19上にオブジェクトを配置
-                Vector3 placementPosition = new Vector3(playerPosition.x, playerPosition.y + 0.19f, playerPosition.z);
-
-                // オブジェクトがまだ設置されていない場合、新しく設置
-                if (placedObject == null && clickToRecordAndVisualize.isRecording == false)
+                // 「SettingPoint」に接触しているかチェック
+                CheckIfOnSettingPoint();
+            }
+            else
+            {
+                // すでにオブジェクトが配置されている場合、そのオブジェクトがプレイヤーに近ければ回収
+                if (Vector3.Distance(placedObject.transform.position, playerPosition) < maxPickupDistance)
                 {
-                    // 新しいオブジェクトを設置
-                    placedObject = Instantiate(objectPrefab, placementPosition, Quaternion.identity);
-                    Recorder.SetActive(false);
-
-                    // 「SettingPoint」に接触しているかチェック
-                    CheckIfOnSettingPoint();
-                }
-                else
-                {
-                    // すでにオブジェクトが配置されている場合、そのオブジェクトがプレイヤーに近ければ回収
-                    if (Vector3.Distance(placedObject.transform.position, playerPosition) < maxPickupDistance)
-                    {
-                        Destroy(placedObject);  // オブジェクトを回収
-                        placedObject = null;  // 置かれているオブジェクトをリセット
-                        Recorder.SetActive(true);
-                        isOnSettingPoint = false;  // 設置状態リセット
-                    }
+                    Destroy(placedObject);  // オブジェクトを回収
+                    placedObject = null;  // 置かれているオブジェクトをリセット
+                    Recorder.SetActive(true);
+                    isOnSettingPoint = false;  // 設置状態リセット
                 }
             }
         }
