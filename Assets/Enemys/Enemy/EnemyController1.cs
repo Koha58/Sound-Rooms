@@ -11,6 +11,7 @@ public class EnemyController1 : MonoBehaviour
     public Transform player;    　　//プレイヤーの位置
     private List<Transform> route;　// 巡回ルート
     [SerializeField] private Transform[] PatrolPoints; // 巡回ポイントの配列
+
     NavMeshAgent navMeshAgent;      //ナヴィメッシュを取得
 
     float chaseRange = 7f;  //Playerを検知する範囲
@@ -222,8 +223,11 @@ public class EnemyController1 : MonoBehaviour
 
                 if (navMeshAgent.remainingDistance <= 0.1f && !navMeshAgent.pathPending)
                 {
-                    pointCount += 1;
-                    if (pointCount > 2) { pointCount = 0; }
+                    //pointCount += 1;
+                    //if (pointCount > 2) { pointCount = 0; }
+                    // 巡回ポイントのインデックスを次に進める（配列長を考慮してループ）
+                    pointCount = (pointCount + 1) % PatrolPoints.Length;
+
                     ChangeState(enemyState.search);
                 }
 
