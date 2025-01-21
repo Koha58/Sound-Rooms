@@ -24,15 +24,14 @@ public class ClickToRecordAndVisualize : MonoBehaviour
 
     void Start()
     {
-        // 録音開始処理 (シーン開始時から録音を開始)
+        // 初期設定（録音ボタンを押したときに録音開始）
         micAudioSource = FindObjectOfType<MicAudioSource>();
         microphoneDevice = Microphone.devices.Length > 0 ? Microphone.devices[0] : null;
         recordEffectParticle = GameObject.Find("RecordParticle").GetComponent<ParticleSystem>();
         recordEffectParticle.Stop();
         recordingTime = 0;
 
-        // シーン開始時に録音を開始（録音が実際に行われるわけではなく、バックグラウンドで行われる）
-        StartRecording();
+        // ボタンを押したときに録音を開始するように設定
     }
 
     void Update()
@@ -40,11 +39,11 @@ public class ClickToRecordAndVisualize : MonoBehaviour
         if (isRecording && Time.time - recordingStartTime >= recordingDuration)
         {
             StopRecording();
-        }
 
-        if (micAudioSource != null)
-        {
-            currentDB = micAudioSource.now_dB;
+            if (micAudioSource != null)
+            {
+                currentDB = micAudioSource.now_dB;
+            }
         }
 
         // 録音停止後、10秒後にUIを非表示にして再生を開始
@@ -55,7 +54,7 @@ public class ClickToRecordAndVisualize : MonoBehaviour
         }
     }
 
-    // 録音開始処理
+    // 録音開始ボタンが押されたときに呼ばれるメソッド
     public void OnRecordButtonClicked()
     {
         if (isRecording || microphoneDevice == null) return;
@@ -73,7 +72,7 @@ public class ClickToRecordAndVisualize : MonoBehaviour
         if (isRecording || microphoneDevice == null) return;
 
         isRecording = true;
-        recordedClip = Microphone.Start(microphoneDevice, false, recordingDuration, 44100);
+        recordedClip = Microphone.Start(microphoneDevice, false, recordingDuration, 44100);  // 録音開始
         recordingStartTime = Time.time;
         Debug.Log("録音を開始しました");
         recordEffectParticle.Play();  // 録音エフェクトを再生
@@ -86,12 +85,16 @@ public class ClickToRecordAndVisualize : MonoBehaviour
     {
         if (!isRecording) return;
 
+        // 録音を停止
         Microphone.End(microphoneDevice);
         isRecording = false;
         audioSource.clip = recordedClip;
         audioSource.Play();  // 録音した音声を再生
         Debug.Log("録音を停止し、録音した音声を再生します");
         recordEffectParticle.Stop();  // 録音エフェクトを停止
+
+        // 録音停止後にMicAudioSourceに音声入力の権限を返す
+        micAudioSource.MicStart(); // 録音後に再度マイクを有効化
 
         OnRecordingStatusChanged?.Invoke(false);
 
