@@ -29,19 +29,20 @@ public class MicAudioSource : MonoBehaviour
 
     void Start()
     {
-        //フレーム更新開始直後にマイクデバイスをスタートする
+        //最初にマイクの入力を開始
         this.MicStart();
     }
 
+    // マイク入力の開始
     public void MicStart()
     {
-        //AudioSourceのClipにマイクデバイスをセット
+        // AudioSourceのClipにマイクデバイスをセット
         micAS.clip = Microphone.Start(null, true, 1, SAMPLE_RATE);
 
-        //マイクデバイスの準備ができるまで待つ
+        // マイクデバイスの準備ができるまで待つ
         while (!(Microphone.GetPosition("") > 0)) { }
 
-        //AudioSouceからの出力を開始
+        // AudioSourceからの出力を開始
         micAS.Play();
     }
 
@@ -66,5 +67,4 @@ public class MicAudioSource : MonoBehaviour
             _now_dB = dB;
         }
     }
-
 }
