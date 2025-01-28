@@ -26,9 +26,6 @@ public class TutorialMessageControll : MonoBehaviour
 
     bool deviceCheck; // 入力デバイスがコントローラーかをチェックするフラグ
 
-    // 録音およびビジュアライズを管理するスクリプトへの参照
-    public ClickToRecordAndVisualize clickToRecordAndVisualize;
-
     // オブジェクト配置を管理するスクリプトへの参照
     public ObjectPlacer OP;
 
@@ -47,7 +44,6 @@ public class TutorialMessageControll : MonoBehaviour
         Messages[Message - 1].state = 1;
 
         // 各コンポーネントの初期化
-        clickToRecordAndVisualize.GetComponent<ClickToRecordAndVisualize>();
         OP.GetComponent<ObjectPlacer>();
         LeftButton.GetComponent<Image>().enabled = false;
     }
@@ -86,12 +82,8 @@ public class TutorialMessageControll : MonoBehaviour
     {
         if (Message == 1)
         {
-            // 録音が開始されたら次のメッセージへ
-            if (clickToRecordAndVisualize.isRecording)
-            {
-                Messages[0].state = 0;
-                Message++;
-            }
+            Messages[0].state = 0;
+            Message++;
         }
 
         if (Message == 2)
@@ -120,11 +112,11 @@ public class TutorialMessageControll : MonoBehaviour
 
         if (Message == 4)
         {
-            if (OP.Recorder.activeSelf == true)
-            {
-                Messages[3].state = 0;
-                Message++;
-            }
+            //if (OP.Recorder.activeSelf == true)
+            //{
+            //    Messages[3].state = 0;
+            //    Message++;
+            //}
         }
     }
 
