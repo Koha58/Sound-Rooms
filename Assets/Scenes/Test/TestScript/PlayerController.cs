@@ -1,17 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;      
 
 public class PlayerController : MonoBehaviour
 {
+    private GameInputSystem gameInputSystem;
 
-    //移動用の変数
-    float x, z;
+    private void Awake()
+    {
+        gameInputSystem = new GameInputSystem();
+        gameInputSystem.Enable();
+    }
 
-    //スピード調整用の変数
-    float speed = 0.1f;
-
- 
     // Start is called before the first frame update
     void Start()
     {
@@ -26,14 +27,19 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()//0.02秒ごとに呼ばれる
     {
-        x = 0;
-        z = 0;
+        //ラジオ置く
+        if (gameInputSystem.Player.PutOn.triggered)
+        {
+            Debug.Log("置く！！");
+        }
 
-        x = Input.GetAxisRaw("Horizontal") * speed;
-        z = Input.GetAxisRaw("Vertical") * speed;
-        z = z * -1;
+       gameInputSystem.Player.MoveController.performed += MoveController_performed;
 
-        transform.position += new Vector3(x, 0, z);
     }
 
+    private void MoveController_performed(InputAction.CallbackContext obj)
+    {
+        Debug.Log("しゃがむ");
+        throw new System.NotImplementedException();
+    }
 }

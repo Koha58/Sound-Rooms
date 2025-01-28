@@ -33,7 +33,7 @@ public class ObjectPlacer : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))  // 左クリックを検出
+        if (Input.GetKeyDown(KeyCode.Space))  // 左クリックを検出
         {
             // プレイヤーの位置を取得
             Vector3 playerPosition = player.position;
