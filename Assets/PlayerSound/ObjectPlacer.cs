@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class ObjectPlacer : MonoBehaviour
 {
-    // マジックナンバーを定数として置き換え
     private const float PlacementHeightOffset = 0.2f;  // プレイヤーの位置に加算する高さオフセット
     private const float PickupDistanceThreshold = 1.0f;  // 回収可能な距離のしきい値
     private const float ParticleRotationAngle = 90f;  // パーティクルの回転角度
@@ -21,6 +20,7 @@ public class ObjectPlacer : MonoBehaviour
 
     private RecordManager recordManager;  // RecordManager の参照
     private GameObject placedParticle = null;  // 設置されたパーティクル
+    private AudioSource placedAudioSource;  // 設置されたオブジェクトのAudioSource
 
     private void Start()
     {
@@ -51,7 +51,8 @@ public class ObjectPlacer : MonoBehaviour
                 // 音源をその位置に設定
                 if (recordManager != null)
                 {
-                    recordManager.SetAudioSource(placedObject.transform.position);
+                    recordManager.SetAudioSource(placedObject);
+                    placedAudioSource = placedObject.GetComponent<AudioSource>();  // AudioSource を取得
                 }
 
                 // パーティクルをその位置に設置（X軸で90度回転させる）
@@ -82,6 +83,12 @@ public class ObjectPlacer : MonoBehaviour
                     isOnSettingPoint = false;  // 設置状態リセット
                 }
             }
+        }
+
+        // 音声が終了した場合、パーティクルを非表示にする
+        if (placedAudioSource != null && !placedAudioSource.isPlaying && placedParticle != null)
+        {
+            placedParticle.SetActive(false);  // パーティクルを非表示
         }
     }
 
