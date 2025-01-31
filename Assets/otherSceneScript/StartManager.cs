@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class StartManager : MonoBehaviour
 {
-    private UIInputActions _uiInputActions;
+    //private UIInputActions _uiInputActions;
 
     Image SelectButtonImage;
     Image BackDesktopButtonImage;
@@ -26,8 +26,8 @@ public class StartManager : MonoBehaviour
     void Start()
     {
 
-        _uiInputActions = new UIInputActions();
-        _uiInputActions.Enable();
+        //_uiInputActions = new UIInputActions();
+        //_uiInputActions.Enable();
 
         SelectButtonImage = SelectButton.GetComponent<Image>();
         BackDesktopButtonImage = BackDesktopButton.GetComponent<Image>();

@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;      
 
-public class PlayerController : MonoBehaviour
+public class MovePlayer : MonoBehaviour
 {
+    private Animator animator;
+
     [Header("Movement Settings")]
     public float moveSpeed = 5f;
 
@@ -109,17 +110,17 @@ public class PlayerController : MonoBehaviour
         transform.Translate(moveDirection * moveSpeed * Time.deltaTime, Space.World);
     }
 
-    //private void RotateCamera()
-    //{
-    //    if (cameraTransform == null) return;
+    private void RotateCamera()
+    {
+        if (cameraTransform == null) return;
 
-    //    // カメラ回転の入力 (右スティック)
-    //    float rotationX = moveCameraInput.x * cameraRotationSpeed * Time.deltaTime;
-    //    float rotationY = moveCameraInput.y * cameraRotationSpeed * Time.deltaTime;
+        // カメラ回転の入力 (右スティック)
+        float rotationX = moveCameraInput.x * cameraRotationSpeed * Time.deltaTime;
+        float rotationY = moveCameraInput.y * cameraRotationSpeed * Time.deltaTime;
 
-    //    // プレイヤーを中心にカメラを水平回転
-    //    cameraTransform.RotateAround(transform.position, Vector3.up, rotationX);
+        // プレイヤーを中心にカメラを水平回転
+        cameraTransform.RotateAround(transform.position, Vector3.up, rotationX);
 
-     
-    //}
+
+    }
 }

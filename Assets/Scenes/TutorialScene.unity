@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 0.524
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.0944687, g: 0.1182742, b: 0.16082758, a: 0.524}
+  m_IndirectSpecularColor: {r: 0.09446845, g: 0.118273765, b: 0.16082697, a: 0.524}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -13015,9 +13015,9 @@ MonoBehaviour:
   Recorder: {fileID: 855479726695017708}
   objectPrefab: {fileID: 3183858080913100468, guid: fd32ef0a70a7a5040b86d230f99a8aa5,
     type: 3}
+  particlePrefab: {fileID: 0}
   player: {fileID: 135133355}
   maxPickupDistance: 1
-  clickToRecordAndVisualize: {fileID: 1870111862}
   isOnSettingPoint: 0
 --- !u!114 &1573040160
 MonoBehaviour:
@@ -13056,7 +13056,6 @@ MonoBehaviour:
   ControllerMessages: []
   MessageSound: {fileID: 0}
   Message: 0
-  clickToRecordAndVisualize: {fileID: 1870111862}
   OP: {fileID: 1573040159}
   LeftButton: {fileID: 194881248}
 --- !u!114 &1573040169
@@ -13071,6 +13070,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c1474ea43afec84491ea70d4689a7f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1573040170
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1573040124}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be615df4156e1d145afd3f27d8b5d978, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 5
+  cameraTransform: {fileID: 0}
+  cameraRotationSpeed: 100
 --- !u!1 &1573608976
 GameObject:
   m_ObjectHideFlags: 0
@@ -20550,6 +20564,10 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 2001932147}
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1389421769132500699, guid: 46909d51fabcb1e499e50df7b0a13ec1,
+        type: 3}
+      insertIndex: 5
+      addedObject: {fileID: 1573040170}
     - targetCorrespondingSourceObject: {fileID: 1389421769132500699, guid: 46909d51fabcb1e499e50df7b0a13ec1,
         type: 3}
       insertIndex: -1

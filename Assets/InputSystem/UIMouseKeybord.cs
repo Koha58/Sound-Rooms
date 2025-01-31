@@ -13,7 +13,7 @@ using static UnityEngine.EventSystems.StandaloneInputModule;
 
 public class UIMouseKeybord : MonoBehaviour
 {
-    private UIInputActions _uiInputActions; //Inputsystem取得
+    private GameInputSystem _inputActions; //Inputsystem取得
 
     private Vector2 _moveInput;//スティックの縦横入力
 
@@ -51,23 +51,17 @@ public class UIMouseKeybord : MonoBehaviour
     void Awake()
     {
         // Input Actionの初期化
-        _uiInputActions = new UIInputActions();
+        _inputActions = new GameInputSystem();
     }
 
     void OnEnable()
     {
-        // Moveアクションにリスナーを設定
-        _uiInputActions.ControllerUI.StickMove.performed += OnMove;
-        _uiInputActions.ControllerUI.StickMove.canceled += OnMove;
-        _uiInputActions.Enable();
+
     }
 
     void OnDisable()
     {
-        // リスナー解除
-        _uiInputActions.ControllerUI.StickMove.performed -= OnMove;
-        _uiInputActions.ControllerUI.StickMove.canceled -= OnMove;
-        _uiInputActions.Disable();
+
     }
 
     private void OnMove(InputAction.CallbackContext context)
@@ -90,10 +84,6 @@ public class UIMouseKeybord : MonoBehaviour
 
         imageGamePadSettingButton = gamePadSettingButton.GetComponent<Image>();
         imageKeyBoardSettingButton = keyBoardSettingButton.GetComponent<Image>();
-
-        //InputSystemのインスタンス化
-        _uiInputActions = new UIInputActions();
-        _uiInputActions.Enable();
 
         // 最初に接続されているゲームパッドを取得
         gamepad = Gamepad.current;
@@ -222,8 +212,7 @@ public class UIMouseKeybord : MonoBehaviour
 
     public void OnSettingMenu()
     {
-        if (_uiInputActions.ControllerUI.StartButton.triggered) 
-        {
+       
             if (isStartButton == 0)
             {
                 menyu.SetActive(true);
@@ -243,7 +232,7 @@ public class UIMouseKeybord : MonoBehaviour
                 Time.timeScale = 1;
                 isStartButton = 0;
             }
-        }
+        
     }
 
     public void OnMainSelect()

@@ -9,7 +9,6 @@ using UnityEngine.UI;
 
 public class UIController : MonoBehaviour
 {
-    private UIInputActions _uiInputActions;
 
     [SerializeField] GameObject Menyu;
     [SerializeField] GameObject SettingPanel1;
@@ -68,8 +67,6 @@ public class UIController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _uiInputActions = new UIInputActions();
-        _uiInputActions.Enable();
 
         Menyu.SetActive(false);
         SettingPanel1.SetActive(false);

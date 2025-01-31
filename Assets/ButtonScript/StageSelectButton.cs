@@ -10,8 +10,6 @@ using static InputDeviceManager;
 
 public class StageSelectButton : MonoBehaviour
 {
-
-    private UIInputActions _uiInputActions;
     public GameObject[] StageButtons;
 
     public GameObject RightButton;
@@ -57,10 +55,6 @@ public class StageSelectButton : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
-
-        _uiInputActions = new UIInputActions();
-        _uiInputActions.Enable();
 
         stage = 0;
         StageButtons[stage].GetComponent<Image>().enabled = true;
