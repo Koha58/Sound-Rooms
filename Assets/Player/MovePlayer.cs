@@ -21,8 +21,12 @@ public class MovePlayer : MonoBehaviour
     private bool isSpaceClickHeld;
     private bool isEClickHeld;
 
+    public bool isWalk;
+
     private void Awake()
     {
+        animator = GetComponent<Animator>();   //アニメーターコントローラーからアニメーションを取得する
+
         // Input Systemのインスタンスを作成
         inputActions = new GameInputSystem();
 
@@ -79,14 +83,36 @@ public class MovePlayer : MonoBehaviour
         if (isRightClickHeld)
         {
             moveSpeed = 15.0f;
+            animator.SetBool("Walking", false);
+            animator.SetBool("Running", true);
+            animator.SetBool("Squatting", false);
+            animator.SetBool("CrouchWalking", false);
         }
         else if (isShiftClickHeld)
         {
             moveSpeed = 2.5f;
+            animator.SetBool("Walking",false);
+            animator.SetBool("Running", false);
+            animator.SetBool("Squatting",false);
+            animator.SetBool("CrouchWalking", true);
         }
-        else
+        else 
         {
             moveSpeed = 5.0f;
+
+            // 移動入力があればWalkingアニメーションを再生
+            if (moveInput.magnitude > 0.1f)
+            {
+                animator.SetBool("Walking", true);
+            }
+            else
+            {
+                animator.SetBool("Walking", false);
+            }
+
+            animator.SetBool("Running", false);
+            animator.SetBool("Squatting", false);
+            animator.SetBool("CrouchWalking", false);
         }
 
         //if (isSpaceClickHeld)
@@ -108,6 +134,34 @@ public class MovePlayer : MonoBehaviour
     {
         Vector3 moveDirection = new Vector3(moveInput.x, 0, moveInput.y);
         transform.Translate(moveDirection * moveSpeed * Time.deltaTime, Space.World);
+
+        //if (cameraTransform == null) return; // カメラが未設定なら処理しない
+
+        //// 入力ベクトルを取得（moveInputはWSADやスティックからの入力）
+        //Vector3 moveDirection = new Vector3(moveInput.x, 0, moveInput.y);
+
+        //// カメラの前方と右方向を取得
+        //Vector3 cameraForward = cameraTransform.forward;
+        //Vector3 cameraRight = cameraTransform.right;
+
+        //// Y軸成分を無視して水平方向に正規化
+        //cameraForward.y = 0;
+        //cameraRight.y = 0;
+        //cameraForward.Normalize();
+        //cameraRight.Normalize();
+
+        //// カメラの向きに基づく移動方向の調整
+        //Vector3 adjustedMoveDirection = cameraForward * moveDirection.z + cameraRight * moveDirection.x;
+
+        //// プレイヤーの移動
+        //transform.Translate(adjustedMoveDirection * moveSpeed * Time.deltaTime, Space.World);
+
+        //// 移動方向に応じてプレイヤーの向きを調整
+        //if (adjustedMoveDirection.magnitude > 0.1f)
+        //{
+        //    Quaternion toRotation = Quaternion.LookRotation(adjustedMoveDirection, Vector3.up);
+        //    transform.rotation = Quaternion.Slerp(transform.rotation, toRotation, 0.1f); // スムーズな回転
+        //}
     }
 
     private void RotateCamera()
@@ -120,7 +174,5 @@ public class MovePlayer : MonoBehaviour
 
         // プレイヤーを中心にカメラを水平回転
         cameraTransform.RotateAround(transform.position, Vector3.up, rotationX);
-
-
     }
 }
