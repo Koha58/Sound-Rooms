@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 0.524
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.0944687, g: 0.1182742, b: 0.16082758, a: 0.524}
+  m_IndirectSpecularColor: {r: 0.09446845, g: 0.118273765, b: 0.16082697, a: 0.524}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -12673,6 +12673,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioClip: {fileID: 8300000, guid: 6c16cab840d939b40af52c8ef087a107, type: 3}
+--- !u!114 &1573040177
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1573040124}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be615df4156e1d145afd3f27d8b5d978, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 5
+  cameraTransform: {fileID: 0}
+  cameraRotationSpeed: 100
+  isWalk: 0
 --- !u!1 &1573608976
 GameObject:
   m_ObjectHideFlags: 0
@@ -19571,6 +19587,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: DoorCheck
       objectReference: {fileID: 0}
+    - target: {fileID: 868569657459479320, guid: 46909d51fabcb1e499e50df7b0a13ec1,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1389421769132500699, guid: 46909d51fabcb1e499e50df7b0a13ec1,
         type: 3}
       propertyPath: m_Name
@@ -19715,6 +19736,11 @@ PrefabInstance:
         type: 3}
       propertyPath: field of view
       value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 5352309774110021976, guid: 46909d51fabcb1e499e50df7b0a13ec1,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5352309774110021976, guid: 46909d51fabcb1e499e50df7b0a13ec1,
         type: 3}
@@ -19966,6 +19992,8 @@ PrefabInstance:
     - {fileID: 6447319461231784795, guid: 46909d51fabcb1e499e50df7b0a13ec1, type: 3}
     - {fileID: 4378290757662917892, guid: 46909d51fabcb1e499e50df7b0a13ec1, type: 3}
     - {fileID: 3628175647393335228, guid: 46909d51fabcb1e499e50df7b0a13ec1, type: 3}
+    - {fileID: 8851052561518663962, guid: 46909d51fabcb1e499e50df7b0a13ec1, type: 3}
+    - {fileID: 3054168247726215386, guid: 46909d51fabcb1e499e50df7b0a13ec1, type: 3}
     m_RemovedGameObjects:
     - {fileID: 7314201665835718268, guid: 46909d51fabcb1e499e50df7b0a13ec1, type: 3}
     - {fileID: 6562518041278379172, guid: 46909d51fabcb1e499e50df7b0a13ec1, type: 3}
@@ -19989,6 +20017,10 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 2001932147}
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1389421769132500699, guid: 46909d51fabcb1e499e50df7b0a13ec1,
+        type: 3}
+      insertIndex: 5
+      addedObject: {fileID: 1573040177}
     - targetCorrespondingSourceObject: {fileID: 1389421769132500699, guid: 46909d51fabcb1e499e50df7b0a13ec1,
         type: 3}
       insertIndex: -1
