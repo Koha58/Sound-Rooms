@@ -1,10 +1,13 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;  // シーン遷移用
 
 public class RadioTextController : MonoBehaviour
 {
-    public Text text;  // Text UI コンポーネントへの参照
+    [SerializeField] private Text text;  // Text UI コンポーネントへの参照
+    [SerializeField] private Text nextText;  // 次のシーンへ進む指示を出すテキスト
+    [SerializeField] private FadeController fadeController;  // フェード用のスクリプト参照
     private int TextCounter = 0;  // テキストカウンター
     private float textDisplayTime = 4f;  // 各テキストを表示する時間（秒）
 
@@ -13,6 +16,7 @@ public class RadioTextController : MonoBehaviour
     {
         // 2秒後に最初のテキストを表示
         StartCoroutine(StartTextSequence());
+        nextText.enabled = false;
     }
 
     // 2秒後にテキストシーケンスを開始する
@@ -38,6 +42,14 @@ public class RadioTextController : MonoBehaviour
 
             // カウンターを進める
             TextCounter++;
+
+            // 12番目のテキストが表示されたら nextText を表示
+            if (TextCounter == 13)
+            {
+                text.enabled = false;
+                nextText.text = "E：ラジオを拾う";  // 例: 次のシーンに進むメッセージ
+                nextText.enabled = true;  // nextTextを表示
+            }
         }
     }
 
@@ -96,6 +108,10 @@ public class RadioTextController : MonoBehaviour
         {
             text.text = "幸運を祈る";
         }
+        else if (TextCounter == 13)
+        {
+            text.text = "";
+        }
     }
 
     void ChangeTiming()
@@ -124,5 +140,25 @@ public class RadioTextController : MonoBehaviour
         {
             textDisplayTime = 6.0f;
         }
+    }
+
+    // Eボタンが押されたときの処理
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.E) && nextText.enabled)
+        {
+            // フェードアウトを開始
+            StartCoroutine(FadeAndLoadScene());
+        }
+    }
+
+    // フェードアウトとシーン遷移
+    IEnumerator FadeAndLoadScene()
+    {
+        // フェードアウトを開始
+        yield return StartCoroutine(fadeController.FadeOut());
+
+        // フェードアウトが完了したらシーン遷移
+        SceneManager.LoadScene("TutorialScene");  // シーン名は適宜変更
     }
 }
