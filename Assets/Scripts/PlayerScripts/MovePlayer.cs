@@ -6,11 +6,9 @@ public class MovePlayer : MonoBehaviour
 {
     private Animator animator;
 
-    [Header("Movement Settings")]
     public float moveSpeed = 5f;
 
-    [Header("Camera Settings")]
-    public Transform cameraTransform; // カメラのTransform
+    public GameObject cameraObject; // カメラのTransform
     public float cameraRotationSpeed = 100f; // カメラの回転速度
 
     private GameInputSystem inputActions;
@@ -126,53 +124,39 @@ public class MovePlayer : MonoBehaviour
         //}
 
         Move();
-
-        //RotateCamera();
+        RotatePlayer();
     }
 
+    /// <summary>
+    /// カメラの向きに基づいた移動
+    /// </summary>
     private void Move()
     {
-        Vector3 moveDirection = new Vector3(moveInput.x, 0, moveInput.y);
-        transform.Translate(moveDirection * moveSpeed * Time.deltaTime, Space.World);
-
-        //if (cameraTransform == null) return; // カメラが未設定なら処理しない
-
-        //// 入力ベクトルを取得（moveInputはWSADやスティックからの入力）
         //Vector3 moveDirection = new Vector3(moveInput.x, 0, moveInput.y);
+        //transform.Translate(moveDirection * moveSpeed * Time.deltaTime, Space.World);
 
-        //// カメラの前方と右方向を取得
-        //Vector3 cameraForward = cameraTransform.forward;
-        //Vector3 cameraRight = cameraTransform.right;
+        if (cameraObject == null || moveInput.magnitude < 0.1f) return;
 
-        //// Y軸成分を無視して水平方向に正規化
-        //cameraForward.y = 0;
-        //cameraRight.y = 0;
-        //cameraForward.Normalize();
-        //cameraRight.Normalize();
+        Vector3 cameraForward = Vector3.Scale(cameraObject.transform.forward, new Vector3(1, 0, 1)).normalized;
+        Vector3 cameraRight = Vector3.Scale(cameraObject.transform.right, new Vector3(1, 0, 1)).normalized;
 
-        //// カメラの向きに基づく移動方向の調整
-        //Vector3 adjustedMoveDirection = cameraForward * moveDirection.z + cameraRight * moveDirection.x;
-
-        //// プレイヤーの移動
-        //transform.Translate(adjustedMoveDirection * moveSpeed * Time.deltaTime, Space.World);
-
-        //// 移動方向に応じてプレイヤーの向きを調整
-        //if (adjustedMoveDirection.magnitude > 0.1f)
-        //{
-        //    Quaternion toRotation = Quaternion.LookRotation(adjustedMoveDirection, Vector3.up);
-        //    transform.rotation = Quaternion.Slerp(transform.rotation, toRotation, 0.1f); // スムーズな回転
-        //}
+        Vector3 moveDirection = (cameraRight * moveInput.x + cameraForward * moveInput.y).normalized;
+        transform.position += moveDirection * moveSpeed * Time.deltaTime;
     }
 
-    private void RotateCamera()
+    /// <summary>
+    /// プレイヤーの向きを移動方向に合わせる
+    /// </summary>
+    private void RotatePlayer()
     {
-        if (cameraTransform == null) return;
+        if (moveInput.magnitude < 0.1f) return;
 
-        // カメラ回転の入力 (右スティック)
-        float rotationX = moveCameraInput.x * cameraRotationSpeed * Time.deltaTime;
-        float rotationY = moveCameraInput.y * cameraRotationSpeed * Time.deltaTime;
+        Vector3 cameraForward = Vector3.Scale(cameraObject.transform.forward, new Vector3(1, 0, 1)).normalized;
+        Vector3 cameraRight = Vector3.Scale(cameraObject.transform.right, new Vector3(1, 0, 1)).normalized;
 
-        // プレイヤーを中心にカメラを水平回転
-        cameraTransform.RotateAround(transform.position, Vector3.up, rotationX);
+        Vector3 moveDirection = (cameraRight * moveInput.x + cameraForward * moveInput.y).normalized;
+
+        Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 10f);
     }
-}
+}   

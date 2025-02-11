@@ -74,8 +74,17 @@ public partial class @GameInputSystem: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""MoveCamera"",
-                    ""type"": ""Button"",
+                    ""type"": ""Value"",
                     ""id"": ""cf9fb9cd-6a30-4342-b12d-7f5faed2ec3f"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""MenuButton"",
+                    ""type"": ""Button"",
+                    ""id"": ""7cadb473-21aa-4f9c-a358-6669640edf60"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -284,11 +293,22 @@ public partial class @GameInputSystem: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""46ff1dae-5318-4428-8916-287cff6a1400"",
-                    ""path"": ""<Gamepad>/rightStick/right"",
+                    ""path"": ""<Gamepad>/rightStick"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""MoveCamera"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""507ecd11-7981-4c30-b29e-2f7d70e004c1"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MenuButton"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -821,6 +841,7 @@ public partial class @GameInputSystem: IInputActionCollection2, IDisposable
         m_Player_SpaceClick = m_Player.FindAction("SpaceClick", throwIfNotFound: true);
         m_Player_EClick = m_Player.FindAction("EClick", throwIfNotFound: true);
         m_Player_MoveCamera = m_Player.FindAction("MoveCamera", throwIfNotFound: true);
+        m_Player_MenuButton = m_Player.FindAction("MenuButton", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -900,6 +921,7 @@ public partial class @GameInputSystem: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_SpaceClick;
     private readonly InputAction m_Player_EClick;
     private readonly InputAction m_Player_MoveCamera;
+    private readonly InputAction m_Player_MenuButton;
     public struct PlayerActions
     {
         private @GameInputSystem m_Wrapper;
@@ -910,6 +932,7 @@ public partial class @GameInputSystem: IInputActionCollection2, IDisposable
         public InputAction @SpaceClick => m_Wrapper.m_Player_SpaceClick;
         public InputAction @EClick => m_Wrapper.m_Player_EClick;
         public InputAction @MoveCamera => m_Wrapper.m_Player_MoveCamera;
+        public InputAction @MenuButton => m_Wrapper.m_Player_MenuButton;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -937,6 +960,9 @@ public partial class @GameInputSystem: IInputActionCollection2, IDisposable
             @MoveCamera.started += instance.OnMoveCamera;
             @MoveCamera.performed += instance.OnMoveCamera;
             @MoveCamera.canceled += instance.OnMoveCamera;
+            @MenuButton.started += instance.OnMenuButton;
+            @MenuButton.performed += instance.OnMenuButton;
+            @MenuButton.canceled += instance.OnMenuButton;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -959,6 +985,9 @@ public partial class @GameInputSystem: IInputActionCollection2, IDisposable
             @MoveCamera.started -= instance.OnMoveCamera;
             @MoveCamera.performed -= instance.OnMoveCamera;
             @MoveCamera.canceled -= instance.OnMoveCamera;
+            @MenuButton.started -= instance.OnMenuButton;
+            @MenuButton.performed -= instance.OnMenuButton;
+            @MenuButton.canceled -= instance.OnMenuButton;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -1102,6 +1131,7 @@ public partial class @GameInputSystem: IInputActionCollection2, IDisposable
         void OnSpaceClick(InputAction.CallbackContext context);
         void OnEClick(InputAction.CallbackContext context);
         void OnMoveCamera(InputAction.CallbackContext context);
+        void OnMenuButton(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

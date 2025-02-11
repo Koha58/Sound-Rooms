@@ -52,8 +52,17 @@
                 },
                 {
                     "name": "MoveCamera",
-                    "type": "Button",
+                    "type": "Value",
                     "id": "cf9fb9cd-6a30-4342-b12d-7f5faed2ec3f",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "MenuButton",
+                    "type": "Button",
+                    "id": "7cadb473-21aa-4f9c-a358-6669640edf60",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -262,11 +271,22 @@
                 {
                     "name": "",
                     "id": "46ff1dae-5318-4428-8916-287cff6a1400",
-                    "path": "<Gamepad>/rightStick/right",
+                    "path": "<Gamepad>/rightStick",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "MoveCamera",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "507ecd11-7981-4c30-b29e-2f7d70e004c1",
+                    "path": "<Gamepad>/start",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MenuButton",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
