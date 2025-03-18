@@ -1,37 +1,39 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+/// <summary>
+/// StartSceneのボタン管理クラス
+/// </summary>
 public class StartManager : MonoBehaviour
 {
-    //private UIInputActions _uiInputActions;
-
+    // Imageコンポーネントを参照
     Image SelectButtonImage;
     Image BackDesktopButtonImage;
 
-    public GameObject SelectButton;
-    public GameObject BackDesktopButton;
+    // ボタンのGameObject参照
+    [SerializeField] private GameObject SelectButton;
+    [SerializeField] private GameObject BackDesktopButton;
 
-
+    // ボタンの移動方向管理用フラグ
     bool UPDOWN;
 
-    Vector3 originalSelectButtonPosition; // 元の位置を保存するための変数
-    Vector3 originalBackDesktopButtonPosition; // 元の位置を保存するための変数
+    // 元の位置を保存するための変数
+    Vector3 originalSelectButtonPosition;
+    Vector3 originalBackDesktopButtonPosition;
 
+    // Selectボタンが押されたときの音を再生するAudioSource
     [SerializeField] AudioSource SelectSound;  // AudioSourceをSerializeFieldとしてインスペクターから設定
 
     // Start is called before the first frame update
     void Start()
     {
-
-        //_uiInputActions = new UIInputActions();
-        //_uiInputActions.Enable();
-
+        // ボタンのImageコンポーネントを取得
         SelectButtonImage = SelectButton.GetComponent<Image>();
         BackDesktopButtonImage = BackDesktopButton.GetComponent<Image>();
 
+        // Selectボタンは色を黒に、BackDesktopボタンは色を薄く設定
         SelectButtonImage.color = new Color32(0, 0, 0, 255);
         BackDesktopButtonImage.color = new Color32(0, 0, 0, 120);
 
@@ -39,7 +41,7 @@ public class StartManager : MonoBehaviour
         originalSelectButtonPosition = SelectButton.GetComponent<RectTransform>().localPosition;
         originalBackDesktopButtonPosition = BackDesktopButton.GetComponent<RectTransform>().localPosition;
 
-        // Selectボタンを少しマイナスX方向に移動
+        // Selectボタンを少し左に移動
         SelectButton.GetComponent<RectTransform>().localPosition = originalSelectButtonPosition + new Vector3(-20f, 0f, 0f);
         BackDesktopButton.GetComponent<RectTransform>().localPosition = originalBackDesktopButtonPosition; // BackDesktopButtonは移動しない
 
@@ -47,54 +49,6 @@ public class StartManager : MonoBehaviour
 
         // AudioSource コンポーネントを取得
         SelectSound = GetComponent<AudioSource>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-//        if (_uiInputActions.SettingUI.MainSelsectUp.triggered)
-//        {
-//            SelectButtonImage.color = new Color32(0, 0, 0, 255);
-//            BackDesktopButtonImage.color = new Color32(0, 0, 0, 120);
-//            UPDOWN = true;
-
-//            // Selectボタンを少しマイナスX方向に移動
-//            SelectButton.GetComponent<RectTransform>().localPosition = originalSelectButtonPosition + new Vector3(-20f, 0f, 0f);
-//            BackDesktopButton.GetComponent<RectTransform>().localPosition = originalBackDesktopButtonPosition; // BackDesktopButtonは移動しない
-//        }
-//        else if (_uiInputActions.SettingUI.MainSelsectDown.triggered)
-//        {
-//            SelectButtonImage.color = new Color32(0, 0, 0, 120);
-//            BackDesktopButtonImage.color = new Color32(0, 0, 0, 255);
-//            UPDOWN = false;
-
-//            // BackDesktopボタンを少しマイナスX方向に移動
-//            BackDesktopButton.GetComponent<RectTransform>().localPosition = originalBackDesktopButtonPosition + new Vector3(-20f, 0f, 0f);
-//            SelectButton.GetComponent<RectTransform>().localPosition = originalSelectButtonPosition; // SelectButtonは移動しない
-//        }
-
-//        // ボタンが選択された状態でボタンが押された場合の処理
-//        if (UPDOWN == true)
-//        {
-//            if (Input.GetKeyDown("joystick button 0"))
-//            {
-//                // 音を再生してシーン遷移するコルーチンを開始
-//                StartCoroutine(PlaySelectSoundAndLoadScene());
-//                SceneManager.LoadScene("StageSelectScene");
-//            }
-//        }
-//        else
-//        {
-//            if (Input.GetKeyDown("joystick button 0"))
-//            {
-//#if UNITY_EDITOR
-//                UnityEditor.EditorApplication.isPlaying = false; // ゲームプレイ終了
-//#else
-//                Application.Quit(); // ゲームプレイ終了
-//#endif
-//            }
-//        }
-
     }
 
     // Selectボタンが選択されたときにシーン遷移
@@ -108,37 +62,53 @@ public class StartManager : MonoBehaviour
     public void OnBackDesktop()
     {
 #if UNITY_EDITOR
+        // Unityエディターの場合、ゲームプレイを終了
         UnityEditor.EditorApplication.isPlaying = false; // ゲームプレイ終了
 #else
+        // ビルドされたゲームの場合、アプリケーションを終了
         Application.Quit(); // ゲームプレイ終了
 #endif
     }
 
+    // Selectボタンにカーソルが入ったときの処理
     public void EnterSelectButton()
     {
+        // Selectボタンの色を黒に変更
         SelectButtonImage.color = new Color32(0, 0, 0, 255);
-        // Selectボタンを少しマイナスX方向に移動
+
+        // Selectボタンを少し左に移動
         SelectButton.GetComponent<RectTransform>().localPosition = originalSelectButtonPosition + new Vector3(-20f, 0f, 0f);
         BackDesktopButton.GetComponent<RectTransform>().localPosition = originalBackDesktopButtonPosition; // BackDesktopButtonは移動しない
     }
 
+    // Selectボタンからカーソルが出たときの処理
     public void ExitSelectButton()
     {
+        // Selectボタンの色を薄く設定
         SelectButtonImage.color = new Color32(0, 0, 0, 120);
+
+        // Selectボタンを元の位置に戻す
         SelectButton.GetComponent<RectTransform>().localPosition = originalSelectButtonPosition;
     }
 
+    // BackDesktopボタンにカーソルが入ったときの処理
     public void EnterBackDesktopButton()
     {
+        // BackDesktopボタンの色を黒に変更
         BackDesktopButtonImage.color = new Color32(0, 0, 0, 255);
-        // BackDesktopボタンを少しマイナスX方向に移動
+
+        // BackDesktopボタンを少し左に移動
         BackDesktopButton.GetComponent<RectTransform>().localPosition = originalBackDesktopButtonPosition + new Vector3(-20f, 0f, 0f);
         SelectButton.GetComponent<RectTransform>().localPosition = originalSelectButtonPosition; // SelectButtonは移動しない
     }
 
+    // BackDesktopボタンからカーソルが出たときの処理
     public void ExitBackDesktopButton()
     {
+        // BackDesktopボタンの色を薄く設定
         BackDesktopButtonImage.color = new Color32(0, 0, 0, 120);
+
+        // BackDesktopボタンを元の位置に戻す
         BackDesktopButton.GetComponent<RectTransform>().localPosition = originalBackDesktopButtonPosition;
     }
 

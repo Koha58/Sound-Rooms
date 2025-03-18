@@ -422,7 +422,7 @@ public class StageSelectButton : MonoBehaviour
         // ‰¹‚ªI—¹‚µ‚½Œã‚ÉƒV[ƒ“‚ğ‘JˆÚ
         if (stage == 0)
         {
-            SceneManager.LoadScene("TutorialScene");
+            SceneManager.LoadScene("GetRecorder");
         }
         else if (stage == 1)
         {

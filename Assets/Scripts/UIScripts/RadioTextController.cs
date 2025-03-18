@@ -3,6 +3,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;  // シーン遷移用
 
+/// <summary>
+/// GetRecorderシーンのテキストを管理するクラス
+/// </summary>
 public class RadioTextController : MonoBehaviour
 {
     [SerializeField] private Text text;  // Text UI コンポーネントへの参照
@@ -16,7 +19,7 @@ public class RadioTextController : MonoBehaviour
     {
         // 2秒後に最初のテキストを表示
         StartCoroutine(StartTextSequence());
-        nextText.enabled = false;
+        nextText.enabled = false;  // 次のシーンへの進行メッセージは初期状態で非表示
     }
 
     // 2秒後にテキストシーケンスを開始する
@@ -46,8 +49,8 @@ public class RadioTextController : MonoBehaviour
             // 12番目のテキストが表示されたら nextText を表示
             if (TextCounter == 13)
             {
-                text.enabled = false;
-                nextText.text = "E：ラジオを拾う";  // 例: 次のシーンに進むメッセージ
+                text.enabled = false;  // 現在のテキストを非表示
+                nextText.text = "E：ラジオを拾う";  // 次のシーンに進むメッセージ
                 nextText.enabled = true;  // nextTextを表示
             }
         }
@@ -56,6 +59,7 @@ public class RadioTextController : MonoBehaviour
     // 現在のテキストを設定する
     void SetText()
     {
+        // TextCounterに応じて表示するテキストを設定
         if (TextCounter == 0)
         {
             text.text = "聞こえておるか";
@@ -110,12 +114,14 @@ public class RadioTextController : MonoBehaviour
         }
         else if (TextCounter == 13)
         {
-            text.text = "";
+            text.text = "";  // 最後のテキスト後に空文字を設定
         }
     }
 
+    // Textごとの表示時間を調整する
     void ChangeTiming()
     {
+        // TextCounterに応じて表示時間を調整
         if (TextCounter == 0)
         {
             textDisplayTime = 2.0f;
@@ -145,6 +151,7 @@ public class RadioTextController : MonoBehaviour
     // Eボタンが押されたときの処理
     void Update()
     {
+        // Eキーが押され、次のテキストが表示されている場合
         if (Input.GetKeyDown(KeyCode.E) && nextText.enabled)
         {
             // フェードアウトを開始

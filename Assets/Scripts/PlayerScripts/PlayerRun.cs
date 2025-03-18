@@ -3,97 +3,109 @@ using System.Collections.Generic;
 using UnityEngine;
 using static InputDeviceManager;
 
-//プレイヤーの移動
+/// <summary>
+/// Playerの移動を管理するクラス
+/// </summary>
 
 public class PlayerRun : MonoBehaviour
 {
-    public int moving = 0;
+    public int moving = 0; // 移動中かどうかを示すフラグ（0は停止、1は移動中）
     [SerializeField]
-    float moveSpeedIn;//プレイヤーの移動速度を入力
-    private Animator animator;
+    float moveSpeedIn; // プレイヤーの移動速度を設定する変数
 
-    Rigidbody playerRb;//プレイヤーのRigidbody
+    private Animator animator; // プレイヤーのアニメーター（アニメーションを制御）
 
-    Vector3 moveSpeed;//プレイヤーの移動速度
+    Rigidbody playerRb; // プレイヤーのRigidbody（物理演算を行うため）
 
-    Vector3 currentPos;//プレイヤーの現在の位置
-    Vector3 pastPos;//プレイヤーの過去の位置
+    Vector3 moveSpeed; // プレイヤーの移動速度（ベクトル形式）
 
-    Vector3 delta;//プレイヤーの移動量
+    Vector3 currentPos; // プレイヤーの現在位置
 
-    Quaternion playerRot;//プレイヤーの進行方向を向くクォータニオン
+    Vector3 pastPos; // プレイヤーの過去の位置（移動の前後比較用）
 
-    float currentAngularVelocity;//現在の回転各速度
+    Vector3 delta; // プレイヤーの移動量（位置の変化量）
+
+    Quaternion playerRot; // プレイヤーの進行方向を向くクォータニオン（回転を表現）
+
+    float currentAngularVelocity; // プレイヤーの現在の回転角速度
 
     [SerializeField]
-    float maxAngularVelocity = Mathf.Infinity;//最大の回転角速度[deg/s]
+    float maxAngularVelocity = Mathf.Infinity; // 最大の回転角速度[deg/s]（制限値）
 
     [SerializeField]
-    float smoothTime = 0.1f;//進行方向にかかるおおよその時間[s]
+    float smoothTime = 0.1f; // 進行方向にかかるおおよその時間[s]（回転を滑らかにする）
 
-    float diffAngle;//現在の向きと進行方向の角度
+    float diffAngle; // 現在の向きと進行方向の角度差
 
-    float rotAngle;//現在の回転する角度
+    float rotAngle; // 現在の回転する角度
 
-    Quaternion nextRot;//どのくらい回転するか
+    Quaternion nextRot; // 次に回転する角度（補間に使う）
 
-    public static bool walk = false;
-    public static bool run = false;
-    public static bool crouch = false;
-    public bool crouchWalk = false;
+    public static bool walk = false; // 歩いているかどうかを示すフラグ（デフォルトは歩いていない）
 
-    private Rigidbody rb;
+    public static bool run = false; // 走っているかどうかを示すフラグ（デフォルトは走っていない）
 
-    //しゃがむとき
-    public static bool CrouchOn = false;
+    public static bool crouch = false; // しゃがんでいるかどうかを示すフラグ（デフォルトはしゃがんでいない）
+
+    public bool crouchWalk = false; // しゃがんで歩いているかどうかを示すフラグ（しゃがみながらの歩行）
+
+    private Rigidbody rb; // プレイヤーのRigidbody（物理演算を行うため）
+
+    // しゃがむとき
+    public static bool CrouchOn = false; // しゃがみ状態を管理するフラグ（しゃがみ中ならtrue）
+
 
 
     void Start()
     {
-        playerRb = GetComponent<Rigidbody>();
-        animator = GetComponent<Animator>();   //アニメーターコントローラーからアニメーションを取得する
-        pastPos = transform.position;
+        playerRb = GetComponent<Rigidbody>(); // Rigidbodyコンポーネントを取得して、物理挙動を扱う
+        animator = GetComponent<Animator>(); // アニメーターコントローラーを取得してアニメーションを制御
+        pastPos = transform.position; // プレイヤーの初期位置を記録
 
-        Application.targetFrameRate = 60;
+        Application.targetFrameRate = 60; // アプリケーションのターゲットフレームレートを60に設定（滑らかな動き）
 
-        rb = GetComponent<Rigidbody>();
+        rb = GetComponent<Rigidbody>(); // Rigidbodyコンポーネントを再度取得（無駄な重複ですが、別の用途の可能性あり）
     }
 
     void Update()
     {
-        //Animation管理
+        // Animation管理（プレイヤーのアニメーション状態を更新）
         Animation();
-        //Moveメソッドで、力加えてもらう
+
+        // 移動メソッドで、プレイヤーに力を加える
         Move();
 
-        //慣性管理、しゃがみ
+        // 慣性の管理やしゃがみ状態を処理
         Inertia();
 
-        //Playerの回転
+        // プレイヤーの回転処理（進行方向に合わせて回転）
         Rotation();
-
     }
 
     /// <summary>
-    /// 移動方向に力を加える
+    /// プレイヤーの移動方向に力を加える処理
     /// </summary>
     private void Move()
     {
+        // 歩いている場合、通常の移動速度で力を加える
         if (walk == true)
         {
-            playerRb.velocity = moveSpeed;
+            playerRb.velocity = moveSpeed; // 歩く速度で移動（velocityを設定して力を加える）
         }
 
+        // 走っている場合、速度を2倍にして力を加える
         if (run == true)
         {
-            playerRb.velocity = moveSpeed * 2;
+            playerRb.velocity = moveSpeed * 2; // 走るときは移動速度を倍にする
         }
 
+        // しゃがみながら歩く場合、移動速度を1/5にして力を加える
         if (crouchWalk == true)
         {
-            playerRb.velocity = moveSpeed / 5;
-        }      
+            playerRb.velocity = moveSpeed / 5; // しゃがんでいるときの移動速度を遅くする
+        }
     }
+
 
     /// <summary>
     /// Animation管理
@@ -111,7 +123,7 @@ public class PlayerRun : MonoBehaviour
         moveSpeed = Vector3.zero;
 
         //歩くとき
-        if (!crouch && Input.GetKey(KeyCode.W))
+        if (!crouch && Input.GetKey(KeyCode.W)) //前方向に移動
         {
             moveSpeed = moveSpeedIn * cameraForward;
             animator.SetBool("Walking", true);
@@ -126,7 +138,7 @@ public class PlayerRun : MonoBehaviour
             CrouchOn = false;
         }
 
-        if (!crouch && Input.GetKey(KeyCode.A))
+        if (!crouch && Input.GetKey(KeyCode.A)) //左方向に移動
         {
             moveSpeed = -moveSpeedIn * cameraRight;
             animator.SetBool("Walking", true);
@@ -141,7 +153,7 @@ public class PlayerRun : MonoBehaviour
             CrouchOn = false;
         }
 
-        if (!crouch && Input.GetKey(KeyCode.S))
+        if (!crouch && Input.GetKey(KeyCode.S)) //後方向に移動
         {
             moveSpeed = -moveSpeedIn * cameraForward;
             animator.SetBool("Walking", true);
@@ -156,7 +168,7 @@ public class PlayerRun : MonoBehaviour
             CrouchOn = false;
         }
 
-        if (!crouch && Input.GetKey(KeyCode.D))
+        if (!crouch && Input.GetKey(KeyCode.D)) //右方向に移動
         {
             moveSpeed = moveSpeedIn * cameraRight;
             animator.SetBool("Walking", true);
@@ -171,7 +183,7 @@ public class PlayerRun : MonoBehaviour
             CrouchOn = false;
         }
 
-        if (!crouch && (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.D)))
+        if (!crouch && (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.D))) //右後ろ方向に移動
         {
             moveSpeed = (-moveSpeedIn * cameraForward) + (moveSpeedIn * cameraRight).normalized;
             animator.SetBool("Walking", true);
@@ -184,7 +196,7 @@ public class PlayerRun : MonoBehaviour
             crouch = false;
             crouchWalk = false;
         }
-        if (!crouch && (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.D)))
+        if (!crouch && (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.D))) //右前方向に移動
         {
             moveSpeed = (moveSpeedIn * cameraForward) + (moveSpeedIn * cameraRight).normalized;
             animator.SetBool("Walking", true);
@@ -197,7 +209,7 @@ public class PlayerRun : MonoBehaviour
             crouch = false;
             crouchWalk = false;
         }
-        if (!crouch && (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.A)))
+        if (!crouch && (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.A))) //左前方向に移動
         {
             moveSpeed = (moveSpeedIn * cameraForward) + (-moveSpeedIn * cameraRight).normalized;
             animator.SetBool("Walking", true);
@@ -210,7 +222,7 @@ public class PlayerRun : MonoBehaviour
             crouch = false;
             crouchWalk = false;
         }
-        if (!crouch && (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.D)))
+        if (!crouch && (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.D))) //左前方向に移動
         {
             moveSpeed = (-moveSpeedIn * cameraForward) + (-moveSpeedIn * cameraRight).normalized;
             animator.SetBool("Walking", true);
@@ -226,7 +238,7 @@ public class PlayerRun : MonoBehaviour
 
 
         //歩くとき(Xbox)
-        if (!crouch && Input.GetAxisRaw("Vertical") < 0)
+        if (!crouch && Input.GetAxisRaw("Vertical") < 0) //前方向に移動
         {
             moveSpeed = moveSpeedIn * cameraForward;
             animator.SetBool("Walking", true);
@@ -241,7 +253,7 @@ public class PlayerRun : MonoBehaviour
             CrouchOn = false;
         }
 
-        if (!crouch && Input.GetAxisRaw("Horizontal") < 0)
+        if (!crouch && Input.GetAxisRaw("Horizontal") < 0) //左方向に移動
         {
             moveSpeed = -moveSpeedIn * cameraRight;
             animator.SetBool("Walking", true);
@@ -256,7 +268,7 @@ public class PlayerRun : MonoBehaviour
             CrouchOn = false;
         }
 
-        if (!crouch && Input.GetAxisRaw("Vertical") > 0)
+        if (!crouch && Input.GetAxisRaw("Vertical") > 0) //後方向に移動
         {
             moveSpeed = -moveSpeedIn * cameraForward;
             animator.SetBool("Walking", true);
@@ -271,7 +283,7 @@ public class PlayerRun : MonoBehaviour
             CrouchOn = false;
         }
 
-        if (!crouch && Input.GetAxisRaw("Horizontal") > 0)
+        if (!crouch && Input.GetAxisRaw("Horizontal") > 0) //右方向に移動
         {
             moveSpeed = moveSpeedIn * cameraRight;
             animator.SetBool("Walking", true);
@@ -286,7 +298,7 @@ public class PlayerRun : MonoBehaviour
             CrouchOn = false;
         }
 
-        if (!crouch && (Input.GetAxisRaw("Horizontal") > 0 && Input.GetAxisRaw("Vertical") > 0))
+        if (!crouch && (Input.GetAxisRaw("Horizontal") > 0 && Input.GetAxisRaw("Vertical") > 0)) //右後ろ方向に移動
         {
             moveSpeed = (-moveSpeedIn * cameraForward) + (moveSpeedIn * cameraRight).normalized;
             animator.SetBool("Walking", true);
@@ -299,7 +311,7 @@ public class PlayerRun : MonoBehaviour
             crouch = false;
             crouchWalk = false;
         }
-        if (!crouch && (Input.GetAxisRaw("Horizontal") > 0 && Input.GetAxisRaw("Vertical") < 0))
+        if (!crouch && (Input.GetAxisRaw("Horizontal") > 0 && Input.GetAxisRaw("Vertical") < 0)) //右前方向に移動
         {
             moveSpeed = (moveSpeedIn * cameraForward) + (moveSpeedIn * cameraRight).normalized;
             animator.SetBool("Walking", true);
@@ -312,7 +324,7 @@ public class PlayerRun : MonoBehaviour
             crouch = false;
             crouchWalk = false;
         }
-        if (!crouch && (Input.GetAxisRaw("Horizontal") < 0 && Input.GetAxisRaw("Vertical") < 0))
+        if (!crouch && (Input.GetAxisRaw("Horizontal") < 0 && Input.GetAxisRaw("Vertical") < 0)) //左前方向に移動
         {
             moveSpeed = (moveSpeedIn * cameraForward) + (-moveSpeedIn * cameraRight).normalized;
             animator.SetBool("Walking", true);
@@ -340,7 +352,7 @@ public class PlayerRun : MonoBehaviour
         }
 
         //走るとき
-        if (!crouch && Input.GetKey(KeyCode.W) && Input.GetMouseButton(1))
+        if (!crouch && Input.GetKey(KeyCode.W) && Input.GetMouseButton(1)) //前方向に移動
         {
             moveSpeed = moveSpeedIn * cameraForward;
             animator.SetBool("Walking", false);
@@ -354,7 +366,7 @@ public class PlayerRun : MonoBehaviour
             crouchWalk = false;
         }
 
-        if (!crouch && Input.GetKey(KeyCode.A) && Input.GetMouseButton(1))
+        if (!crouch && Input.GetKey(KeyCode.A) && Input.GetMouseButton(1)) //左方向に移動
         {
             moveSpeed = -moveSpeedIn * cameraRight;
             animator.SetBool("Walking", false);
@@ -368,7 +380,7 @@ public class PlayerRun : MonoBehaviour
             crouchWalk = false;
         }
 
-        if (!crouch && Input.GetKey(KeyCode.S) && Input.GetMouseButton(1))
+        if (!crouch && Input.GetKey(KeyCode.S) && Input.GetMouseButton(1)) //後方向に移動
         {
             moveSpeed = -moveSpeedIn * cameraForward;
             animator.SetBool("Walking", false);
@@ -382,7 +394,7 @@ public class PlayerRun : MonoBehaviour
             crouchWalk = false;
         }
 
-        if (!crouch && Input.GetKey(KeyCode.D) && Input.GetMouseButton(1))
+        if (!crouch && Input.GetKey(KeyCode.D) && Input.GetMouseButton(1)) //右方向に移動
         {
             moveSpeed = moveSpeedIn * cameraRight;
             animator.SetBool("Walking", false);
@@ -396,7 +408,7 @@ public class PlayerRun : MonoBehaviour
             crouchWalk = false;
         }
 
-        if (!crouch && (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.D)) && Input.GetMouseButton(1))
+        if (!crouch && (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.D)) && Input.GetMouseButton(1)) //右後ろ方向に移動
         {
             moveSpeed = (-moveSpeedIn * cameraForward) + (moveSpeedIn * cameraRight).normalized;
             animator.SetBool("Walking", false);
@@ -409,7 +421,7 @@ public class PlayerRun : MonoBehaviour
             crouch = false;
             crouchWalk = false;
         }
-        if (!crouch && (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.D)) && Input.GetMouseButton(1))
+        if (!crouch && (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.D)) && Input.GetMouseButton(1)) //右前方向に移動
         {
             moveSpeed = (moveSpeedIn * cameraForward) + (moveSpeedIn * cameraRight).normalized;
             animator.SetBool("Walking", false);
@@ -422,7 +434,7 @@ public class PlayerRun : MonoBehaviour
             crouch = false;
             crouchWalk = false;
         }
-        if (!crouch && (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.A)) && Input.GetMouseButton(1))
+        if (!crouch && (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.A)) && Input.GetMouseButton(1)) //左前方向に移動
         {
             moveSpeed = (moveSpeedIn * cameraForward) + (-moveSpeedIn * cameraRight).normalized;
             animator.SetBool("Walking", false);
@@ -451,7 +463,7 @@ public class PlayerRun : MonoBehaviour
         }
 
         //走るとき(Xbox)
-        if (!crouch && Input.GetAxisRaw("Vertical") < 0 && Input.GetKey("joystick button 5"))
+        if (!crouch && Input.GetAxisRaw("Vertical") < 0 && Input.GetKey("joystick button 5")) //前方向に移動
         {
             moveSpeed = moveSpeedIn * cameraForward;
             animator.SetBool("Walking", false);
@@ -465,7 +477,7 @@ public class PlayerRun : MonoBehaviour
             crouchWalk = false;
         }
 
-        if (!crouch && Input.GetAxisRaw("Horizontal") < 0 && Input.GetKey("joystick button 5"))
+        if (!crouch && Input.GetAxisRaw("Horizontal") < 0 && Input.GetKey("joystick button 5")) //左方向に移動
         {
             moveSpeed = -moveSpeedIn * cameraRight;
             animator.SetBool("Walking", false);
@@ -479,7 +491,7 @@ public class PlayerRun : MonoBehaviour
             crouchWalk = false;
         }
 
-        if (!crouch && Input.GetAxisRaw("Vertical") > 0 && Input.GetKey("joystick button 5"))
+        if (!crouch && Input.GetAxisRaw("Vertical") > 0 && Input.GetKey("joystick button 5")) //後方向に移動
         {
             moveSpeed = -moveSpeedIn * cameraForward;
             animator.SetBool("Walking", false);
@@ -493,7 +505,7 @@ public class PlayerRun : MonoBehaviour
             crouchWalk = false;
         }
 
-        if (!crouch && Input.GetAxisRaw("Horizontal") > 0 && Input.GetKey("joystick button 5"))
+        if (!crouch && Input.GetAxisRaw("Horizontal") > 0 && Input.GetKey("joystick button 5")) //右方向に移動
         {
             moveSpeed = moveSpeedIn * cameraRight;
             animator.SetBool("Walking", false);
@@ -507,7 +519,7 @@ public class PlayerRun : MonoBehaviour
             crouchWalk = false;
         }
 
-        if (!crouch && (Input.GetAxisRaw("Horizontal") > 0 && Input.GetAxisRaw("Vertical") > 0) && Input.GetKey("joystick button 5"))
+        if (!crouch && (Input.GetAxisRaw("Horizontal") > 0 && Input.GetAxisRaw("Vertical") > 0) && Input.GetKey("joystick button 5")) //右後ろ方向に移動
         {
             moveSpeed = (-moveSpeedIn * cameraForward) + (moveSpeedIn * cameraRight).normalized;
             animator.SetBool("Walking", false);
@@ -520,7 +532,7 @@ public class PlayerRun : MonoBehaviour
             crouch = false;
             crouchWalk = false;
         }
-        if (!crouch && (Input.GetAxisRaw("Horizontal") > 0 && Input.GetAxisRaw("Vertical") < 0) && Input.GetKey("joystick button 5"))
+        if (!crouch && (Input.GetAxisRaw("Horizontal") > 0 && Input.GetAxisRaw("Vertical") < 0) && Input.GetKey("joystick button 5")) //右前方向に移動
         {
             moveSpeed = (moveSpeedIn * cameraForward) + (moveSpeedIn * cameraRight).normalized;
             animator.SetBool("Walking", false);
@@ -533,7 +545,7 @@ public class PlayerRun : MonoBehaviour
             crouch = false;
             crouchWalk = false;
         }
-        if (!crouch && (Input.GetAxisRaw("Horizontal") < 0 && Input.GetAxisRaw("Vertical") < 0) && Input.GetKey("joystick button 5"))
+        if (!crouch && (Input.GetAxisRaw("Horizontal") < 0 && Input.GetAxisRaw("Vertical") < 0) && Input.GetKey("joystick button 5")) //左前方向に移動
         {
             moveSpeed = (moveSpeedIn * cameraForward) + (-moveSpeedIn * cameraRight).normalized;
             animator.SetBool("Walking", false);
@@ -561,7 +573,7 @@ public class PlayerRun : MonoBehaviour
         }
 
         //しゃがみ歩き
-        if (crouch && Input.GetKey(KeyCode.W))
+        if (crouch && Input.GetKey(KeyCode.W)) //前方向に移動
         {
             moveSpeed = moveSpeedIn * cameraForward;
             animator.SetBool("Walking", false);
@@ -574,7 +586,7 @@ public class PlayerRun : MonoBehaviour
             crouchWalk = true;
         }
 
-        if (crouch && Input.GetKey(KeyCode.A))
+        if (crouch && Input.GetKey(KeyCode.A)) //左方向に移動
         {
             moveSpeed = -moveSpeedIn * cameraRight;
             animator.SetBool("Walking", false);
@@ -587,7 +599,7 @@ public class PlayerRun : MonoBehaviour
             crouchWalk = true;
         }
 
-        if (crouch && Input.GetKey(KeyCode.S))
+        if (crouch && Input.GetKey(KeyCode.S)) //後方向に移動
         {
             moveSpeed = -moveSpeedIn * cameraForward;
             animator.SetBool("Walking", false);
@@ -600,7 +612,7 @@ public class PlayerRun : MonoBehaviour
             crouchWalk = true;
         }
 
-        if (crouch && Input.GetKey(KeyCode.D))
+        if (crouch && Input.GetKey(KeyCode.D)) //右方向に移動
         {
             moveSpeed = moveSpeedIn * cameraRight;
             animator.SetBool("Walking", false);
@@ -614,7 +626,7 @@ public class PlayerRun : MonoBehaviour
         }
 
 
-        if (CrouchOn == true && !crouch && (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.D)))
+        if (CrouchOn == true && !crouch && (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.D))) //右後ろ方向に移動
         {
             moveSpeed = (-moveSpeedIn * cameraForward) + (moveSpeedIn * cameraRight).normalized;
             animator.SetBool("Walking", false);
@@ -627,7 +639,7 @@ public class PlayerRun : MonoBehaviour
             crouch = false;
             crouchWalk = true;
         }
-        if (CrouchOn == true && !crouch && (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.D)))
+        if (CrouchOn == true && !crouch && (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.D))) //右前方向に移動
         {
             moveSpeed = (moveSpeedIn * cameraForward) + (moveSpeedIn * cameraRight).normalized;
             animator.SetBool("Walking", false);
@@ -640,7 +652,7 @@ public class PlayerRun : MonoBehaviour
             crouch = false;
             crouchWalk = true;
         }
-        if (CrouchOn == true && !crouch && (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.A)))
+        if (CrouchOn == true && !crouch && (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.A))) //左前方向に移動
         {
             moveSpeed = (moveSpeedIn * cameraForward) + (-moveSpeedIn * cameraRight).normalized;
             animator.SetBool("Walking", false);
@@ -670,7 +682,7 @@ public class PlayerRun : MonoBehaviour
 
 
         //しゃがみ歩き(Xbox)
-        if (crouch && Input.GetAxisRaw("Vertical") < 0)
+        if (crouch && Input.GetAxisRaw("Vertical") < 0) //前方向に移動
         {
             moveSpeed = moveSpeedIn * cameraForward;
             animator.SetBool("Walking", false);
@@ -684,7 +696,7 @@ public class PlayerRun : MonoBehaviour
             crouchWalk = true;
         }
 
-        if (crouch && Input.GetAxisRaw("Horizontal") < 0)
+        if (crouch && Input.GetAxisRaw("Horizontal") < 0) //左方向に移動
         {
             moveSpeed = -moveSpeedIn * cameraRight;
             animator.SetBool("Walking", false);
@@ -698,7 +710,7 @@ public class PlayerRun : MonoBehaviour
             crouchWalk = true;
         }
 
-        if (crouch && Input.GetAxisRaw("Vertical") > 0)
+        if (crouch && Input.GetAxisRaw("Vertical") > 0) //後方向に移動
         {
             moveSpeed = -moveSpeedIn * cameraForward;
             animator.SetBool("Walking", false);
@@ -712,7 +724,7 @@ public class PlayerRun : MonoBehaviour
             crouchWalk = true;
         }
 
-        if (crouch && Input.GetAxisRaw("Horizontal") > 0)
+        if (crouch && Input.GetAxisRaw("Horizontal") > 0) //右方向に移動
         {
             moveSpeed = moveSpeedIn * cameraRight;
             animator.SetBool("Walking", false);
@@ -726,7 +738,7 @@ public class PlayerRun : MonoBehaviour
             crouchWalk = true;
         }
 
-        if (CrouchOn == true && !crouch && (Input.GetAxisRaw("Horizontal") > 0 && Input.GetAxisRaw("Vertical") > 0))
+        if (CrouchOn == true && !crouch && (Input.GetAxisRaw("Horizontal") > 0 && Input.GetAxisRaw("Vertical") > 0)) //右後ろ方向に移動
         {
             moveSpeed = (-moveSpeedIn * cameraForward) + (moveSpeedIn * cameraRight).normalized;
             animator.SetBool("Walking", false);
@@ -739,7 +751,7 @@ public class PlayerRun : MonoBehaviour
             crouch = false;
             crouchWalk = true;
         }
-        if (CrouchOn == true && !crouch && (Input.GetAxisRaw("Horizontal") > 0 && Input.GetAxisRaw("Vertical") < 0))
+        if (CrouchOn == true && !crouch && (Input.GetAxisRaw("Horizontal") > 0 && Input.GetAxisRaw("Vertical") < 0)) //右前方向に移動
         {
             moveSpeed = (moveSpeedIn * cameraForward) + (moveSpeedIn * cameraRight).normalized;
             animator.SetBool("Walking", false);
@@ -752,7 +764,7 @@ public class PlayerRun : MonoBehaviour
             crouch = false;
             crouchWalk = true;
         }
-        if (CrouchOn == true && !crouch && (Input.GetAxisRaw("Horizontal") < 0 && Input.GetAxisRaw("Vertical") < 0))
+        if (CrouchOn == true && !crouch && (Input.GetAxisRaw("Horizontal") < 0 && Input.GetAxisRaw("Vertical") < 0)) //左前方向に移動
         {
             moveSpeed = (moveSpeedIn * cameraForward) + (-moveSpeedIn * cameraRight).normalized;
             animator.SetBool("Walking", false);

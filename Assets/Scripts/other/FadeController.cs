@@ -2,6 +2,9 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// GetRecorerシーンからTutorialSceneに切り替え時のフェード処理を行うクラス
+/// </summary>
 public class FadeController : MonoBehaviour
 {
     [SerializeField] private Image fadeImage;  // フェード用のImage
