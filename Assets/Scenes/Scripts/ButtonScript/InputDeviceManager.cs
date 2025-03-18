@@ -4,6 +4,9 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
+/// <summary>
+/// 接続されているデバイスを取得するクラス
+/// </summary>
 public class InputDeviceManager : MonoBehaviour
 {
     // シングルトン
