@@ -8,6 +8,8 @@ public class MovePlayer : MonoBehaviour
 
     public float moveSpeed = 5f;
 
+    private Rigidbody rb;  // Rigidbodyを追加
+
     public GameObject cameraObject; // カメラのTransform
     public float cameraRotationSpeed = 100f; // カメラの回転速度
 
@@ -23,6 +25,8 @@ public class MovePlayer : MonoBehaviour
 
     private void Awake()
     {
+        rb = GetComponent<Rigidbody>();  // Rigidbodyを取得
+
         animator = GetComponent<Animator>();   //アニメーターコントローラーからアニメーションを取得する
 
         // Input Systemのインスタンスを作成
@@ -80,7 +84,7 @@ public class MovePlayer : MonoBehaviour
         // 右クリックを押している間のみ移動
         if (isRightClickHeld)
         {
-            moveSpeed = 15.0f;
+            moveSpeed = 7.5f;
             animator.SetBool("Walking", false);
             animator.SetBool("Running", true);
             animator.SetBool("Squatting", false);
@@ -96,7 +100,7 @@ public class MovePlayer : MonoBehaviour
         }
         else 
         {
-            moveSpeed = 5.0f;
+            moveSpeed = 4.0f;
 
             // 移動入力があればWalkingアニメーションを再生
             if (moveInput.magnitude > 0.1f)
@@ -132,16 +136,15 @@ public class MovePlayer : MonoBehaviour
     /// </summary>
     private void Move()
     {
-        //Vector3 moveDirection = new Vector3(moveInput.x, 0, moveInput.y);
-        //transform.Translate(moveDirection * moveSpeed * Time.deltaTime, Space.World);
-
         if (cameraObject == null || moveInput.magnitude < 0.1f) return;
 
         Vector3 cameraForward = Vector3.Scale(cameraObject.transform.forward, new Vector3(1, 0, 1)).normalized;
         Vector3 cameraRight = Vector3.Scale(cameraObject.transform.right, new Vector3(1, 0, 1)).normalized;
 
         Vector3 moveDirection = (cameraRight * moveInput.x + cameraForward * moveInput.y).normalized;
-        transform.position += moveDirection * moveSpeed * Time.deltaTime;
+
+        // Rigidbodyを使って移動
+        rb.MovePosition(transform.position + moveDirection * moveSpeed * Time.deltaTime);
     }
 
     /// <summary>
@@ -158,5 +161,15 @@ public class MovePlayer : MonoBehaviour
 
         Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 10f);
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Wall"))
+        {
+
+            moveSpeed = 0.5f;
+            Debug.Log("どうぶつの森");
+        }
     }
 }   

@@ -1,11 +1,15 @@
 using Cinemachine;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using static UnityEditor.Experimental.AssetDatabaseExperimental.AssetDatabaseCounters;
 using static UnityEngine.Rendering.DebugUI;
 
 public class UIController : MonoBehaviour
@@ -22,15 +26,64 @@ public class UIController : MonoBehaviour
     [SerializeField] AudioMixer audioMixer; //オーディオミキサー
     [SerializeField] GameObject micObject;　//
     public CinemachineFreeLook VCamera;     //
+    private GameInputSystem inputActions;
+
+    private Vector2 navigateInput;
+
+    private bool isMenuButton;
+    private bool isBButton;
+    private bool isAButton;
+
+    float mainSelectCount = 0.0f;
 
     // パネル管理用リスト
     private List<GameObject> panels;
+
+    private void Awake()
+    {
+        // Input Systemのインスタンスを作成
+        inputActions = new GameInputSystem();
+
+        //メニュ画面のスティック操作
+        inputActions.UI.Navigate.performed += ctx => navigateInput = ctx.ReadValue<Vector2>();
+        inputActions.UI.Navigate.canceled += ctx => navigateInput = Vector2.zero;
+
+        //メニュボタン
+        inputActions.UI.MenuButton.performed += ctx => isMenuButton = true;
+        inputActions.UI.MenuButton.performed += ctx => isMenuButton = false;
+
+        //Bボタン
+        inputActions.UI.MenuButton.performed += ctx => isBButton = true;
+        inputActions.UI.MenuButton.performed += ctx => isBButton = false;
+
+        //Aボタン
+        inputActions.UI.MenuButton.performed += ctx => isAButton = true;
+        inputActions.UI.MenuButton.performed += ctx => isAButton = false;
+
+        ////スペースの入力を登録
+        //inputActions.Player.SpaceClick.performed += ctx => isSpaceClickHeld = true;
+        //inputActions.Player.SpaceClick.canceled += ctx => isSpaceClickHeld = false;
+
+        ////Eキーの入力を登録
+        //inputActions.Player.EClick.performed += ctx => isEClickHeld = true;
+        //inputActions.Player.EClick.canceled += ctx => isEClickHeld = false;
+    }
+
+    private void OnEnable()
+    {
+        inputActions.Enable();
+    }
+
+    private void OnDisable()
+    {
+        inputActions.Disable();
+    }
 
     // Start is called before the first frame update
     void Start()
     {
         // パネルリストに追加
-        panels = new List<GameObject> {menu, settingPanel1, settingPanel2, settingPanel3 };
+        panels = new List<GameObject> { menu, settingPanel1, settingPanel2, settingPanel3 };
 
         // 初期状態で全パネルを非表示
         foreach (GameObject panel in panels)
@@ -42,7 +95,7 @@ public class UIController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-    
+        Controller();
     }
 
     public void Menu(GameObject menuPanel)
@@ -83,6 +136,14 @@ public class UIController : MonoBehaviour
         settingPanel2.SetActive(false);
         settingPanel3.SetActive(true);
         SceneManager.LoadScene("StartScene");
+    }
+
+    public void Controller()
+    {
+        //if()
+        //{
+
+        //}
     }
 
     public void SetBGM(float volume2)
