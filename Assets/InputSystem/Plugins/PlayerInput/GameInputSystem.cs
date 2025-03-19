@@ -407,6 +407,33 @@ public partial class @GameInputSystem: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MenuButton"",
+                    ""type"": ""Button"",
+                    ""id"": ""325925bc-8d38-405b-a988-c81e9af0bb40"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""BButton"",
+                    ""type"": ""Button"",
+                    ""id"": ""b3d817b1-ddd3-42e8-841c-fb3b6e1dcf54"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""AButton"",
+                    ""type"": ""Button"",
+                    ""id"": ""1368b194-d6b0-430d-82c0-293e39317e9e"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -827,6 +854,39 @@ public partial class @GameInputSystem: IInputActionCollection2, IDisposable
                     ""action"": ""TrackedDeviceOrientation"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7ce01534-3ec0-4cac-87de-44271ded81ea"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MenuButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e6fbe7d5-b828-4447-b2e7-7839a8571eab"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""BButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""dfc08063-da6b-4dd2-a952-b216e70be4d3"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -854,6 +914,9 @@ public partial class @GameInputSystem: IInputActionCollection2, IDisposable
         m_UI_RightClick = m_UI.FindAction("RightClick", throwIfNotFound: true);
         m_UI_TrackedDevicePosition = m_UI.FindAction("TrackedDevicePosition", throwIfNotFound: true);
         m_UI_TrackedDeviceOrientation = m_UI.FindAction("TrackedDeviceOrientation", throwIfNotFound: true);
+        m_UI_MenuButton = m_UI.FindAction("MenuButton", throwIfNotFound: true);
+        m_UI_BButton = m_UI.FindAction("BButton", throwIfNotFound: true);
+        m_UI_AButton = m_UI.FindAction("AButton", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -1019,6 +1082,9 @@ public partial class @GameInputSystem: IInputActionCollection2, IDisposable
     private readonly InputAction m_UI_RightClick;
     private readonly InputAction m_UI_TrackedDevicePosition;
     private readonly InputAction m_UI_TrackedDeviceOrientation;
+    private readonly InputAction m_UI_MenuButton;
+    private readonly InputAction m_UI_BButton;
+    private readonly InputAction m_UI_AButton;
     public struct UIActions
     {
         private @GameInputSystem m_Wrapper;
@@ -1033,6 +1099,9 @@ public partial class @GameInputSystem: IInputActionCollection2, IDisposable
         public InputAction @RightClick => m_Wrapper.m_UI_RightClick;
         public InputAction @TrackedDevicePosition => m_Wrapper.m_UI_TrackedDevicePosition;
         public InputAction @TrackedDeviceOrientation => m_Wrapper.m_UI_TrackedDeviceOrientation;
+        public InputAction @MenuButton => m_Wrapper.m_UI_MenuButton;
+        public InputAction @BButton => m_Wrapper.m_UI_BButton;
+        public InputAction @AButton => m_Wrapper.m_UI_AButton;
         public InputActionMap Get() { return m_Wrapper.m_UI; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1072,6 +1141,15 @@ public partial class @GameInputSystem: IInputActionCollection2, IDisposable
             @TrackedDeviceOrientation.started += instance.OnTrackedDeviceOrientation;
             @TrackedDeviceOrientation.performed += instance.OnTrackedDeviceOrientation;
             @TrackedDeviceOrientation.canceled += instance.OnTrackedDeviceOrientation;
+            @MenuButton.started += instance.OnMenuButton;
+            @MenuButton.performed += instance.OnMenuButton;
+            @MenuButton.canceled += instance.OnMenuButton;
+            @BButton.started += instance.OnBButton;
+            @BButton.performed += instance.OnBButton;
+            @BButton.canceled += instance.OnBButton;
+            @AButton.started += instance.OnAButton;
+            @AButton.performed += instance.OnAButton;
+            @AButton.canceled += instance.OnAButton;
         }
 
         private void UnregisterCallbacks(IUIActions instance)
@@ -1106,6 +1184,15 @@ public partial class @GameInputSystem: IInputActionCollection2, IDisposable
             @TrackedDeviceOrientation.started -= instance.OnTrackedDeviceOrientation;
             @TrackedDeviceOrientation.performed -= instance.OnTrackedDeviceOrientation;
             @TrackedDeviceOrientation.canceled -= instance.OnTrackedDeviceOrientation;
+            @MenuButton.started -= instance.OnMenuButton;
+            @MenuButton.performed -= instance.OnMenuButton;
+            @MenuButton.canceled -= instance.OnMenuButton;
+            @BButton.started -= instance.OnBButton;
+            @BButton.performed -= instance.OnBButton;
+            @BButton.canceled -= instance.OnBButton;
+            @AButton.started -= instance.OnAButton;
+            @AButton.performed -= instance.OnAButton;
+            @AButton.canceled -= instance.OnAButton;
         }
 
         public void RemoveCallbacks(IUIActions instance)
@@ -1145,5 +1232,8 @@ public partial class @GameInputSystem: IInputActionCollection2, IDisposable
         void OnRightClick(InputAction.CallbackContext context);
         void OnTrackedDevicePosition(InputAction.CallbackContext context);
         void OnTrackedDeviceOrientation(InputAction.CallbackContext context);
+        void OnMenuButton(InputAction.CallbackContext context);
+        void OnBButton(InputAction.CallbackContext context);
+        void OnAButton(InputAction.CallbackContext context);
     }
 }
