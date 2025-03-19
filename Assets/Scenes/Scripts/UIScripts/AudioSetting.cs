@@ -6,55 +6,82 @@ using UnityEngine.Audio;
 using UnityEngine.Rendering;
 using UnityEngine.UI;
 
+/// <summary>
+/// オプション画面で音量やマウス感度などを調整するための機能を提供するクラス
+/// </summary>
 public class AudioSetting : MonoBehaviour
 {
-    [SerializeField] AudioMixer audioMixer;
-    [SerializeField] GameObject micObject;
-    public float volume;
+    // オーディオミキサー、マイクオブジェクト、ボリューム設定用の変数
+    [SerializeField] AudioMixer audioMixer;      // オーディオミキサー
+    [SerializeField] GameObject micObject;       // マイクのオブジェクト
+    public float volume;                         // ボリューム
 
+    // CinemachineFreeLook カメラ（マウス感度設定用）
     public CinemachineFreeLook VCamera;
 
-    [SerializeField] Slider MicSlider;
-    [SerializeField] public Slider BGMSlider;
-    [SerializeField] Slider SESlider;
-    [SerializeField] Slider MouseSlider;
+    // UIのスライダー（各音量調整用）
+    [SerializeField] Slider MicSlider;          // マイク音量用スライダー
+    [SerializeField] public Slider BGMSlider;   // BGM音量用スライダー
+    [SerializeField] Slider SESlider;           // SE音量用スライダー
+    [SerializeField] Slider MouseSlider;        // マウス感度用スライダー
 
+    // Start is called before the first frame update
     private void Start()
     {
+        // マイクのAudioSourceコンポーネントを取得
         AudioSource Mic = micObject.GetComponent<AudioSource>();
+
+        // マイク音量をスライダーに反映
         MicSlider.value = Mic.volume;
 
+        // マウス感度の設定（VCameraのY軸の最大速度をスライダー値に基づいて設定）
         MouseSlider.value = VCamera.m_YAxis.m_MaxSpeed;
+
+        // VCameraのX軸の最大速度を設定（固定値）
         VCamera.m_XAxis.m_MaxSpeed = 100;
 
-        //ミキサーのvolumeにスライダーのvolumeを入れている
-        //BGM
+        // オーディオミキサーのBGMのボリュームをスライダーに設定
+        // BGM
         audioMixer.GetFloat("BGM", out float bgmVolume);
         BGMSlider.value = bgmVolume;
-        //SE
+
+        // オーディオミキサーのSEのボリュームをスライダーに設定
+        // SE
         audioMixer.GetFloat("SE", out float seVolume);
         SESlider.value = seVolume;
     }
 
+    // BGM音量を設定するメソッド
     public void SetBGM(float volume)
     {
+        // オーディオミキサーでBGMの音量を設定
         audioMixer.SetFloat("BGM", volume);
     }
 
+    // SE音量を設定するメソッド
     public void SetSE(float volume)
     {
+        // オーディオミキサーでSEの音量を設定
         audioMixer.SetFloat("SE", volume);
     }
 
+    // マイク音量を設定するメソッド
     public void SetMic(float volume)
     {
+        // マイクのAudioSourceコンポーネントを取得
         AudioSource Mic = micObject.GetComponent<AudioSource>();
+
+        // マイクの音量をスライダーの値に設定
         Mic.volume = MicSlider.value;
     }
 
+    // マウス感度を設定するメソッド
     public void SetMouse(float level)
     {
-        VCamera.m_YAxis.m_MaxSpeed = MouseSlider.value /50;
-        VCamera.m_XAxis.m_MaxSpeed = MouseSlider.value *50;
+        // VCameraのY軸の最大速度をスライダー値を基に調整
+        VCamera.m_YAxis.m_MaxSpeed = MouseSlider.value / 50;
+
+        // VCameraのX軸の最大速度をスライダー値を基に調整
+        VCamera.m_XAxis.m_MaxSpeed = MouseSlider.value * 50;
     }
 }

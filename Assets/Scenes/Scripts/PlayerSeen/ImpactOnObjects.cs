@@ -6,7 +6,9 @@ using UnityEngine;
 using static InputDeviceManager;
 using UnityEngine.UI;
 
-// 鍵の獲得やボックスの移動を管理するスクリプト
+/// <summary>
+/// 鍵の獲得やボックスの移動を管理するスクリプト
+/// </summary>
 public class ImpactOnObjects : MonoBehaviour
 {
     // 鍵の獲得数を表示するためのUIテキスト

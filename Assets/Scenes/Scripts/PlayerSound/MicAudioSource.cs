@@ -3,67 +3,77 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+/// <summary>
+/// マイクの入力を管理するクラス
+/// 音量（dB）をリアルタイムで取得し、他のコンポーネントで利用できるようにする
+/// </summary>
 public class MicAudioSource : MonoBehaviour
 {
-    //サンプリング周波数
+    // サンプリング周波数 (48kHz)
     static readonly int SAMPLE_RATE = 48000;
 
-    //この秒数の幅で振幅の平均値を取ったものでdB値を更新
+    // この秒数の幅で振幅の平均値を取ったものでdB値を更新
+    // 音量（dB）の変化をなめらかにするために一定時間ごとに更新する
     static readonly float MOVING_AVE_TIME = 0.05f;
 
-    //MOVING_AVE_TIMEに相当するサンプル数
+    // MOVING_AVE_TIMEに相当するサンプル数
     static readonly int MOVING_AVE_SAMPLE = (int)(SAMPLE_RATE * MOVING_AVE_TIME);
 
-    //マイクのClipをセットする為のAudioSource
+    // マイクの音声を扱うためのAudioSourceコンポーネント
     AudioSource micAS = null;
 
-    //現在のdB値
-    private float _now_dB;
-    public float now_dB { get { return _now_dB; } }
+    // 現在のdB値
+    private float _now_dB;  // プライベートな変数で、外部アクセス用のプロパティを提供
+    public float now_dB { get { return _now_dB; } }  // 外部から現在のdB値を取得するためのプロパティ
+
 
     private void Awake()
     {
-        //AudioSourceコンポーネント取得
+        // AudioSourceコンポーネントを取得
         micAS = GetComponent<AudioSource>();
     }
 
     void Start()
     {
-        //最初にマイクの入力を開始
+        // 最初にマイクの入力を開始
         this.MicStart();
     }
 
     // マイク入力の開始
     public void MicStart()
     {
-        // AudioSourceのClipにマイクデバイスをセット
+        // マイクデバイスをAudioSourceのClipにセット
+        // Microphone.Startでマイクの録音を開始
         micAS.clip = Microphone.Start(null, true, 1, SAMPLE_RATE);
 
-        // マイクデバイスの準備ができるまで待つ
+        // マイクデバイスの準備ができるまで待機（マイクから音が取得可能になるのを待つ）
         while (!(Microphone.GetPosition("") > 0)) { }
 
-        // AudioSourceからの出力を開始
+        // マイクの音声の再生を開始
         micAS.Play();
     }
 
-    // MicAudioSource クラス
     void Update()
     {
-        if (micAS.isPlaying)
+        if (micAS.isPlaying)  // マイクが再生中であれば
         {
-            // GetOutputData 用のバッファを準備
+            // GetOutputData用のバッファを準備
+            // 音声データを取得するための配列
             float[] data = new float[MOVING_AVE_SAMPLE];
 
-            // AudioSource から出力されているサンプルを取得
+            // AudioSourceから出力されているサンプルデータを取得
+            // ここで取得したデータは、マイクの入力音声の振幅情報
             micAS.GetOutputData(data, 0);
 
-            // バッファ内の平均振幅を取得（絶対値を平均する）
+            // バッファ内の平均振幅を取得（各振幅の絶対値を取り平均値を計算）
+            // 振幅の平均を使うことで、音量のピーク値ではなく平均的な音量を取得
             float aveAmp = data.Average(s => Mathf.Abs(s));
 
-            // 振幅を dB（デシベル）に変換
+            // 平均振幅からdB（デシベル）に変換
+            // 20 * log10(振幅) で振幅をdB値に変換する
             float dB = 20.0f * Mathf.Log10(aveAmp);
 
-            // 現在値（now_dB）を更新
+            // 現在のdB値を更新
             _now_dB = dB;
         }
     }

@@ -2,7 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// ドアの操作を管理するクラス
+/// <summary>
+/// 回転ドアの操作を管理するクラス
+/// </summary>
 public class DoorCheck : MonoBehaviour
 {
     LevelMeter levelMeter;  // 音量を管理するLevelMeterスクリプトの参照

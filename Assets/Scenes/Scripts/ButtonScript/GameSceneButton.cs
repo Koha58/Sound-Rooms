@@ -184,8 +184,6 @@ public class GameSceneButton : MonoBehaviour
 
         Cursor.gameObject.SetActive(false);
 
-        TutorialManager.ON = false;
-
 
         Transform OperationExplanationSelectTransform = OperationExplanationSelect.transform;
         OperationExplanationSelectTransform.transform.localPosition = new Vector3(OperationExplanationOriginPositionX, OperationExplanationOriginPositionY, OperationExplanationOriginPositionZ);
@@ -228,7 +226,6 @@ public class GameSceneButton : MonoBehaviour
 
         if (Input.GetKeyDown("joystick button 7"))//メニュー ボタン 
         {
-            TutorialManager.ON=true;
 
             SettingButton.GetComponent<Image>().enabled = true;
 
@@ -329,7 +326,6 @@ public class GameSceneButton : MonoBehaviour
             SESlider.gameObject.SetActive(false);
 
             MouseSlider.gameObject.SetActive(false);
-            TutorialManager.ON =false;
             //SettingBack.SetActive(false);
             Time.timeScale = 1;
             SelectCount = 0;

@@ -1,29 +1,52 @@
 using UnityEngine;
 
+/// <summary>
+/// Playerがラジオを設置するのを管理するクラス
+/// </summary>
 public class ObjectPlacer : MonoBehaviour
 {
-    private const float PlacementHeightOffset = 0.2f;  // プレイヤーの位置に加算する高さオフセット
-    private const float PickupDistanceThreshold = 1.0f;  // 回収可能な距離のしきい値
-    private const float ParticleRotationAngle = 90f;  // パーティクルの回転角度
+    // プレイヤーの位置に加算する高さオフセット（オブジェクトを少し浮かせる）
+    private const float PlacementHeightOffset = 0.2f;
 
+    // 回収可能な距離のしきい値（プレイヤーがオブジェクトを回収する距離の閾値）
+    private const float PickupDistanceThreshold = 1.0f;
+
+    // パーティクルの回転角度（設置時のパーティクルを回転させる角度）
+    private const float ParticleRotationAngle = 90f;
+
+    // 設置するオブジェクトのプレハブ
     [SerializeField] private GameObject Recorder;
-    [SerializeField] private GameObject objectPrefab;  // 設置するオブジェクトのプレハブ
-    private GameObject placedObject = null;  // 設置されているオブジェクト
 
-    [SerializeField] private GameObject particlePrefab;  // パーティクルのプレハブ
+    // 設置するオブジェクトのプレハブ（実際に配置するオブジェクト）
+    [SerializeField] private GameObject objectPrefab;
 
-    [SerializeField] private Transform player;  // プレイヤーのTransform
+    // 設置されているオブジェクト
+    private GameObject placedObject = null;
 
-    [SerializeField] private float maxPickupDistance = PickupDistanceThreshold;  // オブジェクトを回収できる最大距離
+    // パーティクルのプレハブ（設置時にパーティクルを生成）
+    [SerializeField] private GameObject particlePrefab;
 
-    public bool isOnSettingPoint = false;  // 「SettingPoint」に設置されているかどうか
+    // プレイヤーのTransform（プレイヤーの位置を取得するため）
+    [SerializeField] private Transform player;
 
-    private RecordManager recordManager;  // RecordManager の参照
-    private GameObject placedParticle = null;  // 設置されたパーティクル
-    private AudioSource placedAudioSource;  // 設置されたオブジェクトのAudioSource
+    // オブジェクトを回収できる最大距離（プレイヤーが回収できる距離）
+    [SerializeField] private float maxPickupDistance = PickupDistanceThreshold;
+
+    // 「SettingPoint」に設置されているかどうか
+    public bool isOnSettingPoint = false;
+
+    // RecordManager の参照（音声管理用）
+    private RecordManager recordManager;
+
+    // 設置されたパーティクル
+    private GameObject placedParticle = null;
+
+    // 設置されたオブジェクトのAudioSource（音声を再生するため）
+    private AudioSource placedAudioSource;
 
     private void Start()
     {
+        // Recorderオブジェクトの取得と有効化
         Recorder = GameObject.Find("PanalinaGR100-VintageRadio");
         Recorder.SetActive(true);
 
@@ -33,12 +56,13 @@ public class ObjectPlacer : MonoBehaviour
 
     void Update()
     {
+        // スペースキーが押されたとき
         if (Input.GetKeyDown(KeyCode.Space))  // 左クリックを検出
         {
             // プレイヤーの位置を取得
             Vector3 playerPosition = player.position;
 
-            // プレイヤーの位置からY軸にオフセットを加えた位置にオブジェクトを配置
+            // プレイヤーの位置にY軸のオフセットを加えた位置にオブジェクトを配置
             Vector3 placementPosition = new Vector3(playerPosition.x, playerPosition.y + PlacementHeightOffset, playerPosition.z);
 
             // オブジェクトがまだ設置されていない場合、新しく設置
@@ -46,13 +70,13 @@ public class ObjectPlacer : MonoBehaviour
             {
                 // 新しいオブジェクトを設置
                 placedObject = Instantiate(objectPrefab, placementPosition, Quaternion.identity);
-                Recorder.SetActive(false);
+                Recorder.SetActive(false);  // Recorderを非表示にする
 
-                // 音源をその位置に設定
+                // RecordManager が存在すれば音源を設定
                 if (recordManager != null)
                 {
-                    recordManager.SetAudioSource(placedObject);
-                    placedAudioSource = placedObject.GetComponent<AudioSource>();  // AudioSource を取得
+                    recordManager.SetAudioSource(placedObject);  // 音源を設定
+                    placedAudioSource = placedObject.GetComponent<AudioSource>();  // AudioSourceを取得
                 }
 
                 // パーティクルをその位置に設置（X軸で90度回転させる）
@@ -71,7 +95,7 @@ public class ObjectPlacer : MonoBehaviour
                 {
                     Destroy(placedObject);  // オブジェクトを回収
                     placedObject = null;  // 置かれているオブジェクトをリセット
-                    Recorder.SetActive(true);
+                    Recorder.SetActive(true);  // Recorderを再表示
 
                     // パーティクルも回収
                     if (placedParticle != null)
@@ -92,29 +116,30 @@ public class ObjectPlacer : MonoBehaviour
         }
     }
 
+    // 設置されたオブジェクトが「SettingPoint」に接触しているかどうかをチェック
     private void CheckIfOnSettingPoint()
     {
         // 設置されたオブジェクトのコライダー周辺を探索
-        Collider[] colliders = Physics.OverlapSphere(placedObject.transform.position, 0.5f);
+        Collider[] colliders = Physics.OverlapSphere(placedObject.transform.position, 0.5f);  // 半径0.5の範囲内のコライダーを取得
         foreach (Collider collider in colliders)
         {
-            if (collider.CompareTag("SettingPoint"))
+            if (collider.CompareTag("SettingPoint"))  // 「SettingPoint」タグのオブジェクトと接触していたら
             {
-                isOnSettingPoint = true;
+                isOnSettingPoint = true;  // 設置されているフラグを立てる
                 Debug.Log("Object is on a SettingPoint!");
                 return;
             }
         }
-        isOnSettingPoint = false;
+        isOnSettingPoint = false;  // 設置されていない場合、フラグをリセット
     }
 
+    // デバッグ用：Gizmosを使って設置位置の範囲を可視化
     private void OnDrawGizmos()
     {
-        // デバッグ用：範囲を可視化
         if (placedObject != null)
         {
             Gizmos.color = Color.green;
-            Gizmos.DrawWireSphere(placedObject.transform.position, 0.5f);
+            Gizmos.DrawWireSphere(placedObject.transform.position, 0.5f);  // 設置位置の周りに範囲を描画
         }
     }
 }
