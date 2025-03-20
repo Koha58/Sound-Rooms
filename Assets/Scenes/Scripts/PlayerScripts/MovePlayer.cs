@@ -167,9 +167,7 @@ public class MovePlayer : MonoBehaviour
     {
         if (other.CompareTag("Wall"))
         {
-
-            moveSpeed = 0.5f;
-            Debug.Log("‚Ç‚¤‚Ô‚Â‚ÌX");
+           
         }
     }
 }   

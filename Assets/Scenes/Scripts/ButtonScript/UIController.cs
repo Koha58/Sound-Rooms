@@ -59,14 +59,6 @@ public class UIController : MonoBehaviour
         //Aƒ{ƒ^ƒ“
         inputActions.UI.MenuButton.performed += ctx => isAButton = true;
         inputActions.UI.MenuButton.performed += ctx => isAButton = false;
-
-        ////ƒXƒy[ƒX‚Ì“ü—Í‚ð“o˜^
-        //inputActions.Player.SpaceClick.performed += ctx => isSpaceClickHeld = true;
-        //inputActions.Player.SpaceClick.canceled += ctx => isSpaceClickHeld = false;
-
-        ////EƒL[‚Ì“ü—Í‚ð“o˜^
-        //inputActions.Player.EClick.performed += ctx => isEClickHeld = true;
-        //inputActions.Player.EClick.canceled += ctx => isEClickHeld = false;
     }
 
     private void OnEnable()
@@ -140,10 +132,14 @@ public class UIController : MonoBehaviour
 
     public void Controller()
     {
-        //if()
-        //{
-
-        //}
+        if (isMenuButton == true)
+        {
+            Debug.Log("‰Ÿ‚µ‚½‚æ");
+            menu.SetActive(true);
+            settingPanel1.SetActive(true);
+            settingPanel2.SetActive(false);
+            settingPanel3.SetActive(false);
+        }
     }
 
     public void SetBGM(float volume2)

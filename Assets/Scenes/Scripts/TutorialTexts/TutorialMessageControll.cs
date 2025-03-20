@@ -25,24 +25,24 @@ public class TutorialMessageControll : MonoBehaviour
     [SerializeField]
     private ObjectPlacer OP;
 
-    // --- キーボード用UI ---
+    //// --- キーボード用UI ---
 
-    [SerializeField]
-    private Image TutorialMoveUI;
+    //[SerializeField]
+    //private Image TutorialMoveUI;
 
-    [SerializeField]
-    private Image TutorialSpaceUI;
+    //[SerializeField]
+    //private Image TutorialSpaceUI;
 
-    [SerializeField]
-    private Image TutorialEUI;
+    //[SerializeField]
+    //private Image TutorialEUI;
 
-    // --- コントローラー用UI ---
+    //// --- コントローラー用UI ---
 
-    [SerializeField]
-    private Image xButtonUI;
+    //[SerializeField]
+    //private Image xButtonUI;
 
-    [SerializeField]
-    private Image yButtonUI;
+    //[SerializeField]
+    //private Image yButtonUI;
 
 
     // Startは最初のフレームが更新される前に一度だけ呼び出される
@@ -59,11 +59,11 @@ public class TutorialMessageControll : MonoBehaviour
         // 各コンポーネントの初期化
         OP.GetComponent<ObjectPlacer>();
 
-        TutorialMoveUI.GetComponent<Image>().enabled = false;
-        TutorialSpaceUI.GetComponent<Image>().enabled = false;
-        TutorialEUI.GetComponent<Image>().enabled = false;
-        xButtonUI.GetComponent<Image>().enabled = false;
-        yButtonUI.GetComponent<Image>().enabled = false;
+        //TutorialMoveUI.GetComponent<Image>().enabled = false;
+        //TutorialSpaceUI.GetComponent<Image>().enabled = false;
+        //TutorialEUI.GetComponent<Image>().enabled = false;
+        //xButtonUI.GetComponent<Image>().enabled = false;
+        //yButtonUI.GetComponent<Image>().enabled = false;
     }
 
     // Updateは毎フレーム呼び出される
