@@ -129,9 +129,9 @@ public class ObjectPlacer : MonoBehaviour
             // プレイヤーの位置にY軸のオフセットを加えた位置にオブジェクトを配置
             Vector3 placementPosition = new Vector3(playerPosition.x, playerPosition.y + PlacementHeightOffset, playerPosition.z);
 
-            // すでにオブジェクトが配置されている場合、そのオブジェクトが近ければ回収
-            if (Vector3.Distance(placedObject.transform.position, placementPosition) < maxPickupDistance)
-            {
+            //// すでにオブジェクトが配置されている場合、そのオブジェクトが近ければ回収
+            //if (Vector3.Distance(placedObject.transform.position, placementPosition) < maxPickupDistance)
+            //{
                 Destroy(placedObject);  // オブジェクトを回収
                 placedObject = null;  // 置かれているオブジェクトをリセット
                 Recorder.SetActive(true);  // Recorderを再表示
@@ -144,7 +144,7 @@ public class ObjectPlacer : MonoBehaviour
                 }
 
                 isOnSettingPoint = false;  // 設置状態リセット
-            }
+            //}
         }
 
         // 音声が終了した場合、パーティクルを非表示にする

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028331, g: 0.2257133, b: 0.3069217, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1498,17 +1498,38 @@ MonoBehaviour:
   m_GameObject: {fileID: 1073345625}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
+  m_Script: {fileID: 11500000, guid: 01614664b831546d2ae94a42149d80ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_SendPointerHoverToParent: 1
-  m_HorizontalAxis: Horizontal
-  m_VerticalAxis: Vertical
-  m_SubmitButton: Submit
-  m_CancelButton: Cancel
-  m_InputActionsPerSecond: 10
-  m_RepeatDelay: 0.5
-  m_ForceModuleActive: 0
+  m_MoveRepeatDelay: 0.5
+  m_MoveRepeatRate: 0.1
+  m_XRTrackingOrigin: {fileID: 0}
+  m_ActionsAsset: {fileID: -944628639613478452, guid: ffe23a82d49191c4aabce9748fb5c2e1,
+    type: 3}
+  m_PointAction: {fileID: 2402766283296153055, guid: ffe23a82d49191c4aabce9748fb5c2e1,
+    type: 3}
+  m_MoveAction: {fileID: 8715083563465901030, guid: ffe23a82d49191c4aabce9748fb5c2e1,
+    type: 3}
+  m_SubmitAction: {fileID: 721038149682326530, guid: ffe23a82d49191c4aabce9748fb5c2e1,
+    type: 3}
+  m_CancelAction: {fileID: 5856472329392423021, guid: ffe23a82d49191c4aabce9748fb5c2e1,
+    type: 3}
+  m_LeftClickAction: {fileID: -8788134262625714433, guid: ffe23a82d49191c4aabce9748fb5c2e1,
+    type: 3}
+  m_MiddleClickAction: {fileID: -7333415989072169567, guid: ffe23a82d49191c4aabce9748fb5c2e1,
+    type: 3}
+  m_RightClickAction: {fileID: 6060812125199935528, guid: ffe23a82d49191c4aabce9748fb5c2e1,
+    type: 3}
+  m_ScrollWheelAction: {fileID: -601227302781207261, guid: ffe23a82d49191c4aabce9748fb5c2e1,
+    type: 3}
+  m_TrackedDevicePositionAction: {fileID: 6695252349487098359, guid: ffe23a82d49191c4aabce9748fb5c2e1,
+    type: 3}
+  m_TrackedDeviceOrientationAction: {fileID: -4782379215088828996, guid: ffe23a82d49191c4aabce9748fb5c2e1,
+    type: 3}
+  m_DeselectOnBackgroundClick: 1
+  m_PointerBehavior: 0
+  m_CursorLockBehavior: 0
 --- !u!1 &1120393634
 GameObject:
   m_ObjectHideFlags: 0

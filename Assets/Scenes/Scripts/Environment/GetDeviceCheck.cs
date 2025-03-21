@@ -44,8 +44,8 @@ public class GetDeviceCheck : MonoBehaviour
         // マイクデバイスのリストを再度確認
         foreach (string device in Microphone.devices)
         {
-            // 各マイクのデバイス名をログに表示
-            Debug.Log("Name: " + device);
+            //// 各マイクのデバイス名をログに表示
+            //Debug.Log("Name: " + device);
 
             // マイクが接続されている場合、接続フラグをtrueに設定
             micCheck = true;
@@ -57,8 +57,8 @@ public class GetDeviceCheck : MonoBehaviour
         // マイクが接続されていない場合、エラーメッセージUIを表示
         if (!micCheck)
         {
-            // マイクが接続されていないことをログに表示
-            Debug.Log("マイクが接続されていません");
+            //// マイクが接続されていないことをログに表示
+            //Debug.Log("マイクが接続されていません");
 
             // エラーメッセージUIを表示
             MicConnectionBadUI.GetComponent<Image>().enabled = true;

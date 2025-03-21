@@ -20,7 +20,7 @@ public class UIController : MonoBehaviour
     //ゲーム内設定を変更する画面へ遷移するボタン,操作説明画面へ遷移するボタン,タイトル画面へ遷移するボタン
     [SerializeField] GameObject settingButton,qperationExplanationButton,backTitleButton;
 
-    [SerializeField] GameObject MoveSettingSelect, keyBoardButton, gamePadButton, keyBoard, gamePad;
+    [SerializeField] GameObject keyBoardMoveSettingSelect, gamePadMoveSettingSelect, keyBoardButton, gamePadButton, keyBoard, gamePad;
 
     [SerializeField] GameObject MicSliderGameObject, BGMSliderGameObject, SESliderGameObject, MouseSliderGameObject, closeKey;
 
@@ -57,12 +57,12 @@ public class UIController : MonoBehaviour
         inputActions.UI.MenuButton.canceled += ctx => isMenuButton = false;
 
         //Bボタン
-        inputActions.UI.MenuButton.performed += ctx => isBButton = true;
-        inputActions.UI.MenuButton.canceled += ctx => isBButton = false;
+        inputActions.UI.BButton.performed += ctx => isBButton = true;
+        inputActions.UI.BButton.canceled += ctx => isBButton = false;
 
         //Aボタン
-        inputActions.UI.MenuButton.performed += ctx => isAButton = true;
-        inputActions.UI.MenuButton.canceled += ctx => isAButton = false;
+        inputActions.UI.AButton.performed += ctx => isAButton = true;
+        inputActions.UI.AButton.canceled += ctx => isAButton = false;
     }
 
     private void OnEnable()
@@ -149,6 +149,9 @@ public class UIController : MonoBehaviour
 
     public void Controller()
     {
+        // 選択中のUI取得
+        var selectedGameObject = EventSystem.current.currentSelectedGameObject;
+
         if (isMenuButton == true)
         {
             menu.SetActive(true);
@@ -157,7 +160,7 @@ public class UIController : MonoBehaviour
             settingPanel3.SetActive(false);
             Time.timeScale = 0;
         }
-        else  if (isBButton == true)
+        else if (isBButton==true)
         {
             // 初期状態で全パネルを非表示
             foreach (GameObject panel in panels)
@@ -169,9 +172,6 @@ public class UIController : MonoBehaviour
 
             Time.timeScale = 1;
         }
-
-        // 選択中のUI取得
-        var selectedGameObject = EventSystem.current.currentSelectedGameObject;
 
         if (selectedGameObject == settingButton)
         {
@@ -187,7 +187,8 @@ public class UIController : MonoBehaviour
             settingPanel3.SetActive(false);
 
             keyBoard.SetActive(true);
-            MoveSettingSelect.SetActive(false);
+            keyBoardMoveSettingSelect.SetActive(false);
+            gamePadMoveSettingSelect.SetActive(false);
             gamePad.SetActive(false);
         }
         else if (selectedGameObject == backTitleButton)
@@ -198,13 +199,15 @@ public class UIController : MonoBehaviour
         }
         else if(selectedGameObject == keyBoardButton)
         {
-            MoveSettingSelect.SetActive(true);
+            keyBoardMoveSettingSelect.SetActive(true);
+            gamePadMoveSettingSelect.SetActive(false);
             keyBoard.SetActive(true);
             gamePad.SetActive(false);
         }
         else if (selectedGameObject == gamePadButton)
         {
-            MoveSettingSelect.SetActive(false);
+            keyBoardMoveSettingSelect.SetActive(false);
+            gamePadMoveSettingSelect.SetActive(true);
             keyBoard.SetActive(false);
             gamePad.SetActive(true);
         }

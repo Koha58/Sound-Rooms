@@ -79,7 +79,7 @@ public class AudioOutputChecker : MonoBehaviour
         if (data.Length > 1024)
         {
             overflowOccurred = false;  // オーバーフローが発生していないのでフラグをfalseに
-            Debug.Log("OK");  // 正常終了のログ
+            //Debug.Log("OK");  // 正常終了のログ
         }
         else
         {

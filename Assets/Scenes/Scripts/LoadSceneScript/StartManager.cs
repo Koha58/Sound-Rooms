@@ -1,5 +1,7 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -49,6 +51,11 @@ public class StartManager : MonoBehaviour
 
         // AudioSource コンポーネントを取得
         SelectSound = GetComponent<AudioSource>();
+    }
+
+    void Update()
+    {
+        GamePadUIController();
     }
 
     // Selectボタンが選択されたときにシーン遷移
@@ -123,5 +130,29 @@ public class StartManager : MonoBehaviour
 
         // 音が終了した後にシーンを遷移
         SceneManager.LoadScene("StageSelectScene");
+    }
+
+    public void GamePadUIController()
+    {
+        // 選択中のUI取得
+        var selectedGameObject = EventSystem.current.currentSelectedGameObject;
+
+        if (selectedGameObject == SelectButton)
+        {
+            // Selectボタンの色を黒に変更
+            SelectButtonImage.color = new Color32(0, 0, 0, 255);
+            BackDesktopButtonImage.color = new Color32(0, 0, 0, 120);
+        }
+        else if (selectedGameObject == BackDesktopButton)
+        {
+            // Selectボタンの色を薄く設定
+            SelectButtonImage.color = new Color32(0, 0, 0, 120);
+            BackDesktopButtonImage.color = new Color32(0, 0, 0, 255);
+        }
+        else if(selectedGameObject == null)
+        {
+            // selectedGameObjectがnullの場合、settingButtonにフォーカスを当てる
+            EventSystem.current.SetSelectedGameObject(SelectButton);
+        }
     }
 }
