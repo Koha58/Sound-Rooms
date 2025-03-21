@@ -20,8 +20,14 @@ public class UIController : MonoBehaviour
     //ゲーム内設定を変更する画面へ遷移するボタン,操作説明画面へ遷移するボタン,タイトル画面へ遷移するボタン
     [SerializeField] GameObject settingButton,qperationExplanationButton,backTitleButton;
 
-   //マイクスライダー,BGMスライダー,SEスライダー,マウススライダー
-   [SerializeField] Slider MicSlider, BGMSlider, SESlider, MouseSlider;
+    [SerializeField] GameObject MoveSettingSelect, keyBoardButton, gamePadButton, keyBoard, gamePad;
+
+    [SerializeField] GameObject MicSliderGameObject, BGMSliderGameObject, SESliderGameObject, MouseSliderGameObject, closeKey;
+
+    [SerializeField] GameObject[] Cursor;
+
+    //マイクスライダー,BGMスライダー,SEスライダー,マウススライダー
+    [SerializeField] Slider MicSlider, BGMSlider, SESlider, MouseSlider;
 
     [SerializeField] AudioMixer audioMixer; //オーディオミキサー
     [SerializeField] GameObject micObject;　//
@@ -33,8 +39,6 @@ public class UIController : MonoBehaviour
     private bool isMenuButton;
     private bool isBButton;
     private bool isAButton;
-
-    float mainSelectCount = 0.0f;
 
     // パネル管理用リスト
     private List<GameObject> panels;
@@ -50,15 +54,15 @@ public class UIController : MonoBehaviour
 
         //メニュボタン
         inputActions.UI.MenuButton.performed += ctx => isMenuButton = true;
-        inputActions.UI.MenuButton.performed += ctx => isMenuButton = false;
+        inputActions.UI.MenuButton.canceled += ctx => isMenuButton = false;
 
         //Bボタン
         inputActions.UI.MenuButton.performed += ctx => isBButton = true;
-        inputActions.UI.MenuButton.performed += ctx => isBButton = false;
+        inputActions.UI.MenuButton.canceled += ctx => isBButton = false;
 
         //Aボタン
         inputActions.UI.MenuButton.performed += ctx => isAButton = true;
-        inputActions.UI.MenuButton.performed += ctx => isAButton = false;
+        inputActions.UI.MenuButton.canceled += ctx => isAButton = false;
     }
 
     private void OnEnable()
@@ -82,6 +86,8 @@ public class UIController : MonoBehaviour
         {
             panel.SetActive(false);
         }
+
+       for(int i=0;i<Cursor.Length;i++) Cursor[i].SetActive(false);
     }
 
     // Update is called once per frame
@@ -93,6 +99,10 @@ public class UIController : MonoBehaviour
     public void Menu(GameObject menuPanel)
     {
         menuPanel.SetActive(true);
+        closeKey.SetActive(true);
+        settingPanel1.SetActive(true);
+        settingPanel2.SetActive(false);
+        settingPanel3.SetActive(false);
 
         Time.timeScale = 0;
     }
@@ -100,12 +110,7 @@ public class UIController : MonoBehaviour
     public void CloseMenu(GameObject menuPanel)
     {
         menuPanel.SetActive(false);
-
-        // 初期状態で全パネルを非表示
-        foreach (GameObject panel in panels)
-        {
-            panel.SetActive(false);
-        }
+        closeKey.SetActive(false);
 
         Time.timeScale = 1;
     }
@@ -130,15 +135,111 @@ public class UIController : MonoBehaviour
         SceneManager.LoadScene("StartScene");
     }
 
+    public void KeyBoardPanel()
+    {
+        keyBoard.SetActive(true);
+        gamePad.SetActive(false);
+    }
+
+    public void GamePadPanel()
+    {
+        keyBoard.SetActive(false);
+        gamePad.SetActive(true);
+    }
+
     public void Controller()
     {
         if (isMenuButton == true)
         {
-            Debug.Log("押したよ");
             menu.SetActive(true);
             settingPanel1.SetActive(true);
             settingPanel2.SetActive(false);
             settingPanel3.SetActive(false);
+            Time.timeScale = 0;
+        }
+        else  if (isBButton == true)
+        {
+            // 初期状態で全パネルを非表示
+            foreach (GameObject panel in panels)
+            {
+                panel.SetActive(false);
+            }
+
+            for (int i = 0; i < Cursor.Length; i++) Cursor[i].SetActive(false);
+
+            Time.timeScale = 1;
+        }
+
+        // 選択中のUI取得
+        var selectedGameObject = EventSystem.current.currentSelectedGameObject;
+
+        if (selectedGameObject == settingButton)
+        {
+            settingPanel1.SetActive(true);
+            settingPanel2.SetActive(false);
+            settingPanel3.SetActive(false);
+            for (int i = 0; i < Cursor.Length; i++) Cursor[i].SetActive(false);
+        }
+        else if (selectedGameObject == qperationExplanationButton)
+        {
+            settingPanel1.SetActive(false);
+            settingPanel2.SetActive(true);
+            settingPanel3.SetActive(false);
+
+            keyBoard.SetActive(true);
+            MoveSettingSelect.SetActive(false);
+            gamePad.SetActive(false);
+        }
+        else if (selectedGameObject == backTitleButton)
+        {
+            settingPanel1.SetActive(false);
+            settingPanel2.SetActive(false);
+            settingPanel3.SetActive(true);
+        }
+        else if(selectedGameObject == keyBoardButton)
+        {
+            MoveSettingSelect.SetActive(true);
+            keyBoard.SetActive(true);
+            gamePad.SetActive(false);
+        }
+        else if (selectedGameObject == gamePadButton)
+        {
+            MoveSettingSelect.SetActive(false);
+            keyBoard.SetActive(false);
+            gamePad.SetActive(true);
+        }
+        else if (selectedGameObject == BGMSliderGameObject)
+        {
+            Cursor[0].SetActive(true);
+            Cursor[1].SetActive(false);
+            Cursor[2].SetActive(false);
+            Cursor[3].SetActive(false);
+        }
+        else if (selectedGameObject == SESliderGameObject)
+        {
+            Cursor[0].SetActive(false);
+            Cursor[1].SetActive(true);
+            Cursor[2].SetActive(false);
+            Cursor[3].SetActive(false);
+        }
+        else if (selectedGameObject == MicSliderGameObject)
+        {
+            Cursor[0].SetActive(false);
+            Cursor[1].SetActive(false);
+            Cursor[2].SetActive(true);
+            Cursor[3].SetActive(false);
+        }
+        else if (selectedGameObject == MouseSliderGameObject)
+        {
+            Cursor[0].SetActive(false);
+            Cursor[1].SetActive(false);
+            Cursor[2].SetActive(false);
+            Cursor[3].SetActive(true);
+        }
+        else if(selectedGameObject == null)
+        {
+            // selectedGameObjectがnullの場合、settingButtonにフォーカスを当てる
+            EventSystem.current.SetSelectedGameObject(settingButton);
         }
     }
 

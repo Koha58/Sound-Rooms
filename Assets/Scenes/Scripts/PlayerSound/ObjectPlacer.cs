@@ -44,6 +44,36 @@ public class ObjectPlacer : MonoBehaviour
     // 設置されたオブジェクトのAudioSource（音声を再生するため）
     private AudioSource placedAudioSource;
 
+    //InputSystemを取得
+    private GameInputSystem inputActions;
+
+    private bool isSpaceClickHeld;
+    private bool isEClickHeld;
+
+    private void Awake()
+    {
+        // Input Systemのインスタンスを作成
+        inputActions = new GameInputSystem();
+
+        //スペースの入力を登録
+        inputActions.Player.SpaceClick.performed += ctx => isSpaceClickHeld = true;
+        inputActions.Player.SpaceClick.canceled += ctx => isSpaceClickHeld = false;
+
+        //Eキーの入力を登録
+        inputActions.Player.EClick.performed += ctx => isEClickHeld = true;
+        inputActions.Player.EClick.canceled += ctx => isEClickHeld = false;
+    }
+
+    private void OnEnable()
+    {
+        inputActions.Enable();
+    }
+
+    private void OnDisable()
+    {
+        inputActions.Disable();
+    }
+
     private void Start()
     {
         // Recorderオブジェクトの取得と有効化
@@ -57,7 +87,7 @@ public class ObjectPlacer : MonoBehaviour
     void Update()
     {
         // スペースキーが押されたとき
-        if (Input.GetKeyDown(KeyCode.Space))  // 左クリックを検出
+        if (isSpaceClickHeld)  // 左クリックを検出
         {
             // プレイヤーの位置を取得
             Vector3 playerPosition = player.position;
@@ -68,44 +98,52 @@ public class ObjectPlacer : MonoBehaviour
             // オブジェクトがまだ設置されていない場合、新しく設置
             if (placedObject == null)
             {
-                // 新しいオブジェクトを設置
-                placedObject = Instantiate(objectPrefab, placementPosition, Quaternion.identity);
+                //新しいオブジェクトを設置
+               placedObject = Instantiate(objectPrefab, placementPosition, Quaternion.identity);
                 Recorder.SetActive(false);  // Recorderを非表示にする
 
-                // RecordManager が存在すれば音源を設定
+                //RecordManager が存在すれば音源を設定
                 if (recordManager != null)
                 {
                     recordManager.SetAudioSource(placedObject);  // 音源を設定
                     placedAudioSource = placedObject.GetComponent<AudioSource>();  // AudioSourceを取得
                 }
 
-                // パーティクルをその位置に設置（X軸で90度回転させる）
+                //パーティクルをその位置に設置（X軸で90度回転させる）
                 if (placedParticle == null && particlePrefab != null)
                 {
                     placedParticle = Instantiate(particlePrefab, placementPosition, Quaternion.Euler(ParticleRotationAngle, 0f, 0f));  // X軸で90度回転
                 }
 
-                // 「SettingPoint」に接触しているかチェック
+                //「SettingPoint」に接触しているかチェック
                 CheckIfOnSettingPoint();
             }
-            else
+        }
+
+        //Eキーが押された時
+        if(isEClickHeld)
+        {
+            // プレイヤーの位置を取得
+            Vector3 playerPosition = player.position;
+
+            // プレイヤーの位置にY軸のオフセットを加えた位置にオブジェクトを配置
+            Vector3 placementPosition = new Vector3(playerPosition.x, playerPosition.y + PlacementHeightOffset, playerPosition.z);
+
+            // すでにオブジェクトが配置されている場合、そのオブジェクトが近ければ回収
+            if (Vector3.Distance(placedObject.transform.position, placementPosition) < maxPickupDistance)
             {
-                // すでにオブジェクトが配置されている場合、そのオブジェクトが近ければ回収
-                if (Vector3.Distance(placedObject.transform.position, placementPosition) < maxPickupDistance)
+                Destroy(placedObject);  // オブジェクトを回収
+                placedObject = null;  // 置かれているオブジェクトをリセット
+                Recorder.SetActive(true);  // Recorderを再表示
+
+                // パーティクルも回収
+                if (placedParticle != null)
                 {
-                    Destroy(placedObject);  // オブジェクトを回収
-                    placedObject = null;  // 置かれているオブジェクトをリセット
-                    Recorder.SetActive(true);  // Recorderを再表示
-
-                    // パーティクルも回収
-                    if (placedParticle != null)
-                    {
-                        Destroy(placedParticle);
-                        placedParticle = null;
-                    }
-
-                    isOnSettingPoint = false;  // 設置状態リセット
+                    Destroy(placedParticle);
+                    placedParticle = null;
                 }
+
+                isOnSettingPoint = false;  // 設置状態リセット
             }
         }
 

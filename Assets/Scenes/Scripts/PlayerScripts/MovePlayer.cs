@@ -15,11 +15,8 @@ public class MovePlayer : MonoBehaviour
 
     private GameInputSystem inputActions;
     private Vector2 moveInput;
-    private Vector2 moveCameraInput;
     private bool isRightClickHeld;
     private bool isShiftClickHeld;
-    private bool isSpaceClickHeld;
-    private bool isEClickHeld;
 
     public bool isWalk;
 
@@ -36,10 +33,6 @@ public class MovePlayer : MonoBehaviour
         inputActions.Player.Move.performed += ctx => moveInput = ctx.ReadValue<Vector2>();
         inputActions.Player.Move.canceled += ctx => moveInput = Vector2.zero;
 
-        //// MoveCameraの入力を登録
-        //inputActions.Player.MoveCamera.performed += ctx => moveCameraInput = ctx.ReadValue<Vector2>();
-        //inputActions.Player.MoveCamera.canceled += ctx => moveCameraInput = Vector2.zero;
-
         // 右クリックの入力を登録
         inputActions.Player.RightClick.performed += ctx => isRightClickHeld = true;
         inputActions.Player.RightClick.canceled += ctx => isRightClickHeld = false;
@@ -47,26 +40,6 @@ public class MovePlayer : MonoBehaviour
         //シフトの入力を登録
         inputActions.Player.ShiftClick.performed += ctx => isShiftClickHeld = true;
         inputActions.Player.ShiftClick.canceled += ctx => isShiftClickHeld = false;
-
-        ////スペースの入力を登録
-        //inputActions.Player.SpaceClick.performed += ctx => isSpaceClickHeld = true;
-        //inputActions.Player.SpaceClick.canceled += ctx => isSpaceClickHeld = false;
-
-        ////Eキーの入力を登録
-        //inputActions.Player.EClick.performed += ctx => isEClickHeld = true;
-        //inputActions.Player.EClick.canceled += ctx => isEClickHeld = false;
-
-        // スペースの入力を登録 (押された瞬間だけログを表示)
-        inputActions.Player.SpaceClick.performed += ctx =>
-        {
-            Debug.Log("ラジオを落としたよ");
-        };
-
-        // Eキーの入力を登録 (押された瞬間だけログを表示)
-        inputActions.Player.EClick.performed += ctx =>
-        {
-            Debug.Log("ラジオを拾うよ");
-        };
     }
 
     private void OnEnable()
@@ -116,16 +89,6 @@ public class MovePlayer : MonoBehaviour
             animator.SetBool("Squatting", false);
             animator.SetBool("CrouchWalking", false);
         }
-
-        //if (isSpaceClickHeld)
-        //{
-        //    Debug.Log("ラジオを落としたよ");
-        //}
-
-        //if (isEClickHeld)
-        //{
-        //    Debug.Log("ラジオを拾うよ");
-        //}
 
         Move();
         RotatePlayer();
