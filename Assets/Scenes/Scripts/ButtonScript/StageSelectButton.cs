@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.ProBuilder.MeshOperations;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -12,43 +13,14 @@ public class StageSelectButton : MonoBehaviour
 {
     public GameObject[] StageButtons;
 
-    public GameObject RightButton;
-    public GameObject LeftButton;
+    public GameObject RightButton, LeftButton,GameStartButton, BackStartButton;
 
     public GameObject[] StageVideos;
     public GameObject[] StageTitles;
 
-    bool Continue;
-
     int stage;
 
     bool deviceCheck;
-
-    bool SetGameStart;
-
-    private float originPositionX = -583;
-    private float originPositionY = 245;
-    private float originPositionZ = 0;
-
-    private float changePositionY;
-
-    private float mostUnderPositionY;
-
-    private float originSizeX = 1.0f;
-    private float originSizeY = 0.5f;
-    private float originSizeZ = 1.0f;
-
-    private float StartPositionX = 448;
-    private float StartPositionY = -447;
-    private float StartPositionZ = 0;
-
-    private float StartSizeX = 1.65f;
-    private float StartSizeY = 0.7f;
-    private float StartSizeZ = 1.0f;
-
-
-    float Timer;
-    bool TimeON;
 
     [SerializeField] AudioSource StartSound;  // AudioSourceをSerializeFieldとしてインスペクターから設定
 
@@ -89,16 +61,6 @@ public class StageSelectButton : MonoBehaviour
             deviceCheck = false;
         }
 
-        if (deviceCheck)
-        {
-            //Transform cursorTransform = Cursor.transform;
-           // cursorTransform.transform.localPosition = new Vector3(originPositionX, originPositionY, originPositionZ);
-           // changePositionY = originPositionY;
-            mostUnderPositionY = 160;
-        }
-
-        Continue = false;
-
         // AudioSource コンポーネントを取得
         StartSound = GetComponent<AudioSource>();
     }
@@ -106,7 +68,6 @@ public class StageSelectButton : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Transform cursorTransform = Cursor.transform;
         if (InputDeviceManager.Instance.CurrentDeviceType == InputDeviceType.Xbox)
         {
             deviceCheck = true;
@@ -118,50 +79,7 @@ public class StageSelectButton : MonoBehaviour
             deviceCheck = false;
         }
 
-        if (deviceCheck)
-        {
-            StageSelect();
-
-            //if (_uiInputActions.SettingUI.MainSelsectUp.triggered)
-            //{
-            //    stage--;
-            //    for (int i = 0; i < StageButtons.Length; i++)
-            //    {
-            //        StageButtons[i].GetComponent<Image>().color = new Color32(255, 255, 255, 45);
-            //    }
-
-            //    if (stage < 0)
-            //    {
-            //        stage = 0;
-            //    }
-
-            //    StageButtons[stage].GetComponent<Image>().color = new Color32(255, 255, 255, 255);
-            //}
-            //else if (_uiInputActions.SettingUI.MainSelsectDown.triggered)
-            //{
-            //    stage++;
-            //    for (int i = 0; i < StageButtons.Length; i++)
-            //    {
-            //        StageButtons[i].GetComponent<Image>().color = new Color32(255, 255, 255, 45);
-            //    }
-
-            //    if (stage > 1)
-            //    {
-            //        stage = 1;
-            //    }
-
-            //    StageButtons[stage].GetComponent<Image>().color = new Color32(255, 255, 255, 255);
-            //}
-
-
-            if (Input.GetKeyDown("joystick button 0"))
-            {
-                PlayStartSound(); // 音を再生
-                OnStart();
-            }
-
-        }
-
+        if (deviceCheck)StageSelect();
     }
 
     public void OnStage0Select()
@@ -354,53 +272,76 @@ public class StageSelectButton : MonoBehaviour
 
     void StageSelect()
     {
-        if (stage == 0)
+        // 選択中のUI取得
+        var selectedGameObject = EventSystem.current.currentSelectedGameObject;
+
+        if (selectedGameObject == StageButtons[0])
         {
-            for (int i = 0; i < StageVideos.Length; i++)
+            StageButtons[0].GetComponent<Image>().color = new Color32(255, 255, 255, 255);
+            StageButtons[1].GetComponent<Image>().color = new Color32(255, 255, 255, 45);
+            StageButtons[2].GetComponent<Image>().color = new Color32(255, 255, 255, 45);
+            BackStartButton.SetActive(false);
+
+            if (Input.GetKeyDown("joystick button 0"))
             {
-                StageVideos[i].GetComponent<RawImage>().enabled = false;
+                StageVideos[0].GetComponent<RawImage>().enabled = true;
+                StageVideos[1].GetComponent<RawImage>().enabled = false;
+                StageVideos[2].GetComponent<RawImage>().enabled = false;
+                StageTitles[0].GetComponent<Image>().enabled = true;
+                StageTitles[1].GetComponent<Image>().enabled = false;
+                StageTitles[2].GetComponent<Image>().enabled = false;
+                stage = 0;
             }
-
-            StageVideos[stage].GetComponent<RawImage>().enabled = true;
-
-            for (int i = 0; i < StageTitles.Length; i++)
-            {
-                StageTitles[i].GetComponent<Image>().enabled = false;
-            }
-
-            StageTitles[stage].GetComponent<Image>().enabled = true;
         }
-        else if (stage == 1)
+        else if (selectedGameObject == StageButtons[1])
         {
-            for (int i = 0; i < StageVideos.Length; i++)
+            StageButtons[0].GetComponent<Image>().color = new Color32(255, 255, 255, 45);
+            StageButtons[1].GetComponent<Image>().color = new Color32(255, 255, 255, 255);
+            StageButtons[2].GetComponent<Image>().color = new Color32(255, 255, 255, 45);
+            BackStartButton.SetActive(false);
+
+            if (Input.GetKeyDown("joystick button 0"))
             {
-                StageVideos[i].GetComponent<RawImage>().enabled = false;
+                StageVideos[0].GetComponent<RawImage>().enabled = false;
+                StageVideos[1].GetComponent<RawImage>().enabled = true;
+                StageVideos[2].GetComponent<RawImage>().enabled = false;
+                StageTitles[0].GetComponent<Image>().enabled = false;
+                StageTitles[1].GetComponent<Image>().enabled = true;
+                StageTitles[2].GetComponent<Image>().enabled = false;
+                stage = 1;
             }
 
-            StageVideos[stage].GetComponent<RawImage>().enabled = true;
-
-            for (int i = 0; i < StageTitles.Length; i++)
-            {
-                StageTitles[i].GetComponent<Image>().enabled = false;
-            }
-
-            StageTitles[stage].GetComponent<Image>().enabled = true;
         }
-        else if (stage == 2)
+        else if (selectedGameObject == StageButtons[2])
         {
-            for (int i = 0; i < StageVideos.Length; i++)
+            StageButtons[0].GetComponent<Image>().color = new Color32(255, 255, 255, 45);
+            StageButtons[1].GetComponent<Image>().color = new Color32(255, 255, 255, 45);
+            StageButtons[2].GetComponent<Image>().color = new Color32(255, 255, 255, 255);
+            BackStartButton.SetActive(false);
+            if (Input.GetKeyDown("joystick button 0"))
             {
-                StageVideos[i].GetComponent<RawImage>().enabled = false;
+                StageVideos[0].GetComponent<RawImage>().enabled = false;
+                StageVideos[1].GetComponent<RawImage>().enabled = false;
+                StageVideos[2].GetComponent<RawImage>().enabled = true;
+                StageTitles[0].GetComponent<Image>().enabled = false;
+                StageTitles[1].GetComponent<Image>().enabled = false;
+                StageTitles[2].GetComponent<Image>().enabled = true;
+                stage = 2;
             }
-
-            StageVideos[stage].GetComponent<RawImage>().enabled = true;
-
-            for (int i = 0; i < StageTitles.Length; i++)
+        }
+        else if(selectedGameObject == GameStartButton)
+        {
+            BackStartButton.SetActive(true);
+            if (Input.GetKeyDown("joystick button 0"))
             {
-                StageTitles[i].GetComponent<Image>().enabled = false;
+                PlayStartSound(); // 音を再生
+                OnStart();
             }
-
-            StageTitles[stage].GetComponent<Image>().enabled = true;
+        }
+        else if (selectedGameObject == null)
+        {
+            // selectedGameObjectがnullの場合、settingButtonにフォーカスを当てる
+            EventSystem.current.SetSelectedGameObject(StageButtons[0]);
         }
     }
 
@@ -432,6 +373,5 @@ public class StageSelectButton : MonoBehaviour
         {
             SceneManager.LoadScene("GameScene");
         }
-
     }
 }
