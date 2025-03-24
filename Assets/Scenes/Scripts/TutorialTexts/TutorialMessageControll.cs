@@ -52,8 +52,6 @@ public class TutorialMessageControll : MonoBehaviour
 
     private bool OnPut;
 
-    private bool OnKey;
-
     // メッセージの最大数とインデックス範囲の定数
     private const int MAX_INDEX = 2; // メッセージのインデックスは 0, 1, 2 なので最大値は 2
 
@@ -159,28 +157,7 @@ public class TutorialMessageControll : MonoBehaviour
             UIDeviceCheck[DEVICE_MESSAGE_0_INDEX] = KeyboardMove[DEVICE_MESSAGE_0_INDEX]; // キーボードメッセージを非表示
             UIDeviceCheck[DEVICE_MESSAGE_0_INDEX].enabled = false; // 0番目のデバイスメッセージを非表示
 
-            // メッセージインデックスが最初の場合、コントローラー用のメッセージを表示
-            if (impactObjects.count != 1 && OnPut)
-            {
-                UIDeviceCheck[DEVICE_MESSAGE_1_INDEX] = ControllerMove[DEVICE_MESSAGE_1_INDEX]; // コントローラーの1番目のメッセージを表示
-                UIDeviceCheck[DEVICE_MESSAGE_1_INDEX].enabled = true; // コントローラーの1番目のメッセージを表示
-            }
-            // メッセージインデックスが2番目の場合、コントローラーの1番目のメッセージを非表示
-            else if (MessageIndex == SECOND_MESSAGE_INDEX)
-            {
-                UIDeviceCheck[DEVICE_MESSAGE_1_INDEX].enabled = false; // 1番目のメッセージを非表示
-            }
-            // メッセージインデックスが3番目の場合、コントローラーの2番目のメッセージを表示
-            else if (MessageIndex == THIRD_MESSAGE_INDEX)
-            {
-                UIDeviceCheck[DEVICE_MESSAGE_1_INDEX].enabled = false; // 1番目のメッセージを非表示
-                UIDeviceCheck[DEVICE_MESSAGE_2_INDEX] = ControllerMove[DEVICE_MESSAGE_2_INDEX]; // コントローラーの2番目のメッセージを表示
-                UIDeviceCheck[DEVICE_MESSAGE_2_INDEX].enabled = true; // コントローラーの2番目のメッセージを表示
-            }
-            else
-            {
-                UIDeviceCheck[DEVICE_MESSAGE_2_INDEX].enabled = false; // それ以外はメッセージを非表示
-            }
+            
         }
         else // キーボードが使用されている場合
         {
@@ -188,28 +165,7 @@ public class TutorialMessageControll : MonoBehaviour
             UIDeviceCheck[DEVICE_MESSAGE_0_INDEX] = KeyboardMove[DEVICE_MESSAGE_0_INDEX]; // キーボードの0番目のメッセージを表示
             UIDeviceCheck[DEVICE_MESSAGE_0_INDEX].enabled = true; // 0番目のメッセージを表示
 
-            // メッセージインデックスが最初の場合、キーボードの1番目のメッセージを表示
-            if (impactObjects.count != 1 && OnPut)
-            {
-                UIDeviceCheck[DEVICE_MESSAGE_1_INDEX] = KeyboardMove[DEVICE_MESSAGE_1_INDEX]; // キーボードの1番目のメッセージを表示
-                UIDeviceCheck[DEVICE_MESSAGE_1_INDEX].enabled = true; // キーボードの1番目のメッセージを表示
-            }
-            // メッセージインデックスが2番目の場合、キーボードの1番目のメッセージを非表示
-            else if (MessageIndex == SECOND_MESSAGE_INDEX)
-            {
-                UIDeviceCheck[DEVICE_MESSAGE_1_INDEX].enabled = false; // 1番目のメッセージを非表示
-            }
-            // メッセージインデックスが3番目の場合、キーボードの2番目のメッセージを表示
-            else if (MessageIndex == THIRD_MESSAGE_INDEX)
-            {
-                UIDeviceCheck[DEVICE_MESSAGE_1_INDEX].enabled = false; // 1番目のメッセージを非表示
-                UIDeviceCheck[DEVICE_MESSAGE_2_INDEX] = KeyboardMove[DEVICE_MESSAGE_2_INDEX]; // キーボードの2番目のメッセージを表示
-                UIDeviceCheck[DEVICE_MESSAGE_2_INDEX].enabled = true; // キーボードの2番目のメッセージを表示
-            }
-            else
-            {
-                UIDeviceCheck[DEVICE_MESSAGE_2_INDEX].enabled = false; // それ以外はメッセージを非表示
-            }
+            
         }
     }
 
@@ -223,25 +179,97 @@ public class TutorialMessageControll : MonoBehaviour
         }
     }
 
-    private void OnTriggerStay(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("SettingPoint"))
+        // "EnemyAttackArea" を探して、その状態に基づいてメッセージを切り替え
+        GameObject impactObjectsArea = GameObject.Find("EnemyAttackArea"); // "EnemyAttackArea" オブジェクトを探す
+        ImpactOnObjects impactObjects = impactObjectsArea.GetComponent<ImpactOnObjects>(); // ImpactOnObjects スクリプトを取得
+
+        Debug.Log("Colliding with: " + other.gameObject.name); // 接触しているオブジェクトの名前をログ出力
+
+        // UIDeviceCheck 配列が十分な長さかチェック
+        if (UIDeviceCheck.Length > DEVICE_MESSAGE_1_INDEX && UIDeviceCheck.Length > DEVICE_MESSAGE_2_INDEX)
         {
-            OnPut = true;
+            if (other.CompareTag("SettingPoint") && impactObjects.count != 1 && !objectPlacer.isOnSettingPoint)
+            {
+                Debug.Log("SettingPoint triggered!"); // "SettingPoint" タグと一致した場合に表示されるログ
+                OnPut = true;
+
+                if (isControllerInput) // コントローラーが使用されている場合
+                {
+                    UIDeviceCheck[DEVICE_MESSAGE_1_INDEX] = ControllerMove[DEVICE_MESSAGE_1_INDEX]; // コントローラーの1番目のメッセージを表示
+                }
+                else
+                {
+                    UIDeviceCheck[DEVICE_MESSAGE_1_INDEX] = KeyboardMove[DEVICE_MESSAGE_1_INDEX]; // キーボードの1番目のメッセージを表示
+                }
+                UIDeviceCheck[DEVICE_MESSAGE_1_INDEX].enabled = true; // コントローラーの1番目のメッセージを表示
+            }
+            else if (other.CompareTag("SettingPoint") && impactObjects.count == 1 && objectPlacer.isOnSettingPoint)
+            {
+                if (isControllerInput && UIDeviceCheck[DEVICE_MESSAGE_2_INDEX] != null) // コントローラーが使用されている場合
+                {
+                    UIDeviceCheck[DEVICE_MESSAGE_2_INDEX] = ControllerMove[DEVICE_MESSAGE_1_INDEX]; // コントローラーの2番目のメッセージを表示
+                }
+                else
+                {
+                    UIDeviceCheck[DEVICE_MESSAGE_2_INDEX] = KeyboardMove[DEVICE_MESSAGE_2_INDEX]; // キーボードの2番目のメッセージを表示
+                }
+
+                UIDeviceCheck[DEVICE_MESSAGE_2_INDEX].enabled = true; // キーボードの2番目のメッセージを表示
+            }
+            else
+            {
+                OnPut = false;
+                // UIDeviceCheck[DEVICE_MESSAGE_1_INDEX] が null でないかチェック
+                if (UIDeviceCheck[DEVICE_MESSAGE_1_INDEX] != null)
+                {
+                    UIDeviceCheck[DEVICE_MESSAGE_1_INDEX].enabled = false; // 1番目のメッセージを非表示
+                }
+            }
         }
         else
         {
-            OnPut = false;
+            Debug.LogError("UIDeviceCheck array is too small to handle the indices.");
         }
 
-        if (other.CompareTag("KeyCheck"))
+        Debug.Log("OnPut state after check: " + OnPut); // OnPut の状態を表示
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        // "EnemyAttackArea" を探して、その状態に基づいてメッセージを切り替え
+        GameObject impactObjectsArea = GameObject.Find("EnemyAttackArea"); // "EnemyAttackArea" オブジェクトを探す
+        ImpactOnObjects impactObjects = impactObjectsArea.GetComponent<ImpactOnObjects>(); // ImpactOnObjects スクリプトを取得
+
+        Debug.Log("Colliding with: " + other.gameObject.name); // 接触しているオブジェクトの名前をログ出力
+
+        // UIDeviceCheck 配列が十分な長さかチェック
+        if (UIDeviceCheck.Length > DEVICE_MESSAGE_1_INDEX && UIDeviceCheck.Length > DEVICE_MESSAGE_2_INDEX)
         {
-            OnKey = true;
+            if (other.CompareTag("SettingPoint") && impactObjects.count != 1 && !objectPlacer.isOnSettingPoint)
+            {
+                OnPut = false;
+                // UIDeviceCheck[DEVICE_MESSAGE_1_INDEX] が null でないかチェック
+                if (UIDeviceCheck[DEVICE_MESSAGE_1_INDEX] != null)
+                {
+                    UIDeviceCheck[DEVICE_MESSAGE_1_INDEX].enabled = false; // 1番目のメッセージを非表示
+                }
+            }
+            else if (other.CompareTag("SettingPoint") && impactObjects.count == 1)
+            {
+                if (UIDeviceCheck[DEVICE_MESSAGE_2_INDEX] != null)
+                {
+                    UIDeviceCheck[DEVICE_MESSAGE_2_INDEX].enabled = false; // キーボードの2番目のメッセージを表示
+                }
+            }
         }
         else
         {
-            OnKey = false;
+            Debug.LogError("UIDeviceCheck array is too small to handle the indices.");
         }
+
+        Debug.Log("OnPut state after check: " + OnPut); // OnPut の状態を表示
     }
 
 }
