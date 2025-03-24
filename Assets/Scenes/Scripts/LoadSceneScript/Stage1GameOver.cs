@@ -21,64 +21,71 @@ public class Stage1GameOver : MonoBehaviour
     [SerializeField] GameObject LostLife4;  // 失われたライフ4のUIオブジェクト
     [SerializeField] GameObject LostLife5;  // 失われたライフ5のUIオブジェクト
 
-    private float Timer;  // タイマー (ライフを失ってから次の処理までの時間を計測)
-    private float Count;  // カウント (ライフを失った後の待機フラグ)
+    private float damageCooldown = 2.0f; // クールタイムの時間 (秒)
+    private float lastDamageTime = -1.0f; // 最後にダメージを受けた時間
+    private Renderer[] playerRenderers; // プレイヤーのRenderer
+                                        // 点滅の設定
+    private float blinkInterval = 0.2f;  // 点滅間隔 (秒)
+    private int blinkCount = 10;  // 点滅回数
+
+    private Color32 darkgray = new Color32(255, 204, 204, 255);
+
 
     // Start is called before the first frame update
     void Start()
     {
-        // プレイヤーの初期ライフアイコンを全て表示
+        // "PlayerParts" タグを持つすべてのオブジェクトのRendererを取得
+        GameObject[] playerParts = GameObject.FindGameObjectsWithTag("PlayerParts");
+        playerRenderers = new Renderer[playerParts.Length];
+
+        // 各オブジェクトのRendererを取得
+        for (int i = 0; i < playerParts.Length; i++)
+        {
+            playerRenderers[i] = playerParts[i].GetComponent<Renderer>();
+        }
+
+        // 初期設定として、ライフのUIを全て表示
         Life1.GetComponent<Image>().enabled = true;
         Life2.GetComponent<Image>().enabled = true;
         Life3.GetComponent<Image>().enabled = true;
         Life4.GetComponent<Image>().enabled = true;
         Life5.GetComponent<Image>().enabled = true;
 
-        // 失ったライフのアイコンは初期状態で非表示
+        // 失われたライフのUIは最初は非表示
         LostLife1.GetComponent<Image>().enabled = false;
         LostLife2.GetComponent<Image>().enabled = false;
         LostLife3.GetComponent<Image>().enabled = false;
         LostLife4.GetComponent<Image>().enabled = false;
         LostLife5.GetComponent<Image>().enabled = false;
 
-        // ライフ数の初期値を5に設定
+        // ライフ数を5に設定
         LifeCount = 5;
-        Count = 0;  // カウントを0にリセット
     }
 
     // Update is called once per frame
     void Update()
     {
-        // カウントが1の場合、5秒間の待機タイムを設定
-        if (Count == 1)
-        {
-            Timer += Time.deltaTime;  // タイマーを経過時間で更新
-            if (Timer >= 5.0f)  // 5秒経過したら
-            {
-                Timer = 0;  // タイマーをリセット
-                Count = 0;  // カウントを0に戻す
-            }
-        }
+
     }
 
     // トリガーに入ったときに呼び出される
     private void OnTriggerEnter(Collider other)
     {
-        // プレイヤーオブジェクトを取得
-        GameObject gobj = GameObject.Find("Player");
-        PlayerSeen PS = gobj.GetComponent<PlayerSeen>();
+        PlayerSeen PS;
+        GameObject gobj = GameObject.Find("Player");  // プレイヤーオブジェクトを探す
+        PS = gobj.GetComponent<PlayerSeen>();  // PlayerSeenスクリプトを取得
 
-        // 敵に接触した場合の処理
-        if (other.CompareTag("Enemy"))
+        if (other.gameObject.tag == "Enemy" && Time.time - lastDamageTime >= damageCooldown)
         {
             // プレイヤーが見えている状態（onoff == 1）のときだけライフが減る
             if (PS.onoff == 1)
             {
-                if (Count == 0)  // まだライフを減らしていない場合
-                {
-                    LifeCount--;  // ライフを1減らす
-                    Count = 1;  // 1回目のライフ減少をカウント
-                }
+                // クールタイムが過ぎていればダメージを与える
+                LifeCount--;
+                lastDamageTime = Time.time;  // ダメージを受けた時間を記録
+
+                // プレイヤーを赤く点滅させる
+                StartCoroutine(BlinkPlayer());
             }
         }
 
@@ -109,6 +116,37 @@ public class Stage1GameOver : MonoBehaviour
             Life1.GetComponent<Image>().enabled = false;  // 1番目のライフアイコンを非表示
             LostLife1.GetComponent<Image>().enabled = true;  // 失われたライフアイコンを表示
             SceneManager.LoadScene("GameOver_Stage1");  // ゲームオーバー画面へ遷移
+        }
+    }
+
+    // プレイヤーが赤く点滅するコルーチン
+    private IEnumerator BlinkPlayer()
+    {
+        // プレイヤーの元の色を保存
+        Color[] originalColors = new Color[playerRenderers.Length];
+        for (int i = 0; i < playerRenderers.Length; i++)
+        {
+            originalColors[i] = playerRenderers[i].material.color;
+        }
+
+        // 点滅処理
+        for (int i = 0; i < blinkCount; i++)
+        {
+            // プレイヤーを赤く
+            for (int j = 0; j < playerRenderers.Length; j++)
+            {
+                playerRenderers[j].material.color = darkgray;
+            }
+
+            yield return new WaitForSeconds(blinkInterval);
+
+            // 元の色に戻す
+            for (int j = 0; j < playerRenderers.Length; j++)
+            {
+                playerRenderers[j].material.color = originalColors[j];
+            }
+
+            yield return new WaitForSeconds(blinkInterval);
         }
     }
 }

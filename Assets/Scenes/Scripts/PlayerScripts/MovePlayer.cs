@@ -18,7 +18,7 @@ public class MovePlayer : MonoBehaviour
     private bool isRightClickHeld;
     private bool isShiftClickHeld;
 
-    public bool isWalk;
+    public bool isWall;
 
     private void Awake()
     {
@@ -57,7 +57,12 @@ public class MovePlayer : MonoBehaviour
         // 右クリックを押している間のみ移動
         if (isRightClickHeld)
         {
-            moveSpeed = 7.5f;
+            if (!isWall)
+            {
+                moveSpeed =7.0f;
+            }
+            else moveSpeed = 2.0f;
+            else moveSpeed = 2.0f;
             animator.SetBool("Walking", false);
             animator.SetBool("Running", true);
             animator.SetBool("Squatting", false);
@@ -65,7 +70,11 @@ public class MovePlayer : MonoBehaviour
         }
         else if (isShiftClickHeld)
         {
-            moveSpeed = 2.5f;
+            if (!isWall)
+            {
+                moveSpeed = 2.0f;
+            }
+            else moveSpeed = 2.0f;
             animator.SetBool("Walking",false);
             animator.SetBool("Running", false);
             animator.SetBool("Squatting",false);
@@ -73,7 +82,12 @@ public class MovePlayer : MonoBehaviour
         }
         else 
         {
-            moveSpeed = 4.0f;
+            if (!isWall)
+            {
+                moveSpeed = 4.0f;
+            }
+            else moveSpeed = 2.0f;
+
 
             // 移動入力があればWalkingアニメーションを再生
             if (moveInput.magnitude > 0.1f)
@@ -90,7 +104,7 @@ public class MovePlayer : MonoBehaviour
             animator.SetBool("CrouchWalking", false);
         }
 
-        Move();
+            Move();
         RotatePlayer();
     }
 
@@ -126,11 +140,25 @@ public class MovePlayer : MonoBehaviour
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 10f);
     }
 
-    void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Wall"))
+        if (/*other.gameObject.tag == "Wall"||*/ other.gameObject.tag == "Object")
         {
-           
+            isWall = true;
+        }
+
+        // オブジェクトに接触した場合、そのオブジェクトの名前を表示
+        if (other.gameObject.CompareTag("Object"))
+        {
+            Debug.Log("Player collided with: " + other.gameObject.name);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (/*other.gameObject.tag == "Wall" ||*/ other.gameObject.tag == "Object")
+        {
+            isWall = false;
         }
     }
 }   

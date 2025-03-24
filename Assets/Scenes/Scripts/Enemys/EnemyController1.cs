@@ -29,7 +29,7 @@ public class EnemyController1 : MonoBehaviour
     float stopChaseRange = 2f; // 追跡をやめる範囲
 
     //アニメーション
-    [SerializeField] Animator animator;　//アニメーター取得
+    //[SerializeField] Animator animator;　//アニメーター取得
 
     //サウンド
     [SerializeField] AudioSource audioSourse; //オーディオソース取得
@@ -213,8 +213,8 @@ public class EnemyController1 : MonoBehaviour
                     Debug.Log("巡回中");
                     behaviors.GetBehavior(BehaviorType.patrol).value = 0;
 
-                    animator.SetBool("Walk", true);
-                    animator.SetBool("Run", false);
+                    //animator.SetBool("Walk", true);
+                    //animator.SetBool("Run", false);
                     audioSourse.clip = walkClip;
                     navMeshAgent.speed = 2.0f;
                     transform.LookAt(PatrolPoints[pointCount].transform);
@@ -257,8 +257,8 @@ public class EnemyController1 : MonoBehaviour
                 {
                     stateEnter = false;
                     Debug.Log("どこにいるかな？");
-                    animator.SetBool("Walk", false);
-                    animator.SetBool("Run", false);
+                    //animator.SetBool("Walk", false);
+                    //animator.SetBool("Run", false);
                     audioSourse.clip = runClip;
                     navMeshAgent.SetDestination(this.transform.position);
                     ImageOn = false;
@@ -271,8 +271,8 @@ public class EnemyController1 : MonoBehaviour
                     searchTime = 0;
                     behaviors.GetBehavior(BehaviorType.search).value = 0;
                     behaviors.GetBehavior(BehaviorType.patrol).value = 2;
-                    animator.SetBool("Walk", true);
-                    animator.SetBool("Run", false);
+                    //animator.SetBool("Walk", true);
+                    //animator.SetBool("Run", false);
                 }
 
                 behaviors.SortDesire();
@@ -302,8 +302,8 @@ public class EnemyController1 : MonoBehaviour
                     stateEnter = false;
                     Debug.Log("追いかけいるよ");
                     behaviors.GetBehavior(BehaviorType.chase).value = 0;
-                    animator.SetBool("Walk",false);
-                    animator.SetBool("Run", true);
+                    //animator.SetBool("Walk",false);
+                    //animator.SetBool("Run", true);
                     transform.LookAt(player.transform);
                     navMeshAgent.speed = 3.5f;
                     PS.onoff = 1;

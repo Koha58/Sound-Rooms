@@ -21,12 +21,28 @@ public class TutorialGameOver : MonoBehaviour
     [SerializeField] GameObject LostLife4;  // 失われたライフ4のUIオブジェクト
     [SerializeField] GameObject LostLife5;  // 失われたライフ5のUIオブジェクト
 
-    private float Timer;  // タイマー (ライフを失ってから次の処理までの時間を計測)
-    private float Count;  // カウント (ライフを失った後の待機フラグ)
+    private float damageCooldown = 2.0f; // クールタイムの時間 (秒)
+    private float lastDamageTime = -1.0f; // 最後にダメージを受けた時間
+    private Renderer[] playerRenderers; // プレイヤーのRenderer
+                                     // 点滅の設定
+    private float blinkInterval = 0.2f;  // 点滅間隔 (秒)
+    private int blinkCount = 10;  // 点滅回数
+
+    private Color32 darkgray = new Color32(255, 204, 204, 255);
 
     // Start is called before the first frame update
     void Start()
     {
+        // "PlayerParts" タグを持つすべてのオブジェクトのRendererを取得
+        GameObject[] playerParts = GameObject.FindGameObjectsWithTag("PlayerParts");
+        playerRenderers = new Renderer[playerParts.Length];
+
+        // 各オブジェクトのRendererを取得
+        for (int i = 0; i < playerParts.Length; i++)
+        {
+            playerRenderers[i] = playerParts[i].GetComponent<Renderer>();
+        }
+
         // 初期設定として、ライフのUIを全て表示
         Life1.GetComponent<Image>().enabled = true;
         Life2.GetComponent<Image>().enabled = true;
@@ -48,16 +64,7 @@ public class TutorialGameOver : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // プレイヤーがライフを失った後、待機している状態
-        if (Count == 1)
-        {
-            Timer += Time.deltaTime;  // 経過時間を加算
-            if (Timer >= 3)  // 3秒経過したら
-            {
-                Timer = 0;  // タイマーをリセット
-                Count = 0;  // 待機状態を解除
-            }
-        }
+
     }
 
     // トリガーに入ったときに呼ばれる
@@ -66,6 +73,20 @@ public class TutorialGameOver : MonoBehaviour
         PlayerSeen PS;
         GameObject gobj = GameObject.Find("Player");  // プレイヤーオブジェクトを探す
         PS = gobj.GetComponent<PlayerSeen>();  // PlayerSeenスクリプトを取得
+
+        if (other.gameObject.tag == "Enemy" && Time.time - lastDamageTime >= damageCooldown)
+        {
+            // プレイヤーが見えている状態（onoff == 1）のときだけライフが減る
+            if (PS.onoff == 1)
+            {
+                // クールタイムが過ぎていればダメージを与える
+                LifeCount--;
+                lastDamageTime = Time.time;  // ダメージを受けた時間を記録
+
+                // プレイヤーを赤く点滅させる
+                StartCoroutine(BlinkPlayer());
+            }
+        }
 
         // プレイヤーのライフに応じてUIを変更
         if (LifeCount == 4)
@@ -93,6 +114,38 @@ public class TutorialGameOver : MonoBehaviour
             Life1.GetComponent<Image>().enabled = false;  // ライフ1を非表示
             LostLife1.GetComponent<Image>().enabled = true;  // 失われたライフ1を表示
             SceneManager.LoadScene("GameOver_Tutorial");  // ゲームオーバー画面に遷移
+        }
+        
+    }
+
+    // プレイヤーが赤く点滅するコルーチン
+    private IEnumerator BlinkPlayer()
+    {
+        // プレイヤーの元の色を保存
+        Color[] originalColors = new Color[playerRenderers.Length];
+        for (int i = 0; i < playerRenderers.Length; i++)
+        {
+            originalColors[i] = playerRenderers[i].material.color;
+        }
+
+        // 点滅処理
+        for (int i = 0; i < blinkCount; i++)
+        {
+            // プレイヤーを赤く
+            for (int j = 0; j < playerRenderers.Length; j++)
+            {
+                playerRenderers[j].material.color = darkgray;
+            }
+
+            yield return new WaitForSeconds(blinkInterval);
+
+            // 元の色に戻す
+            for (int j = 0; j < playerRenderers.Length; j++)
+            {
+                playerRenderers[j].material.color = originalColors[j];
+            }
+
+            yield return new WaitForSeconds(blinkInterval);
         }
     }
 }
