@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 0.524
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.09446845, g: 0.118273765, b: 0.16082697, a: 0.524}
+  m_IndirectSpecularColor: {r: 0.0944687, g: 0.1182742, b: 0.16082758, a: 0.524}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -11757,6 +11757,118 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1372582033}
   m_CullTransparentMesh: 1
+--- !u!1 &1386866444
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1386866445}
+  - component: {fileID: 1386866448}
+  - component: {fileID: 1386866447}
+  - component: {fileID: 1386866446}
+  m_Layer: 7
+  m_Name: UIControlArea
+  m_TagString: EnemyAttackArea
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1386866445
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1386866444}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.01, y: 0.16, z: 1.21}
+  m_LocalScale: {x: 2.8, y: 2, z: 2}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 135133355}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1386866446
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1386866444}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1a7e2a6860a7f442bfa24dd1c1f479c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Messages:
+  - {fileID: 246023699}
+  - {fileID: 1804261377}
+  - {fileID: 455419050}
+  - {fileID: 472341946}
+  KeyboardMove:
+  - {fileID: 1863650454}
+  - {fileID: 37313340}
+  - {fileID: 1272881691}
+  ControllerMove:
+  - {fileID: 2001272672}
+  - {fileID: 1046412824}
+  UIDeviceCheck:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  MessageIndex: 0
+  objectPlacer: {fileID: 1573040159}
+--- !u!54 &1386866447
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1386866444}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!135 &1386866448
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1386866444}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1402192762
 GameObject:
   m_ObjectHideFlags: 0
@@ -12429,36 +12541,6 @@ MonoBehaviour:
   player: {fileID: 135133355}
   maxPickupDistance: 1
   isOnSettingPoint: 0
---- !u!114 &1573040168
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1573040124}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c1a7e2a6860a7f442bfa24dd1c1f479c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Messages:
-  - {fileID: 246023699}
-  - {fileID: 1804261377}
-  - {fileID: 455419050}
-  - {fileID: 472341946}
-  KeyboardMove:
-  - {fileID: 1863650454}
-  - {fileID: 37313340}
-  - {fileID: 1272881691}
-  ControllerMove:
-  - {fileID: 2001272672}
-  - {fileID: 1046412824}
-  UIDeviceCheck:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  MessageIndex: 0
-  objectPlacer: {fileID: 1573040159}
 --- !u!114 &1573040169
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19299,6 +19381,10 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1730480739002498145, guid: 46909d51fabcb1e499e50df7b0a13ec1,
         type: 3}
       insertIndex: 19
+      addedObject: {fileID: 1386866445}
+    - targetCorrespondingSourceObject: {fileID: 1730480739002498145, guid: 46909d51fabcb1e499e50df7b0a13ec1,
+        type: 3}
+      insertIndex: 20
       addedObject: {fileID: 275328555}
     - targetCorrespondingSourceObject: {fileID: 3651380053937961437, guid: 46909d51fabcb1e499e50df7b0a13ec1,
         type: 3}
@@ -19329,10 +19415,6 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 1573040159}
-    - targetCorrespondingSourceObject: {fileID: 1389421769132500699, guid: 46909d51fabcb1e499e50df7b0a13ec1,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1573040168}
     - targetCorrespondingSourceObject: {fileID: 1389421769132500699, guid: 46909d51fabcb1e499e50df7b0a13ec1,
         type: 3}
       insertIndex: -1
