@@ -20,6 +20,10 @@ public class MovePlayer : MonoBehaviour
 
     public bool isWall;
 
+
+    public float wallCheckDistance = 1.0f; // 壁とのチェック距離
+    public LayerMask wallLayerMask; // 壁のレイヤーマスク
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();  // Rigidbodyを取得
@@ -57,12 +61,8 @@ public class MovePlayer : MonoBehaviour
         // 右クリックを押している間のみ移動
         if (isRightClickHeld)
         {
-            if (!isWall)
-            {
-                moveSpeed =7.0f;
-            }
-            else moveSpeed = 2.0f;
-            else moveSpeed = 2.0f;
+            moveSpeed = 7.0f;
+
             animator.SetBool("Walking", false);
             animator.SetBool("Running", true);
             animator.SetBool("Squatting", false);
@@ -70,24 +70,16 @@ public class MovePlayer : MonoBehaviour
         }
         else if (isShiftClickHeld)
         {
-            if (!isWall)
-            {
-                moveSpeed = 2.0f;
-            }
-            else moveSpeed = 2.0f;
-            animator.SetBool("Walking",false);
+            moveSpeed = 2.0f;
+
+            animator.SetBool("Walking", false);
             animator.SetBool("Running", false);
-            animator.SetBool("Squatting",false);
+            animator.SetBool("Squatting", false);
             animator.SetBool("CrouchWalking", true);
         }
-        else 
+        else
         {
-            if (!isWall)
-            {
-                moveSpeed = 4.0f;
-            }
-            else moveSpeed = 2.0f;
-
+            moveSpeed = 4.0f;
 
             // 移動入力があればWalkingアニメーションを再生
             if (moveInput.magnitude > 0.1f)
@@ -104,7 +96,7 @@ public class MovePlayer : MonoBehaviour
             animator.SetBool("CrouchWalking", false);
         }
 
-            Move();
+        Move();
         RotatePlayer();
     }
 
@@ -120,8 +112,11 @@ public class MovePlayer : MonoBehaviour
 
         Vector3 moveDirection = (cameraRight * moveInput.x + cameraForward * moveInput.y).normalized;
 
-        // Rigidbodyを使って移動
-        rb.MovePosition(transform.position + moveDirection * moveSpeed * Time.deltaTime);
+        // 壁との衝突をチェック
+        if (!IsWallInFront(moveDirection))
+        {
+            rb.MovePosition(transform.position + moveDirection * moveSpeed * Time.deltaTime);
+        }
     }
 
     /// <summary>
@@ -140,25 +135,14 @@ public class MovePlayer : MonoBehaviour
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 10f);
     }
 
-    private void OnTriggerEnter(Collider other)
+    // 壁が前方にあるかをチェックする
+    private bool IsWallInFront(Vector3 moveDirection)
     {
-        if (/*other.gameObject.tag == "Wall"||*/ other.gameObject.tag == "Object")
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, moveDirection, out hit, wallCheckDistance, wallLayerMask))
         {
-            isWall = true;
+            return true; // 壁が前方にある
         }
-
-        // オブジェクトに接触した場合、そのオブジェクトの名前を表示
-        if (other.gameObject.CompareTag("Object"))
-        {
-            Debug.Log("Player collided with: " + other.gameObject.name);
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (/*other.gameObject.tag == "Wall" ||*/ other.gameObject.tag == "Object")
-        {
-            isWall = false;
-        }
+        return false; // 壁がない
     }
 }   

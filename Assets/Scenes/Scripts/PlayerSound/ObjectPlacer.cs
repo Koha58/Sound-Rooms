@@ -47,8 +47,7 @@ public class ObjectPlacer : MonoBehaviour
     //InputSystemを取得
     private GameInputSystem inputActions;
 
-    private bool isSpaceClickHeld;
-    private bool isEClickHeld;
+    private bool isSpaceClickHeld, isEClickHeld, isXButtonHeld, isYButtonHeld;
 
     private void Awake()
     {
@@ -62,6 +61,14 @@ public class ObjectPlacer : MonoBehaviour
         //Eキーの入力を登録
         inputActions.Player.EClick.performed += ctx => isEClickHeld = true;
         inputActions.Player.EClick.canceled += ctx => isEClickHeld = false;
+
+        //Xの入力を登録
+        inputActions.Player.XButton.performed += ctx => isXButtonHeld = true;
+        inputActions.Player.XButton.canceled += ctx => isXButtonHeld = false;
+
+        //Yの入力を登録
+        inputActions.Player.YButton.performed += ctx => isYButtonHeld = true;
+        inputActions.Player.YButton.canceled += ctx => isYButtonHeld = false;
     }
 
     private void OnEnable()
@@ -86,8 +93,15 @@ public class ObjectPlacer : MonoBehaviour
 
     void Update()
     {
+        // プレイヤーのTransformが設定されていない場合
+        if (player == null)
+        {
+            Debug.LogError("Player Transform is not assigned.");
+            return;
+        }
+
         // スペースキーが押されたとき
-        if (isSpaceClickHeld)  // 左クリックを検出
+        if (isSpaceClickHeld || isXButtonHeld)  // 左クリックを検出
         {
             // プレイヤーの位置を取得
             Vector3 playerPosition = player.position;
@@ -121,30 +135,34 @@ public class ObjectPlacer : MonoBehaviour
         }
 
         //Eキーが押された時
-        if(isEClickHeld)
+        if(isEClickHeld || isYButtonHeld)
         {
-            // プレイヤーの位置を取得
-            Vector3 playerPosition = player.position;
+            // もしオブジェクトが存在し、プレイヤーが指定した距離以内にいるなら回収
+            if (placedObject != null)
+            {
+                // プレイヤーの位置を取得
+                Vector3 playerPosition = player.position;
 
-            // プレイヤーの位置にY軸のオフセットを加えた位置にオブジェクトを配置
-            Vector3 placementPosition = new Vector3(playerPosition.x, playerPosition.y + PlacementHeightOffset, playerPosition.z);
+                // プレイヤーの位置にY軸のオフセットを加えた位置にオブジェクトを配置
+                Vector3 placementPosition = new Vector3(playerPosition.x, playerPosition.y + PlacementHeightOffset, playerPosition.z);
 
-            //// すでにオブジェクトが配置されている場合、そのオブジェクトが近ければ回収
-            //if (Vector3.Distance(placedObject.transform.position, placementPosition) < maxPickupDistance)
-            //{
-                Destroy(placedObject);  // オブジェクトを回収
-                placedObject = null;  // 置かれているオブジェクトをリセット
-                Recorder.SetActive(true);  // Recorderを再表示
-
-                // パーティクルも回収
-                if (placedParticle != null)
+                // すでにオブジェクトが配置されている場合、そのオブジェクトが近ければ回収
+                if (Vector3.Distance(placedObject.transform.position, placementPosition) < maxPickupDistance)
                 {
-                    Destroy(placedParticle);
-                    placedParticle = null;
-                }
+                    Destroy(placedObject);  // オブジェクトを回収
+                    placedObject = null;  // 置かれているオブジェクトをリセット
+                    Recorder.SetActive(true);  // Recorderを再表示
 
-                isOnSettingPoint = false;  // 設置状態リセット
-            //}
+                    // パーティクルも回収
+                    if (placedParticle != null)
+                    {
+                        Destroy(placedParticle);
+                        placedParticle = null;
+                    }
+
+                    isOnSettingPoint = false;  // 設置状態リセット
+                }
+            }
         }
 
         // 音声が終了した場合、パーティクルを非表示にする

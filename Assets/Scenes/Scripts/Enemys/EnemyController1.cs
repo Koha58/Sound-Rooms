@@ -150,7 +150,7 @@ public class EnemyController1 : MonoBehaviour
 
         if (distanceToPlayer <= chaseRange && distanceToPlayer >= stopChaseRange)
         {
-            if (isFront && PS.onoff == 1)
+            if (isFront && isMovingToSound && PS.onoff == 1)
             {
                 behaviors.GetBehavior(BehaviorType.chase).value = 2;
             }

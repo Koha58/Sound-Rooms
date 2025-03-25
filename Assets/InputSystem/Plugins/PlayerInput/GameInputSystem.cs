@@ -37,6 +37,24 @@ public partial class @GameInputSystem: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
+                    ""name"": ""YButton"",
+                    ""type"": ""Button"",
+                    ""id"": ""139887a5-1c60-495a-b90e-8400c2d7ac2f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""XButton"",
+                    ""type"": ""Button"",
+                    ""id"": ""dc1874c9-714d-490c-88b6-7c5fdb3e36ff"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""RightClick"",
                     ""type"": ""Button"",
                     ""id"": ""a6d6137d-80e8-4a67-8374-97e62d1470cc"",
@@ -248,17 +266,6 @@ public partial class @GameInputSystem: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""aa8a3e47-1b68-44c0-b626-23c9f9d2b720"",
-                    ""path"": ""<Gamepad>/buttonSouth"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""SpaceClick"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""eaac206d-6ab4-4e56-a12b-9c986a9c780c"",
                     ""path"": ""<Gamepad>/leftStick"",
                     ""interactions"": """",
@@ -272,17 +279,6 @@ public partial class @GameInputSystem: IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""9e75cb49-db60-45c3-9bb3-7dc40e45c36f"",
                     ""path"": ""<Keyboard>/e"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""EClick"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""8041dbc9-3bea-44cf-b520-d3cd4011867f"",
-                    ""path"": ""<Gamepad>/buttonEast"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -309,6 +305,28 @@ public partial class @GameInputSystem: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""MenuButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""981da1b5-4515-4005-ae36-7b57e746f6b5"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""XButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""bfcb01c2-4ed2-4a2a-9eb1-170b2a56291b"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""YButton"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -430,6 +448,24 @@ public partial class @GameInputSystem: IInputActionCollection2, IDisposable
                     ""name"": ""AButton"",
                     ""type"": ""Button"",
                     ""id"": ""1368b194-d6b0-430d-82c0-293e39317e9e"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""XButton"",
+                    ""type"": ""Button"",
+                    ""id"": ""cd9a26cb-559e-458b-9232-105015b5c796"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""YButton"",
+                    ""type"": ""Button"",
+                    ""id"": ""133999e4-efbc-4719-b6d4-8706827906fd"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -887,6 +923,28 @@ public partial class @GameInputSystem: IInputActionCollection2, IDisposable
                     ""action"": ""AButton"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d0023942-6c77-404e-ab76-077aeb4bcfc0"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""XButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d5015727-176f-4bbc-a684-6de98ec8f3f0"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""YButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -896,6 +954,8 @@ public partial class @GameInputSystem: IInputActionCollection2, IDisposable
         // Player
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
+        m_Player_YButton = m_Player.FindAction("YButton", throwIfNotFound: true);
+        m_Player_XButton = m_Player.FindAction("XButton", throwIfNotFound: true);
         m_Player_RightClick = m_Player.FindAction("RightClick", throwIfNotFound: true);
         m_Player_ShiftClick = m_Player.FindAction("ShiftClick", throwIfNotFound: true);
         m_Player_SpaceClick = m_Player.FindAction("SpaceClick", throwIfNotFound: true);
@@ -917,6 +977,8 @@ public partial class @GameInputSystem: IInputActionCollection2, IDisposable
         m_UI_MenuButton = m_UI.FindAction("MenuButton", throwIfNotFound: true);
         m_UI_BButton = m_UI.FindAction("BButton", throwIfNotFound: true);
         m_UI_AButton = m_UI.FindAction("AButton", throwIfNotFound: true);
+        m_UI_XButton = m_UI.FindAction("XButton", throwIfNotFound: true);
+        m_UI_YButton = m_UI.FindAction("YButton", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -979,6 +1041,8 @@ public partial class @GameInputSystem: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Player;
     private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
     private readonly InputAction m_Player_Move;
+    private readonly InputAction m_Player_YButton;
+    private readonly InputAction m_Player_XButton;
     private readonly InputAction m_Player_RightClick;
     private readonly InputAction m_Player_ShiftClick;
     private readonly InputAction m_Player_SpaceClick;
@@ -990,6 +1054,8 @@ public partial class @GameInputSystem: IInputActionCollection2, IDisposable
         private @GameInputSystem m_Wrapper;
         public PlayerActions(@GameInputSystem wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_Player_Move;
+        public InputAction @YButton => m_Wrapper.m_Player_YButton;
+        public InputAction @XButton => m_Wrapper.m_Player_XButton;
         public InputAction @RightClick => m_Wrapper.m_Player_RightClick;
         public InputAction @ShiftClick => m_Wrapper.m_Player_ShiftClick;
         public InputAction @SpaceClick => m_Wrapper.m_Player_SpaceClick;
@@ -1008,6 +1074,12 @@ public partial class @GameInputSystem: IInputActionCollection2, IDisposable
             @Move.started += instance.OnMove;
             @Move.performed += instance.OnMove;
             @Move.canceled += instance.OnMove;
+            @YButton.started += instance.OnYButton;
+            @YButton.performed += instance.OnYButton;
+            @YButton.canceled += instance.OnYButton;
+            @XButton.started += instance.OnXButton;
+            @XButton.performed += instance.OnXButton;
+            @XButton.canceled += instance.OnXButton;
             @RightClick.started += instance.OnRightClick;
             @RightClick.performed += instance.OnRightClick;
             @RightClick.canceled += instance.OnRightClick;
@@ -1033,6 +1105,12 @@ public partial class @GameInputSystem: IInputActionCollection2, IDisposable
             @Move.started -= instance.OnMove;
             @Move.performed -= instance.OnMove;
             @Move.canceled -= instance.OnMove;
+            @YButton.started -= instance.OnYButton;
+            @YButton.performed -= instance.OnYButton;
+            @YButton.canceled -= instance.OnYButton;
+            @XButton.started -= instance.OnXButton;
+            @XButton.performed -= instance.OnXButton;
+            @XButton.canceled -= instance.OnXButton;
             @RightClick.started -= instance.OnRightClick;
             @RightClick.performed -= instance.OnRightClick;
             @RightClick.canceled -= instance.OnRightClick;
@@ -1085,6 +1163,8 @@ public partial class @GameInputSystem: IInputActionCollection2, IDisposable
     private readonly InputAction m_UI_MenuButton;
     private readonly InputAction m_UI_BButton;
     private readonly InputAction m_UI_AButton;
+    private readonly InputAction m_UI_XButton;
+    private readonly InputAction m_UI_YButton;
     public struct UIActions
     {
         private @GameInputSystem m_Wrapper;
@@ -1102,6 +1182,8 @@ public partial class @GameInputSystem: IInputActionCollection2, IDisposable
         public InputAction @MenuButton => m_Wrapper.m_UI_MenuButton;
         public InputAction @BButton => m_Wrapper.m_UI_BButton;
         public InputAction @AButton => m_Wrapper.m_UI_AButton;
+        public InputAction @XButton => m_Wrapper.m_UI_XButton;
+        public InputAction @YButton => m_Wrapper.m_UI_YButton;
         public InputActionMap Get() { return m_Wrapper.m_UI; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1150,6 +1232,12 @@ public partial class @GameInputSystem: IInputActionCollection2, IDisposable
             @AButton.started += instance.OnAButton;
             @AButton.performed += instance.OnAButton;
             @AButton.canceled += instance.OnAButton;
+            @XButton.started += instance.OnXButton;
+            @XButton.performed += instance.OnXButton;
+            @XButton.canceled += instance.OnXButton;
+            @YButton.started += instance.OnYButton;
+            @YButton.performed += instance.OnYButton;
+            @YButton.canceled += instance.OnYButton;
         }
 
         private void UnregisterCallbacks(IUIActions instance)
@@ -1193,6 +1281,12 @@ public partial class @GameInputSystem: IInputActionCollection2, IDisposable
             @AButton.started -= instance.OnAButton;
             @AButton.performed -= instance.OnAButton;
             @AButton.canceled -= instance.OnAButton;
+            @XButton.started -= instance.OnXButton;
+            @XButton.performed -= instance.OnXButton;
+            @XButton.canceled -= instance.OnXButton;
+            @YButton.started -= instance.OnYButton;
+            @YButton.performed -= instance.OnYButton;
+            @YButton.canceled -= instance.OnYButton;
         }
 
         public void RemoveCallbacks(IUIActions instance)
@@ -1213,6 +1307,8 @@ public partial class @GameInputSystem: IInputActionCollection2, IDisposable
     public interface IPlayerActions
     {
         void OnMove(InputAction.CallbackContext context);
+        void OnYButton(InputAction.CallbackContext context);
+        void OnXButton(InputAction.CallbackContext context);
         void OnRightClick(InputAction.CallbackContext context);
         void OnShiftClick(InputAction.CallbackContext context);
         void OnSpaceClick(InputAction.CallbackContext context);
@@ -1235,5 +1331,7 @@ public partial class @GameInputSystem: IInputActionCollection2, IDisposable
         void OnMenuButton(InputAction.CallbackContext context);
         void OnBButton(InputAction.CallbackContext context);
         void OnAButton(InputAction.CallbackContext context);
+        void OnXButton(InputAction.CallbackContext context);
+        void OnYButton(InputAction.CallbackContext context);
     }
 }

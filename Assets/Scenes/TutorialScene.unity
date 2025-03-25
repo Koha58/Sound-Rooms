@@ -12581,7 +12581,7 @@ MonoBehaviour:
   moveSpeed: 5
   cameraObject: {fileID: 1899148003}
   cameraRotationSpeed: 100
-  isWalk: 0
+  isWall: 0
 --- !u!114 &1573040184
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14529,7 +14529,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1899698994
 RectTransform:
   m_ObjectHideFlags: 0
@@ -18008,7 +18008,6 @@ MonoBehaviour:
   - {fileID: 1951576067}
   - {fileID: 1118194862}
   detectionRange: 10
-  animator: {fileID: 2120517580817973843}
   audioSourse: {fileID: 2120517580817973838}
   searchClip: {fileID: 8300000, guid: 9f82ad0d3a2cb104e8756814c0348e45, type: 3}
   runClip: {fileID: 8300000, guid: e6525d5f0bebe9949abd25ac340d7f05, type: 3}
@@ -19372,6 +19371,7 @@ PrefabInstance:
     - {fileID: 8851052561518663962, guid: 46909d51fabcb1e499e50df7b0a13ec1, type: 3}
     - {fileID: 3054168247726215386, guid: 46909d51fabcb1e499e50df7b0a13ec1, type: 3}
     - {fileID: 8345537409221738037, guid: 46909d51fabcb1e499e50df7b0a13ec1, type: 3}
+    - {fileID: 5352309774110021976, guid: 46909d51fabcb1e499e50df7b0a13ec1, type: 3}
     m_RemovedGameObjects:
     - {fileID: 7314201665835718268, guid: 46909d51fabcb1e499e50df7b0a13ec1, type: 3}
     - {fileID: 6562518041278379172, guid: 46909d51fabcb1e499e50df7b0a13ec1, type: 3}
@@ -19401,7 +19401,7 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 1389421769132500699, guid: 46909d51fabcb1e499e50df7b0a13ec1,
         type: 3}
-      insertIndex: 5
+      insertIndex: 4
       addedObject: {fileID: 1573040177}
     - targetCorrespondingSourceObject: {fileID: 1389421769132500699, guid: 46909d51fabcb1e499e50df7b0a13ec1,
         type: 3}
