@@ -4778,10 +4778,10 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1653341028}
         m_TargetAssemblyTypeName: AudioSetting, Assembly-CSharp
         m_MethodName: SetMouse
-        m_Mode: 0
+        m_Mode: 4
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -9110,10 +9110,10 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1653341028}
         m_TargetAssemblyTypeName: AudioSetting, Assembly-CSharp
         m_MethodName: SetMic
-        m_Mode: 0
+        m_Mode: 4
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -11368,7 +11368,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &808008811
 RectTransform:
   m_ObjectHideFlags: 0
@@ -13026,7 +13026,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &925047391
 RectTransform:
   m_ObjectHideFlags: 0
@@ -13101,7 +13101,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &925947961
 RectTransform:
   m_ObjectHideFlags: 0
@@ -15492,16 +15492,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25290fcd04d128947b271a76d09755b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterID: 2
-  player: {fileID: 135133355}
-  PatrolPoints:
-  - {fileID: 578225526}
-  - {fileID: 1613709628}
-  detectionRange: 10
-  audioSourse: {fileID: 1090088576}
-  searchClip: {fileID: 8300000, guid: 9f82ad0d3a2cb104e8756814c0348e45, type: 3}
-  runClip: {fileID: 8300000, guid: e6525d5f0bebe9949abd25ac340d7f05, type: 3}
-  walkClip: {fileID: 8300000, guid: 11892326d64bf2543b641e9fb724effd, type: 3}
 --- !u!82 &1090088576
 AudioSource:
   m_ObjectHideFlags: 0
@@ -23105,16 +23095,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25290fcd04d128947b271a76d09755b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterID: 3
-  player: {fileID: 135133355}
-  PatrolPoints:
-  - {fileID: 315993192}
-  - {fileID: 1539384590}
-  detectionRange: 10
-  audioSourse: {fileID: 1301852723}
-  searchClip: {fileID: 8300000, guid: 9f82ad0d3a2cb104e8756814c0348e45, type: 3}
-  runClip: {fileID: 8300000, guid: e6525d5f0bebe9949abd25ac340d7f05, type: 3}
-  walkClip: {fileID: 8300000, guid: 11892326d64bf2543b641e9fb724effd, type: 3}
 --- !u!82 &1301852723
 AudioSource:
   m_ObjectHideFlags: 0
@@ -27079,10 +27059,10 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1653341028}
         m_TargetAssemblyTypeName: AudioSetting, Assembly-CSharp
         m_MethodName: SetBGM
-        m_Mode: 0
+        m_Mode: 4
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -27561,41 +27541,6 @@ MonoBehaviour:
   player: {fileID: 135133355}
   maxPickupDistance: 1
   isOnSettingPoint: 0
---- !u!114 &1573040168
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1573040124}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2064b11a8c374024b85398de71900ecc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1573040175
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1573040124}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1de1b83c6ad193f45a2e79ec1b488789, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  LifeCount: 0
-  Life1: {fileID: 209140903}
-  Life2: {fileID: 1028723411}
-  Life3: {fileID: 989451388}
-  Life4: {fileID: 841212502}
-  Life5: {fileID: 283389552}
-  LostLife1: {fileID: 1608191630}
-  LostLife2: {fileID: 944116380}
-  LostLife3: {fileID: 1266496257}
-  LostLife4: {fileID: 514472782}
-  LostLife5: {fileID: 1790032251}
 --- !u!114 &1573040176
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27625,6 +27570,43 @@ MonoBehaviour:
   cameraObject: {fileID: 1899148003}
   cameraRotationSpeed: 100
   isWall: 0
+--- !u!114 &1573040178
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1573040124}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f6b6d53d497d34409a5f90c6bc7546b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clearSceneName: Stage1ClearScene
+--- !u!114 &1573040179
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1573040124}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d37e1995f58ee14d9d10d1f88ac4518, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LifeCount: 0
+  Life1: {fileID: 209140903}
+  Life2: {fileID: 1028723411}
+  Life3: {fileID: 989451388}
+  Life4: {fileID: 841212502}
+  Life5: {fileID: 283389552}
+  LostLife1: {fileID: 1608191630}
+  LostLife2: {fileID: 944116380}
+  LostLife3: {fileID: 1266496257}
+  LostLife4: {fileID: 514472782}
+  LostLife5: {fileID: 1790032251}
+  damageSound: {fileID: 8300000, guid: 0ea06c292310bc340a9b59990d48b196, type: 3}
 --- !u!1 &1573608976
 GameObject:
   m_ObjectHideFlags: 0
@@ -28499,7 +28481,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1620932570
 RectTransform:
   m_ObjectHideFlags: 0
@@ -31196,10 +31178,10 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1653341028}
         m_TargetAssemblyTypeName: AudioSetting, Assembly-CSharp
         m_MethodName: SetSE
-        m_Mode: 0
+        m_Mode: 4
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -37572,16 +37554,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25290fcd04d128947b271a76d09755b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterID: 1
-  player: {fileID: 135133355}
-  PatrolPoints:
-  - {fileID: 1573608977}
-  - {fileID: 1884075388}
-  detectionRange: 10
-  audioSourse: {fileID: 2120517580817973838}
-  searchClip: {fileID: 8300000, guid: 9f82ad0d3a2cb104e8756814c0348e45, type: 3}
-  runClip: {fileID: 8300000, guid: e6525d5f0bebe9949abd25ac340d7f05, type: 3}
-  walkClip: {fileID: 8300000, guid: 11892326d64bf2543b641e9fb724effd, type: 3}
 --- !u!82 &2120517580817973838
 AudioSource:
   m_ObjectHideFlags: 0
@@ -38596,6 +38568,17 @@ PrefabInstance:
       propertyPath: m_IsTrigger
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4378290757662917892, guid: 46909d51fabcb1e499e50df7b0a13ec1,
+        type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 0ea06c292310bc340a9b59990d48b196, type: 3}
+    - target: {fileID: 4378290757662917892, guid: 46909d51fabcb1e499e50df7b0a13ec1,
+        type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: -3577120203181901737, guid: bf5be84fde00e394d82d970ecd5a5aa2,
+        type: 2}
     - target: {fileID: 5181087234468648248, guid: 46909d51fabcb1e499e50df7b0a13ec1,
         type: 3}
       propertyPath: field of view
@@ -38847,12 +38830,11 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents:
-    - {fileID: 1268248220558393076, guid: 46909d51fabcb1e499e50df7b0a13ec1, type: 3}
+    - {fileID: 0}
     - {fileID: 6447319461231784795, guid: 46909d51fabcb1e499e50df7b0a13ec1, type: 3}
-    - {fileID: 4378290757662917892, guid: 46909d51fabcb1e499e50df7b0a13ec1, type: 3}
     - {fileID: 3628175647393335228, guid: 46909d51fabcb1e499e50df7b0a13ec1, type: 3}
     - {fileID: 8345537409221738037, guid: 46909d51fabcb1e499e50df7b0a13ec1, type: 3}
-    - {fileID: 5352309774110021976, guid: 46909d51fabcb1e499e50df7b0a13ec1, type: 3}
+    - {fileID: 0}
     m_RemovedGameObjects:
     - {fileID: 7314201665835718268, guid: 46909d51fabcb1e499e50df7b0a13ec1, type: 3}
     - {fileID: 6562518041278379172, guid: 46909d51fabcb1e499e50df7b0a13ec1, type: 3}
@@ -38896,15 +38878,15 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1389421769132500699, guid: 46909d51fabcb1e499e50df7b0a13ec1,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1573040168}
-    - targetCorrespondingSourceObject: {fileID: 1389421769132500699, guid: 46909d51fabcb1e499e50df7b0a13ec1,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1573040175}
-    - targetCorrespondingSourceObject: {fileID: 1389421769132500699, guid: 46909d51fabcb1e499e50df7b0a13ec1,
-        type: 3}
-      insertIndex: -1
       addedObject: {fileID: 1573040176}
+    - targetCorrespondingSourceObject: {fileID: 1389421769132500699, guid: 46909d51fabcb1e499e50df7b0a13ec1,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1573040179}
+    - targetCorrespondingSourceObject: {fileID: 1389421769132500699, guid: 46909d51fabcb1e499e50df7b0a13ec1,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1573040178}
     - targetCorrespondingSourceObject: {fileID: 1682293848527618018, guid: 46909d51fabcb1e499e50df7b0a13ec1,
         type: 3}
       insertIndex: -1
