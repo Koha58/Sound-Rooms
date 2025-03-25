@@ -122,8 +122,8 @@ public class TutorialMessageControll : MonoBehaviour
         // 2番目のメッセージ（インデックス 1）の場合
         else if (MessageIndex == SECOND_MESSAGE_INDEX)
         {
-            // "EnemyAttackArea" を探して、その状態に基づいてメッセージを切り替え
-            GameObject impactObjectsArea = GameObject.Find("EnemyAttackArea"); // "EnemyAttackArea" オブジェクトを探す
+            // "ImpactOnObjectsArea" を探して、その状態に基づいてメッセージを切り替え
+            GameObject impactObjectsArea = GameObject.Find("ImpactOnObjectsArea"); // "EnemyAttackArea" オブジェクトを探す
             ImpactOnObjects impactObjects = impactObjectsArea.GetComponent<ImpactOnObjects>(); // ImpactOnObjects スクリプトを取得
             if (impactObjects.count == 1) // impactObjects のカウントが 1 の場合
             {
@@ -147,8 +147,8 @@ public class TutorialMessageControll : MonoBehaviour
     void ControllerCheck()
     {
 
-        // "EnemyAttackArea" を探して、その状態に基づいてメッセージを切り替え
-        GameObject impactObjectsArea = GameObject.Find("EnemyAttackArea"); // "EnemyAttackArea" オブジェクトを探す
+        // "ImpactOnObjectsArea" を探して、その状態に基づいてメッセージを切り替え
+        GameObject impactObjectsArea = GameObject.Find("ImpactOnObjectsArea"); // "EnemyAttackArea" オブジェクトを探す
         ImpactOnObjects impactObjects = impactObjectsArea.GetComponent<ImpactOnObjects>(); // ImpactOnObjects スクリプトを取得
 
         if (isControllerInput) // コントローラーが使用されている場合
@@ -181,8 +181,8 @@ public class TutorialMessageControll : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        // "EnemyAttackArea" を探して、その状態に基づいてメッセージを切り替え
-        GameObject impactObjectsArea = GameObject.Find("EnemyAttackArea"); // "EnemyAttackArea" オブジェクトを探す
+        // "ImpactOnObjectsArea" を探して、その状態に基づいてメッセージを切り替え
+        GameObject impactObjectsArea = GameObject.Find("ImpactOnObjectsArea"); // "EnemyAttackArea" オブジェクトを探す
         ImpactOnObjects impactObjects = impactObjectsArea.GetComponent<ImpactOnObjects>(); // ImpactOnObjects スクリプトを取得
 
         Debug.Log("Colliding with: " + other.gameObject.name); // 接触しているオブジェクトの名前をログ出力
@@ -197,7 +197,7 @@ public class TutorialMessageControll : MonoBehaviour
 
                 if (isControllerInput) // コントローラーが使用されている場合
                 {
-                    UIDeviceCheck[DEVICE_MESSAGE_1_INDEX] = ControllerMove[DEVICE_MESSAGE_1_INDEX]; // コントローラーの1番目のメッセージを表示
+                    UIDeviceCheck[DEVICE_MESSAGE_1_INDEX] = ControllerMove[DEVICE_MESSAGE_0_INDEX]; // コントローラーの1番目のメッセージを表示
                 }
                 else
                 {
@@ -238,8 +238,8 @@ public class TutorialMessageControll : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        // "EnemyAttackArea" を探して、その状態に基づいてメッセージを切り替え
-        GameObject impactObjectsArea = GameObject.Find("EnemyAttackArea"); // "EnemyAttackArea" オブジェクトを探す
+        // "ImpactOnObjectsArea" を探して、その状態に基づいてメッセージを切り替え
+        GameObject impactObjectsArea = GameObject.Find("ImpactOnObjectsArea"); // "EnemyAttackArea" オブジェクトを探す
         ImpactOnObjects impactObjects = impactObjectsArea.GetComponent<ImpactOnObjects>(); // ImpactOnObjects スクリプトを取得
 
         Debug.Log("Colliding with: " + other.gameObject.name); // 接触しているオブジェクトの名前をログ出力

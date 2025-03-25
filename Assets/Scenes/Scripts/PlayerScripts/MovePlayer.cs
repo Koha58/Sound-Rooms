@@ -62,7 +62,6 @@ public class MovePlayer : MonoBehaviour
                 moveSpeed =7.0f;
             }
             else moveSpeed = 2.0f;
-            else moveSpeed = 2.0f;
             animator.SetBool("Walking", false);
             animator.SetBool("Running", true);
             animator.SetBool("Squatting", false);
