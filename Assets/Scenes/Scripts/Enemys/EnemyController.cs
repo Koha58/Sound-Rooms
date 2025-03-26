@@ -10,11 +10,6 @@ public class EnemyController : MonoBehaviour
 
     NavMeshAgent navMeshAgent;      //ナヴィメッシュを取得
 
-    public PatrolPointManager patrolPointManager;  // PatrolPointManagerの参照
-
-    //アニメーション
-    //[SerializeField] Animator animator;　//アニメーター取得
-
     //サウンド
     [SerializeField] AudioSource audioSourse; //オーディオソース取得
     [SerializeField] AudioClip searchClip;    //探す音
@@ -119,8 +114,6 @@ public class EnemyController : MonoBehaviour
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
         audioSourse = GetComponent<AudioSource>();
-
-        ChangeState(enemyState.patrol);
     }
 
     private void Update()
@@ -172,19 +165,6 @@ public class EnemyController : MonoBehaviour
                     stateEnter = false;
                     behaviors.GetBehavior(BehaviorType.patrol).value = 0;
                     Debug.Log("巡回中");
-
-
-                    // キャラクターIDに基づいて次の巡回ポイントを取得
-                    Transform nextPatrolPoint = patrolPointManager.GetNextPatrolPoint(characterID);
-                    if (nextPatrolPoint != null)
-                    {
-                        navMeshAgent.SetDestination(nextPatrolPoint.position);  // 次の巡回先に向けて移動
-                    }
-                    else
-                    {
-                        Debug.LogError("巡回ポイントが見つかりません");
-                    }
-
                 }
 
                 behaviors.SortDesire();
