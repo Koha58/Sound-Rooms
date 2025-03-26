@@ -4,6 +4,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using static InputDeviceManager;
 
 /// <summary>
 /// StartSceneのボタン管理クラス
@@ -27,6 +28,9 @@ public class StartManager : MonoBehaviour
 
     // Selectボタンが押されたときの音を再生するAudioSource
     [SerializeField] AudioSource SelectSound;  // AudioSourceをSerializeFieldとしてインスペクターから設定
+
+    // 入力デバイスの種類を判定するフラグ
+    bool deviceCheck;
 
     // Start is called before the first frame update
     void Start()
@@ -55,7 +59,20 @@ public class StartManager : MonoBehaviour
 
     void Update()
     {
-        GamePadUIController();
+        // 入力デバイスの種類を確認し、フラグを設定
+        if (InputDeviceManager.Instance.CurrentDeviceType == InputDeviceType.Xbox)
+        {
+            deviceCheck = true; // コントローラーが使用されている
+        }
+        else if (InputDeviceManager.Instance.CurrentDeviceType == InputDeviceType.Keyboard)
+        {
+            deviceCheck = false; // キーボードが使用されている
+        }
+
+        if (deviceCheck)
+        {
+            GamePadUIController();
+        }
     }
 
     // Selectボタンが選択されたときにシーン遷移
@@ -80,12 +97,15 @@ public class StartManager : MonoBehaviour
     // Selectボタンにカーソルが入ったときの処理
     public void EnterSelectButton()
     {
-        // Selectボタンの色を黒に変更
-        SelectButtonImage.color = new Color32(0, 0, 0, 255);
-
         // Selectボタンを少し左に移動
         SelectButton.GetComponent<RectTransform>().localPosition = originalSelectButtonPosition + new Vector3(-20f, 0f, 0f);
         BackDesktopButton.GetComponent<RectTransform>().localPosition = originalBackDesktopButtonPosition; // BackDesktopButtonは移動しない
+
+        // Selectボタンの色を黒に変更
+        SelectButtonImage.color = new Color32(0, 0, 0, 255);
+
+        // selectedGameObjectがnullの場合、settingButtonにフォーカスを当てる
+        EventSystem.current.SetSelectedGameObject(null);
     }
 
     // Selectボタンからカーソルが出たときの処理
@@ -101,12 +121,15 @@ public class StartManager : MonoBehaviour
     // BackDesktopボタンにカーソルが入ったときの処理
     public void EnterBackDesktopButton()
     {
+        // BackDesktopボタンを少し左に移動
+        SelectButton.GetComponent<RectTransform>().localPosition = originalSelectButtonPosition; // SelectButtonは移動しない
+        BackDesktopButton.GetComponent<RectTransform>().localPosition = originalBackDesktopButtonPosition + new Vector3(-20f, 0f, 0f);
+
         // BackDesktopボタンの色を黒に変更
         BackDesktopButtonImage.color = new Color32(0, 0, 0, 255);
 
-        // BackDesktopボタンを少し左に移動
-        BackDesktopButton.GetComponent<RectTransform>().localPosition = originalBackDesktopButtonPosition + new Vector3(-20f, 0f, 0f);
-        SelectButton.GetComponent<RectTransform>().localPosition = originalSelectButtonPosition; // SelectButtonは移動しない
+        // selectedGameObjectがnullの場合、settingButtonにフォーカスを当てる
+        EventSystem.current.SetSelectedGameObject(null);
     }
 
     // BackDesktopボタンからカーソルが出たときの処理
