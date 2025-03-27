@@ -2008,6 +2008,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf80e1f8976743d429ac589ae17dd02a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  patrolPointManager: {fileID: 1345054516}
+  enemy1PatrolPoints:
+  - {fileID: 1573608977}
+  - {fileID: 1951576067}
+  - {fileID: 1118194862}
+  enemy2PatrolPoints: []
+  enemy3PatrolPoints: []
 --- !u!4 &358562168
 Transform:
   m_ObjectHideFlags: 0
@@ -11673,15 +11680,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1345054514}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 691c61fc32fa0c64e98eb9c41dfcc2e2, type: 3}
+  m_Script: {fileID: 11500000, guid: 7d8dd4c381d16b148ad6e901710ec12d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemy1RoutePoint:
-  - {fileID: 1573608977}
-  - {fileID: 1951576067}
-  - {fileID: 1118194862}
-  enemy2Route2Point: []
-  enemy3Route3Point: []
 --- !u!1 &1372582033
 GameObject:
   m_ObjectHideFlags: 0
@@ -17651,9 +17652,9 @@ GameObject:
   - component: {fileID: 2120517580817973842}
   - component: {fileID: 2120517580817973839}
   - component: {fileID: 2120517580817973838}
-  - component: {fileID: 2120517580817973837}
   - component: {fileID: 2120517580817973844}
   - component: {fileID: 2120517580817973845}
+  - component: {fileID: 2120517580817973846}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -18118,26 +18119,6 @@ Transform:
   - {fileID: 2536099699962851229}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2120517580817973837
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1596041379267483894}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 25290fcd04d128947b271a76d09755b5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  characterID: 0
-  player: {fileID: 0}
-  PatrolPoints: []
-  detectionRange: 10
-  audioSourse: {fileID: 0}
-  searchClip: {fileID: 0}
-  runClip: {fileID: 0}
-  walkClip: {fileID: 0}
 --- !u!82 &2120517580817973838
 AudioSource:
   m_ObjectHideFlags: 0
@@ -18147,7 +18128,8 @@ AudioSource:
   m_GameObject: {fileID: 1596041379267483894}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: bf5be84fde00e394d82d970ecd5a5aa2,
+    type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
@@ -18350,6 +18332,27 @@ CapsuleCollider:
   m_Height: 1.25318
   m_Direction: 1
   m_Center: {x: 0, y: 0.64781165, z: 0}
+--- !u!114 &2120517580817973846
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1596041379267483894}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 419182a193ffdf84fae99f198041e4d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterID: 1
+  player: {fileID: 135133355}
+  detectionRange: 10
+  soundPosition: {x: 0, y: 0, z: 0}
+  animator: {fileID: 2120517580817973843}
+  audioSourse: {fileID: 2120517580817973838}
+  searchClip: {fileID: 8300000, guid: 9f82ad0d3a2cb104e8756814c0348e45, type: 3}
+  runClip: {fileID: 8300000, guid: e6525d5f0bebe9949abd25ac340d7f05, type: 3}
+  walkClip: {fileID: 8300000, guid: 11892326d64bf2543b641e9fb724effd, type: 3}
 --- !u!4 &2123887306856772363
 Transform:
   m_ObjectHideFlags: 0

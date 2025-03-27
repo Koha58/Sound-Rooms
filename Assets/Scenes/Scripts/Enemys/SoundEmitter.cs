@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SoundEmitter : MonoBehaviour
 {
-    public float soundRange =10f; // ‰¹‚ª“Í‚­”ÍˆÍ
+    public float soundRange =5f; // ‰¹‚ª“Í‚­”ÍˆÍ
     void Start()
     {
 
@@ -14,21 +14,19 @@ public class SoundEmitter : MonoBehaviour
     {
 
         EmitSound();
-
     }
 
     public void EmitSound()
     {
-
         // ”ÍˆÍ“à‚Ì“G‚ğŒŸo‚µ‚Ä’Ê’m
-        Collider[] hitColliders = Physics.OverlapSphere(transform.position, soundRange);
+        Collider[] hitColliders = Physics.OverlapSphere(this.transform.position, soundRange);
         foreach (Collider collider in hitColliders)
         {
-            EnemyController1 enemy = collider.GetComponent<EnemyController1>();
+            EnemyController enemy = collider.GetComponent<EnemyController>();
 
             if (enemy != null)
             {
-                enemy.OnSoundHeard(transform.position);
+                enemy.OnSoundHeard(this.transform.position);
             }
         }
     }
@@ -37,7 +35,7 @@ public class SoundEmitter : MonoBehaviour
     {
         // ‰¹‚Ì”ÍˆÍ‚ğ‰Â‹‰»
         Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, soundRange);
+        Gizmos.DrawWireSphere(this.transform.position, soundRange);
     }
 
 }

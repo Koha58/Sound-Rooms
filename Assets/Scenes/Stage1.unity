@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 0.524
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.09446845, g: 0.118273765, b: 0.16082697, a: 0.524}
+  m_IndirectSpecularColor: {r: 0.0944687, g: 0.1182742, b: 0.16082758, a: 0.524}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -5223,6 +5223,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf80e1f8976743d429ac589ae17dd02a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  patrolPointManager: {fileID: 1345054516}
+  enemy1PatrolPoints:
+  - {fileID: 1573608977}
+  - {fileID: 1884075388}
+  enemy2PatrolPoints:
+  - {fileID: 578225526}
+  - {fileID: 1613709628}
+  enemy3PatrolPoints:
+  - {fileID: 315993192}
+  - {fileID: 1539384590}
 --- !u!4 &358562168
 Transform:
   m_ObjectHideFlags: 0
@@ -15587,7 +15597,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 2.5
+  m_Speed: 1
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -15722,8 +15732,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 419182a193ffdf84fae99f198041e4d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterID: 0
+  characterID: 2
   player: {fileID: 135133355}
+  detectionRange: 10
+  soundPosition: {x: 0, y: 0, z: 0}
+  animator: {fileID: 1090088581}
   audioSourse: {fileID: 1090088576}
   searchClip: {fileID: 8300000, guid: 9f82ad0d3a2cb104e8756814c0348e45, type: 3}
   runClip: {fileID: 8300000, guid: e6525d5f0bebe9949abd25ac340d7f05, type: 3}
@@ -23083,7 +23096,6 @@ GameObject:
   - component: {fileID: 1301852731}
   - component: {fileID: 1301852730}
   - component: {fileID: 1301852732}
-  - component: {fileID: 1301852733}
   m_Layer: 0
   m_Name: Enemy (2)
   m_TagString: Enemy
@@ -23198,7 +23210,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 2.5
+  m_Speed: 1
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -23333,24 +23345,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 419182a193ffdf84fae99f198041e4d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterID: 0
+  characterID: 3
   player: {fileID: 135133355}
-  audioSourse: {fileID: 1301852723}
-  searchClip: {fileID: 8300000, guid: 9f82ad0d3a2cb104e8756814c0348e45, type: 3}
-  runClip: {fileID: 8300000, guid: e6525d5f0bebe9949abd25ac340d7f05, type: 3}
-  walkClip: {fileID: 8300000, guid: 11892326d64bf2543b641e9fb724effd, type: 3}
---- !u!114 &1301852733
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1301852721}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ff4786d5988c852478c889415ebebb86, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  detectionRange: 10
+  soundPosition: {x: 0, y: 0, z: 0}
   animator: {fileID: 1301852728}
   audioSourse: {fileID: 1301852723}
   searchClip: {fileID: 8300000, guid: 9f82ad0d3a2cb104e8756814c0348e45, type: 3}
@@ -24117,10 +24115,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d8dd4c381d16b148ad6e901710ec12d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  patrolPoints:
-  - {fileID: 1573608977}
-  - {fileID: 1884075388}
-  - {fileID: 578225526}
 --- !u!1 &1348675549
 GameObject:
   m_ObjectHideFlags: 0
@@ -37706,7 +37700,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 2.5
+  m_Speed: 1
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -37824,8 +37818,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 419182a193ffdf84fae99f198041e4d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterID: 0
+  characterID: 1
   player: {fileID: 135133355}
+  detectionRange: 10
+  soundPosition: {x: 0, y: 0, z: 0}
+  animator: {fileID: 2120517580817973843}
   audioSourse: {fileID: 2120517580817973838}
   searchClip: {fileID: 8300000, guid: 9f82ad0d3a2cb104e8756814c0348e45, type: 3}
   runClip: {fileID: 8300000, guid: e6525d5f0bebe9949abd25ac340d7f05, type: 3}

@@ -135,7 +135,6 @@ public class EnemyController1 : MonoBehaviour
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
         audioSourse = GetComponent<AudioSource>();
-        route = GameManager.instance.GetRoute(characterID);
     }
 
     private void Update()
@@ -162,7 +161,7 @@ public class EnemyController1 : MonoBehaviour
             navMeshAgent.SetDestination(soundPosition);
 
             // 目的地に近づいたら停止
-            if (Vector3.Distance(transform.position, soundPosition) < 1f)
+            if (Vector3.Distance(transform.position, soundPosition) < 0.01f)
             {
                 isMovingToSound = false;
             }
@@ -224,9 +223,7 @@ public class EnemyController1 : MonoBehaviour
                 if (navMeshAgent.remainingDistance <= 0.1f && !navMeshAgent.pathPending)
                 {
                     pointCount += 1;
-                    if (pointCount > 2) { pointCount = 0; }
-                    // 巡回ポイントのインデックスを次に進める（配列長を考慮してループ）
-                    pointCount = (pointCount + 1) % PatrolPoints.Length;
+
 
                     ChangeState(enemyState.search);
                 }
@@ -405,13 +402,13 @@ public class EnemyController1 : MonoBehaviour
         navMeshAgent.SetDestination(player.transform.position);
     }
 
-    public void OnSoundHeard(Vector3 position)
-    {
-        // 範囲内の場合のみ音に反応
-        if (Vector3.Distance(transform.position, position) <= detectionRange)
-        {
-            soundPosition = position;
-            isMovingToSound = true;
-        }
-    }
+    //public void OnSoundHeard(Vector3 position)
+    //{
+    //    // 範囲内の場合のみ音に反応
+    //    if (Vector3.Distance(transform.position, position) <= detectionRange)
+    //    {
+    //        soundPosition = position;
+    //        isMovingToSound = true;
+    //    }
+    //}
 }

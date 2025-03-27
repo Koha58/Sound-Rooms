@@ -5,45 +5,40 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-     public static GameManager instance { get; private set; }
+    public PatrolPointManager patrolPointManager;
+    public Transform[] enemy1PatrolPoints;  // 敵1用の巡回ポイント
+    public Transform[] enemy2PatrolPoints;  // 敵2用の巡回ポイント
+    public Transform[] enemy3PatrolPoints;  // 敵3用の巡回ポイント
+    public Transform[] enemy4PatrolPoints;  // 敵4用の巡回ポイント
+    public Transform[] enemy5PatrolPoints;  // 敵5用の巡回ポイント
+    public Transform[] enemy6PatrolPoints;  // 敵6用の巡回ポイント
+    public Transform[] enemy7PatrolPoints;  // 敵7用の巡回ポイント
+    public Transform[] enemy8PatrolPoints;  // 敵8用の巡回ポイント
 
-    private Dictionary<int, List<Transform>> routes = new Dictionary<int, List<Transform>>();
-
-    private void Awake()
+    private void Start()
     {
-        if (instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(this);
-        }
-    }
+        // 敵1の巡回ポイントを追加
+        patrolPointManager.AddPatrolPoints(1, new List<Transform>(enemy1PatrolPoints));
 
-    // ルートを登録
-    public void RegisterRoute(int characterID, List<Transform> route)
-    {
-        if (!routes.ContainsKey(characterID))
-        {
-            routes.Add(characterID, route);
-            Debug.Log($"Route registered for Character {characterID}.");
-        }
-        else
-        {
-            Debug.LogWarning($"Character {characterID} already has a registered route.");
-        }
-    }
+        // 敵2の巡回ポイントを追加
+        patrolPointManager.AddPatrolPoints(2, new List<Transform>(enemy2PatrolPoints));
 
-    // ルートを取得
-    public List<Transform> GetRoute(int characterID)
-    {
-        if (routes.TryGetValue(characterID, out List<Transform> route))
-        {
-            return route;
-        }
-        Debug.LogWarning($"No route found for Character {characterID}.");
-        return null;
+        // 敵3の巡回ポイントを追加
+        patrolPointManager.AddPatrolPoints(3, new List<Transform>(enemy3PatrolPoints));
+
+        // 敵4の巡回ポイントを追加
+        patrolPointManager.AddPatrolPoints(4, new List<Transform>(enemy4PatrolPoints));
+
+        // 敵5の巡回ポイントを追加
+        patrolPointManager.AddPatrolPoints(5, new List<Transform>(enemy5PatrolPoints));
+
+        // 敵6の巡回ポイントを追加
+        patrolPointManager.AddPatrolPoints(6, new List<Transform>(enemy6PatrolPoints));
+
+        // 敵7の巡回ポイントを追加
+        patrolPointManager.AddPatrolPoints(7, new List<Transform>(enemy7PatrolPoints));
+
+        // 敵8の巡回ポイントを追加
+        patrolPointManager.AddPatrolPoints(8, new List<Transform>(enemy8PatrolPoints));
     }
 }

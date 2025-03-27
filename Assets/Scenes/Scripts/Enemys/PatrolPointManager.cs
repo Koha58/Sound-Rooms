@@ -4,26 +4,25 @@ using UnityEngine;
 
 public class PatrolPointManager : MonoBehaviour
 {
-    public Transform[] patrolPoints;  // 巡回ポイントの配列
+    // 各敵の巡回ポイントを管理するディクショナリ
+    private Dictionary<int, List<Transform>> patrolPoints = new Dictionary<int, List<Transform>>();
 
-    // 現在の巡回ポイントインデックス
-    private int currentPatrolIndex = 0;
-
-    // キャラクターIDに基づいて巡回ポイントを取得
-    public Transform GetNextPatrolPoint(int characterID)
+    // 巡回ポイントを追加する関数
+    public void AddPatrolPoints(int enemyID, List<Transform> points)
     {
-        if (patrolPoints.Length == 0)
+        if (!patrolPoints.ContainsKey(enemyID))
         {
-            return null;
+            patrolPoints.Add(enemyID, points);
         }
+    }
 
-        // キャラクターIDを無視して、単純に次の巡回ポイントを取得
-        // この方法では、すべてのキャラクターが同じ順番で巡回するようになります
-        Transform nextPatrolPoint = patrolPoints[currentPatrolIndex];
-
-        // 次の巡回ポイントに移動するため、インデックスを更新
-        currentPatrolIndex = (currentPatrolIndex + 1) % patrolPoints.Length;
-
-        return nextPatrolPoint;
+    // 指定したIDの巡回ポイントを取得する関数
+    public List<Transform> GetPatrolPoints(int enemyID)
+    {
+        if (patrolPoints.ContainsKey(enemyID))
+        {
+            return patrolPoints[enemyID];
+        }
+        return null;
     }
 }
