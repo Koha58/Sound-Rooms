@@ -21,6 +21,9 @@ public class MovePlayer : MonoBehaviour
     public float wallCheckDistance = 1.0f; // 壁とのチェック距離
     public LayerMask wallLayerMask; // 壁のレイヤーマスク
 
+    public float ObjectCheckDistance = 1.0f; // 壁とのチェック距離
+    public LayerMask ObjectLayerMask; // 壁のレイヤーマスク
+
     public bool isWall;
 
     private void Awake()
@@ -110,7 +113,7 @@ public class MovePlayer : MonoBehaviour
         Vector3 moveDirection = (cameraRight * moveInput.x + cameraForward * moveInput.y).normalized;
 
         // 壁との衝突をチェック
-        if (!IsWallInFront(moveDirection))
+        if (!IsWallInFront(moveDirection)&&!IsObjectInFront(moveDirection))
         {
             rb.MovePosition(transform.position + moveDirection * moveSpeed * Time.deltaTime);
         }
@@ -143,19 +146,14 @@ public class MovePlayer : MonoBehaviour
          return false; // 壁がない
     }
 
-    private void OnTriggerEnter(Collider other)
+    // 壁が前方にあるかをチェックする
+    private bool IsObjectInFront(Vector3 moveDirection)
     {
-        if (other.gameObject.tag == "Wall" || other.gameObject.tag == "Object")
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, moveDirection, out hit, ObjectCheckDistance, ObjectLayerMask))
         {
-            isWall = true;
+            return true; // 壁が前方にある
         }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.tag == "Wall" || other.gameObject.tag == "Object")
-        {
-            isWall = false;
-        }
+        return false; // 壁がない
     }
 }   

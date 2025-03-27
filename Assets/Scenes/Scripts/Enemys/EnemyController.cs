@@ -161,13 +161,8 @@ public class EnemyController : MonoBehaviour
             {
                 behaviors.GetBehavior(BehaviorType.chase).value = 2;
             }
-            else if(isFront && !isMovingToSound)
-            {
-                isPatrolling = false;
-                behaviors.GetBehavior(BehaviorType.search).value = 2;
-            }
         }
-        else if (distanceToPlayer >= chaseRange && !isMovingToSound)
+        else if (distanceToPlayer >= chaseRange)
         {
             behaviors.GetBehavior(BehaviorType.patrol).value = 2;
             isPatrolling =true;
@@ -340,6 +335,8 @@ public class EnemyController : MonoBehaviour
                 {
                     stateEnter = false;
                     behaviors.GetBehavior(BehaviorType.chase).value = 0;
+                    PS.onoff = 1;
+                    PS.Visualization = true;
                     Debug.Log("’Ç‚¢‚©‚¯‚¢‚é‚æ");
                 }
 
@@ -349,12 +346,10 @@ public class EnemyController : MonoBehaviour
                 animator.SetBool("Run", true);
                 animator.SetBool("Idle", false);
 
+                transform.LookAt(player.transform);
+
                 navMeshAgent.SetDestination(player.transform.position);
-
                 navMeshAgent.speed = 3.5f;
-
-                PS.Visualization = true;
-                PS.onoff = 1;
 
                 behaviors.SortDesire();
 
