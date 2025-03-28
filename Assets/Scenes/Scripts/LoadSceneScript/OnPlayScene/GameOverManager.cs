@@ -85,6 +85,12 @@ public class GameOverManager : MonoBehaviour
     // プレイヤーが衝突したときに呼ばれる
     private void OnTriggerEnter(Collider other)
     {
+        // プレイヤーの位置から1メートル以内かどうかチェック
+        if (Vector3.Distance(other.transform.position, this.transform.position) > 1f)
+        {
+            return; // 1メートル以上離れている場合、何もしない
+        }
+
         PlayerSeen PS;
         GameObject gobj = GameObject.Find("Player");  // プレイヤーオブジェクトを探す
         PS = gobj.GetComponent<PlayerSeen>();  // PlayerSeenスクリプトを取得

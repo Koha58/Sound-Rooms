@@ -173,19 +173,25 @@ public class EnemyController : MonoBehaviour
 
         distanceToPlayer = Vector3.Distance(player.position, transform.position); // プレイヤーとの距離を計算
 
-        if (distanceToPlayer <= chaseRange)
+        if (isFront && !isMovingToSound && PS.onoff == 1)
         {
-            if (isFront && !isMovingToSound && PS.onoff == 1)
+            if (distanceToPlayer <= chaseRange)
             {
                 PS.onoff = 1;
                 PS.Visualization = true;
                 behaviors.GetBehavior(BehaviorType.chase).value = 2; // プレイヤーを追跡する
             }
+            else if (distanceToPlayer >= chaseRange)
+            {
+                behaviors.GetBehavior(BehaviorType.patrol).value = 2;   // プレイヤーが範囲外の場合、巡回に戻る
+                isPatrolling = true;
+                PS.Visualization = false; // プレイヤーの可視化をオフ
+            }
         }
-        else if (distanceToPlayer >= chaseRange)
+        else
         {
             behaviors.GetBehavior(BehaviorType.patrol).value = 2;   // プレイヤーが範囲外の場合、巡回に戻る
-            isPatrolling =true;
+            isPatrolling = true;
             PS.Visualization = false; // プレイヤーの可視化をオフ
         }
         #endregion
