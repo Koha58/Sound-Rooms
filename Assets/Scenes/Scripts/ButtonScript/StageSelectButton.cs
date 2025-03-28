@@ -9,65 +9,80 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using static InputDeviceManager;
 
+/// <summary>
+/// ステージ選択画面を制御するクラス
+/// </summary>
 public class StageSelectButton : MonoBehaviour
 {
+    // ステージボタンを格納する配列
     public GameObject[] StageButtons;
 
+    // ステージ選択画面で使用するボタンの参照
     public GameObject RightButton, LeftButton,GameStartButton, BackStartButton;
 
+    // ステージごとの動画とタイトル
     public GameObject[] StageVideos;
     public GameObject[] StageTitles;
 
+    // 現在選択されているステージ番号
     int stage;
 
+    // 入力デバイスがXboxかどうかを判定するフラグ
     bool deviceCheck;
 
-    [SerializeField] AudioSource StartSound;  // AudioSourceをSerializeFieldとしてインスペクターから設定
+    // スタート音を格納するAudioSource
+    [SerializeField] AudioSource StartSound;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        // 初期ステージ番号を設定 (最初のステージ0)
         stage = 0;
+
+        // ステージボタンの最初のボタンを表示
         StageButtons[stage].GetComponent<Image>().enabled = true;
 
+        // ステージボタンの色を薄く設定 (選択されていないボタンは半透明)
         for (int i = 0; i < StageButtons.Length; i++)
         {
             StageButtons[i].GetComponent<Image>().color = new Color32(255, 255, 255, 45);
         }
 
+        // 現在選択されているステージのボタン色を強調表示
         StageButtons[stage].GetComponent<Image>().color = new Color32(255, 255, 255, 255);
 
+        // ステージの動画を非表示にし、選択されたステージのみ表示
         for (int i = 0; i < StageVideos.Length; i++)
         {
             StageVideos[i].GetComponent<RawImage>().enabled = false;
         }
-
         StageVideos[stage].GetComponent<RawImage>().enabled = true;
 
+        // ステージのタイトルを非表示にし、選択されたタイトルのみ表示
         for (int i = 0; i < StageTitles.Length; i++)
         {
             StageTitles[i].GetComponent<Image>().enabled = false;
         }
-
         StageTitles[stage].GetComponent<Image>().enabled = true;
 
+        // 入力デバイスがXboxかキーボードかをチェック
         if (InputDeviceManager.Instance.CurrentDeviceType == InputDeviceType.Xbox)
         {
-            deviceCheck = true;
+            deviceCheck = true;  // Xboxの場合
         }
         else if (InputDeviceManager.Instance.CurrentDeviceType == InputDeviceType.Keyboard)
         {
-            deviceCheck = false;
+            deviceCheck = false;  // キーボードの場合
         }
 
-        // AudioSource コンポーネントを取得
+        // AudioSourceコンポーネントを取得
         StartSound = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        // 入力デバイスの種類に応じて、右左ボタンを非表示にする処理
         if (InputDeviceManager.Instance.CurrentDeviceType == InputDeviceType.Xbox)
         {
             deviceCheck = true;
@@ -79,9 +94,11 @@ public class StageSelectButton : MonoBehaviour
             deviceCheck = false;
         }
 
+        // Xboxコントローラーの場合はステージ選択を処理
         if (deviceCheck)StageSelect();
     }
 
+    // ステージ0が選択されたときの処理
     public void OnStage0Select()
     {
         stage = 0;
@@ -106,6 +123,7 @@ public class StageSelectButton : MonoBehaviour
 
         StageTitles[stage].GetComponent<Image>().enabled = true;
     }
+    // ステージ1が選択されたときの処理
 
     public void OnStage1Select()
     {
@@ -132,6 +150,8 @@ public class StageSelectButton : MonoBehaviour
         StageTitles[stage].GetComponent<Image>().enabled = true;
     }
 
+
+    // ステージ2が選択されたときの処理
     public void OnStage2Select()
     {
         stage = 2;
@@ -205,6 +225,7 @@ public class StageSelectButton : MonoBehaviour
         }
     }
 
+    // 右ボタンが押されたときの処理
     public void OnRightButton()
     {
         if(stage != 2)
@@ -237,6 +258,7 @@ public class StageSelectButton : MonoBehaviour
         StageTitles[stage].GetComponent<Image>().enabled = true;
     }
 
+    // 左ボタンが押されたときの処理
     public void OnLeftButton()
     {
         if(stage != 0)
@@ -270,9 +292,10 @@ public class StageSelectButton : MonoBehaviour
         StageTitles[stage].GetComponent<Image>().enabled = true;
     }
 
+    // ステージ選択の処理
     void StageSelect()
     {
-        // 選択中のUI取得
+        // 現在選択されているゲームオブジェクトを取得
         var selectedGameObject = EventSystem.current.currentSelectedGameObject;
 
         if (selectedGameObject == StageButtons[0])
@@ -340,11 +363,12 @@ public class StageSelectButton : MonoBehaviour
         }
         else if (selectedGameObject == null)
         {
-            // selectedGameObjectがnullの場合、settingButtonにフォーカスを当てる
+            // ボタンが選択されていない場合、最初のボタンにフォーカスを当てる
             EventSystem.current.SetSelectedGameObject(StageButtons[0]);
         }
     }
 
+    // ゲーム開始時の処理
     public void OnStart()
     {
         // 音を再生してシーン遷移するコルーチンを開始
