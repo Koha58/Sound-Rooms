@@ -8,8 +8,7 @@ using UnityEngine.SceneManagement;
 /// </summary>
 public class GameClearManager : MonoBehaviour
 {
-    // 遷移先のシーン名を設定する変数
-    [SerializeField] private string clearSceneName;
+    private string currentScene;  // 現在のシーン名
 
     // 衝突が発生したときに呼ばれる
     void OnCollisionEnter(Collision other)
@@ -27,8 +26,11 @@ public class GameClearManager : MonoBehaviour
             // ImpactOnObjectsスクリプト内のcountが1のときにステージクリア処理を実行
             if (impactObjects.count == 1)
             {
+                // プレイヤーのライフが0になったとき、現在のシーン名を保存してGameClearSceneに遷移
+                // 現在のシーン名を保存
+                PlayerPrefs.SetString("PreviousScene", SceneManager.GetActiveScene().name);
                 // 指定されたシーンに遷移
-                SceneManager.LoadScene(clearSceneName);
+                SceneManager.LoadScene("GameClearScene");
             }
         }
     }

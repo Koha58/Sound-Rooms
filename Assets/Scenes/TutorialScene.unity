@@ -2015,6 +2015,11 @@ MonoBehaviour:
   - {fileID: 1118194862}
   enemy2PatrolPoints: []
   enemy3PatrolPoints: []
+  enemy4PatrolPoints: []
+  enemy5PatrolPoints: []
+  enemy6PatrolPoints: []
+  enemy7PatrolPoints: []
+  enemy8PatrolPoints: []
 --- !u!4 &358562168
 Transform:
   m_ObjectHideFlags: 0
@@ -12600,6 +12605,14 @@ MonoBehaviour:
   moveSpeed: 5
   cameraObject: {fileID: 1899148003}
   cameraRotationSpeed: 100
+  wallCheckDistance: 0.3
+  wallLayerMask:
+    serializedVersion: 2
+    m_Bits: 64
+  ObjectCheckDistance: 1
+  ObjectLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
   isWall: 0
 --- !u!82 &1573040190
 AudioSource:
@@ -12710,7 +12723,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f6b6d53d497d34409a5f90c6bc7546b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clearSceneName: TutorialClearScene
 --- !u!114 &1573040192
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20037,6 +20049,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3595609251436373912, guid: 3f5dbaadf30628c4f8a53ce6d905fed0,
         type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3595609251436373912, guid: 3f5dbaadf30628c4f8a53ce6d905fed0,
+        type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
@@ -20049,6 +20066,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_StaticEditorFlags
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4466659173689239149, guid: 3f5dbaadf30628c4f8a53ce6d905fed0,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 4466659173689239149, guid: 3f5dbaadf30628c4f8a53ce6d905fed0,
         type: 3}
@@ -20122,6 +20144,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5667448974410896409, guid: 3f5dbaadf30628c4f8a53ce6d905fed0,
         type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5667448974410896409, guid: 3f5dbaadf30628c4f8a53ce6d905fed0,
+        type: 3}
       propertyPath: m_TagString
       value: Wall
       objectReference: {fileID: 0}
@@ -20129,6 +20156,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_StaticEditorFlags
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6483149339421198860, guid: 3f5dbaadf30628c4f8a53ce6d905fed0,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 6483149339421198860, guid: 3f5dbaadf30628c4f8a53ce6d905fed0,
         type: 3}
