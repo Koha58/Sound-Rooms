@@ -2,35 +2,44 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// InputSystemを使ってプレイヤーの移動管理クラス
+/// </summary>
 public class MovePlayer : MonoBehaviour
 {
+    // アニメーターの参照 (アニメーション制御用)
     private Animator animator;
 
+    // プレイヤーの移動速度
     public float moveSpeed = 5f;
 
-    private Rigidbody rb;  // Rigidbodyを追加
+    // Rigidbodyコンポーネントを格納する変数
+    private Rigidbody rb;
 
-    public GameObject cameraObject; // カメラのTransform
-    public float cameraRotationSpeed = 100f; // カメラの回転速度
+    //カメラ
+    public GameObject cameraObject;          // プレイヤーが向いているカメラのTransform
+    public float cameraRotationSpeed = 100f; // カメラ回転速度
 
-    private GameInputSystem inputActions;
-    private Vector2 moveInput;
-    private bool isRightClickHeld;
-    private bool isShiftClickHeld;
+    // InputSystem
+    private GameInputSystem inputActions;　// 入力管理システム
+    private Vector2 moveInput;             // 移動の入力（横と縦の軸）
+    private bool isRightClickHeld;         // 右クリックが押されているかのフラグ
+    private bool isShiftClickHeld;         // シフトキーが押されているかのフラグ
 
+    //当たり判定
     public float wallCheckDistance = 1.0f; // 壁とのチェック距離
-    public LayerMask wallLayerMask; // 壁のレイヤーマスク
+    public LayerMask wallLayerMask;        // 壁のレイヤーマスク
 
-    public float ObjectCheckDistance = 1.0f; // 壁とのチェック距離
-    public LayerMask ObjectLayerMask; // 壁のレイヤーマスク
+    public float ObjectCheckDistance = 1.0f; //物とのチェック距離
+    public LayerMask ObjectLayerMask;        // 物のレイヤーマスク
 
     public bool isWall;
 
+    // 初期化処理（Awakeはシーンがロードされる前に呼ばれる）
     private void Awake()
     {
-        rb = GetComponent<Rigidbody>();  // Rigidbodyを取得
-
-        animator = GetComponent<Animator>();   //アニメーターコントローラーからアニメーションを取得する
+        rb = GetComponent<Rigidbody>();        // Rigidbodyコンポーネントを取得
+        animator = GetComponent<Animator>();   // Animatorコンポーネントを取得
 
         // Input Systemのインスタンスを作成
         inputActions = new GameInputSystem();
@@ -48,11 +57,13 @@ public class MovePlayer : MonoBehaviour
         inputActions.Player.ShiftClick.canceled += ctx => isShiftClickHeld = false;
     }
 
+    // 入力アクションを有効にする（ゲーム開始時）
     private void OnEnable()
     {
         inputActions.Enable();
     }
 
+    // 入力アクションを無効にする（ゲーム終了時）
     private void OnDisable()
     {
         inputActions.Disable();
@@ -60,28 +71,30 @@ public class MovePlayer : MonoBehaviour
 
     private void Update()
     {
-        // 右クリックを押している間のみ移動
+        // 右クリックを押している間は、走る状態に変更
         if (isRightClickHeld)
         {
-            moveSpeed = 7.0f;
-            animator.SetBool("Walking", false);
-            animator.SetBool("Running", true);
-            animator.SetBool("Squatting", false);
-            animator.SetBool("CrouchWalking", false);
+            moveSpeed = 7.0f;                         // 移動速度を増加
+            animator.SetBool("Walking", false);       // 歩行アニメーションを無効化
+            animator.SetBool("Running", true);        // 走行アニメーションを有効化
+            animator.SetBool("Squatting", false);     // しゃがみアニメーションを無効化
+            animator.SetBool("CrouchWalking", false); // しゃがんで歩くアニメーションを無効化
         }
+        // シフトキーを押している間は、しゃがんで歩く状態に変更
         else if (isShiftClickHeld)
         {
-            moveSpeed = 2.0f;
-            animator.SetBool("Walking",false);
-            animator.SetBool("Running", false);
-            animator.SetBool("Squatting",false);
-            animator.SetBool("CrouchWalking", true);
+            moveSpeed = 2.0f;                        // 移動速度を減少
+            animator.SetBool("Walking", false);      // 歩行アニメーションを無効化
+            animator.SetBool("Running", false);      // 走行アニメーションを無効化
+            animator.SetBool("Squatting", false);    // しゃがみアニメーションを無効化
+            animator.SetBool("CrouchWalking", true); // しゃがんで歩くアニメーションを有効化
         }
-        else 
+        // それ以外は通常の歩行状態
+        else
         {
-            moveSpeed = 4.0f;
+            moveSpeed = 4.0f; // 通常の移動速度
 
-            // 移動入力があればWalkingアニメーションを再生
+            // 移動入力がある場合、歩行アニメーションを再生
             if (moveInput.magnitude > 0.1f)
             {
                 animator.SetBool("Walking", true);
@@ -91,29 +104,32 @@ public class MovePlayer : MonoBehaviour
                 animator.SetBool("Walking", false);
             }
 
-            animator.SetBool("Running", false);
-            animator.SetBool("Squatting", false);
-            animator.SetBool("CrouchWalking", false);
+            animator.SetBool("Running", false); // 走行アニメーションを無効化
+            animator.SetBool("Squatting", false); // しゃがみアニメーションを無効化
+            animator.SetBool("CrouchWalking", false); // しゃがみ歩行アニメーションを無効化s
         }
 
-            Move();
-        RotatePlayer();
+        Move(); // プレイヤーの移動処理
+        RotatePlayer(); // プレイヤーの回転処理
     }
 
     /// <summary>
-    /// カメラの向きに基づいた移動
+    /// カメラの向きに基づいてプレイヤーを移動させる
     /// </summary>
     private void Move()
     {
+        // カメラオブジェクトが設定されていない、または移動入力がない場合、移動しない
         if (cameraObject == null || moveInput.magnitude < 0.1f) return;
 
+        // カメラの前方向と右方向を取得し、平面上で正規化
         Vector3 cameraForward = Vector3.Scale(cameraObject.transform.forward, new Vector3(1, 0, 1)).normalized;
         Vector3 cameraRight = Vector3.Scale(cameraObject.transform.right, new Vector3(1, 0, 1)).normalized;
 
+        // プレイヤーの移動方向を計算（カメラの向きに基づく）
         Vector3 moveDirection = (cameraRight * moveInput.x + cameraForward * moveInput.y).normalized;
 
-        // 壁との衝突をチェック
-        if (!IsWallInFront(moveDirection)&&!IsObjectInFront(moveDirection))
+        // 壁やオブジェクトが前方にない場合に移動を実行
+        if (!IsWallInFront(moveDirection) && !IsObjectInFront(moveDirection))
         {
             rb.MovePosition(transform.position + moveDirection * moveSpeed * Time.deltaTime);
         }
@@ -124,36 +140,42 @@ public class MovePlayer : MonoBehaviour
     /// </summary>
     private void RotatePlayer()
     {
+        // 移動入力がない場合、回転しない
         if (moveInput.magnitude < 0.1f) return;
 
+        // カメラの前方向と右方向を取得し、平面上で正規化
         Vector3 cameraForward = Vector3.Scale(cameraObject.transform.forward, new Vector3(1, 0, 1)).normalized;
         Vector3 cameraRight = Vector3.Scale(cameraObject.transform.right, new Vector3(1, 0, 1)).normalized;
 
+        // プレイヤーの移動方向を計算（カメラの向きに基づく）
         Vector3 moveDirection = (cameraRight * moveInput.x + cameraForward * moveInput.y).normalized;
 
+        // 移動方向を基に回転を行う
         Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
-        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 10f);
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 10f); // スムーズに回転
     }
 
     // 壁が前方にあるかをチェックする
     private bool IsWallInFront(Vector3 moveDirection)
     {
         RaycastHit hit;
+        // プレイヤーから前方にRayを飛ばし、壁があるかを確認
         if (Physics.Raycast(transform.position, moveDirection, out hit, wallCheckDistance, wallLayerMask))
         {
             return true; // 壁が前方にある
         }
-         return false; // 壁がない
+        return false; // 壁がない
     }
 
-    // 壁が前方にあるかをチェックする
+    // プレイヤーの前方に障害物があるかをチェックする
     private bool IsObjectInFront(Vector3 moveDirection)
     {
         RaycastHit hit;
+        // プレイヤーから前方にRayを飛ばし、オブジェクトがあるかを確認
         if (Physics.Raycast(transform.position, moveDirection, out hit, ObjectCheckDistance, ObjectLayerMask))
         {
-            return true; // 壁が前方にある
+            return true; // 障害物が前方にある
         }
-        return false; // 壁がない
+        return false; // 障害物がない
     }
 }   

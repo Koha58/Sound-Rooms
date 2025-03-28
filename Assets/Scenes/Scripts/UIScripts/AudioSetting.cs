@@ -31,8 +31,11 @@ public class AudioSetting : MonoBehaviour
         // マイクのAudioSourceコンポーネントを取得
         AudioSource Mic = micObject.GetComponent<AudioSource>();
 
+        //// マイク音量をスライダーに反映
+        //MicSlider.value = Mic.volume;
         // マイク音量をスライダーに反映
-        MicSlider.value = Mic.volume;
+        MicSlider.value =0.5f;
+
 
         // マウス感度の設定（VCameraのY軸の最大速度をスライダー値に基づいて設定）
         MouseSlider.value = VCamera.m_YAxis.m_MaxSpeed;
