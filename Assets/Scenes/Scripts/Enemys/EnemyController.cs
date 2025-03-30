@@ -183,12 +183,14 @@ public class EnemyController : MonoBehaviour
             {
                 behaviors.GetBehavior(BehaviorType.patrol).value = 2;   // プレイヤーが範囲外の場合、巡回に戻る
                 isPatrolling = true;
+                PS.Visualization = false; // プレイヤーの可視化をオフ
             }
         }
         else
         {
             behaviors.GetBehavior(BehaviorType.patrol).value = 2;   // プレイヤーが範囲外の場合、巡回に戻る
             isPatrolling = true;
+            PS.Visualization = false; // プレイヤーの可視化をオフ
         }
         #endregion
 
