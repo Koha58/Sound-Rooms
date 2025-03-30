@@ -177,22 +177,18 @@ public class EnemyController : MonoBehaviour
         {
             if (distanceToPlayer <= chaseRange)
             {
-                PS.onoff = 1;
-                PS.Visualization = true;
                 behaviors.GetBehavior(BehaviorType.chase).value = 2; // プレイヤーを追跡する
             }
             else if (distanceToPlayer >= chaseRange)
             {
                 behaviors.GetBehavior(BehaviorType.patrol).value = 2;   // プレイヤーが範囲外の場合、巡回に戻る
                 isPatrolling = true;
-                PS.Visualization = false; // プレイヤーの可視化をオフ
             }
         }
         else
         {
             behaviors.GetBehavior(BehaviorType.patrol).value = 2;   // プレイヤーが範囲外の場合、巡回に戻る
             isPatrolling = true;
-            PS.Visualization = false; // プレイヤーの可視化をオフ
         }
         #endregion
 
@@ -358,8 +354,8 @@ public class EnemyController : MonoBehaviour
                 {
                     stateEnter = false;
                     behaviors.GetBehavior(BehaviorType.chase).value = 0;
-                    PS.Visualization = true;
                     PS.onoff = 1;
+                    PS.Visualization = true; // プレイヤーの可視化をオフ
                     Debug.Log("追いかけいるよ");
                 }
 

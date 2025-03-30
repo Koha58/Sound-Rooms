@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 0.524
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.0944687, g: 0.1182742, b: 0.16082758, a: 0.524}
+  m_IndirectSpecularColor: {r: 0.09446845, g: 0.118273765, b: 0.16082697, a: 0.524}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3501,7 +3501,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &556129658
 Transform:
   m_ObjectHideFlags: 0
@@ -18140,7 +18140,7 @@ AudioSource:
   m_GameObject: {fileID: 1596041379267483894}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 24300002, guid: bf5be84fde00e394d82d970ecd5a5aa2,
+  OutputAudioMixerGroup: {fileID: -3577120203181901737, guid: bf5be84fde00e394d82d970ecd5a5aa2,
     type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
@@ -18153,7 +18153,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 0
-  MaxDistance: 3.4485273
+  MaxDistance: 0.5
   Pan2D: 0
   rolloffMode: 1
   BypassEffects: 0
@@ -18357,14 +18357,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterID: 1
-  player: {fileID: 135133355}
-  detectionRange: 10
-  soundPosition: {x: 0, y: 0, z: 0}
   animator: {fileID: 2120517580817973843}
   audioSourse: {fileID: 2120517580817973838}
   searchClip: {fileID: 8300000, guid: 9f82ad0d3a2cb104e8756814c0348e45, type: 3}
   runClip: {fileID: 8300000, guid: e6525d5f0bebe9949abd25ac340d7f05, type: 3}
   walkClip: {fileID: 8300000, guid: 11892326d64bf2543b641e9fb724effd, type: 3}
+  player: {fileID: 135133355}
+  detectionRange: 10
+  soundPosition: {x: 0, y: 0, z: 0}
 --- !u!4 &2123887306856772363
 Transform:
   m_ObjectHideFlags: 0
