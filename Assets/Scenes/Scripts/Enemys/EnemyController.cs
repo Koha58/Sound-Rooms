@@ -440,13 +440,13 @@ public class EnemyController : MonoBehaviour
                 navMeshAgent.SetDestination(this.transform.position);
 
                 // ラジオカセットの音に反応して移動する
-                if (OP.isParticle)
+                if (!OP.isParticle)
                 {
                     isMovingToSound = false;
                     behaviors.GetBehavior(BehaviorType.patrol).value = 2; // 音に近づいている
                 }
 
-                behaviors.SortDesire();//行動パターンをソート
+                    behaviors.SortDesire();//行動パターンをソート
 
                 if (behaviors.behaviorList[0].value >= 1)//リストの一番上の1を上回ったら
                 {

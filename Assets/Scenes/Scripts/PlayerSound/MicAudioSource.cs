@@ -77,9 +77,6 @@ public class MicAudioSource : MonoBehaviour
 
             // 平均振幅からdB（デシベル）に変換
             _now_dB = 20.0f * Mathf.Log10(aveAmp);
-
-            // Debugログ（必要に応じて確認）
-            Debug.Log(_now_dB);
         }
     }
 }

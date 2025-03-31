@@ -95,6 +95,10 @@ public class ObjectPlacer : MonoBehaviour
 
     void Update()
     {
+
+        GameObject obj = GameObject.Find("Player");      //Playerオブジェクトを探す
+        PlayerSeen PS = obj.GetComponent<PlayerSeen>();  //付いているスクリプトを取得
+        ObjectPlacer OP = obj.GetComponent<ObjectPlacer>();
         // プレイヤーのTransformが設定されていない場合
         if (player == null)
         {
@@ -172,7 +176,7 @@ public class ObjectPlacer : MonoBehaviour
         if (placedAudioSource != null && !placedAudioSource.isPlaying && placedParticle != null)
         {
             placedParticle.SetActive(false);  // パーティクルを非表示
-            isParticle=true;
+            isParticle=false;
         }
     }
 
