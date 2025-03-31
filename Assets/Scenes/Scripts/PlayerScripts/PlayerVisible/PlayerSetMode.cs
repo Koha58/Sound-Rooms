@@ -7,15 +7,29 @@ using UnityEngine;
 /// </summary>
 public class PlayerSetMode : MonoBehaviour
 {
-    Renderer rend;  // プレイヤーのRendererコンポーネント
-    private float targetAlpha;  // マテリアルの目標アルファ値（透明度）
-    private float fadeSpeed = 2.0f;  // 透明度が変化する速さ
+    // プレイヤーのRendererコンポーネント
+    Renderer rend;
+    // マテリアルの目標アルファ値（透明度）
+    private float targetAlpha;
+    // 透明度が変化する速さ
+    private float fadeSpeed = 2.0f;
+
+    // 定数の定義
+    private const float INITIAL_ALPHA = 0.2f;  // 初期状態の透明度
+    private const float VISIBLE_ALPHA = 1f;  // プレイヤーが見える状態の透明度（不透明）
+    private const float INVISIBLE_ALPHA = 0.15f;  // プレイヤーが見えない状態の透明度
+    private const int TRANSPARENT_RENDER_QUEUE = 3000;  // 透明オブジェクトのレンダリング順序
+    private const int OPAQUE_RENDER_QUEUE = -1;  // 不透明オブジェクトのレンダリング順序
+    private const int SRC_BLEND_SRC_ALPHA = (int)UnityEngine.Rendering.BlendMode.SrcAlpha;  // ソースアルファ
+    private const int DST_BLEND_ONE_MINUS_SRC_ALPHA = (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha;  // 逆のアルファ
+    private const int SRC_BLEND_ONE = (int)UnityEngine.Rendering.BlendMode.One;  // ソースの色をそのまま使用
+    private const int DST_BLEND_ZERO = (int)UnityEngine.Rendering.BlendMode.Zero;  // 目的地の色は使用しない
 
     // Startは最初のフレームの前に呼ばれる
     void Start()
     {
         rend = GetComponent<Renderer>();  // Rendererコンポーネントを取得
-        targetAlpha = 0.2f;  // 初期状態では透明（アルファ値0.2）
+        targetAlpha = INITIAL_ALPHA;  // 初期状態では透明（アルファ値0.2）
     }
 
     // Updateは毎フレーム呼ばれる
@@ -30,11 +44,11 @@ public class PlayerSetMode : MonoBehaviour
         // Playerの可視状態によって透明度を変更
         if (PS.onoff == 0)  // プレイヤーが見えない状態
         {
-            targetAlpha = 0.15f;  // 透明度を低く設定（アルファ0.15）
+            targetAlpha = INVISIBLE_ALPHA;  // 透明度を低く設定（アルファ0.15）
         }
         else  // プレイヤーが見える状態
         {
-            targetAlpha = 1f;  // 完全に不透明に設定（アルファ1）
+            targetAlpha = VISIBLE_ALPHA;  // 完全に不透明に設定（アルファ1）
         }
 
         // 透明度を目標アルファ値に向かって徐々に変化させる
@@ -52,25 +66,25 @@ public class PlayerSetMode : MonoBehaviour
             material.SetColor("_Color", newColor);  // 新しい色をマテリアルに設定
 
             // 透明モードの場合、ブレンド設定を変更
-            if (targetAlpha < 1f)  // 透明の場合
+            if (targetAlpha < VISIBLE_ALPHA)  // 透明の場合
             {
-                material.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);  // ソースのアルファを使用
-                material.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);  // 逆のアルファを使用
+                material.SetInt("_SrcBlend", SRC_BLEND_SRC_ALPHA);  // ソースのアルファを使用
+                material.SetInt("_DstBlend", DST_BLEND_ONE_MINUS_SRC_ALPHA);  // 逆のアルファを使用
                 material.SetInt("_ZWrite", 0);  // ZWriteをオフにして、後ろにあるオブジェクトに隠れないようにする
                 material.DisableKeyword("_ALPHATEST_ON");  // アルファテスト無効化
                 material.EnableKeyword("_ALPHABLEND_ON");  // アルファブレンド有効化
                 material.DisableKeyword("_ALPHAPREMULTIPLY_ON");  // アルファプレマルチ無効化
-                material.renderQueue = 3000;  // 透明オブジェクトのレンダリング順序を設定
+                material.renderQueue = TRANSPARENT_RENDER_QUEUE;  // 透明オブジェクトのレンダリング順序を設定
             }
             else  // 不透明の場合
             {
-                material.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.One);  // ソースの色をそのまま使用
-                material.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.Zero);  // 目的地の色は使用しない
+                material.SetInt("_SrcBlend", SRC_BLEND_ONE);  // ソースの色をそのまま使用
+                material.SetInt("_DstBlend", DST_BLEND_ZERO);  // 目的地の色は使用しない
                 material.SetInt("_ZWrite", 1);  // ZWriteをオンにして、前にあるオブジェクトが隠れるようにする
                 material.DisableKeyword("_ALPHATEST_ON");  // アルファテスト無効化
                 material.DisableKeyword("_ALPHABLEND_ON");  // アルファブレンド無効化
                 material.DisableKeyword("_ALPHAPREMULTIPLY_ON");  // アルファプレマルチ無効化
-                material.renderQueue = -1;  // 不透明オブジェクトのレンダリング順序をデフォルトに戻す
+                material.renderQueue = OPAQUE_RENDER_QUEUE;  // 不透明オブジェクトのレンダリング順序をデフォルトに戻す
             }
         }
     }
