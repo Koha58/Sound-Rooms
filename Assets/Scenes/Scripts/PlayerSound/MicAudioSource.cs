@@ -69,12 +69,17 @@ public class MicAudioSource : MonoBehaviour
             // 振幅の平均を使うことで、音量のピーク値ではなく平均的な音量を取得
             float aveAmp = data.Average(s => Mathf.Abs(s));
 
-            // 平均振幅からdB（デシベル）に変換
-            // 20 * log10(振幅) で振幅をdB値に変換する
-            float dB = 20.0f * Mathf.Log10(aveAmp);
+            // 振幅が非常に小さい（ゼロに近い）場合でも音を拾うため、最小振幅を設定
+            if (aveAmp < 0.0001f) // ここで0.0001は非常に小さい音量の閾値
+            {
+                aveAmp = 0.0001f; // 振幅が非常に小さい場合でも0.0001の振幅に設定
+            }
 
-            // 現在のdB値を更新
-            _now_dB = dB;
+            // 平均振幅からdB（デシベル）に変換
+            _now_dB = 20.0f * Mathf.Log10(aveAmp);
+
+            // Debugログ（必要に応じて確認）
+            Debug.Log(_now_dB);
         }
     }
 }

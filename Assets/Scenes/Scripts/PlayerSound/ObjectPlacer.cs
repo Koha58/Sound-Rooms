@@ -47,6 +47,8 @@ public class ObjectPlacer : MonoBehaviour
     //InputSystemを取得
     private GameInputSystem inputActions;
 
+    public bool isParticle;
+
     private bool isSpaceClickHeld, isEClickHeld, isXButtonHeld, isYButtonHeld;
 
     private void Awake()
@@ -161,6 +163,7 @@ public class ObjectPlacer : MonoBehaviour
                     }
 
                     isOnSettingPoint = false;  // 設置状態リセット
+                    isParticle = false;
                 }
             }
         }
@@ -169,6 +172,7 @@ public class ObjectPlacer : MonoBehaviour
         if (placedAudioSource != null && !placedAudioSource.isPlaying && placedParticle != null)
         {
             placedParticle.SetActive(false);  // パーティクルを非表示
+            isParticle=true;
         }
     }
 

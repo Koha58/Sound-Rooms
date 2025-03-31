@@ -43,8 +43,9 @@ public class EnemyController : MonoBehaviour
     //ラジオカセット
     public float detectionRange = 10f;   　// 音を聞き取れる範囲
     public Vector3 soundPosition;        　//ラジオカセットの置かれているポイント
-    private bool isMovingToSound = false;　//ラジオカセットに反応して移動する
+    private bool isMovingToSound = false; //ラジオカセットに反応して移動する
 
+    private float searchTimer = 0f; // 探す状態のタイマーs
 
     //ステートベースAI
     #region
@@ -166,6 +167,7 @@ public class EnemyController : MonoBehaviour
     {
         GameObject obj = GameObject.Find("Player");      //Playerオブジェクトを探す
         PlayerSeen PS = obj.GetComponent<PlayerSeen>();  //付いているスクリプトを取得
+        ObjectPlacer OP = obj.GetComponent<ObjectPlacer>();
 
         #region　プレイヤーの位置を確認し、追跡・巡回を判断
         Vector3 Position = player.position - transform.position;      // ターゲットの位置と自身の位置の差を計算
@@ -186,16 +188,14 @@ public class EnemyController : MonoBehaviour
                 PS.Visualization = false; // プレイヤーの可視化をオフ
             }
         }
-        else
+        else if (Vector3.Distance(transform.position, patrolPoints[currentPatrolPointIndex].position) < 0.5f)
         {
-            behaviors.GetBehavior(BehaviorType.patrol).value = 2;   // プレイヤーが範囲外の場合、巡回に戻る
-            isPatrolling = true;
-            PS.Visualization = false; // プレイヤーの可視化をオフ
+            behaviors.GetBehavior(BehaviorType.search).value = 2;
         }
         #endregion
 
         // ラジオカセットの音に反応して移動する
-        if (isMovingToSound)
+        if (isMovingToSound && !OP.isParticle)
         {
             isPatrolling = false;
             // 目的地に近づいたら停止
@@ -250,22 +250,22 @@ public class EnemyController : MonoBehaviour
 
                 #endregion
                 break;
-            case enemyState.patrol:　//巡回
+            case enemyState.patrol: //巡回
                 #region
                 if (stateEnter)
                 {
                     stateEnter = false;
                     behaviors.GetBehavior(BehaviorType.patrol).value = 0;
                     Debug.Log("巡回中");
+                    animator.SetBool("Walk", true);
+                    animator.SetBool("Run", false);
+                    animator.SetBool("Idle", false);
                 }
 
                 Walk(); // 歩く音
 
                 if (isPatrolling)
                 {
-                    animator.SetBool("Walk", true);
-                    animator.SetBool("Run", false);
-                    animator.SetBool("Idle", false);
 
                     navMeshAgent.speed = 1.0f;
 
@@ -313,15 +313,35 @@ public class EnemyController : MonoBehaviour
                     stateEnter = false;
                     behaviors.GetBehavior(BehaviorType.search).value = 0;
                     Debug.Log("どこにいるかな？");
+                    navMeshAgent.speed = 0.0f;
+
+                    animator.SetBool("Walk", false);
+                    animator.SetBool("Run", false);
+                    animator.SetBool("Idle", true);
+                    // 探す状態に入ったらタイマーをリセット
+                    searchTimer = 0f;
                 }
 
-                animator.SetBool("Walk", false);
-                animator.SetBool("Run", false);
-                animator.SetBool("Idle", true);
 
                 Idle();
 
-                navMeshAgent.SetDestination(this.transform.position);
+                navMeshAgent.SetDestination(this.transform.position); // 現位置で止まる
+
+                // 音を聞いた位置に移動
+                if (isMovingToSound)
+                {
+                    navMeshAgent.SetDestination(soundPosition);
+                }
+
+                // 3秒経過後に巡回に戻る
+                searchTimer += Time.deltaTime;
+                if (searchTimer >= 4.5f)
+                {
+                    isMovingToSound = false; // 音から離れた場合、移動を停止
+                    behaviors.GetBehavior(BehaviorType.patrol).value = 2; // 巡回に戻す
+                    isPatrolling = true;
+                    PS.Visualization = false; // プレイヤーの可視化をオフ
+                }
 
                 behaviors.SortDesire();
 
@@ -350,22 +370,24 @@ public class EnemyController : MonoBehaviour
 
                 #endregion
                 break;
-            case enemyState.chase:　//追いかける
+            case enemyState.chase: //追いかける
                 #region
                 if (stateEnter)
                 {
                     stateEnter = false;
                     behaviors.GetBehavior(BehaviorType.chase).value = 0;
-                    PS.onoff = 1;
-                    PS.Visualization = true; // プレイヤーの可視化をオフ
                     Debug.Log("追いかけいるよ");
+
+                    animator.SetBool("Walk", false);
+                    animator.SetBool("Run", true);
+                    animator.SetBool("Idle", false);
+                    navMeshAgent.speed = 0.0f;
                 }
 
-                Run();  // 走る音
+                PS.onoff = 1;
+                PS.Visualization = true; // プレイヤーの可視化をオフ
 
-                animator.SetBool("Walk", false);
-                animator.SetBool("Run", true);
-                animator.SetBool("Idle", false);
+                Run();  // 走る音
 
                 transform.LookAt(player.transform);
 
@@ -399,24 +421,30 @@ public class EnemyController : MonoBehaviour
 
                 #endregion
                 break;
-            case enemyState.hear:　//聞く
+            case enemyState.hear: //聞く
                 #region
                 if (stateEnter)
                 {
                     stateEnter = false;
                     behaviors.GetBehavior(BehaviorType.hear).value = 0;
+                    animator.SetBool("Walk", false);
+                    animator.SetBool("Run", false);
+                    animator.SetBool("Idle", true);
                     Debug.Log("聞く");
                 }
 
                 Idle();
 
-                animator.SetBool("Walk",false);
-                animator.SetBool("Run",false);
-                animator.SetBool("Idle",true);
-
                 navMeshAgent.speed = 1.0f;
 
                 navMeshAgent.SetDestination(this.transform.position);
+
+                // ラジオカセットの音に反応して移動する
+                if (OP.isParticle)
+                {
+                    isMovingToSound = false;
+                    behaviors.GetBehavior(BehaviorType.patrol).value = 2; // 音に近づいている
+                }
 
                 behaviors.SortDesire();//行動パターンをソート
 
@@ -445,7 +473,7 @@ public class EnemyController : MonoBehaviour
 
                 #endregion
                 break;
-            case enemyState.near:　//音に近づく
+            case enemyState.near: //音に近づく
                 #region
                 if (stateEnter)
                 {

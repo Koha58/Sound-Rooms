@@ -55,6 +55,8 @@ public class StartManager : MonoBehaviour
 
         // AudioSource コンポーネントを取得
         SelectSound = GetComponent<AudioSource>();
+
+        deviceCheck = false; // キーボードが使用されている
     }
 
     void Update()
@@ -98,7 +100,7 @@ public class StartManager : MonoBehaviour
     public void EnterSelectButton()
     {
         // Selectボタンを少し左に移動
-        SelectButton.GetComponent<RectTransform>().localPosition = originalSelectButtonPosition + new Vector3(-20f, 0f, 0f);
+        SelectButton.GetComponent<RectTransform>().localPosition = originalSelectButtonPosition + new Vector3(-40f, 0f, 0f);
         BackDesktopButton.GetComponent<RectTransform>().localPosition = originalBackDesktopButtonPosition; // BackDesktopButtonは移動しない
 
         // Selectボタンの色を黒に変更
@@ -123,7 +125,7 @@ public class StartManager : MonoBehaviour
     {
         // BackDesktopボタンを少し左に移動
         SelectButton.GetComponent<RectTransform>().localPosition = originalSelectButtonPosition; // SelectButtonは移動しない
-        BackDesktopButton.GetComponent<RectTransform>().localPosition = originalBackDesktopButtonPosition + new Vector3(-20f, 0f, 0f);
+        BackDesktopButton.GetComponent<RectTransform>().localPosition = originalBackDesktopButtonPosition + new Vector3(-40f, 0f, 0f);
 
         // BackDesktopボタンの色を黒に変更
         BackDesktopButtonImage.color = new Color32(0, 0, 0, 255);
