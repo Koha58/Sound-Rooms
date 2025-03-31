@@ -10,29 +10,62 @@ using UnityEngine.UI;
 /// </summary>
 public class GameOverManager : MonoBehaviour
 {
+    // 定数の定義
+
+    /// <summary>
+    /// ゲーム内で最大のライフ数
+    /// </summary>
+    private const int MAX_LIFE_COUNT = 5;
+
+    /// <summary>
+    /// ゲーム開始時の初期ライフ数（最大ライフ数と同じ）
+    /// </summary>
+    private const int INITIAL_LIFE_COUNT = MAX_LIFE_COUNT;
+
+    /// <summary>
+    /// ダメージクールダウン時間（秒）
+    /// </summary>
+    private const float DAMAGE_COOLDOWN = 2.0f;
+
+    /// <summary>
+    /// プレイヤーが点滅する間隔（秒）
+    /// </summary>
+    private const float BLINK_INTERVAL = 0.2f;
+
+    /// <summary>
+    /// プレイヤーの点滅回数
+    /// </summary>
+    private const int BLINK_COUNT = 10;
+
+    /// <summary>
+    /// ダメージ判定における距離の閾値（メートル）
+    /// </summary>
+    private const float DAMAGE_DISTANCE_THRESHOLD = 1f;
+
+    // ライフUIのインデックス
+    private const int FIRST_LIFE_INDEX = 0; // 1番目のライフUIインデックス（0ベース）
+    private const int FIFTH_LIFE_INDEX = 4; // 5番目のライフUIインデックス（0ベース）
+
+    // ライフUIに関連するインデックス
+    private const int LIFE_UI_ENABLED = 1; // ライフUIを表示
+
+    // ライフがゼロになった状態を表す定数
+    private const int NO_LIFE = 0;
+
     public int LifeCount;  // プレイヤーの残りライフ数
-    [SerializeField] GameObject Life1;  // ライフ1のUIオブジェクト
-    [SerializeField] GameObject Life2;  // ライフ2のUIオブジェクト
-    [SerializeField] GameObject Life3;  // ライフ3のUIオブジェクト
-    [SerializeField] GameObject Life4;  // ライフ4のUIオブジェクト
-    [SerializeField] GameObject Life5;  // ライフ5のUIオブジェクト
-    [SerializeField] GameObject LostLife1;  // 失われたライフ1のUIオブジェクト
-    [SerializeField] GameObject LostLife2;  // 失われたライフ2のUIオブジェクト
-    [SerializeField] GameObject LostLife3;  // 失われたライフ3のUIオブジェクト
-    [SerializeField] GameObject LostLife4;  // 失われたライフ4のUIオブジェクト
-    [SerializeField] GameObject LostLife5;  // 失われたライフ5のUIオブジェクト
+
+    // ライフUIオブジェクト
+    [SerializeField] GameObject[] Life = new GameObject[MAX_LIFE_COUNT];
+
+    // 失われたライフのUIオブジェクト
+    [SerializeField] GameObject[] LostLife = new GameObject[MAX_LIFE_COUNT];
 
     [SerializeField] AudioClip damageSound;  // ダメージSEのAudioClip
     private AudioSource audioSource;  // プレイヤーのAudioSource
 
-    private float damageCooldown = 2.0f; // クールタイムの時間 (秒)
-    private float lastDamageTime = -1.0f; // 最後にダメージを受けた時間
-    private Renderer[] playerRenderers; // プレイヤーのRenderer
-                                        // 点滅の設定
-    private float blinkInterval = 0.2f;  // 点滅間隔 (秒)
-    private int blinkCount = 10;  // 点滅回数
-
-    private Color32 darkgray = new Color32(255, 204, 204, 255);
+    private float lastDamageTime = -1.0f;  // 最後にダメージを受けた時間
+    private Renderer[] playerRenderers;  // プレイヤーのRenderer
+    private Color32 darkgray = new Color32(255, 204, 204, 255);  // 点滅時の色
 
     private string currentScene;  // 現在のシーン名
 
@@ -52,21 +85,14 @@ public class GameOverManager : MonoBehaviour
         }
 
         // 初期設定として、ライフのUIを全て表示
-        Life1.GetComponent<Image>().enabled = true;
-        Life2.GetComponent<Image>().enabled = true;
-        Life3.GetComponent<Image>().enabled = true;
-        Life4.GetComponent<Image>().enabled = true;
-        Life5.GetComponent<Image>().enabled = true;
+        for (int i = FIRST_LIFE_INDEX; i <= FIFTH_LIFE_INDEX; i++)
+        {
+            Life[i].GetComponent<Image>().enabled = true;
+            LostLife[i].GetComponent<Image>().enabled = false;
+        }
 
-        // 失われたライフのUIは最初は非表示
-        LostLife1.GetComponent<Image>().enabled = false;
-        LostLife2.GetComponent<Image>().enabled = false;
-        LostLife3.GetComponent<Image>().enabled = false;
-        LostLife4.GetComponent<Image>().enabled = false;
-        LostLife5.GetComponent<Image>().enabled = false;
-
-        // ライフ数を5に設定
-        LifeCount = 5;
+        // ライフ数を初期値に設定
+        LifeCount = INITIAL_LIFE_COUNT;
 
         audioSource = GetComponent<AudioSource>();  // AudioSourceをこのオブジェクトから取得
         if (audioSource == null)
@@ -85,20 +111,20 @@ public class GameOverManager : MonoBehaviour
     // プレイヤーが衝突したときに呼ばれる
     private void OnTriggerEnter(Collider other)
     {
-        // プレイヤーの位置から1メートル以内かどうかチェック
-        if (Vector3.Distance(other.transform.position, this.transform.position) > 1f)
+        // プレイヤーの位置から指定した距離以内かどうかチェック
+        if (Vector3.Distance(other.transform.position, this.transform.position) > DAMAGE_DISTANCE_THRESHOLD)
         {
-            return; // 1メートル以上離れている場合、何もしない
+            return; // 指定距離以上離れている場合、何もしない
         }
 
         PlayerSeen PS;
         GameObject gobj = GameObject.Find("Player");  // プレイヤーオブジェクトを探す
         PS = gobj.GetComponent<PlayerSeen>();  // PlayerSeenスクリプトを取得
 
-        if (other.gameObject.tag == "Enemy" && Time.time - lastDamageTime >= damageCooldown)
+        if (other.gameObject.tag == "Enemy" && Time.time - lastDamageTime >= DAMAGE_COOLDOWN)
         {
-            // プレイヤーが見えている状態（onoff == 1）のときだけライフが減る
-            if (PS.onoff == 1)
+            // プレイヤーが見えている状態（onoff == LIFE_UI_ENABLED）のときだけライフが減る
+            if (PS.onoff == LIFE_UI_ENABLED)
             {
                 // クールタイムが過ぎていればダメージを与える
                 LifeCount--;
@@ -128,10 +154,10 @@ public class GameOverManager : MonoBehaviour
         }
 
         // ライフ数が0になった場合、シーンごとにゲームオーバー画面に遷移
-        if (LifeCount == 0)
+        if (LifeCount == NO_LIFE)
         {
-            Life1.GetComponent<Image>().enabled = false;  // 1番目のライフアイコンを非表示
-            LostLife1.GetComponent<Image>().enabled = true;  // 失われたライフアイコンを表示
+            Life[FIRST_LIFE_INDEX].GetComponent<Image>().enabled = false;  // 1番目のライフアイコンを非表示
+            LostLife[FIRST_LIFE_INDEX].GetComponent<Image>().enabled = true;  // 失われたライフアイコンを表示
 
             // プレイヤーのライフが0になったとき、現在のシーン名を保存してGameOverSceneに遷移
             PlayerPrefs.SetString("PreviousScene", currentScene);  // 現在のシーン名を保存
@@ -153,7 +179,7 @@ public class GameOverManager : MonoBehaviour
         }
 
         // 点滅処理
-        for (int i = 0; i < blinkCount; i++)
+        for (int i = 0; i < BLINK_COUNT; i++)
         {
             // プレイヤーを赤く
             for (int j = 0; j < playerRenderers.Length; j++)
@@ -161,7 +187,7 @@ public class GameOverManager : MonoBehaviour
                 playerRenderers[j].material.color = darkgray;
             }
 
-            yield return new WaitForSeconds(blinkInterval);
+            yield return new WaitForSeconds(BLINK_INTERVAL);
 
             // 元の色に戻す
             for (int j = 0; j < playerRenderers.Length; j++)
@@ -169,32 +195,32 @@ public class GameOverManager : MonoBehaviour
                 playerRenderers[j].material.color = originalColors[j];
             }
 
-            yield return new WaitForSeconds(blinkInterval);
+            yield return new WaitForSeconds(BLINK_INTERVAL);
         }
     }
 
     // ライフ数に応じてUIを更新
     private void UpdateLifeUI()
     {
-        if (LifeCount == 4)
+        // すべてのライフUIを非表示に
+        for (int i = FIRST_LIFE_INDEX; i <= FIFTH_LIFE_INDEX; i++)
         {
-            Life5.GetComponent<Image>().enabled = false;  // ライフ5を非表示
-            LostLife5.GetComponent<Image>().enabled = true;  // 失われたライフ5を表示
+            Life[i].GetComponent<Image>().enabled = false;
+            LostLife[i].GetComponent<Image>().enabled = false;
         }
-        else if (LifeCount == 3)
+
+        // 残りライフ数に応じてUIを更新
+        for (int i = FIRST_LIFE_INDEX; i < LifeCount; i++)
         {
-            Life4.GetComponent<Image>().enabled = false;  // ライフ4を非表示
-            LostLife4.GetComponent<Image>().enabled = true;  // 失われたライフ4を表示
+            Life[i].GetComponent<Image>().enabled = true;  // 残っているライフは表示
+            LostLife[i].GetComponent<Image>().enabled = false;  // 失われたライフは非表示
         }
-        else if (LifeCount == 2)
+
+        // 失われたライフのUIを表示
+        for (int i = LifeCount; i < MAX_LIFE_COUNT; i++)
         {
-            Life3.GetComponent<Image>().enabled = false;  // ライフ3を非表示
-            LostLife3.GetComponent<Image>().enabled = true;  // 失われたライフ3を表示
-        }
-        else if (LifeCount == 1)
-        {
-            Life2.GetComponent<Image>().enabled = false;  // ライフ2を非表示
-            LostLife2.GetComponent<Image>().enabled = true;  // 失われたライフ2を表示
+            Life[i].GetComponent<Image>().enabled = false;  // 失われたライフは非表示
+            LostLife[i].GetComponent<Image>().enabled = true;  // 失われたライフは表示
         }
     }
 }

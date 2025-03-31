@@ -27629,16 +27629,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LifeCount: 0
-  Life1: {fileID: 209140903}
-  Life2: {fileID: 1028723411}
-  Life3: {fileID: 989451388}
-  Life4: {fileID: 841212502}
-  Life5: {fileID: 283389552}
-  LostLife1: {fileID: 1608191630}
-  LostLife2: {fileID: 944116380}
-  LostLife3: {fileID: 1266496257}
-  LostLife4: {fileID: 514472782}
-  LostLife5: {fileID: 1790032251}
+  Life:
+  - {fileID: 209140903}
+  - {fileID: 1028723411}
+  - {fileID: 989451388}
+  - {fileID: 841212502}
+  - {fileID: 283389552}
+  LostLife:
+  - {fileID: 1608191630}
+  - {fileID: 944116380}
+  - {fileID: 1266496257}
+  - {fileID: 514472782}
+  - {fileID: 1790032251}
   damageSound: {fileID: 8300000, guid: 0ea06c292310bc340a9b59990d48b196, type: 3}
 --- !u!1 &1573608976
 GameObject:
