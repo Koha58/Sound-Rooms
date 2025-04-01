@@ -14,21 +14,26 @@ using static InputDeviceManager;
 /// </summary>
 public class StageSelectButton : MonoBehaviour
 {
+    // 定数定義
+    private const int StageIndex0 = 0;  // チュートリアルのインデックス
+    private const int StageIndex1 = 1;  // ステージ1のインデックス
+    private const int StageIndex2 = 2;  // ステージ2のインデックス
+
     // ステージボタンを格納する配列
-    public GameObject[] StageButtons;
+    [SerializeField] private GameObject[] StageButtons;
 
     // ステージ選択画面で使用するボタンの参照
-    public GameObject RightButton, LeftButton,GameStartButton, BackStartButton;
+    [SerializeField] private GameObject RightButton, LeftButton,GameStartButton, BackStartButton;
 
     // ステージごとの動画とタイトル
-    public GameObject[] StageVideos;
-    public GameObject[] StageTitles;
+    [SerializeField] private GameObject[] StageVideos;
+    [SerializeField] private GameObject[] StageTitles;
 
     // 現在選択されているステージ番号
-    int stage;
+    private int stage;
 
     // 入力デバイスがXboxかどうかを判定するフラグ
-    bool deviceCheck;
+    private bool deviceCheck;
 
     // スタート音を格納するAudioSource
     [SerializeField] AudioSource StartSound;
@@ -37,7 +42,7 @@ public class StageSelectButton : MonoBehaviour
     void Start()
     {
         // 初期ステージ番号を設定 (最初のステージ0)
-        stage = 0;
+        stage = StageIndex0;
 
         // ステージボタンの最初のボタンを表示
         StageButtons[stage].GetComponent<Image>().enabled = true;
@@ -101,7 +106,7 @@ public class StageSelectButton : MonoBehaviour
     // ステージ0が選択されたときの処理
     public void OnStage0Select()
     {
-        stage = 0;
+        stage = StageIndex0;
         for (int i = 0; i < StageButtons.Length; i++)
         {
             StageButtons[i].GetComponent<Image>().color = new Color32(255, 255, 255, 45);
@@ -127,7 +132,7 @@ public class StageSelectButton : MonoBehaviour
 
     public void OnStage1Select()
     {
-        stage = 1;
+        stage = StageIndex2;
         for (int i = 0; i < StageButtons.Length; i++)
         {
             StageButtons[i].GetComponent<Image>().color = new Color32(255, 255, 255, 45);
@@ -154,7 +159,7 @@ public class StageSelectButton : MonoBehaviour
     // ステージ2が選択されたときの処理
     public void OnStage2Select()
     {
-        stage = 2;
+        stage = StageIndex2;
         for (int i = 0; i < StageButtons.Length; i++)
         {
             StageButtons[i].GetComponent<Image>().color = new Color32(255, 255, 255, 45);
@@ -179,7 +184,7 @@ public class StageSelectButton : MonoBehaviour
 
     public void EnterStage0SelectButton()
     {
-        if(stage != 0)
+        if(stage != StageIndex0)
         {
             StageButtons[0].GetComponent<Image>().color = new Color32(255, 255, 255, 255);
         }
@@ -187,7 +192,7 @@ public class StageSelectButton : MonoBehaviour
 
     public void ExitStage0SelectButton()
     {
-        if (stage != 0)
+        if (stage != StageIndex0)
         {
             StageButtons[0].GetComponent<Image>().color = new Color32(255, 255, 255, 45);
         }
@@ -195,7 +200,7 @@ public class StageSelectButton : MonoBehaviour
 
     public void EnterStage1SelectButton()
     {
-        if (stage != 1)
+        if (stage != StageIndex1)
         {
             StageButtons[1].GetComponent<Image>().color = new Color32(255, 255, 255, 255);
         }
@@ -203,7 +208,7 @@ public class StageSelectButton : MonoBehaviour
 
     public void ExitStage1SelectButton()
     {
-        if (stage != 1)
+        if (stage != StageIndex1)
         {
             StageButtons[1].GetComponent<Image>().color = new Color32(255, 255, 255, 45);
         }
@@ -211,7 +216,7 @@ public class StageSelectButton : MonoBehaviour
 
     public void EnterStage2SelectButton()
     {
-        if (stage != 2)
+        if (stage != StageIndex2)
         {
             StageButtons[2].GetComponent<Image>().color = new Color32(255, 255, 255, 255);
         }
@@ -219,7 +224,7 @@ public class StageSelectButton : MonoBehaviour
 
     public void ExitStage2SelectButton()
     {
-        if (stage != 2)
+        if (stage != StageIndex2)
         {
             StageButtons[2].GetComponent<Image>().color = new Color32(255, 255, 255, 45);
         }
@@ -228,13 +233,13 @@ public class StageSelectButton : MonoBehaviour
     // 右ボタンが押されたときの処理
     public void OnRightButton()
     {
-        if(stage != 2)
+        if(stage != StageIndex2)
         {
             stage++;
         }
         else
         {
-            stage = 0;
+            stage = StageIndex0;
         }
         for (int i = 0; i < StageButtons.Length; i++)
         {
@@ -261,13 +266,13 @@ public class StageSelectButton : MonoBehaviour
     // 左ボタンが押されたときの処理
     public void OnLeftButton()
     {
-        if(stage != 0)
+        if(stage != StageIndex0)
         {
             stage--;
         }
         else
         {
-            stage = 2;
+            stage = StageIndex2;
         }
 
         for (int i = 0; i < StageButtons.Length; i++)
@@ -313,7 +318,7 @@ public class StageSelectButton : MonoBehaviour
                 StageTitles[0].GetComponent<Image>().enabled = true;
                 StageTitles[1].GetComponent<Image>().enabled = false;
                 StageTitles[2].GetComponent<Image>().enabled = false;
-                stage = 0;
+                stage = StageIndex0;
             }
         }
         else if (selectedGameObject == StageButtons[1])
@@ -331,7 +336,7 @@ public class StageSelectButton : MonoBehaviour
                 StageTitles[0].GetComponent<Image>().enabled = false;
                 StageTitles[1].GetComponent<Image>().enabled = true;
                 StageTitles[2].GetComponent<Image>().enabled = false;
-                stage = 1;
+                stage = StageIndex1;
             }
 
         }
@@ -349,7 +354,7 @@ public class StageSelectButton : MonoBehaviour
                 StageTitles[0].GetComponent<Image>().enabled = false;
                 StageTitles[1].GetComponent<Image>().enabled = false;
                 StageTitles[2].GetComponent<Image>().enabled = true;
-                stage = 2;
+                stage = StageIndex2;
             }
         }
         else if(selectedGameObject == GameStartButton)
@@ -378,24 +383,23 @@ public class StageSelectButton : MonoBehaviour
     // 音を再生するメソッド
     private IEnumerator PlayStartSound()
     {
-        // 音を再生
         StartSound.PlayOneShot(StartSound.clip);
-
-        // 音が再生されるのを待機 (音の長さ分だけ待機)
         yield return new WaitForSeconds(StartSound.clip.length);
 
         // 音が終了した後にシーンを遷移
-        if (stage == 0)
+        string sceneName = GetSceneNameForStage(stage);
+        SceneManager.LoadScene(sceneName);
+    }
+
+    // ステージ番号に対応するシーン名を取得するメソッド
+    private string GetSceneNameForStage(int stageIndex)
+    {
+        switch (stageIndex)
         {
-            SceneManager.LoadScene("GetRecorder");
-        }
-        else if (stage == 1)
-        {
-            SceneManager.LoadScene("Stage1");
-        }
-        else if (stage == 2)
-        {
-            SceneManager.LoadScene("GameScene");
+            case StageIndex0: return "GetRecorder";
+            case StageIndex1: return "Stage1";
+            case StageIndex2: return "GameScene";
+            default: return "GetRecorder";
         }
     }
 }
