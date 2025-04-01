@@ -95,7 +95,6 @@ public class ObjectPlacer : MonoBehaviour
 
     void Update()
     {
-
         GameObject obj = GameObject.Find("Player");      //Playerオブジェクトを探す
         PlayerSeen PS = obj.GetComponent<PlayerSeen>();  //付いているスクリプトを取得
         ObjectPlacer OP = obj.GetComponent<ObjectPlacer>();
@@ -118,8 +117,10 @@ public class ObjectPlacer : MonoBehaviour
             // オブジェクトがまだ設置されていない場合、新しく設置
             if (placedObject == null)
             {
+                isParticle = true;
+
                 //新しいオブジェクトを設置
-               placedObject = Instantiate(objectPrefab, placementPosition, Quaternion.identity);
+                placedObject = Instantiate(objectPrefab, placementPosition, Quaternion.identity);
                 Recorder.SetActive(false);  // Recorderを非表示にする
 
                 //RecordManager が存在すれば音源を設定
