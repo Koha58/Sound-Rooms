@@ -1310,6 +1310,7 @@ GameObject:
   - component: {fileID: 1073345630}
   - component: {fileID: 1073345632}
   - component: {fileID: 1073345626}
+  - component: {fileID: 1073345634}
   - component: {fileID: 1073345631}
   - component: {fileID: 1073345633}
   m_Layer: 0
@@ -1516,6 +1517,31 @@ MonoBehaviour:
   m_DeselectOnBackgroundClick: 1
   m_PointerBehavior: 0
   m_CursorLockBehavior: 0
+--- !u!114 &1073345634
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1073345625}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b0db0c5a39837e4ebb8b9fdf3d51cfb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  StageButtons:
+  - {fileID: 2106215256}
+  - {fileID: 1017634641}
+  - {fileID: 463179}
+  RightButton: {fileID: 0}
+  LeftButton: {fileID: 0}
+  GameStartButton: {fileID: 0}
+  BackStartButton: {fileID: 0}
+  StageVideos:
+  - {fileID: 53476974}
+  - {fileID: 1387296384}
+  - {fileID: 1412408568}
+  StageTitles: []
 --- !u!1 &1120393634
 GameObject:
   m_ObjectHideFlags: 0

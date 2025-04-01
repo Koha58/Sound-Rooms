@@ -308,13 +308,13 @@ public class StageSelectButton : MonoBehaviour
             StageButtons[0].GetComponent<Image>().color = new Color32(255, 255, 255, 255);
             StageButtons[1].GetComponent<Image>().color = new Color32(255, 255, 255, 45);
             StageButtons[2].GetComponent<Image>().color = new Color32(255, 255, 255, 45);
+            StageVideos[0].GetComponent<RawImage>().enabled = true;
+            StageVideos[1].GetComponent<RawImage>().enabled = false;
+            StageVideos[2].GetComponent<RawImage>().enabled = false;
             BackStartButton.SetActive(false);
 
             if (Input.GetKeyDown("joystick button 0"))
             {
-                StageVideos[0].GetComponent<RawImage>().enabled = true;
-                StageVideos[1].GetComponent<RawImage>().enabled = false;
-                StageVideos[2].GetComponent<RawImage>().enabled = false;
                 StageTitles[0].GetComponent<Image>().enabled = true;
                 StageTitles[1].GetComponent<Image>().enabled = false;
                 StageTitles[2].GetComponent<Image>().enabled = false;
@@ -326,6 +326,9 @@ public class StageSelectButton : MonoBehaviour
             StageButtons[0].GetComponent<Image>().color = new Color32(255, 255, 255, 45);
             StageButtons[1].GetComponent<Image>().color = new Color32(255, 255, 255, 255);
             StageButtons[2].GetComponent<Image>().color = new Color32(255, 255, 255, 45);
+            StageVideos[0].GetComponent<RawImage>().enabled = false;
+            StageVideos[1].GetComponent<RawImage>().enabled = true;
+            StageVideos[2].GetComponent<RawImage>().enabled = false;
             BackStartButton.SetActive(false);
 
             if (Input.GetKeyDown("joystick button 0"))
@@ -345,6 +348,9 @@ public class StageSelectButton : MonoBehaviour
             StageButtons[0].GetComponent<Image>().color = new Color32(255, 255, 255, 45);
             StageButtons[1].GetComponent<Image>().color = new Color32(255, 255, 255, 45);
             StageButtons[2].GetComponent<Image>().color = new Color32(255, 255, 255, 255);
+            StageVideos[0].GetComponent<RawImage>().enabled = false;
+            StageVideos[1].GetComponent<RawImage>().enabled = false;
+            StageVideos[2].GetComponent<RawImage>().enabled = true;
             BackStartButton.SetActive(false);
             if (Input.GetKeyDown("joystick button 0"))
             {
