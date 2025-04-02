@@ -8,102 +8,80 @@ using UnityEngine.UI;
 
 public class StageSelectManager : MonoBehaviour
 {
-    // 定数定義
-    private const int StageIndex0 = 0;  // チュートリアルのインデックス
-    private const int StageIndex1 = 1;  // ステージ1のインデックス
-    private const int StageIndex2 = 2;  // ステージ2のインデックス
+    private const int StageIndex0 = 0;
+    private const int StageIndex1 = 1;
+    private const int StageIndex2 = 2;
 
-    // ステージボタンを格納する配列
     [SerializeField] private GameObject[] StageButtons;
-
-    // ステージ選択画面で使用するボタンの参照
-    [SerializeField] private GameObject RightButton, LeftButton, GameStartButton, BackStartButton;
-
-    // ステージごとの動画とタイトル
     [SerializeField] private GameObject[] StageVideos;
     [SerializeField] private GameObject[] StageTitles;
 
-    // Start is called before the first frame update
+    private int stage;
+    private bool deviceCheck;
+
+    [SerializeField] private AudioSource StartSound;
+
+    private float inputDelay = 0.2f; // スティック入力のディレイ時間
+    private float lastInputTime = 0f;
+
+    private Dictionary<int, int> stagePriority = new Dictionary<int, int>
+    {
+        { StageIndex0, 0 },  // チュートリアルが最優先
+        { StageIndex1, 1 },
+        { StageIndex2, 2 }
+    };
+
     void Start()
     {
-      
+        stage = StageIndex0;
+        UpdateStageDisplay();
+
+        deviceCheck = InputDeviceManager.Instance.CurrentDeviceType == InputDeviceType.Xbox;
+        StartSound = GetComponent<AudioSource>();
     }
 
-    // Update is called once per frame
     void Update()
     {
-      StageSelect();
+        if (deviceCheck) HandleStageSelection();
     }
 
-    // ステージ選択の処理
-    void StageSelect()
+    void HandleStageSelection()
     {
-        // 現在選択されているゲームオブジェクトを取得
-        var selectedGameObject = EventSystem.current.currentSelectedGameObject;
+        Vector2 input = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
 
-        if (selectedGameObject == StageButtons[0])
+        if (Time.time - lastInputTime < inputDelay) return; // ディレイ処理
+
+        if (input.x > 0.5f) // 右に倒したとき
         {
-            StageButtons[0].GetComponent<Image>().color = new Color32(255, 255, 255, 255);
-            StageButtons[1].GetComponent<Image>().color = new Color32(255, 255, 255, 45);
-            StageButtons[2].GetComponent<Image>().color = new Color32(255, 255, 255, 45);
-            StageVideos[0].GetComponent<RawImage>().enabled = true;
-            StageVideos[1].GetComponent<RawImage>().enabled = false;
-            StageVideos[2].GetComponent<RawImage>().enabled = false;
-
-            if (Input.GetKeyDown("joystick button 0"))
-            {
-                StageTitles[0].GetComponent<Image>().enabled = true;
-                StageTitles[1].GetComponent<Image>().enabled = false;
-                StageTitles[2].GetComponent<Image>().enabled = false;
-
-            }
+            SelectNextStage(1);
+            lastInputTime = Time.time;
         }
-        else if (selectedGameObject == StageButtons[1])
+        else if (input.x < -0.5f) // 左に倒したとき
         {
-            StageButtons[0].GetComponent<Image>().color = new Color32(255, 255, 255, 45);
-            StageButtons[1].GetComponent<Image>().color = new Color32(255, 255, 255, 255);
-            StageButtons[2].GetComponent<Image>().color = new Color32(255, 255, 255, 45);
-            StageVideos[0].GetComponent<RawImage>().enabled = false;
-            StageVideos[1].GetComponent<RawImage>().enabled = true;
-            StageVideos[2].GetComponent<RawImage>().enabled = false;
-
-            if (Input.GetKeyDown("joystick button 0"))
-            {
-                StageVideos[0].GetComponent<RawImage>().enabled = false;
-                StageVideos[1].GetComponent<RawImage>().enabled = true;
-                StageVideos[2].GetComponent<RawImage>().enabled = false;
-                StageTitles[0].GetComponent<Image>().enabled = false;
-                StageTitles[1].GetComponent<Image>().enabled = true;
-                StageTitles[2].GetComponent<Image>().enabled = false;
-            }
-
+            SelectNextStage(-1);
+            lastInputTime = Time.time;
         }
-        else if (selectedGameObject == StageButtons[2])
-        {
-            StageButtons[0].GetComponent<Image>().color = new Color32(255, 255, 255, 45);
-            StageButtons[1].GetComponent<Image>().color = new Color32(255, 255, 255, 45);
-            StageButtons[2].GetComponent<Image>().color = new Color32(255, 255, 255, 255);
-            StageVideos[0].GetComponent<RawImage>().enabled = false;
-            StageVideos[1].GetComponent<RawImage>().enabled = false;
-            StageVideos[2].GetComponent<RawImage>().enabled = true;
-            if (Input.GetKeyDown("joystick button 0"))
-            {
-                StageVideos[0].GetComponent<RawImage>().enabled = false;
-                StageVideos[1].GetComponent<RawImage>().enabled = false;
-                StageVideos[2].GetComponent<RawImage>().enabled = true;
-                StageTitles[0].GetComponent<Image>().enabled = false;
-                StageTitles[1].GetComponent<Image>().enabled = false;
-                StageTitles[2].GetComponent<Image>().enabled = true;
-            }
-        }
-        else if (selectedGameObject == GameStartButton)
-        {
+    }
 
-        }
-        else if (selectedGameObject == null)
+    void SelectNextStage(int direction)
+    {
+        List<int> orderedStages = new List<int>(stagePriority.Keys);
+        orderedStages.Sort((a, b) => stagePriority[a].CompareTo(stagePriority[b])); // 優先度順にソート
+
+        int currentIndex = orderedStages.IndexOf(stage);
+        int nextIndex = (currentIndex + direction + orderedStages.Count) % orderedStages.Count;
+        stage = orderedStages[nextIndex];
+
+        UpdateStageDisplay();
+    }
+
+    void UpdateStageDisplay()
+    {
+        for (int i = 0; i < StageButtons.Length; i++)
         {
-            // ボタンが選択されていない場合、最初のボタンにフォーカスを当てる
-            EventSystem.current.SetSelectedGameObject(StageButtons[0]);
+            StageButtons[i].GetComponent<Image>().color = (i == stage) ? new Color32(255, 255, 255, 255) : new Color32(255, 255, 255, 45);
+            StageVideos[i].GetComponent<RawImage>().enabled = (i == stage);
+            StageTitles[i].GetComponent<Image>().enabled = (i == stage);
         }
     }
 }
