@@ -10,6 +10,8 @@ public class FadeController : MonoBehaviour
     [SerializeField] private Image fadeImage;  // フェード用のImage
     [SerializeField] private float fadeDuration = 2f;  // フェードアウトにかかる時間
     private CanvasGroup canvasGroup;
+    private float clearAlpha = 0f; // 透明になる値
+    private float visibleAlpha = 1f; // 可視化する値
 
     // Start is called before the first frame update
     void Start()
@@ -23,24 +25,24 @@ public class FadeController : MonoBehaviour
 
         // 最初は非表示にしておく
         fadeImage.enabled = false;  // Imageを非表示
-        canvasGroup.alpha = 0f;  // 透明度を0に
+        canvasGroup.alpha = clearAlpha;  // 透明度を0に
     }
 
     // フェードアウト処理
     public IEnumerator FadeOut()
     {
         fadeImage.enabled = true;  // Imageを表示
-        float timeElapsed = 0f;
+        float timeElapsed = clearAlpha;
 
         // 透明度を0から1にフェードイン
         while (timeElapsed < fadeDuration)
         {
             timeElapsed += Time.deltaTime;
-            canvasGroup.alpha = Mathf.Lerp(0f, 1f, timeElapsed / fadeDuration);
+            canvasGroup.alpha = Mathf.Lerp(clearAlpha, visibleAlpha, timeElapsed / fadeDuration);
             yield return null;
         }
 
         // 完全に不透明に
-        canvasGroup.alpha = 1f;
+        canvasGroup.alpha = visibleAlpha;
     }
 }

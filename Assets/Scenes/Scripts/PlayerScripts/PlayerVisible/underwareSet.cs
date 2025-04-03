@@ -33,7 +33,7 @@ public class UnderwareSet : MonoBehaviour
         GameObject obj = GameObject.Find("Player");  // Playerオブジェクトを探す
         PlayerSeen PS = obj.GetComponent<PlayerSeen>();  // PlayerSeenスクリプトを取得
 
-        if (rend != null && PS.onoff == 0)
+        if (rend != null && !PS.isVisible)
         {
             // プレイヤーが見えない場合、透明に設定
             SetMaterialTransparency(TRANSPARENT_ALPHA, RENDER_QUEUE_TRANSPARENT, SRC_BLEND_SRC_ALPHA, DST_BLEND_ONE_MINUS_SRC_ALPHA, ZWRITE_OFF);

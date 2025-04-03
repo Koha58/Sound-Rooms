@@ -12567,18 +12567,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be615df4156e1d145afd3f27d8b5d978, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 2670424832789362830}
   moveSpeed: 5
   cameraObject: {fileID: 1899148003}
   cameraRotationSpeed: 100
-  wallCheckDistance: 0.3
   wallLayerMask:
     serializedVersion: 2
     m_Bits: 64
-  ObjectCheckDistance: 1
   ObjectLayerMask:
     serializedVersion: 2
-    m_Bits: 0
-  isWall: 0
+    m_Bits: 512
 --- !u!82 &1573040190
 AudioSource:
   m_ObjectHideFlags: 0
@@ -19602,6 +19600,12 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 652610681}
   m_SourcePrefab: {fileID: 100100000, guid: 46909d51fabcb1e499e50df7b0a13ec1, type: 3}
+--- !u!95 &2670424832789362830 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5300324300115317236, guid: 46909d51fabcb1e499e50df7b0a13ec1,
+    type: 3}
+  m_PrefabInstance: {fileID: 2670424832789362829}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2699948195539314810
 GameObject:
   m_ObjectHideFlags: 0

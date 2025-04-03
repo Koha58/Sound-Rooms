@@ -42,7 +42,7 @@ public class PlayerSetMode : MonoBehaviour
         PlayerSeen PS = obj.GetComponent<PlayerSeen>();
 
         // Playerの可視状態によって透明度を変更
-        if (PS.onoff == 0)  // プレイヤーが見えない状態
+        if (!PS.isVisible)  // プレイヤーが見えない状態
         {
             targetAlpha = INVISIBLE_ALPHA;  // 透明度を低く設定（アルファ0.15）
         }
