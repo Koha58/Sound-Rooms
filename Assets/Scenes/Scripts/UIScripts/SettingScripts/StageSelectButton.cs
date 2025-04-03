@@ -32,9 +32,6 @@ public class StageSelectButton : MonoBehaviour
     // 現在選択されているステージ番号
     private int stage;
 
-    // 入力デバイスがXboxかどうかを判定するフラグ
-    private bool deviceCheck;
-
     // スタート音を格納するAudioSource
     [SerializeField] AudioSource StartSound;
 
@@ -70,37 +67,8 @@ public class StageSelectButton : MonoBehaviour
         }
         StageTitles[stage].GetComponent<Image>().enabled = true;
 
-        // 入力デバイスがXboxかキーボードかをチェック
-        if (InputDeviceManager.Instance.CurrentDeviceType == InputDeviceType.Xbox)
-        {
-            deviceCheck = true;  // Xboxの場合
-        }
-        else if (InputDeviceManager.Instance.CurrentDeviceType == InputDeviceType.Keyboard)
-        {
-            deviceCheck = false;  // キーボードの場合
-        }
-
         // AudioSourceコンポーネントを取得
         StartSound = GetComponent<AudioSource>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        // 入力デバイスの種類に応じて、右左ボタンを非表示にする処理
-        if (InputDeviceManager.Instance.CurrentDeviceType == InputDeviceType.Xbox)
-        {
-            deviceCheck = true;
-            RightButton.SetActive(false);
-            LeftButton.SetActive(false);
-        }
-        else if (InputDeviceManager.Instance.CurrentDeviceType == InputDeviceType.Keyboard)
-        {
-            deviceCheck = false;
-        }
-
-        // Xboxコントローラーの場合はステージ選択を処理
-        if (deviceCheck)StageSelect();
     }
 
     // ステージ0が選択されたときの処理
@@ -132,7 +100,7 @@ public class StageSelectButton : MonoBehaviour
 
     public void OnStage1Select()
     {
-        stage = StageIndex2;
+        stage = StageIndex1;
         for (int i = 0; i < StageButtons.Length; i++)
         {
             StageButtons[i].GetComponent<Image>().color = new Color32(255, 255, 255, 45);
@@ -233,7 +201,7 @@ public class StageSelectButton : MonoBehaviour
     // 右ボタンが押されたときの処理
     public void OnRightButton()
     {
-        if(stage != StageIndex2)
+        if (stage != StageIndex2)
         {
             stage++;
         }
@@ -295,82 +263,6 @@ public class StageSelectButton : MonoBehaviour
         }
 
         StageTitles[stage].GetComponent<Image>().enabled = true;
-    }
-
-    // ステージ選択の処理
-    void StageSelect()
-    {
-        // 現在選択されているゲームオブジェクトを取得
-        var selectedGameObject = EventSystem.current.currentSelectedGameObject;
-
-        if (selectedGameObject == StageButtons[0])
-        {
-            StageButtons[0].GetComponent<Image>().color = new Color32(255, 255, 255, 255);
-            StageButtons[1].GetComponent<Image>().color = new Color32(255, 255, 255, 45);
-            StageButtons[2].GetComponent<Image>().color = new Color32(255, 255, 255, 45);
-            BackStartButton.SetActive(false);
-
-            if (Input.GetKeyDown("joystick button 0"))
-            {
-                StageVideos[0].GetComponent<RawImage>().enabled = true;
-                StageVideos[1].GetComponent<RawImage>().enabled = false;
-                StageVideos[2].GetComponent<RawImage>().enabled = false;
-                StageTitles[0].GetComponent<Image>().enabled = true;
-                StageTitles[1].GetComponent<Image>().enabled = false;
-                StageTitles[2].GetComponent<Image>().enabled = false;
-                stage = StageIndex0;
-            }
-        }
-        else if (selectedGameObject == StageButtons[1])
-        {
-            StageButtons[0].GetComponent<Image>().color = new Color32(255, 255, 255, 45);
-            StageButtons[1].GetComponent<Image>().color = new Color32(255, 255, 255, 255);
-            StageButtons[2].GetComponent<Image>().color = new Color32(255, 255, 255, 45);
-            BackStartButton.SetActive(false);
-
-            if (Input.GetKeyDown("joystick button 0"))
-            {
-                StageVideos[0].GetComponent<RawImage>().enabled = false;
-                StageVideos[1].GetComponent<RawImage>().enabled = true;
-                StageVideos[2].GetComponent<RawImage>().enabled = false;
-                StageTitles[0].GetComponent<Image>().enabled = false;
-                StageTitles[1].GetComponent<Image>().enabled = true;
-                StageTitles[2].GetComponent<Image>().enabled = false;
-                stage = StageIndex1;
-            }
-
-        }
-        else if (selectedGameObject == StageButtons[2])
-        {
-            StageButtons[0].GetComponent<Image>().color = new Color32(255, 255, 255, 45);
-            StageButtons[1].GetComponent<Image>().color = new Color32(255, 255, 255, 45);
-            StageButtons[2].GetComponent<Image>().color = new Color32(255, 255, 255, 255);
-            BackStartButton.SetActive(false);
-            if (Input.GetKeyDown("joystick button 0"))
-            {
-                StageVideos[0].GetComponent<RawImage>().enabled = false;
-                StageVideos[1].GetComponent<RawImage>().enabled = false;
-                StageVideos[2].GetComponent<RawImage>().enabled = true;
-                StageTitles[0].GetComponent<Image>().enabled = false;
-                StageTitles[1].GetComponent<Image>().enabled = false;
-                StageTitles[2].GetComponent<Image>().enabled = true;
-                stage = StageIndex2;
-            }
-        }
-        else if(selectedGameObject == GameStartButton)
-        {
-            BackStartButton.SetActive(true);
-            if (Input.GetKeyDown("joystick button 0"))
-            {
-                PlayStartSound(); // 音を再生
-                OnStart();
-            }
-        }
-        else if (selectedGameObject == null)
-        {
-            // ボタンが選択されていない場合、最初のボタンにフォーカスを当てる
-            EventSystem.current.SetSelectedGameObject(StageButtons[0]);
-        }
     }
 
     // ゲーム開始時の処理
