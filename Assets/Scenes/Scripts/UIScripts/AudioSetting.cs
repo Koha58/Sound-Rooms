@@ -11,6 +11,11 @@ using UnityEngine.UI;
 /// </summary>
 public class AudioSetting : MonoBehaviour
 {
+    // 定数定義
+    private const float MouseSensitivityDivisor = 50f;  // Y軸の感度調整用
+    private const float MouseSensitivityMultiplier = 50f;  // X軸の感度調整用
+    private const float DefaultMicVolume = 0.5f;  // 初期のマイク音量（デフォルト値）
+
     // オーディオミキサー、マイクオブジェクト、ボリューム設定用の変数
     [SerializeField] AudioMixer audioMixer;      // オーディオミキサー
     [SerializeField] GameObject micObject;       // マイクのオブジェクト
@@ -31,25 +36,20 @@ public class AudioSetting : MonoBehaviour
         // マイクのAudioSourceコンポーネントを取得
         AudioSource Mic = micObject.GetComponent<AudioSource>();
 
-        //// マイク音量をスライダーに反映
-        //MicSlider.value = Mic.volume;
-        // マイク音量をスライダーに反映
-        MicSlider.value =0.5f;
-
+        // マイク音量をスライダーに反映（デフォルト値を使用）
+        MicSlider.value = DefaultMicVolume;
 
         // マウス感度の設定（VCameraのY軸の最大速度をスライダー値に基づいて設定）
         MouseSlider.value = VCamera.m_YAxis.m_MaxSpeed;
 
         // VCameraのX軸の最大速度を設定（固定値）
-        VCamera.m_XAxis.m_MaxSpeed = 100;
+        VCamera.m_XAxis.m_MaxSpeed = MouseSensitivityMultiplier;
 
         // オーディオミキサーのBGMのボリュームをスライダーに設定
-        // BGM
         audioMixer.GetFloat("BGM", out float bgmVolume);
         BGMSlider.value = bgmVolume;
 
         // オーディオミキサーのSEのボリュームをスライダーに設定
-        // SE
         audioMixer.GetFloat("SE", out float seVolume);
         SESlider.value = seVolume;
     }
@@ -82,9 +82,9 @@ public class AudioSetting : MonoBehaviour
     public void SetMouse(float level)
     {
         // VCameraのY軸の最大速度をスライダー値を基に調整
-        VCamera.m_YAxis.m_MaxSpeed = MouseSlider.value / 50;
+        VCamera.m_YAxis.m_MaxSpeed = level / MouseSensitivityDivisor;
 
         // VCameraのX軸の最大速度をスライダー値を基に調整
-        VCamera.m_XAxis.m_MaxSpeed = MouseSlider.value * 50;
+        VCamera.m_XAxis.m_MaxSpeed = level * MouseSensitivityMultiplier;
     }
 }

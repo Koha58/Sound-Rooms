@@ -50,10 +50,9 @@ public class MyWindow : EditorWindow
 
         //テキストエリア
         text = EditorGUILayout.TextArea(text, GUILayout.Height(100));
-        //ボタン, おされたらtrueを返し、コンソールにtextを表示
-        if (GUILayout.Button("コンソールに出力！！")) ;
+        if (GUILayout.Button("コンソールに出力！！"))
         {
-            Debug.Log(text);
+            Debug.Log(text); // ボタンがクリックされたら、コンソールにtextを出力
         }
     }
 

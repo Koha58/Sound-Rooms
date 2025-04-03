@@ -20,7 +20,6 @@ public class GameClearSceneManager : MonoBehaviour
     [SerializeField] private string[] normalTextContent; // 表示するテキスト内容（普通に表示用）
 
     private int currentIndex = 0; // 現在のテキストのインデックス
-    private bool isTyping = false; // 入力中かどうか
 
     // 入力が終了した後に遷移するシーン名
     private string nextScene;
@@ -149,7 +148,6 @@ public class GameClearSceneManager : MonoBehaviour
         }
 
         // 文字の入力が終了したら、次のシーンへ遷移
-        isTyping = false;
         yield return new WaitForSeconds(SCENE_TRANSITION_DELAY); // 少し待ってから遷移
 
         // nextSceneが設定されている場合のみ遷移

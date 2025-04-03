@@ -19,9 +19,6 @@ public class StartManager : MonoBehaviour
     [SerializeField] private GameObject SelectButton;
     [SerializeField] private GameObject BackDesktopButton;
 
-    // ボタンの移動方向管理用フラグ
-    bool UPDOWN;
-
     // 元の位置を保存するための変数
     Vector3 originalSelectButtonPosition;
     Vector3 originalBackDesktopButtonPosition;
@@ -50,8 +47,6 @@ public class StartManager : MonoBehaviour
         // Selectボタンを少し左に移動
         SelectButton.GetComponent<RectTransform>().localPosition = originalSelectButtonPosition + new Vector3(-20f, 0f, 0f);
         BackDesktopButton.GetComponent<RectTransform>().localPosition = originalBackDesktopButtonPosition; // BackDesktopButtonは移動しない
-
-        UPDOWN = true;
 
         // AudioSource コンポーネントを取得
         SelectSound = GetComponent<AudioSource>();
