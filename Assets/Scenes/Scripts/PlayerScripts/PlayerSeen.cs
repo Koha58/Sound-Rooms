@@ -9,22 +9,26 @@ using UnityEngine.SceneManagement;
 /// </summary>
 public class PlayerSeen : MonoBehaviour
 {
-    public int onoff = 0;  // 判定用（プレイヤーが見えていない時：0 / 見えている時：1）
+    public bool isVisible = false;  // 判定用（プレイヤーが見えていない時：false/ 見えている時：true）
 
-    [SerializeField] public Transform _parentTransform; // プレイヤーの親オブジェクト
+    [SerializeField] private Transform _parentTransform; // プレイヤーの親オブジェクト
     LevelMeter levelMeter; // 音量を測定するスクリプト
     public bool piano; // ピアノ部屋での挙動判定フラグ
-    int pianocnt; // ピアノ部屋の挙動に関するカウンタ
-    public bool zero; // ピアノ部屋の音量がゼロかどうかを判定するフラグ
+    private int pianocnt; // ピアノ部屋の挙動に関するカウンタ
+    private bool zero; // ピアノ部屋の音量がゼロかどうかを判定するフラグ
     AudioSetting AS; // 音量設定を管理するスクリプト
 
-    public bool Visualization; // プレイヤーが見えるかどうかの状態
+    public bool isVisualization; // 敵参照用プレイヤーが見えるかどうかの状態
+
+    private int muteBGM = -80; // BGMのミュートとする値
+
+    const int EvenNumber = 2; //偶数
 
     void Start()
     {
         // 初期状態の設定
-        onoff = 0;  // プレイヤーは最初見えていない
-        Visualization = false;  // 可視化の状態は初期は不可視
+        isVisible = false;  // プレイヤーは最初見えていない
+        isVisualization = false;  // 可視化の状態は初期は不可視
         piano = false;  // ピアノ部屋でない
         pianocnt = 0;  // ピアノ部屋の挙動カウント
         zero = false;  // 音量ゼロフラグは初期はオフ
@@ -38,17 +42,17 @@ public class PlayerSeen : MonoBehaviour
         // 音を出すことでプレイヤーが見えるようになる
         if (levelMeter.nowdB > 0.0f && !piano)
         {
-            onoff = 1;  // 見えている状態に変更
+            isVisible = true;  // 見えている状態に変更
         }
 
-        if (Visualization == false)
+        if (!isVisualization)
         {
             // 音を出していない場合、プレイヤーを見えなくする
-            if (onoff == 1)
+            if (isVisible)
             {
                 if (levelMeter.nowdB <= 0.0f && !piano)
                 {
-                    onoff = 0;  // 見えていない状態に変更
+                    isVisible = false;  // 見えていない状態に変更
                 }
             }
         }
@@ -56,30 +60,30 @@ public class PlayerSeen : MonoBehaviour
         // ピアノ部屋の挙動管理
         if (piano)
         {
-            onoff = 1;  // ピアノ部屋ではプレイヤーは見える
+            isVisible = true;  // ピアノ部屋ではプレイヤーは見える
 
             GameObject Setting = GameObject.Find("EventSystem");
             AS = Setting.GetComponent<AudioSetting>(); // AudioSettingスクリプトを取得
 
             // 音量が最小（-80）の場合、ピアノ部屋の挙動を終了
-            if (AS.BGMSlider.value == -80)
+            if (AS.BGMSlider.value == muteBGM)
             {
                 zero = true;  // 音量ゼロを検出
                 piano = false;  // ピアノ部屋終了
-                onoff = 0;  // 見えない状態に戻す
+                isVisible = false;  // 見えない状態に戻す
             }
             else
             {
                 piano = true;  // ピアノ部屋
                 zero = false;  // 音量ゼロフラグオフ
-                onoff = 1;  // プレイヤーは見える
+                isVisible = true;  // プレイヤーは見える
             }
         }
         else
         {
             zero = false;  // ピアノ部屋でない場合
             // ピアノ部屋の挙動カウンタが奇数ならピアノ部屋状態にする
-            if (pianocnt % 2 != 0 && AS.BGMSlider.value != -80)
+            if (pianocnt % EvenNumber != 0 && AS.BGMSlider.value != muteBGM)
             {
                 piano = true;
             }
@@ -97,7 +101,7 @@ public class PlayerSeen : MonoBehaviour
                 piano = true;  // ピアノ部屋状態にする
 
                 // カウントが偶数ならピアノ部屋を終了
-                if (pianocnt % 2 == 0)
+                if (pianocnt % EvenNumber == 0)
                 {
                     piano = false;
                 }
@@ -110,7 +114,7 @@ public class PlayerSeen : MonoBehaviour
     {
         if (other.CompareTag("RoomOut"))
         {
-            onoff = 0;  // プレイヤーは見えない状態に戻す
+            isVisible = false;  // プレイヤーは見えない状態に戻す
         }
     }
 }

@@ -175,7 +175,7 @@ public class EnemyController : MonoBehaviour
 
         distanceToPlayer = Vector3.Distance(player.position, transform.position); // プレイヤーとの距離を計算
 
-        if (isFront && !isMovingToSound && PS.onoff == 1)
+        if (isFront && !isMovingToSound && PS.isVisible)
         {
             if (distanceToPlayer <= chaseRange)
             {
@@ -185,7 +185,7 @@ public class EnemyController : MonoBehaviour
             {
                 behaviors.GetBehavior(BehaviorType.patrol).value = 2;   // プレイヤーが範囲外の場合、巡回に戻る
                 isPatrolling = true;
-                PS.Visualization = false; // プレイヤーの可視化をオフ
+                PS.isVisualization = false; // プレイヤーの可視化をオフ
             }
         }
         else if (Vector3.Distance(transform.position, patrolPoints[currentPatrolPointIndex].position) < 0.5f)
@@ -332,7 +332,7 @@ public class EnemyController : MonoBehaviour
                     searchTimer = 0f;// 探す状態に入ったらタイマーをリセット
                     behaviors.GetBehavior(BehaviorType.patrol).value = 2; // 巡回に戻す
                     isPatrolling = true;
-                    PS.Visualization = false; // プレイヤーの可視化をオフ
+                    PS.isVisualization = false; // プレイヤーの可視化をオフ
                 }
 
                 behaviors.SortDesire();
@@ -376,8 +376,8 @@ public class EnemyController : MonoBehaviour
                     navMeshAgent.speed = 0.0f;
                 }
 
-                PS.onoff = 1;
-                PS.Visualization = true; // プレイヤーの可視化をオフ
+                PS.isVisible = true;
+                PS.isVisualization = true; // プレイヤーの可視化をオフ
 
                 Run();  // 走る音
 
@@ -473,7 +473,7 @@ public class EnemyController : MonoBehaviour
                 {
                     stateEnter = false;
                     behaviors.GetBehavior(BehaviorType.near).value = 0;
-                    PS.Visualization = false;
+                    PS.isVisualization = false;
                     Debug.Log("近づく");
                 }
 

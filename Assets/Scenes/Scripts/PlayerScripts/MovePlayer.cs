@@ -3,15 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// InputSystemを使ってプレイヤーの移動管理クラス
+/// InputSystemを使ったプレイヤーの移動管理クラス
 /// </summary>
 public class MovePlayer : MonoBehaviour
 {
     // アニメーターの参照 (アニメーション制御用)
-    private Animator animator;
+    [SerializeField] private Animator animator;
 
     // プレイヤーの移動速度
-    public float moveSpeed = 5f;
+    private float moveSpeed;
+    private float defaultSpeed = 4.0f; // 歩くとき
+    private float runSpeed = 7.0f;　　 // 走るとき
+    private float crouchSpeed = 2.0f;　// しゃがみ歩きするとき
 
     // Rigidbodyコンポーネントを格納する変数
     private Rigidbody rb;
@@ -27,13 +30,12 @@ public class MovePlayer : MonoBehaviour
     private bool isShiftClickHeld;         // シフトキーが押されているかのフラグ
 
     //当たり判定
-    public float wallCheckDistance = 1.0f; // 壁とのチェック距離
-    public LayerMask wallLayerMask;        // 壁のレイヤーマスク
+    private float wallCheckDistance = 1.0f; // 壁とのチェック距離
+    [SerializeField] private LayerMask wallLayerMask;        // 壁のレイヤーマスク
 
-    public float ObjectCheckDistance = 1.0f; //物とのチェック距離
-    public LayerMask ObjectLayerMask;        // 物のレイヤーマスク
+    private float ObjectCheckDistance = 1.0f; //物とのチェック距離
+    [SerializeField] private LayerMask ObjectLayerMask;        // 物のレイヤーマスク
 
-    public bool isWall;
 
     // 初期化処理（Awakeはシーンがロードされる前に呼ばれる）
     private void Awake()
@@ -74,7 +76,7 @@ public class MovePlayer : MonoBehaviour
         // 右クリックを押している間は、走る状態に変更
         if (isRightClickHeld)
         {
-            moveSpeed = 7.0f;                         // 移動速度を増加
+            moveSpeed = runSpeed;                         // 移動速度を増加
             animator.SetBool("Walking", false);       // 歩行アニメーションを無効化
             animator.SetBool("Running", true);        // 走行アニメーションを有効化
             animator.SetBool("Squatting", false);     // しゃがみアニメーションを無効化
@@ -83,7 +85,7 @@ public class MovePlayer : MonoBehaviour
         // シフトキーを押している間は、しゃがんで歩く状態に変更
         else if (isShiftClickHeld)
         {
-            moveSpeed = 2.0f;                        // 移動速度を減少
+            moveSpeed = crouchSpeed;                        // 移動速度を減少
             animator.SetBool("Walking", false);      // 歩行アニメーションを無効化
             animator.SetBool("Running", false);      // 走行アニメーションを無効化
             animator.SetBool("Squatting", false);    // しゃがみアニメーションを無効化
@@ -92,7 +94,7 @@ public class MovePlayer : MonoBehaviour
         // それ以外は通常の歩行状態
         else
         {
-            moveSpeed = 4.0f; // 通常の移動速度
+            moveSpeed = defaultSpeed; // 通常の移動速度
 
             // 移動入力がある場合、歩行アニメーションを再生
             if (moveInput.magnitude > 0.1f)

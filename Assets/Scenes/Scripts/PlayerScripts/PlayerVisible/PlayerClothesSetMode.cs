@@ -39,7 +39,7 @@ public class PlayerClothesSetMode : MonoBehaviour
         PlayerSeen PS = obj.GetComponent<PlayerSeen>();  // PlayerSeenスクリプトを取得
 
         // PlayerSeenスクリプトの「onoff」変数の値によって透明度を変更
-        if (PS.onoff == 0)
+        if (!PS.isVisible)
         {
             targetAlpha = PLAYER_INVISIBLE_ALPHA;  // 「onoff」が0(Playerが透明)なら透明度を0.5に設定（半透明）
         }

@@ -46,9 +46,6 @@ public class GameOverManager : MonoBehaviour
     private const int FIRST_LIFE_INDEX = 0; // 1番目のライフUIインデックス（0ベース）
     private const int FIFTH_LIFE_INDEX = 4; // 5番目のライフUIインデックス（0ベース）
 
-    // ライフUIに関連するインデックス
-    private const int LIFE_UI_ENABLED = 1; // ライフUIを表示
-
     // ライフがゼロになった状態を表す定数
     private const int NO_LIFE = 0;
 
@@ -123,8 +120,8 @@ public class GameOverManager : MonoBehaviour
 
         if (other.gameObject.tag == "Enemy" && Time.time - lastDamageTime >= DAMAGE_COOLDOWN)
         {
-            // プレイヤーが見えている状態（onoff == LIFE_UI_ENABLED）のときだけライフが減る
-            if (PS.onoff == LIFE_UI_ENABLED)
+            // プレイヤーが見えている状態のときだけライフが減る
+            if (PS.isVisible)
             {
                 // クールタイムが過ぎていればダメージを与える
                 LifeCount--;
