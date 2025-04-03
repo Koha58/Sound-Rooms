@@ -57,6 +57,8 @@ public class StartManager : MonoBehaviour
         SelectSound = GetComponent<AudioSource>();
 
         deviceCheck = false; // キーボードが使用されている
+
+        Time.timeScale=1;
     }
 
     void Update()
