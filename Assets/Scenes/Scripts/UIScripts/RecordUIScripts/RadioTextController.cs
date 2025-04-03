@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;  // シーン遷移用
+using static InputDeviceManager;
 
 /// <summary>
 /// GetRecorderシーンのテキストを管理するクラス
@@ -50,6 +51,9 @@ public class RadioTextController : MonoBehaviour
     // シーン開始から待機する時間（秒）
     private const float InitialWaitTime = 2.0f;
 
+    // デバイス（Xbox/Keyboard）のチェックフラグ
+    private bool deviceCheck;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -83,7 +87,14 @@ public class RadioTextController : MonoBehaviour
             if (TextCounter == Texts.Length)
             {
                 text.enabled = false;  // 現在のテキストを非表示
-                nextText.text = "E：ラジオを拾う";  // 次のシーンに進むメッセージ
+                if(deviceCheck)
+                {
+                    nextText.text = "X：ラジオを拾う";  // 次のシーンに進むメッセージ
+                }
+                else
+                {
+                    nextText.text = "E：ラジオを拾う";  // 次のシーンに進むメッセージ
+                }            
                 nextText.enabled = true;  // nextTextを表示
             }
         }
@@ -99,11 +110,37 @@ public class RadioTextController : MonoBehaviour
     // Eボタンが押されたときの処理
     void Update()
     {
-        // Eキーが押され、次のテキストが表示されている場合
-        if (Input.GetKeyDown(KeyCode.E) && nextText.enabled)
+        // 現在使用している入力デバイスをチェック
+        if (InputDeviceManager.Instance.CurrentDeviceType == InputDeviceType.Xbox)
         {
-            // フェードアウトを開始
-            StartCoroutine(FadeAndLoadScene());
+            // Xboxコントローラーが使用されている場合
+            deviceCheck = true;
+        }
+        else if (InputDeviceManager.Instance.CurrentDeviceType == InputDeviceType.Keyboard)
+        {
+            // キーボードが使用されている場合
+            deviceCheck = false;
+        }
+
+        // Xboxコントローラーが使用されている場合
+        if (deviceCheck)
+        {
+            // Xボタンが押され、次のテキストが表示されている場合
+            if (Input.GetKeyDown("joystick button 2") && nextText.enabled)
+            {
+                // フェードアウトを開始
+                StartCoroutine(FadeAndLoadScene());
+            }
+        }
+        // キーボードが使用されている場合
+        else
+        {
+            // Eキーが押され、次のテキストが表示されている場合
+            if (Input.GetKeyDown(KeyCode.E) && nextText.enabled)
+            {
+                // フェードアウトを開始
+                StartCoroutine(FadeAndLoadScene());
+            }
         }
     }
 
