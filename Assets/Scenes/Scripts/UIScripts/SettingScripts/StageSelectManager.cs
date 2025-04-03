@@ -13,7 +13,7 @@ public class StageSelectManager : MonoBehaviour
     private const int StageIndex2 = 2;  // ステージ2のインデックス
 
     [SerializeField] private GameObject[] StageButtons;  // ステージボタンの配列
-    [SerializeField] private GameObject RightButton, LeftButton, GameStartButton, BackStartButton;
+    [SerializeField] private GameObject RightButton, LeftButton, GameStartButton;
     [SerializeField] private GameObject[] StageVideos;
     [SerializeField] private GameObject[] StageTitles;
     [SerializeField] private AudioSource StartSound;
@@ -62,11 +62,6 @@ public class StageSelectManager : MonoBehaviour
                 PlayStartSound();  // スタート音を再生
                 string sceneName = GetSceneNameForStage(stage);
                 StartCoroutine(LoadSceneWithDelay(sceneName));
-            }
-            else if (Input.GetKeyDown("joystick button 1"))  // ボタンB（キャンセルボタン）
-            {
-                // キャンセル動作
-                BackStartButton.SetActive(true);
             }
             else if(Input.GetAxisRaw("Vertical") != 0)
             {

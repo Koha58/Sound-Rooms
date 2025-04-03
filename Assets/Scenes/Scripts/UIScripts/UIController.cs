@@ -9,6 +9,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using static InputDeviceManager;
 using static UnityEngine.Rendering.DebugUI;
 
 /// <summary>
@@ -49,12 +50,13 @@ public class UIController : MonoBehaviour
     // keyBoard: キーボード設定用のパネル
     // gamePad: ゲームパッド設定用のパネル
 
-    [SerializeField] GameObject MicSliderGameObject, BGMSliderGameObject, SESliderGameObject, MouseSliderGameObject, closeKey;
+    [SerializeField] GameObject MicSliderGameObject, BGMSliderGameObject, SESliderGameObject, MouseSliderGameObject, closeKey, decisionA;
     // MicSliderGameObject: マイク音量を調整するためのスライダー
     // BGMSliderGameObject: BGM音量を調整するためのスライダー
     // SESliderGameObject: SE音量を調整するためのスライダー
     // MouseSliderGameObject: マウス感度を調整するためのスライダー
     // closeKey: 設定を閉じるための「閉じる」ボタン
+    // decisionA;コントローラーの時に表示させるボタン
 
     [SerializeField] GameObject[] Cursor;
     // Cursor: 複数のカーソル（選択中の項目に表示される）を保持する配列
@@ -75,6 +77,9 @@ public class UIController : MonoBehaviour
 
     // パネル管理用リスト（パネルの表示非表示を管理する）
     private List<GameObject> panels;
+
+    // 入力デバイスの種類を判定するフラグ
+    bool deviceCheck;
 
 
     private void Awake()
@@ -131,6 +136,18 @@ public class UIController : MonoBehaviour
     void Update()
     {
         Controller();// コントローラーの入力処理を管理
+
+        // 入力デバイスの種類を確認し、フラグを設定
+        if (InputDeviceManager.Instance.CurrentDeviceType == InputDeviceType.Xbox)
+        {
+            deviceCheck = true; // コントローラーが使用されている
+            decisionA.SetActive(true);
+        }
+        else if (InputDeviceManager.Instance.CurrentDeviceType == InputDeviceType.Keyboard)
+        {
+            deviceCheck = false; // キーボードが使用されている
+            decisionA.SetActive(false);
+        }
     }
 
     // メニューを表示する処理

@@ -23,7 +23,7 @@ public class StageSelectButton : MonoBehaviour
     [SerializeField] private GameObject[] StageButtons;
 
     // ステージ選択画面で使用するボタンの参照
-    [SerializeField] private GameObject RightButton, LeftButton,GameStartButton, BackStartButton;
+    [SerializeField] private GameObject RightButton, LeftButton,GameStartButton;
 
     // ステージごとの動画とタイトル
     [SerializeField] private GameObject[] StageVideos;
