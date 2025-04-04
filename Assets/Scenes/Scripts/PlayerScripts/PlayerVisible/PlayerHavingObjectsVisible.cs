@@ -5,21 +5,45 @@ using UnityEngine;
 /// </summary>
 public class PlayerHavingObjectsVisible : MonoBehaviour
 {
-    private const float INITIAL_ALPHA = 0.3f;  // 初期透明度（アルファ値）
-    private const float FULL_ALPHA = 1f;      // 完全不透明（アルファ値）
-    private const float FADE_SPEED = 2.0f;    // 透明度の変化速度
+    // 定数の定義
+
+    /// <summary>
+    /// 初期透明度（アルファ値）
+    /// </summary>
+    private const float INITIAL_ALPHA = 0.3f;
+
+    /// <summary>
+    /// 完全不透明（アルファ値）
+    /// </summary>
+    private const float FULL_ALPHA = 1f;
+
+    /// <summary>
+    /// 透明度の変化速度（透明度の増減をどれだけ早く行うか）
+    /// </summary>
+    private const float FADE_SPEED = 2.0f;
 
     // シェーダー設定用の定数
-    // _SrcBlend に指定する値: ソースのアルファ値を使う
+
+    /// <summary>
+    /// _SrcBlend に指定する値: ソースのアルファ値を使う
+    /// </summary>
     private const int SRC_BLEND_SRC_ALPHA = (int)UnityEngine.Rendering.BlendMode.SrcAlpha;
 
-    // _DstBlend に指定する値: ソースのアルファの逆を使う
+    /// <summary>
+    /// _DstBlend に指定する値: ソースのアルファの逆を使う
+    /// </summary>
     private const int DST_BLEND_ONE_MINUS_SRC_ALPHA = (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha;
 
-    private const int ZWRITE_OFF = 0;  // ZWriteをオフ
+    /// <summary>
+    /// ZWriteをオフにするための設定
+    /// </summary>
+    private const int ZWRITE_OFF = 0;
 
-    private Renderer rend;  // プレイヤーのRendererコンポーネント
-    private float targetAlpha;  // マテリアルの目標アルファ値（透明度）
+    // プレイヤーのRendererコンポーネント
+    private Renderer rend;
+
+    // マテリアルの目標アルファ値（透明度）
+    private float targetAlpha;
 
     // Startは最初のフレームの前に呼ばれる
     void Start()

@@ -11,8 +11,8 @@ using static InputDeviceManager;
 /// </summary>
 public class SkipButton : MonoBehaviour
 {
-    // スキップボタンのUIオブジェクト（ボタンの表示/非表示を制御）
-    public GameObject Sikp;
+    // XボタンのUIオブジェクト（ボタンの表示/非表示を制御）
+    [SerializeField] private GameObject xSkip;
 
     // 新しいInput Systemでの入力管理用のインスタンス
     private GameInputSystem inputActions;
@@ -80,16 +80,16 @@ public class SkipButton : MonoBehaviour
             deviceCheck = false;
         }
 
-        // 入力デバイスがキーボードの場合はスキップボタンを非表示にし、Xboxの場合は表示する
+        // 入力デバイスがキーボードの場合はXボタンを非表示にし、Xboxの場合は表示する
         if (!deviceCheck)
         {
-            // キーボードの場合、スキップボタンを非表示
-            Sikp.SetActive(false);
+            // キーボードの場合、Xボタンを非表示
+            xSkip.SetActive(false);
         }
         else
         {
-            // Xboxの場合、スキップボタンを表示
-            Sikp.SetActive(true);
+            // Xboxの場合、Xボタンを表示
+            xSkip.SetActive(true);
         }
 
         // Xボタンが押された場合、シーン遷移を行う

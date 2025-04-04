@@ -9,20 +9,38 @@ using UnityEngine.SceneManagement;
 /// </summary>
 public class PlayerSeen : MonoBehaviour
 {
-    public bool isVisible = false;  // 判定用（プレイヤーが見えていない時：false/ 見えている時：true）
+    // プレイヤーの可視状態を管理
+    public bool isVisible = false;  // 判定用（プレイヤーが見えていない時：false / 見えている時：true）
 
-    [SerializeField] private Transform _parentTransform; // プレイヤーの親オブジェクト
-    LevelMeter levelMeter; // 音量を測定するスクリプト
-    public bool piano; // ピアノ部屋での挙動判定フラグ
-    private int pianocnt; // ピアノ部屋の挙動に関するカウンタ
-    private bool zero; // ピアノ部屋の音量がゼロかどうかを判定するフラグ
-    AudioSetting AS; // 音量設定を管理するスクリプト
+    // プレイヤーの親オブジェクト
+    [SerializeField] private Transform _parentTransform;
 
-    public bool isVisualization; // 敵参照用プレイヤーが見えるかどうかの状態
+    // 音量を測定するスクリプトのインスタンス
+    private LevelMeter levelMeter;
 
-    private int muteBGM = -80; // BGMのミュートとする値
+    // ピアノ部屋での挙動判定フラグ
+    public bool piano;
 
-    const int EvenNumber = 2; //偶数
+    // ピアノ部屋の挙動に関するカウンタ
+    private int pianocnt;
+
+    // ピアノ部屋の音量がゼロかどうかを判定するフラグ
+    private bool zero;
+
+    // 音量設定を管理するスクリプト
+    private AudioSetting AS;
+
+    // 敵参照用プレイヤーが見えるかどうかの状態
+    public bool isVisualization;
+
+    // BGMのミュートとする値（音量）
+    private int muteBGM = -80;
+
+    // マイクの入力判定用閾値
+    private float muteLevel = 0.0f;
+
+    // 偶数判定用定数
+    const int EvenNumber = 2;
 
     void Start()
     {
@@ -40,7 +58,7 @@ public class PlayerSeen : MonoBehaviour
         levelMeter = soundobj.GetComponent<LevelMeter>(); // LevelMeterスクリプトを取得
 
         // 音を出すことでプレイヤーが見えるようになる
-        if (levelMeter.nowdB > 0.0f && !piano)
+        if (levelMeter.nowdB > muteLevel && !piano)
         {
             isVisible = true;  // 見えている状態に変更
         }
@@ -50,7 +68,7 @@ public class PlayerSeen : MonoBehaviour
             // 音を出していない場合、プレイヤーを見えなくする
             if (isVisible)
             {
-                if (levelMeter.nowdB <= 0.0f && !piano)
+                if (levelMeter.nowdB <= muteLevel && !piano)
                 {
                     isVisible = false;  // 見えていない状態に変更
                 }
