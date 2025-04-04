@@ -185,7 +185,6 @@ public class EnemyController : MonoBehaviour
             {
                 behaviors.GetBehavior(BehaviorType.patrol).value = 2;   // プレイヤーが範囲外の場合、巡回に戻る
                 isPatrolling = true;
-                PS.isVisualization = false; // プレイヤーの可視化をオフ
             }
         }
         else if (Vector3.Distance(transform.position, patrolPoints[currentPatrolPointIndex].position) < 0.5f)
@@ -333,6 +332,7 @@ public class EnemyController : MonoBehaviour
                     behaviors.GetBehavior(BehaviorType.patrol).value = 2; // 巡回に戻す
                     isPatrolling = true;
                     PS.isVisualization = false; // プレイヤーの可視化をオフ
+
                 }
 
                 behaviors.SortDesire();
@@ -377,7 +377,7 @@ public class EnemyController : MonoBehaviour
                 }
 
                 PS.isVisible = true;
-                PS.isVisualization = true; // プレイヤーの可視化をオフ
+                PS.isVisualization = true; // プレイヤーの可視化をオンs
 
                 Run();  // 走る音
 
