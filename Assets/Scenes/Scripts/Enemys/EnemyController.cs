@@ -256,6 +256,7 @@ public class EnemyController : MonoBehaviour
                 {
                     stateEnter = false;
                     behaviors.GetBehavior(BehaviorType.patrol).value = 0;
+                    PS.isVisualization = false;
                     Debug.Log("巡回中");
                     animator.SetBool("Walk", true);
                     animator.SetBool("Run", false);
@@ -314,7 +315,6 @@ public class EnemyController : MonoBehaviour
                     behaviors.GetBehavior(BehaviorType.search).value = 0;
                     Debug.Log("どこにいるかな？");
                     navMeshAgent.speed = 0.0f;
-
                     animator.SetBool("Walk", false);
                     animator.SetBool("Run", false);
                     animator.SetBool("Idle", true);
@@ -331,8 +331,7 @@ public class EnemyController : MonoBehaviour
                     searchTimer = 0f;// 探す状態に入ったらタイマーをリセット
                     behaviors.GetBehavior(BehaviorType.patrol).value = 2; // 巡回に戻す
                     isPatrolling = true;
-                    PS.isVisualization = false; // プレイヤーの可視化をオフ
-
+                    PS.isVisualization = false;
                 }
 
                 behaviors.SortDesire();
