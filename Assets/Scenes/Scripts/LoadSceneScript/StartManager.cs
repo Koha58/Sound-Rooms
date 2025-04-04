@@ -164,12 +164,16 @@ public class StartManager : MonoBehaviour
             // Selectボタンの色を黒に変更
             SelectButtonImage.color = new Color32(0, 0, 0, 255);
             BackDesktopButtonImage.color = new Color32(0, 0, 0, 120);
+            SelectButton.GetComponent<RectTransform>().localPosition = originalSelectButtonPosition + new Vector3(-40f, 0f, 0f);
+            BackDesktopButton.GetComponent<RectTransform>().localPosition = originalBackDesktopButtonPosition; // BackDesktopButtonは移動しない
         }
         else if (selectedGameObject == BackDesktopButton)
         {
             // Selectボタンの色を薄く設定
             SelectButtonImage.color = new Color32(0, 0, 0, 120);
             BackDesktopButtonImage.color = new Color32(0, 0, 0, 255);
+            SelectButton.GetComponent<RectTransform>().localPosition = originalSelectButtonPosition; // SelectButtonは移動しない
+            BackDesktopButton.GetComponent<RectTransform>().localPosition = originalBackDesktopButtonPosition + new Vector3(-40f, 0f, 0f);
         }
         else if(selectedGameObject == null)
         {
