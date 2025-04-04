@@ -1,15 +1,10 @@
 using Cinemachine;
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.EventSystems;
-using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using static InputDeviceManager;
 using static UnityEngine.Rendering.DebugUI;
 
 /// <summary>
@@ -136,18 +131,6 @@ public class UIController : MonoBehaviour
     void Update()
     {
         Controller();// コントローラーの入力処理を管理
-
-        // 入力デバイスの種類を確認し、フラグを設定
-        if (InputDeviceManager.Instance.CurrentDeviceType == InputDeviceType.Xbox)
-        {
-            deviceCheck = true; // コントローラーが使用されている
-            decisionA.SetActive(true);
-        }
-        else if (InputDeviceManager.Instance.CurrentDeviceType == InputDeviceType.Keyboard)
-        {
-            deviceCheck = false; // キーボードが使用されている
-            decisionA.SetActive(false);
-        }
     }
 
     // メニューを表示する処理
@@ -170,7 +153,7 @@ public class UIController : MonoBehaviour
 
         Time.timeScale = TimeScaleRunning; // ゲームの進行を再開
     }
-    // 設定パネル1を表示
+    // 設定画面を表示
     public void SettingPanel()
     {
         settingPanel.SetActive(true);
@@ -178,16 +161,16 @@ public class UIController : MonoBehaviour
         goTitlePanel.SetActive(false);
     }
 
-    // 設定パネル2を表示
-    public void SettingPanel1()
+    // 操作説明画面を表示
+    public void ExplanationPanel()
     {
         settingPanel.SetActive(false);
         explanationPanel.SetActive(true);
         goTitlePanel.SetActive(false);
     }
 
-    // 設定パネル3を表示し、シーンをロード
-    public void SettingPanel2()
+    // タイトルに戻るを表示し、シーンをロード
+    public void GoTitlePanel()
     {
         settingPanel.SetActive(false);
         explanationPanel.SetActive(false);

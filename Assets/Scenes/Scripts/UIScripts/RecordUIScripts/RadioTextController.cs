@@ -12,7 +12,7 @@ public class RadioTextController : MonoBehaviour
     [SerializeField] private Text text;  // Text UI コンポーネントへの参照
     [SerializeField] private Text nextText;  // 次のシーンへ進む指示を出すテキスト
     [SerializeField] private FadeController fadeController;  // フェード用のスクリプト参照
-    private int TextCounter = 0;  // テキストカウンター
+    private int textCounter = 0;  // テキストカウンター
 
     // 各テキストに対応する表示時間（秒）
     private static readonly float[] TextDisplayTimes = {
@@ -72,19 +72,19 @@ public class RadioTextController : MonoBehaviour
     // テキストを時間ごとに切り替えるコルーチン
     IEnumerator SwitchText()
     {
-        while (TextCounter < Texts.Length)  // 最大のテキストカウンター（配列の長さまで）
+        while (textCounter < Texts.Length)  // 最大のテキストカウンター（配列の長さまで）
         {
             // 現在のテキストを設定
             SetText();
 
             // 指定した秒数待つ
-            yield return new WaitForSeconds(TextDisplayTimes[TextCounter]);
+            yield return new WaitForSeconds(TextDisplayTimes[textCounter]);
 
             // カウンターを進める
-            TextCounter++;
+            textCounter++;
 
             // 12番目のテキストが表示されたら nextText を表示
-            if (TextCounter == Texts.Length)
+            if (textCounter == Texts.Length)
             {
                 text.enabled = false;  // 現在のテキストを非表示
                 if(deviceCheck)
@@ -104,7 +104,7 @@ public class RadioTextController : MonoBehaviour
     void SetText()
     {
         // TextCounterに応じて表示するテキストを設定
-        text.text = Texts[TextCounter];
+        text.text = Texts[textCounter];
     }
 
     // Eボタンが押されたときの処理

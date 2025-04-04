@@ -49,22 +49,32 @@ public class GameOverManager : MonoBehaviour
     // ライフがゼロになった状態を表す定数
     private const int NO_LIFE = 0;
 
-    public int LifeCount;  // プレイヤーの残りライフ数
+    // プレイヤーの残りライフ数
+    public int LifeCount;
 
-    // ライフUIオブジェクト
-    [SerializeField] GameObject[] Life = new GameObject[MAX_LIFE_COUNT];
+    // ライフUIオブジェクト（最大ライフ数分の配列）
+    [SerializeField] private GameObject[] Life = new GameObject[MAX_LIFE_COUNT];
 
-    // 失われたライフのUIオブジェクト
-    [SerializeField] GameObject[] LostLife = new GameObject[MAX_LIFE_COUNT];
+    // 失われたライフのUIオブジェクト（最大ライフ数分の配列）
+    [SerializeField] private GameObject[] LostLife = new GameObject[MAX_LIFE_COUNT];
 
-    [SerializeField] AudioClip damageSound;  // ダメージSEのAudioClip
-    private AudioSource audioSource;  // プレイヤーのAudioSource
+    // ダメージ音のAudioClip
+    [SerializeField] private AudioClip damageSound;
 
-    private float lastDamageTime = -1.0f;  // 最後にダメージを受けた時間
-    private Renderer[] playerRenderers;  // プレイヤーのRenderer
-    private Color32 darkgray = new Color32(255, 204, 204, 255);  // 点滅時の色
+    // プレイヤーのAudioSource
+    private AudioSource audioSource;
 
-    private string currentScene;  // 現在のシーン名
+    // 最後にダメージを受けた時間（クールダウン用）
+    private float lastDamageTime = -1.0f;
+
+    // プレイヤーのRenderer
+    private Renderer[] playerRenderers;
+
+    // 点滅時の色（暗灰色）
+    private Color32 darkgray = new Color32(255, 204, 204, 255);
+
+    // 現在のシーン名
+    private string currentScene;
 
     // Start is called before the first frame update
     void Start()
