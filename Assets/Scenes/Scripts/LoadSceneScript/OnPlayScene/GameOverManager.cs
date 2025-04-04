@@ -35,7 +35,7 @@ public class GameOverManager : MonoBehaviour
     /// <summary>
     /// プレイヤーの点滅回数
     /// </summary>
-    private const int BLINK_COUNT = 10;
+    private const int BLINK_COUNT = 5;
 
     /// <summary>
     /// ダメージ判定における距離の閾値（メートル）
@@ -70,8 +70,8 @@ public class GameOverManager : MonoBehaviour
     // プレイヤーのRenderer
     private Renderer[] playerRenderers;
 
-    // 点滅時の色（暗灰色）
-    private Color32 darkgray = new Color32(255, 204, 204, 255);
+    // 点滅時の色
+    private Color32 red = new Color32(255, 204, 204, 255);
 
     // 現在のシーン名
     private string currentScene;
@@ -191,7 +191,7 @@ public class GameOverManager : MonoBehaviour
             // プレイヤーを赤く
             for (int j = 0; j < playerRenderers.Length; j++)
             {
-                playerRenderers[j].material.color = darkgray;
+                playerRenderers[j].material.color = red;
             }
 
             yield return new WaitForSeconds(BLINK_INTERVAL);
