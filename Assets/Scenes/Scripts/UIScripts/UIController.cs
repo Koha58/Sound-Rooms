@@ -123,8 +123,8 @@ public class UIController : MonoBehaviour
             panel.SetActive(false);
         }
 
-        // カーソルを非表示にする
-        for (int i = 0; i < Cursor.Length; i++) Cursor[i].SetActive(false);
+        //// カーソルを非表示にする
+        //for (int i = 0; i < Cursor.Length; i++) Cursor[i].SetActive(false);
     }
 
     // Update is called once per frame
@@ -215,18 +215,30 @@ public class UIController : MonoBehaviour
                 panel.SetActive(false); // すべてのパネルを非表示
             }
 
-            for (int i = 0; i < Cursor.Length; i++) Cursor[i].SetActive(false); // カーソルを非表示
+            //for (int i = 0; i < Cursor.Length; i++) Cursor[i].SetActive(false); // カーソルを非表示
 
             Time.timeScale = TimeScaleRunning; // ゲームの進行を再開
         }
 
-        // 各UIオブジェクトに応じて設定パネルを切り替える処理
+        //各UIオブジェクトに応じて設定パネルを切り替える処理
         if (selectedGameObject == settingButton)
         {
             settingPanel.SetActive(true);
             explanationPanel.SetActive(false);
             goTitlePanel.SetActive(false);
-            for (int i = 0; i < Cursor.Length; i++) Cursor[i].SetActive(false);
+        }
+        else if (selectedGameObject == Cursor[0])
+        {
+
+        }
+        else if (selectedGameObject == Cursor[1])
+        {
+        }
+        else if (selectedGameObject == Cursor[2])
+        {
+        }
+        else if (selectedGameObject == Cursor[3])
+        {
         }
         else if (selectedGameObject == qperationExplanationButton)
         {
@@ -238,12 +250,6 @@ public class UIController : MonoBehaviour
             keyBoardMoveSettingSelect.SetActive(false); // キーボード移動設定を非表示
             gamePadMoveSettingSelect.SetActive(false); // ゲームパッド移動設定を非表示
             gamePad.SetActive(false); // ゲームパッド設定を非表示
-        }
-        else if (selectedGameObject == backTitleButton)
-        {
-            settingPanel.SetActive(false);
-            explanationPanel.SetActive(false);
-            goTitlePanel.SetActive(true);
         }
         // その他のUIオブジェクトに応じて設定を切り替える処理（スライダーやボタンの選択）
         else if (selectedGameObject == keyBoardButton)
@@ -260,39 +266,94 @@ public class UIController : MonoBehaviour
             keyBoard.SetActive(false);
             gamePad.SetActive(true);
         }
-        else if (selectedGameObject == BGMSliderGameObject)
+        else if (selectedGameObject == backTitleButton)
         {
-            Cursor[CursorBGMIndex].SetActive(true); // BGMのカーソルを表示
-            Cursor[CursorSEIndex].SetActive(false);
-            Cursor[CursorMicIndex].SetActive(false);
-            Cursor[CursorMouseIndex].SetActive(false);
-        }
-        else if (selectedGameObject == SESliderGameObject)
-        {
-            Cursor[CursorBGMIndex].SetActive(false);
-            Cursor[CursorSEIndex].SetActive(true); // SEのカーソルを表示
-            Cursor[CursorMicIndex].SetActive(false);
-            Cursor[CursorMouseIndex].SetActive(false);
-        }
-        else if (selectedGameObject == MicSliderGameObject)
-        {
-            Cursor[CursorBGMIndex].SetActive(false);
-            Cursor[CursorSEIndex].SetActive(false);
-            Cursor[CursorMicIndex].SetActive(true); // マイクのカーソルを表示
-            Cursor[CursorMouseIndex].SetActive(false);
-        }
-        else if (selectedGameObject == MouseSliderGameObject)
-        {
-            Cursor[CursorBGMIndex].SetActive(false);
-            Cursor[CursorSEIndex].SetActive(false);
-            Cursor[CursorMicIndex].SetActive(false);
-            Cursor[CursorMouseIndex].SetActive(true); // マウスのカーソルを表示
+            settingPanel.SetActive(false);
+            explanationPanel.SetActive(false);
+            goTitlePanel.SetActive(true);
         }
         // 何も選択されていない場合、settingButtonにフォーカスを当てる
         else if (selectedGameObject == null)
         {
             // selectedGameObjectがnullの場合、settingButtonにフォーカスを当てる
             EventSystem.current.SetSelectedGameObject(settingButton);
+        }
+
+        {
+            //// 各UIオブジェクトに応じて設定パネルを切り替える処理
+            //if (selectedGameObject == settingButton)
+            //{
+            //    settingPanel.SetActive(true);
+            //    explanationPanel.SetActive(false);
+            //    goTitlePanel.SetActive(false);
+            //    for (int i = 0; i < Cursor.Length; i++) Cursor[i].SetActive(false);
+            //}
+            //else if (selectedGameObject == qperationExplanationButton)
+            //{
+            //    settingPanel.SetActive(false);
+            //    explanationPanel.SetActive(true);
+            //    goTitlePanel.SetActive(false);
+
+            //    keyBoard.SetActive(true); // キーボード設定を表示
+            //    keyBoardMoveSettingSelect.SetActive(false); // キーボード移動設定を非表示
+            //    gamePadMoveSettingSelect.SetActive(false); // ゲームパッド移動設定を非表示
+            //    gamePad.SetActive(false); // ゲームパッド設定を非表示
+            //}
+            //else if (selectedGameObject == backTitleButton)
+            //{
+            //    settingPanel.SetActive(false);
+            //    explanationPanel.SetActive(false);
+            //    goTitlePanel.SetActive(true);
+            //}
+            //// その他のUIオブジェクトに応じて設定を切り替える処理（スライダーやボタンの選択）
+            //else if (selectedGameObject == keyBoardButton)
+            //{
+            //    keyBoardMoveSettingSelect.SetActive(true);
+            //    gamePadMoveSettingSelect.SetActive(false);
+            //    keyBoard.SetActive(true);
+            //    gamePad.SetActive(false);
+            //}
+            //else if (selectedGameObject == gamePadButton)
+            //{
+            //    keyBoardMoveSettingSelect.SetActive(false);
+            //    gamePadMoveSettingSelect.SetActive(true);
+            //    keyBoard.SetActive(false);
+            //    gamePad.SetActive(true);
+            //}
+            //else if (selectedGameObject == BGMSliderGameObject)
+            //{
+            //    Cursor[CursorBGMIndex].SetActive(true); // BGMのカーソルを表示
+            //    Cursor[CursorSEIndex].SetActive(false);
+            //    Cursor[CursorMicIndex].SetActive(false);
+            //    Cursor[CursorMouseIndex].SetActive(false);
+            //}
+            //else if (selectedGameObject == SESliderGameObject)
+            //{
+            //    Cursor[CursorBGMIndex].SetActive(false);
+            //    Cursor[CursorSEIndex].SetActive(true); // SEのカーソルを表示
+            //    Cursor[CursorMicIndex].SetActive(false);
+            //    Cursor[CursorMouseIndex].SetActive(false);
+            //}
+            //else if (selectedGameObject == MicSliderGameObject)
+            //{
+            //    Cursor[CursorBGMIndex].SetActive(false);
+            //    Cursor[CursorSEIndex].SetActive(false);
+            //    Cursor[CursorMicIndex].SetActive(true); // マイクのカーソルを表示
+            //    Cursor[CursorMouseIndex].SetActive(false);
+            //}
+            //else if (selectedGameObject == MouseSliderGameObject)
+            //{
+            //    Cursor[CursorBGMIndex].SetActive(false);
+            //    Cursor[CursorSEIndex].SetActive(false);
+            //    Cursor[CursorMicIndex].SetActive(false);
+            //    Cursor[CursorMouseIndex].SetActive(true); // マウスのカーソルを表示
+            //}
+            //// 何も選択されていない場合、settingButtonにフォーカスを当てる
+            //else if (selectedGameObject == null)
+            //{
+            //    // selectedGameObjectがnullの場合、settingButtonにフォーカスを当てる
+            //    EventSystem.current.SetSelectedGameObject(settingButton);
+            //}
         }
     }
 

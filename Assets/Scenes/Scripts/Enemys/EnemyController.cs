@@ -34,18 +34,22 @@ public class EnemyController : MonoBehaviour
     private List<Transform> patrolPoints;     // 巡回ポイントリスト
     private int currentPatrolPointIndex = 0;  // 現在の巡回ポイントのインデックス
     private bool isPatrolling = false;      　// 巡回中かどうか
+    private float walkSpeed = 1.0f;           // 巡回速度設定
 
     //追跡
-    public Transform player;                  //プレイヤーの位置
-    float distanceToPlayer = Mathf.Infinity;  // プレイヤーとの距離
-    float chaseRange = 7f;        　　　　　　//Playerを検知する範囲
+    public Transform player;                          //プレイヤーの位置
+    private float distanceToPlayer = Mathf.Infinity;  // プレイヤーとの距離
+    private float chaseRange = 7f;                    //Playerを検知する範囲
+    private float runSpeed = 3.5f;                    // 追跡速度設定
+
+    //探す・聞く・何もしない
+    private float idleSpeed = 0.0f; // 探す・聞く・何もしない時の速度設定
+    private float searchTimer = 0f; // 探す状態を維持する時間
 
     //ラジオカセット
     public float detectionRange = 10f;   　// 音を聞き取れる範囲
     public Vector3 soundPosition;        　//ラジオカセットの置かれているポイント
-    private bool isMovingToSound = false; //ラジオカセットに反応して移動する
-
-    private float searchTimer = 0f; // 探す状態のタイマーs
+    private bool isMovingToSound = false;  //ラジオカセットに反応して移動する
 
     //ステートベースAI
     #region
@@ -165,9 +169,9 @@ public class EnemyController : MonoBehaviour
 
     private void Update()
     {
-        GameObject obj = GameObject.Find("Player");      //Playerオブジェクトを探す
-        PlayerSeen PS = obj.GetComponent<PlayerSeen>();  //付いているスクリプトを取得
-        ObjectPlacer OP = obj.GetComponent<ObjectPlacer>();
+        GameObject obj = GameObject.Find("Player");         //Playerオブジェクトを探す
+        PlayerSeen PS = obj.GetComponent<PlayerSeen>();     //付いているスクリプト(PlayerSeen)を取得
+        ObjectPlacer OP = obj.GetComponent<ObjectPlacer>(); //付いているスクリプト( ObjectPlacer)を取得
 
         #region　プレイヤーの位置を確認し、追跡・巡回を判断
         Vector3 Position = player.position - transform.position;      // ターゲットの位置と自身の位置の差を計算
@@ -175,40 +179,47 @@ public class EnemyController : MonoBehaviour
 
         distanceToPlayer = Vector3.Distance(player.position, transform.position); // プレイヤーとの距離を計算
 
+        // プレイヤーが前方にいるかつラジオが範囲内におかれていないかつ視界内にいる場合
         if (isFront && !isMovingToSound && PS.isVisible)
         {
+            //追跡範囲内
             if (distanceToPlayer <= chaseRange)
             {
                 behaviors.GetBehavior(BehaviorType.chase).value = 2; // プレイヤーを追跡する
             }
+            //追跡範囲外
             else if (distanceToPlayer >= chaseRange)
             {
-                behaviors.GetBehavior(BehaviorType.patrol).value = 2;   // プレイヤーが範囲外の場合、巡回に戻る
-                isPatrolling = true;
+                behaviors.GetBehavior(BehaviorType.patrol).value = 2;// プレイヤーが範囲外の場合、巡回に戻る
+                isPatrolling = true;                                 // 移動開始
             }
         }
+        // 巡回中の処理
         else if (Vector3.Distance(transform.position, patrolPoints[currentPatrolPointIndex].position) < 0.5f)
         {
-            behaviors.GetBehavior(BehaviorType.search).value = 2;
+            behaviors.GetBehavior(BehaviorType.search).value = 2;   // 巡回ポイント到達後、周辺を探索する
         }
         #endregion
 
+        #region ラジオカセットが置かれた時に反応し、状態偏移を行う
         // ラジオカセットの音に反応して移動する
         if (isMovingToSound && OP.isParticle)
         {
-            isPatrolling = false;
+            isPatrolling = false;   // 目的地に向かって移動中は巡回停止
+
             // 目的地に近づいたら停止
             if (Vector3.Distance(this.transform.position, soundPosition) < 1f)
             {
                 behaviors.GetBehavior(BehaviorType.hear).value = 2; // 音の元に到達
-                isMovingToSound = false;
+                isMovingToSound = false;                            // 移動停止
             }
+            // 音源に向かっている途中で、一定距離まで接近
             else if (Vector3.Distance(this.transform.position, soundPosition) >=1f&& OP.isParticle)
             {
                 behaviors.GetBehavior(BehaviorType.near).value = 2; // 音に近づいている
             }
         }
-
+        #endregion
 
         // 現在のステートに基づいた処理
         switch (curretState)
@@ -218,14 +229,16 @@ public class EnemyController : MonoBehaviour
                 if (stateEnter)
                 {
                     stateEnter = false;
-                    behaviors.GetBehavior(BehaviorType.doNothing).value = 0;
-                    behaviors.GetBehavior(BehaviorType.patrol).value = 1;
+                    behaviors.GetBehavior(BehaviorType.doNothing).value = 0;//何もしない行動を終了
+                    behaviors.GetBehavior(BehaviorType.patrol).value = 2;   //巡回に切り替える
                     Debug.Log("何もしない");
                 }
 
                 behaviors.SortDesire();//行動パターンをソート
 
-                if (behaviors.behaviorList[0].value >= 1)//リストの一番上の1を上回ったら
+                //行動リストの中で最も優先度の高い行動を選択
+                //リストの一番上の1を上回ったら
+                if (behaviors.behaviorList[0].value >= 1)
                 {
                     Behavior behavior = behaviors.behaviorList[0];
                     switch (behavior.type)
@@ -255,33 +268,34 @@ public class EnemyController : MonoBehaviour
                 if (stateEnter)
                 {
                     stateEnter = false;
-                    behaviors.GetBehavior(BehaviorType.patrol).value = 0;
-                    PS.isVisualization = false;
+                    behaviors.GetBehavior(BehaviorType.patrol).value = 0; // 巡回行動を終了
+                    PS.isVisualization = false;                           // プレイヤーの可視化をオフ
                     Debug.Log("巡回中");
-                    animator.SetBool("Walk", true);
-                    animator.SetBool("Run", false);
-                    animator.SetBool("Idle", false);
+                    animator.SetBool("Walk", true);     // 歩行アニメーションを開始
+                    animator.SetBool("Run", false);     // 走行アニメーションを停止
+                    animator.SetBool("Idle", false);    // 待機アニメーションを停止
                 }
 
-                Walk(); // 歩く音
+                Walk(); // 歩く音を再生
 
+                // プレイヤーが前方にいるかつラジオが範囲内におかれていないかつ視界内にいる場合
                 if (isPatrolling)
                 {
+                    navMeshAgent.speed = walkSpeed;// 巡回速度設定
 
-                    navMeshAgent.speed = 1.0f;
-
-                    navMeshAgent.SetDestination(patrolPoints[currentPatrolPointIndex].position);
+                    navMeshAgent.SetDestination(patrolPoints[currentPatrolPointIndex].position);// 次の巡回ポイントを設定
 
                     // 巡回ポイントに到達したかチェック
                     if (Vector3.Distance(transform.position, patrolPoints[currentPatrolPointIndex].position) < 0.5f)
                     {
-                        // 次の巡回ポイントに移動
-                        currentPatrolPointIndex = (currentPatrolPointIndex + 1) % patrolPoints.Count;
+                        currentPatrolPointIndex = (currentPatrolPointIndex + 1) % patrolPoints.Count; // 次の巡回ポイントに移動
                     }
                 }
 
-                behaviors.SortDesire();
+                behaviors.SortDesire();// 行動パターンをソート
 
+                //行動リストの中で最も優先度の高い行動を選択
+                //リストの一番上の1を上回ったら
                 if (behaviors.behaviorList[0].value >= 1)
                 {
                     Behavior behavior = behaviors.behaviorList[0];
@@ -312,15 +326,15 @@ public class EnemyController : MonoBehaviour
                 if (stateEnter)
                 {
                     stateEnter = false;
-                    behaviors.GetBehavior(BehaviorType.search).value = 0;
+                    behaviors.GetBehavior(BehaviorType.search).value = 0; // 探索行動を終了
                     Debug.Log("どこにいるかな？");
-                    navMeshAgent.speed = 0.0f;
-                    animator.SetBool("Walk", false);
-                    animator.SetBool("Run", false);
-                    animator.SetBool("Idle", true);
+                    navMeshAgent.speed = idleSpeed;
+                    animator.SetBool("Walk", false);  // 歩行アニメーションを停止
+                    animator.SetBool("Run", false);   // 走行アニメーションを停止
+                    animator.SetBool("Idle", true);   // 待機アニメーションを開始
                 }
 
-                Idle();
+                Idle();// アイドル（探す）音を再生
 
                 navMeshAgent.SetDestination(this.transform.position); // 現位置で止まる
 
@@ -331,11 +345,13 @@ public class EnemyController : MonoBehaviour
                     searchTimer = 0f;// 探す状態に入ったらタイマーをリセット
                     behaviors.GetBehavior(BehaviorType.patrol).value = 2; // 巡回に戻す
                     isPatrolling = true;
-                    PS.isVisualization = false;
+                    PS.isVisualization = false; // プレイヤーの可視化をオフ
                 }
 
-                behaviors.SortDesire();
+                behaviors.SortDesire();// 行動パターンをソート
 
+                //行動リストの中で最も優先度の高い行動を選択
+                //リストの一番上の1を上回ったら
                 if (behaviors.behaviorList[0].value >= 1)
                 {
                     Behavior behavior = behaviors.behaviorList[0];
@@ -366,27 +382,29 @@ public class EnemyController : MonoBehaviour
                 if (stateEnter)
                 {
                     stateEnter = false;
-                    behaviors.GetBehavior(BehaviorType.chase).value = 0;
+                    behaviors.GetBehavior(BehaviorType.chase).value = 0;// 追跡行動を終了
                     Debug.Log("追いかけいるよ");
 
-                    animator.SetBool("Walk", false);
-                    animator.SetBool("Run", true);
-                    animator.SetBool("Idle", false);
-                    navMeshAgent.speed = 0.0f;
+                    animator.SetBool("Walk", false);  // 歩行アニメーションを停止
+                    animator.SetBool("Run", true);    // 走行アニメーションを開始
+                    animator.SetBool("Idle", false);  // 待機アニメーションを停止
+                    navMeshAgent.speed = 0.0f;        // 初期速度設定
                 }
 
-                PS.isVisible = true;
-                PS.isVisualization = true; // プレイヤーの可視化をオンs
+                PS.isVisible = true;       // プレイヤーを可視化
+                PS.isVisualization = true; // プレイヤーの可視化をオン
 
-                Run();  // 走る音
+                Run();  // 走る音を再生
 
-                transform.LookAt(player.transform);
+                transform.LookAt(player.transform);// プレイヤーに向かって回転
 
-                navMeshAgent.SetDestination(player.transform.position);
-                navMeshAgent.speed = 3.5f;
+                navMeshAgent.SetDestination(player.transform.position); // プレイヤーに向かって移動
+                navMeshAgent.speed = runSpeed;                          // 追跡速度設定
 
-                behaviors.SortDesire();
+                behaviors.SortDesire();// 行動パターンをソート
 
+                //行動リストの中で最も優先度の高い行動を選択
+                //リストの一番上の1を上回ったら
                 if (behaviors.behaviorList[0].value >= 1)
                 {
                     Behavior behavior = behaviors.behaviorList[0];
@@ -417,31 +435,34 @@ public class EnemyController : MonoBehaviour
                 if (stateEnter)
                 {
                     stateEnter = false;
-                    behaviors.GetBehavior(BehaviorType.hear).value = 0;
-                    animator.SetBool("Walk", false);
-                    animator.SetBool("Run", false);
-                    animator.SetBool("Idle", true);
+                    behaviors.GetBehavior(BehaviorType.hear).value = 0;// 聞く行動を終了
                     Debug.Log("聞く");
+                    animator.SetBool("Walk", false);  // 歩行アニメーションを停止
+                    animator.SetBool("Run", false);   // 走行アニメーションを停止
+                    animator.SetBool("Idle", true);   // 待機アニメーションを開始
                 }
 
-                Idle();
+                Idle();// アイドル（探す）音を再生
 
                 // ラジオカセットの音に反応して移動する
                 if (OP.isParticle)
                 {
-                    navMeshAgent.SetDestination(this.transform.position);
-                    navMeshAgent.speed = 1.0f;
+                    navMeshAgent.SetDestination(this.transform.position); // 音源に移動
+                    navMeshAgent.speed =walkSpeed;                        // 移動速度設定
                 }
                 else if (!OP.isParticle)
                 {
-                    isMovingToSound = false;
-                    navMeshAgent.SetDestination(patrolPoints[currentPatrolPointIndex].position);
-                    behaviors.GetBehavior(BehaviorType.patrol).value = 2; // 音に近づいている
+                    isMovingToSound = false;                                                     // 音源が消えたら移動停止
+                    navMeshAgent.SetDestination(patrolPoints[currentPatrolPointIndex].position); // 巡回ポイントに戻る
+                    behaviors.GetBehavior(BehaviorType.patrol).value = 2;                        // 巡回に戻す
+                
                 }
 
                 behaviors.SortDesire();//行動パターンをソート
 
-                if (behaviors.behaviorList[0].value >= 1)//リストの一番上の1を上回ったら
+                //行動リストの中で最も優先度の高い行動を選択
+                //リストの一番上の1を上回ったら
+                if (behaviors.behaviorList[0].value >= 1)
                 {
                     Behavior behavior = behaviors.behaviorList[0];
                     switch (behavior.type)
@@ -471,24 +492,26 @@ public class EnemyController : MonoBehaviour
                 if (stateEnter)
                 {
                     stateEnter = false;
-                    behaviors.GetBehavior(BehaviorType.near).value = 0;
-                    PS.isVisualization = false;
+                    behaviors.GetBehavior(BehaviorType.near).value = 0; // 音源に近づく行動を終了
+                    PS.isVisualization = false; // プレイヤーの可視化をオフ
                     Debug.Log("近づく");
                 }
 
-                animator.SetBool("Walk", true);
-                animator.SetBool("Run", false);
-                animator.SetBool("Idle", false);
+                animator.SetBool("Walk", true);  // 歩行アニメーションを開始
+                animator.SetBool("Run", false);  // 走行アニメーションを停止
+                animator.SetBool("Idle", false); // 待機アニメーションを停止
 
-                navMeshAgent.speed = 2.0f;
+                navMeshAgent.speed = walkSpeed;// 移動速度設定
 
-                navMeshAgent.SetDestination(soundPosition);
+                navMeshAgent.SetDestination(soundPosition); // 音源に向かって移動
 
-                Walk(); // 歩く音
+                Walk(); // 歩く音を再生
 
                 behaviors.SortDesire();//行動パターンをソート
 
-                if (behaviors.behaviorList[0].value >= 1)//リストの一番上の1を上回ったら
+                //行動リストの中で最も優先度の高い行動を選択
+                //リストの一番上の1を上回ったら
+                if (behaviors.behaviorList[0].value >= 1)
                 {
                     Behavior behavior = behaviors.behaviorList[0];
                     switch (behavior.type)
@@ -510,7 +533,6 @@ public class EnemyController : MonoBehaviour
                             return;
                     }
                 }
-
                 #endregion
                 break;
         }
