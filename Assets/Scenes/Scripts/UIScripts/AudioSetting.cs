@@ -15,6 +15,7 @@ public class AudioSetting : MonoBehaviour
     private const float MouseSensitivityDivisor = 50f;  // Y軸の感度調整用
     private const float MouseSensitivityMultiplier = 50f;  // X軸の感度調整用
     private const float DefaultMicVolume = 0.5f;  // 初期のマイク音量（デフォルト値）
+    private const int TargetFrameRate = 60;  // フレームレート固定値
 
     // オーディオミキサー、マイクオブジェクト、ボリューム設定用の変数
     [SerializeField] AudioMixer audioMixer;      // オーディオミキサー
@@ -33,6 +34,9 @@ public class AudioSetting : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
+        // フレームレートを60に固定
+        Application.targetFrameRate = TargetFrameRate;
+
         // マイクのAudioSourceコンポーネントを取得
         AudioSource Mic = micObject.GetComponent<AudioSource>();
 
