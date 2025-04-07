@@ -36,10 +36,10 @@ public class MovePlayer : MonoBehaviour
     private bool isShiftClickHeld;             // シフトキーが押されているかのフラグ
 
     // 当たり判定用設定
-    private const float WALL_CHECK_DISTANCE = 1.0f;  // 壁とのチェック距離
+    private const float WALL_CHECK_DISTANCE = 0.5f;  // 壁とのチェック距離
     [SerializeField] private LayerMask wallLayerMask;  // 壁のレイヤーマスク
 
-    private const float OBJECT_CHECK_DISTANCE = 1.0f; // 物とのチェック距離
+    private const float OBJECT_CHECK_DISTANCE = 0.7f; // 物とのチェック距離
     [SerializeField] private LayerMask objectLayerMask; // 物のレイヤーマスク
 
 
