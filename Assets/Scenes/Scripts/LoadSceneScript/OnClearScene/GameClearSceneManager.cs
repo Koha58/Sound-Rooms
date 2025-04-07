@@ -31,7 +31,7 @@ public class GameClearSceneManager : MonoBehaviour
 
     private const string TUTORIAL_SCENE = "TutorialScene"; // チュートリアルシーンの名前
     private const string STAGE1_SCENE = "Stage1";         // Stage1シーンの名前
-    private const string GAME_SCENE = "GameScene";         // GameSceneシーンの名前
+    private const string GAME_SCENE = "Stage2";         // Stage2シーンの名前
     private const string START_SCENE = "StartScene";       // StartSceneシーンの名前
 
     private const string PREVIOUS_SCENE_KEY = "PreviousScene"; // PlayerPrefsキー名
