@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Profiling;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -137,26 +138,12 @@ public class GameOverManager : MonoBehaviour
                 LifeCount--;
                 lastDamageTime = Time.time;  // ダメージを受けた時間を記録
 
-                // プレイヤーを赤く点滅させる
-                StartCoroutine(BlinkPlayer());
-
                 // ダメージSEを再生
-                if (audioSource != null && damageSound != null)
-                {
-                    Debug.Log("Playing damage sound!");
-                    audioSource.PlayOneShot(damageSound);
-                }
-                else
-                {
-                    if (audioSource == null)
-                    {
-                        Debug.LogWarning("AudioSource is null!");
-                    }
-                    if (damageSound == null)
-                    {
-                        Debug.LogWarning("damageSound is null!");
-                    }
-                }
+                Debug.Log("Playing damage sound!");
+                audioSource.PlayOneShot(damageSound);
+                // プレイヤーを赤く点滅させる
+                StartCoroutine("BlinkPlayer");
+                
             }
         }
 

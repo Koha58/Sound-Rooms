@@ -231,7 +231,7 @@ public class EnemyController : MonoBehaviour
                     stateEnter = false;
                     behaviors.GetBehavior(BehaviorType.doNothing).value = 0;//何もしない行動を終了
                     behaviors.GetBehavior(BehaviorType.patrol).value = 2;   //巡回に切り替える
-                    Debug.Log("何もしない");
+                    //Debug.Log("何もしない");
                 }
 
                 behaviors.SortDesire();//行動パターンをソート
@@ -383,7 +383,7 @@ public class EnemyController : MonoBehaviour
                 {
                     stateEnter = false;
                     behaviors.GetBehavior(BehaviorType.chase).value = 0;// 追跡行動を終了
-                    Debug.Log("追いかけいるよ");
+                   // Debug.Log("追いかけいるよ");
 
                     animator.SetBool("Walk", false);  // 歩行アニメーションを停止
                     animator.SetBool("Run", true);    // 走行アニメーションを開始

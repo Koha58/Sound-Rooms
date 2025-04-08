@@ -185,14 +185,14 @@ public class TutorialMessageControll : MonoBehaviour
         GameObject impactObjectsArea = GameObject.Find("ImpactOnObjectsArea"); // "EnemyAttackArea" オブジェクトを探す
         ImpactOnObjects impactObjects = impactObjectsArea.GetComponent<ImpactOnObjects>(); // ImpactOnObjects スクリプトを取得
 
-        Debug.Log("Colliding with: " + other.gameObject.name); // 接触しているオブジェクトの名前をログ出力
+       // Debug.Log("Colliding with: " + other.gameObject.name); // 接触しているオブジェクトの名前をログ出力
 
         // UIDeviceCheck 配列が十分な長さかチェック
         if (UIDeviceCheck.Length > DEVICE_MESSAGE_1_INDEX && UIDeviceCheck.Length > DEVICE_MESSAGE_2_INDEX)
         {
             if (other.CompareTag("SettingPoint") && impactObjects.count != 1 && !objectPlacer.isOnSettingPoint)
             {
-                Debug.Log("SettingPoint triggered!"); // "SettingPoint" タグと一致した場合に表示されるログ
+               // Debug.Log("SettingPoint triggered!"); // "SettingPoint" タグと一致した場合に表示されるログ
                 OnPut = true;
 
                 if (isControllerInput) // コントローラーが使用されている場合
@@ -233,7 +233,7 @@ public class TutorialMessageControll : MonoBehaviour
             Debug.LogError("UIDeviceCheck array is too small to handle the indices.");
         }
 
-        Debug.Log("OnPut state after check: " + OnPut); // OnPut の状態を表示
+        //Debug.Log("OnPut state after check: " + OnPut); // OnPut の状態を表示
     }
 
     private void OnTriggerExit(Collider other)

@@ -290,7 +290,7 @@ public class StageSelectButton : MonoBehaviour
         {
             case StageIndex0: return "GetRecorder";
             case StageIndex1: return "Stage1";
-            case StageIndex2: return "GameScene";
+            case StageIndex2: return "Stage2";
             default: return "GetRecorder";
         }
     }

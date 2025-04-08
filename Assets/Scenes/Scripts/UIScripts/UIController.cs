@@ -64,6 +64,8 @@ public class UIController : MonoBehaviour
     [SerializeField] GameObject micObject;    // マイクオブジェクト
     public CinemachineFreeLook VCamera;       // Cinemachineカメラ
 
+    [SerializeField] private GameObject BackCursor;
+
     // 入力管理
     private GameInputSystem inputActions;     // 入力管理システム
     private Vector2 navigateInput;            // 移動の入力（2Dベクトル）
@@ -129,6 +131,8 @@ public class UIController : MonoBehaviour
 
         //// カーソルを非表示にする
         //for (int i = 0; i < Cursor.Length; i++) Cursor[i].SetActive(false);
+
+        BackCursor.GetComponent<Image>().enabled = false;
     }
 
     // Update is called once per frame
@@ -145,6 +149,8 @@ public class UIController : MonoBehaviour
         settingPanel.SetActive(true); // 設定パネル1を表示
         explanationPanel.SetActive(false); // 設定パネル2を非表示
         goTitlePanel.SetActive(false); // 設定パネル3を非表示
+
+        BackCursor.GetComponent<Image>().enabled = false;
 
         Time.timeScale = TimeScalePaused; // ゲームの進行を一時停止
     }
