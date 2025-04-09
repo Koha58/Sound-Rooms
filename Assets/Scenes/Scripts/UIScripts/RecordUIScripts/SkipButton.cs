@@ -37,15 +37,6 @@ public class SkipButton : MonoBehaviour
     }
 
     /// <summary>
-    /// Startメソッド
-    /// </summary>
-    // Startはゲーム開始時に1度だけ呼ばれる
-    void Start()
-    {
-        // 特に処理は書かれていないが、必要であればここに初期化処理を書くことができる
-    }
-
-    /// <summary>
     /// 入力を有効化する
     /// </summary>
     private void OnEnable()
