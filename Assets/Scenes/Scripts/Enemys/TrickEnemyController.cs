@@ -3,10 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-/// <summary>
-/// Enemyの制御（移動　アニメーション　サウンド）クラス
-/// </summary>
-public class EnemyController : MonoBehaviour
+public class TrickEnemy : MonoBehaviour
 {
     // キャラクターのID (敵キャラクターを一意に識別するため)
     public int characterID;
@@ -17,18 +14,18 @@ public class EnemyController : MonoBehaviour
     // PatrolPointManagerへの参照 (巡回ポイントを管理)
     private PatrolPointManager patrolPointManager;
 
-    // アニメーターの参照 (アニメーション制御用)
-    [SerializeField] Animator animator;
+    //// アニメーターの参照 (アニメーション制御用)
+    //[SerializeField] Animator animator;
 
-    // サウンド関連の変数
-    [SerializeField] AudioSource audioSourse; //オーディオソース取得
-    [SerializeField] AudioClip searchClip;    //探す音
-    [SerializeField] AudioClip runClip;       //走る音
-    [SerializeField] AudioClip walkClip;      //歩く音
+    //// サウンド関連の変数
+    //[SerializeField] AudioSource audioSourse; //オーディオソース取得
+    //[SerializeField] AudioClip searchClip;    //探す音
+    //[SerializeField] AudioClip runClip;       //走る音
+    //[SerializeField] AudioClip walkClip;      //歩く音
 
-    void Idle() { audioSourse.PlayOneShot(searchClip); }     //探す音を再生
-    void Run() { audioSourse.PlayOneShot(runClip); }         //走る音を再生
-    void Walk() { audioSourse.PlayOneShot(walkClip); }       //歩く音を再生
+    //void Idle() { audioSourse.PlayOneShot(searchClip); }     //探す音を再生
+    //void Run() { audioSourse.PlayOneShot(runClip); }         //走る音を再生
+    //void Walk() { audioSourse.PlayOneShot(walkClip); }       //歩く音を再生
 
     //巡回
     private List<Transform> patrolPoints;     // 巡回ポイントリスト
@@ -148,7 +145,7 @@ public class EnemyController : MonoBehaviour
     {
         // コンポーネントの取得
         navMeshAgent = GetComponent<NavMeshAgent>();
-        audioSourse = GetComponent<AudioSource>();
+        //audioSourse = GetComponent<AudioSource>();
 
         // PatrolPointManagerのインスタンスを取得
         patrolPointManager = FindObjectOfType<PatrolPointManager>();
@@ -214,7 +211,7 @@ public class EnemyController : MonoBehaviour
                 isMovingToSound = false;                            // 移動停止
             }
             // 音源に向かっている途中で、一定距離まで接近
-            else if (Vector3.Distance(this.transform.position, soundPosition) >=1f&& OP.isParticle)
+            else if (Vector3.Distance(this.transform.position, soundPosition) >= 1f && OP.isParticle)
             {
                 behaviors.GetBehavior(BehaviorType.near).value = 2; // 音に近づいている
             }
@@ -271,12 +268,12 @@ public class EnemyController : MonoBehaviour
                     behaviors.GetBehavior(BehaviorType.patrol).value = 0; // 巡回行動を終了
                     PS.isVisualization = false;                           // プレイヤーの可視化をオフ
                     //Debug.Log("巡回中");
-                    animator.SetBool("Walk", true);     // 歩行アニメーションを開始
-                    animator.SetBool("Run", false);     // 走行アニメーションを停止
-                    animator.SetBool("Idle", false);    // 待機アニメーションを停止
+                    //animator.SetBool("Walk", true);     // 歩行アニメーションを開始
+                    //animator.SetBool("Run", false);     // 走行アニメーションを停止
+                    //animator.SetBool("Idle", false);    // 待機アニメーションを停止
                 }
 
-                Walk(); // 歩く音を再生
+                //Walk(); // 歩く音を再生
 
                 // プレイヤーが前方にいるかつラジオが範囲内におかれていないかつ視界内にいる場合
                 if (isPatrolling)
@@ -329,12 +326,12 @@ public class EnemyController : MonoBehaviour
                     behaviors.GetBehavior(BehaviorType.search).value = 0; // 探索行動を終了
                     //Debug.Log("どこにいるかな？");
                     navMeshAgent.speed = idleSpeed;
-                    animator.SetBool("Walk", false);  // 歩行アニメーションを停止
-                    animator.SetBool("Run", false);   // 走行アニメーションを停止
-                    animator.SetBool("Idle", true);   // 待機アニメーションを開始
+                    //animator.SetBool("Walk", false);  // 歩行アニメーションを停止
+                    //animator.SetBool("Run", false);   // 走行アニメーションを停止
+                    //animator.SetBool("Idle", true);   // 待機アニメーションを開始
                 }
 
-                Idle();// アイドル（探す）音を再生
+                //Idle();// アイドル（探す）音を再生
 
                 navMeshAgent.SetDestination(this.transform.position); // 現位置で止まる
 
@@ -383,18 +380,18 @@ public class EnemyController : MonoBehaviour
                 {
                     stateEnter = false;
                     behaviors.GetBehavior(BehaviorType.chase).value = 0;// 追跡行動を終了
-                   // Debug.Log("追いかけいるよ");
+                                                                        // Debug.Log("追いかけいるよ");
 
-                    animator.SetBool("Walk", false);  // 歩行アニメーションを停止
-                    animator.SetBool("Run", true);    // 走行アニメーションを開始
-                    animator.SetBool("Idle", false);  // 待機アニメーションを停止
+                    //animator.SetBool("Walk", false);  // 歩行アニメーションを停止
+                    //animator.SetBool("Run", true);    // 走行アニメーションを開始
+                    //animator.SetBool("Idle", false);  // 待機アニメーションを停止
                     navMeshAgent.speed = 0.0f;        // 初期速度設定
                 }
 
                 PS.isVisible = true;       // プレイヤーを可視化
                 PS.isVisualization = true; // プレイヤーの可視化をオン
 
-                Run();  // 走る音を再生
+                //Run();  // 走る音を再生
 
                 transform.LookAt(player.transform);// プレイヤーに向かって回転
 
@@ -437,25 +434,25 @@ public class EnemyController : MonoBehaviour
                     stateEnter = false;
                     behaviors.GetBehavior(BehaviorType.hear).value = 0;// 聞く行動を終了
                     //Debug.Log("聞く");
-                    animator.SetBool("Walk", false);  // 歩行アニメーションを停止
-                    animator.SetBool("Run", false);   // 走行アニメーションを停止
-                    animator.SetBool("Idle", true);   // 待機アニメーションを開始
+                    //animator.SetBool("Walk", false);  // 歩行アニメーションを停止
+                    //animator.SetBool("Run", false);   // 走行アニメーションを停止
+                    //animator.SetBool("Idle", true);   // 待機アニメーションを開始
                 }
 
-                Idle();// アイドル（探す）音を再生
+                //Idle();// アイドル（探す）音を再生
 
                 // ラジオカセットの音に反応して移動する
                 if (OP.isParticle)
                 {
                     navMeshAgent.SetDestination(this.transform.position); // 音源に移動
-                    navMeshAgent.speed =walkSpeed;                        // 移動速度設定
+                    navMeshAgent.speed = walkSpeed;                        // 移動速度設定
                 }
                 else if (!OP.isParticle)
                 {
                     isMovingToSound = false;                                                     // 音源が消えたら移動停止
                     navMeshAgent.SetDestination(patrolPoints[currentPatrolPointIndex].position); // 巡回ポイントに戻る
                     behaviors.GetBehavior(BehaviorType.patrol).value = 2;                        // 巡回に戻す
-                
+
                 }
 
                 behaviors.SortDesire();//行動パターンをソート
@@ -497,15 +494,15 @@ public class EnemyController : MonoBehaviour
                     Debug.Log("近づく");
                 }
 
-                animator.SetBool("Walk", true);  // 歩行アニメーションを開始
-                animator.SetBool("Run", false);  // 走行アニメーションを停止
-                animator.SetBool("Idle", false); // 待機アニメーションを停止
+                //animator.SetBool("Walk", true);  // 歩行アニメーションを開始
+                //animator.SetBool("Run", false);  // 走行アニメーションを停止
+                //animator.SetBool("Idle", false); // 待機アニメーションを停止
 
                 navMeshAgent.speed = walkSpeed;// 移動速度設定
 
                 navMeshAgent.SetDestination(soundPosition); // 音源に向かって移動
 
-                Walk(); // 歩く音を再生
+                //Walk(); // 歩く音を再生
 
                 behaviors.SortDesire();//行動パターンをソート
 
