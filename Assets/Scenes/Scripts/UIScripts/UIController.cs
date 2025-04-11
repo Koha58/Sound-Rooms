@@ -105,7 +105,7 @@ public class UIController : MonoBehaviour
         inputActions.UI.BButton.canceled += ctx => isBButton = false;
 
         // Aボタンの入力を監視
-        // Aボタンが押された場合、isBButtonがtrueに設定される
+        // Aボタンが押された場合、isAButtonがtrueに設定される
         inputActions.UI.AButton.performed += ctx => isAButton = true;
         inputActions.UI.AButton.canceled += ctx => isAButton = false;
     }
