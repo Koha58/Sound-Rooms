@@ -489,5 +489,4 @@ public class UIController : MonoBehaviour
         // マウスの感度を設定（X軸の移動速度）
         VCamera.m_XAxis.m_MaxSpeed = mouseSensitivity * MouseMaxSpeedMultiplier; // X軸の感度を設定（掛け算を使用）
     }
-
 }

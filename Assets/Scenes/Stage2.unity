@@ -16858,7 +16858,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 450965157}
+  m_Father: {fileID: 1697926985}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -52550,6 +52550,7 @@ GameObject:
   - component: {fileID: 390705914}
   - component: {fileID: 390705913}
   - component: {fileID: 390705911}
+  - component: {fileID: 390705916}
   m_Layer: 5
   m_Name: UI Canvas
   m_TagString: Untagged
@@ -52692,6 +52693,31 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 1
   m_TargetDisplay: 0
+--- !u!114 &390705916
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 390705910}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8a417f14eb35454e87ac49a7c24aadd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputActions: {fileID: -944628639613478452, guid: 1b5bbe061cb657f4094a8b42eaef2f17,
+    type: 3}
+  MainMenu: {fileID: 1697926984}
+  SettingSelect: {fileID: 450965156}
+  ExplanationSelect: {fileID: 2040221878}
+  BackPanel: {fileID: 2053859967}
+  GoTitleSelectParent: {fileID: 1876416728}
+  buttonBui: {fileID: 0}
+  buttonAui: {fileID: 0}
+  settingCursorUI: {fileID: 136384449}
+  KeyboardPanel: {fileID: 0}
+  GameControllerPanel: {fileID: 0}
+  Menus: []
 --- !u!1001 &390725394
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -60569,7 +60595,6 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 136384448}
   - {fileID: 2067407715}
   - {fileID: 1999611978}
   - {fileID: 1154368047}
@@ -239151,6 +239176,7 @@ RectTransform:
   - {fileID: 938018937}
   - {fileID: 1441814015}
   - {fileID: 438251738}
+  - {fileID: 136384448}
   - {fileID: 450965157}
   - {fileID: 2040221879}
   - {fileID: 2053859968}
