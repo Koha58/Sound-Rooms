@@ -8,343 +8,295 @@ using UnityEngine.EventSystems;
 
 public class memo : MonoBehaviour
 {
-    [SerializeField] private InputActionAsset inputActions;
+    [SerializeField] private InputActionAsset inputActions; // Input Systemのアクションアセット
 
-    private InputAction openSettingAction;
-    private InputAction moveAction;
-    private InputAction backAction;
-    private InputAction decisionAction;
+    private InputAction openSettingAction; // 設定メニューを開くアクション
+    private InputAction moveAction;        // メニューカーソルを上下に動かすアクション
+    private InputAction backAction;        // 戻るアクション
+    private InputAction decisionAction;    // 決定アクション
 
-    // 設定メニュー関連のオブジェクト
-    [SerializeField] private GameObject MainMenu;  // 設定メニュー全体のオブジェクト
-    [SerializeField] private GameObject SettingSelect;
-    [SerializeField] private GameObject ExplanationSelect;
-    [SerializeField] private GameObject BackPanel;
-    [SerializeField] private GameObject GoTitleSelectParent;
-    [SerializeField] private Image buttonBui;         // BボタンのUI（戻るボタン表示用）
-    [SerializeField] private Image buttonAui;         // AボタンのUI（タイトルへ戻るボタン表示用）
-    [SerializeField] private Image settingCursorUI;   // 設定メニューのカーソル画像
+    // 設定メニューに関連するUIオブジェクト
+    [SerializeField] private GameObject MainMenu;      // 設定メニュー全体
+    [SerializeField] private Image buttonBui;          // BボタンUI（戻る）
+    [SerializeField] private Image buttonAui;          // AボタンUI（決定）
+    [SerializeField] private Image settingCursorUI;    // カーソル用画像
 
-    [SerializeField] private GameObject KeyboardPanel;
-    [SerializeField] private GameObject GameControllerPanel;
+    [SerializeField] private GameObject KeyboardPanel;        // キーボード操作パネル
+    [SerializeField] private GameObject GameControllerPanel;  // ゲームコントローラ操作パネル
 
-    public List<GameObject> Menus;
+    public List<GameObject> MenuSelects; // カーソルで選択するメニュー項目のリスト
+    public List<GameObject> Menus;       // （未使用）別のメニュー要素用？
+    public List<GameObject> cursor;
+    public List<Slider> slider;
 
-    // スライダーの管理
-    private int currentIndex = 0; // 現在選択中の項目（0: BGM, 1: SE, 2: Aボタン）
-    private int totalOptions;     // 選択可能な項目数（スライダーの数 + AボタンUI）
-    private bool isSliderControlMode = false;
+    private int currentIndex = 0;        // 現在カーソルが指しているメニューのインデックス
+    private float moveCooldown = 0.2f;   // カーソル移動のクールタイム（連打防止）
+    private float moveTimer = 0f;
 
-    // スティック入力の管理
-    private bool stickNeutral = true; // スティックの入力がニュートラルな状態か（押しっぱなし防止）
-    private bool canMove = true;      // 選択移動が可能か（入力クールダウン管理）
+    private const float TimeScalePaused = 0f;   // メニュー表示中：ゲーム停止
+    private const float TimeScaleRunning = 1f;  // メニュー非表示中：ゲーム再開
 
-    // カーソル位置管理
-    private Vector3 lastCursorPosition; // 最後に設定されたカーソルの位置
+    private bool IsSettingActive;// メニューが開いているかどうかを表すフラグ
 
-    // 定数（数値設定）
-    private const float InputCooldown = 0.1f;           // 連続入力のクールダウン時間
-    private const float StickThreshold = 0.5f;          // スティックの入力閾値
-    private const float MinStickNeutralThreshold = 0.1f;// スティックがニュートラルと見なされる閾値
-    private const float CursorOffsetX = -600f;         // カーソル位置のX軸オフセット
+    private float settingToggleCooldown = 0.5f; // メニュー開閉のクールタイム
+    private float settingToggleTimer = 0f;
 
-    private const float TimeScalePaused = 0f;  // ゲーム進行を一時停止するための定数
-    private const float TimeScaleRunning = 1f; // ゲーム進行を再開するための定数
+    private bool isControllingSlider = false;
+    private int currentSliderIndex = 0;
 
+    private bool isInDeviceSelectMode = false; // パネル切り替えモード中
+    private int devicePanelIndex = 0; // 0: KeyboardPanel, 1: GameControllerPanel
+
+    // アクションの有効化
     private void OnEnable()
     {
-        // InputActionAsset 内の "UI" というアクションマップを取得
         var uiMap = inputActions.FindActionMap("UI");
 
-        // 各入力アクション（設定を開く、メニュー移動、戻る、決定）を取得
         openSettingAction = uiMap.FindAction("OpenSetting");
         moveAction = uiMap.FindAction("SelectMenu");
         backAction = uiMap.FindAction("Return");
         decisionAction = uiMap.FindAction("Decision");
 
-        // 各アクションにイベントを登録
-        openSettingAction.performed += ctx => ToggleSettingMenu(!IsSettingActive); // 設定メニューの開閉
-        moveAction.performed += OnMove;            // メニュー選択移動処理を呼び出し
-        backAction.performed += ctx => Close();    // 戻る処理（メニューを閉じる）
-
-        // 各アクションを有効化（Enable）
         openSettingAction.Enable();
         moveAction.Enable();
         backAction.Enable();
         decisionAction.Enable();
     }
 
+    // アクションの無効化
     private void OnDisable()
     {
-        // 各アクションを無効化
         openSettingAction.Disable();
         moveAction.Disable();
         backAction.Disable();
         decisionAction.Disable();
-
-        // イベント登録を解除（メモリリーク防止のため）
-        openSettingAction.performed -= ctx => ToggleSettingMenu(!IsSettingActive);
-        moveAction.performed -= OnMove;
-        backAction.performed -= ctx => Close();
     }
-
-    // 設定メニューの状態を管理するプロパティ
-    public bool IsSettingActive { get; private set; }  // 設定メニューが開いているか
 
     private void Start()
     {
-        // 選択可能な項目数（スライダーの数 + AボタンUI）
-        totalOptions = Menus.Count;
+        MainMenu.SetActive(false);
+        KeyboardPanel.SetActive(false);
+        GameControllerPanel.SetActive(false);
+        // ▼ カーソルの表示切り替え
+        for (int i = 0; i <4; i++)
+        {
+            cursor[i].SetActive(i == currentSliderIndex);
+        }
+        currentIndex = 0;
     }
 
     private void Update()
     {
-        // 設定メニューが表示されている場合のみ処理を行う
-        if (!IsSettingActive) return;
-
-        // 現在のシーンがGameSceneの場合、canMoveをtrueに設定
-        if (SceneManager.GetActiveScene().name == "GameScene")
+        // クールタイムタイマーを減少
+        if (settingToggleTimer > 0f)
         {
-            canMove = true;
-
-            // ゲームパッドが接続されており、B(East)ボタンが押されたら
-            if (Gamepad.current != null && Gamepad.current.buttonEast.wasPressedThisFrame)
-            {
-                // 設定メニューを閉じる
-                Close();
-            }
-            // ゲームパッドが接続されており、AボタンUIが表示され、かつA(South)ボタンが押されたら
-            else if (Gamepad.current != null && Gamepad.current.buttonSouth.wasPressedThisFrame && buttonAui.enabled == true)
-            {
-                //// タイトルシーンに戻る
-                //Quit();
-            }
+            settingToggleTimer -= Time.unscaledDeltaTime;
         }
 
-        if (IsSettingActive && ExplanationSelect.activeSelf)
+        // メニューの開閉トグル（クールタイム中は無効）
+        if (openSettingAction.WasPressedThisFrame() && settingToggleTimer <= 0f)
         {
-            float xInput = moveAction.ReadValue<Vector2>().x;
-
-            if (stickNeutral && Mathf.Abs(xInput) > StickThreshold)
+            if (!IsSettingActive)
             {
-                stickNeutral = false;
-
-                if (xInput > 0)
-                {
-                    KeyboardPanel.SetActive(false);
-                    GameControllerPanel.SetActive(true);
-                }
-                else if (xInput < 0)
-                {
-                    KeyboardPanel.SetActive(true);
-                    GameControllerPanel.SetActive(false);
-                }
-
-                StartCoroutine(ResetStickNeutralAfterCooldown());
-            }
-        }
-
-        // ゲームパッドが使用されている場合、入力を処理
-        if (Gamepad.current != null)
-        {
-            HandleGamepadInput();
-        }
-    }
-
-    private void OnMove(InputAction.CallbackContext ctx)
-    {
-        // 設定メニューが開いておらず、または移動操作が無効なら何もしない
-        if (!IsSettingActive || !canMove) return;
-
-        // スティック（または方向キーなど）から入力値を取得
-        Vector2 input = ctx.ReadValue<Vector2>();
-
-        // スティックがニュートラルだった状態から、しきい値以上に倒されたときだけ処理
-        if (stickNeutral && Mathf.Abs(input.y) > StickThreshold)
-        {
-            stickNeutral = false; // 押しっぱなし防止のためフラグをfalseに
-
-            if (input.y > 0)
-            {
-                // 上に倒された：前の項目へ移動（最小0まで）
-                currentIndex = Mathf.Max(0, currentIndex - 1);
+                OpenSettingMenu();
             }
             else
             {
-                // 下に倒された：次の項目へ移動（最大 totalOptions - 1 まで）
-                currentIndex = Mathf.Min(totalOptions - 1, currentIndex + 1);
+                CloseSettingMenu();
             }
 
-            // カーソルの表示位置を更新
-            UpdateCursorPosition();
-
-            // クールダウン時間後に再び移動できるようにする
-            StartCoroutine(ResetStickNeutralAfterCooldown());
+            settingToggleTimer = settingToggleCooldown;
         }
-        else if (stickNeutral && Mathf.Abs(input.x) > StickThreshold)
+        // メニューがアクティブなときのみ操作可能
+        if (IsSettingActive)
         {
-            // 右スティックで左・右に倒された場合
-            if (input.x > 0)
+            moveTimer -= Time.unscaledDeltaTime;
+
+            Vector2 moveInput = moveAction.ReadValue<Vector2>();
+
+            // ▼ デバイス切り替えモード
+            if (isInDeviceSelectMode)
             {
-                // カーソルを右に移動（BGM/SEなどに移動）
-                currentIndex = Mathf.Min(Menus.Count - 1, currentIndex + 1);
-                UpdateCursorPosition();
+                // 左右入力でパネル切り替え
+                if (moveInput.x > 0.5f && moveTimer <= 0f)
+                {
+                    devicePanelIndex = 1; // GameControllerPanel
+                    UpdateDevicePanel();
+                    moveTimer = moveCooldown;
+                }
+                else if (moveInput.x < -0.5f && moveTimer <= 0f)
+                {
+                    devicePanelIndex = 0; // KeyboardPanel
+                    UpdateDevicePanel();
+                    moveTimer = moveCooldown;
+                }
+
+                // Bで戻る
+                if (backAction.WasPressedThisFrame())
+                {
+                    isInDeviceSelectMode = false;
+                    KeyboardPanel.SetActive(true);
+                    GameControllerPanel.SetActive(false);
+                    EventSystem.current.SetSelectedGameObject(MenuSelects[currentIndex]);
+                }
             }
-            else if (input.x < 0)
+            // ▼ スライダー操作モード
+            if (isControllingSlider)
             {
-                // カーソルを左に移動（BGM/SEなどに移動）
-                currentIndex = Mathf.Max(0, currentIndex - 1);
-                UpdateCursorPosition();
+                // ▼ カーソルの表示切り替え
+                for (int i = 0; i < cursor.Count; i++)
+                {
+                    cursor[i].SetActive(i == currentSliderIndex);
+                }
+
+                // スライダーの値を変更
+                if (moveInput.x > 0.5f && moveTimer <= 0f)
+                {
+                    var targetSlider = slider[currentSliderIndex];
+                    targetSlider.value = Mathf.Clamp(targetSlider.value + 1f, targetSlider.minValue, targetSlider.maxValue);
+                    moveTimer = moveCooldown;
+                }
+                else if (moveInput.x < -0.5f && moveTimer <= 0f)
+                {
+                    var targetSlider = slider[currentSliderIndex];
+                    targetSlider.value = Mathf.Clamp(targetSlider.value - 1f, targetSlider.minValue, targetSlider.maxValue);
+                    moveTimer = moveCooldown;
+                }
+
+                // 上下でスライダーの切り替え
+                if (moveInput.y > 0.5f && moveTimer <= 0f)
+                {
+                    currentSliderIndex = (currentSliderIndex - 1 + slider.Count) % slider.Count;
+                    EventSystem.current.SetSelectedGameObject(slider[currentSliderIndex].gameObject);
+                    moveTimer = moveCooldown;
+                }
+                else if (moveInput.y < -0.5f && moveTimer <= 0f)
+                {
+                    currentSliderIndex = (currentSliderIndex + 1) % slider.Count;
+                    EventSystem.current.SetSelectedGameObject(slider[currentSliderIndex].gameObject);
+                    moveTimer = moveCooldown;
+                }
+
+                // Bでスライダー操作からメニュー戻る
+                if (backAction.WasPressedThisFrame())
+                {
+                    isControllingSlider = false;
+
+                    // ▼ スライダー用カーソルをすべて非表示にする
+                    foreach (var c in cursor)
+                    {
+                        c.SetActive(false);
+                    }
+
+                    EventSystem.current.SetSelectedGameObject(MenuSelects[currentIndex]);
+                }
             }
-
-            // クールダウン時間後に再び移動できるようにする
-            StartCoroutine(ResetStickNeutralAfterCooldown());
-        }
-    }
-
-    private IEnumerator ResetStickNeutralAfterCooldown()
-    {
-        canMove = false;                      // 移動操作を一時的に無効化
-        yield return new WaitForSeconds(InputCooldown); // 一定時間待機（クールダウン）
-        canMove = true;                       // 再び移動操作を有効にする
-        stickNeutral = true;                 // スティックがニュートラルに戻ったと見なす
-    }
-
-    /// <summary>
-    /// 設定メニューを開閉する
-    /// </summary>
-    /// <param name="isActive">設定メニューを表示するかどうかのフラグ</param>
-    public void ToggleSettingMenu(bool isActive)
-    {
-        // メニューの表示・非表示を制御
-        MainMenu.SetActive(isActive);
-        IsSettingActive = isActive;
-
-        // ゲームパッドが使用されている場合のみ、UIのBボタンとカーソルを有効にする
-        bool isUsingGamepad = Gamepad.current != null;
-        buttonBui.enabled = isUsingGamepad && isActive;
-        settingCursorUI.enabled = isUsingGamepad && isActive;
-
-        // メニューが表示されている場合、カーソル位置を更新
-        if (isActive)
-        {
-            UpdateCursorPosition();
-        }
-    }
-
-    /// <summary>
-    /// ゲームパッドの入力を処理する
-    /// </summary>
-    private void HandleGamepadInput()
-    {
-        // 左スティックの入力を取得
-        Vector2 input = Gamepad.current.leftStick.ReadValue();
-
-        // 入力可能な状態で、スティックの上下入力に応じてスライダーの選択を変更
-        if (canMove && stickNeutral)
-        {
-            if (input.y > StickThreshold) // 上に入力された場合、前のスライダーに移動
+            // ▼ メニューモード
+            else
             {
-                ChangeSliderSelection(-1);
+                // 上下でメニュー移動
+                if (moveInput.y > 0.5f && moveTimer <= 0f)
+                {
+                    MoveCursor(-1);
+                }
+                else if (moveInput.y < -0.5f && moveTimer <= 0f)
+                {
+                    MoveCursor(1);
+                }
+
+                // 決定で処理
+                if (decisionAction.WasPressedThisFrame())
+                {
+                    // ▼ MenuSelects[1]が選ばれていたらパネル切り替えモードへ
+                    if (currentIndex == 1)
+                    {
+                        isInDeviceSelectMode = true;
+                        devicePanelIndex = 0;
+                        UpdateDevicePanel();
+                        EventSystem.current.SetSelectedGameObject(null); // UIフォーカス解除
+                    }
+                    else if (currentIndex == 0 && slider.Count > 0)
+                    {
+                        isControllingSlider = true;
+                        currentSliderIndex = 0;
+                        EventSystem.current.SetSelectedGameObject(slider[currentSliderIndex].gameObject);
+                    }
+                    else
+                    {
+                        PressCurrentButton();
+                    }
+                }
+
+                // Bボタン
+                if (backAction.WasPressedThisFrame())
+                {
+                    EventSystem.current.SetSelectedGameObject(null);
+                }
+
+                // カーソルUIの位置更新
+                if (settingCursorUI != null && currentIndex >= 0 && currentIndex < MenuSelects.Count)
+                {
+                    settingCursorUI.rectTransform.position = MenuSelects[currentIndex].GetComponent<RectTransform>().position;
+                }
+
+                Debug.Log("現在の選択: " + MenuSelects[currentIndex].name);
             }
-            else if (input.y < -StickThreshold) // 下に入力された場合、次のスライダーに移動
-            {
-                ChangeSliderSelection(1);
-            }
         }
+    }
 
-        // スティックのy軸入力がニュートラル領域（しきい値未満）に戻った場合
-        if (Mathf.Abs(input.y) < MinStickNeutralThreshold)
+    // カーソルを上下に移動させる処理
+    private void MoveCursor(int direction)
+    {
+        currentIndex += direction;
+
+        // インデックスが範囲外にならないようループ
+        if (currentIndex < 0) currentIndex = MenuSelects.Count - 1;
+        else if (currentIndex >= MenuSelects.Count)currentIndex = 0;
+
+        // EventSystemで選択対象を更新
+        EventSystem.current.SetSelectedGameObject(MenuSelects[currentIndex]);
+        moveTimer = moveCooldown;
+
+        // MenuSelectに合わせてMenusを表示非表示にする
+        for (int i = 0; i < Menus.Count; i++)
         {
-            stickNeutral = true;
+            Menus[i].SetActive(i == currentIndex);
         }
     }
 
-    /// <summary>
-    /// スライダーの選択を変更する
-    /// </summary>
-    /// <param name="direction">選択方向（-1: 上、1: 下）</param>
-    private void ChangeSliderSelection(int direction)
+    // 現在選択されているボタンのクリック処理を呼び出す
+    private void PressCurrentButton()
     {
-        // 選択肢の数に応じてインデックスを循環させる
-        currentIndex = (currentIndex + direction + totalOptions) % totalOptions;
-        // カーソルの位置を更新
-        UpdateCursorPosition();
-        // 移動処理が終わるまで次の移動を受け付けない
-        StartCoroutine(ResetMove());
-        stickNeutral = false;
-    }
-
-    /// <summary>
-    /// カーソルの位置を現在選択中のスライダーの位置に合わせる
-    /// </summary>
-    private void UpdateCursorPosition()
-    {
-        Vector3 offset = new Vector3(CursorOffsetX, 0f, 0f);
-
-        if (currentIndex < Menus.Count)
+        var selected = MenuSelects[currentIndex].GetComponent<Button>();
+        if (selected != null)
         {
-            settingCursorUI.transform.position = new Vector3(370, Menus[currentIndex].transform.position.y + 10.0f, Menus[currentIndex].transform.position.z);
-            lastCursorPosition = settingCursorUI.transform.position;
-
-            if (buttonAui != null)
-            {
-                buttonAui.enabled = false;
-            }
-
-            // 表示切替処理を追加（スライダーの選択状況で制御）
-            SettingSelect.SetActive(currentIndex == 0);     
-            ExplanationSelect.SetActive(currentIndex == 1); 
-            GoTitleSelectParent.SetActive(false);  
-            BackPanel.SetActive(true);           
-            MainMenu.SetActive(true);                        // メニュー表示時は常時 true
-        }
-        else if (buttonAui != null)
-        {
-            buttonAui.enabled = true;
-
-            settingCursorUI.transform.position = new Vector3(
-                lastCursorPosition.x,
-                buttonAui.transform.position.y,
-                lastCursorPosition.z
-            );
-
-            // Aボタンが選ばれている時の表示切替
-            SettingSelect.SetActive(false);
-            ExplanationSelect.SetActive(false);
-            GoTitleSelectParent.SetActive(true);      // タイトルに戻る選択肢を表示
-            BackPanel.SetActive(true);
-            MainMenu.SetActive(true);
+            selected.onClick.Invoke();
         }
     }
 
-    /// <summary>
-    /// 
-    /// 入力受付をクールダウンする
-    /// </summary>
-    private IEnumerator ResetMove()
+    // 設定メニューを開く処理
+    private void OpenSettingMenu()
     {
-        // 入力受付を無効化
-        canMove = false;
-        // 一定時間待機
-        yield return new WaitForSeconds(InputCooldown);
-        // 入力受付を再度有効化
-        canMove = true;
+        MainMenu.SetActive(true);
+        Time.timeScale = TimeScalePaused;
+        IsSettingActive = true;
+        currentIndex = 0; // 最初の項目にカーソルを合わせる
+        EventSystem.current.SetSelectedGameObject(MenuSelects[currentIndex]);
     }
 
-    /// <summary>
-    /// 設定メニューを閉じる
-    /// </summary>
-    public void Close()
+    // 設定メニューを閉じる処理
+    private void CloseSettingMenu()
     {
-        ToggleSettingMenu(false);
+        MainMenu.SetActive(false);
+        Time.timeScale = TimeScaleRunning;
+        IsSettingActive = false;
+        EventSystem.current.SetSelectedGameObject(null);
     }
 
-    /// <summary>
-    /// タイトルシーンに戻る
-    /// </summary>
-    public void Quit()
+    private void UpdateDevicePanel()
     {
-        SceneManager.LoadScene("StartScene");
+        KeyboardPanel.SetActive(devicePanelIndex == 0);
+        GameControllerPanel.SetActive(devicePanelIndex == 1);
     }
 }
+

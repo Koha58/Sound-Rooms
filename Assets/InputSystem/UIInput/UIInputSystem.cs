@@ -15,10 +15,10 @@ using System.Collections.Generic;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Utilities;
 
-public partial class PlayerInput : IInputActionCollection2, IDisposable
+public partial class @UIInputSystem: IInputActionCollection2, IDisposable
 {
     public InputActionAsset asset { get; }
-    public PlayerInput ()
+    public @UIInputSystem()
     {
         asset = InputActionAsset.FromJson(@"{
     ""name"": ""UIInputSystem"",
@@ -28,7 +28,7 @@ public partial class PlayerInput : IInputActionCollection2, IDisposable
             ""id"": ""a0364cd6-8874-4a45-ad2d-f8051e149cad"",
             ""actions"": [
                 {
-                    ""name"": ""OpenSetting"",
+                    ""name"": ""SelectMenu"",
                     ""type"": ""Value"",
                     ""id"": ""5005c4af-86e7-4a10-aac0-b20437209203"",
                     ""expectedControlType"": ""Vector2"",
@@ -37,7 +37,7 @@ public partial class PlayerInput : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""SelectMenu"",
+                    ""name"": ""OpenSetting"",
                     ""type"": ""Button"",
                     ""id"": ""b77b1091-1f37-4ef7-885b-11042a30bc72"",
                     ""expectedControlType"": ""Button"",
@@ -72,7 +72,7 @@ public partial class PlayerInput : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""OpenSetting"",
+                    ""action"": ""SelectMenu"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -83,7 +83,7 @@ public partial class PlayerInput : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""SelectMenu"",
+                    ""action"": ""OpenSetting"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -122,8 +122,8 @@ public partial class PlayerInput : IInputActionCollection2, IDisposable
 }");
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
-        m_UI_OpenSetting = m_UI.FindAction("OpenSetting", throwIfNotFound: true);
         m_UI_SelectMenu = m_UI.FindAction("SelectMenu", throwIfNotFound: true);
+        m_UI_OpenSetting = m_UI.FindAction("OpenSetting", throwIfNotFound: true);
         m_UI_Return = m_UI.FindAction("Return", throwIfNotFound: true);
         m_UI_Decision = m_UI.FindAction("Decision", throwIfNotFound: true);
     }
@@ -187,16 +187,16 @@ public partial class PlayerInput : IInputActionCollection2, IDisposable
     // UI
     private readonly InputActionMap m_UI;
     private List<IUIActions> m_UIActionsCallbackInterfaces = new List<IUIActions>();
-    private readonly InputAction m_UI_OpenSetting;
     private readonly InputAction m_UI_SelectMenu;
+    private readonly InputAction m_UI_OpenSetting;
     private readonly InputAction m_UI_Return;
     private readonly InputAction m_UI_Decision;
     public struct UIActions
     {
-        private PlayerInput  m_Wrapper;
-        public UIActions(PlayerInput  wrapper) { m_Wrapper = wrapper; }
-        public InputAction @OpenSetting => m_Wrapper.m_UI_OpenSetting;
+        private @UIInputSystem m_Wrapper;
+        public UIActions(@UIInputSystem wrapper) { m_Wrapper = wrapper; }
         public InputAction @SelectMenu => m_Wrapper.m_UI_SelectMenu;
+        public InputAction @OpenSetting => m_Wrapper.m_UI_OpenSetting;
         public InputAction @Return => m_Wrapper.m_UI_Return;
         public InputAction @Decision => m_Wrapper.m_UI_Decision;
         public InputActionMap Get() { return m_Wrapper.m_UI; }
@@ -208,12 +208,12 @@ public partial class PlayerInput : IInputActionCollection2, IDisposable
         {
             if (instance == null || m_Wrapper.m_UIActionsCallbackInterfaces.Contains(instance)) return;
             m_Wrapper.m_UIActionsCallbackInterfaces.Add(instance);
-            @OpenSetting.started += instance.OnOpenSetting;
-            @OpenSetting.performed += instance.OnOpenSetting;
-            @OpenSetting.canceled += instance.OnOpenSetting;
             @SelectMenu.started += instance.OnSelectMenu;
             @SelectMenu.performed += instance.OnSelectMenu;
             @SelectMenu.canceled += instance.OnSelectMenu;
+            @OpenSetting.started += instance.OnOpenSetting;
+            @OpenSetting.performed += instance.OnOpenSetting;
+            @OpenSetting.canceled += instance.OnOpenSetting;
             @Return.started += instance.OnReturn;
             @Return.performed += instance.OnReturn;
             @Return.canceled += instance.OnReturn;
@@ -224,12 +224,12 @@ public partial class PlayerInput : IInputActionCollection2, IDisposable
 
         private void UnregisterCallbacks(IUIActions instance)
         {
-            @OpenSetting.started -= instance.OnOpenSetting;
-            @OpenSetting.performed -= instance.OnOpenSetting;
-            @OpenSetting.canceled -= instance.OnOpenSetting;
             @SelectMenu.started -= instance.OnSelectMenu;
             @SelectMenu.performed -= instance.OnSelectMenu;
             @SelectMenu.canceled -= instance.OnSelectMenu;
+            @OpenSetting.started -= instance.OnOpenSetting;
+            @OpenSetting.performed -= instance.OnOpenSetting;
+            @OpenSetting.canceled -= instance.OnOpenSetting;
             @Return.started -= instance.OnReturn;
             @Return.performed -= instance.OnReturn;
             @Return.canceled -= instance.OnReturn;
@@ -262,13 +262,10 @@ public partial class PlayerInput : IInputActionCollection2, IDisposable
             return asset.controlSchemes[m_NewcontrolschemeSchemeIndex];
         }
     }
-
-    public object ActionsMap { get; internal set; }
-
     public interface IUIActions
     {
-        void OnOpenSetting(InputAction.CallbackContext context);
         void OnSelectMenu(InputAction.CallbackContext context);
+        void OnOpenSetting(InputAction.CallbackContext context);
         void OnReturn(InputAction.CallbackContext context);
         void OnDecision(InputAction.CallbackContext context);
     }
