@@ -27,8 +27,15 @@ public class StageSelectManager : MonoBehaviour
 
     void Start()
     {
-        UpdateStageSelection();
-        stage = StageIndex0;
+        stage = StageIndex0; // 明示的に初期ステージをセット（必要なら）
+        // 選択状態の更新（色とUI表示）
+        for (int i = 0; i < StageButtons.Length; i++)
+        {
+            StageButtons[i].GetComponent<Image>().color = new Color32(255, 255, 255, 45);
+            StageVideos[i].GetComponent<RawImage>().enabled = false;
+            StageTitles[i].GetComponent<Image>().enabled = false;
+        }
+
         SetInitialStage();
         CheckInputDevice();
     }
@@ -89,7 +96,8 @@ public class StageSelectManager : MonoBehaviour
 
     void MoveStageTop()
     {
-        if (stage != StageIndex2)
+        // ステージを次に進める（最後なら最初に戻す）
+        if (stage < StageIndex2)
         {
             stage++;
         }
@@ -97,29 +105,29 @@ public class StageSelectManager : MonoBehaviour
         {
             stage = StageIndex0;
         }
-
         UpdateStageSelection();
-        lastMoveTime = Time.time;
     }
 
     void MoveStageDown()
     {
-        if (stage != StageIndex0)
+        // ステージを前に戻す（最初なら最後に戻す）
+        if (stage > StageIndex0)
         {
             stage--;
         }
         else
         {
-            stage = StageIndex2;
+            stage =  StageIndex2;
         }
-
         UpdateStageSelection();
-        lastMoveTime = Time.time;
     }
 
     void UpdateStageSelection()
     {
-        // ステージのボタン色や動画、タイトルを更新
+        // ステージ選択ログを出力
+        Debug.Log($"現在選択中のステージ: index = {stage}, 名前 = {StageButtons[stage].name}");
+
+        // 選択状態の更新（色とUI表示）
         for (int i = 0; i < StageButtons.Length; i++)
         {
             StageButtons[i].GetComponent<Image>().color = new Color32(255, 255, 255, 45);
@@ -130,7 +138,12 @@ public class StageSelectManager : MonoBehaviour
         StageButtons[stage].GetComponent<Image>().color = new Color32(255, 255, 255, 255);
         StageVideos[stage].GetComponent<RawImage>().enabled = true;
         StageTitles[stage].GetComponent<Image>().enabled = true;
+
+        // UIの選択状態を確実に更新
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(StageButtons[stage]);
     }
+    
 
     void SetInitialStage()
     {
@@ -170,7 +183,7 @@ public class StageSelectManager : MonoBehaviour
 
     private IEnumerator LoadSceneWithDelay(string sceneName)
     {
-        yield return new WaitForSeconds(1f); // 音が終わった後にシーン遷移
+        yield return null; // 1フレーム待つ
         SceneManager.LoadScene(sceneName);
     }
 }

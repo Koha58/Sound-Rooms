@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.LowLevel;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -50,6 +51,8 @@ public class SystemUI : MonoBehaviour
     private bool isInDeviceSelectMode = false; // パネル切り替えモード中
     private int devicePanelIndex = 0; // 0: KeyboardPanel, 1: GameControllerPanel
 
+    private InputDevice lastInputDevice = null;
+
     // アクションの有効化
     private void OnEnable()
     {
@@ -64,6 +67,9 @@ public class SystemUI : MonoBehaviour
         moveAction.Enable();
         backAction.Enable();
         decisionAction.Enable();
+
+        // 入力検出イベントを登録
+        InputSystem.onEvent += OnInputEvent;
     }
 
     // アクションの無効化
@@ -73,7 +79,37 @@ public class SystemUI : MonoBehaviour
         moveAction.Disable();
         backAction.Disable();
         decisionAction.Disable();
+
+        // 入力検出イベントを解除
+        InputSystem.onEvent -= OnInputEvent;
     }
+
+    private void OnInputEvent(InputEventPtr eventPtr, InputDevice device)
+    {
+        if (!eventPtr.IsA<StateEvent>() && !eventPtr.IsA<DeltaStateEvent>())
+            return;
+
+        // すでにこのデバイスが最後のデバイスなら何もしない
+        if (lastInputDevice == device) return;
+
+        lastInputDevice = device;
+
+        // キーボードまたはマウスならカーソル非表示
+        if (device is Keyboard || device is Mouse)
+        {
+            settingCursorUI.enabled = false;
+            buttonBui.enabled = false;
+            buttonAui.enabled = false;
+        }
+        // ゲームパッドなどならカーソル表示
+        else if (device is Gamepad)
+        {
+            settingCursorUI.enabled = true;
+            buttonBui.enabled = true;
+            buttonAui.enabled = true;
+        }
+    }
+
 
     private void Start()
     {
@@ -132,15 +168,11 @@ public class SystemUI : MonoBehaviour
                 // 左右入力でパネル切り替え
                 if (moveInput.x > 0.5f && moveTimer <= 0f)
                 {
-                    devicePanelIndex = 1; // GameControllerPanel
-                    UpdateDevicePanel();
-                    moveTimer = moveCooldown;
+                    GamePadSettingPanel();
                 }
                 else if (moveInput.x < -0.5f && moveTimer <= 0f)
                 {
-                    devicePanelIndex = 0; // KeyboardPanel
-                    UpdateDevicePanel();
-                    moveTimer = moveCooldown;
+                    KeyBoardSettingPanel();
                 }
 
                 // Bで戻る
@@ -152,6 +184,7 @@ public class SystemUI : MonoBehaviour
                     EventSystem.current.SetSelectedGameObject(MenuSelects[currentIndex]);
                 }
             }
+
             // ▼ スライダー操作モード
             if (isControllingSlider)
             {
@@ -316,5 +349,49 @@ public class SystemUI : MonoBehaviour
     {
         CloseSettingMenu();
         SceneManager.LoadScene("StartScene"); // 新しいシーンを読み込む
+    }
+
+    public void ClickControlPanel()
+    {
+        currentIndex = 1;
+
+        // EventSystemで選択対象を更新
+        EventSystem.current.SetSelectedGameObject(MenuSelects[currentIndex]);
+        moveTimer = moveCooldown;
+
+        // MenuSelectに合わせてMenusを表示非表示にする
+        for (int i = 0; i < Menus.Count; i++)
+        {
+            Menus[i].SetActive(i == currentIndex);
+        }
+    }
+
+    public void ClickSettingPanel()
+    {
+        currentIndex = 0;
+
+        // EventSystemで選択対象を更新
+        EventSystem.current.SetSelectedGameObject(MenuSelects[currentIndex]);
+        moveTimer = moveCooldown;
+
+        // MenuSelectに合わせてMenusを表示非表示にする
+        for (int i = 0; i < Menus.Count; i++)
+        {
+            Menus[i].SetActive(i == currentIndex);
+        }
+    }
+
+    public void KeyBoardSettingPanel()
+    {
+        devicePanelIndex = 0; // KeyboardPanel
+        UpdateDevicePanel();
+        moveTimer = moveCooldown;
+    }
+
+    public void GamePadSettingPanel()
+    {
+        devicePanelIndex = 1; // GameControllerPanel
+        UpdateDevicePanel();
+        moveTimer = moveCooldown;
     }
 }
