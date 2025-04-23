@@ -23,6 +23,8 @@ public class StageSelectManager : MonoBehaviour
     private float moveDelay = 0.5f;  // ボタン切り替えの遅延（秒）
     private float lastMoveTime = -1f;  // 最後にボタンが切り替わった時間
 
+    private float previousVertical = 0f;
+
     void Start()
     {
         UpdateStageSelection();
@@ -54,28 +56,35 @@ public class StageSelectManager : MonoBehaviour
 
     void StageSelect()
     {
-        // ボタン切り替えの遅延時間を管理
+        float currentVertical = Input.GetAxisRaw("Vertical");
+
+        // 決定ボタンの処理
+        if (Input.GetKeyDown("joystick button 0"))
+        {
+            PlayStartSound();
+            string sceneName = GetSceneNameForStage(stage);
+            StartCoroutine(LoadSceneWithDelay(sceneName));
+        }
+
+        // 上下入力の遷移を確認（前フレームと今フレームで値が変化したときのみ）
         if (Time.time - lastMoveTime > moveDelay)
         {
-            if (Input.GetKeyDown("joystick button 0"))  // ジョイスティックのボタンA（決定ボタン）
+            if (previousVertical == 0f && currentVertical != 0f)
             {
-                PlayStartSound();  // スタート音を再生
-                string sceneName = GetSceneNameForStage(stage);
-                StartCoroutine(LoadSceneWithDelay(sceneName));
-            }
-            else if(Input.GetAxisRaw("Vertical") != 0)
-            {
-                // コントローラーで方向キーやスティックの入力を受け付け、ステージを切り替え
-                if (Input.GetAxisRaw("Vertical") > 0)
+                if (currentVertical > 0f)
                 {
                     MoveStageTop();
                 }
-                else if (Input.GetAxisRaw("Vertical") < 0)
+                else if (currentVertical < 0f)
                 {
                     MoveStageDown();
                 }
+
+                lastMoveTime = Time.time;
             }
         }
+
+        previousVertical = currentVertical; // 入力値を保存
     }
 
     void MoveStageTop()
@@ -154,7 +163,7 @@ public class StageSelectManager : MonoBehaviour
         {
             case StageIndex0: return "GetRecorder";
             case StageIndex1: return "Stage1";
-            case StageIndex2: return "GameScene";
+            case StageIndex2: return "Stage2";
             default: return "GetRecorder";
         }
     }

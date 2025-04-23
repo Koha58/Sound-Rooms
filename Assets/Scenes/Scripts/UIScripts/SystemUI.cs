@@ -1,12 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
-public class memo : MonoBehaviour
+public class SystemUI : MonoBehaviour
 {
     [SerializeField] private InputActionAsset inputActions; // Input Systemのアクションアセット
 
@@ -81,7 +81,7 @@ public class memo : MonoBehaviour
         KeyboardPanel.SetActive(true);
         GameControllerPanel.SetActive(false);
         // ▼ カーソルの表示切り替え
-        for (int i = 0; i <4; i++)
+        for (int i = 0; i < 4; i++)
         {
             cursor[i].SetActive(i == currentSliderIndex);
         }
@@ -263,7 +263,7 @@ public class memo : MonoBehaviour
 
         // インデックスが範囲外にならないようループ
         if (currentIndex < 0) currentIndex = MenuSelects.Count - 1;
-        else if (currentIndex >= MenuSelects.Count)currentIndex = 0;
+        else if (currentIndex >= MenuSelects.Count) currentIndex = 0;
 
         // EventSystemで選択対象を更新
         EventSystem.current.SetSelectedGameObject(MenuSelects[currentIndex]);
@@ -287,7 +287,7 @@ public class memo : MonoBehaviour
     }
 
     // 設定メニューを開く処理
-    private void OpenSettingMenu()
+    public void OpenSettingMenu()
     {
         MainMenu.SetActive(true);
         Time.timeScale = TimeScalePaused;
@@ -297,7 +297,7 @@ public class memo : MonoBehaviour
     }
 
     // 設定メニューを閉じる処理
-    private void CloseSettingMenu()
+    public void CloseSettingMenu()
     {
         MainMenu.SetActive(false);
         Time.timeScale = TimeScaleRunning;
@@ -310,5 +310,11 @@ public class memo : MonoBehaviour
         KeyboardPanel.SetActive(devicePanelIndex == 0);
         GameControllerPanel.SetActive(devicePanelIndex == 1);
     }
-}
 
+    // タイトルに戻るを表示し、シーンをロード
+    public void GoTitlePanel()
+    {
+        CloseSettingMenu();
+        SceneManager.LoadScene("StartScene"); // 新しいシーンを読み込む
+    }
+}
