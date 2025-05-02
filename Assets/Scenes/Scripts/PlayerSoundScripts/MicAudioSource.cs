@@ -1,81 +1,110 @@
 using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 /// <summary>
-/// マイクの入力を管理するクラス
-/// 音量（dB）をリアルタイムで取得し、他のコンポーネントで利用できるようにする
+/// マイクの音声入力を管理し、リアルタイムの音量（dB）を取得するクラス。
+/// マイクが接続されていない場合は自動的に無効化され、クラッシュを防止する。
 /// </summary>
+[RequireComponent(typeof(AudioSource))]
 public class MicAudioSource : MonoBehaviour
 {
-    // サンプリング周波数 (48kHz)
+    // サンプリングレート（48kHz）
     static readonly int SAMPLE_RATE = 48000;
 
-    // この秒数の幅で振幅の平均値を取ったものでdB値を更新
-    // 音量（dB）の変化をなめらかにするために一定時間ごとに更新する
+    // dB更新のための時間幅（秒）
     static readonly float MOVING_AVE_TIME = 0.05f;
 
-    // MOVING_AVE_TIMEに相当するサンプル数
+    // dB更新に必要なサンプル数
     static readonly int MOVING_AVE_SAMPLE = (int)(SAMPLE_RATE * MOVING_AVE_TIME);
 
-    // マイクの音声を扱うためのAudioSourceコンポーネント
+    // AudioSource（マイク音声再生用）
     AudioSource micAS = null;
 
-    // 現在のdB値
-    private float _now_dB;  // プライベートな変数で、外部アクセス用のプロパティを提供
-    public float now_dB { get { return _now_dB; } }  // 外部から現在のdB値を取得するためのプロパティ
+    // 現在のdB値（外部から取得可能なプロパティ）
+    private float _now_dB;
+    // 現在のdB値（マイクが再生中でなければ -80dB を返す）
+    public float now_dB
+    {
+        get
+        {
+            // マイクが未接続または再生中でない場合は -80dB を返す（無音扱い）
+            if (micAS == null || !micAS.isPlaying)
+                return -80.0f;
 
+            return _now_dB;
+        }
+    }
 
+    /// <summary>
+    /// 初期化処理。AudioSource を取得。
+    /// </summary>
     private void Awake()
     {
-        // AudioSourceコンポーネントを取得
         micAS = GetComponent<AudioSource>();
     }
 
+    /// <summary>
+    /// マイク入力を開始する。
+    /// 接続されていない場合はスクリプトを無効化。
+    /// </summary>
     void Start()
     {
-        // 最初にマイクの入力を開始
-        this.MicStart();
+        // マイクが接続されていない場合はエラーログを出してスクリプトを停止
+        if (Microphone.devices.Length == 0)
+        {
+            Debug.LogError("マイクが接続されていません。MicAudioSource は無効化されます。");
+            enabled = false;  // Updateなども止める
+            return;
+        }
+
+        // マイク入力を開始（コルーチンで非同期に開始）
+        StartCoroutine(MicStartCoroutine());
     }
 
-    // マイク入力の開始
-    public void MicStart()
+    /// <summary>
+    /// マイク録音を非同期で開始する処理。
+    /// マイク準備が整うまで待ってから再生を開始。
+    /// </summary>
+    IEnumerator MicStartCoroutine()
     {
-        // マイクデバイスをAudioSourceのClipにセット
-        // Microphone.Startでマイクの録音を開始
+        // デフォルトマイクから録音を開始（1秒ループ）
         micAS.clip = Microphone.Start(null, true, 1, SAMPLE_RATE);
 
-        // マイクデバイスの準備ができるまで待機（マイクから音が取得可能になるのを待つ）
-        while (!(Microphone.GetPosition("") > 0)) { }
+        // マイクの録音準備が完了するまで待つ
+        while (Microphone.GetPosition(null) <= 0)
+        {
+            yield return null;  // 次のフレームまで待機
+        }
 
-        // マイクの音声の再生を開始
+        // 再生開始（録音した音をそのまま再生）
         micAS.Play();
     }
 
+    /// <summary>
+    /// 毎フレーム、音声データを取得して現在の音量（dB）を計算
+    /// </summary>
     void Update()
     {
-        if (micAS.isPlaying)  // マイクが再生中であれば
+        // AudioSource が再生中であれば音量データを処理
+        if (micAS != null && micAS.isPlaying)
         {
-            // GetOutputData用のバッファを準備
-            // 音声データを取得するための配列
+            // サンプルバッファを準備
             float[] data = new float[MOVING_AVE_SAMPLE];
 
-            // AudioSourceから出力されているサンプルデータを取得
-            // ここで取得したデータは、マイクの入力音声の振幅情報
+            // 現在再生されている音声のサンプルデータを取得
             micAS.GetOutputData(data, 0);
 
-            // バッファ内の平均振幅を取得（各振幅の絶対値を取り平均値を計算）
-            // 振幅の平均を使うことで、音量のピーク値ではなく平均的な音量を取得
+            // 絶対値の平均で振幅を算出
             float aveAmp = data.Average(s => Mathf.Abs(s));
 
-            // 振幅が非常に小さい（ゼロに近い）場合でも音を拾うため、最小振幅を設定
-            if (aveAmp < 0.0001f) // ここで0.0001は非常に小さい音量の閾値
+            // 無音状態に近いときの下限値を設定（ログ計算エラー防止）
+            if (aveAmp < 0.0001f)
             {
-                aveAmp = 0.0001f; // 振幅が非常に小さい場合でも0.0001の振幅に設定
+                aveAmp = 0.0001f;
             }
 
-            // 平均振幅からdB（デシベル）に変換
+            // dBに変換（デシベル = 20 * log10(振幅)）
             _now_dB = 20.0f * Mathf.Log10(aveAmp);
         }
     }

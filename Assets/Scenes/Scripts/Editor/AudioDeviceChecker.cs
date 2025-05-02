@@ -30,8 +30,12 @@ public class AudioDeviceMonitor
         bool isMicrophoneConnected = CheckMicrophone();
         bool isSpeakersConnected = CheckSpeakers();
 
-        // マイクの状態に変化があった場合にログ出力
-        if (isMicrophoneConnected != lastMicrophoneState)
+        // 状態が変化したかどうかを判定
+        bool micChanged = isMicrophoneConnected != lastMicrophoneState;
+        bool speakerChanged = isSpeakersConnected != lastSpeakersState;
+
+        // マイクの状態が変化した場合にログ出力
+        if (micChanged)
         {
             if (isMicrophoneConnected)
             {
@@ -44,8 +48,8 @@ public class AudioDeviceMonitor
             lastMicrophoneState = isMicrophoneConnected;
         }
 
-        // スピーカーの状態に変化があった場合にログ出力
-        if (isSpeakersConnected != lastSpeakersState)
+        // スピーカーの状態が変化した場合にログ出力
+        if (speakerChanged)
         {
             if (isSpeakersConnected)
             {
@@ -58,20 +62,24 @@ public class AudioDeviceMonitor
             lastSpeakersState = isSpeakersConnected;
         }
 
-        // 両方とも接続されていないときの注意ログ（補足）
-        if (!isMicrophoneConnected && !isSpeakersConnected)
+        // 両方の状態に変化があった場合の補足的な警告ログ（状態変化時のみ）
+        if (micChanged || speakerChanged)
         {
-            Debug.LogWarning("マイクとスピーカーの両方が接続されていません！");
-        }
-        else if (!isMicrophoneConnected)
-        {
-            Debug.LogWarning("マイクが接続されていません！");
-        }
-        else if (!isSpeakersConnected)
-        {
-            Debug.LogWarning("スピーカーが接続されていません！");
+            if (!isMicrophoneConnected && !isSpeakersConnected)
+            {
+                Debug.LogWarning("マイクとスピーカーの両方が接続されていません！");
+            }
+            else if (!isMicrophoneConnected)
+            {
+                Debug.LogWarning("マイクが接続されていません！");
+            }
+            else if (!isSpeakersConnected)
+            {
+                Debug.LogWarning("スピーカーが接続されていません！");
+            }
         }
     }
+
 
     // マイクの接続確認
     private static bool CheckMicrophone()
