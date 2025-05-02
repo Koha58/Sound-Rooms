@@ -19,7 +19,6 @@ public class SystemUI : MonoBehaviour
     // 設定メニューに関連するUIオブジェクト
     [SerializeField] private GameObject MainMenu;      // 設定メニュー全体
     [SerializeField] private Image buttonBui;          // BボタンUI（戻る）
-    [SerializeField] private Image buttonAui;          // AボタンUI（決定）
     [SerializeField] private Image settingCursorUI;    // カーソル用画像
 
     [SerializeField] private GameObject KeyboardPanel;        // キーボード操作パネル
@@ -99,14 +98,12 @@ public class SystemUI : MonoBehaviour
         {
             settingCursorUI.enabled = false;
             buttonBui.enabled = false;
-            buttonAui.enabled = false;
         }
         // ゲームパッドなどならカーソル表示
         else if (device is Gamepad)
         {
             settingCursorUI.enabled = true;
             buttonBui.enabled = true;
-            buttonAui.enabled = true;
         }
     }
 
@@ -283,7 +280,16 @@ public class SystemUI : MonoBehaviour
                 // カーソルUIの位置更新
                 if (settingCursorUI != null && currentIndex >= 0 && currentIndex < MenuSelects.Count)
                 {
-                    settingCursorUI.rectTransform.position = MenuSelects[currentIndex].GetComponent<RectTransform>().position;
+                    Vector3 targetPosition = MenuSelects[currentIndex].GetComponent<RectTransform>().position;
+
+                    float fixedX =380f; // 固定したいX座標
+                    float yOffset = 10f; // 上に上げる量
+
+                    settingCursorUI.rectTransform.position = new Vector3(
+                        fixedX,
+                        targetPosition.y + yOffset,
+                        targetPosition.z
+                    );
                 }
             }
         }

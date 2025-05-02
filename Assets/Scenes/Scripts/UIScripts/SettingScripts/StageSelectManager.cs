@@ -36,6 +36,8 @@ public class StageSelectManager : MonoBehaviour
             StageTitles[i].GetComponent<Image>().enabled = false;
         }
 
+        StageButtons[0].GetComponent<Image>().color = new Color32(255, 255, 255, 255);
+
         SetInitialStage();
         CheckInputDevice();
     }
