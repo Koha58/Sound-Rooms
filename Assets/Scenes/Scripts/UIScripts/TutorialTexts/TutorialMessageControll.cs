@@ -39,9 +39,6 @@ public class TutorialMessageControll : MonoBehaviour
     private const int SECOND_MESSAGE_INDEX = 1; // 2番目のメッセージ（インデックス1）
     private const int THIRD_MESSAGE_INDEX = 2;  // 3番目のメッセージ（インデックス2）
 
-    // チュートリアルの最大メッセージ数
-    private const int MAX_MESSAGES = 3;
-
     // キーボードとコントローラーの配列の最大数
     private const int MAX_DEVICE_MESSAGES = 3;
 
@@ -123,7 +120,7 @@ public class TutorialMessageControll : MonoBehaviour
         else if (MessageIndex == SECOND_MESSAGE_INDEX)
         {
             // "ImpactOnObjectsArea" を探して、その状態に基づいてメッセージを切り替え
-            GameObject impactObjectsArea = GameObject.Find("ImpactOnObjectsArea"); // "EnemyAttackArea" オブジェクトを探す
+            GameObject impactObjectsArea = GameObject.Find("ImpactOnObjectsArea"); // "ImpactOnObjectsArea" オブジェクトを探す
             ImpactOnObjects impactObjects = impactObjectsArea.GetComponent<ImpactOnObjects>(); // ImpactOnObjects スクリプトを取得
             if (impactObjects.count == 1) // impactObjects のカウントが 1 の場合
             {
@@ -146,11 +143,6 @@ public class TutorialMessageControll : MonoBehaviour
     // 入力デバイスに応じたメッセージ処理を行うメソッド
     void ControllerCheck()
     {
-
-        // "ImpactOnObjectsArea" を探して、その状態に基づいてメッセージを切り替え
-        GameObject impactObjectsArea = GameObject.Find("ImpactOnObjectsArea"); // "EnemyAttackArea" オブジェクトを探す
-        ImpactOnObjects impactObjects = impactObjectsArea.GetComponent<ImpactOnObjects>(); // ImpactOnObjects スクリプトを取得
-
         if (isControllerInput) // コントローラーが使用されている場合
         {
             // キーボードメッセージを非表示にし、コントローラーのメッセージを表示
@@ -182,10 +174,8 @@ public class TutorialMessageControll : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         // "ImpactOnObjectsArea" を探して、その状態に基づいてメッセージを切り替え
-        GameObject impactObjectsArea = GameObject.Find("ImpactOnObjectsArea"); // "EnemyAttackArea" オブジェクトを探す
+        GameObject impactObjectsArea = GameObject.Find("ImpactOnObjectsArea"); // ImpactOnObjectsArea オブジェクトを探す
         ImpactOnObjects impactObjects = impactObjectsArea.GetComponent<ImpactOnObjects>(); // ImpactOnObjects スクリプトを取得
-
-       // Debug.Log("Colliding with: " + other.gameObject.name); // 接触しているオブジェクトの名前をログ出力
 
         // UIDeviceCheck 配列が十分な長さかチェック
         if (UIDeviceCheck.Length > DEVICE_MESSAGE_1_INDEX && UIDeviceCheck.Length > DEVICE_MESSAGE_2_INDEX)
@@ -239,7 +229,7 @@ public class TutorialMessageControll : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         // "ImpactOnObjectsArea" を探して、その状態に基づいてメッセージを切り替え
-        GameObject impactObjectsArea = GameObject.Find("ImpactOnObjectsArea"); // "EnemyAttackArea" オブジェクトを探す
+        GameObject impactObjectsArea = GameObject.Find("ImpactOnObjectsArea"); // "ImpactOnObjectsArea" オブジェクトを探す
         ImpactOnObjects impactObjects = impactObjectsArea.GetComponent<ImpactOnObjects>(); // ImpactOnObjects スクリプトを取得
 
         Debug.Log("Colliding with: " + other.gameObject.name); // 接触しているオブジェクトの名前をログ出力
