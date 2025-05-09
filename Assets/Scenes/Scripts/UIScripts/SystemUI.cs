@@ -96,13 +96,13 @@ public class SystemUI : MonoBehaviour
         // キーボードまたはマウスならカーソル非表示
         if (device is Keyboard || device is Mouse)
         {
-            settingCursorUI.enabled = false;
+            //settingCursorUI.enabled = false;
             buttonBui.enabled = false;
         }
         // ゲームパッドなどならカーソル表示
         else if (device is Gamepad)
         {
-            settingCursorUI.enabled = true;
+            //settingCursorUI.enabled = true;
             buttonBui.enabled = true;
         }
     }
@@ -282,7 +282,7 @@ public class SystemUI : MonoBehaviour
                 {
                     Vector3 targetPosition = MenuSelects[currentIndex].GetComponent<RectTransform>().position;
 
-                    float fixedX =380f; // 固定したいX座標
+                    float fixedX =350f; // 固定したいX座標
                     float yOffset = 10f; // 上に上げる量
 
                     settingCursorUI.rectTransform.position = new Vector3(
