@@ -40,7 +40,7 @@ public class EnemyController : MonoBehaviour
     public Transform player;                          //プレイヤーの位置
     private float distanceToPlayer = Mathf.Infinity;  // プレイヤーとの距離
     private float chaseRange = 7f;                    //Playerを検知する範囲
-    private float runSpeed = 3.5f;                    // 追跡速度設定
+    private float runSpeed = 5.5f;                    // 追跡速度設定
 
     //探す・聞く・何もしない
     private float idleSpeed = 0.0f; // 探す・聞く・何もしない時の速度設定
