@@ -1,87 +1,91 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
 /// <summary>
-/// Enemy‚Ì§ŒäiˆÚ“®@ƒAƒjƒ[ƒVƒ‡ƒ“@ƒTƒEƒ“ƒhjƒNƒ‰ƒX
+/// Enemyã®åˆ¶å¾¡ï¼ˆç§»å‹•ã€€ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã€€ã‚µã‚¦ãƒ³ãƒ‰ï¼‰ã‚¯ãƒ©ã‚¹
 /// </summary>
 public class EnemyController : MonoBehaviour
 {
-    // ƒLƒƒƒ‰ƒNƒ^[‚ÌID (“GƒLƒƒƒ‰ƒNƒ^[‚ğˆêˆÓ‚É¯•Ê‚·‚é‚½‚ß)
+    // ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ¼ã®ID (æ•µã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ¼ã‚’ä¸€æ„ã«è­˜åˆ¥ã™ã‚‹ãŸã‚)
     public int characterID;
 
-    // ƒiƒ”ƒBƒƒbƒVƒ…ƒG[ƒWƒFƒ“ƒg‚ÌQÆ (ˆÚ“®‚Ég—p‚·‚éNavMeshAgent)
+    // ãƒŠãƒ´ã‚£ãƒ¡ãƒƒã‚·ãƒ¥ã‚¨ãƒ¼ã‚¸ã‚§ãƒ³ãƒˆã®å‚ç…§ (ç§»å‹•ã«ä½¿ç”¨ã™ã‚‹NavMeshAgent)
     NavMeshAgent navMeshAgent;
 
-    // PatrolPointManager‚Ö‚ÌQÆ („‰ñƒ|ƒCƒ“ƒg‚ğŠÇ—)
+    // PatrolPointManagerã¸ã®å‚ç…§ (å·¡å›ãƒã‚¤ãƒ³ãƒˆã‚’ç®¡ç†)
     private PatrolPointManager patrolPointManager;
 
-    // ƒAƒjƒ[ƒ^[‚ÌQÆ (ƒAƒjƒ[ƒVƒ‡ƒ“§Œä—p)
+    // ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚¿ãƒ¼ã®å‚ç…§ (ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³åˆ¶å¾¡ç”¨)
     [SerializeField] Animator animator;
 
-    // ƒTƒEƒ“ƒhŠÖ˜A‚Ì•Ï”
-    [SerializeField] AudioSource audioSourse; //ƒI[ƒfƒBƒIƒ\[ƒXæ“¾
-    [SerializeField] AudioClip searchClip;    //’T‚·‰¹
-    [SerializeField] AudioClip runClip;       //‘–‚é‰¹
-    [SerializeField] AudioClip walkClip;      //•à‚­‰¹
+    // ã‚µã‚¦ãƒ³ãƒ‰é–¢é€£ã®å¤‰æ•°
+    [SerializeField] AudioSource audioSourse; //ã‚ªãƒ¼ãƒ‡ã‚£ã‚ªã‚½ãƒ¼ã‚¹å–å¾—
+    [SerializeField] AudioClip searchClip;    //æ¢ã™éŸ³
+    [SerializeField] AudioClip runClip;       //èµ°ã‚‹éŸ³
+    [SerializeField] AudioClip walkClip;      //æ­©ãéŸ³
 
-    void Idle() { audioSourse.PlayOneShot(searchClip); }     //’T‚·‰¹‚ğÄ¶
-    void Run() { audioSourse.PlayOneShot(runClip); }         //‘–‚é‰¹‚ğÄ¶
-    void Walk() { audioSourse.PlayOneShot(walkClip); }       //•à‚­‰¹‚ğÄ¶
+    void Idle() { audioSourse.PlayOneShot(searchClip); }     //æ¢ã™éŸ³ã‚’å†ç”Ÿ
+    void Run() { audioSourse.PlayOneShot(runClip); }         //èµ°ã‚‹éŸ³ã‚’å†ç”Ÿ
+    void Walk() { audioSourse.PlayOneShot(walkClip); }       //æ­©ãéŸ³ã‚’å†ç”Ÿ
 
-    //„‰ñ
-    private List<Transform> patrolPoints;     // „‰ñƒ|ƒCƒ“ƒgƒŠƒXƒg
-    private int currentPatrolPointIndex = 0;  // Œ»İ‚Ì„‰ñƒ|ƒCƒ“ƒg‚ÌƒCƒ“ƒfƒbƒNƒX
-    private bool isPatrolling = false;      @// „‰ñ’†‚©‚Ç‚¤‚©
-    private float walkSpeed = 1.0f;           // „‰ñ‘¬“xİ’è
+    //å·¡å›
+    private List<Transform> patrolPoints;     // å·¡å›ãƒã‚¤ãƒ³ãƒˆãƒªã‚¹ãƒˆ
+    private int currentPatrolPointIndex = 0;  // ç¾åœ¨ã®å·¡å›ãƒã‚¤ãƒ³ãƒˆã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
+    private bool isPatrolling = false;      ã€€// å·¡å›ä¸­ã‹ã©ã†ã‹
+    private float walkSpeed = 1.0f;           // å·¡å›é€Ÿåº¦è¨­å®š
 
-    //’ÇÕ
-    public Transform player;                          //ƒvƒŒƒCƒ„[‚ÌˆÊ’u
-    private float distanceToPlayer = Mathf.Infinity;  // ƒvƒŒƒCƒ„[‚Æ‚Ì‹——£
-    private float chaseRange = 7f;                    //Player‚ğŒŸ’m‚·‚é”ÍˆÍ
-    private float runSpeed = 5.5f;                    // ’ÇÕ‘¬“xİ’è
+    //è¿½è·¡
+    public Transform player;                          //ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ä½ç½®
+    private float distanceToPlayer = Mathf.Infinity;  // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã¨ã®è·é›¢
+    private float chaseRange = 7f;                    //Playerã‚’æ¤œçŸ¥ã™ã‚‹ç¯„å›²
+    private float runSpeed = 5.5f;                    // è¿½è·¡é€Ÿåº¦è¨­å®š
 
-    //’T‚·E•·‚­E‰½‚à‚µ‚È‚¢
-    private float idleSpeed = 0.0f; // ’T‚·E•·‚­E‰½‚à‚µ‚È‚¢‚Ì‘¬“xİ’è
-    private float searchTimer = 0f; // ’T‚·ó‘Ô‚ğˆÛ‚·‚éŠÔ
+    // è·é›¢ã«å¿œã˜ãŸé€Ÿåº¦ã‚’è¨­å®šï¼ˆè·é›¢ãŒè¿‘ã„ã»ã©é…ãã€é ã„ã»ã©é€Ÿã„ï¼‰
+    float minSpeed = 2.0f;  // æœ€ä½é€Ÿåº¦
+    float maxSpeed = 5.5f;  // æœ€å¤§é€Ÿåº¦
 
-    //ƒ‰ƒWƒIƒJƒZƒbƒg
-    public float detectionRange = 10f;   @// ‰¹‚ğ•·‚«æ‚ê‚é”ÍˆÍ
-    public Vector3 soundPosition;        @//ƒ‰ƒWƒIƒJƒZƒbƒg‚Ì’u‚©‚ê‚Ä‚¢‚éƒ|ƒCƒ“ƒg
-    private bool isMovingToSound = false;  //ƒ‰ƒWƒIƒJƒZƒbƒg‚É”½‰‚µ‚ÄˆÚ“®‚·‚é
+    //æ¢ã™ãƒ»èããƒ»ä½•ã‚‚ã—ãªã„
+    private float idleSpeed = 0.0f; // æ¢ã™ãƒ»èããƒ»ä½•ã‚‚ã—ãªã„æ™‚ã®é€Ÿåº¦è¨­å®š
+    private float searchTimer = 0f; // æ¢ã™çŠ¶æ…‹ã‚’ç¶­æŒã™ã‚‹æ™‚é–“
 
-    //ƒXƒe[ƒgƒx[ƒXAI
+    //ãƒ©ã‚¸ã‚ªã‚«ã‚»ãƒƒãƒˆ
+    public float detectionRange = 10f;   ã€€// éŸ³ã‚’èãå–ã‚Œã‚‹ç¯„å›²
+    public Vector3 soundPosition;        ã€€//ãƒ©ã‚¸ã‚ªã‚«ã‚»ãƒƒãƒˆã®ç½®ã‹ã‚Œã¦ã„ã‚‹ãƒã‚¤ãƒ³ãƒˆ
+    private bool isMovingToSound = false;  //ãƒ©ã‚¸ã‚ªã‚«ã‚»ãƒƒãƒˆã«åå¿œã—ã¦ç§»å‹•ã™ã‚‹
+
+    //ã‚¹ãƒ†ãƒ¼ãƒˆãƒ™ãƒ¼ã‚¹AI
     #region
     enum enemyState
     {
-        patrol,    //„‰ñ
-        chase,     //’Ç‚¢‚©‚¯‚é
-        search,    //’T‚·
-        hear,      //•·‚­
-        near,      //‹ß‚Ã‚­
-        doNothing  //‰½‚à‚µ‚È‚¢
+        patrol,    //å·¡å›
+        chase,     //è¿½ã„ã‹ã‘ã‚‹
+        search,    //æ¢ã™
+        hear,      //èã
+        near,      //è¿‘ã¥ã
+        doNothing  //ä½•ã‚‚ã—ãªã„
     }
 
     enum BehaviorType
     {
-        patrol,    //„‰ñ
-        chase,     //’Ç‚¢‚©‚¯‚é
-        search,    //’T‚·
-        hear,      //•·‚­
-        near,      //‹ß‚Ã‚­
-        doNothing@//‰½‚à‚µ‚È‚¢
+        patrol,    //å·¡å›
+        chase,     //è¿½ã„ã‹ã‘ã‚‹
+        search,    //æ¢ã™
+        hear,      //èã
+        near,      //è¿‘ã¥ã
+        doNothingã€€//ä½•ã‚‚ã—ãªã„
     }
 
     class Behavior
     {
-        public BehaviorType type { get; private set; }@//s“®ƒpƒ^[ƒ“i‘‚«Š·‚¦‚Å‚«‚È‚¢j
-        public float value;                             //s“®ƒpƒ^[ƒ“•Ï‰»‚ğ•\‚·’l
+        public BehaviorType type { get; private set; }ã€€//è¡Œå‹•ãƒ‘ã‚¿ãƒ¼ãƒ³ï¼ˆæ›¸ãæ›ãˆã§ããªã„ï¼‰
+        public float value;                             //è¡Œå‹•ãƒ‘ã‚¿ãƒ¼ãƒ³å¤‰åŒ–ã‚’è¡¨ã™å€¤
 
-        // ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+        // ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
         public Behavior(BehaviorType _type)
         {
-            //Še•Ï”‚Ì‰Šú‰»
+            //å„å¤‰æ•°ã®åˆæœŸåŒ–
             type = _type;
             value = 0f;
         }
@@ -89,12 +93,12 @@ public class EnemyController : MonoBehaviour
 
     class Behaviors
     {
-        public List<Behavior> behaviorList { get; private set; } = new List<Behavior>();@//s“®ƒpƒ^[ƒ“‚Ìí—Ş‚ğ•\‚·•Ï”
+        public List<Behavior> behaviorList { get; private set; } = new List<Behavior>();ã€€//è¡Œå‹•ãƒ‘ã‚¿ãƒ¼ãƒ³ã®ç¨®é¡ã‚’è¡¨ã™å¤‰æ•°
 
-        //BehaviorType‚ğˆø”‚ÉAŠY“–‚·‚éBehaviorƒNƒ‰ƒX‚ğQÆ‚·‚é
+        //BehaviorTypeã‚’å¼•æ•°ã«ã€è©²å½“ã™ã‚‹Behaviorã‚¯ãƒ©ã‚¹ã‚’å‚ç…§ã™ã‚‹
         public Behavior GetBehavior(BehaviorType type)
         {
-            foreach (Behavior behaviour in behaviorList)// behaviorList‚ğˆêŒÂ‚¸‚ÂŠm”F
+            foreach (Behavior behaviour in behaviorList)// behaviorListã‚’ä¸€å€‹ãšã¤ç¢ºèª
             {
                 if (behaviour.type == type)
                 {
@@ -104,37 +108,37 @@ public class EnemyController : MonoBehaviour
             return null;
         }
 
-        // s“®ƒpƒ^[ƒ“‚Ìd—v“x‡‚Éƒ\[ƒg
+        // è¡Œå‹•ãƒ‘ã‚¿ãƒ¼ãƒ³ã®é‡è¦åº¦é †ã«ã‚½ãƒ¼ãƒˆ
         public void SortDesire()
         {
-            //—v‘f‚ğ~‡‚Åƒ\[ƒg‚µ‚Ä‚¢‚­
+            //è¦ç´ ã‚’é™é †ã§ã‚½ãƒ¼ãƒˆã—ã¦ã„ã
             behaviorList.Sort((behaviour1, behaviour2) => behaviour2.value.CompareTo(behaviour1.value));
-            //¸‡‚É‚µ‚½‚¢ê‡‚Í behaviour1.value.CompareTo(behaviour2.value)
+            //æ˜‡é †ã«ã—ãŸã„å ´åˆã¯ behaviour1.value.CompareTo(behaviour2.value)
         }
 
-        //ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+        //ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
         public Behaviors()
         {
-            //—ñ‹“Œ^‚ğ•¶š—ñ‚Ì”z—ñ‚É•ÏŠ·ALength‚Å—v‘f”‚ğæ“¾
+            //åˆ—æŒ™å‹ã‚’æ–‡å­—åˆ—ã®é…åˆ—ã«å¤‰æ›ã€Lengthã§è¦ç´ æ•°ã‚’å–å¾—
             int BehaviorNum = System.Enum.GetNames(typeof(BehaviorType)).Length;
 
-            // BehaviorƒNƒ‰ƒX‚ğ¶¬‰Šú‰»AƒŠƒXƒg‚É’Ç‰Á‚µ‚Ä‚¢‚­
+            // Behaviorã‚¯ãƒ©ã‚¹ã‚’ç”ŸæˆåˆæœŸåŒ–ã€ãƒªã‚¹ãƒˆã«è¿½åŠ ã—ã¦ã„ã
             for (int i = 0; i < BehaviorNum; i++)
             {
-                BehaviorType type = (BehaviorType)System.Enum.ToObject(typeof(BehaviorType), i);//—ñ‹“Œ^‚ğƒCƒ“ƒfƒbƒNƒX‚Åæ“¾‚·‚é
-                Behavior newBehavior = new Behavior(type);@@@@@@@@@@@@@@@@@@@ //‰Šú‰»@@@@@@@@@@@@@@@@@@@
+                BehaviorType type = (BehaviorType)System.Enum.ToObject(typeof(BehaviorType), i);//åˆ—æŒ™å‹ã‚’ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã§å–å¾—ã™ã‚‹
+                Behavior newBehavior = new Behavior(type);ã€€ã€€ã€€ã€€ã€€ã€€ã€€ã€€ã€€ã€€ã€€ã€€ã€€ã€€ã€€ã€€ã€€ã€€ã€€ //åˆæœŸåŒ–ã€€ã€€ã€€ã€€ã€€ã€€ã€€ã€€ã€€ã€€ã€€ã€€ã€€ã€€ã€€ã€€ã€€ã€€ã€€
 
-                behaviorList.Add(newBehavior);//’Ç‰Á
+                behaviorList.Add(newBehavior);//è¿½åŠ 
             }
         }
     }
 
-    Behaviors behaviors = new Behaviors();//ƒNƒ‰ƒX‚ÌÀ‘Ô
+    Behaviors behaviors = new Behaviors();//ã‚¯ãƒ©ã‚¹ã®å®Ÿæ…‹
 
-    enemyState curretState = enemyState.doNothing;//Œ»İ‚ÌƒXƒe[ƒg‚Í‰½‚à‚µ‚Ä‚¢‚È‚¢
-    bool stateEnter = true;                      //ƒXƒe[ƒg‚Ì•Ï‰»‚Éˆê‰ñ‚¾‚¯“Áê‚Èˆ—‚ğ‚³‚¹‚½‚¢‚Æ‚«‚Ég—p
+    enemyState curretState = enemyState.doNothing;//ç¾åœ¨ã®ã‚¹ãƒ†ãƒ¼ãƒˆã¯ä½•ã‚‚ã—ã¦ã„ãªã„
+    bool stateEnter = true;                      //ã‚¹ãƒ†ãƒ¼ãƒˆã®å¤‰åŒ–æ™‚ã«ä¸€å›ã ã‘ç‰¹æ®Šãªå‡¦ç†ã‚’ã•ã›ãŸã„ã¨ãã«ä½¿ç”¨
 
-    // ƒXƒe[ƒg•ÏX—pƒƒ\ƒbƒh
+    // ã‚¹ãƒ†ãƒ¼ãƒˆå¤‰æ›´ç”¨ãƒ¡ã‚½ãƒƒãƒ‰
     void ChangeState(enemyState newEnemyState)
     {
         curretState = newEnemyState;
@@ -143,101 +147,101 @@ public class EnemyController : MonoBehaviour
 
     #endregion
 
-    // ‰Šú‰»ˆ—
+    // åˆæœŸåŒ–å‡¦ç†
     private void Start()
     {
-        // ƒRƒ“ƒ|[ƒlƒ“ƒg‚Ìæ“¾
+        // ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®å–å¾—
         navMeshAgent = GetComponent<NavMeshAgent>();
         audioSourse = GetComponent<AudioSource>();
 
-        // PatrolPointManager‚ÌƒCƒ“ƒXƒ^ƒ“ƒX‚ğæ“¾
+        // PatrolPointManagerã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’å–å¾—
         patrolPointManager = FindObjectOfType<PatrolPointManager>();
 
-        // ‚»‚ÌID‚É‘Î‰‚·‚é„‰ñƒ|ƒCƒ“ƒg‚ğæ“¾
+        // ãã®IDã«å¯¾å¿œã™ã‚‹å·¡å›ãƒã‚¤ãƒ³ãƒˆã‚’å–å¾—
         patrolPoints = patrolPointManager.GetPatrolPoints(characterID);
 
-        // „‰ñƒ|ƒCƒ“ƒg‚ª‘¶İ‚·‚ê‚Î„‰ñ‚ğŠJn
+        // å·¡å›ãƒã‚¤ãƒ³ãƒˆãŒå­˜åœ¨ã™ã‚Œã°å·¡å›ã‚’é–‹å§‹
         if (patrolPoints != null && patrolPoints.Count > 0)
         {
             isPatrolling = true;
-            navMeshAgent.SetDestination(patrolPoints[currentPatrolPointIndex].position);  // Å‰‚Ì„‰ñƒ|ƒCƒ“ƒg‚ÉŒü‚©‚¤
+            navMeshAgent.SetDestination(patrolPoints[currentPatrolPointIndex].position);  // æœ€åˆã®å·¡å›ãƒã‚¤ãƒ³ãƒˆã«å‘ã‹ã†
         }
 
-        // s“®ƒŠƒXƒg‚Ì„‰ñ‚Ìd—v“x‚ğ‰Šúİ’è
+        // è¡Œå‹•ãƒªã‚¹ãƒˆã®å·¡å›ã®é‡è¦åº¦ã‚’åˆæœŸè¨­å®š
         behaviors.GetBehavior(BehaviorType.patrol).value = 2;
     }
 
     private void Update()
     {
-        GameObject obj = GameObject.Find("Player");         //PlayerƒIƒuƒWƒFƒNƒg‚ğ’T‚·
-        PlayerSeen PS = obj.GetComponent<PlayerSeen>();     //•t‚¢‚Ä‚¢‚éƒXƒNƒŠƒvƒg(PlayerSeen)‚ğæ“¾
-        ObjectPlacer OP = obj.GetComponent<ObjectPlacer>(); //•t‚¢‚Ä‚¢‚éƒXƒNƒŠƒvƒg( ObjectPlacer)‚ğæ“¾
+        GameObject obj = GameObject.Find("Player");         //Playerã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’æ¢ã™
+        PlayerSeen PS = obj.GetComponent<PlayerSeen>();     //ä»˜ã„ã¦ã„ã‚‹ã‚¹ã‚¯ãƒªãƒ—ãƒˆ(PlayerSeen)ã‚’å–å¾—
+        ObjectPlacer OP = obj.GetComponent<ObjectPlacer>(); //ä»˜ã„ã¦ã„ã‚‹ã‚¹ã‚¯ãƒªãƒ—ãƒˆ( ObjectPlacer)ã‚’å–å¾—
 
-        #region@ƒvƒŒƒCƒ„[‚ÌˆÊ’u‚ğŠm”F‚µA’ÇÕE„‰ñ‚ğ”»’f
-        Vector3 Position = player.position - transform.position;      // ƒ^[ƒQƒbƒg‚ÌˆÊ’u‚Æ©g‚ÌˆÊ’u‚Ì·‚ğŒvZ
-        bool isFront = Vector3.Dot(Position, transform.forward) > 0;  // ƒ^[ƒQƒbƒg‚ª©g‚Ì‘O•û‚É‚ ‚é‚©‚Ç‚¤‚©”»’è
+        #regionã€€ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ä½ç½®ã‚’ç¢ºèªã—ã€è¿½è·¡ãƒ»å·¡å›ã‚’åˆ¤æ–­
+        Vector3 Position = player.position - transform.position;      // ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã®ä½ç½®ã¨è‡ªèº«ã®ä½ç½®ã®å·®ã‚’è¨ˆç®—
+        bool isFront = Vector3.Dot(Position, transform.forward) > 0;  // ã‚¿ãƒ¼ã‚²ãƒƒãƒˆãŒè‡ªèº«ã®å‰æ–¹ã«ã‚ã‚‹ã‹ã©ã†ã‹åˆ¤å®š
 
-        distanceToPlayer = Vector3.Distance(player.position, transform.position); // ƒvƒŒƒCƒ„[‚Æ‚Ì‹——£‚ğŒvZ
+        distanceToPlayer = Vector3.Distance(player.position, transform.position); // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã¨ã®è·é›¢ã‚’è¨ˆç®—
 
-        // ƒvƒŒƒCƒ„[‚ª‘O•û‚É‚¢‚é‚©‚Âƒ‰ƒWƒI‚ª”ÍˆÍ“à‚É‚¨‚©‚ê‚Ä‚¢‚È‚¢‚©‚Â‹ŠE“à‚É‚¢‚éê‡
+        // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãŒå‰æ–¹ã«ã„ã‚‹ã‹ã¤ãƒ©ã‚¸ã‚ªãŒç¯„å›²å†…ã«ãŠã‹ã‚Œã¦ã„ãªã„ã‹ã¤è¦–ç•Œå†…ã«ã„ã‚‹å ´åˆ
         if (isFront && !isMovingToSound && PS.isVisible)
         {
-            //’ÇÕ”ÍˆÍ“à
+            //è¿½è·¡ç¯„å›²å†…
             if (distanceToPlayer <= chaseRange)
             {
-                behaviors.GetBehavior(BehaviorType.chase).value = 2; // ƒvƒŒƒCƒ„[‚ğ’ÇÕ‚·‚é
+                behaviors.GetBehavior(BehaviorType.chase).value = 2; // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚’è¿½è·¡ã™ã‚‹
             }
-            //’ÇÕ”ÍˆÍŠO
+            //è¿½è·¡ç¯„å›²å¤–
             else if (distanceToPlayer >= chaseRange)
             {
-                behaviors.GetBehavior(BehaviorType.patrol).value = 2;// ƒvƒŒƒCƒ„[‚ª”ÍˆÍŠO‚Ìê‡A„‰ñ‚É–ß‚é
-                isPatrolling = true;                                 // ˆÚ“®ŠJn
+                behaviors.GetBehavior(BehaviorType.patrol).value = 2;// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãŒç¯„å›²å¤–ã®å ´åˆã€å·¡å›ã«æˆ»ã‚‹
+                isPatrolling = true;                                 // ç§»å‹•é–‹å§‹
             }
         }
-        // „‰ñ’†‚Ìˆ—
+        // å·¡å›ä¸­ã®å‡¦ç†
         else if (Vector3.Distance(transform.position, patrolPoints[currentPatrolPointIndex].position) < 0.5f)
         {
-            behaviors.GetBehavior(BehaviorType.search).value = 2;   // „‰ñƒ|ƒCƒ“ƒg“’BŒãAü•Ó‚ğ’Tõ‚·‚é
+            behaviors.GetBehavior(BehaviorType.search).value = 2;   // å·¡å›ãƒã‚¤ãƒ³ãƒˆåˆ°é”å¾Œã€å‘¨è¾ºã‚’æ¢ç´¢ã™ã‚‹
         }
         #endregion
 
-        #region ƒ‰ƒWƒIƒJƒZƒbƒg‚ª’u‚©‚ê‚½‚É”½‰‚µAó‘Ô•ÎˆÚ‚ğs‚¤
-        // ƒ‰ƒWƒIƒJƒZƒbƒg‚Ì‰¹‚É”½‰‚µ‚ÄˆÚ“®‚·‚é
+        #region ãƒ©ã‚¸ã‚ªã‚«ã‚»ãƒƒãƒˆãŒç½®ã‹ã‚ŒãŸæ™‚ã«åå¿œã—ã€çŠ¶æ…‹åç§»ã‚’è¡Œã†
+        // ãƒ©ã‚¸ã‚ªã‚«ã‚»ãƒƒãƒˆã®éŸ³ã«åå¿œã—ã¦ç§»å‹•ã™ã‚‹
         if (isMovingToSound && OP.isParticle)
         {
-            isPatrolling = false;   // –Ú“I’n‚ÉŒü‚©‚Á‚ÄˆÚ“®’†‚Í„‰ñ’â~
+            isPatrolling = false;   // ç›®çš„åœ°ã«å‘ã‹ã£ã¦ç§»å‹•ä¸­ã¯å·¡å›åœæ­¢
 
-            // –Ú“I’n‚É‹ß‚Ã‚¢‚½‚ç’â~
+            // ç›®çš„åœ°ã«è¿‘ã¥ã„ãŸã‚‰åœæ­¢
             if (Vector3.Distance(this.transform.position, soundPosition) < 1f)
             {
-                behaviors.GetBehavior(BehaviorType.hear).value = 2; // ‰¹‚ÌŒ³‚É“’B
-                isMovingToSound = false;                            // ˆÚ“®’â~
+                behaviors.GetBehavior(BehaviorType.hear).value = 2; // éŸ³ã®å…ƒã«åˆ°é”
+                isMovingToSound = false;                            // ç§»å‹•åœæ­¢
             }
-            // ‰¹Œ¹‚ÉŒü‚©‚Á‚Ä‚¢‚é“r’†‚ÅAˆê’è‹——£‚Ü‚ÅÚ‹ß
+            // éŸ³æºã«å‘ã‹ã£ã¦ã„ã‚‹é€”ä¸­ã§ã€ä¸€å®šè·é›¢ã¾ã§æ¥è¿‘
             else if (Vector3.Distance(this.transform.position, soundPosition) >=1f&& OP.isParticle)
             {
-                behaviors.GetBehavior(BehaviorType.near).value = 2; // ‰¹‚É‹ß‚Ã‚¢‚Ä‚¢‚é
+                behaviors.GetBehavior(BehaviorType.near).value = 2; // éŸ³ã«è¿‘ã¥ã„ã¦ã„ã‚‹
             }
         }
         #endregion
 
-        // Œ»İ‚ÌƒXƒe[ƒg‚ÉŠî‚Ã‚¢‚½ˆ—
+        // ç¾åœ¨ã®ã‚¹ãƒ†ãƒ¼ãƒˆã«åŸºã¥ã„ãŸå‡¦ç†
         switch (curretState)
         {
-            case enemyState.doNothing: //‰½‚à‚µ‚È‚¢
+            case enemyState.doNothing: //ä½•ã‚‚ã—ãªã„
                 #region
                 if (stateEnter)
                 {
                     stateEnter = false;
-                    behaviors.GetBehavior(BehaviorType.doNothing).value = 0;//‰½‚à‚µ‚È‚¢s“®‚ğI—¹
-                    behaviors.GetBehavior(BehaviorType.patrol).value = 2;   //„‰ñ‚ÉØ‚è‘Ö‚¦‚é
-                    //Debug.Log("‰½‚à‚µ‚È‚¢");
+                    behaviors.GetBehavior(BehaviorType.doNothing).value = 0;//ä½•ã‚‚ã—ãªã„è¡Œå‹•ã‚’çµ‚äº†
+                    behaviors.GetBehavior(BehaviorType.patrol).value = 2;   //å·¡å›ã«åˆ‡ã‚Šæ›¿ãˆã‚‹
+                    //Debug.Log("ä½•ã‚‚ã—ãªã„");
                 }
 
-                behaviors.SortDesire();//s“®ƒpƒ^[ƒ“‚ğƒ\[ƒg
+                behaviors.SortDesire();//è¡Œå‹•ãƒ‘ã‚¿ãƒ¼ãƒ³ã‚’ã‚½ãƒ¼ãƒˆ
 
-                //s“®ƒŠƒXƒg‚Ì’†‚ÅÅ‚à—Dæ“x‚Ì‚‚¢s“®‚ğ‘I‘ğ
-                //ƒŠƒXƒg‚Ìˆê”Ôã‚Ì1‚ğã‰ñ‚Á‚½‚ç
+                //è¡Œå‹•ãƒªã‚¹ãƒˆã®ä¸­ã§æœ€ã‚‚å„ªå…ˆåº¦ã®é«˜ã„è¡Œå‹•ã‚’é¸æŠ
+                //ãƒªã‚¹ãƒˆã®ä¸€ç•ªä¸Šã®1ã‚’ä¸Šå›ã£ãŸã‚‰
                 if (behaviors.behaviorList[0].value >= 1)
                 {
                     Behavior behavior = behaviors.behaviorList[0];
@@ -263,39 +267,39 @@ public class EnemyController : MonoBehaviour
 
                 #endregion
                 break;
-            case enemyState.patrol: //„‰ñ
+            case enemyState.patrol: //å·¡å›
                 #region
                 if (stateEnter)
                 {
                     stateEnter = false;
-                    behaviors.GetBehavior(BehaviorType.patrol).value = 0; // „‰ñs“®‚ğI—¹
-                    PS.isVisualization = false;                           // ƒvƒŒƒCƒ„[‚Ì‰Â‹‰»‚ğƒIƒt
-                    //Debug.Log("„‰ñ’†");
-                    animator.SetBool("Walk", true);     // •àsƒAƒjƒ[ƒVƒ‡ƒ“‚ğŠJn
-                    animator.SetBool("Run", false);     // ‘–sƒAƒjƒ[ƒVƒ‡ƒ“‚ğ’â~
-                    animator.SetBool("Idle", false);    // ‘Ò‹@ƒAƒjƒ[ƒVƒ‡ƒ“‚ğ’â~
+                    behaviors.GetBehavior(BehaviorType.patrol).value = 0; // å·¡å›è¡Œå‹•ã‚’çµ‚äº†
+                    PS.isVisualization = false;                           // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®å¯è¦–åŒ–ã‚’ã‚ªãƒ•
+                    //Debug.Log("å·¡å›ä¸­");
+                    animator.SetBool("Walk", true);     // æ­©è¡Œã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã‚’é–‹å§‹
+                    animator.SetBool("Run", false);     // èµ°è¡Œã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã‚’åœæ­¢
+                    animator.SetBool("Idle", false);    // å¾…æ©Ÿã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã‚’åœæ­¢
                 }
 
-                Walk(); // •à‚­‰¹‚ğÄ¶
+                Walk(); // æ­©ãéŸ³ã‚’å†ç”Ÿ
 
-                // ƒvƒŒƒCƒ„[‚ª‘O•û‚É‚¢‚é‚©‚Âƒ‰ƒWƒI‚ª”ÍˆÍ“à‚É‚¨‚©‚ê‚Ä‚¢‚È‚¢‚©‚Â‹ŠE“à‚É‚¢‚éê‡
+                // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãŒå‰æ–¹ã«ã„ã‚‹ã‹ã¤ãƒ©ã‚¸ã‚ªãŒç¯„å›²å†…ã«ãŠã‹ã‚Œã¦ã„ãªã„ã‹ã¤è¦–ç•Œå†…ã«ã„ã‚‹å ´åˆ
                 if (isPatrolling)
                 {
-                    navMeshAgent.speed = walkSpeed;// „‰ñ‘¬“xİ’è
+                    navMeshAgent.speed = walkSpeed;// å·¡å›é€Ÿåº¦è¨­å®š
 
-                    navMeshAgent.SetDestination(patrolPoints[currentPatrolPointIndex].position);// Ÿ‚Ì„‰ñƒ|ƒCƒ“ƒg‚ğİ’è
+                    navMeshAgent.SetDestination(patrolPoints[currentPatrolPointIndex].position);// æ¬¡ã®å·¡å›ãƒã‚¤ãƒ³ãƒˆã‚’è¨­å®š
 
-                    // „‰ñƒ|ƒCƒ“ƒg‚É“’B‚µ‚½‚©ƒ`ƒFƒbƒN
+                    // å·¡å›ãƒã‚¤ãƒ³ãƒˆã«åˆ°é”ã—ãŸã‹ãƒã‚§ãƒƒã‚¯
                     if (Vector3.Distance(transform.position, patrolPoints[currentPatrolPointIndex].position) < 0.5f)
                     {
-                        currentPatrolPointIndex = (currentPatrolPointIndex + 1) % patrolPoints.Count; // Ÿ‚Ì„‰ñƒ|ƒCƒ“ƒg‚ÉˆÚ“®
+                        currentPatrolPointIndex = (currentPatrolPointIndex + 1) % patrolPoints.Count; // æ¬¡ã®å·¡å›ãƒã‚¤ãƒ³ãƒˆã«ç§»å‹•
                     }
                 }
 
-                behaviors.SortDesire();// s“®ƒpƒ^[ƒ“‚ğƒ\[ƒg
+                behaviors.SortDesire();// è¡Œå‹•ãƒ‘ã‚¿ãƒ¼ãƒ³ã‚’ã‚½ãƒ¼ãƒˆ
 
-                //s“®ƒŠƒXƒg‚Ì’†‚ÅÅ‚à—Dæ“x‚Ì‚‚¢s“®‚ğ‘I‘ğ
-                //ƒŠƒXƒg‚Ìˆê”Ôã‚Ì1‚ğã‰ñ‚Á‚½‚ç
+                //è¡Œå‹•ãƒªã‚¹ãƒˆã®ä¸­ã§æœ€ã‚‚å„ªå…ˆåº¦ã®é«˜ã„è¡Œå‹•ã‚’é¸æŠ
+                //ãƒªã‚¹ãƒˆã®ä¸€ç•ªä¸Šã®1ã‚’ä¸Šå›ã£ãŸã‚‰
                 if (behaviors.behaviorList[0].value >= 1)
                 {
                     Behavior behavior = behaviors.behaviorList[0];
@@ -321,37 +325,37 @@ public class EnemyController : MonoBehaviour
 
                 #endregion
                 break;
-            case enemyState.search: //’T‚·
+            case enemyState.search: //æ¢ã™
                 #region
                 if (stateEnter)
                 {
                     stateEnter = false;
-                    behaviors.GetBehavior(BehaviorType.search).value = 0; // ’Tõs“®‚ğI—¹
-                    //Debug.Log("‚Ç‚±‚É‚¢‚é‚©‚ÈH");
+                    behaviors.GetBehavior(BehaviorType.search).value = 0; // æ¢ç´¢è¡Œå‹•ã‚’çµ‚äº†
+                    //Debug.Log("ã©ã“ã«ã„ã‚‹ã‹ãªï¼Ÿ");
                     navMeshAgent.speed = idleSpeed;
-                    animator.SetBool("Walk", false);  // •àsƒAƒjƒ[ƒVƒ‡ƒ“‚ğ’â~
-                    animator.SetBool("Run", false);   // ‘–sƒAƒjƒ[ƒVƒ‡ƒ“‚ğ’â~
-                    animator.SetBool("Idle", true);   // ‘Ò‹@ƒAƒjƒ[ƒVƒ‡ƒ“‚ğŠJn
+                    animator.SetBool("Walk", false);  // æ­©è¡Œã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã‚’åœæ­¢
+                    animator.SetBool("Run", false);   // èµ°è¡Œã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã‚’åœæ­¢
+                    animator.SetBool("Idle", true);   // å¾…æ©Ÿã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã‚’é–‹å§‹
                 }
 
-                Idle();// ƒAƒCƒhƒ‹i’T‚·j‰¹‚ğÄ¶
+                Idle();// ã‚¢ã‚¤ãƒ‰ãƒ«ï¼ˆæ¢ã™ï¼‰éŸ³ã‚’å†ç”Ÿ
 
-                navMeshAgent.SetDestination(this.transform.position); // Œ»ˆÊ’u‚Å~‚Ü‚é
+                navMeshAgent.SetDestination(this.transform.position); // ç¾ä½ç½®ã§æ­¢ã¾ã‚‹
 
-                // 3•bŒo‰ßŒã‚É„‰ñ‚É–ß‚é
+                // 3ç§’çµŒéå¾Œã«å·¡å›ã«æˆ»ã‚‹
                 searchTimer += Time.deltaTime;
                 if (searchTimer >= 2.5f)
                 {
-                    searchTimer = 0f;// ’T‚·ó‘Ô‚É“ü‚Á‚½‚çƒ^ƒCƒ}[‚ğƒŠƒZƒbƒg
-                    behaviors.GetBehavior(BehaviorType.patrol).value = 2; // „‰ñ‚É–ß‚·
+                    searchTimer = 0f;// æ¢ã™çŠ¶æ…‹ã«å…¥ã£ãŸã‚‰ã‚¿ã‚¤ãƒãƒ¼ã‚’ãƒªã‚»ãƒƒãƒˆ
+                    behaviors.GetBehavior(BehaviorType.patrol).value = 2; // å·¡å›ã«æˆ»ã™
                     isPatrolling = true;
-                    PS.isVisualization = false; // ƒvƒŒƒCƒ„[‚Ì‰Â‹‰»‚ğƒIƒt
+                    PS.isVisualization = false; // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®å¯è¦–åŒ–ã‚’ã‚ªãƒ•
                 }
 
-                behaviors.SortDesire();// s“®ƒpƒ^[ƒ“‚ğƒ\[ƒg
+                behaviors.SortDesire();// è¡Œå‹•ãƒ‘ã‚¿ãƒ¼ãƒ³ã‚’ã‚½ãƒ¼ãƒˆ
 
-                //s“®ƒŠƒXƒg‚Ì’†‚ÅÅ‚à—Dæ“x‚Ì‚‚¢s“®‚ğ‘I‘ğ
-                //ƒŠƒXƒg‚Ìˆê”Ôã‚Ì1‚ğã‰ñ‚Á‚½‚ç
+                //è¡Œå‹•ãƒªã‚¹ãƒˆã®ä¸­ã§æœ€ã‚‚å„ªå…ˆåº¦ã®é«˜ã„è¡Œå‹•ã‚’é¸æŠ
+                //ãƒªã‚¹ãƒˆã®ä¸€ç•ªä¸Šã®1ã‚’ä¸Šå›ã£ãŸã‚‰
                 if (behaviors.behaviorList[0].value >= 1)
                 {
                     Behavior behavior = behaviors.behaviorList[0];
@@ -377,34 +381,36 @@ public class EnemyController : MonoBehaviour
 
                 #endregion
                 break;
-            case enemyState.chase: //’Ç‚¢‚©‚¯‚é
+            case enemyState.chase: //è¿½ã„ã‹ã‘ã‚‹
                 #region
                 if (stateEnter)
                 {
                     stateEnter = false;
-                    behaviors.GetBehavior(BehaviorType.chase).value = 0;// ’ÇÕs“®‚ğI—¹
-                   // Debug.Log("’Ç‚¢‚©‚¯‚¢‚é‚æ");
+                    behaviors.GetBehavior(BehaviorType.chase).value = 0;// è¿½è·¡è¡Œå‹•ã‚’çµ‚äº†
+                   // Debug.Log("è¿½ã„ã‹ã‘ã„ã‚‹ã‚ˆ");
 
-                    animator.SetBool("Walk", false);  // •àsƒAƒjƒ[ƒVƒ‡ƒ“‚ğ’â~
-                    animator.SetBool("Run", true);    // ‘–sƒAƒjƒ[ƒVƒ‡ƒ“‚ğŠJn
-                    animator.SetBool("Idle", false);  // ‘Ò‹@ƒAƒjƒ[ƒVƒ‡ƒ“‚ğ’â~
-                    navMeshAgent.speed = 0.0f;        // ‰Šú‘¬“xİ’è
+                    animator.SetBool("Walk", false);  // æ­©è¡Œã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã‚’åœæ­¢
+                    animator.SetBool("Run", true);    // èµ°è¡Œã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã‚’é–‹å§‹
+                    animator.SetBool("Idle", false);  // å¾…æ©Ÿã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã‚’åœæ­¢
+                    navMeshAgent.speed = 0.0f;        // åˆæœŸé€Ÿåº¦è¨­å®š
                 }
 
-                PS.isVisible = true;       // ƒvƒŒƒCƒ„[‚ğ‰Â‹‰»
-                PS.isVisualization = true; // ƒvƒŒƒCƒ„[‚Ì‰Â‹‰»‚ğƒIƒ“
+                PS.isVisible = true;       // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚’å¯è¦–åŒ–
+                PS.isVisualization = true; // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®å¯è¦–åŒ–ã‚’ã‚ªãƒ³
 
-                Run();  // ‘–‚é‰¹‚ğÄ¶
+                Run();  // èµ°ã‚‹éŸ³ã‚’å†ç”Ÿ
 
-                transform.LookAt(player.transform);// ƒvƒŒƒCƒ„[‚ÉŒü‚©‚Á‚Ä‰ñ“]
+                transform.LookAt(player.transform); // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã«å‘ã‹ã£ã¦å›è»¢
+                navMeshAgent.SetDestination(player.transform.position); // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã«å‘ã‹ã£ã¦ç§»å‹•
 
-                navMeshAgent.SetDestination(player.transform.position); // ƒvƒŒƒCƒ„[‚ÉŒü‚©‚Á‚ÄˆÚ“®
-                navMeshAgent.speed = runSpeed;                          // ’ÇÕ‘¬“xİ’è
+                float t = Mathf.Clamp01(distanceToPlayer / chaseRange); // 0ã€œ1ã®ç¯„å›²ã«æ­£è¦åŒ–
+                navMeshAgent.speed = Mathf.Lerp(minSpeed, maxSpeed, t);       // ç·šå½¢è£œé–“ã§é€Ÿåº¦ã‚’è¨­å®š
 
-                behaviors.SortDesire();// s“®ƒpƒ^[ƒ“‚ğƒ\[ƒg
 
-                //s“®ƒŠƒXƒg‚Ì’†‚ÅÅ‚à—Dæ“x‚Ì‚‚¢s“®‚ğ‘I‘ğ
-                //ƒŠƒXƒg‚Ìˆê”Ôã‚Ì1‚ğã‰ñ‚Á‚½‚ç
+                behaviors.SortDesire();// è¡Œå‹•ãƒ‘ã‚¿ãƒ¼ãƒ³ã‚’ã‚½ãƒ¼ãƒˆ
+
+                //è¡Œå‹•ãƒªã‚¹ãƒˆã®ä¸­ã§æœ€ã‚‚å„ªå…ˆåº¦ã®é«˜ã„è¡Œå‹•ã‚’é¸æŠ
+                //ãƒªã‚¹ãƒˆã®ä¸€ç•ªä¸Šã®1ã‚’ä¸Šå›ã£ãŸã‚‰
                 if (behaviors.behaviorList[0].value >= 1)
                 {
                     Behavior behavior = behaviors.behaviorList[0];
@@ -430,38 +436,38 @@ public class EnemyController : MonoBehaviour
 
                 #endregion
                 break;
-            case enemyState.hear: //•·‚­
+            case enemyState.hear: //èã
                 #region
                 if (stateEnter)
                 {
                     stateEnter = false;
-                    behaviors.GetBehavior(BehaviorType.hear).value = 0;// •·‚­s“®‚ğI—¹
-                    //Debug.Log("•·‚­");
-                    animator.SetBool("Walk", false);  // •àsƒAƒjƒ[ƒVƒ‡ƒ“‚ğ’â~
-                    animator.SetBool("Run", false);   // ‘–sƒAƒjƒ[ƒVƒ‡ƒ“‚ğ’â~
-                    animator.SetBool("Idle", true);   // ‘Ò‹@ƒAƒjƒ[ƒVƒ‡ƒ“‚ğŠJn
+                    behaviors.GetBehavior(BehaviorType.hear).value = 0;// èãè¡Œå‹•ã‚’çµ‚äº†
+                    //Debug.Log("èã");
+                    animator.SetBool("Walk", false);  // æ­©è¡Œã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã‚’åœæ­¢
+                    animator.SetBool("Run", false);   // èµ°è¡Œã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã‚’åœæ­¢
+                    animator.SetBool("Idle", true);   // å¾…æ©Ÿã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã‚’é–‹å§‹
                 }
 
-                Idle();// ƒAƒCƒhƒ‹i’T‚·j‰¹‚ğÄ¶
+                Idle();// ã‚¢ã‚¤ãƒ‰ãƒ«ï¼ˆæ¢ã™ï¼‰éŸ³ã‚’å†ç”Ÿ
 
-                // ƒ‰ƒWƒIƒJƒZƒbƒg‚Ì‰¹‚É”½‰‚µ‚ÄˆÚ“®‚·‚é
+                // ãƒ©ã‚¸ã‚ªã‚«ã‚»ãƒƒãƒˆã®éŸ³ã«åå¿œã—ã¦ç§»å‹•ã™ã‚‹
                 if (OP.isParticle)
                 {
-                    navMeshAgent.SetDestination(this.transform.position); // ‰¹Œ¹‚ÉˆÚ“®
-                    navMeshAgent.speed =walkSpeed;                        // ˆÚ“®‘¬“xİ’è
+                    navMeshAgent.SetDestination(this.transform.position); // éŸ³æºã«ç§»å‹•
+                    navMeshAgent.speed =walkSpeed;                        // ç§»å‹•é€Ÿåº¦è¨­å®š
                 }
                 else if (!OP.isParticle)
                 {
-                    isMovingToSound = false;                                                     // ‰¹Œ¹‚ªÁ‚¦‚½‚çˆÚ“®’â~
-                    navMeshAgent.SetDestination(patrolPoints[currentPatrolPointIndex].position); // „‰ñƒ|ƒCƒ“ƒg‚É–ß‚é
-                    behaviors.GetBehavior(BehaviorType.patrol).value = 2;                        // „‰ñ‚É–ß‚·
+                    isMovingToSound = false;                                                     // éŸ³æºãŒæ¶ˆãˆãŸã‚‰ç§»å‹•åœæ­¢
+                    navMeshAgent.SetDestination(patrolPoints[currentPatrolPointIndex].position); // å·¡å›ãƒã‚¤ãƒ³ãƒˆã«æˆ»ã‚‹
+                    behaviors.GetBehavior(BehaviorType.patrol).value = 2;                        // å·¡å›ã«æˆ»ã™
                 
                 }
 
-                behaviors.SortDesire();//s“®ƒpƒ^[ƒ“‚ğƒ\[ƒg
+                behaviors.SortDesire();//è¡Œå‹•ãƒ‘ã‚¿ãƒ¼ãƒ³ã‚’ã‚½ãƒ¼ãƒˆ
 
-                //s“®ƒŠƒXƒg‚Ì’†‚ÅÅ‚à—Dæ“x‚Ì‚‚¢s“®‚ğ‘I‘ğ
-                //ƒŠƒXƒg‚Ìˆê”Ôã‚Ì1‚ğã‰ñ‚Á‚½‚ç
+                //è¡Œå‹•ãƒªã‚¹ãƒˆã®ä¸­ã§æœ€ã‚‚å„ªå…ˆåº¦ã®é«˜ã„è¡Œå‹•ã‚’é¸æŠ
+                //ãƒªã‚¹ãƒˆã®ä¸€ç•ªä¸Šã®1ã‚’ä¸Šå›ã£ãŸã‚‰
                 if (behaviors.behaviorList[0].value >= 1)
                 {
                     Behavior behavior = behaviors.behaviorList[0];
@@ -487,30 +493,30 @@ public class EnemyController : MonoBehaviour
 
                 #endregion
                 break;
-            case enemyState.near: //‰¹‚É‹ß‚Ã‚­
+            case enemyState.near: //éŸ³ã«è¿‘ã¥ã
                 #region
                 if (stateEnter)
                 {
                     stateEnter = false;
-                    behaviors.GetBehavior(BehaviorType.near).value = 0; // ‰¹Œ¹‚É‹ß‚Ã‚­s“®‚ğI—¹
-                    PS.isVisualization = false; // ƒvƒŒƒCƒ„[‚Ì‰Â‹‰»‚ğƒIƒt
-                    Debug.Log("‹ß‚Ã‚­");
+                    behaviors.GetBehavior(BehaviorType.near).value = 0; // éŸ³æºã«è¿‘ã¥ãè¡Œå‹•ã‚’çµ‚äº†
+                    PS.isVisualization = false; // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®å¯è¦–åŒ–ã‚’ã‚ªãƒ•
+                    Debug.Log("è¿‘ã¥ã");
                 }
 
-                animator.SetBool("Walk", true);  // •àsƒAƒjƒ[ƒVƒ‡ƒ“‚ğŠJn
-                animator.SetBool("Run", false);  // ‘–sƒAƒjƒ[ƒVƒ‡ƒ“‚ğ’â~
-                animator.SetBool("Idle", false); // ‘Ò‹@ƒAƒjƒ[ƒVƒ‡ƒ“‚ğ’â~
+                animator.SetBool("Walk", true);  // æ­©è¡Œã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã‚’é–‹å§‹
+                animator.SetBool("Run", false);  // èµ°è¡Œã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã‚’åœæ­¢
+                animator.SetBool("Idle", false); // å¾…æ©Ÿã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã‚’åœæ­¢
 
-                navMeshAgent.speed = walkSpeed;// ˆÚ“®‘¬“xİ’è
+                navMeshAgent.speed = walkSpeed;// ç§»å‹•é€Ÿåº¦è¨­å®š
 
-                navMeshAgent.SetDestination(soundPosition); // ‰¹Œ¹‚ÉŒü‚©‚Á‚ÄˆÚ“®
+                navMeshAgent.SetDestination(soundPosition); // éŸ³æºã«å‘ã‹ã£ã¦ç§»å‹•
 
-                Walk(); // •à‚­‰¹‚ğÄ¶
+                Walk(); // æ­©ãéŸ³ã‚’å†ç”Ÿ
 
-                behaviors.SortDesire();//s“®ƒpƒ^[ƒ“‚ğƒ\[ƒg
+                behaviors.SortDesire();//è¡Œå‹•ãƒ‘ã‚¿ãƒ¼ãƒ³ã‚’ã‚½ãƒ¼ãƒˆ
 
-                //s“®ƒŠƒXƒg‚Ì’†‚ÅÅ‚à—Dæ“x‚Ì‚‚¢s“®‚ğ‘I‘ğ
-                //ƒŠƒXƒg‚Ìˆê”Ôã‚Ì1‚ğã‰ñ‚Á‚½‚ç
+                //è¡Œå‹•ãƒªã‚¹ãƒˆã®ä¸­ã§æœ€ã‚‚å„ªå…ˆåº¦ã®é«˜ã„è¡Œå‹•ã‚’é¸æŠ
+                //ãƒªã‚¹ãƒˆã®ä¸€ç•ªä¸Šã®1ã‚’ä¸Šå›ã£ãŸã‚‰
                 if (behaviors.behaviorList[0].value >= 1)
                 {
                     Behavior behavior = behaviors.behaviorList[0];
@@ -538,14 +544,14 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    // ‰¹‚É”½‰‚µ‚½‚Æ‚«‚ÉŒÄ‚Î‚ê‚é
+    // éŸ³ã«åå¿œã—ãŸã¨ãã«å‘¼ã°ã‚Œã‚‹
     public void OnSoundHeard(Vector3 position)
     {
-        // ”ÍˆÍ“à‚Ìê‡‚Ì‚İ‰¹‚É”½‰
+        // ç¯„å›²å†…ã®å ´åˆã®ã¿éŸ³ã«åå¿œ
         if (Vector3.Distance(transform.position, position) <= detectionRange)
         {
-            soundPosition = position;   // ‰¹‚ÌˆÊ’u‚ğ•Û‘¶
-            isMovingToSound = true;      // ‰¹‚ÉˆÚ“®‚·‚é
+            soundPosition = position;   // éŸ³ã®ä½ç½®ã‚’ä¿å­˜
+            isMovingToSound = true;      // éŸ³ã«ç§»å‹•ã™ã‚‹
         }
     }
 }
