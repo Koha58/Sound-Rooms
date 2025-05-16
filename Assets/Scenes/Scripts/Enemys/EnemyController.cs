@@ -43,8 +43,8 @@ public class EnemyController : MonoBehaviour
     private float runSpeed = 5.5f;                    // 追跡速度設定
 
     // 距離に応じた速度を設定（距離が近いほど遅く、遠いほど速い）
-    float minSpeed = 2.0f;  // 最低速度
-    float maxSpeed = 5.5f;  // 最大速度
+    float minSpeed = 3.5f;  // 最低速度
+    float maxSpeed = 6.0f;  // 最大速度
 
     //探す・聞く・何もしない
     private float idleSpeed = 0.0f; // 探す・聞く・何もしない時の速度設定
@@ -405,7 +405,6 @@ public class EnemyController : MonoBehaviour
 
                 float t = Mathf.Clamp01(distanceToPlayer / chaseRange); // 0〜1の範囲に正規化
                 navMeshAgent.speed = Mathf.Lerp(minSpeed, maxSpeed, t);       // 線形補間で速度を設定
-
 
                 behaviors.SortDesire();// 行動パターンをソート
 
