@@ -35,22 +35,18 @@ public class TutorialMessageControll : MonoBehaviour
     private ObjectPlacer objectPlacer;
 
     // メッセージのインデックスを管理する定数
-    private const int FIRST_MESSAGE_INDEX = 0;  // 最初のメッセージ（インデックス0）
-    private const int SECOND_MESSAGE_INDEX = 1; // 2番目のメッセージ（インデックス1）
-    private const int THIRD_MESSAGE_INDEX = 2;  // 3番目のメッセージ（インデックス2）
+    private const int FIRST_MESSAGE_INDEX = 0;  // 最初のメッセージ（インデックス0）「ラジオを緑のポイントに置く」
+    private const int SECOND_MESSAGE_INDEX = 1; // 2番目のメッセージ（インデックス1 「光っている場所に行く」
+    private const int THIRD_MESSAGE_INDEX = 2;  // 3番目のメッセージ（インデックス2 「ラジオを回収する」
 
     // キーボードとコントローラーの配列の最大数
     private const int MAX_DEVICE_MESSAGES = 3;
 
-    // キーボード、コントローラー、UIDeviceCheck 配列のインデックスの最大値
-    private const int DEVICE_MESSAGE_0_INDEX = 0;  // 0番目のデバイスメッセージ
-    private const int DEVICE_MESSAGE_1_INDEX = 1;  // 1番目のデバイスメッセージ
-    private const int DEVICE_MESSAGE_2_INDEX = 2;  // 2番目のデバイスメッセージ
+    // キーボード、コントローラー、UIDeviceCheck 配列のインデックスを管理する定数
+    private const int DEVICE_MESSAGE_0_INDEX = 0;  // 0番目のデバイスメッセージ：操作ボタン表示
+    private const int DEVICE_MESSAGE_1_INDEX = 1;  // 1番目のデバイスメッセージ：ラジオ置くボタン表示
+    private const int DEVICE_MESSAGE_2_INDEX = 2;  // 2番目のデバイスメッセージ：ラジオ回収ボタン表示
 
-    private bool OnPut;
-
-    // メッセージの最大数とインデックス範囲の定数
-    private const int MAX_INDEX = 2; // メッセージのインデックスは 0, 1, 2 なので最大値は 2
 
     void Start()
     {
@@ -101,6 +97,12 @@ public class TutorialMessageControll : MonoBehaviour
 
         // 現在のメッセージを表示状態に設定
         Messages[MessageIndex].state = SlideUIControll.State.SlideIn; // 現在表示されているメッセージを表示状態に
+
+        // objectPlacer が設定地点にない場合
+        if (!objectPlacer.isOnSettingPoint)
+        {
+            UIDeviceCheck[DEVICE_MESSAGE_2_INDEX].enabled = false; // 「E」「Y」を非表示
+        }
     }
 
     // メッセージの切り替え条件を確認するメソッド
@@ -182,9 +184,6 @@ public class TutorialMessageControll : MonoBehaviour
         {
             if (other.CompareTag("SettingPoint") && impactObjects.count != 1 && !objectPlacer.isOnSettingPoint)
             {
-               // Debug.Log("SettingPoint triggered!"); // "SettingPoint" タグと一致した場合に表示されるログ
-                OnPut = true;
-
                 if (isControllerInput) // コントローラーが使用されている場合
                 {
                     UIDeviceCheck[DEVICE_MESSAGE_1_INDEX] = ControllerMove[DEVICE_MESSAGE_0_INDEX]; // コントローラーの1番目のメッセージを表示
@@ -210,7 +209,6 @@ public class TutorialMessageControll : MonoBehaviour
             }
             else
             {
-                OnPut = false;
                 // UIDeviceCheck[DEVICE_MESSAGE_1_INDEX] が null でないかチェック
                 if (UIDeviceCheck[DEVICE_MESSAGE_1_INDEX] != null)
                 {
@@ -222,8 +220,6 @@ public class TutorialMessageControll : MonoBehaviour
         {
             Debug.LogError("UIDeviceCheck array is too small to handle the indices.");
         }
-
-        //Debug.Log("OnPut state after check: " + OnPut); // OnPut の状態を表示
     }
 
     private void OnTriggerExit(Collider other)
@@ -239,7 +235,6 @@ public class TutorialMessageControll : MonoBehaviour
         {
             if (other.CompareTag("SettingPoint") && impactObjects.count != 1 && !objectPlacer.isOnSettingPoint)
             {
-                OnPut = false;
                 // UIDeviceCheck[DEVICE_MESSAGE_1_INDEX] が null でないかチェック
                 if (UIDeviceCheck[DEVICE_MESSAGE_1_INDEX] != null)
                 {
@@ -250,7 +245,7 @@ public class TutorialMessageControll : MonoBehaviour
             {
                 if (UIDeviceCheck[DEVICE_MESSAGE_2_INDEX] != null)
                 {
-                    UIDeviceCheck[DEVICE_MESSAGE_2_INDEX].enabled = false; // キーボードの2番目のメッセージを表示
+                    UIDeviceCheck[DEVICE_MESSAGE_2_INDEX].enabled = false; // キーボードの2番目のメッセージを非表示
                 }
             }
         }
@@ -258,8 +253,6 @@ public class TutorialMessageControll : MonoBehaviour
         {
             Debug.LogError("UIDeviceCheck array is too small to handle the indices.");
         }
-
-        Debug.Log("OnPut state after check: " + OnPut); // OnPut の状態を表示
     }
 
 }
