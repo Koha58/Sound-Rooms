@@ -8,15 +8,15 @@ using UnityEngine.UI;
 /// </summary>
 public class GameManager : MonoBehaviour
 {
-    public PatrolPointManager patrolPointManager; // PatrolPointManagerへの参照 (巡回ポイントを管理)
-    public Transform[] enemy1PatrolPoints;        // 敵1用の巡回ポイント
-    public Transform[] enemy2PatrolPoints;        // 敵2用の巡回ポイント
-    public Transform[] enemy3PatrolPoints;        // 敵3用の巡回ポイント
-    public Transform[] enemy4PatrolPoints;        // 敵4用の巡回ポイント
-    public Transform[] enemy5PatrolPoints;        // 敵5用の巡回ポイント
-    public Transform[] enemy6PatrolPoints;        // 敵6用の巡回ポイント
-    public Transform[] enemy7PatrolPoints;        // 敵7用の巡回ポイント
-    public Transform[] enemy8PatrolPoints;        // 敵8用の巡回ポイント
+    [SerializeField] private PatrolPointManager patrolPointManager; // PatrolPointManagerへの参照 (巡回ポイントを管理)
+    [SerializeField] private Transform[] enemy1PatrolPoints;        // 敵1用の巡回ポイント
+    [SerializeField] private Transform[] enemy2PatrolPoints;        // 敵2用の巡回ポイント
+    [SerializeField] private Transform[] enemy3PatrolPoints;        // 敵3用の巡回ポイント
+    [SerializeField] private Transform[] enemy4PatrolPoints;        // 敵4用の巡回ポイント
+    [SerializeField] private Transform[] enemy5PatrolPoints;        // 敵5用の巡回ポイント
+    [SerializeField] private Transform[] enemy6PatrolPoints;        // 敵6用の巡回ポイント
+    [SerializeField] private Transform[] enemy7PatrolPoints;        // 敵7用の巡回ポイント
+    [SerializeField] private Transform[] enemy8PatrolPoints;        // 敵8用の巡回ポイント
 
     private void Start()
     {
