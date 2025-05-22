@@ -341,7 +341,9 @@ public class SystemUI : MonoBehaviour
         MainMenu.SetActive(false);
         Time.timeScale = TimeScaleRunning;
         IsSettingActive = false;
-        EventSystem.current.SetSelectedGameObject(null);
+
+        // 初期化処理
+        ResetUIState();
     }
 
     private void UpdateDevicePanel()
@@ -400,4 +402,36 @@ public class SystemUI : MonoBehaviour
         UpdateDevicePanel();
         moveTimer = moveCooldown;
     }
+
+    private void ResetUIState()
+    {
+        // スライダー操作モードを解除
+        isControllingSlider = false;
+        currentSliderIndex = 0;
+
+        // デバイス切り替えモード解除
+        isInDeviceSelectMode = false;
+        devicePanelIndex = 0;
+
+        // カーソルを非表示
+        foreach (var c in cursor)
+        {
+            c.SetActive(false);
+        }
+
+        // 初期のパネル状態に戻す
+        KeyboardPanel.SetActive(true);
+        GameControllerPanel.SetActive(false);
+
+        // メニュー選択状態をリセット
+        currentIndex = 0;
+        for (int i = 0; i < Menus.Count; i++)
+        {
+            Menus[i].SetActive(i == currentIndex);
+        }
+
+        // 選択状態をクリア
+        EventSystem.current.SetSelectedGameObject(null);
+    }
+
 }
