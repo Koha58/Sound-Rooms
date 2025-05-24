@@ -1831,17 +1831,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   patrolPointManager: {fileID: 1345054516}
-  enemy1PatrolPoints:
-  - {fileID: 1573608977}
-  - {fileID: 1951576067}
-  - {fileID: 1118194862}
-  enemy2PatrolPoints: []
-  enemy3PatrolPoints: []
-  enemy4PatrolPoints: []
-  enemy5PatrolPoints: []
-  enemy6PatrolPoints: []
-  enemy7PatrolPoints: []
-  enemy8PatrolPoints: []
+  enemyPatrolRoutes:
+  - patrolPoints:
+    - {fileID: 1573608977}
+    - {fileID: 1951576067}
+    - {fileID: 1118194862}
 --- !u!4 &358562168
 Transform:
   m_ObjectHideFlags: 0
