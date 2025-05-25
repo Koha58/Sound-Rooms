@@ -28,7 +28,7 @@ public class EnemyController : MonoBehaviour
 
     void Idle() { audioSourse.PlayOneShot(searchClip); }     //探す音を再生
     void Run() { audioSourse.PlayOneShot(runClip); }         //走る音を再生
-    void Walk() { audioSourse.PlayOneShot(walkClip); }       //歩く音を再生
+    void Walk() { PlayClipIfNotPlaying(walkClip); }          //歩く音を再生
 
     //巡回
     private List<Transform> patrolPoints;     // 巡回ポイントリスト
@@ -268,20 +268,24 @@ public class EnemyController : MonoBehaviour
                     Behavior behavior = behaviors.behaviorList[0];
                     switch (behavior.type)
                     {
-                        case BehaviorType.search:
-                            ChangeState(enemyState.search);
+                        case BehaviorType.search: // 探索行動
+                            ChangeState(enemyState.search); // 探索状態に遷移
                             return;
-                        case BehaviorType.chase:
-                            ChangeState(enemyState.chase);
+
+                        case BehaviorType.chase: // 追跡行動
+                            ChangeState(enemyState.chase); // 追跡状態に遷移
                             return;
-                        case BehaviorType.patrol:
-                            ChangeState(enemyState.patrol);
+
+                        case BehaviorType.patrol: // パトロール行動
+                            ChangeState(enemyState.patrol); // パトロール状態に遷移
                             return;
-                        case BehaviorType.hear:
-                            ChangeState(enemyState.hear);
+
+                        case BehaviorType.hear: // 音を聞いたときの行動
+                            ChangeState(enemyState.hear); // 音源に反応する状態に遷移
                             return;
-                        case BehaviorType.near:
-                            ChangeState(enemyState.near);
+
+                        case BehaviorType.near: // プレイヤーに接近されたときの行動
+                            ChangeState(enemyState.near); // 接近状態に遷移
                             return;
                     }
                 }
@@ -325,20 +329,24 @@ public class EnemyController : MonoBehaviour
                     Behavior behavior = behaviors.behaviorList[0];
                     switch (behavior.type)
                     {
-                        case BehaviorType.search:
-                            ChangeState(enemyState.search);
+                        case BehaviorType.search: // 探索行動
+                            ChangeState(enemyState.search); // 探索状態に遷移
                             return;
-                        case BehaviorType.chase:
-                            ChangeState(enemyState.chase);
+
+                        case BehaviorType.chase: // 追跡行動
+                            ChangeState(enemyState.chase); // 追跡状態に遷移
                             return;
-                        case BehaviorType.patrol:
-                            ChangeState(enemyState.patrol);
+
+                        case BehaviorType.patrol: // パトロール行動
+                            ChangeState(enemyState.patrol); // パトロール状態に遷移
                             return;
-                        case BehaviorType.hear:
-                            ChangeState(enemyState.hear);
+
+                        case BehaviorType.hear: // 音を聞いたときの行動
+                            ChangeState(enemyState.hear); // 音源に反応する状態に遷移
                             return;
-                        case BehaviorType.near:
-                            ChangeState(enemyState.near);
+
+                        case BehaviorType.near: // プレイヤーに接近されたときの行動
+                            ChangeState(enemyState.near); // 接近状態に遷移
                             return;
                     }
                 }
@@ -433,20 +441,24 @@ public class EnemyController : MonoBehaviour
                     Behavior behavior = behaviors.behaviorList[0];
                     switch (behavior.type)
                     {
-                        case BehaviorType.search:
-                            ChangeState(enemyState.search);
+                        case BehaviorType.search: // 探索行動
+                            ChangeState(enemyState.search); // 探索状態に遷移
                             return;
-                        case BehaviorType.chase:
-                            ChangeState(enemyState.chase);
+
+                        case BehaviorType.chase: // 追跡行動
+                            ChangeState(enemyState.chase); // 追跡状態に遷移
                             return;
-                        case BehaviorType.patrol:
-                            ChangeState(enemyState.patrol);
+
+                        case BehaviorType.patrol: // パトロール行動
+                            ChangeState(enemyState.patrol); // パトロール状態に遷移
                             return;
-                        case BehaviorType.hear:
-                            ChangeState(enemyState.hear);
+
+                        case BehaviorType.hear: // 音を聞いたときの行動
+                            ChangeState(enemyState.hear); // 音源に反応する状態に遷移
                             return;
-                        case BehaviorType.near:
-                            ChangeState(enemyState.near);
+
+                        case BehaviorType.near: // プレイヤーに接近されたときの行動
+                            ChangeState(enemyState.near); // 接近状態に遷移
                             return;
                     }
                 }
@@ -489,20 +501,24 @@ public class EnemyController : MonoBehaviour
                     Behavior behavior = behaviors.behaviorList[0];
                     switch (behavior.type)
                     {
-                        case BehaviorType.search:
-                            ChangeState(enemyState.search);
+                        case BehaviorType.search: // 探索行動
+                            ChangeState(enemyState.search); // 探索状態に遷移
                             return;
-                        case BehaviorType.chase:
-                            ChangeState(enemyState.chase);
+
+                        case BehaviorType.chase: // 追跡行動
+                            ChangeState(enemyState.chase); // 追跡状態に遷移
                             return;
-                        case BehaviorType.patrol:
-                            ChangeState(enemyState.patrol);
+
+                        case BehaviorType.patrol: // パトロール行動
+                            ChangeState(enemyState.patrol); // パトロール状態に遷移
                             return;
-                        case BehaviorType.hear:
-                            ChangeState(enemyState.hear);
+
+                        case BehaviorType.hear: // 音を聞いたときの行動
+                            ChangeState(enemyState.hear); // 音源に反応する状態に遷移
                             return;
-                        case BehaviorType.near:
-                            ChangeState(enemyState.near);
+
+                        case BehaviorType.near: // プレイヤーに接近されたときの行動
+                            ChangeState(enemyState.near); // 接近状態に遷移
                             return;
                     }
                 }
@@ -523,7 +539,6 @@ public class EnemyController : MonoBehaviour
                 animator.SetBool("Idle", false); // 待機アニメーションを停止
 
                 navMeshAgent.speed = walkSpeed;// 移動速度設定
-
                 navMeshAgent.SetDestination(soundPosition); // 音源に向かって移動
 
                 Walk(); // 歩く音を再生
@@ -537,20 +552,24 @@ public class EnemyController : MonoBehaviour
                     Behavior behavior = behaviors.behaviorList[0];
                     switch (behavior.type)
                     {
-                        case BehaviorType.search:
-                            ChangeState(enemyState.search);
+                        case BehaviorType.search: // 探索行動
+                            ChangeState(enemyState.search); // 探索状態に遷移
                             return;
-                        case BehaviorType.chase:
-                            ChangeState(enemyState.chase);
+
+                        case BehaviorType.chase: // 追跡行動
+                            ChangeState(enemyState.chase); // 追跡状態に遷移
                             return;
-                        case BehaviorType.patrol:
-                            ChangeState(enemyState.patrol);
+
+                        case BehaviorType.patrol: // パトロール行動
+                            ChangeState(enemyState.patrol); // パトロール状態に遷移
                             return;
-                        case BehaviorType.hear:
-                            ChangeState(enemyState.hear);
+
+                        case BehaviorType.hear: // 音を聞いたときの行動
+                            ChangeState(enemyState.hear); // 音源に反応する状態に遷移
                             return;
-                        case BehaviorType.near:
-                            ChangeState(enemyState.near);
+
+                        case BehaviorType.near: // プレイヤーに接近されたときの行動
+                            ChangeState(enemyState.near); // 接近状態に遷移
                             return;
                     }
                 }
@@ -567,6 +586,18 @@ public class EnemyController : MonoBehaviour
         {
             soundPosition = position;   // 音の位置を保存
             isMovingToSound = true;     // 音に移動する
+        }
+    }
+
+    // 指定されたAudioClipが再生されていない場合に再生するメソッド
+    void PlayClipIfNotPlaying(AudioClip clip)
+    {
+        // 現在のクリップが指定されたものと異なる、または再生されていない場合に再生処理を行う
+        if (audioSourse.clip != clip || !audioSourse.isPlaying)
+        {
+            audioSourse.clip = clip;        // 指定されたクリップをセット
+            audioSourse.pitch = 0.7f;       // 再生速度を落とす（音程も下がる）
+            audioSourse.Play();             // クリップを再生
         }
     }
 }
