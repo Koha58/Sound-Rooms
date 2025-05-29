@@ -9,7 +9,7 @@ using UnityEngine.AI;
 public class EnemyController : MonoBehaviour
 {
     // キャラクターのID (敵キャラクターを一意に識別するため)
-    public int characterID;
+    public int characterID=-1;
 
     // ナヴィメッシュエージェントの参照 (移動に使用するNavMeshAgent)
     NavMeshAgent navMeshAgent;
@@ -32,7 +32,7 @@ public class EnemyController : MonoBehaviour
 
     //巡回
     private List<Transform> patrolPoints;     // 巡回ポイントリスト
-    private int currentPatrolPointIndex = 0;  // 現在の巡回ポイントのインデックス
+    private int currentPatrolPointIndex;  // 現在の巡回ポイントのインデックス
     private bool isPatrolling = false;      　// 巡回中かどうか
     private float walkSpeed = 1.0f;           // 巡回速度設定
 
@@ -148,6 +148,8 @@ public class EnemyController : MonoBehaviour
     // 初期化処理
     private void Start()
     {
+        Debug.Log($"{gameObject.name} に ID {characterID} を割り当てました");
+
         // コンポーネントの取得
         navMeshAgent = GetComponent<NavMeshAgent>();
         audioSourse = GetComponent<AudioSource>();
@@ -159,10 +161,15 @@ public class EnemyController : MonoBehaviour
         patrolPoints = patrolPointManager.GetPatrolPoints(characterID);
 
         // 巡回ポイントが存在すれば巡回を開始
-        if (patrolPoints != null && patrolPoints.Count > 0)
+        if (patrolPoints != null && patrolPoints.Count >= 0)
         {
             isPatrolling = true;
+            currentPatrolPointIndex = 0;
             navMeshAgent.SetDestination(patrolPoints[currentPatrolPointIndex].position);  // 最初の巡回ポイントに向かう
+        }
+        else
+        {
+            Debug.LogError($"[{gameObject.name}] 巡回ポイントが取得できていません。characterID: {characterID}");
         }
 
         // 行動リストの巡回の重要度を初期設定

@@ -28,15 +28,23 @@ public class GameManager : MonoBehaviour
     /// ゲーム開始時に呼ばれる初期化処理
     /// 各敵に対応する巡回ポイントをPatrolPointManagerに登録する
     /// </summary>
-    private void Start()
+    private void Awake()
     {
         // 各敵ごとの巡回ルートを処理
         for (int i = 0; i < enemyPatrolRoutes.Count; i++)
         {
-            int enemyId = i + 1; // 敵IDを1から開始（0からではなく）
+            int enemyId = i; // 敵IDを 0 から開始
 
-            // 巡回ポイントをListに変換してPatrolPointManagerに追加
-            patrolPointManager.AddPatrolPoints(enemyId, new List<Transform>(enemyPatrolRoutes[i].patrolPoints));
+            // 巡回ポイントが null でなく、1つ以上含まれているか確認
+            if (enemyPatrolRoutes[i].patrolPoints != null && enemyPatrolRoutes[i].patrolPoints.Length > 0)
+            {
+                // 巡回ポイントをListに変換してPatrolPointManagerに追加
+                patrolPointManager.AddPatrolPoints(enemyId, new List<Transform>(enemyPatrolRoutes[i].patrolPoints));
+            }
+            else
+            {
+                Debug.LogWarning($"Enemy ID {enemyId} に巡回ポイントが設定されていません。");
+            }
         }
     }
 }
