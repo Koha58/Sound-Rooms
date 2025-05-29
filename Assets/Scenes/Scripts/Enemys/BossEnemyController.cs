@@ -4,9 +4,10 @@ using UnityEngine;
 using UnityEngine.AI;
 
 /// <summary>
-/// TrickEnemyの制御（移動　アニメーション　サウンド）クラス
+/// Enemyの制御（移動　アニメーション　サウンド）クラス
 /// </summary>
-public class TrickEnemyController : MonoBehaviour
+
+public class BossEnemyController : MonoBehaviour
 {
     // キャラクターのID (敵キャラクターを一意に識別するため)
     public int characterID = -1;
@@ -23,14 +24,16 @@ public class TrickEnemyController : MonoBehaviour
     // サウンド関連の変数
     [SerializeField] private AudioSource audioSourse; //オーディオソース取得
     [SerializeField] private AudioClip searchClip;    //探す音
-    //[SerializeField] private AudioClip runClip;       //走る音
+    [SerializeField] private AudioClip runClip;       //走る音
+    [SerializeField] private AudioClip walkClip;      //歩く音
 
     void Idle() { audioSourse.PlayOneShot(searchClip); }     //探す音を再生
-    //void Run() { audioSourse.PlayOneShot(runClip); }         //走る音を再生
+    void Run() { audioSourse.PlayOneShot(runClip); }         //走る音を再生
+    void Walk() { PlayClipIfNotPlaying(walkClip); }          //歩く音を再生
 
     //巡回
     private List<Transform> patrolPoints;     // 巡回ポイントリスト
-    private int currentPatrolPointIndex;      // 現在の巡回ポイントのインデックス
+    private int currentPatrolPointIndex;  // 現在の巡回ポイントのインデックス
     private bool isPatrolling = false;      　// 巡回中かどうか
     private float walkSpeed = 1.0f;           // 巡回速度設定
 
@@ -55,7 +58,7 @@ public class TrickEnemyController : MonoBehaviour
     #region ステートベースAI
     enum enemyState
     {
-        back,    //戻る
+        patrol,    //巡回
         chase,     //追いかける
         search,    //探す
         hear,      //聞く
@@ -65,7 +68,7 @@ public class TrickEnemyController : MonoBehaviour
 
     enum BehaviorType
     {
-        back,    //戻る
+        patrol,    //巡回
         chase,     //追いかける
         search,    //探す
         hear,      //聞く
@@ -143,12 +146,6 @@ public class TrickEnemyController : MonoBehaviour
 
     #endregion
 
-    public void Laugh()
-    {
-        // アニメーションイベントの処理（例えば笑う効果音を鳴らすなど）
-        Debug.Log("Laugh animation event triggered");
-    }
-
     // 初期化処理
     private void Start()
     {
@@ -177,7 +174,7 @@ public class TrickEnemyController : MonoBehaviour
         }
 
         // 行動リストの巡回の重要度を初期設定
-        behaviors.GetBehavior(BehaviorType.back).value = 2;
+        behaviors.GetBehavior(BehaviorType.patrol).value = 2;
     }
 
     private void Update()
@@ -215,7 +212,7 @@ public class TrickEnemyController : MonoBehaviour
             //追跡範囲外
             else if (distanceToPlayer >= chaseRange)
             {
-                behaviors.GetBehavior(BehaviorType.back).value = 2;// プレイヤーが範囲外の場合、巡回に戻る
+                behaviors.GetBehavior(BehaviorType.patrol).value = 2;// プレイヤーが範囲外の場合、巡回に戻る
                 isPatrolling = true;                                 // 移動開始
             }
         }
@@ -267,7 +264,7 @@ public class TrickEnemyController : MonoBehaviour
                 {
                     stateEnter = false;
                     behaviors.GetBehavior(BehaviorType.doNothing).value = 0;//何もしない行動を終了
-                    behaviors.GetBehavior(BehaviorType.back).value = 2;   //巡回に切り替える
+                    behaviors.GetBehavior(BehaviorType.patrol).value = 2;   //巡回に切り替える
                 }
 
                 behaviors.SortDesire();//行動パターンをソート
@@ -287,8 +284,8 @@ public class TrickEnemyController : MonoBehaviour
                             ChangeState(enemyState.chase); // 追跡状態に遷移
                             return;
 
-                        case BehaviorType.back: // パトロール行動
-                            ChangeState(enemyState.back); // パトロール状態に遷移
+                        case BehaviorType.patrol: // パトロール行動
+                            ChangeState(enemyState.patrol); // パトロール状態に遷移
                             return;
 
                         case BehaviorType.hear: // 音を聞いたときの行動
@@ -303,19 +300,19 @@ public class TrickEnemyController : MonoBehaviour
 
                 #endregion
                 break;
-            case enemyState.back: //巡回
+            case enemyState.patrol: //巡回
                 #region
                 if (stateEnter)
                 {
                     stateEnter = false;
-                    behaviors.GetBehavior(BehaviorType.back).value = 0; // 巡回行動を終了
+                    behaviors.GetBehavior(BehaviorType.patrol).value = 0; // 巡回行動を終了
                     PS.isVisualization = false;                           // プレイヤーの可視化をオフ
-                    //animator.SetBool("Walk", true);     // 歩行アニメーションを開始
-                    //animator.SetBool("Run", false);     // 走行アニメーションを停止
-                    animator.SetBool("Idle", true);    // 待機アニメーションを停止
+                    animator.SetBool("Walk", true);     // 歩行アニメーションを開始
+                    animator.SetBool("Run", false);     // 走行アニメーションを停止
+                    animator.SetBool("Idle", false);    // 待機アニメーションを停止
                 }
 
-                Idle();
+                Walk(); // 歩く音を再生
 
                 // プレイヤーが前方にいるかつラジオが範囲内におかれていないかつ視界内にいる場合
                 if (isPatrolling)
@@ -348,8 +345,8 @@ public class TrickEnemyController : MonoBehaviour
                             ChangeState(enemyState.chase); // 追跡状態に遷移
                             return;
 
-                        case BehaviorType.back: // パトロール行動
-                            ChangeState(enemyState.back); // パトロール状態に遷移
+                        case BehaviorType.patrol: // パトロール行動
+                            ChangeState(enemyState.patrol); // パトロール状態に遷移
                             return;
 
                         case BehaviorType.hear: // 音を聞いたときの行動
@@ -371,12 +368,12 @@ public class TrickEnemyController : MonoBehaviour
                     stateEnter = false;
                     behaviors.GetBehavior(BehaviorType.search).value = 0; // 探索行動を終了
                     navMeshAgent.speed = idleSpeed;
-                    //animator.SetBool("Walk", false);  // 歩行アニメーションを停止
-                    //animator.SetBool("Run", false);   // 走行アニメーションを停止
-                    //animator.SetBool("Idle", true);   // 待機アニメーションを開始
+                    animator.SetBool("Walk", false);  // 歩行アニメーションを停止
+                    animator.SetBool("Run", false);   // 走行アニメーションを停止
+                    animator.SetBool("Idle", true);   // 待機アニメーションを開始
                 }
 
-                //Idle();// アイドル（探す）音を再生
+                Idle();// アイドル（探す）音を再生
 
                 navMeshAgent.SetDestination(this.transform.position); // 現位置で止まる
 
@@ -385,7 +382,7 @@ public class TrickEnemyController : MonoBehaviour
                 if (searchTimer >= 2.5f)
                 {
                     searchTimer = 0f;// 探す状態に入ったらタイマーをリセット
-                    behaviors.GetBehavior(BehaviorType.back).value = 2; // 巡回に戻す
+                    behaviors.GetBehavior(BehaviorType.patrol).value = 2; // 巡回に戻す
                     isPatrolling = true;
                     PS.isVisualization = false; // プレイヤーの可視化をオフ
                 }
@@ -405,8 +402,8 @@ public class TrickEnemyController : MonoBehaviour
                         case BehaviorType.chase:
                             ChangeState(enemyState.chase);
                             return;
-                        case BehaviorType.back:
-                            ChangeState(enemyState.back);
+                        case BehaviorType.patrol:
+                            ChangeState(enemyState.patrol);
                             return;
                         case BehaviorType.hear:
                             ChangeState(enemyState.hear);
@@ -426,16 +423,16 @@ public class TrickEnemyController : MonoBehaviour
                     stateEnter = false;
                     behaviors.GetBehavior(BehaviorType.chase).value = 0;// 追跡行動を終了
 
-                    //animator.SetBool("Walk", false);  // 歩行アニメーションを停止
-                    //animator.SetBool("Run", true);    // 走行アニメーションを開始
-                    //animator.SetBool("Idle", false);  // 待機アニメーションを停止
+                    animator.SetBool("Walk", false);  // 歩行アニメーションを停止
+                    animator.SetBool("Run", true);    // 走行アニメーションを開始
+                    animator.SetBool("Idle", false);  // 待機アニメーションを停止
                     navMeshAgent.speed = 0.0f;        // 初期速度設定
                 }
 
                 PS.isVisible = true;       // プレイヤーを可視化
                 PS.isVisualization = true; // プレイヤーの可視化をオン
 
-                //Run();  // 走る音を再生
+                Run();  // 走る音を再生
 
                 transform.LookAt(player.transform); // プレイヤーに向かって回転
                 navMeshAgent.SetDestination(player.transform.position); // プレイヤーに向かって移動
@@ -460,8 +457,8 @@ public class TrickEnemyController : MonoBehaviour
                             ChangeState(enemyState.chase); // 追跡状態に遷移
                             return;
 
-                        case BehaviorType.back: // パトロール行動
-                            ChangeState(enemyState.back); // パトロール状態に遷移
+                        case BehaviorType.patrol: // パトロール行動
+                            ChangeState(enemyState.patrol); // パトロール状態に遷移
                             return;
 
                         case BehaviorType.hear: // 音を聞いたときの行動
@@ -482,12 +479,12 @@ public class TrickEnemyController : MonoBehaviour
                 {
                     stateEnter = false;
                     behaviors.GetBehavior(BehaviorType.hear).value = 0;// 聞く行動を終了
-                    //animator.SetBool("Walk", false);  // 歩行アニメーションを停止
-                    //animator.SetBool("Run", false);   // 走行アニメーションを停止
-                    //animator.SetBool("Idle", true);   // 待機アニメーションを開始
+                    animator.SetBool("Walk", false);  // 歩行アニメーションを停止
+                    animator.SetBool("Run", false);   // 走行アニメーションを停止
+                    animator.SetBool("Idle", true);   // 待機アニメーションを開始
                 }
 
-                //Idle();// アイドル（探す）音を再生
+                Idle();// アイドル（探す）音を再生
 
                 // ラジオカセットの音に反応して移動する
                 if (OP.isParticle)
@@ -499,7 +496,7 @@ public class TrickEnemyController : MonoBehaviour
                 {
                     isMovingToSound = false;                                                     // 音源が消えたら移動停止
                     navMeshAgent.SetDestination(patrolPoints[currentPatrolPointIndex].position); // 巡回ポイントに戻る
-                    behaviors.GetBehavior(BehaviorType.back).value = 2;                        // 巡回に戻す
+                    behaviors.GetBehavior(BehaviorType.patrol).value = 2;                        // 巡回に戻す
 
                 }
 
@@ -520,8 +517,8 @@ public class TrickEnemyController : MonoBehaviour
                             ChangeState(enemyState.chase); // 追跡状態に遷移
                             return;
 
-                        case BehaviorType.back: // パトロール行動
-                            ChangeState(enemyState.back); // パトロール状態に遷移
+                        case BehaviorType.patrol: // パトロール行動
+                            ChangeState(enemyState.patrol); // パトロール状態に遷移
                             return;
 
                         case BehaviorType.hear: // 音を聞いたときの行動
@@ -545,12 +542,14 @@ public class TrickEnemyController : MonoBehaviour
                     PS.isVisualization = false; // プレイヤーの可視化をオフ
                 }
 
-                //animator.SetBool("Walk", true);  // 歩行アニメーションを開始
-                //animator.SetBool("Run", false);  // 走行アニメーションを停止
-                //animator.SetBool("Idle", false); // 待機アニメーションを停止
+                animator.SetBool("Walk", true);  // 歩行アニメーションを開始
+                animator.SetBool("Run", false);  // 走行アニメーションを停止
+                animator.SetBool("Idle", false); // 待機アニメーションを停止
 
                 navMeshAgent.speed = walkSpeed;// 移動速度設定
                 navMeshAgent.SetDestination(soundPosition); // 音源に向かって移動
+
+                Walk(); // 歩く音を再生
 
                 behaviors.SortDesire();//行動パターンをソート
 
@@ -569,8 +568,8 @@ public class TrickEnemyController : MonoBehaviour
                             ChangeState(enemyState.chase); // 追跡状態に遷移
                             return;
 
-                        case BehaviorType.back: // パトロール行動
-                            ChangeState(enemyState.back); // パトロール状態に遷移
+                        case BehaviorType.patrol: // パトロール行動
+                            ChangeState(enemyState.patrol); // パトロール状態に遷移
                             return;
 
                         case BehaviorType.hear: // 音を聞いたときの行動
