@@ -14,7 +14,7 @@ public class MovePlayer : MonoBehaviour
     private float moveSpeed;
     private const float DEFAULT_SPEED = 4.0f;  // 歩くとき
     private const float RUN_SPEED = 7.0f;      // 走るとき
-    private const float CROUCH_SPEED = 2.0f;   // しゃがみ歩きするとき
+    private const float CROUCH_SPEED = 0.5f;   // しゃがみ歩きするとき
 
     // 回転速度
     private const float ROTATION_SPEED = 10.0f;
@@ -79,8 +79,8 @@ public class MovePlayer : MonoBehaviour
 
     private void Update()
     {
-        // 右クリックを押している間は、走る状態に変更
-        if (isRightClickHeld)
+        // 移動入力があり、右クリックを押している間は、走る状態に変更
+        if (isRightClickHeld && (moveInput.magnitude > MAGNITUDE_CHECK))
         {
             moveSpeed = RUN_SPEED;                         // 移動速度を増加
             animator.SetBool("Walking", false);       // 歩行アニメーションを無効化
@@ -88,14 +88,24 @@ public class MovePlayer : MonoBehaviour
             animator.SetBool("Squatting", false);     // しゃがみアニメーションを無効化
             animator.SetBool("CrouchWalking", false); // しゃがんで歩くアニメーションを無効化
         }
-        // シフトキーを押している間は、しゃがんで歩く状態に変更
+        // シフトキーを押している間は、しゃがむ状態に変更
         else if (isShiftClickHeld)
         {
-            moveSpeed = CROUCH_SPEED;                        // 移動速度を減少
+            moveSpeed = CROUCH_SPEED;               // 移動速度を減少
+
+            // 移動入力がある場合、しゃがみ歩きアニメーションを再生
+            if (moveInput.magnitude > MAGNITUDE_CHECK)
+            {
+                animator.SetBool("CrouchWalking", true); // しゃがみ歩きアニメーションを有効化
+                animator.SetBool("Squatting", false);    // しゃがみアニメーションを無効化
+            }
+            else
+            {
+                animator.SetBool("Squatting", true);    // しゃがみアニメーションを有効化
+                animator.SetBool("CrouchWalking", false); // しゃがみ歩きアニメーションを無効化
+            }
             animator.SetBool("Walking", false);      // 歩行アニメーションを無効化
             animator.SetBool("Running", false);      // 走行アニメーションを無効化
-            animator.SetBool("Squatting", false);    // しゃがみアニメーションを無効化
-            animator.SetBool("CrouchWalking", true); // しゃがんで歩くアニメーションを有効化
         }
         // それ以外は通常の歩行状態
         else
@@ -114,7 +124,7 @@ public class MovePlayer : MonoBehaviour
 
             animator.SetBool("Running", false); // 走行アニメーションを無効化
             animator.SetBool("Squatting", false); // しゃがみアニメーションを無効化
-            animator.SetBool("CrouchWalking", false); // しゃがみ歩行アニメーションを無効化s
+            animator.SetBool("CrouchWalking", false); // しゃがみ歩行アニメーションを無効化
         }
 
         Move(); // プレイヤーの移動処理

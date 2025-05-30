@@ -22,15 +22,17 @@ public class YAxisLock : CinemachineExtension
         CinemachineVirtualCameraBase vcam,
         CinemachineCore.Stage stage, ref CameraState state, float deltaTime)
     {
-        // カメラのボディ部分（位置）に対してのみ処理を行う
         if (stage == CinemachineCore.Stage.Body)
         {
-            var newPos = state.RawPosition;  // 現在のカメラ位置を取得
-            // 各軸に対してロックする場合、指定した位置に変更
-            if (x_islocked) newPos.x = lockPosition.x;
-            if (y_islocked) newPos.y = lockPosition.y;
-            if (z_islocked) newPos.z = lockPosition.z;
-            state.RawPosition = newPos;  // カメラ位置を更新
+            var newPos = state.RawPosition;
+
+            // スムーズ補正（瞬間ではなく補間）
+            float smoothSpeed = 5f;
+            if (x_islocked) newPos.x = Mathf.Lerp(newPos.x, lockPosition.x, deltaTime * smoothSpeed);
+            if (y_islocked) newPos.y = Mathf.Lerp(newPos.y, lockPosition.y, deltaTime * smoothSpeed);
+            if (z_islocked) newPos.z = Mathf.Lerp(newPos.z, lockPosition.z, deltaTime * smoothSpeed);
+
+            state.RawPosition = newPos;
         }
     }
 }
