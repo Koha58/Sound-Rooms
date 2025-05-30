@@ -25,7 +25,7 @@ public class TrickEnemyController : MonoBehaviour
     [SerializeField] private AudioClip searchClip;    //探す音
     [SerializeField] private AudioClip runClip;       //走る音
 
-    void Idle() { audioSourse.PlayOneShot(searchClip); }     //探す音を再生
+    void Idle() { PlayClipIfNotPlaying(searchClip); }     //探す音を再生
     void Run() { audioSourse.PlayOneShot(runClip); }         //走る音を再生
 
     //巡回
