@@ -313,7 +313,7 @@ public class EnemyController : MonoBehaviour
 
                 Walk(); // 歩く音を再生
 
-                // プレイヤーが前方にいるかつラジオが範囲内におかれていないかつ視界内にいる場合
+                // 追跡範囲外
                 if (isPatrolling)
                 {
                     navMeshAgent.speed = walkSpeed;// 巡回速度設定

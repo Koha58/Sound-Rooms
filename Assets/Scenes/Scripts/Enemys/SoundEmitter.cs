@@ -35,12 +35,17 @@ public class SoundEmitter : MonoBehaviour
         {
             // ColliderにEnemyControllerがアタッチされているか確認
             EnemyController enemy = collider.GetComponent<EnemyController>();
+            TrickEnemyController trickEnemy= collider.GetComponent<TrickEnemyController>();
 
             // EnemyControllerが存在する場合、音を聞いた処理を呼び出す
             if (enemy != null)
             {
                 // 敵キャラクターに音が聞こえたことを通知
                 enemy.OnSoundHeard(this.transform.position);
+            }
+            else if (trickEnemy != null)
+            {
+                trickEnemy.OnSoundHeard(this.transform.position);
             }
         }
     }
