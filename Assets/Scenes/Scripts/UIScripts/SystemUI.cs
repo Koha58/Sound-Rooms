@@ -113,7 +113,7 @@ public class SystemUI : MonoBehaviour
         MainMenu.SetActive(false);
         KeyboardPanel.SetActive(true);
         GameControllerPanel.SetActive(false);
-        // ▼ カーソルの表示切り替え
+        // カーソルの表示切り替え
         for (int i = 0; i < 4; i++)
         {
             cursor[i].SetActive(i == currentSliderIndex);
@@ -123,7 +123,7 @@ public class SystemUI : MonoBehaviour
         {
             Menus[i].SetActive(i == currentIndex);
         }
-        // ▼ カーソルの表示切り替え
+        // カーソルの表示切り替え
         for (int i = 0; i < 4; i++)
         {
             cursor[i].SetActive(false);
@@ -159,7 +159,7 @@ public class SystemUI : MonoBehaviour
 
             Vector2 moveInput = moveAction.ReadValue<Vector2>();
 
-            // ▼ デバイス切り替えモード
+            // デバイス切り替えモード
             if (isInDeviceSelectMode)
             {
                 // 左右入力でパネル切り替え
@@ -182,10 +182,10 @@ public class SystemUI : MonoBehaviour
                 }
             }
 
-            // ▼ スライダー操作モード
+            // スライダー操作モード
             if (isControllingSlider)
             {
-                // ▼ カーソルの表示切り替え
+                // カーソルの表示切り替え
                 for (int i = 0; i < cursor.Count; i++)
                 {
                     cursor[i].SetActive(i == currentSliderIndex);
@@ -226,7 +226,7 @@ public class SystemUI : MonoBehaviour
                 {
                     isControllingSlider = false;
 
-                    // ▼ スライダー用カーソルをすべて非表示にする
+                    // スライダー用カーソルをすべて非表示にする
                     foreach (var c in cursor)
                     {
                         c.SetActive(false);
@@ -235,7 +235,7 @@ public class SystemUI : MonoBehaviour
                     EventSystem.current.SetSelectedGameObject(MenuSelects[currentIndex]);
                 }
             }
-            // ▼ メニューモード
+            // メニューモード
             else
             {
                 // 上下でメニュー移動
@@ -251,7 +251,7 @@ public class SystemUI : MonoBehaviour
                 // 決定で処理
                 if (decisionAction.WasPressedThisFrame())
                 {
-                    // ▼ MenuSelects[1]が選ばれていたらパネル切り替えモードへ
+                    // MenuSelects[1]が選ばれていたらパネル切り替えモードへ
                     if (currentIndex == 1)
                     {
                         isInDeviceSelectMode = true;

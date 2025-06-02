@@ -26,13 +26,17 @@ public class TrickEnemyController : MonoBehaviour
     [SerializeField] private AudioClip runClip;       //走る音
 
     void Idle() { PlayClipIfNotPlaying(searchClip); }     //探す音を再生
-    void Run() { audioSourse.PlayOneShot(runClip); }         //走る音を再生
+    void Run() { PlayClipIfNotPlaying(runClip); }         //走る音を再生
 
     //巡回
     private List<Transform> patrolPoints;     // 巡回ポイントリスト
     private int currentPatrolPointIndex;      // 現在の巡回ポイントのインデックス
     private bool isPatrolling = false;      　// 巡回中かどうか
     private float walkSpeed = 1.0f;           // 巡回速度設定
+
+    // Startで記録
+    private Vector3 originalPosition;
+    private Quaternion originalRotation;
 
     //追跡
     public Transform player;                          //プレイヤーの位置
@@ -55,7 +59,7 @@ public class TrickEnemyController : MonoBehaviour
     #region ステートベースAI
     enum enemyState
     {
-        back,    //戻る
+        back,      //戻る
         chase,     //追いかける
         search,    //探す
         hear,      //聞く
@@ -65,7 +69,7 @@ public class TrickEnemyController : MonoBehaviour
 
     enum BehaviorType
     {
-        back,    //戻る
+        back,      //戻る
         chase,     //追いかける
         search,    //探す
         hear,      //聞く
@@ -176,6 +180,9 @@ public class TrickEnemyController : MonoBehaviour
             Debug.LogError($"[{gameObject.name}] 巡回ポイントが取得できていません。characterID: {characterID}");
         }
 
+        originalPosition = patrolPoints[currentPatrolPointIndex].transform.position;
+        originalRotation =transform.rotation;
+
         // 行動リストの巡回の重要度を初期設定
         behaviors.GetBehavior(BehaviorType.search).value = 2;
     }
@@ -236,13 +243,13 @@ public class TrickEnemyController : MonoBehaviour
             isPatrolling = false;   // 目的地に向かって移動中は巡回停止
 
             // 目的地に近づいたら停止
-            if (Vector3.Distance(this.transform.position, soundPosition) < 1f)
+            if (Vector3.Distance(this.transform.position, soundPosition) < 2.5f)
             {
                 behaviors.GetBehavior(BehaviorType.hear).value = 3; // 音の元に到達
                 isMovingToSound = false;                            // 移動停止
             }
             // 音源に向かっている途中で、一定距離まで接近
-            else if (Vector3.Distance(this.transform.position, soundPosition) >= 1f && OP.isParticle)
+            else if (Vector3.Distance(this.transform.position, soundPosition) >= 2.5f && OP.isParticle)
             {
                 behaviors.GetBehavior(BehaviorType.near).value = 3; // 音に近づいている
             }
@@ -307,21 +314,21 @@ public class TrickEnemyController : MonoBehaviour
                     stateEnter = false;
                     behaviors.GetBehavior(BehaviorType.back).value = 0; // 巡回行動を終了
                     PS.isVisualization = false;                           // プレイヤーの可視化をオフ
+                    navMeshAgent.speed = walkSpeed;
+                    navMeshAgent.SetDestination(patrolPoints[currentPatrolPointIndex].position);
                 }
 
-                Idle();
+                Run();  // 走る音を再生
 
-                // 追跡範囲外
-                if (isPatrolling)
+                // 到着処理
+                if (navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance && !navMeshAgent.pathPending)
                 {
-                    navMeshAgent.speed = walkSpeed;// 巡回速度設定
+                    navMeshAgent.ResetPath(); // 停止
+                    transform.rotation = Quaternion.RotateTowards(transform.rotation, originalRotation, Time.deltaTime * 180f); // ゆっくり向きを戻す
 
-                    navMeshAgent.SetDestination(patrolPoints[currentPatrolPointIndex].position);// 次の巡回ポイントを設定
-
-                    // 巡回ポイントに到達したかチェック
-                    if (Vector3.Distance(transform.position, patrolPoints[currentPatrolPointIndex].position) < 0.5f)
+                    if (Quaternion.Angle(transform.rotation, originalRotation) < 1f)
                     {
-                        behaviors.GetBehavior(BehaviorType.search).value = 2;
+                        ChangeState(enemyState.search);
                     }
                 }
 
@@ -367,11 +374,12 @@ public class TrickEnemyController : MonoBehaviour
                     navMeshAgent.speed = idleSpeed;
                     animator.SetBool("Run", false);   // 走行アニメーションを停止
                     animator.SetBool("Idle", true);   // 待機アニメーションを開始
+
+                    navMeshAgent.SetDestination(patrolPoints[currentPatrolPointIndex].position); 
+                    transform.rotation = originalRotation;      // 回転修正
                 }
 
                 Idle();// アイドル（探す）音を再生
-
-                navMeshAgent.SetDestination(this.transform.position); // 現位置で止まる
 
                 behaviors.SortDesire();// 行動パターンをソート
 
@@ -409,7 +417,6 @@ public class TrickEnemyController : MonoBehaviour
                     stateEnter = false;
                     behaviors.GetBehavior(BehaviorType.chase).value = 0;// 追跡行動を終了
 
-                    //animator.SetBool("Walk", false);  // 歩行アニメーションを停止
                     animator.SetBool("Run", true);    // 走行アニメーションを開始
                     animator.SetBool("Idle", false);  // 待機アニメーションを停止
                     navMeshAgent.speed = 0.0f;        // 初期速度設定
@@ -480,9 +487,7 @@ public class TrickEnemyController : MonoBehaviour
                 else if (!OP.isParticle)
                 {
                     isMovingToSound = false;                                                     // 音源が消えたら移動停止
-                    navMeshAgent.SetDestination(patrolPoints[currentPatrolPointIndex].position); // 巡回ポイントに戻る
-                    behaviors.GetBehavior(BehaviorType.back).value = 2;                        // 巡回に戻す
-
+                    behaviors.GetBehavior(BehaviorType.back).value = 2;                          // 巡回に戻す
                 }
 
                 behaviors.SortDesire();//行動パターンをソート
@@ -529,6 +534,8 @@ public class TrickEnemyController : MonoBehaviour
 
                 animator.SetBool("Run", true);  // 走行アニメーションを停止
                 animator.SetBool("Idle", false); // 待機アニメーションを停止
+
+                Run();  // 走る音を再生
 
                 navMeshAgent.speed = walkSpeed;// 移動速度設定
                 navMeshAgent.SetDestination(soundPosition); // 音源に向かって移動
@@ -586,7 +593,7 @@ public class TrickEnemyController : MonoBehaviour
         if (audioSourse.clip != clip || !audioSourse.isPlaying)
         {
             audioSourse.clip = clip;        // 指定されたクリップをセット
-            audioSourse.pitch = 0.7f;       // 再生速度を落とす（音程も下がる）
+            audioSourse.pitch = 1.0f;       // 再生速度を落とす（音程も下がる）
             audioSourse.Play();             // クリップを再生
         }
     }

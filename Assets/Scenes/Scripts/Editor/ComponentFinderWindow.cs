@@ -44,12 +44,16 @@ public class ComponentFinderWindow : EditorWindow
         {
             GUILayout.Label($"Found {results.Count} objects", EditorStyles.boldLabel);
 
+            if (GUILayout.Button("Select All"))
+            {
+                Selection.objects = results.ToArray();
+            }
+
             // 検索結果をスクロール表示
             scrollPos = GUILayout.BeginScrollView(scrollPos, GUILayout.Height(300));
 
             foreach (var obj in results)
             {
-                // オブジェクト名のボタンを表示し、クリックで選択＆Ping表示
                 if (GUILayout.Button(obj.name))
                 {
                     Selection.activeGameObject = obj;
