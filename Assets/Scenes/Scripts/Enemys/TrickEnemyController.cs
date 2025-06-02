@@ -41,15 +41,14 @@ public class TrickEnemyController : MonoBehaviour
     //追跡
     public Transform player;                          //プレイヤーの位置
     private float distanceToPlayer = Mathf.Infinity;  // プレイヤーとの距離
-    private float chaseRange = 7f;                    //Playerを検知する範囲
+    private float chaseRange = 10f;                    //Playerを検知する範囲
 
     // 距離に応じた速度を設定（距離が近いほど遅く、遠いほど速い）
-    float minSpeed = 3.5f;  // 最低速度
-    float maxSpeed = 6.0f;  // 最大速度
+    float minSpeed = 4.0f;  // 最低速度
+    float maxSpeed = 7.0f;  // 最大速度
 
     //探す・聞く・何もしない
     private float idleSpeed = 0.0f; // 探す・聞く・何もしない時の速度設定
-    private float searchTimer = 0f; // 探す状態を維持する時間
 
     //ラジオカセット
     public float detectionRange = 10f;   　// 音を聞き取れる範囲
@@ -146,12 +145,6 @@ public class TrickEnemyController : MonoBehaviour
     }
 
     #endregion
-
-    public void Laugh()
-    {
-        // アニメーションイベントの処理（例えば笑う効果音を鳴らすなど）
-        Debug.Log("Laugh animation event triggered");
-    }
 
     // 初期化処理
     private void Start()
@@ -326,7 +319,7 @@ public class TrickEnemyController : MonoBehaviour
                     navMeshAgent.ResetPath(); // 停止
                     transform.rotation = Quaternion.RotateTowards(transform.rotation, originalRotation, Time.deltaTime * 180f); // ゆっくり向きを戻す
 
-                    if (Quaternion.Angle(transform.rotation, originalRotation) < 1f)
+                    if (Quaternion.Angle(transform.rotation, originalRotation) < 2.0f)
                     {
                         ChangeState(enemyState.search);
                     }

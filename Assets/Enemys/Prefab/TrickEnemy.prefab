@@ -504,7 +504,7 @@ GameObject:
   - component: {fileID: 7433283799515874907}
   m_Layer: 0
   m_Name: TrickEnemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -517,7 +517,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 492101338128357871}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0.7134897, z: -0, w: -0.7006658}
+  m_LocalRotation: {x: -0, y: -0.71348906, z: 0, w: -0.70066637}
   m_LocalPosition: {x: 0.7, y: 0.25, z: -2.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -616,9 +616,9 @@ CapsuleCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.4221843
-  m_Height: 2
+  m_Height: 1.6791052
   m_Direction: 2
-  m_Center: {x: -0.004327833, y: 0.34256613, z: 0.5}
+  m_Center: {x: -0.0043278327, y: 0.34256613, z: 0.65}
 --- !u!136 &2158784896144823819
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -638,10 +638,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.4221843
-  m_Height: 2
+  m_Radius: 0.45
+  m_Height: 1.78
   m_Direction: 2
-  m_Center: {x: -0.0043278327, y: 0.34256613, z: 0.5}
+  m_Center: {x: -0.0043278337, y: 0.34256613, z: 0.65}
 --- !u!82 &1209779277411060586
 AudioSource:
   m_ObjectHideFlags: 0
@@ -698,7 +698,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0

@@ -24,27 +24,27 @@ public class BossEnemyController : MonoBehaviour
     // サウンド関連の変数
     [SerializeField] private AudioSource audioSourse; //オーディオソース取得
     [SerializeField] private AudioClip searchClip;    //探す音
-    [SerializeField] private AudioClip runClip;       //走る音
+    //[SerializeField] private AudioClip runClip;       //走る音
     [SerializeField] private AudioClip walkClip;      //歩く音
 
     void Idle() { audioSourse.PlayOneShot(searchClip); }     //探す音を再生
-    void Run() { audioSourse.PlayOneShot(runClip); }         //走る音を再生
-    void Walk() { PlayClipIfNotPlaying(walkClip); }          //歩く音を再生
+    //void Run() { audioSourse.PlayOneShot(runClip); }         //走る音を再生
+    void Move() { PlayClipIfNotPlaying(walkClip); }          //歩く音を再生
 
     //巡回
     private List<Transform> patrolPoints;     // 巡回ポイントリスト
     private int currentPatrolPointIndex;  // 現在の巡回ポイントのインデックス
     private bool isPatrolling = false;      　// 巡回中かどうか
-    private float walkSpeed = 1.0f;           // 巡回速度設定
+    private float walkSpeed = 4.0f;           // 巡回速度設定
 
     //追跡
     public Transform player;                          //プレイヤーの位置
     private float distanceToPlayer = Mathf.Infinity;  // プレイヤーとの距離
-    private float chaseRange = 7f;                    //Playerを検知する範囲
+    private float chaseRange = 10f;                    //Playerを検知する範囲
 
     // 距離に応じた速度を設定（距離が近いほど遅く、遠いほど速い）
-    float minSpeed = 3.5f;  // 最低速度
-    float maxSpeed = 6.0f;  // 最大速度
+    float minSpeed = 7.5f;  // 最低速度
+    float maxSpeed = 9.0f;  // 最大速度
 
     //探す・聞く・何もしない
     private float idleSpeed = 0.0f; // 探す・聞く・何もしない時の速度設定
@@ -307,12 +307,11 @@ public class BossEnemyController : MonoBehaviour
                     stateEnter = false;
                     behaviors.GetBehavior(BehaviorType.patrol).value = 0; // 巡回行動を終了
                     PS.isVisualization = false;                           // プレイヤーの可視化をオフ
-                    animator.SetBool("Walk", true);     // 歩行アニメーションを開始
-                    animator.SetBool("Run", false);     // 走行アニメーションを停止
+                    animator.SetBool("Move", true);     // 歩行アニメーションを開始
                     animator.SetBool("Idle", false);    // 待機アニメーションを停止
                 }
 
-                Walk(); // 歩く音を再生
+                Move(); // 歩く音を再生
 
                 // プレイヤーが前方にいるかつラジオが範囲内におかれていないかつ視界内にいる場合
                 if (isPatrolling)
@@ -368,8 +367,8 @@ public class BossEnemyController : MonoBehaviour
                     stateEnter = false;
                     behaviors.GetBehavior(BehaviorType.search).value = 0; // 探索行動を終了
                     navMeshAgent.speed = idleSpeed;
-                    animator.SetBool("Walk", false);  // 歩行アニメーションを停止
-                    animator.SetBool("Run", false);   // 走行アニメーションを停止
+
+                    animator.SetBool("Move", false);   // 走行アニメーションを停止
                     animator.SetBool("Idle", true);   // 待機アニメーションを開始
                 }
 
@@ -423,8 +422,7 @@ public class BossEnemyController : MonoBehaviour
                     stateEnter = false;
                     behaviors.GetBehavior(BehaviorType.chase).value = 0;// 追跡行動を終了
 
-                    animator.SetBool("Walk", false);  // 歩行アニメーションを停止
-                    animator.SetBool("Run", true);    // 走行アニメーションを開始
+                    animator.SetBool("Move", true);    // 走行アニメーションを開始
                     animator.SetBool("Idle", false);  // 待機アニメーションを停止
                     navMeshAgent.speed = 0.0f;        // 初期速度設定
                 }
@@ -432,7 +430,7 @@ public class BossEnemyController : MonoBehaviour
                 PS.isVisible = true;       // プレイヤーを可視化
                 PS.isVisualization = true; // プレイヤーの可視化をオン
 
-                Run();  // 走る音を再生
+                //Run();  // 走る音を再生
 
                 transform.LookAt(player.transform); // プレイヤーに向かって回転
                 navMeshAgent.SetDestination(player.transform.position); // プレイヤーに向かって移動
@@ -479,8 +477,8 @@ public class BossEnemyController : MonoBehaviour
                 {
                     stateEnter = false;
                     behaviors.GetBehavior(BehaviorType.hear).value = 0;// 聞く行動を終了
-                    animator.SetBool("Walk", false);  // 歩行アニメーションを停止
-                    animator.SetBool("Run", false);   // 走行アニメーションを停止
+
+                    animator.SetBool("Move", false);   // 走行アニメーションを停止
                     animator.SetBool("Idle", true);   // 待機アニメーションを開始
                 }
 
@@ -549,7 +547,7 @@ public class BossEnemyController : MonoBehaviour
                 navMeshAgent.speed = walkSpeed;// 移動速度設定
                 navMeshAgent.SetDestination(soundPosition); // 音源に向かって移動
 
-                Walk(); // 歩く音を再生
+                Move(); // 歩く音を再生
 
                 behaviors.SortDesire();//行動パターンをソート
 

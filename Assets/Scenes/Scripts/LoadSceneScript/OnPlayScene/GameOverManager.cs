@@ -41,7 +41,7 @@ public class GameOverManager : MonoBehaviour
     /// <summary>
     /// ダメージ判定における距離の閾値（メートル）
     /// </summary>
-    private const float DAMAGE_DISTANCE_THRESHOLD = 1f;
+    private const float DAMAGE_DISTANCE_THRESHOLD = 2.0f;
 
     // ライフUIのインデックス
     private const int FIRST_LIFE_INDEX = 0; // 1番目のライフUIインデックス（0ベース）
