@@ -376,9 +376,9 @@ public class EnemyController : MonoBehaviour
 
                 navMeshAgent.SetDestination(this.transform.position); // 現位置で止まる
 
-                // 3秒経過後に巡回に戻る
+                // 5秒経過後に巡回に戻る
                 searchTimer += Time.deltaTime;
-                if (searchTimer >= 2.5f)
+                if (searchTimer >= 5.0f)
                 {
                     searchTimer = 0f;// 探す状態に入ったらタイマーをリセット
                     behaviors.GetBehavior(BehaviorType.patrol).value = 2; // 巡回に戻す
