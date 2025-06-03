@@ -12,39 +12,40 @@ public class EnemyPatrolRoute
     public Transform[] patrolPoints;
 }
 
-/// <summary>
-/// ゲーム全体の管理を行うGameManagerクラス
-/// 敵の巡回ルートを初期化してPatrolPointManagerに登録する
-/// </summary>
 public class GameManager : MonoBehaviour
 {
-    // 巡回ポイントの管理を行うマネージャークラスの参照（Inspectorからアサイン）
     [SerializeField] private PatrolPointManager patrolPointManager;
 
-    // 各敵ごとの巡回ルート情報を格納するリスト（Inspectorから設定）
-    [SerializeField] private List<EnemyPatrolRoute> enemyPatrolRoutes = new List<EnemyPatrolRoute>();
+    // 親オブジェクト（敵ごとの巡回ポイント群が子オブジェクトとして存在）
+    [SerializeField] private List<Transform> enemyPatrolParents;
 
-    /// <summary>
-    /// ゲーム開始時に呼ばれる初期化処理
-    /// 各敵に対応する巡回ポイントをPatrolPointManagerに登録する
-    /// </summary>
+    // 敵の巡回ルートリスト（EnemyPatrolRouteの配列）
+    private List<EnemyPatrolRoute> enemyPatrolRoutes = new List<EnemyPatrolRoute>();
+
     private void Awake()
     {
-        // 各敵ごとの巡回ルートを処理
-        for (int i = 0; i < enemyPatrolRoutes.Count; i++)
-        {
-            int enemyId = i; // 敵IDを 0 から開始
+        enemyPatrolRoutes.Clear();
 
-            // 巡回ポイントが null でなく、1つ以上含まれているか確認
-            if (enemyPatrolRoutes[i].patrolPoints != null && enemyPatrolRoutes[i].patrolPoints.Length > 0)
+        // 親オブジェクトリストを使ってEnemyPatrolRouteを作る
+        for (int i = 0; i < enemyPatrolParents.Count; i++)
+        {
+            Transform parent = enemyPatrolParents[i];
+            EnemyPatrolRoute route = new EnemyPatrolRoute();
+
+            // 親の子オブジェクト全てを配列にセット
+            int childCount = parent.childCount;
+            route.patrolPoints = new Transform[childCount];
+            for (int j = 0; j < childCount; j++)
             {
-                // 巡回ポイントをListに変換してPatrolPointManagerに追加
-                patrolPointManager.AddPatrolPoints(enemyId, new List<Transform>(enemyPatrolRoutes[i].patrolPoints));
+                route.patrolPoints[j] = parent.GetChild(j);
             }
-            else
-            {
-                Debug.LogWarning($"Enemy ID {enemyId} に巡回ポイントが設定されていません。");
-            }
+
+            enemyPatrolRoutes.Add(route);
+
+            // PatrolPointManagerに登録
+            patrolPointManager.AddPatrolPoints(i, new List<Transform>(route.patrolPoints));
+
+            Debug.Log($"Enemy ID {i} に {childCount} 個の巡回ポイントを登録しました。");
         }
     }
 }
