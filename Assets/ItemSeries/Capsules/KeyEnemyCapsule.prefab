@@ -5700,6 +5700,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1631081335188566264}
   - component: {fileID: 1509506855854508104}
+  - component: {fileID: 8925937792113685087}
   m_Layer: 9
   m_Name: KeyEnemyCapsule
   m_TagString: Capsule
@@ -5750,6 +5751,22 @@ CapsuleCollider:
   m_Height: 4.06
   m_Direction: 1
   m_Center: {x: -3.05, y: 9.04, z: 8.41}
+--- !u!208 &8925937792113685087
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5600470008101709054}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 1.5, y: 1.5, z: 1.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: -3.09, y: 8.46, z: 7.89}
+  m_TimeToStationary: 0.5
 --- !u!1 &5628433371330905176
 GameObject:
   m_ObjectHideFlags: 0
