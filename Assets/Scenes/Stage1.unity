@@ -2245,19 +2245,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   patrolPointManager: {fileID: 1345054516}
-  enemyPatrolRoutes:
-  - patrolPoints:
-    - {fileID: 1573608977}
-    - {fileID: 1884075388}
-    - {fileID: 578225526}
-  - patrolPoints:
-    - {fileID: 1613709628}
-    - {fileID: 315993192}
-    - {fileID: 1539384590}
-  - patrolPoints:
-    - {fileID: 321703900}
-    - {fileID: 20274889}
-    - {fileID: 242591565}
+  enemyPatrolParents: []
 --- !u!4 &358562168
 Transform:
   m_ObjectHideFlags: 0
@@ -3372,7 +3360,8 @@ AudioSource:
   m_GameObject: {fileID: 652610670}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -3577120203181901737, guid: bf5be84fde00e394d82d970ecd5a5aa2,
+    type: 2}
   m_audioClip: {fileID: 8300000, guid: a1af6d0f01af08d49b80c6a77a37c801, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
