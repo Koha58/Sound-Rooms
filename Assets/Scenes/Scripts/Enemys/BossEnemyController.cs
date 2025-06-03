@@ -21,6 +21,8 @@ public class BossEnemyController : MonoBehaviour
     // アニメーターの参照 (アニメーション制御用)
     [SerializeField] Animator animator;
 
+    [SerializeField] private GameObject soundEffect; // 音の可視化用
+
     // サウンド関連の変数
     [SerializeField] private AudioSource audioSourse; //オーディオソース取得
     [SerializeField] private AudioClip searchClip;    //探す音
@@ -40,7 +42,7 @@ public class BossEnemyController : MonoBehaviour
     //追跡
     public Transform player;                          //プレイヤーの位置
     private float distanceToPlayer = Mathf.Infinity;  // プレイヤーとの距離
-    private float chaseRange = 10f;                    //Playerを検知する範囲
+    private float chaseRange = 20f;                    //Playerを検知する範囲
 
     // 距離に応じた速度を設定（距離が近いほど遅く、遠いほど速い）
     float minSpeed = 7.5f;  // 最低速度
@@ -374,6 +376,8 @@ public class BossEnemyController : MonoBehaviour
 
                 Idle();// アイドル（探す）音を再生
 
+                ShowSoundEffect();// 音の可視化をここで呼ぶ
+
                 navMeshAgent.SetDestination(this.transform.position); // 現位置で止まる
 
                 // 3秒経過後に巡回に戻る
@@ -605,5 +609,33 @@ public class BossEnemyController : MonoBehaviour
             audioSourse.pitch = 0.7f;       // 再生速度を落とす（音程も下がる）
             audioSourse.Play();             // クリップを再生
         }
+    }
+    private void ShowSoundEffect()
+    {
+        GameObject obj = GameObject.Find("Player");         //Playerオブジェクトを探す
+        PlayerSeen PS = obj.GetComponent<PlayerSeen>();     //スクリプト取得
+
+        if (soundEffect != null)
+        {
+            audioSourse.maxDistance = 500f;
+            audioSourse.volume = 0.05f;
+            audioSourse.rolloffMode = AudioRolloffMode.Linear; // 距離に応じて音量がリニアに減衰
+            GameObject effect = Instantiate(soundEffect, transform.position, Quaternion.identity);
+            Destroy(effect, 5.0f); // 2秒後に自動で削除（任意）
+
+            //5秒後にfalseに戻すコルーチンを開始
+            StartCoroutine(ResetVisibility(PS));
+        }
+    }
+
+    // コルーチン：2秒後に可視化をオフにする
+    private IEnumerator ResetVisibility(PlayerSeen ps)
+    {
+        yield return new WaitForSeconds(5f);
+        audioSourse.maxDistance = 5f;
+        audioSourse.volume = 1.0f;
+        ps.isVisible = false;
+        ps.isVisualization = false;
+        Debug.Log("2秒後 → プレイヤーを非可視化");
     }
 }
