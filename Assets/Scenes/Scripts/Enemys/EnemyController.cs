@@ -26,8 +26,8 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private AudioClip runClip;       //走る音
     [SerializeField] private AudioClip walkClip;      //歩く音
 
-    void Idle() { audioSourse.PlayOneShot(searchClip); }     //探す音を再生
-    void Run() { audioSourse.PlayOneShot(runClip); }         //走る音を再生
+    void Idle() { PlayClipIfNotPlaying(searchClip); }     //探す音を再生
+    void Run() { PlayClipIfNotPlaying(runClip); }         //走る音を再生
     void Walk() { PlayClipIfNotPlaying(walkClip); }          //歩く音を再生
 
     //巡回
@@ -603,7 +603,7 @@ public class EnemyController : MonoBehaviour
         if (audioSourse.clip != clip || !audioSourse.isPlaying)
         {
             audioSourse.clip = clip;        // 指定されたクリップをセット
-            audioSourse.pitch = 0.7f;       // 再生速度を落とす（音程も下がる）
+            audioSourse.pitch = 0.8f;       // 再生速度を落とす（音程も下がる）
             audioSourse.Play();             // クリップを再生
         }
     }
