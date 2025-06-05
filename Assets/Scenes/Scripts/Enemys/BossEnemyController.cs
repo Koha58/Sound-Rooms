@@ -189,6 +189,7 @@ public class BossEnemyController : MonoBehaviour
 
         // 現在のステートに基づいた処理
         CurretStateStatus();
+
     }
 
     //プレイヤーの位置を確認し、追跡・巡回を判断
@@ -219,7 +220,7 @@ public class BossEnemyController : MonoBehaviour
             }
         }
         // 巡回中の処理
-        else if (Vector3.Distance(transform.position, patrolPoints[currentPatrolPointIndex].position) < 0.5f)
+        else if (Vector3.Distance(transform.position, patrolPoints[currentPatrolPointIndex].position) < 1.5f)
         {
             behaviors.GetBehavior(BehaviorType.search).value = 2;   // 巡回ポイント到達後、周辺を探索する
         }
@@ -323,7 +324,7 @@ public class BossEnemyController : MonoBehaviour
                     navMeshAgent.SetDestination(patrolPoints[currentPatrolPointIndex].position);// 次の巡回ポイントを設定
 
                     // 巡回ポイントに到達したかチェック
-                    if (Vector3.Distance(transform.position, patrolPoints[currentPatrolPointIndex].position) < 0.5f)
+                    if (Vector3.Distance(transform.position, patrolPoints[currentPatrolPointIndex].position) < 1.5f)
                     {
                         currentPatrolPointIndex = (currentPatrolPointIndex + 1) % patrolPoints.Count; // 次の巡回ポイントに移動
                     }
@@ -369,6 +370,7 @@ public class BossEnemyController : MonoBehaviour
                     stateEnter = false;
                     behaviors.GetBehavior(BehaviorType.search).value = 0; // 探索行動を終了
                     navMeshAgent.speed = idleSpeed;
+                    ShowSoundEffect();// 音の可視化をここで呼ぶ
 
                     animator.SetBool("Move", false);   // 走行アニメーションを停止
                     animator.SetBool("Idle", true);   // 待機アニメーションを開始
@@ -376,7 +378,6 @@ public class BossEnemyController : MonoBehaviour
 
                 Idle();// アイドル（探す）音を再生
 
-                ShowSoundEffect();// 音の可視化をここで呼ぶ
 
                 navMeshAgent.SetDestination(this.transform.position); // 現位置で止まる
 

@@ -27,11 +27,7 @@ public class TrickEnemyController : MonoBehaviour
 
     void Idle() { PlayClipIfNotPlaying(searchClip); }     //探す音を再生
 
-    void Laugh()
-    {
-        // 笑い声やモーションの再生、または演出処理をここに書く
-        Debug.Log("TrickEnemy is laughing!");
-    }
+    void Laugh(){}
 
     void Run() { PlayClipIfNotPlaying(runClip); }         //走る音を再生
 
