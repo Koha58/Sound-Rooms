@@ -26,7 +26,15 @@ public class TrickEnemyController : MonoBehaviour
     [SerializeField] private AudioClip runClip;       //走る音
 
     void Idle() { PlayClipIfNotPlaying(searchClip); }     //探す音を再生
+
+    void Laugh()
+    {
+        // 笑い声やモーションの再生、または演出処理をここに書く
+        Debug.Log("TrickEnemy is laughing!");
+    }
+
     void Run() { PlayClipIfNotPlaying(runClip); }         //走る音を再生
+
 
     //巡回
     private List<Transform> patrolPoints;     // 巡回ポイントリスト
@@ -44,8 +52,8 @@ public class TrickEnemyController : MonoBehaviour
     private float chaseRange = 10f;                    //Playerを検知する範囲
 
     // 距離に応じた速度を設定（距離が近いほど遅く、遠いほど速い）
-    float minSpeed = 4.0f;  // 最低速度
-    float maxSpeed = 7.0f;  // 最大速度
+    float minSpeed = 2.0f;  // 最低速度
+    float maxSpeed = 4.0f;  // 最大速度
 
     //探す・聞く・何もしない
     private float idleSpeed = 0.0f; // 探す・聞く・何もしない時の速度設定
@@ -193,6 +201,9 @@ public class TrickEnemyController : MonoBehaviour
 
         // 現在のステートに基づいた処理
         CurretStateStatus();
+
+        // カプセルON/OFFチェック
+        UpdateCapsuleCollider();
     }
 
     //プレイヤーの位置を確認し、追跡・巡回を判断
@@ -316,10 +327,9 @@ public class TrickEnemyController : MonoBehaviour
                 // 到着処理
                 if (navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance && !navMeshAgent.pathPending)
                 {
-                    navMeshAgent.ResetPath(); // 停止
                     transform.rotation = Quaternion.RotateTowards(transform.rotation, originalRotation, Time.deltaTime * 180f); // ゆっくり向きを戻す
 
-                    if (Quaternion.Angle(transform.rotation, originalRotation) < 2.0f)
+                    if (Quaternion.Angle(transform.rotation, originalRotation) < 3.0f)
                     {
                         ChangeState(enemyState.search);
                     }
@@ -588,6 +598,16 @@ public class TrickEnemyController : MonoBehaviour
             audioSourse.clip = clip;        // 指定されたクリップをセット
             audioSourse.pitch = 1.0f;       // 再生速度を落とす（音程も下がる）
             audioSourse.Play();             // クリップを再生
+        }
+    }
+
+    // カプセルコライダーをステートによってON/OFF
+    void UpdateCapsuleCollider()
+    {
+        CapsuleCollider capsule = GetComponent<CapsuleCollider>();
+        if (capsule != null)
+        {
+            capsule.enabled = (curretState == enemyState.chase);
         }
     }
 }
