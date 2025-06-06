@@ -37,7 +37,7 @@ public class BossEnemyController : MonoBehaviour
     private List<Transform> patrolPoints;     // 巡回ポイントリスト
     private int currentPatrolPointIndex;  // 現在の巡回ポイントのインデックス
     private bool isPatrolling = false;      　// 巡回中かどうか
-    private float walkSpeed = 4.0f;           // 巡回速度設定
+    private float walkSpeed = 2.0f;           // 巡回速度設定
 
     //追跡
     public Transform player;                          //プレイヤーの位置
@@ -45,8 +45,8 @@ public class BossEnemyController : MonoBehaviour
     private float chaseRange = 20f;                    //Playerを検知する範囲
 
     // 距離に応じた速度を設定（距離が近いほど遅く、遠いほど速い）
-    float minSpeed = 7.5f;  // 最低速度
-    float maxSpeed = 9.0f;  // 最大速度
+    float minSpeed = 5.5f;  // 最低速度
+    float maxSpeed = 7.5f;  // 最大速度
 
     //探す・聞く・何もしない
     private float idleSpeed = 0.0f; // 探す・聞く・何もしない時の速度設定
@@ -622,7 +622,7 @@ public class BossEnemyController : MonoBehaviour
             audioSourse.volume = 0.05f;
             audioSourse.rolloffMode = AudioRolloffMode.Linear; // 距離に応じて音量がリニアに減衰
             GameObject effect = Instantiate(soundEffect, transform.position, Quaternion.identity);
-            Destroy(effect, 5.0f); // 2秒後に自動で削除（任意）
+            Destroy(effect, 5.0f); // 5秒後に自動で削除（任意）
 
             //5秒後にfalseに戻すコルーチンを開始
             StartCoroutine(ResetVisibility(PS));

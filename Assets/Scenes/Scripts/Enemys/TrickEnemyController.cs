@@ -23,11 +23,12 @@ public class TrickEnemyController : MonoBehaviour
     // サウンド関連の変数
     [SerializeField] private AudioSource audioSourse; //オーディオソース取得
     [SerializeField] private AudioClip searchClip;    //探す音
+    [SerializeField] private AudioClip laughClip;    //探す音
     [SerializeField] private AudioClip runClip;       //走る音
 
     void Idle() { PlayClipIfNotPlaying(searchClip); }     //探す音を再生
 
-    void Laugh(){}
+    void Laugh() { PlayClipIfNotPlaying(laughClip); }
 
     void Run() { PlayClipIfNotPlaying(runClip); }         //走る音を再生
 
@@ -378,7 +379,7 @@ public class TrickEnemyController : MonoBehaviour
                     transform.rotation = originalRotation;      // 回転修正
                 }
 
-                Idle();// アイドル（探す）音を再生
+                IdleThenLaugh();
 
                 behaviors.SortDesire();// 行動パターンをソート
 
@@ -475,8 +476,7 @@ public class TrickEnemyController : MonoBehaviour
                     animator.SetBool("Idle", false);   // 待機アニメーションを開始
                 }
 
-                Idle();// アイドル（探す）音を再生
-
+                IdleThenLaugh();
                 // ラジオカセットの音に反応して移動する
                 if (OP.isParticle)
                 {
@@ -606,4 +606,29 @@ public class TrickEnemyController : MonoBehaviour
             capsule.enabled = (curretState == enemyState.chase);
         }
     }
+
+    private Coroutine idleLaughCoroutine = null;
+
+
+    void IdleThenLaugh()
+    {
+        if (idleLaughCoroutine == null)
+        {
+            idleLaughCoroutine = StartCoroutine(PlayIdleThenLaughCoroutine());
+        }
+    }
+
+
+    IEnumerator PlayIdleThenLaughCoroutine()
+    {
+        Idle();  // 探す音の再生
+
+        yield return new WaitForSeconds(searchClip.length);
+
+        Laugh(); // 笑い声の再生
+
+        idleLaughCoroutine = null; // コルーチン終了
+    }
+
+
 }
