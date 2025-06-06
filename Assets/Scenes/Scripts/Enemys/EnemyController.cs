@@ -34,7 +34,7 @@ public class EnemyController : MonoBehaviour
     private List<Transform> patrolPoints;     // 巡回ポイントリスト
     private int currentPatrolPointIndex;  // 現在の巡回ポイントのインデックス
     private bool isPatrolling = false;      　// 巡回中かどうか
-    private float walkSpeed = 1.0f;           // 巡回速度設定
+    private float walkSpeed = 0.2f;           // 巡回速度設定
 
     //追跡
     public Transform player;                          //プレイヤーの位置
