@@ -187,9 +187,6 @@ public class TrickEnemyController : MonoBehaviour
 
     private void Update()
     {
-        //// 状態遷移前の状態ログ（必要に応じて）
-        //Debug.Log($"[Update] Current State: {curretState}, DistanceToPlayer: {distanceToPlayer:F2}, IsPatrolling: {isPatrolling}, IsMovingToSound: {isMovingToSound}");
-
         //プレイヤーの位置を確認し、追跡・巡回を判断
         PatrolAndChaseAI();
 

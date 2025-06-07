@@ -28,7 +28,12 @@ public class EnemyController : MonoBehaviour
 
     void Idle() { PlayClipIfNotPlaying(searchClip); }     //探す音を再生
     void Run() { PlayClipIfNotPlaying(runClip); }         //走る音を再生
-    void Walk() { PlayClipIfNotPlaying(walkClip); }          //歩く音を再生
+    void Walk()                                            //歩く音を再生
+    {
+        PlayClipIfNotPlaying(walkClip);
+        audioSourse.pitch = 0.2f;
+
+    }          
 
     //巡回
     private List<Transform> patrolPoints;     // 巡回ポイントリスト
@@ -600,7 +605,7 @@ public class EnemyController : MonoBehaviour
     void PlayClipIfNotPlaying(AudioClip clip)
     {
         // 現在のクリップが指定されたものと異なる、または再生されていない場合に再生処理を行う
-        if (audioSourse.clip != clip || !audioSourse.isPlaying)
+        if ( audioSourse.clip != clip || !audioSourse.isPlaying)
         {
             audioSourse.clip = clip;        // 指定されたクリップをセット
             audioSourse.pitch = 0.8f;       // 再生速度を落とす（音程も下がる）
