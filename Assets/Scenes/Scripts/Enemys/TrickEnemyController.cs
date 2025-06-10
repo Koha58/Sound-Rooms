@@ -70,7 +70,7 @@ public class TrickEnemyController : MonoBehaviour
 
     // 距離に応じて追跡スピードを変化させるための設定値
     float minSpeed = 2.0f;  // プレイヤーが近い時の最小速度
-    float maxSpeed = 4.0f;  // プレイヤーが遠い時の最大速度
+    float maxSpeed = 8.0f;  // プレイヤーが遠い時の最大速度
 
     // 待機・探索・聞き取り中などのときに使用する速度（基本的に停止状態）
     private float idleSpeed = 0.0f;
