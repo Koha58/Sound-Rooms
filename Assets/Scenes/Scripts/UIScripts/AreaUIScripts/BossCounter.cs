@@ -12,6 +12,12 @@ public class BossCounter : MonoBehaviour
     // 各段階のUIオブジェクト（ステージ0～4を想定）
     public GameObject[] uiStages;
 
+    // UI切り替え時に再生する効果音
+    [SerializeField] private AudioClip stageChangeClip;
+
+    // 効果音再生に使用する AudioSource（このオブジェクトにアタッチされている想定）
+    private AudioSource audioSource;
+
     // 現在の段階インデックス（0～4）
     private int currentStage = 0;
 
@@ -19,16 +25,19 @@ public class BossCounter : MonoBehaviour
     private float timer = 0f;
 
     // 各段階の継続時間（秒）：2分（120秒）
-    private float stageDuration = 120f;
+    private float stageDuration = 10f;
 
     // 最終段階到達後のリセットまでの待機時間：1分（60秒）
-    private float resetDelay = 60f;
+    private float resetDelay = 10f;
 
     // 最終段階に到達したかを示すフラグ
     private bool isFinalStage = false;
 
     void Start()
     {
+        // AudioSource を取得
+        audioSource = GetComponent<AudioSource>();
+
         // 初期段階のUIを表示（他は非表示）
         UpdateUIStage();
     }
@@ -68,6 +77,12 @@ public class BossCounter : MonoBehaviour
         for (int i = 0; i < uiStages.Length; i++)
         {
             uiStages[i].SetActive(i == currentStage);
+        }
+
+        // 効果音を再生（AudioClip が設定されていて、AudioSource もある場合）
+        if (stageChangeClip != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(stageChangeClip);
         }
     }
 
