@@ -534,6 +534,9 @@ public class TrickEnemyController : MonoBehaviour
                 PS.isVisible = true;       // プレイヤーが見えるように設定
                 PS.isVisualization = true; // 可視化処理をオン（視認されている演出）
 
+                // カプセルコライダー（当たり判定）のON/OFFをチェックし更新
+                UpdateCapsuleCollider();
+
                 Run();  // 走る音を再生
 
                 transform.LookAt(player.transform); // プレイヤーの方向を向く
