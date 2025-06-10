@@ -44,6 +44,12 @@ public class BossCounter : MonoBehaviour
 
     void Update()
     {
+        // ボスエネミーオブジェクトを取得
+        GameObject obj = GameObject.Find("BossEnemy");
+
+        // ボスエネミーの（移動　アニメーション　サウンド）を管理するスクリプトを取得
+        BossEnemyController bossEnemyController = obj.GetComponent<BossEnemyController>();
+
         // 経過時間を加算
         timer += Time.deltaTime;
 
@@ -59,6 +65,9 @@ public class BossCounter : MonoBehaviour
                 // 最終段階に固定
                 currentStage = uiStages.Length - 1;
                 isFinalStage = true;
+
+                //(現在はボスエネミー大きい声を出すだけ)
+                bossEnemyController.ShowSoundEffect();
 
                 // 指定秒数後に最初の段階へリセット
                 StartCoroutine(ResetAfterDelay());

@@ -370,7 +370,6 @@ public class BossEnemyController : MonoBehaviour
                     stateEnter = false;
                     behaviors.GetBehavior(BehaviorType.search).value = 0; // 探索行動を終了
                     navMeshAgent.speed = idleSpeed;
-                    ShowSoundEffect();// 音の可視化をここで呼ぶ
 
                     animator.SetBool("Move", false);   // 走行アニメーションを停止
                     animator.SetBool("Idle", true);   // 待機アニメーションを開始
@@ -611,13 +610,14 @@ public class BossEnemyController : MonoBehaviour
             audioSourse.Play();             // クリップを再生
         }
     }
-    private void ShowSoundEffect()
+    public void ShowSoundEffect()
     {
         GameObject obj = GameObject.Find("Player");         //Playerオブジェクトを探す
         PlayerSeen PS = obj.GetComponent<PlayerSeen>();     //スクリプト取得
 
         if (soundEffect != null)
         {
+            behaviors.GetBehavior(BehaviorType.search).value = 3;
             audioSourse.maxDistance = 500f;
             audioSourse.volume = 0.05f;
             audioSourse.rolloffMode = AudioRolloffMode.Linear; // 距離に応じて音量がリニアに減衰
@@ -635,8 +635,8 @@ public class BossEnemyController : MonoBehaviour
         yield return new WaitForSeconds(5f);
         audioSourse.maxDistance = 5f;
         audioSourse.volume = 1.0f;
-        ps.isVisible = false;
-        ps.isVisualization = false;
+        //ps.isVisible = false;
+        //ps.isVisualization = false;
         Debug.Log("2秒後 → プレイヤーを非可視化");
     }
 }
