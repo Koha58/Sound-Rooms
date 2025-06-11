@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 
 /// <summary>
-/// Enemyの制御（移動　アニメーション　サウンド）クラス
+/// BossEnemyの制御（移動　アニメーション　サウンド）クラス
 /// </summary>
 
 public class BossEnemyController : MonoBehaviour
@@ -624,16 +624,16 @@ public class BossEnemyController : MonoBehaviour
             GameObject effect = Instantiate(soundEffect, transform.position, Quaternion.identity);
             Destroy(effect, 5.0f); // 5秒後に自動で削除（任意）
 
-            //5秒後にfalseに戻すコルーチンを開始
+            //10秒後にfalseに戻すコルーチンを開始
             StartCoroutine(ResetVisibility(PS));
         }
     }
 
-    // コルーチン：2秒後に可視化をオフにする
+    // コルーチン：10秒後に可視化をオフにする
     private IEnumerator ResetVisibility(PlayerSeen ps)
     {
-        yield return new WaitForSeconds(5f);
-        audioSourse.maxDistance = 5f;
+        yield return new WaitForSeconds(10f);
+        audioSourse.maxDistance = 20f;
         audioSourse.volume = 1.0f;
         //ps.isVisible = false;
         //ps.isVisualization = false;
