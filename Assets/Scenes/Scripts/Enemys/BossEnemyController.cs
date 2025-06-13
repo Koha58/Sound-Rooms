@@ -42,7 +42,7 @@ public class BossEnemyController : MonoBehaviour
     //追跡
     public Transform player;                          //プレイヤーの位置
     private float distanceToPlayer = Mathf.Infinity;  // プレイヤーとの距離
-    private float chaseRange = 20f;                    //Playerを検知する範囲
+    private float chaseRange = 7f;                    //Playerを検知する範囲
 
     // 距離に応じた速度を設定（距離が近いほど遅く、遠いほど速い）
     float minSpeed = 5.5f;  // 最低速度
@@ -632,7 +632,7 @@ public class BossEnemyController : MonoBehaviour
     // コルーチン：10秒後に可視化をオフにする
     private IEnumerator ResetVisibility(PlayerSeen ps)
     {
-        yield return new WaitForSeconds(10f);
+        yield return new WaitForSeconds(5f);
         audioSourse.maxDistance = 20f;
         audioSourse.volume = 1.0f;
         //ps.isVisible = false;

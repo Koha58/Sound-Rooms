@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.AI;
 
 /// <summary>
 /// ボスイベントを管理するクラス
@@ -18,8 +19,8 @@ public class BossCounter : MonoBehaviour
     // ステージ管理
     private int currentStage = 0;           // 現在のステージ番号
     private float timer = 0f;               // ステージ経過時間管理用タイマー
-    private float stageDuration = 120f;     // 各ステージの継続時間（秒）
-    private float resetDelay = 60f;        // 最終ステージ後のリセット待機時間（秒）
+    private float stageDuration = 2f;     // 各ステージの継続時間（秒）
+    private float resetDelay = 10f;        // 最終ステージ後のリセット待機時間（秒）
     private bool isFinalStage = false;     // 最終ステージ到達フラグ
 
     [Header("演出カメラ")]
@@ -129,6 +130,9 @@ public class BossCounter : MonoBehaviour
     {
         Debug.Log("[PlayFinalStageEvent] 演出開始");
 
+        // ボスをワープさせる
+        WarpBossNearPlayer();
+
         // ゲームの時間を止める（演出用に）
         Time.timeScale = 0f;
 
@@ -221,4 +225,105 @@ public class BossCounter : MonoBehaviour
         // UI更新
         UpdateUIStage();
     }
+
+    void WarpBossNearPlayer()
+    {
+        GameObject boss = GameObject.Find("BossEnemy");
+        if (boss == null || player == null) return;
+
+        NavMeshAgent agent = boss.GetComponent<NavMeshAgent>();
+        if (agent == null)
+        {
+            Debug.LogWarning("BossにNavMeshAgentがアタッチされていません。");
+            return;
+        }
+
+        Vector3 playerPos = player.transform.position;
+        Vector3 forward = player.transform.forward;
+        Vector3 right = player.transform.right;
+
+        // 前方と背後の壁チェック
+        bool hasWallFront = Physics.Raycast(playerPos, forward, wallCheckDistance);
+        bool hasWallBack = Physics.Raycast(playerPos, -forward, wallCheckDistance);
+
+        Vector3 direction;
+
+        if (hasWallFront && hasWallBack)
+        {
+            // 前後とも壁あり → プレイヤーの右か左どちらかにワープ（ここでは右方向に設定）
+            direction = right.normalized;
+        }
+        else if (hasWallBack)
+        {
+            // 背後に壁あり → 前方にワープ
+            direction = forward.normalized;
+        }
+        else if (hasWallFront)
+        {
+            // 前方に壁あり → 背後にワープ
+            direction = -forward.normalized;
+        }
+        else
+        {
+            // 壁なし → 背後にワープ
+            direction = -forward.normalized;
+        }
+
+        Vector3 desiredPosition = playerPos + direction * 8f;
+
+        // NavMesh上の適切な位置を探す
+        NavMeshHit hit;
+        if (NavMesh.SamplePosition(desiredPosition, out hit, 5f, NavMesh.AllAreas))
+        {
+            agent.Warp(hit.position);
+
+            Vector3 pos = agent.transform.position;
+            pos.y = boss.transform.position.y;
+            agent.transform.position = pos;
+
+            // プレイヤーを向く
+            agent.transform.LookAt(playerPos);
+        }
+        else
+        {
+            Debug.LogWarning("適切なワープ先が見つかりませんでした。");
+        }
+    }
+
+
+    //void WarpBossNearPlayer()
+    //{
+    //    GameObject boss = GameObject.Find("BossEnemy");
+    //    if (boss == null || player == null) return;
+
+    //    // プレイヤーの背後に壁があるかチェック
+    //    Vector3 back = -player.transform.forward;
+    //    Ray ray = new Ray(player.transform.position, back);
+    //    bool hasWallBehind = Physics.Raycast(ray, wallCheckDistance);
+
+    //    Vector3 direction;
+    //    if (hasWallBehind)
+    //    {
+    //        // 壁がある → プレイヤーの前にボスをワープ
+    //        direction = player.transform.forward.normalized;
+    //    }
+    //    else
+    //    {
+    //        // 壁がない → プレイヤーの後ろにボスをワープ
+    //        direction = -player.transform.forward.normalized;
+    //    }
+
+    //    // プレイヤーの位置から方向に8m進んだ位置
+    //    Vector3 targetPosition = player.transform.position + direction * 8f;
+
+    //    // ボスの高さは元のままにする
+    //    targetPosition.y = boss.transform.position.y;
+
+    //    // ボスの位置を移動
+    //    boss.transform.position = targetPosition;
+
+    //    // ボスの向きをプレイヤーに向ける
+    //    boss.transform.LookAt(player.transform.position);
+    //}
+
 }
