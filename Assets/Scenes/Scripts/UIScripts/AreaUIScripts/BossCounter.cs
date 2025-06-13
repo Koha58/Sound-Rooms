@@ -1,61 +1,58 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.AI;
 
 /// <summary>
-/// ボスイベントを管理するクラス
-/// 段階ごとのUI切り替えや最終ステージでのカメラ演出、
-/// 不気味なオーバーレイ表示などを制御。
+/// ボス戦に関連するステージ演出・UI更新・不気味演出を管理するクラス。
+/// ステージ進行に応じてUIを切り替え、最終段階で特殊演出やオーバーレイ演出を実行する。
 /// </summary>
-
 public class BossCounter : MonoBehaviour
 {
-    // UI関連
-    public GameObject[] uiStages;               // 各ステージのUIオブジェクト配列
-    [SerializeField] private GameObject screenEerieOverlay; // 不気味オーバーレイ用ゲームオブジェクト
-    [SerializeField] private AudioClip stageChangeClip;    // ステージ切り替え時の効果音
-    private AudioSource audioSource;                        // 効果音再生用
+    // === UI・演出素材関連 ===
+    public GameObject[] uiStages; // 各ステージごとに用意されたUIオブジェクト（順にアクティブ化）
+    [SerializeField] private GameObject screenEerieOverlay; // 最終ステージで表示される不気味な演出用オーバーレイ
+    [SerializeField] private AudioClip stageChangeClip; // ステージ切り替え時に再生するSE
+    private AudioSource audioSource; // SE再生用のAudioSource
 
-    // ステージ管理
-    private int currentStage = 0;           // 現在のステージ番号
-    private float timer = 0f;               // ステージ経過時間管理用タイマー
-    private float stageDuration = 2f;     // 各ステージの継続時間（秒）
-    private float resetDelay = 10f;        // 最終ステージ後のリセット待機時間（秒）
-    private bool isFinalStage = false;     // 最終ステージ到達フラグ
+    // === ステージ進行管理 ===
+    private int currentStage = 0; // 現在のステージ番号（配列indexとしても使う）
+    private float timer = 0f; // 経過時間を測るタイマー
+    private float stageDuration = 120f; // 各ステージの持続時間（秒単位）
+    private float resetDelay = 60f; // 最終ステージ演出後にリセットするまでの時間
+    private bool isFinalStage = false; // 現在が最終ステージかどうかのフラグ
 
+    // === カメラ演出関連 ===
     [Header("演出カメラ")]
-    [SerializeField] private Camera mainCamera;          // 通常プレイ用カメラ
-    [SerializeField] private Camera eventCamera;         // 演出用カメラ
-    [SerializeField] private Transform eventCameraStartPoint; // 演出カメラ開始位置
-    [SerializeField] private Transform eventCameraEndPoint;   // 演出カメラ終了位置
+    [SerializeField] private Camera mainCamera; // 通常プレイ用カメラ
+    [SerializeField] private Camera eventCamera; // イベントシーン用の演出カメラ
+    [SerializeField] private Transform eventCameraStartPoint; // 通常演出の開始位置
+    [SerializeField] private Transform eventCameraEndPoint; // 通常演出の終了位置
+    [SerializeField] private Transform frontEventCameraStartPoint; // 正面（壁が後ろにある場合）演出の開始位置
+    [SerializeField] private Transform frontEventCameraEndPoint; // 正面演出の終了位置
 
-    // 前方演出用（背後に壁がある場合）
-    [SerializeField] private Transform frontEventCameraStartPoint; // 壁あり時の演出カメラ開始位置
-    [SerializeField] private Transform frontEventCameraEndPoint;   // 壁あり時の演出カメラ終了位置
-    private float wallCheckDistance = 10f;           // 壁判定用レイの距離
+    private float wallCheckDistance = 10f; // 壁との距離をチェックするための射程
+    private float minWallDistance = 2f; // 追加：壁が近すぎると判定する最短距離
 
-    // 演出設定
-    private float cameraMoveDuration = 5f;           // カメラ移動にかける時間（秒）
-    private float eventDuration = 5f;                 // 演出中の待機時間（秒）
+    // === カメラ演出設定 ===
+    private float cameraMoveDuration = 5f; // カメラ演出の移動時間
+    private float eventDuration = 5f; // 演出後に静止する待機時間
 
-    // 参照
-    [SerializeField] private GameObject player;       // プレイヤーオブジェクト参照
+    // === プレイヤー・状態管理 ===
+    [SerializeField] private GameObject player; // プレイヤーオブジェクトへの参照
 
-    // 状態管理
-    private bool isEventPlaying = false;              // 演出中フラグ
-    private bool isEerieEffectActive = false;        // 不気味オーバーレイ表示フラグ
+    private bool isEventPlaying = false; // カメラ演出中の制御フラグ
+    private bool isEerieEffectActive = false; // 不気味演出がアクティブかどうかのフラグ
 
-    // MainCameraの元の位置・回転を保持（演出後に戻すため）
-    private Vector3 mainCameraOriginalPosition;
-    private Quaternion mainCameraOriginalRotation;
-
+    private Vector3 mainCameraOriginalPosition; // 演出終了後にメインカメラを戻すための位置保存
+    private Quaternion mainCameraOriginalRotation; // 同じく回転の保存
 
     void Start()
     {
+        // AudioSourceの取得（SE再生用）
         audioSource = GetComponent<AudioSource>();
+
         Debug.Log("[Start] 初期化: currentStage=0");
 
-        // 最初のUI更新（ステージ0のUI表示）
+        // 最初のステージUIのみを表示
         UpdateUIStage();
 
         // 不気味オーバーレイは最初は非表示にしておく
@@ -65,265 +62,200 @@ public class BossCounter : MonoBehaviour
 
     void Update()
     {
-        // 演出中は通常のステージ進行処理を止める
+        // イベント演出中は通常の進行を停止
         if (isEventPlaying) return;
 
-        timer += Time.deltaTime; // タイマーを進める
+        // 経過時間をカウント
+        timer += Time.deltaTime;
 
+        // 通常ステージ進行：一定時間ごとに次のステージに移行
         if (!isFinalStage && timer >= stageDuration)
         {
-            // ステージ時間経過でステージ進行
             timer = 0f;
             currentStage++;
 
+            // 最終ステージに到達したかチェック
             if (currentStage >= uiStages.Length - 1)
             {
-                // 最終ステージ到達時の処理
                 currentStage = uiStages.Length - 1;
                 isFinalStage = true;
+
+                // 最終ステージ用UIを表示
                 UpdateUIStage();
 
+                // イベント未実行なら演出コルーチンを開始
                 if (!isEventPlaying)
                 {
-                    // 演出開始
                     isEventPlaying = true;
                     StartCoroutine(PlayFinalStageEvent());
                 }
             }
             else
             {
-                // 通常ステージ更新
+                // 通常ステージのUI更新
                 UpdateUIStage();
             }
         }
 
-        // 不気味オーバーレイのON/OFFをフラグで制御
+        // 不気味演出のオーバーレイ表示更新（フラグに応じて）
         if (screenEerieOverlay != null)
         {
             screenEerieOverlay.SetActive(isEerieEffectActive);
         }
     }
 
-    // ステージに応じてUIを切り替える関数
+    /// <summary>
+    /// 現在のステージUIのみ表示し、他は全て非表示にする。
+    /// さらに不気味演出オーバーレイやSEの処理も制御。
+    /// </summary>
     void UpdateUIStage()
     {
+        // UIステージ全体をループして、現在のステージだけ表示
         for (int i = 0; i < uiStages.Length; i++)
         {
             uiStages[i].SetActive(i == currentStage);
         }
 
-        // 不気味オーバーレイはUpdate()で制御しているためここではOFFにする
+        // 不気味演出が有効でないならオーバーレイは非表示
         if (screenEerieOverlay != null && !isEerieEffectActive)
         {
             screenEerieOverlay.SetActive(false);
         }
 
-        // ステージ切り替え音の再生
+        // ステージ変更SEを再生
         if (stageChangeClip != null && audioSource != null)
         {
             audioSource.PlayOneShot(stageChangeClip);
         }
     }
 
-    // 最終ステージ到達時の演出処理
+    /// <summary>
+    /// 最終ステージに到達したときに再生されるイベント演出。
+    /// 壁の有無によって演出の可否を判断し、適切なパターンを再生。
+    /// </summary>
     IEnumerator PlayFinalStageEvent()
     {
         Debug.Log("[PlayFinalStageEvent] 演出開始");
 
-        // ボスをワープさせる
-        WarpBossNearPlayer();
-
-        // ゲームの時間を止める（演出用に）
+        // プレイヤー動作停止のために時間を止める（イベント演出中はゲームが一時停止）
         Time.timeScale = 0f;
 
-        // プレイヤーの背後に壁があるかをチェック
-        Vector3 back = -player.transform.forward;
-        Ray ray = new Ray(player.transform.position, back);
-        bool hasWallBehind = Physics.Raycast(ray, wallCheckDistance);
+        // プレイヤーの向きと位置から前後の壁をRayで検出
+        Vector3 pos = player.transform.position;
+        Vector3 forward = player.transform.forward;
+        Vector3 back = -forward;
 
-        // 壁の有無によって演出カメラのスタート・エンド位置を切り替え
+        // 壁検出＋距離測定
+        bool hasWallBehind = Physics.Raycast(pos, back, out RaycastHit backHit, wallCheckDistance);
+        bool hasWallInFront = Physics.Raycast(pos, forward, out RaycastHit frontHit, wallCheckDistance);
+
+        // 壁が近すぎる場合の判定を追加
+        bool wallTooClose = (hasWallBehind && backHit.distance <= minWallDistance) ||
+                            (hasWallInFront && frontHit.distance <= minWallDistance);
+
+        // ボスを取得
+        GameObject boss = GameObject.Find("BossEnemy");
+
+        // 両方向とも壁、または壁が近すぎる場合は演出スキップ
+        if ((hasWallBehind && hasWallInFront) || wallTooClose)
+        {
+            Debug.Log("[PlayFinalStageEvent] 前後に壁、または壁が近すぎる → 演出スキップ");
+
+            isEerieEffectActive = true;
+            screenEerieOverlay?.SetActive(true);
+
+            // ボス側にSEやエフェクトのトリガーを送る（演出強化）
+            boss?.GetComponent<BossEnemyController>()?.ShowSoundEffect();
+
+            Time.timeScale = 1f;
+            StartCoroutine(ResetAfterDelay());
+            isEventPlaying = false;
+            yield break;
+        }
+
+        // 使用するカメラ演出開始点と終了点を決定（背面が塞がれている場合は正面パターン）
         Transform startPoint = hasWallBehind ? frontEventCameraStartPoint : eventCameraStartPoint;
         Transform endPoint = hasWallBehind ? frontEventCameraEndPoint : eventCameraEndPoint;
 
-        // MainCameraの元位置・回転を保存（演出後に戻すため）
+        // メインカメラの位置・回転を保存しておく（演出終了後に復元）
         mainCameraOriginalPosition = mainCamera.transform.position;
         mainCameraOriginalRotation = mainCamera.transform.rotation;
 
-        // 演出用カメラの初期位置・回転を設定
+        // イベントカメラの位置・角度を初期化
         eventCamera.transform.position = startPoint.position;
         eventCamera.transform.rotation = startPoint.rotation;
 
-        // 通常カメラをOFF、演出カメラをONに切り替え
+        // カメラ切り替え：演出用カメラON、メインカメラOFF
         mainCamera.enabled = false;
         eventCamera.enabled = true;
 
-        // ボスのサウンドエフェクトを再生（存在する場合）
-        GameObject boss = GameObject.Find("BossEnemy");
+        // ボス側にSEやエフェクトのトリガーを送る（演出強化）
         boss?.GetComponent<BossEnemyController>()?.ShowSoundEffect();
 
-        // カメラをスムーズに移動させる
+        // カメラを一定時間かけて移動させる（滑らかな演出）
         float elapsed = 0f;
         while (elapsed < cameraMoveDuration)
         {
             float t = Mathf.SmoothStep(0, 1, elapsed / cameraMoveDuration);
+
+            // 線形補間と球面線形補間で位置と回転を更新
             eventCamera.transform.position = Vector3.Lerp(startPoint.position, endPoint.position, t);
             eventCamera.transform.rotation = Quaternion.Slerp(startPoint.rotation, endPoint.rotation, t);
 
-            elapsed += Time.unscaledDeltaTime; // 時間停止中でも進む時間で計算
+            elapsed += Time.unscaledDeltaTime;
             yield return null;
         }
 
-        // 最終的な位置・回転に補正
+        // 終点を念のため再設定して精度保証
         eventCamera.transform.position = endPoint.position;
         eventCamera.transform.rotation = endPoint.rotation;
 
-        Debug.Log("[PlayFinalStageEvent] 演出中...待機");
-        yield return new WaitForSecondsRealtime(eventDuration); // 演出時間だけ待機（リアルタイム）
+        Debug.Log("[PlayFinalStageEvent] カメラ演出終了、待機");
 
-        // 演出カメラをOFF、通常カメラをONに戻す
+        // イベントの余韻を数秒間表示したままにする
+        yield return new WaitForSecondsRealtime(eventDuration);
+
+        // カメラを元の状態に戻す
         eventCamera.enabled = false;
         mainCamera.enabled = true;
-
-        // カメラの位置・回転を元に戻す
         mainCamera.transform.position = mainCameraOriginalPosition;
         mainCamera.transform.rotation = mainCameraOriginalRotation;
 
-        // 時間を通常に戻す
+        // ゲームを再開
         Time.timeScale = 1f;
 
-        Debug.Log("[PlayFinalStageEvent] 演出終了、不気味演出開始");
+        Debug.Log("[PlayFinalStageEvent] 不気味演出へ移行");
 
-        // 不気味演出ON（オーバーレイ表示）
+        // 不気味なオーバーレイ表示を有効化
         isEerieEffectActive = true;
-        if (screenEerieOverlay != null)
-            screenEerieOverlay.SetActive(true);
+        screenEerieOverlay?.SetActive(true);
 
-        // リセット処理開始
+        // 一定時間後にステージをリセットするコルーチン開始
         StartCoroutine(ResetAfterDelay());
 
         isEventPlaying = false;
     }
 
-    // 不気味演出表示後、リセットするまで待機してリセットする
+    /// <summary>
+    /// 最終ステージの演出後、一定時間待ってステージを初期化する処理。
+    /// </summary>
     IEnumerator ResetAfterDelay()
     {
-        Debug.Log("[ResetAfterDelay] リセット待機開始");
-        yield return new WaitForSeconds(resetDelay); // リセットまでの待機
+        Debug.Log("[ResetAfterDelay] 待機中...");
+        yield return new WaitForSeconds(resetDelay);
 
-        // ステージ情報を初期化
+        // ステージと状態をリセット
         currentStage = 0;
         isFinalStage = false;
         timer = 0f;
 
-        Debug.Log("[ResetAfterDelay] リセット完了 currentStage=0");
+        Debug.Log("[ResetAfterDelay] 初期化完了 → currentStage=0");
 
-        // 不気味演出OFF（オーバーレイ非表示）
+        // 不気味演出のオーバーレイ非表示
         isEerieEffectActive = false;
-        if (screenEerieOverlay != null)
-            screenEerieOverlay.SetActive(false);
+        screenEerieOverlay?.SetActive(false);
 
-        // UI更新
+        // UIもリセットして最初の状態に戻す
         UpdateUIStage();
     }
-
-    void WarpBossNearPlayer()
-    {
-        GameObject boss = GameObject.Find("BossEnemy");
-        if (boss == null || player == null) return;
-
-        NavMeshAgent agent = boss.GetComponent<NavMeshAgent>();
-        if (agent == null)
-        {
-            Debug.LogWarning("BossにNavMeshAgentがアタッチされていません。");
-            return;
-        }
-
-        Vector3 playerPos = player.transform.position;
-        Vector3 forward = player.transform.forward;
-        Vector3 right = player.transform.right;
-
-        // 前方と背後の壁チェック
-        bool hasWallFront = Physics.Raycast(playerPos, forward, wallCheckDistance);
-        bool hasWallBack = Physics.Raycast(playerPos, -forward, wallCheckDistance);
-
-        Vector3 direction;
-
-        if (hasWallFront && hasWallBack)
-        {
-            // 前後とも壁あり → プレイヤーの右か左どちらかにワープ（ここでは右方向に設定）
-            direction = right.normalized;
-        }
-        else if (hasWallBack)
-        {
-            // 背後に壁あり → 前方にワープ
-            direction = forward.normalized;
-        }
-        else if (hasWallFront)
-        {
-            // 前方に壁あり → 背後にワープ
-            direction = -forward.normalized;
-        }
-        else
-        {
-            // 壁なし → 背後にワープ
-            direction = -forward.normalized;
-        }
-
-        Vector3 desiredPosition = playerPos + direction * 8f;
-
-        // NavMesh上の適切な位置を探す
-        NavMeshHit hit;
-        if (NavMesh.SamplePosition(desiredPosition, out hit, 5f, NavMesh.AllAreas))
-        {
-            agent.Warp(hit.position);
-
-            Vector3 pos = agent.transform.position;
-            pos.y = boss.transform.position.y;
-            agent.transform.position = pos;
-
-            // プレイヤーを向く
-            agent.transform.LookAt(playerPos);
-        }
-        else
-        {
-            Debug.LogWarning("適切なワープ先が見つかりませんでした。");
-        }
-    }
-
-
-    //void WarpBossNearPlayer()
-    //{
-    //    GameObject boss = GameObject.Find("BossEnemy");
-    //    if (boss == null || player == null) return;
-
-    //    // プレイヤーの背後に壁があるかチェック
-    //    Vector3 back = -player.transform.forward;
-    //    Ray ray = new Ray(player.transform.position, back);
-    //    bool hasWallBehind = Physics.Raycast(ray, wallCheckDistance);
-
-    //    Vector3 direction;
-    //    if (hasWallBehind)
-    //    {
-    //        // 壁がある → プレイヤーの前にボスをワープ
-    //        direction = player.transform.forward.normalized;
-    //    }
-    //    else
-    //    {
-    //        // 壁がない → プレイヤーの後ろにボスをワープ
-    //        direction = -player.transform.forward.normalized;
-    //    }
-
-    //    // プレイヤーの位置から方向に8m進んだ位置
-    //    Vector3 targetPosition = player.transform.position + direction * 8f;
-
-    //    // ボスの高さは元のままにする
-    //    targetPosition.y = boss.transform.position.y;
-
-    //    // ボスの位置を移動
-    //    boss.transform.position = targetPosition;
-
-    //    // ボスの向きをプレイヤーに向ける
-    //    boss.transform.LookAt(player.transform.position);
-    //}
-
 }
