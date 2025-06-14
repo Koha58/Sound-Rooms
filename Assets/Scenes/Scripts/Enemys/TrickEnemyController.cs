@@ -61,6 +61,7 @@ public class TrickEnemyController : MonoBehaviour
     // ワープタイムアウト（秒）
     private float patrolTimeout = 10f;
 
+    // 巡回開始からの経過時間
     float elapsed;
 
     /// <summary>
@@ -101,7 +102,7 @@ public class TrickEnemyController : MonoBehaviour
     // 敵の現在の行動状態を表す列挙型（ステート）
     enum enemyState
     {
-        back,      // 元の位置へ戻る
+        patrol,    // 元の位置へ戻る
         chase,     // プレイヤーを追いかける
         search,    // プレイヤーを探す
         hear,      // 音を聞く
@@ -112,7 +113,7 @@ public class TrickEnemyController : MonoBehaviour
     // 行動の種類を表す列挙型（行動の候補や種類として利用）
     enum BehaviorType
     {
-        back,      // 元の位置へ戻る
+        patrol,    // 元の位置へ戻る
         chase,     // プレイヤーを追いかける
         search,    // プレイヤーを探す
         hear,      // 音を聞く
@@ -246,24 +247,26 @@ public class TrickEnemyController : MonoBehaviour
     /// </summary>
     private void Update()
     {
-        // 巡回中でタイムアウトした場合にワープ
-        if (curretState == enemyState.back&&!(navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance))
+        // 現在のステートが「巡回復帰状態」で、目的地にまだ到達していない場合
+        if (curretState == enemyState.patrol && !(navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance))
         {
-            elapsed +=Time.deltaTime;
+            // 経過時間を加算し、ワープタイムアウトを監視
+            elapsed += Time.deltaTime;
             if (elapsed >= patrolTimeout)
             {
-                // ワープ実行
+                // ワープ実行：指定の巡回ポイントへ瞬間移動
                 navMeshAgent.Warp(patrolPoints[currentPatrolPointIndex].position);
-                patrolMoveStartTime = Time.time; // 時刻をリセット
+                patrolMoveStartTime = Time.time;
             }
         }
         else
         {
+            // タイマーリセット（正常に巡回中）
             elapsed = 0.0f;
         }
 
-            // プレイヤーの位置を確認し、追跡すべきか巡回を続けるべきかを判断
-            PatrolAndChaseAI();
+        // プレイヤーの位置を確認し、追跡すべきか巡回を続けるべきかを判断
+        PatrolAndChaseAI();
 
         // ラジオカセットの音に反応する処理を実行
         PutOnRange();
@@ -310,8 +313,8 @@ public class TrickEnemyController : MonoBehaviour
             // プレイヤーが追跡範囲外にいる場合
             else if (distanceToPlayer >= chaseRange)
             {
-                // 「back（巡回に戻る）」行動の重要度を高める（追跡中止）
-                behaviors.GetBehavior(BehaviorType.back).value = 2;
+                // 「patrol（巡回に戻る）」行動の重要度を高める（追跡中止）
+                behaviors.GetBehavior(BehaviorType.patrol).value = 2;
             }
         }
     }
@@ -398,8 +401,8 @@ public class TrickEnemyController : MonoBehaviour
                             ChangeState(enemyState.chase); // 追跡状態に遷移
                             return;
 
-                        case BehaviorType.back: //元の位置へ戻るときの行動
-                            ChangeState(enemyState.back); // 位置へ戻る状態に遷移
+                        case BehaviorType.patrol: //元の位置へ戻るときの行動
+                            ChangeState(enemyState.patrol); // 位置へ戻る状態に遷移
                             return;
 
                         case BehaviorType.hear: // 音を聞いたときの行動
@@ -414,14 +417,14 @@ public class TrickEnemyController : MonoBehaviour
 
                 #endregion
                 break;
-            case enemyState.back: //位置へ戻る
+            case enemyState.patrol: //位置へ戻る
                 #region
                 if (stateEnter)
                 {
                     stateEnter = false; // 初回遷移処理が完了したのでフラグを下げる
 
                     // 位置へ戻るときの行動の優先度をリセット
-                    behaviors.GetBehavior(BehaviorType.back).value = 0;
+                    behaviors.GetBehavior(BehaviorType.patrol).value = 0;
 
                     // 可視化表示をオフ（プレイヤー視認不可）
                     PS.isVisualization = false;
@@ -468,8 +471,8 @@ public class TrickEnemyController : MonoBehaviour
                             ChangeState(enemyState.chase); // 追跡状態に遷移
                             return;
 
-                        case BehaviorType.back: //元の位置へ戻るときの行動
-                            ChangeState(enemyState.back); // 位置へ戻る状態に遷移
+                        case BehaviorType.patrol: //元の位置へ戻るときの行動
+                            ChangeState(enemyState.patrol); // 位置へ戻る状態に遷移
                             return;
 
                         case BehaviorType.hear: // 音を聞いたときの行動
@@ -496,9 +499,8 @@ public class TrickEnemyController : MonoBehaviour
                     // 移動速度を待機モードに設定
                     navMeshAgent.speed = idleSpeed;
 
-                    // アニメーション設定：走行をオフ、待機をオン
-                    animator.SetBool("Run", false);
-                    animator.SetBool("Idle", true);
+                    animator.SetBool("Run", false);// 走行アニメーション開始
+                    animator.SetBool("Idle", true);// 待機アニメーション停止
 
                     // 現在の巡回ポイントへ移動
                     navMeshAgent.SetDestination(patrolPoints[currentPatrolPointIndex].position);
@@ -527,8 +529,8 @@ public class TrickEnemyController : MonoBehaviour
                             ChangeState(enemyState.chase); // 追跡状態に遷移
                             return;
 
-                        case BehaviorType.back: //元の位置へ戻るときの行動
-                            ChangeState(enemyState.back); // 位置へ戻る状態に遷移
+                        case BehaviorType.patrol: //元の位置へ戻るときの行動
+                            ChangeState(enemyState.patrol); // 位置へ戻る状態に遷移
                             return;
 
                         case BehaviorType.hear: // 音を聞いたときの行動
@@ -560,11 +562,11 @@ public class TrickEnemyController : MonoBehaviour
                     PS.isVisualization = true; // プレイヤーの可視化をオン
                 }
 
-                float distance = Vector3.Distance(transform.position, player.transform.position); // プレイヤーとの距離を取得
-                float stopDistance = 2.0f; // 追いかけるのを止める距離（これ以下には近づかない）
-
                 // カプセルコライダー（当たり判定）のON/OFFをチェックし更新
                 UpdateCapsuleCollider();
+
+                float distance = Vector3.Distance(transform.position, player.transform.position); // プレイヤーとの距離を取得
+                float stopDistance = 2.0f; // 追いかけるのを止める距離（これ以下には近づかない）
 
                 if (distance > stopDistance)
                 {
@@ -574,7 +576,7 @@ public class TrickEnemyController : MonoBehaviour
                 else
                 {
                     navMeshAgent.SetDestination(transform.position); // 一定距離内ならその場で停止
-                    navMeshAgent.speed = 0f;
+                    navMeshAgent.speed = 0f;//速度を動かないよう0にする
                 }
 
                 float t = Mathf.Clamp01(distance / chaseRange); // 0〜1の範囲に正規化
@@ -600,8 +602,8 @@ public class TrickEnemyController : MonoBehaviour
                             ChangeState(enemyState.chase); // 追跡状態に遷移
                             return;
 
-                        case BehaviorType.back: //元の位置へ戻るときの行動
-                            ChangeState(enemyState.back); // 位置へ戻る状態に遷移
+                        case BehaviorType.patrol: //元の位置へ戻るときの行動
+                            ChangeState(enemyState.patrol); // 位置へ戻る状態に遷移
                             return;
 
                         case BehaviorType.hear: // 音を聞いたときの行動
@@ -622,8 +624,8 @@ public class TrickEnemyController : MonoBehaviour
                 {
                     stateEnter = false; // 初回遷移処理が完了したのでフラグを下げる
                     behaviors.GetBehavior(BehaviorType.hear).value = 0;// 聞く行動を終了
-                    animator.SetBool("Run", true);   // 走行アニメーションを停止
-                    animator.SetBool("Idle", false);   // 待機アニメーションを開始
+                    animator.SetBool("Run", true);   // 走行アニメーションを開始
+                    animator.SetBool("Idle", false);   // 待機アニメーションを停止
                 }
 
                 IdleThenLaugh();
@@ -637,7 +639,7 @@ public class TrickEnemyController : MonoBehaviour
                 else if (!OP.isParticle)
                 {
                     isMovingToSound = false;                           　// 音源が消えたら移動停止
-                    behaviors.GetBehavior(BehaviorType.back).value = 2; // 巡回に戻す
+                    behaviors.GetBehavior(BehaviorType.patrol).value = 2; // 巡回に戻す
                 }
 
                 // 行動リストを優先度順にソート
@@ -658,8 +660,8 @@ public class TrickEnemyController : MonoBehaviour
                             ChangeState(enemyState.chase); // 追跡状態に遷移
                             return;
 
-                        case BehaviorType.back: //元の位置へ戻るときの行動
-                            ChangeState(enemyState.back); // 位置へ戻る状態に遷移
+                        case BehaviorType.patrol: //元の位置へ戻るときの行動
+                            ChangeState(enemyState.patrol); // 位置へ戻る状態に遷移
                             return;
 
                         case BehaviorType.hear: // 音を聞いたときの行動
@@ -683,7 +685,7 @@ public class TrickEnemyController : MonoBehaviour
                     PS.isVisualization = false; // プレイヤーの可視化をオフ
                 }
 
-                animator.SetBool("Run", true);  // 走行アニメーションを停止
+                animator.SetBool("Run", true);  // 走行アニメーションを開始
                 animator.SetBool("Idle", false); // 待機アニメーションを停止
 
                 Run();  // 走る音を再生
@@ -709,8 +711,8 @@ public class TrickEnemyController : MonoBehaviour
                             ChangeState(enemyState.chase); // 追跡状態に遷移
                             return;
 
-                        case BehaviorType.back: //元の位置へ戻るときの行動
-                            ChangeState(enemyState.back); // 位置へ戻る状態に遷移
+                        case BehaviorType.patrol: //元の位置へ戻るときの行動
+                            ChangeState(enemyState.patrol); // 位置へ戻る状態に遷移
                             return;
 
                         case BehaviorType.hear: // 音を聞いたときの行動

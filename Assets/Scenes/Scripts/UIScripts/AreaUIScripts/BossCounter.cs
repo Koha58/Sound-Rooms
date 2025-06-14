@@ -17,8 +17,8 @@ public class BossCounter : MonoBehaviour
     // === ステージ進行管理 ===
     private int currentStage = 0; // 現在のステージ番号（配列indexとしても使う）
     private float timer = 0f; // 経過時間を測るタイマー
-    private float stageDuration = 2f; // 各ステージの持続時間（秒単位）
-    private float resetDelay = 1f; // 最終ステージ演出後にリセットするまでの時間
+    private float stageDuration = 120f; // 各ステージの持続時間（秒単位）
+    private float resetDelay = 60f; // 最終ステージ演出後にリセットするまでの時間
     private bool isFinalStage = false; // 現在が最終ステージかどうかのフラグ
 
     // === カメラ演出関連 ===

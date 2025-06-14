@@ -483,6 +483,7 @@ public class EnemyController : MonoBehaviour
                 searchTimer += Time.deltaTime;
                 if (searchTimer >= 5.0f)
                 {
+                    // 探す状態に入ったらタイマーをリセット
                     searchTimer = 0f;
 
                     // 巡回行動の優先度を上げる
