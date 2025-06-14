@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.AI;
 
 /// <summary>
 /// ボス戦に関連するステージ演出・UI更新・不気味演出を管理するクラス。
@@ -16,8 +17,8 @@ public class BossCounter : MonoBehaviour
     // === ステージ進行管理 ===
     private int currentStage = 0; // 現在のステージ番号（配列indexとしても使う）
     private float timer = 0f; // 経過時間を測るタイマー
-    private float stageDuration = 120f; // 各ステージの持続時間（秒単位）
-    private float resetDelay = 60f; // 最終ステージ演出後にリセットするまでの時間
+    private float stageDuration = 2f; // 各ステージの持続時間（秒単位）
+    private float resetDelay = 1f; // 最終ステージ演出後にリセットするまでの時間
     private bool isFinalStage = false; // 現在が最終ステージかどうかのフラグ
 
     // === カメラ演出関連 ===
@@ -137,6 +138,9 @@ public class BossCounter : MonoBehaviour
     {
         Debug.Log("[PlayFinalStageEvent] 演出開始");
 
+        // プレイヤーの近くにボスをワープさせる関数
+        WarpBossNearPlayer();
+
         // プレイヤー動作停止のために時間を止める（イベント演出中はゲームが一時停止）
         Time.timeScale = 0f;
 
@@ -163,6 +167,12 @@ public class BossCounter : MonoBehaviour
 
             isEerieEffectActive = true;
             screenEerieOverlay?.SetActive(true);
+
+            // ボスの一時停止処理をコルーチンで呼び出す
+            if (boss != null)
+            {
+                StartCoroutine(TemporarilyStopBoss(boss, 3f)); // ここで3秒停止
+            }
 
             // ボス側にSEやエフェクトのトリガーを送る（演出強化）
             boss?.GetComponent<BossEnemyController>()?.ShowSoundEffect();
@@ -258,4 +268,136 @@ public class BossCounter : MonoBehaviour
         // UIもリセットして最初の状態に戻す
         UpdateUIStage();
     }
+
+    /// <summary>
+    /// プレイヤーの近くにボスをワープさせる関数
+    /// </summary>
+    void WarpBossNearPlayer()
+    {
+        // "BossEnemy"という名前のGameObjectをシーンから探す
+        GameObject boss = GameObject.Find("BossEnemy");
+
+        // ボスまたはプレイヤーが存在しない場合は処理を中断
+        if (boss == null || player == null) return;
+
+        // ボスのNavMeshAgentコンポーネントを取得
+        NavMeshAgent agent = boss.GetComponent<NavMeshAgent>();
+
+        // NavMeshAgentが存在しない場合は警告を出して処理を中断
+        if (agent == null)
+        {
+            Debug.LogWarning("BossにNavMeshAgentがアタッチされていません。");
+            return;
+        }
+
+        // プレイヤーの現在位置
+        Vector3 playerPos = player.transform.position;
+
+        // プレイヤーの前方ベクトル（向いている方向）
+        Vector3 forward = player.transform.forward;
+
+        // プレイヤーの右方向ベクトル
+        Vector3 right = player.transform.right;
+
+        // プレイヤーの前方に壁があるかをRaycastでチェック
+        bool hasWallFront = Physics.Raycast(playerPos, forward, wallCheckDistance);
+
+        // プレイヤーの背後に壁があるかをRaycastでチェック
+        bool hasWallBack = Physics.Raycast(playerPos, -forward, wallCheckDistance);
+
+        Vector3 direction; // ボスをワープさせる方向を決定する変数
+
+        // 前方と背後の両方に壁がある場合
+        if (hasWallFront && hasWallBack)
+        {
+            // 前後に壁があるため、プレイヤーの横方向（ここでは右）にワープさせる
+            direction = right.normalized;
+        }
+        // 背後にのみ壁がある場合
+        else if (hasWallBack)
+        {
+            // 背後がふさがっているため、前方にワープ
+            direction = forward.normalized;
+        }
+        // 前方にのみ壁がある場合
+        else if (hasWallFront)
+        {
+            // 前方がふさがっているため、背後にワープ
+            direction = -forward.normalized;
+        }
+        // 前後に壁がない場合
+        else
+        {
+            // 安全のため、背後にワープさせる
+            direction = -forward.normalized;
+        }
+
+        // ワープさせたい目標位置をプレイヤー位置 + 方向 * 8m で算出
+        Vector3 desiredPosition = playerPos + direction * 8f;
+
+        NavMeshHit hit; // 実際にワープさせるNavMesh上の位置を格納する変数
+
+        // 指定位置の周囲半径5m以内でNavMesh上の適切な地点を探す
+        if (NavMesh.SamplePosition(desiredPosition, out hit, 5f, NavMesh.AllAreas))
+        {
+            // NavMeshAgentを探した地点にワープさせる
+            agent.Warp(hit.position);
+
+            // ボスのy座標が変わってしまう場合に備え、元のyを維持（高さを変更しない）
+            Vector3 pos = agent.transform.position;
+            pos.y = boss.transform.position.y;
+            agent.transform.position = pos;
+
+            // ワープ後、ボスをプレイヤーの方向に向ける
+            agent.transform.LookAt(playerPos);
+        }
+        else
+        {
+            // NavMesh上に適切な地点が見つからなかった場合は警告を出力
+            Debug.LogWarning("適切なワープ先が見つかりませんでした。");
+        }
+    }
+
+    /// <summary>
+    /// ボスの動きを一時的に止め、一定時間後に再開するコルーチン。
+    /// </summary>
+    IEnumerator TemporarilyStopBoss(GameObject boss, float stopDuration)
+    {
+        // ボスにアタッチされているNavMeshAgentコンポーネントを取得（移動停止用）
+        var nav = boss.GetComponent<NavMeshAgent>();
+
+        // ボスにアタッチされているAI制御スクリプト（例: 独自の行動制御）の参照を取得
+        var ai = boss.GetComponent<BossEnemyController>(); // 存在しない場合はnull
+
+        // NavMeshAgentが存在していれば移動停止
+        if (nav != null)
+        {
+            nav.isStopped = true; // ボスの経路移動を停止する
+        }
+
+        // AIスクリプトが存在していれば一時的に無効化
+        if (ai != null)
+        {
+            ai.enabled = false; // AIの処理ループや行動制御を一時的に無効にする
+        }
+
+        // 指定時間だけ待機（リアルタイムでの停止を保証、ゲームのTimeScaleに影響されない）
+        yield return new WaitForSecondsRealtime(stopDuration);
+
+        // NavMeshAgentが存在していれば移動再開
+        if (nav != null)
+        {
+            nav.isStopped = false;
+        }
+
+        // AIスクリプトが存在していれば再び有効化
+        if (ai != null)
+        {
+            ai.enabled = true;
+        }
+
+        // デバッグログに再始動の通知を出力（デバッグ用）
+        Debug.Log($"[TemporarilyStopBoss] ボスが{stopDuration}秒後に再始動");
+    }
+
 }

@@ -55,6 +55,14 @@ public class TrickEnemyController : MonoBehaviour
     private Vector3 originalPosition;
     private Quaternion originalRotation;
 
+    // 巡回移動開始時刻
+    private float patrolMoveStartTime;
+
+    // ワープタイムアウト（秒）
+    private float patrolTimeout = 10f;
+
+    float elapsed;
+
     /// <summary>
     /// プレイヤー追跡関連
     /// </summary>
@@ -238,8 +246,24 @@ public class TrickEnemyController : MonoBehaviour
     /// </summary>
     private void Update()
     {
-        // プレイヤーの位置を確認し、追跡すべきか巡回を続けるべきかを判断
-        PatrolAndChaseAI();
+        // 巡回中でタイムアウトした場合にワープ
+        if (curretState == enemyState.back&&!(navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance))
+        {
+            elapsed +=Time.deltaTime;
+            if (elapsed >= patrolTimeout)
+            {
+                // ワープ実行
+                navMeshAgent.Warp(patrolPoints[currentPatrolPointIndex].position);
+                patrolMoveStartTime = Time.time; // 時刻をリセット
+            }
+        }
+        else
+        {
+            elapsed = 0.0f;
+        }
+
+            // プレイヤーの位置を確認し、追跡すべきか巡回を続けるべきかを判断
+            PatrolAndChaseAI();
 
         // ラジオカセットの音に反応する処理を実行
         PutOnRange();
@@ -407,6 +431,8 @@ public class TrickEnemyController : MonoBehaviour
 
                     // 元の位置へ戻るの巡回ポイントへ移動
                     navMeshAgent.SetDestination(patrolPoints[currentPatrolPointIndex].position);
+
+                    patrolMoveStartTime = Time.time; // 巡回開始時刻を記録
                 }
 
                 Run();  // 走行サウンド再生
@@ -529,22 +555,32 @@ public class TrickEnemyController : MonoBehaviour
                     animator.SetBool("Idle", false); // 待機アニメーション停止
 
                     navMeshAgent.speed = 0.0f; // 初期速度をゼロに設定（徐々に上げるため）
+
+                    PS.isVisible = true;       // プレイヤーを可視化
+                    PS.isVisualization = true; // プレイヤーの可視化をオン
                 }
 
-                PS.isVisible = true;       // プレイヤーが見えるように設定
-                PS.isVisualization = true; // 可視化処理をオン（視認されている演出）
+                float distance = Vector3.Distance(transform.position, player.transform.position); // プレイヤーとの距離を取得
+                float stopDistance = 2.0f; // 追いかけるのを止める距離（これ以下には近づかない）
 
                 // カプセルコライダー（当たり判定）のON/OFFをチェックし更新
                 UpdateCapsuleCollider();
 
+                if (distance > stopDistance)
+                {
+                    transform.LookAt(player.transform); // プレイヤーに向かって回転
+                    navMeshAgent.SetDestination(player.transform.position); // プレイヤーに向かって移動
+                }
+                else
+                {
+                    navMeshAgent.SetDestination(transform.position); // 一定距離内ならその場で停止
+                    navMeshAgent.speed = 0f;
+                }
+
+                float t = Mathf.Clamp01(distance / chaseRange); // 0〜1の範囲に正規化
+                navMeshAgent.speed = Mathf.Lerp(minSpeed, maxSpeed, t); // 線形補間で速度を設定
+
                 Run();  // 走る音を再生
-
-                transform.LookAt(player.transform); // プレイヤーの方向を向く
-                navMeshAgent.SetDestination(player.transform.position); // プレイヤーへ向かって移動
-
-                // プレイヤーとの距離に応じて速度を補間設定（近いほど速く）
-                float t = Mathf.Clamp01(distanceToPlayer / chaseRange);
-                navMeshAgent.speed = Mathf.Lerp(minSpeed, maxSpeed, t);
 
                 // 行動リストを優先度順にソート
                 behaviors.SortDesire();

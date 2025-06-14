@@ -35,7 +35,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private void Awake()
     {
-        // 念のため巡回ルートリストをクリア（再初期化）
+        // 巡回ルートリストをクリア（再初期化）
         enemyPatrolRoutes.Clear();
 
         // 各敵（親オブジェクト）ごとに巡回ルートを作成

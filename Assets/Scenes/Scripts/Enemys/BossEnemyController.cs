@@ -6,7 +6,6 @@ using UnityEngine.AI;
 /// <summary>
 /// BossEnemyの制御（移動　アニメーション　サウンド）クラス
 /// </summary>
-
 public class BossEnemyController : MonoBehaviour
 {
     // キャラクターのID (敵キャラクターを一意に識別するため)
@@ -21,12 +20,9 @@ public class BossEnemyController : MonoBehaviour
     // アニメーターの参照 (アニメーション制御用)
     [SerializeField] Animator animator;
 
-    [SerializeField] private GameObject soundEffect; // 音の可視化用
-
     // サウンド関連の変数
     [SerializeField] private AudioSource audioSourse; //オーディオソース取得
     [SerializeField] private AudioClip searchClip;    //探す音
-    //[SerializeField] private AudioClip runClip;       //走る音
     [SerializeField] private AudioClip walkClip;      //歩く音
 
     void Idle() { audioSourse.PlayOneShot(searchClip); }     //探す音を再生
@@ -39,14 +35,22 @@ public class BossEnemyController : MonoBehaviour
     private bool isPatrolling = false;      　// 巡回中かどうか
     private float walkSpeed = 2.0f;           // 巡回速度設定
 
+    // 巡回移動開始時刻
+    private float patrolMoveStartTime;
+
+    // ワープタイムアウト（秒）
+    private float patrolTimeout = 30f;
+
+    float elapsed;
+
     //追跡
     public Transform player;                          //プレイヤーの位置
     private float distanceToPlayer = Mathf.Infinity;  // プレイヤーとの距離
-    private float chaseRange = 7f;                    //Playerを検知する範囲
+    private float chaseRange = 10f;                    //Playerを検知する範囲
 
     // 距離に応じた速度を設定（距離が近いほど遅く、遠いほど速い）
     float minSpeed = 5.5f;  // 最低速度
-    float maxSpeed = 7.5f;  // 最大速度
+    float maxSpeed = 6.5f;  // 最大速度
 
     //探す・聞く・何もしない
     private float idleSpeed = 0.0f; // 探す・聞く・何もしない時の速度設定
@@ -181,6 +185,22 @@ public class BossEnemyController : MonoBehaviour
 
     private void Update()
     {
+        // 巡回中でタイムアウトした場合にワープ
+        if (curretState == enemyState.patrol && !(navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance))
+        {
+            elapsed += Time.deltaTime;
+            if (elapsed >= patrolTimeout)
+            {
+                // ワープ実行
+                navMeshAgent.Warp(patrolPoints[currentPatrolPointIndex].position);
+                patrolMoveStartTime = Time.time; // 時刻をリセット
+            }
+        }
+        else
+        {
+            elapsed = 0.0f;
+        }
+
         //プレイヤーの位置を確認し、追跡・巡回を判断
         PatrolAndChaseAI();
 
@@ -312,6 +332,8 @@ public class BossEnemyController : MonoBehaviour
                     PS.isVisualization = false;                           // プレイヤーの可視化をオフ
                     animator.SetBool("Move", true);     // 歩行アニメーションを開始
                     animator.SetBool("Idle", false);    // 待機アニメーションを停止
+
+                    patrolMoveStartTime = Time.time; // 巡回開始時刻を記録
                 }
 
                 Move(); // 歩く音を再生
@@ -428,19 +450,27 @@ public class BossEnemyController : MonoBehaviour
 
                     animator.SetBool("Move", true);    // 走行アニメーションを開始
                     animator.SetBool("Idle", false);  // 待機アニメーションを停止
-                    navMeshAgent.speed = 0.0f;        // 初期速度設定
+                    PS.isVisible = true;       // プレイヤーを可視化
+                    PS.isVisualization = true; // プレイヤーの可視化をオン
                 }
 
-                PS.isVisible = true;       // プレイヤーを可視化
-                PS.isVisualization = true; // プレイヤーの可視化をオン
+                float distance = Vector3.Distance(transform.position, player.transform.position); // プレイヤーとの距離を取得
+                float stopDistance = 4.0f; // 追いかけるのを止める距離（これ以下には近づかない）
 
-                //Run();  // 走る音を再生
+                if (distance > stopDistance)
+                {
+                    transform.LookAt(player.transform); // プレイヤーに向かって回転
+                    navMeshAgent.SetDestination(player.transform.position); // プレイヤーに向かって移動
+                }
+                else
+                {
+                    navMeshAgent.SetDestination(transform.position); // 一定距離内ならその場で停止
+                    navMeshAgent.speed = 0f;
+                }
 
-                transform.LookAt(player.transform); // プレイヤーに向かって回転
-                navMeshAgent.SetDestination(player.transform.position); // プレイヤーに向かって移動
-
-                float t = Mathf.Clamp01(distanceToPlayer / chaseRange); // 0〜1の範囲に正規化
+                float t = Mathf.Clamp01(distance / chaseRange); // 0〜1の範囲に正規化
                 navMeshAgent.speed = Mathf.Lerp(minSpeed, maxSpeed, t); // 線形補間で速度を設定
+
 
                 behaviors.SortDesire();// 行動パターンをソート
 
@@ -614,29 +644,23 @@ public class BossEnemyController : MonoBehaviour
     {
         GameObject obj = GameObject.Find("Player");         //Playerオブジェクトを探す
         PlayerSeen PS = obj.GetComponent<PlayerSeen>();     //スクリプト取得
+        behaviors.GetBehavior(BehaviorType.search).value = 3;
+        audioSourse.maxDistance = 500f;
+        audioSourse.volume = 0.05f;
+        audioSourse.rolloffMode = AudioRolloffMode.Linear; // 距離に応じて音量がリニアに減衰
 
-        if (soundEffect != null)
-        {
-            behaviors.GetBehavior(BehaviorType.search).value = 3;
-            audioSourse.maxDistance = 500f;
-            audioSourse.volume = 0.05f;
-            audioSourse.rolloffMode = AudioRolloffMode.Linear; // 距離に応じて音量がリニアに減衰
-            GameObject effect = Instantiate(soundEffect, transform.position, Quaternion.identity);
-            Destroy(effect, 5.0f); // 5秒後に自動で削除（任意）
+        PS.isVisible = true;       // プレイヤーを可視化
+        PS.isVisualization = true; // プレイヤーの可視化をオン
 
-            //10秒後にfalseに戻すコルーチンを開始
-            StartCoroutine(ResetVisibility(PS));
-        }
+        //10秒後にfalseに戻すコルーチンを開始
+        StartCoroutine(ResetVisibility(PS));
     }
 
     // コルーチン：10秒後に可視化をオフにする
     private IEnumerator ResetVisibility(PlayerSeen ps)
     {
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(10f);
         audioSourse.maxDistance = 20f;
         audioSourse.volume = 1.0f;
-        //ps.isVisible = false;
-        //ps.isVisualization = false;
-        Debug.Log("2秒後 → プレイヤーを非可視化");
     }
 }

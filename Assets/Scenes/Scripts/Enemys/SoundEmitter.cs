@@ -7,15 +7,12 @@ using UnityEngine;
 /// </summary>
 public class SoundEmitter : MonoBehaviour
 {
-    public float soundRange = 5f; // 音が届く範囲（半径）
+    // 音が届く範囲（半径）
+    public float soundRange = 5f; 
 
-    // Startはゲーム開始時に呼ばれる
-    void Start()
-    {
-        // 初期化処理は特にないので、空のまま
-    }
-
-    // Updateは毎フレーム呼ばれる
+    /// <summary>
+    /// 更新処理
+    /// </summary>
     void Update()
     {
         // 毎フレーム、音を発生させる
@@ -36,16 +33,25 @@ public class SoundEmitter : MonoBehaviour
             // ColliderにEnemyControllerがアタッチされているか確認
             EnemyController enemy = collider.GetComponent<EnemyController>();
             TrickEnemyController trickEnemy= collider.GetComponent<TrickEnemyController>();
+            BossEnemyController bossEnemy = collider.GetComponent<BossEnemyController>();
 
             // EnemyControllerが存在する場合、音を聞いた処理を呼び出す
             if (enemy != null)
             {
-                // 敵キャラクターに音が聞こえたことを通知
+                // Enemyに音が聞こえたことを通知
                 enemy.OnSoundHeard(this.transform.position);
             }
+            // TrickEnemyControllerが存在する場合、音を聞いた処理を呼び出す
             else if (trickEnemy != null)
             {
+                // TrickEnemyに音が聞こえたことを通知
                 trickEnemy.OnSoundHeard(this.transform.position);
+            }
+            // BossEnemyControllerが存在する場合、音を聞いた処理を呼び出す
+            else if (bossEnemy != null)
+            {
+                // BossEnemyに音が聞こえたことを通知
+                bossEnemy.OnSoundHeard(this.transform.position);
             }
         }
     }
