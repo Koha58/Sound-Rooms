@@ -2,126 +2,85 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
-/// スピーカーが接続されていない場合に、エラー表示をさせるクラス
+/// スピーカーが接続されていない場合にエラーUIを表示するクラス
+/// ※ AudioListener.GetOutputData() を利用して、音声出力の有無を擬似的に検出します。
 /// </summary>
 public class AudioOutputChecker : MonoBehaviour
 {
-    private AudioSource audioSource;  // AudioSource コンポーネント
-    private AudioClip audioClip;  // カスタムオーディオクリップ
-    private bool overflowOccurred = false; // オーバーフロー発生フラグ
-    private OverflowHandler overflowHandler;  // オーバーフロー処理を担当するハンドラ
+    [SerializeField] private GameObject SpeakerConnectionBadUI; // エラー表示用のUI（Imageを想定）
 
-    [SerializeField] private GameObject SpeakerConnectionBadUI;  // スピーカー接続エラーUI
+    private float[] audioSamples = new float[256]; // 出力音声のバッファ
+    private float checkInterval = 3f; // チェックの間隔（秒）
+    private float timer = 0f; // タイマー（経過時間を記録）
 
-    // Start is called before the first frame update
     void Start()
     {
-        // AudioSource コンポーネントを追加
-        audioSource = gameObject.AddComponent<AudioSource>();
+        // 起動時にエラーUIを非表示にする
+        SetSpeakerUIVisible(false);
 
-        // カスタムオーディオクリップを作成（44100サンプル、1チャンネル、44100Hzで再生）
-        audioClip = AudioClip.Create("CustomAudioClip", 44100, 1, 44100, true, OnAudioRead);
-
-        // AudioSource にクリップを設定
-        audioSource.clip = audioClip;
-
-        // オーディオソースをミュートに設定（再生しても音は出さない）
-        audioSource.mute = true;
-
-        // 初期状態でオーバーフローが発生していると設定
-        overflowOccurred = true;
-
-        // オーディオソースを再生開始
-        audioSource.Play();
-
-        // スピーカー接続エラーUIを表示
-        SpeakerConnectionBadUI.GetComponent<Image>().enabled = true;
+        // 無音の AudioClip を作成し、再生しておくことで AudioListener から出力データが取得できるようにする
+        var source = gameObject.AddComponent<AudioSource>();
+        source.clip = AudioClip.Create("Silent", 44100, 1, 44100, false); // 1秒分の無音クリップ
+        source.loop = true;  // ループ再生
+        source.Play();       // 再生開始
     }
 
-    // Update is called once per frame
     void Update()
     {
-        // 3秒後に実行する処理を開始（ただし現在は何もしていない）
-        StartCoroutine(WaitAndExecute());
-
-        // スピーカー接続エラーUIを非表示にする
-        SpeakerConnectionBadUI.GetComponent<Image>().enabled = false;
-
-        // オーバーフローが発生している場合、Overflow メソッドを実行
-        if (overflowOccurred)
+        // 一定時間ごとに出力状態をチェック
+        timer += Time.deltaTime;
+        if (timer >= checkInterval)
         {
-            Overflow();
+            timer = 0f;
+            CheckSpeakerOutput();
         }
     }
 
-    // 3秒待ってから実行する処理を開始するコルーチン
-    private System.Collections.IEnumerator WaitAndExecute()
+    /// <summary>
+    /// スピーカーから音声が出ているかを擬似的に確認する
+    /// </summary>
+    private void CheckSpeakerOutput()
     {
-        // 3秒間待機
-        yield return new WaitForSeconds(3f);
-    }
+        // チャンネル0（左）から256サンプル分の音声データを取得
+        AudioListener.GetOutputData(audioSamples, 0);
 
-    // オーディオデータを生成するメソッド
-    private void OnAudioRead(float[] data)
-    {
-        // サイン波（440Hz）をオーディオデータとして生成
-        for (int i = 0; i < data.Length; i++)
+        float level = 0f;
+        // 各サンプルの絶対値を加算して、音量レベルの目安とする
+        foreach (var sample in audioSamples)
         {
-            // 440Hzのサイン波を生成してデータに設定
-            data[i] = Mathf.Sin(2 * Mathf.PI * 440 * (i / 44100f)); // 440Hzのサイン波
+            level += Mathf.Abs(sample);
         }
-    }
 
-    // オーディオフィルタの読み取りメソッド（オーバーフローの検出）
-    private void OnAudioFilterRead(float[] data, int channels)
-    {
-        // オーディオデータの長さが1024サンプルより大きい場合、オーバーフローが発生していないと判断
-        if (data.Length > 1024)
+        // 閾値未満なら出力されていないと判断（＝スピーカー未接続の可能性）
+        bool noOutput = level < 0.0001f;
+
+        // エラーUIを切り替える
+        SetSpeakerUIVisible(noOutput);
+
+        // デバッグログで状態を通知
+        if (noOutput)
         {
-            overflowOccurred = false;  // オーバーフローが発生していないのでフラグをfalseに
-            //Debug.Log("OK");  // 正常終了のログ
+            Debug.LogWarning("スピーカーが接続されていない可能性があります");
         }
         else
         {
-            // オーバーフローが発生した場合、フラグを立てて処理を行う
-            overflowOccurred = true;
-            HandleBufferOverflow((uint)data.Length);  // バッファオーバーフローの処理を行う
+            Debug.Log("スピーカーが接続されています");
         }
     }
 
-    // バッファオーバーフローが発生した場合の処理
-    private void HandleBufferOverflow(uint overflow)
+    /// <summary>
+    /// UIの表示・非表示を制御する
+    /// </summary>
+    /// <param name="isVisible">true で表示、false で非表示</param>
+    private void SetSpeakerUIVisible(bool isVisible)
     {
-        // オーバーフローが発生した際の警告ログ
-        Debug.LogWarning($"バッファオーバーフローが発生しました: {overflow} samples discarded.");
-
-        // オーバーフローが発生した場合はフラグを立てる
-        overflowOccurred = true;
-
-        // OverflowHandler が設定されていれば、その処理を呼び出す
-        if (overflowHandler != null)
+        if (SpeakerConnectionBadUI != null)
         {
-            overflowHandler.OnBufferOverflow(overflow);  // オーバーフロー処理を実行
-        }
-    }
-
-    // オーバーフローが発生した場合に表示する処理
-    public void Overflow()
-    {
-        // スピーカー接続エラーの警告ログ
-        Debug.LogWarning("スピーカーが接続されていません");
-
-        // スピーカー接続エラーUIを再度表示
-        SpeakerConnectionBadUI.GetComponent<Image>().enabled = true;
-    }
-
-    // オブジェクトが破棄されるときの処理
-    void OnDestroy()
-    {
-        // AudioSource が存在すれば、リソースを解放
-        if (audioSource != null)
-        {
-            Destroy(audioSource);
+            var image = SpeakerConnectionBadUI.GetComponent<Image>();
+            if (image != null)
+            {
+                image.enabled = isVisible;
+            }
         }
     }
 }
