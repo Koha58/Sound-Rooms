@@ -557,10 +557,10 @@ public class TrickEnemyController : MonoBehaviour
                     animator.SetBool("Idle", false); // 待機アニメーション停止
 
                     navMeshAgent.speed = 0.0f; // 初期速度をゼロに設定（徐々に上げるため）
-
-                    PS.isVisible = true;       // プレイヤーを可視化
-                    PS.isVisualization = true; // プレイヤーの可視化をオン
                 }
+
+                PS.isVisible = true;       // プレイヤーを可視化
+                PS.isVisualization = true; // 可視化状態をオン
 
                 // カプセルコライダー（当たり判定）のON/OFFをチェックし更新
                 UpdateCapsuleCollider();
