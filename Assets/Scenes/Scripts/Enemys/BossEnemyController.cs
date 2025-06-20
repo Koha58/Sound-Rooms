@@ -784,6 +784,35 @@ public class BossEnemyController : MonoBehaviour
     }
 
     /// <summary>
+    /// サウンドエフェクトを発生させる処理。
+    /// 主に「プレイヤーを一時的に可視化する」演出に使われる。
+    /// 音量や距離減衰などのAudio設定も一時的に変更される。
+    /// </summary>
+    public void SkipShowSoundEffect()
+    {
+        // シーン内から "Player" という名前のGameObjectを探す
+        GameObject obj = GameObject.Find("Player");
+
+        // Playerオブジェクトにアタッチされている PlayerSeen スクリプトを取得
+        PlayerSeen PS = obj.GetComponent<PlayerSeen>();
+
+        // 行動AIのうち「search（探索）」行動の優先度を3に設定（強制的に探索を促す）
+        behaviors.GetBehavior(BehaviorType.search).value = 3;
+
+        // AudioSourceの設定を変更：音が遠くまで届くように調整
+        audioSourse.maxDistance = 500f;                          // 音が聞こえる最大距離を大きくする
+        audioSourse.volume = 0.05f;                              // 音量を一時的に下げる（環境音的に）
+        audioSourse.rolloffMode = AudioRolloffMode.Linear;       // 音量の減衰をリニア方式に設定
+
+        // プレイヤーを見える状態に設定する（例：シルエット表示などの演出）
+        PS.isVisible = true;       // 敵AIにとって「見えている状態」にする
+        PS.isVisualization = true; // 表示的に「可視化中」の状態（ビジュアル用フラグ）
+
+        // 可視化を10秒後に自動でオフにするコルーチンを開始
+        StartCoroutine(ResetVisibility(PS));
+    }
+
+    /// <summary>
     /// 一時的に可視化されたプレイヤー状態を10秒後に元に戻すコルーチン。
     /// 音量や音の届く距離も元に戻す。
     /// </summary>

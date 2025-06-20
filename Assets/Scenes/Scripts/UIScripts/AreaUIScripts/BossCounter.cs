@@ -168,11 +168,11 @@ public class BossCounter : MonoBehaviour
             isEerieEffectActive = true;
             screenEerieOverlay?.SetActive(true);
 
-            // ボスの一時停止処理をコルーチンで呼び出す
-            if (boss != null)
-            {
-                StartCoroutine(TemporarilyStopBoss(boss, 3f)); // ここで3秒停止
-            }
+            //// ボスの一時停止処理をコルーチンで呼び出す
+            //if (boss != null)
+            //{
+            //    StartCoroutine(TemporarilyStopBoss(boss, 3f)); // ここで3秒停止
+            //}
 
             // ボス側にSEやエフェクトのトリガーを送る（演出強化）
             boss?.GetComponent<BossEnemyController>()?.ShowSoundEffect();
