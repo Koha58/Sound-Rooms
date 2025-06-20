@@ -330,14 +330,14 @@ public class BossEnemyController : MonoBehaviour
         if (isMovingToSound && OP.isParticle)
         {
             // 音源の位置にある程度近づいた場合
-            if (Vector3.Distance(this.transform.position, soundPosition) < 1.0f)
+            if (Vector3.Distance(this.transform.position, soundPosition) < 7.0f)
             {
                 // 「hear（音を聞いた）」行動の優先度を最大に設定（音の場所に到達）
                 behaviors.GetBehavior(BehaviorType.hear).value = 2;
                 isMovingToSound = false; // 音に対する移動を終了
             }
             // 音源に向かって移動している途中
-            else if (Vector3.Distance(this.transform.position, soundPosition) >= 1.0f && OP.isParticle)
+            else if (Vector3.Distance(this.transform.position, soundPosition) >= 7.0f && OP.isParticle)
             {
                 // 「near（音に近づいている）」行動の優先度を設定
                 behaviors.GetBehavior(BehaviorType.near).value = 2;
@@ -556,10 +556,10 @@ public class BossEnemyController : MonoBehaviour
 
                     animator.SetBool("Move", true);    // 走行アニメーションを開始
                     animator.SetBool("Idle", false);  // 待機アニメーションを停止
-
-                    PS.isVisible = true;       // プレイヤーを可視化
-                    PS.isVisualization = true; // プレイヤーの可視化をオン
                 }
+
+                PS.isVisible = true;       // プレイヤーを可視化
+                PS.isVisualization = true; // プレイヤーの可視化をオン
 
                 float distance = Vector3.Distance(transform.position, player.transform.position); // プレイヤーとの距離を取得
                 float stopDistance = 4.0f; // 追いかけるのを止める距離（これ以下には近づかない）
@@ -627,6 +627,7 @@ public class BossEnemyController : MonoBehaviour
 
                 if (OP.isParticle) // 音のエフェクトが出ている（ラジオなどが鳴っている）場合
                 {
+                    transform.LookAt(soundPosition);
                     navMeshAgent.SetDestination(this.transform.position); // 現在位置に留まる
                     navMeshAgent.speed = walkSpeed; // 歩行速度設定
                 }
