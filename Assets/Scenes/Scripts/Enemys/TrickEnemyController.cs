@@ -559,8 +559,8 @@ public class TrickEnemyController : MonoBehaviour
                     navMeshAgent.speed = 0.0f; // 初期速度をゼロに設定（徐々に上げるため）
                 }
 
-                PS.isVisible = true;       // プレイヤーを可視化
                 PS.isVisualization = true; // 可視化状態をオン
+                PS.isVisible = true;       // プレイヤーを可視化
 
                 // カプセルコライダー（当たり判定）のON/OFFをチェックし更新
                 UpdateCapsuleCollider();

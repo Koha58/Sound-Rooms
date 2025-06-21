@@ -302,6 +302,7 @@ public class BossEnemyController : MonoBehaviour
             {
                 // 「patrol（巡回に戻る）」行動の重要度を高める（追跡中止）
                 behaviors.GetBehavior(BehaviorType.patrol).value = 2;
+                PS.overrideVisibility = false; // 自動制御を再開
                 isPatrolling = true;// 巡回ポイントを移動を開始                                
             }
         }
@@ -556,6 +557,9 @@ public class BossEnemyController : MonoBehaviour
 
                     animator.SetBool("Move", true);    // 走行アニメーションを開始
                     animator.SetBool("Idle", false);  // 待機アニメーションを停止
+
+                    // 自動制御を一時的に無効化
+                    PS.overrideVisibility = true;
                 }
 
                 PS.isVisible = true;       // プレイヤーを可視化
@@ -761,70 +765,46 @@ public class BossEnemyController : MonoBehaviour
     /// </summary>
     public void ShowSoundEffect()
     {
+        // 行動AIのうち「search（探索）」行動の優先度を2に設定（強制的に探索を促す）
+        behaviors.GetBehavior(BehaviorType.search).value = 2;
+
         // シーン内から "Player" という名前のGameObjectを探す
         GameObject obj = GameObject.Find("Player");
 
         // Playerオブジェクトにアタッチされている PlayerSeen スクリプトを取得
         PlayerSeen PS = obj.GetComponent<PlayerSeen>();
 
-        // 行動AIのうち「search（探索）」行動の優先度を3に設定（強制的に探索を促す）
-        behaviors.GetBehavior(BehaviorType.search).value = 3;
+        // 自動制御を一時的に無効化
+        PS.overrideVisibility = true;
+        PS.isVisualization = true; // プレイヤーの可視化をオン
+        PS.isVisible = true;       // プレイヤーを可視化
 
-        // AudioSourceの設定を変更：音が遠くまで届くように調整
-        audioSourse.maxDistance = 500f;                          // 音が聞こえる最大距離を大きくする
-        audioSourse.volume = 0.05f;                              // 音量を一時的に下げる（環境音的に）
-        audioSourse.rolloffMode = AudioRolloffMode.Linear;       // 音量の減衰をリニア方式に設定
-
-        // プレイヤーを見える状態に設定する（例：シルエット表示などの演出）
-        PS.isVisible = true;       // 敵AIにとって「見えている状態」にする
-        PS.isVisualization = true; // 表示的に「可視化中」の状態（ビジュアル用フラグ）
-
-        // 可視化を10秒後に自動でオフにするコルーチンを開始
-        StartCoroutine(ResetVisibility(PS));
-    }
-
-    /// <summary>
-    /// サウンドエフェクトを発生させる処理。
-    /// 主に「プレイヤーを一時的に可視化する」演出に使われる。
-    /// 音量や距離減衰などのAudio設定も一時的に変更される。
-    /// </summary>
-    public void SkipShowSoundEffect()
-    {
-        // シーン内から "Player" という名前のGameObjectを探す
-        GameObject obj = GameObject.Find("Player");
-
-        // Playerオブジェクトにアタッチされている PlayerSeen スクリプトを取得
-        PlayerSeen PS = obj.GetComponent<PlayerSeen>();
-
-        // 行動AIのうち「search（探索）」行動の優先度を3に設定（強制的に探索を促す）
-        behaviors.GetBehavior(BehaviorType.search).value = 3;
-
-        // AudioSourceの設定を変更：音が遠くまで届くように調整
-        audioSourse.maxDistance = 500f;                          // 音が聞こえる最大距離を大きくする
-        audioSourse.volume = 0.05f;                              // 音量を一時的に下げる（環境音的に）
-        audioSourse.rolloffMode = AudioRolloffMode.Linear;       // 音量の減衰をリニア方式に設定
-
-        // プレイヤーを見える状態に設定する（例：シルエット表示などの演出）
-        PS.isVisible = true;       // 敵AIにとって「見えている状態」にする
-        PS.isVisualization = true; // 表示的に「可視化中」の状態（ビジュアル用フラグ）
-
-        // 可視化を10秒後に自動でオフにするコルーチンを開始
-        StartCoroutine(ResetVisibility(PS));
+        // 可視化を3秒後に自動でオフにするコルーチンを開始
+        StartCoroutine(ResetVisibility());
     }
 
     /// <summary>
     /// 一時的に可視化されたプレイヤー状態を10秒後に元に戻すコルーチン。
     /// 音量や音の届く距離も元に戻す。
     /// </summary>
-    private IEnumerator ResetVisibility(PlayerSeen ps)
+    private IEnumerator ResetVisibility()
     {
-        // 10秒間待機
-        yield return new WaitForSeconds(10f);
+        // 行動AIのうち「search（探索）」行動の優先度を2に設定（強制的に探索を促す）
+        behaviors.GetBehavior(BehaviorType.chase).value = 2;
 
-        // 音が聞こえる範囲を通常の距離（短距離）に戻す
-        audioSourse.maxDistance = 20f;
+        // シーン内から "Player" という名前のGameObjectを探す
+        GameObject obj = GameObject.Find("Player");
 
-        // 音量を元に戻す（通常の大きさ）
-        audioSourse.volume = 1.0f;
+        // Playerオブジェクトにアタッチされている PlayerSeen スクリプトを取得
+        PlayerSeen PS = obj.GetComponent<PlayerSeen>();
+
+        PS.isVisualization = true; // プレイヤーの可視化をオン
+        PS.isVisible = true;       // プレイヤーを可視化
+
+        // 3秒間待機
+        yield return new WaitForSeconds(3f);
+
+        // 自動制御を再開
+        PS.overrideVisibility = false;
     }
 }

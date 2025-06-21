@@ -42,6 +42,8 @@ public class PlayerSeen : MonoBehaviour
     /// </summary>
     private float muteLevel = 0.0f;
 
+    public bool overrideVisibility = false; //自動制御を一時停止する
+
     /// <summary>
     /// 初期化処理
     /// </summary>
@@ -57,6 +59,12 @@ public class PlayerSeen : MonoBehaviour
     /// </summary>
     void Update()
     {
+        if (overrideVisibility)
+        {
+            // 強制状態なので、他のロジックをスキップ
+            return;
+        }
+
         // 必要なら LevelMeter を探す
         if (levelMeter == null)
         {
